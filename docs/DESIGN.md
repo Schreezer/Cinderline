@@ -1,0 +1,46 @@
+# Cinderline
+
+A touch-first RTS about prospectors defending a mining frontier. The first playable faction, the Cairn Assembly, builds low, split-hull machines around a bright central ore core. Teal lights identify your forces. Warm red lights identify the opposing command. The silhouette must explain the role even without its color.
+
+## First playable match
+
+Both sides begin with a headquarters, workers and the same resource budget. Workers carry finite ore back to a headquarters or processor. The opponent pays the same construction and production costs as the player. Destroy every opposing headquarters to win; there is no match deadline.
+
+| Unit | Role | Intended silhouette |
+| --- | --- | --- |
+| Drudge | Worker; harvests ore | Small split diamond, exposed cargo core |
+| Ember | General ranged infantry | Compact upright wedge |
+| Needle | Anti-armor and anti-air infantry | Twin forward prongs |
+| Skim | Fast vision and harassment | Narrow horizontal dart |
+| Anvil | Armored frontline | Broad split hull |
+| Cinderthrow | Long-range siege | Wide chassis with long barrel |
+| Mend | Repairs and sustains armies | Open ring around core |
+| Veil | Air pressure and flanking | Swept triangular wing |
+
+The Anchor headquarters produces Drudges. The Kiln produces infantry. The Crucible produces vehicles. The Resonator opens research and advanced production. The Siphon shortens mining travel and provides supply. The Ward protects approaches. Initial gameplay uses one faction on both sides; asymmetric factions require a later tested implementation.
+
+## Touch command policy
+
+Tap a friendly unit to select it. Tap terrain to move selected troops, a resource to gather with workers, or a visible enemy to attack. Camera drag and selection drag have distinct modes so a camera motion cannot accidentally order an army. Pinch changes zoom. A visible attack-move control explicitly changes the next terrain command. Context buttons show available production and construction choices. Subgroup buttons narrow the selection by unit type.
+
+The native runner also accepts mouse and keyboard input. It exists to exercise the same C++ simulation before Unreal is ready. Native-runner results do not establish Unreal rendering, iOS usability or mobile performance.
+
+## Simulation decisions
+
+- Shared engine-independent C++ owns entities, economy, orders, movement, combat, vision, production, research and opponent behavior.
+- One fixed 50 ms simulation step prevents frame rate from changing economy or weapon timing. Presentation renders between updates.
+- Commands identify issuing player and entity IDs. They pass ownership, cost, placement, technology and visibility validation before changing gameplay.
+- Stable IDs avoid presentation holding pointers across simulation steps.
+- Central definitions hold balance values. Procedural visual assets let the gameplay run without purchased content.
+- A command boundary prepares for authoritative networking. No network or cross-platform determinism claim follows from that structure alone.
+- Fog has separate unexplored, previously explored and currently visible states. Enemy units must not be drawn or targeted through current fog.
+
+## Pacing validation
+
+The product target is 20–30 minutes. Actual match durations must be reported from completed simulations and later human matches. Early production, travel, expansion distance and technology costs are tunable. A development runner completing a match is evidence of a loop, not evidence of competitive balance.
+
+There is no artificial end timer. Finite starting deposits, exposed expansions and expensive advanced units should create decisions throughout the match. Any tuning still needs measured playtests.
+
+## Evidence required for completion
+
+Checkpoint 0 requires a successful Unreal launch into an interactive battlefield. Further checkpoint reports distinguish source implementation, automated simulation checks, native gameplay checks, Unreal play checks, iOS simulator checks and physical iPhone checks. Unverified paths remain open on the task board.

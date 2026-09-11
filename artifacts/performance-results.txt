@@ -1,0 +1,6 @@
+BENCHMARK combat_units=50 starting_workers=10 min_combat_alive=6 samples=500 mean_ms=0.022 p95_ms=0.050 max_ms=0.542
+BENCHMARK combat_units=100 starting_workers=10 min_combat_alive=17 samples=500 mean_ms=0.078 p95_ms=0.247 max_ms=2.206
+BENCHMARK combat_units=200 starting_workers=10 min_combat_alive=65 samples=500 mean_ms=0.302 p95_ms=1.151 max_ms=6.796
+GROUP_MOVE units=200 simulation_seconds=50.000 median_distance_to_assigned_goal=18.705 p95_distance_to_assigned_goal=28.373 unreachable_over_100=0 min_separation=33.196 clearance_ratio=0.830 mean_ms=0.195 p95_ms=0.282 max_ms=2.301
+PASS performance
+RESULT passed=1 failed=0

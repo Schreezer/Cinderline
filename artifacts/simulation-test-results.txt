@@ -1,0 +1,16 @@
+PASS reset and definitions
+PASS physical gathering and depletion
+PASS paid commands, production and supply
+CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
+PASS placement and construction
+PASS research and prerequisites
+PASS ownership and fog
+GROUP_MOVE units=15 mean_destination_distance=92.819 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
+PASS obstacle paths and group movement
+PASS ground and air combat
+PASS victory and defeat
+PASS save-load continuity and replay
+PASS bounded fixed-step update
+AI_ECONOMY seconds=330.700 ore=4817 gathered=7807 produced=17 built=4 paid_command_cost=2990
+PASS AI paid economy
+RESULT passed=12 failed=0

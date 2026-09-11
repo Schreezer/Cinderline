@@ -1,0 +1,60 @@
+UpdateCTestConfiguration  from :/Users/chirag13/Documents/ChatGPT/starCraft/build/native/DartConfiguration.tcl
+Parse Config file:/Users/chirag13/Documents/ChatGPT/starCraft/build/native/DartConfiguration.tcl
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: simulation_rules
+
+1: Test command: /Users/chirag13/Documents/ChatGPT/starCraft/build/native/CinderlineTests
+1: Working Directory: /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+1: Test timeout computed to be: 120
+1: PASS reset and definitions
+1: PASS physical gathering and depletion
+1: PASS paid commands, production and supply
+1: CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
+1: PASS placement and construction
+1: PASS research and prerequisites
+1: PASS ownership and fog
+1: GROUP_MOVE units=15 mean_destination_distance=92.819 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
+1: PASS obstacle paths and group movement
+1: PASS ground and air combat
+1: PASS victory and defeat
+1: PASS save-load continuity and replay
+1: PASS bounded fixed-step update
+1: AI_ECONOMY seconds=330.700 ore=4817 gathered=7807 produced=17 built=4 paid_command_cost=2990
+1: PASS AI paid economy
+1: RESULT passed=12 failed=0
+1/3 Test #1: simulation_rules .................   Passed    0.25 sec
+test 2
+    Start 2: native_smoke
+
+2: Test command: /Users/chirag13/Documents/ChatGPT/starCraft/build/native/CinderlineNative "--smoke-test"
+2: Working Directory: /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+2: Test timeout computed to be: 15
+2: PASS: camera transforms/world bounds and subgroup layout at desktop/compact dimensions; subgroup filters only current selection without changing orders; shared simulation advanced 20 ticks.
+2/3 Test #2: native_smoke .....................   Passed    0.48 sec
+test 3
+    Start 3: native_render_stress
+
+3: Test command: /Users/chirag13/Documents/ChatGPT/starCraft/build/native/CinderlineNative "--render-stress" "3000"
+3: Working Directory: /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+3: Test timeout computed to be: 120
+3: PASS: mixed-selection chip activation/layout at desktop and compact sizes; modifier-A guards; damage warning survives production notification.
+3: Rendered 1000 frames; simulation 50.0s
+3: Rendered 2000 frames; simulation 100.0s
+3: Rendered 3000 frames; simulation 150.0s
+3: PASS: 3000 offscreen frames, 150.0 simulated seconds, no Cocoa drawing exception.
+3/3 Test #3: native_render_stress .............   Passed   16.29 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Label Time Summary:
+native    =  16.29 sec*proc (1 test)
+render    =  16.29 sec*proc (1 test)
+
+Total Test time (real) =  17.03 sec

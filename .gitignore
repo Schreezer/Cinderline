@@ -1,0 +1,10 @@
+build/
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+.DS_Store
+*.xcworkspace/
+*.xcodeproj/
+artifacts/*.app/
+artifacts/*.log

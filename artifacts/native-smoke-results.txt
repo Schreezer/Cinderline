@@ -1,0 +1,1 @@
+PASS: camera transforms/world bounds and subgroup layout at desktop/compact dimensions; subgroup filters only current selection without changing orders; shared simulation advanced 20 ticks.
