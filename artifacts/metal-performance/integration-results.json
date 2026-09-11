@@ -1,0 +1,153 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "B93C18A51C4EC658BA371187FA14500C",
+			"instanceName": "MacBook-Pro-10.local-27539",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.0 26A428",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.11-16.40.01",
+	"succeeded": 4,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.26430320739746094,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "AIKnowledgeAndPersistence",
+			"fullTestPath": "Cinderline.Integration.AIKnowledgeAndPersistence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B93C18A51C4EC658BA371187FA14500C"
+			],
+			"duration": 0.12243624776601791,
+			"dateTime": "2026.09.11-16.40.00",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=6, first_seen_tick=616, retained_seen_tick=616, continuation_ticks=60; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-16.40.00"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CombatFeedback",
+			"fullTestPath": "Cinderline.Integration.CombatFeedback",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B93C18A51C4EC658BA371187FA14500C"
+			],
+			"duration": 0.029280167073011398,
+			"dateTime": "2026.09.11-16.40.00",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_COMBAT_FEEDBACK_PASS: weapon=4, impact=4, heal=4, death=1, hidden_weapon=1; development spawns, real combat actor ticks, exactly-once requests, pause/reset, temporary snapshot cursor, absent subsystem; no audible-output, viewport or physical-input proof.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-16.40.00"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EconomyAndProduction",
+			"fullTestPath": "Cinderline.Integration.EconomyAndProduction",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B93C18A51C4EC658BA371187FA14500C"
+			],
+			"duration": 0.092897959053516388,
+			"dateTime": "2026.09.11-16.40.00",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=252, produced=2, built=1, ore=342; paid commands, builder travel and pause/resume, actual actor ticks, selected-controller dispatch, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-16.40.00"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorldLifecycle",
+			"fullTestPath": "Cinderline.Integration.WorldLifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B93C18A51C4EC658BA371187FA14500C"
+			],
+			"duration": 0.019688833504915237,
+			"dateTime": "2026.09.11-16.40.00",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-16.40.00"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-16.40.00"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

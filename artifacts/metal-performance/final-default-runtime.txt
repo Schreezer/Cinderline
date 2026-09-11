@@ -1,0 +1,73 @@
+[2026.09.11-16.45.43:489][  0]LogConfig: Set CVar [[r.AntiAliasingMethod:1]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TemporalAA.Quality:2]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TSR.History.R11G11B10:1]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TSR.History.ScreenPercentage:200]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TSR.History.UpdateQuality:3]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TSR.ShadingRejection.Flickering:1]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TSR.RejectionAntiAliasingQuality:2]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TSR.ReprojectionField:1]]
+[2026.09.11-16.45.43:491][  0]LogConfig: Set CVar [[r.TSR.Resurrection:1]]
+[2026.09.11-16.45.43:492][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.AntiAliasingMethod:1 -> 2]]
+[2026.09.11-16.45.43:492][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.TemporalAA.Quality:2 -> 2]]
+[2026.09.11-16.45.43:492][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.TSR.History.ScreenPercentage:200 -> 100]]
+[2026.09.11-16.45.44:837][  0]LogMetal: Warning: To use SM6 on this system, please ensure you are running Mac OS 15. Falling back to SM5
+[2026.09.11-16.45.44:838][  0]LogRHI: Texture pool is 17203 MB (70% of 24576 MB)
+[2026.09.11-16.45.44:838][  0]LogMetal: Display:       Vendor ID: 4203
+[2026.09.11-16.45.44:838][  0]LogMetal: Display:       Device ID: 909194058
+[2026.09.11-16.45.44:838][  0]LogMetal: Display:       VRAM (MB): 24576
+[2026.09.11-16.45.44:854][  0]LogRHI: RHI Adapter Info:
+[2026.09.11-16.45.44:854][  0]LogRHI:             Name: Apple M1 Max
+[2026.09.11-16.45.44:854][  0]LogRHI:   Driver Version:  (internal:360.34.5, unified:360.34.5)
+[2026.09.11-16.45.44:854][  0]LogRHI:      Driver Date: 1-1-1970
+[2026.09.11-16.45.44:859][  0]LogRHI: Render tracing channels set: 'Submission' -> 0xf
+[2026.09.11-16.45.48:185][  0]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0x5d35cc4d980
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY map=Frontier viewport_px=2560x1440 render_target_px=2560x1440 dpi_scale=2.000 high_dpi_active=1 foreground=1 rendered_viewport_available=1
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=0 set_by=Scalability
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.11-16.46.03:050][351]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile
+[2026.09.11-16.46.03:110][354]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=10 rendered_fallback_entities=0
+[2026.09.11-16.46.03:110][354]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=0 fog=256_texture_plane fog_uploads=1 pads=1
+[2026.09.11-16.46.03:110][354]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=85 delta_calls=0 transforms=0 added=13 removed=0 full_rebuilds=0 unchanged_skips=4166 static_skips=588; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-16.46.08:332][454]LogCinderVisualPreview: Display: CINDERLINE_VISUAL_PREVIEW_FRAME viewport=2560x1440 distance=1917.3 focus=(949.6,2373.6) target_screen=(307,187)-(2150,1037); framing is a development camera setup
+[2026.09.11-16.46.08:337][454]LogCinderVisualPreview: Display: CINDERLINE_VISUAL_PREVIEW scene=frontier_western_cliff live=1 staged=18 tick=3 obstacle=(1320,2400) enemy_palette_visible=1; ordinary terrain and rules, no save written
+[2026.09.11-16.46.08:341][454]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=34 rendered_fallback_entities=0
+[2026.09.11-16.46.08:341][454]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=2 fog=256_texture_plane fog_uploads=3 pads=6
+[2026.09.11-16.46.08:341][454]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=118 delta_calls=0 transforms=0 added=44 removed=0 full_rebuilds=0 unchanged_skips=5775 static_skips=807; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-16.46.08:369][454]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=34 rendered_fallback_entities=0
+[2026.09.11-16.46.08:369][454]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=2 fog=256_texture_plane fog_uploads=3 pads=6
+[2026.09.11-16.46.08:369][454]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=118 delta_calls=0 transforms=0 added=44 removed=0 full_rebuilds=0 unchanged_skips=5775 static_skips=807; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-16.46.32:113][751]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=34 rendered_fallback_entities=0
+[2026.09.11-16.46.32:114][751]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=2 fog=256_texture_plane fog_uploads=3 pads=6
+[2026.09.11-16.46.32:114][751]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=272 delta_calls=308 transforms=308 added=44 removed=0 full_rebuilds=0 unchanged_skips=13013 static_skips=1885; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-16.46.59:492][800]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=10 rendered_fallback_entities=0
+[2026.09.11-16.46.59:492][800]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=0 fog=256_texture_plane fog_uploads=1 pads=1
+[2026.09.11-16.46.59:492][800]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=30 delta_calls=0 transforms=0 added=13 removed=0 full_rebuilds=0 unchanged_skips=1471 static_skips=203; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-16.47.33:581][453]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=10 rendered_fallback_entities=0
+[2026.09.11-16.47.33:581][453]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=0 fog=256_texture_plane fog_uploads=6 pads=1
+[2026.09.11-16.47.33:581][453]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=587 delta_calls=488 transforms=1079 added=13 removed=0 full_rebuilds=0 unchanged_skips=28359 static_skips=4095; actor-lifetime accepted adapter submissions, not GPU timings

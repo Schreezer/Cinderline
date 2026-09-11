@@ -47,7 +47,7 @@ before pressing Play. On a fresh checkout run `setup` before packaging.
 
 `./scripts/unreal.sh play` requests a **2560×1440 framebuffer** in a window on
 Mac, with Retina/high-DPI awareness enabled. Linux retains the 1280×720 default.
-The Mac device profile uses TSR with primary and secondary screen percentages at
+The Mac device profile uses native TAA (quality 2) with primary and secondary screen percentages at
 100%, fixed resolution, screen-space reflections, ambient occlusion, bloom and
 higher shadow/texture filtering quality. Motion blur, depth of field and color
 fringing are disabled. MacEditor inherits the Mac profile; the iOS profile has its
@@ -149,6 +149,8 @@ In a Development build, open Unreal's console with the backtick key and run:
 cinder.quality
 cinder.profile
 cinder.profile 120
+cinder.profile 600
+cinder.profile 1200
 cinder.profile cancel
 ```
 
@@ -160,14 +162,18 @@ occlusion, bloom, shadows, filtering and related controls. They also include VSy
 and the frame-rate cap so timing results can be interpreted alongside those limits.
 
 `cinder.profile` collects 180 rendered viewport frames after 30 warmup frames;
-`cinder.profile 120` selects the shorter sample. Close the console and keep the game
+`cinder.profile 120`, `600` and `1200` select shorter or longer samples. Close the console and keep the game
 in the foreground while sampling. The `CINDERLINE_FRAME_PROFILE result` line
 reports the sample count and time window, mean/median/p95 frame interval,
 frame cadence in FPS and the number of sampled background frames. It measures
 wall-clock intervals at engine end-of-frame after this viewport was drawn. It is
-not GPU timing, a GPU utilization measurement or a sustained performance test.
+not GPU timing or a GPU utilization measurement. Longer samples help compare settings but do not establish full-match or thermal performance.
 VSync, frame caps, background throttling and other work on the machine can affect
 these values; compare runs at the same viewport size and scene.
+
+`CINDERLINE_FRAME_PROFILE_TIMING` adds mean/median/p95 game, render, RHI and GPU timings with availability and sample counts. CPU values are raw engine counters and can include waits; they are not CPU utilization. GPU values come from fresh completed engine frames in `FRHIGPUFrameTimeHistory`, not repeated copies of the latest value. They can arrive late and are not paired with individual viewport frames. The scope line records missing completions and disjoint history. Zero/missing values are reported as unavailable.
+
+See [METAL_PERFORMANCE_PASS.md](METAL_PERFORMANCE_PASS.md) for the measured Mac AA choice, quality tradeoff and instance/HUD optimizations. To compare anti-aliasing at the same camera, use `r.AntiAliasingMethod 4` for TSR and `r.AntiAliasingMethod 2` to restore native TAA; allow history to settle before sampling. These console overrides last for the process and do not save a preference.
 
 Only one sample runs at a time. `cancel` detaches the active sample. Profiling
 requires a visible game viewport and excludes unattended/headless runs. It also

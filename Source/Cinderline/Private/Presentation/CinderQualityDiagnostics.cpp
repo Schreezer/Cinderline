@@ -7,6 +7,11 @@
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformApplicationMisc.h"
 #include "HAL/PlatformTime.h"
+#include "GPUProfiler.h"
+#include "RenderTimer.h"
+#include "RenderingThread.h"
+#include "RHICommandList.h"
+#include "RHIGlobals.h"
 #include "Misc/App.h"
 #include "Misc/CoreDelegates.h"
 #include "UnrealClient.h"
@@ -48,6 +53,8 @@ void LogQuality(UWorld* World)
 
     static const TCHAR* Names[] = {
         TEXT("EnableHighDPIAwareness"), TEXT("r.AntiAliasingMethod"),
+        TEXT("r.TemporalAA.Quality"), TEXT("r.TemporalAA.HistoryScreenPercentage"),
+        TEXT("r.TSR.AsyncCompute"), TEXT("r.TSR.History.UpdateQuality"),
         TEXT("r.ScreenPercentage"), TEXT("r.SecondaryScreenPercentage.GameViewport"),
         TEXT("r.DynamicRes.OperationMode"), TEXT("r.TSR.History.ScreenPercentage"),
         TEXT("r.ReflectionMethod"), TEXT("r.SSR.Quality"), TEXT("r.SSR.HalfResSceneColor"),
@@ -67,6 +74,51 @@ void LogQuality(UWorld* World)
             Variable ? GetConsoleVariableSetByName(Variable->GetFlags()) : TEXT("unavailable"));
     }
 }
+
+struct FEngineTimingSamples
+{
+    TArray<double> Values;
+    int32 Unavailable = 0;
+
+    void Reset(int32 Capacity)
+    {
+        Values.Reset(Capacity);
+        Unavailable = 0;
+    }
+
+    bool Add(double Milliseconds, bool bAvailable = true)
+    {
+        if (!bAvailable || !FMath::IsFinite(Milliseconds) || Milliseconds <= 0)
+        {
+            ++Unavailable;
+            return false;
+        }
+        Values.Add(Milliseconds);
+        return true;
+    }
+
+    void Log(const TCHAR* Metric, const TCHAR* Source, int32 ViewportSamples, const TCHAR* Availability, bool bIncomplete = false) const
+    {
+        if (Values.IsEmpty())
+        {
+            UE_LOG(LogCinderQuality, Display,
+                TEXT("CINDERLINE_FRAME_PROFILE_TIMING metric=%s status=unavailable samples=0 viewport_samples=%d unavailable_observations=%d mean_ms=unavailable median_ms=unavailable p95_ms=unavailable source=%s availability=%s"),
+                Metric, ViewportSamples, Unavailable, Source, Availability);
+            return;
+        }
+        TArray<double> Ordered = Values;
+        Ordered.Sort();
+        double Total = 0;
+        for (double Value : Ordered) Total += Value;
+        const int32 Count = Ordered.Num();
+        const double Median = (Ordered[(Count - 1) / 2] + Ordered[Count / 2]) * 0.5;
+        const int32 P95 = FMath::Clamp(FMath::CeilToInt(Count * 0.95f) - 1, 0, Count - 1);
+        UE_LOG(LogCinderQuality, Display,
+            TEXT("CINDERLINE_FRAME_PROFILE_TIMING metric=%s status=%s samples=%d viewport_samples=%d unavailable_observations=%d mean_ms=%.3f median_ms=%.3f p95_ms=%.3f source=%s availability=%s"),
+            Metric, Unavailable > 0 || bIncomplete ? TEXT("partial") : TEXT("available"), Count, ViewportSamples,
+            Unavailable, Total / Count, Median, Ordered[P95], Source, Availability);
+    }
+};
 
 class FQualityFrameSample
 {
@@ -92,6 +144,11 @@ public:
         WarmupRemaining = WarmupFrames;
         BackgroundSamples = 0;
         Samples.Reset(Count);
+        GameTiming.Reset(Count); RenderTiming.Reset(Count); RHITiming.Reset(Count);
+        GPUTiming.Reset(Count + GPUHistoryCapacity);
+        GPUHistory = FRHIGPUFrameTimeHistory::FState{};
+        GPUFramesWithoutCompletion = 0; GPUDisjointEvents = 0;
+        GPUPollLimitHits = 0; GPUOverflowDiscarded = 0;
         StartedAt = FPlatformTime::Seconds();
         PreviousFrameAt = 0;
         bViewportDrawn = false;
@@ -101,7 +158,7 @@ public:
         CleanupHandle = FWorldDelegates::OnWorldCleanup.AddRaw(this, &FQualityFrameSample::OnWorldCleanup);
         ExitHandle = FCoreDelegates::OnEnginePreExit.AddRaw(this, &FQualityFrameSample::OnEngineExit);
         UE_LOG(LogCinderQuality, Display,
-            TEXT("CINDERLINE_FRAME_PROFILE started map=%s warmup_frames=%d sample_frames=%d viewport_px=%dx%d; measures rendered-viewport wall-clock cadence, not GPU timing"),
+            TEXT("CINDERLINE_FRAME_PROFILE started map=%s warmup_frames=%d sample_frames=%d viewport_px=%dx%d; measures viewport wall-clock cadence plus asynchronous raw engine timings"),
             *World->GetMapName(), WarmupFrames, TargetSamples, StartSize.X, StartSize.Y);
         LogQuality(World);
     }
@@ -115,10 +172,18 @@ public:
 private:
     static constexpr int32 WarmupFrames = 30;
     static constexpr double MaximumSeconds = 120.0;
+    // UE 5.8 retains 16 completed GPU frame timings. A bounded drain allows a
+    // concurrently publishing RHI to make progress without an unbounded loop.
+    static constexpr int32 GPUHistoryCapacity = 16;
+    static constexpr int32 GPUMaxPopsPerViewportFrame = 32;
     TWeakObjectPtr<UWorld> SampleWorld;
     TWeakObjectPtr<UGameViewportClient> SampleViewport;
     FDelegateHandle DrawHandle, EndFrameHandle, CleanupHandle, ExitHandle;
     TArray<double> Samples;
+    FEngineTimingSamples GameTiming, RenderTiming, RHITiming, GPUTiming;
+    FRHIGPUFrameTimeHistory::FState GPUHistory;
+    int32 GPUFramesWithoutCompletion = 0, GPUDisjointEvents = 0;
+    int32 GPUPollLimitHits = 0, GPUOverflowDiscarded = 0;
     FIntPoint StartSize = FIntPoint::ZeroValue;
     int32 TargetSamples = 180, WarmupRemaining = 0, BackgroundSamples = 0;
     double StartedAt = 0, PreviousFrameAt = 0;
@@ -145,6 +210,28 @@ private:
         Detach();
     }
 
+    void ReadGPUTimings(bool bRecord)
+    {
+        const int32 Before = GPUTiming.Values.Num();
+        bool bDrained = false;
+        for (int32 Pop = 0; Pop < GPUMaxPopsPerViewportFrame; ++Pop)
+        {
+            uint64 Cycles = 0;
+            const auto Result = GPUHistory.PopFrameCycles(Cycles);
+            if (Result == FRHIGPUFrameTimeHistory::EResult::Empty) { bDrained = true; break; }
+            if (!bRecord) continue; // Consume historical and warmup completions.
+            if (Result == FRHIGPUFrameTimeHistory::EResult::Disjoint) ++GPUDisjointEvents;
+            if (GPUTiming.Values.Num() < TargetSamples + GPUHistoryCapacity)
+                GPUTiming.Add(FPlatformTime::ToMilliseconds64(Cycles));
+            else ++GPUOverflowDiscarded;
+        }
+        if (bRecord)
+        {
+            if (!bDrained) ++GPUPollLimitHits;
+            if (GPUTiming.Values.Num() == Before) ++GPUFramesWithoutCompletion;
+        }
+    }
+
     void OnViewportDrawn() { bViewportDrawn = true; }
     void OnWorldCleanup(UWorld* World, bool, bool)
     {
@@ -166,10 +253,22 @@ private:
         bViewportDrawn = false;
         const double IntervalMS = (Now - PreviousFrameAt) * 1000.0;
         PreviousFrameAt = Now;
-        if (WarmupRemaining > 0) { --WarmupRemaining; return; }
+        if (WarmupRemaining > 0)
+        {
+            ReadGPUTimings(false);
+            --WarmupRemaining;
+            return;
+        }
         if (!FMath::IsFinite(IntervalMS) || IntervalMS <= 0) { Abort(TEXT("invalid_clock_interval")); return; }
         if (!FPlatformApplicationMisc::IsThisApplicationForeground()) ++BackgroundSamples;
         Samples.Add(IntervalMS);
+        // These are the same raw published counters used by stat unit, not
+        // per-thread CPU utilization. Publication is asynchronous; engine waits
+        // and dependent work can contribute, and the values are not frame-paired.
+        GameTiming.Add(FPlatformTime::ToMilliseconds(GGameThreadTime));
+        RenderTiming.Add(FPlatformTime::ToMilliseconds(GRenderThreadTime), GIsThreadedRendering);
+        RHITiming.Add(FPlatformTime::ToMilliseconds(GRHIThreadTime), IsRunningRHIInSeparateThread());
+        ReadGPUTimings(true);
         if (Samples.Num() < TargetSamples) return;
 
         double TotalMS = 0;
@@ -180,10 +279,21 @@ private:
         const int32 P95Index = FMath::Clamp(FMath::CeilToInt(Count * 0.95f) - 1, 0, Count - 1);
         const double MeanMS = TotalMS / Count;
         UE_LOG(LogCinderQuality, Display,
-            TEXT("CINDERLINE_FRAME_PROFILE result map=%s samples=%d warmup_frames=%d viewport_px=%dx%d window_seconds=%.3f mean_ms=%.3f median_ms=%.3f p95_ms=%.3f fps=%.2f foreground=%d background_frames=%d measurement=rendered_viewport_wall_clock gpu_timing=unavailable"),
+            TEXT("CINDERLINE_FRAME_PROFILE result map=%s samples=%d warmup_frames=%d viewport_px=%dx%d window_seconds=%.3f mean_ms=%.3f median_ms=%.3f p95_ms=%.3f fps=%.2f foreground=%d background_frames=%d measurement=rendered_viewport_wall_clock gpu_timing=%s"),
             *SampleWorld->GetMapName(), Count, WarmupFrames, StartSize.X, StartSize.Y, TotalMS / 1000.0,
             MeanMS, MedianMS, Samples[P95Index], 1000.0 / MeanMS,
-            FPlatformApplicationMisc::IsThisApplicationForeground(), BackgroundSamples);
+            FPlatformApplicationMisc::IsThisApplicationForeground(), BackgroundSamples,
+            GPUTiming.Values.IsEmpty() ? TEXT("unavailable") : TEXT("completed_engine_frames"));
+        GameTiming.Log(TEXT("game_thread"), TEXT("GGameThreadTime"), Count, TEXT("positive_latest_published_counter"));
+        RenderTiming.Log(TEXT("render_thread"), TEXT("GRenderThreadTime"), Count, TEXT("separate_thread_and_positive_latest_published_counter"));
+        RHITiming.Log(TEXT("rhi_thread"), TEXT("GRHIThreadTime"), Count, TEXT("separate_thread_and_positive_latest_published_counter"));
+        GPUTiming.Log(TEXT("gpu"), TEXT("FRHIGPUFrameTimeHistory"), Count, TEXT("fresh_positive_completed_gpu_frames"),
+            GPUDisjointEvents > 0 || GPUPollLimitHits > 0 || GPUOverflowDiscarded > 0);
+        UE_LOG(LogCinderQuality, Display,
+            TEXT("CINDERLINE_FRAME_PROFILE_TIMING_SCOPE scope=global_engine cpu_alignment=latest_published gpu_alignment=asynchronous_completed gpu_frames=%d viewport_frames_without_gpu_completion=%d gpu_disjoint_events=%d gpu_poll_limit_hits=%d gpu_overflow_discarded=%d gpu_frame_bubbles_removed=%d render_thread_separate=%d rhi_thread_separate=%d; CPU engine timings may include waits and are not CPU utilization or pure active work. GPU completions can lag, include other engine viewport work, and are not paired with these viewport frames; zero or missing timings are unavailable, not measured zero. No GPU utilization or synchronized frame attribution is inferred."),
+            GPUTiming.Values.Num(), GPUFramesWithoutCompletion, GPUDisjointEvents,
+            GPUPollLimitHits, GPUOverflowDiscarded, GRHISupportsFrameCyclesBubblesRemoval,
+            GIsThreadedRendering, IsRunningRHIInSeparateThread());
         Detach();
     }
 };
@@ -193,16 +303,16 @@ FAutoConsoleCommandWithWorld QualityCommand(
     TEXT("cinder.quality"), TEXT("DEVELOPMENT: log viewport pixels, DPI state and effective rendering CVars without changing settings."),
     FConsoleCommandWithWorldDelegate::CreateStatic(&LogQuality));
 FAutoConsoleCommandWithWorldAndArgs ProfileCommand(
-    TEXT("cinder.profile"), TEXT("DEVELOPMENT: sample 180 (or 120) rendered frames after 30 warmup frames; cinder.profile cancel stops the active sample. Reports wall-clock cadence, not GPU time."),
+    TEXT("cinder.profile"), TEXT("DEVELOPMENT: sample 120, 180 (default), 600 or 1200 rendered frames after 30 warmups; cinder.profile cancel stops. Reports viewport cadence and available asynchronous engine CPU/GPU timings."),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
     {
         if (Args.Num() == 1 && Args[0].Equals(TEXT("cancel"), ESearchCase::IgnoreCase)) { FrameSample.Cancel(); return; }
-        if (Args.Num() > 1 || (Args.Num() == 1 && Args[0] != TEXT("120") && Args[0] != TEXT("180")))
+        if (Args.Num() > 1 || (Args.Num() == 1 && Args[0] != TEXT("120") && Args[0] != TEXT("180") && Args[0] != TEXT("600") && Args[0] != TEXT("1200")))
         {
-            UE_LOG(LogCinderQuality, Display, TEXT("CINDERLINE_FRAME_PROFILE usage: cinder.profile [120|180|cancel]"));
+            UE_LOG(LogCinderQuality, Display, TEXT("CINDERLINE_FRAME_PROFILE usage: cinder.profile [120|180|600|1200|cancel]"));
             return;
         }
-        FrameSample.Start(World, Args.Num() == 1 && Args[0] == TEXT("120") ? 120 : 180);
+        FrameSample.Start(World, Args.Num() == 1 ? FCString::Atoi(*Args[0]) : 180);
     }));
 }
 

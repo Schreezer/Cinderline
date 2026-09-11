@@ -218,6 +218,113 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     TestTrue(TEXT("New match clears old command recording"), Battle.Sim().recording().empty());
     for (const Entity& Entity : Battle.Sim().entities())
         TestTrue(TEXT("New match clears old production queues"), Entity.queue.empty());
+
+    // Check actual renderer output through public actors/components. Skim has one
+    // centered body instance in both the imported-model and primitive-fallback adapters.
+    Battle.Sim().reset({0, 42, false, 1});
+    Battle.ResetFeedback();
+    auto& Sim = Battle.Sim();
+    const Id FirstSkim = Sim.debugSpawn(Kind::Scout, 0, {1103, 1309});
+    const Id SecondSkim = Sim.debugSpawn(Kind::Scout, 0, {1337, 1309});
+    IssueAtBattlefield(Battle, CommandType::Hold, {FirstSkim, SecondSkim});
+    Battle.RenderState();
+    const Vec2 FirstStart = Sim.find(FirstSkim)->pos;
+    auto AtPoint = [](const FTransform& Pose, Vec2 Point)
+    {
+        const FVector Position = Pose.GetTranslation();
+        return FMath::Abs(Position.X - Point.x) < 0.01 && FMath::Abs(Position.Y - Point.y) < 0.01;
+    };
+    UInstancedStaticMeshComponent* SkimComponent = nullptr;
+    TArray<UInstancedStaticMeshComponent*> Components;
+    Battle.GetComponents<UInstancedStaticMeshComponent>(Components);
+    for (UInstancedStaticMeshComponent* Component : Components)
+    {
+        if (!Component) continue;
+        for (int32 Index = 0; Index < Component->GetInstanceCount(); ++Index)
+        {
+            FTransform Pose;
+            if (Component->GetInstanceTransform(Index, Pose, true) && AtPoint(Pose, FirstStart))
+            { SkimComponent = Component; break; }
+        }
+        if (SkimComponent) break;
+    }
+    if (!TestNotNull(TEXT("Spawned Skim has an actual centered mesh instance"), SkimComponent)) return false;
+    auto HasSkimAt = [&](Vec2 Point)
+    {
+        int32 Matches = 0;
+        for (int32 Index = 0; Index < SkimComponent->GetInstanceCount(); ++Index)
+        {
+            FTransform Pose;
+            if (SkimComponent->GetInstanceTransform(Index, Pose, true) && AtPoint(Pose, Point)) ++Matches;
+        }
+        return Matches == 1;
+    };
+    TestEqual(TEXT("Two staged Skims render two body instances"), SkimComponent->GetInstanceCount(), 2);
+    TestTrue(TEXT("Both starting Skim positions reach the component"), HasSkimAt(FirstStart) && HasSkimAt(Sim.find(SecondSkim)->pos));
+    if (!TestTrue(TEXT("Renderer movement fixture accepts a normal move"),
+        IssueAtBattlefield(Battle, CommandType::Move, {FirstSkim}, Kind::Worker, {1103, 1509}).accepted)) return false;
+    if (!TestTrue(TEXT("Normal actor ticks move the staged Skim"), Fixture.TickUntil([&]
+        { const Entity* E = Sim.find(FirstSkim); return E && E->pos.y > FirstStart.y + 80; }, 2))) return false;
+    IssueAtBattlefield(Battle, CommandType::Hold, {FirstSkim});
+    Battle.RenderState();
+    const Vec2 MovedPosition = Sim.find(FirstSkim)->pos;
+    TestEqual(TEXT("Moving a Skim preserves the rendered unit count"), SkimComponent->GetInstanceCount(), 2);
+    TestTrue(TEXT("Rendered Skim follows its actual moved position"), HasSkimAt(MovedPosition));
+    TestFalse(TEXT("Movement leaves no instance at the abandoned position"), HasSkimAt(FirstStart));
+    const Id ThirdSkim = Sim.debugSpawn(Kind::Scout, 0, {1499, 1409});
+    IssueAtBattlefield(Battle, CommandType::Hold, {ThirdSkim});
+    Battle.RenderState();
+    TestEqual(TEXT("A new Skim adds one rendered instance"), SkimComponent->GetInstanceCount(), 3);
+    TestTrue(TEXT("Growth preserves old units and displays the new unit"),
+        HasSkimAt(MovedPosition) && HasSkimAt(Sim.find(SecondSkim)->pos) && HasSkimAt(Sim.find(ThirdSkim)->pos));
+    auto DefeatSkim = [&](Id Victim)
+    {
+        const Entity* E = Sim.find(Victim);
+        if (!E || !E->alive()) return false;
+        const Vec2 Position = E->pos;
+        Command Attack;
+        Attack.type = CommandType::Attack; Attack.team = 1; Attack.target = Victim;
+        for (int32 Index = 0; Index < 4; ++Index)
+            Attack.units.push_back(Sim.debugSpawn(Kind::Lancer, 1, {Position.x + 220, Position.y + Index * 30 - 45}));
+        if (!Sim.command(Attack).accepted) return false;
+        // Advance ordinary combat without submitting an intermediate render, so a
+        // replacement can retain the same visible count while changing its membership.
+        Sim.update(Simulation::Step);
+        E = Sim.find(Victim);
+        return !E || !E->alive();
+    };
+    if (!TestTrue(TEXT("Ordinary combat defeats the first rendered Skim"), DefeatSkim(FirstSkim))) return false;
+    const Id Replacement = Sim.debugSpawn(Kind::Scout, 0, {1603, 1679});
+    IssueAtBattlefield(Battle, CommandType::Hold, {Replacement});
+    Battle.RenderState();
+    TestEqual(TEXT("Death plus replacement retains three visible instances"), SkimComponent->GetInstanceCount(), 3);
+    TestFalse(TEXT("Same-count replacement removes the defeated unit's old pose"), HasSkimAt(MovedPosition));
+    TestTrue(TEXT("Same-count replacement renders every surviving and new unit"),
+        HasSkimAt(Sim.find(SecondSkim)->pos) && HasSkimAt(Sim.find(ThirdSkim)->pos) && HasSkimAt(Sim.find(Replacement)->pos));
+    const Vec2 ReplacementPosition = Sim.find(Replacement)->pos;
+    if (!TestTrue(TEXT("A second ordinary defeat exercises count reduction"), DefeatSkim(Replacement))) return false;
+    Battle.RenderState();
+    TestEqual(TEXT("Death without replacement removes one rendered instance"), SkimComponent->GetInstanceCount(), 2);
+    TestFalse(TEXT("Count reduction leaves no defeated-unit ghost"), HasSkimAt(ReplacementPosition));
+    TestTrue(TEXT("Count reduction preserves both surviving unit poses"), HasSkimAt(Sim.find(SecondSkim)->pos) && HasSkimAt(Sim.find(ThirdSkim)->pos));
+    TArray<FTransform> BeforeRepeat;
+    for (int32 Index = 0; Index < SkimComponent->GetInstanceCount(); ++Index)
+    {
+        FTransform Pose;
+        if (!TestTrue(TEXT("Renderer snapshot reads a real surviving instance"), SkimComponent->GetInstanceTransform(Index, Pose, true))) return false;
+        BeforeRepeat.Add(Pose);
+    }
+    const uint64 BeforeRepeatHash = Sim.stateHash();
+    Battle.RenderState(); Battle.RenderState();
+    TestEqual(TEXT("Unchanged renders preserve the instance count"), SkimComponent->GetInstanceCount(), BeforeRepeat.Num());
+    for (int32 Index = 0; Index < BeforeRepeat.Num(); ++Index)
+    {
+        FTransform Pose;
+        TestTrue(TEXT("Unchanged renders preserve complete instance transforms"),
+            SkimComponent->GetInstanceTransform(Index, Pose, true) && Pose.Equals(BeforeRepeat[Index], 0.0));
+    }
+    TestEqual(TEXT("Repeated rendering does not change authoritative state"), static_cast<uint64>(Sim.stateHash()), BeforeRepeatHash);
+    if (!HasAnyErrors()) AddInfo(TEXT("CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render."));
     if (!HasAnyErrors()) AddInfo(TEXT("CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset."));
     return !HasAnyErrors();
 }

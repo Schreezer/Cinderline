@@ -26,7 +26,7 @@ Fresh before captures are `artifacts/visual-upgrade-before-menu.png`, `visual-up
 
 ## Implemented
 
-Mac now renders a 2560×1440 framebuffer with high-DPI awareness, TSR, 100% primary and secondary screen percentages, no dynamic resolution, 16× texture filtering, four cascaded shadow maps, screen-space reflections, ambient occlusion and restrained bloom. Motion blur, depth of field and color fringing remain disabled for tactical readability. The iOS profile remains separate.
+The visual-upgrade checkpoint rendered a 2560×1440 framebuffer with high-DPI awareness, TSR, 100% primary and secondary screen percentages, no dynamic resolution, 16× texture filtering, four cascaded shadow maps, screen-space reflections, ambient occlusion and restrained bloom. Motion blur, depth of field and color fringing remain disabled for tactical readability. The iOS profile remains separate.
 
 The HUD rasterizes fonts at their final size and uses matching Slate measurement. The menu has a larger wordmark, quieter backdrop scrim, clearer map selection and a prominent Start action. The shared HUD and pause controls use the same typography and palette. Compact layout selection uses logical window height under Retina; mouse drag and picking tolerances scale with DPI while drawing and input remain in framebuffer coordinates.
 
@@ -108,3 +108,7 @@ NEXT CHECKPOINT: Unit locomotion and work animation, stronger environment compos
 - [ ] Sustained late-game GPU/CPU profiling and a measured 60 FPS quality budget.
 - [ ] Hands-on construction acceptance and a full human match/mix review.
 - [ ] Later iOS packaging, device interaction, performance and thermals.
+
+## Subsequent performance pass
+
+The Mac anti-aliasing default was subsequently changed to native TAA after a matched Metal comparison. Historical TSR screenshots and timings above remain evidence of this visual checkpoint. See [METAL_PERFORMANCE_PASS.md](METAL_PERFORMANCE_PASS.md) for the current configuration and results.

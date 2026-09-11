@@ -1,0 +1,43 @@
+13.047 ms exclusive | 13.047 ms inclusive | TSR ClearPrevTextures 2560x1440
+1.164 ms exclusive | 1.164 ms inclusive | AmbientOcclusionPS 2560x1440 SetupAsInput=0 Upsample=1 ShaderQuality=4
+0.646 ms exclusive | 0.646 ms inclusive | ReflectionEnvironmentAndSky(2560x1440,SubstrateMat=Off)
+0.456 ms exclusive | 0.456 ms inclusive | RenderLight Light::StandardDeferred: DirectionalLight_0
+0.343 ms exclusive | 0.343 ms inclusive | AmbientOcclusionPS 1280x720 SetupAsInput=1 Upsample=1 ShaderQuality=4
+0.337 ms exclusive | 0.337 ms inclusive | BasePassParallel
+0.228 ms exclusive | 0.228 ms inclusive | ShadowProjection WholeScene split2
+0.193 ms exclusive | 0.193 ms inclusive | ShadowProjection WholeScene split1
+0.184 ms exclusive | 0.184 ms inclusive | SSR RayMarch(Quality=2 RayPerPixel=1) 2560x1440
+0.183 ms exclusive | 0.183 ms inclusive | DiffuseIndirectComposite(DiffuseIndirect=Disabled ApplyAOToSceneColor) 2560x1440
+0.159 ms exclusive | 0.159 ms inclusive | Tonemap 2560x1440 (PS GammaOnly=0)
+0.122 ms exclusive | 2.026 ms inclusive | RenderDeferredLighting
+0.093 ms exclusive | 0.442 ms inclusive | Bloom
+0.083 ms exclusive | 19.372 ms inclusive | Scene
+0.071 ms exclusive | 13.891 ms inclusive | PostProcessing
+0.071 ms exclusive | 0.265 ms inclusive | Atlas0 8192x2048
+0.070 ms exclusive | 1.205 ms inclusive | Frontier.DirectionalLight_0
+0.065 ms exclusive | 0.375 ms inclusive | InjectTranslucencyLightingVolume(View=0)
+0.060 ms exclusive | 0.679 ms inclusive | Frontier.DirectionalLight_0
+0.037 ms exclusive | 1.757 ms inclusive | LightCompositionTasks_PreLighting
+0.022 ms exclusive | 0.331 ms inclusive | ShadowDepths
+0.022 ms exclusive | 0.194 ms inclusive | Frontier.DirectionalLight_0
+0.013 ms exclusive | 0.487 ms inclusive | TranslucencyLightingVolume
+0.000 ms exclusive | 19.372 ms inclusive | SceneRender - ViewFamilies
+0.000 ms exclusive | 19.372 ms inclusive | RenderGraphExecute - /ViewFamilies
+0.000 ms exclusive | 19.372 ms inclusive | Frame 43524
+0.000 ms exclusive | 19.372 ms inclusive | <root>
+0.000 ms exclusive | 13.047 ms inclusive | TemporalSuperResolution(sg.AntiAliasingQuality=3) 2560x1440 -> 2560x1440
+0.000 ms exclusive | 1.205 ms inclusive | UnbatchedLights
+0.000 ms exclusive | 1.205 ms inclusive | Lights
+0.000 ms exclusive | 1.205 ms inclusive | DirectLighting
+0.000 ms exclusive | 1.164 ms inclusive | ScreenSpace AO
+0.000 ms exclusive | 0.830 ms inclusive | RenderDeferredLighting
+0.000 ms exclusive | 0.830 ms inclusive | ReflectionIndirect
+0.000 ms exclusive | 0.830 ms inclusive | DiffuseIndirectAndAO
+0.000 ms exclusive | 0.679 ms inclusive | Shadows
+0.000 ms exclusive | 0.679 ms inclusive | ShadowProjectionOnOpaque
+0.000 ms exclusive | 0.646 ms inclusive | ReflectionEnvironment
+0.000 ms exclusive | 0.343 ms inclusive | ScreenSpace AO
+0.000 ms exclusive | 0.343 ms inclusive | BasePass
+0.000 ms exclusive | 0.184 ms inclusive | ScreenSpaceReflections(Quality=2)
+0.000 ms exclusive | 0.184 ms inclusive | ScreenSpaceReflections
+0.000 ms exclusive | 0.183 ms inclusive | DiffuseIndirectAndAO

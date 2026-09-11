@@ -58,8 +58,20 @@ private:
     {
         UInstancedStaticMeshComponent* Mesh = nullptr;
         TArray<FTransform> Transforms;
+        TArray<FTransform> SubmittedTransforms;
         bool bDynamic = true;
         bool bDirty = true;
+    };
+    struct FInstanceUploadCounters
+    {
+        uint64 Passes = 0;
+        uint64 DeltaCalls = 0;
+        uint64 Transforms = 0;
+        uint64 Added = 0;
+        uint64 Removed = 0;
+        uint64 FullRebuilds = 0;
+        uint64 UnchangedSkips = 0;
+        uint64 StaticSkips = 0;
     };
     FBatch& AddBatch(UStaticMesh* Mesh, FLinearColor Color, bool bCastShadow = false, bool bDynamic = true);
     void LoadModelBatches();
@@ -81,6 +93,7 @@ private:
     int CurrentMap = 0;
     float RenderTimer = 0;
     TArray<FBatch> Batches;
+    FInstanceUploadCounters InstanceUploads;
     TArray<int32> ModelBatchIndices;
     TArray<FString> ModelFallbackReasons;
     int32 ModelBatchStart = 0;

@@ -75,7 +75,7 @@ FVector2D ACinderHUD::MeasureLabel(const FString& Text, float Scale) const
 void ACinderHUD::Label(const FString& Text, float X, float Y, FLinearColor Color, float Scale)
 {
     if (!GEngine || !Canvas) return;
-    FCanvasTextItem Item(FVector2D(FMath::RoundToFloat(X), FMath::RoundToFloat(Y)), FText::FromString(Text), FontForScale(Scale), Color);
+    FCanvasTextStringViewItem Item(FVector2D(FMath::RoundToFloat(X), FMath::RoundToFloat(Y)), FStringView(Text), FontForScale(Scale), Color);
     Item.Scale = FVector2D(1);
     Canvas->DrawItem(Item);
 }
@@ -252,13 +252,34 @@ void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Ba
     UIRegions.Add(Minimap);
     Panel(Origin.X - 3, Origin.Y - 3, Size + 6, Size + 6, Muted);
     const float Cell = Size / cinder::Simulation::FogSize;
+    const float CellExtent = Cell + 0.3f;
+    const FLinearColor FogColors[] = {
+        FLinearColor(0.014f, 0.025f, 0.04f),
+        FLinearColor(0.065f, 0.12f, 0.14f),
+        FLinearColor(0.11f, 0.25f, 0.25f)
+    };
+    auto FogState = [&](int X, int Y)
+    {
+        const cinder::Vec2 P{ (X + 0.5f) * 75, (Y + 0.5f) * 75 };
+        return Battle->Sim().visible(0, P) ? 2 : Battle->Sim().explored(0, P) ? 1 : 0;
+    };
     for (int Y = 0; Y < cinder::Simulation::FogSize; ++Y)
-        for (int X = 0; X < cinder::Simulation::FogSize; ++X)
+    {
+        int RunStart = 0, RunState = FogState(0, Y);
+        for (int X = 1; X <= cinder::Simulation::FogSize; ++X)
         {
-            const cinder::Vec2 P{ (X + 0.5f) * 75, (Y + 0.5f) * 75 };
-            const FLinearColor C = Battle->Sim().visible(0, P) ? FLinearColor(0.11f, 0.25f, 0.25f) : Battle->Sim().explored(0, P) ? FLinearColor(0.065f, 0.12f, 0.14f) : FLinearColor(0.014f, 0.025f, 0.04f);
-            Panel(Origin.X + X * Cell, Origin.Y + Y * Cell, Cell + 0.3f, Cell + 0.3f, C);
+            const int State = X < cinder::Simulation::FogSize ? FogState(X, Y) : -1;
+            if (State == RunState) continue;
+            // Opaque equal-color cells have the same union as one row run.
+            // Keep the original last-cell edge and row order at color boundaries.
+            const float Left = Origin.X + RunStart * Cell;
+            const float LastCellLeft = Origin.X + (X - 1) * Cell;
+            const float Right = LastCellLeft + CellExtent;
+            Panel(Left, Origin.Y + Y * Cell, Right - Left, CellExtent, FogColors[RunState]);
+            RunStart = X;
+            RunState = State;
         }
+    }
     const float K = Size / cinder::Simulation::WorldSize;
     for (const auto& E : Battle->KnownResources())
     {
