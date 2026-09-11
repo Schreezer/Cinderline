@@ -1,0 +1,23 @@
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+[ 42%] Built target CinderlineSimulation
+[ 57%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 85%] Built target CinderlineNative
+[100%] Linking CXX executable CinderlineTests
+[100%] Built target CinderlineTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+    Start 1: simulation_rules
+1/3 Test #1: simulation_rules .................   Passed    1.84 sec
+    Start 2: native_smoke
+2/3 Test #2: native_smoke .....................   Passed    0.01 sec
+    Start 3: native_render_stress
+3/3 Test #3: native_render_stress .............   Passed   16.30 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Label Time Summary:
+native    =  16.30 sec*proc (1 test)
+render    =  16.30 sec*proc (1 test)
+
+Total Test time (real) =  18.15 sec

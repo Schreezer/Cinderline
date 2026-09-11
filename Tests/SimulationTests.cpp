@@ -860,6 +860,233 @@ void aiConstructionAssignments() {
   std::cout<<"AI_CONSTRUCTION travelling_preserved=1 orphan_resumed="<<resumed<<" all_busy_orphan_paused=1\n";
 }
 
+// The following fixtures place actors to control what can be seen, but all
+// scouting movement, destruction, construction and purchases use normal commands.
+const AISighting* remembered(const Simulation& s,Id id) {
+  const auto& knowledge=s.aiSightings();
+  const auto found=std::find_if(knowledge.begin(),knowledge.end(),[&](const AISighting& sighting){return sighting.id==id;});
+  return found==knowledge.end()?nullptr:&*found;
+}
+void advanceWithoutAIFunds(Simulation& s,float seconds) {
+  for(int n=0;n<static_cast<int>(std::ceil(seconds/Simulation::Step));++n) {
+    s.debugResources(1,0);s.update(Simulation::Step);
+  }
+}
+std::vector<Kind> aiTrainingSince(const Simulation& s,std::size_t start) {
+  std::vector<Kind> result;
+  for(std::size_t i=start;i<s.recording().size();++i) {
+    const auto& c=s.recording()[i].command;
+    if(c.team==1&&c.type==CommandType::Train&&c.kind!=Kind::Worker)result.push_back(c.kind);
+  }
+  return result;
+}
+
+void aiObservationLifecycle() {
+  Simulation s;s.reset({0,803,true,1});s.debugResources(1,0);
+  const Id builder=s.debugSpawn(Kind::Worker,0,{1100,300});
+  const Vec2 site=validPlacement(s,0,Kind::Processor,{1100,300});
+  check(send(s,CommandType::Build,0,{builder},site,0,Kind::Processor).accepted,"observation fixture buys an ordinary foundation");
+  const Id foundation=first(s,0,Kind::Processor);
+  check(send(s,CommandType::Stop,0,{builder}).accepted,"observation fixture leaves its foundation unfinished");
+  const Id mobile=s.debugSpawn(Kind::Mender,0,{site.x,site.y+160});
+  check(s.aiSightings().empty()&&s.aiLastObserved(site)==0,"enemy fixtures do not create knowledge before actual opponent vision");
+  const Id observer=s.debugSpawn(Kind::Mender,1,{site.x+350,site.y});
+  advanceWithoutAIFunds(s,0.1f);
+  check(remembered(s,foundation)&&remembered(s,mobile),"visible structures and mobile units become opponent sightings");
+  check(remembered(s,foundation)->kind==Kind::Processor&&distance(remembered(s,foundation)->pos,site)<1,"sighting captures the observed kind and location");
+  check(s.aiLastObserved(site)>0,"actually observed terrain records its observation time");
+  check(send(s,CommandType::Move,1,{observer},{2800,300}).accepted,"observer receives an ordinary withdrawal order");
+  advanceWithoutAIFunds(s,15);
+  check(!s.visible(1,site)&&!s.visible(1,s.find(mobile)->pos),"observer leaves both enemy fixtures in fog");
+  const auto lastSeen=remembered(s,foundation)->lastSeenTick;
+  const Vec2 mobileLastPosition=remembered(s,mobile)->pos;
+  check(send(s,CommandType::CancelBuilding,0,{foundation}).accepted,"owner cancels the unseen foundation through its ordinary command");
+  check(send(s,CommandType::Move,0,{mobile},{700,300}).accepted,"unseen mobile unit receives an ordinary movement order");
+  advanceWithoutAIFunds(s,8);
+  check(remembered(s,foundation)&&remembered(s,foundation)->lastSeenTick==lastSeen,"hidden destruction cannot erase or refresh a remembered building");
+  check(remembered(s,mobile)&&distance(remembered(s,mobile)->pos,mobileLastPosition)<1,"hidden movement cannot update a mobile sighting");
+  advanceWithoutAIFunds(s,91);
+  check(!remembered(s,mobile),"mobile knowledge expires after ninety seconds without another sighting");
+  check(remembered(s,foundation)&&remembered(s,foundation)->lastSeenTick==lastSeen,"building memory survives long fog even after its hidden destruction");
+  check(send(s,CommandType::Move,1,{observer},{site.x+350,site.y}).accepted,"observer returns to inspect the last known site");
+  advanceWithoutAIFunds(s,15);
+  check(s.visible(1,site)&&s.aiLastObserved(site)>lastSeen,"returning observer actually rechecks the remembered terrain");
+  check(!remembered(s,foundation),"renewed vision of an empty site invalidates the remembered building");
+  Simulation witnessed;witnessed.reset({0,807,true,1});
+  const Id victim=witnessed.debugSpawn(Kind::Mender,0,{1200,300});
+  witnessed.debugSpawn(Kind::Mender,1,{1500,300});advanceWithoutAIFunds(witnessed,1.0f);
+  check(remembered(witnessed,victim),"visible-death fixture first establishes a real mobile sighting");
+  const Id attacker=witnessed.debugSpawn(Kind::Bastion,1,{1430,300});
+  check(send(witnessed,CommandType::Attack,1,{attacker},{},victim).accepted,"visible mobile death comes from ordinary combat");
+  while(witnessed.find(victim)&&witnessed.find(victim)->alive()&&witnessed.tick()<120)advanceWithoutAIFunds(witnessed,Simulation::Step);
+  std::cout<<"AI_WITNESSED_DEATH tick="<<witnessed.tick()<<" previous_decision_tick=80 cleanup_tick=100\n";
+  check(witnessed.find(victim)&&!witnessed.find(victim)->alive()&&witnessed.tick()>80&&witnessed.tick()<100,"four real Bastion hits kill the known mobile between the tick80 decision and tick100 corpse cleanup");
+  check(!remembered(witnessed,victim),"witnessed mobile death erases knowledge immediately before the next AI decision");
+  while(witnessed.tick()<=100)advanceWithoutAIFunds(witnessed,Simulation::Step);
+  check(!witnessed.find(victim)&&!remembered(witnessed,victim),"corpse cleanup cannot leave a dead mobile counter-production report");
+  std::cout<<"AI_KNOWLEDGE hidden_death_retained=1 hidden_movement_ignored=1 mobile_expired=1 empty_site_cleared=1 visible_death_immediate=1\n";
+}
+
+Simulation aiProductionFixture(Kind enemyKind,bool reveal,int enemyCount=1,int existingStrikers=0) {
+  Simulation s;s.reset({0,804,true,1});
+  s.debugSpawn(Kind::Foundry,1,{3850,4450});
+  s.debugSpawn(Kind::Foundry,1,{4150,4550});
+  s.debugSpawn(Kind::Foundry,1,{4500,4150});
+  s.debugSpawn(Kind::Processor,1,{4500,4500});
+  s.debugSpawn(Kind::Scout,1,{4500,3850});
+  for(int n=0;n<existingStrikers;++n)s.debugSpawn(Kind::Striker,1,{3900.f+n*55,3800});
+  s.debugSpawn(Kind::Mender,1,reveal?Vec2{1530,300}:Vec2{2200,300});
+  for(int n=0;n<enemyCount;++n)s.debugSpawn(enemyKind,0,{1100.f+n*60,300});
+  s.debugResources(1,2000);
+  return s;
+}
+
+void aiObservedProduction() {
+  auto hiddenAir=aiProductionFixture(Kind::Kite,false);
+  auto hiddenArmor=aiProductionFixture(Kind::Bastion,false);
+  auto hiddenLight=aiProductionFixture(Kind::Lancer,false);
+  hiddenAir.update(Simulation::Step);hiddenArmor.update(Simulation::Step);hiddenLight.update(Simulation::Step);
+  check(hiddenAir.aiSightings().empty()&&hiddenArmor.aiSightings().empty()&&hiddenLight.aiSightings().empty(),"unseen army composition remains absent from opponent knowledge");
+  const auto baseline=aiTrainingSince(hiddenAir,0);
+  check(!baseline.empty()&&baseline==aiTrainingSince(hiddenArmor,0)&&baseline==aiTrainingSince(hiddenLight,0),"hidden air, armor and light infantry produce identical ordinary purchase decisions");
+  for(Kind threat:{Kind::Kite,Kind::Bastion}) {
+    auto seen=aiProductionFixture(threat,true);const int before=seen.players()[1].ore;
+    seen.update(Simulation::Step);const auto trained=aiTrainingSince(seen,0);
+    const int counters=static_cast<int>(std::count(trained.begin(),trained.end(),Kind::Lancer));
+    check(counters==2&&std::count(trained.begin(),trained.end(),Kind::Striker)==1,"three producers coordinate exactly two Needles for one seen heavy or air threat, then return to baseline production");
+    check(trained!=baseline,"actually sighted armor or air changes the paid composition");
+    int paid=0;for(const auto& r:seen.recording())if(r.command.team==1&&(r.command.type==CommandType::Train||r.command.type==CommandType::Build))paid+=definition(r.command.kind).cost;
+    check(before-seen.players()[1].ore==paid&&seen.players()[1].ore>=0,"counter composition spends ordinary costs without extra income");
+  }
+  auto light=aiProductionFixture(Kind::Lancer,true,3,3);
+  auto blindLight=aiProductionFixture(Kind::Lancer,false,3,3);
+  light.update(Simulation::Step);blindLight.update(Simulation::Step);
+  const auto lightQueue=aiTrainingSince(light,0),blindQueue=aiTrainingSince(blindLight,0);
+  check(!lightQueue.empty()&&lightQueue.front()==Kind::Striker&&!blindQueue.empty()&&blindQueue.front()==Kind::Lancer,"seeing vulnerable light infantry changes the next purchase from a ratio-balancing Needle to Ember infantry");
+
+  auto recent=aiProductionFixture(Kind::Kite,true);recent.debugResources(1,0);
+  recent.update(Simulation::Step);const Id observer=first(recent,1,Kind::Mender);
+  check(send(recent,CommandType::Move,1,{observer},{2400,300}).accepted,"production observer leaves the sighted aircraft behind");
+  advanceWithoutAIFunds(recent,12);
+  check(!recent.visible(1,{1100,300})&&!recent.aiSightings().empty(),"counter fixture retains recent aircraft knowledge through fog");
+  Simulation stale=recent;
+  for(int n=0;n<1300;++n) {
+    // Keep the existing reconnaissance unit at home so the aging fixture cannot
+    // accidentally receive a fresh aircraft sighting while its clock advances.
+    send(stale,CommandType::Hold,1,ids(stale,1,Kind::Scout));advanceWithoutAIFunds(stale,Simulation::Step);
+  }
+  check(!stale.aiSightings().empty()&&!stale.visible(1,{1100,300}),"sixty-five-second-old mobile report is retained but no longer fresh");
+  const auto staleStart=stale.recording().size();stale.debugResources(1,2000);advance(stale,2.1f);
+  const auto staleQueue=aiTrainingSince(stale,staleStart);
+  check(!staleQueue.empty()&&staleQueue.front()==Kind::Striker,"stale mobile knowledge returns production to the balanced baseline before its ninety-second expiry");
+  const auto rememberedStart=recent.recording().size();recent.debugResources(1,2000);advance(recent,2.1f);
+  const auto rememberedQueue=aiTrainingSince(recent,rememberedStart);
+  check(!rememberedQueue.empty()&&rememberedQueue.front()==Kind::Lancer,"recent remembered aircraft still drive counter production outside vision");
+
+  Simulation scouts;scouts.reset({0,805,true,1});
+  for(Vec2 p:{Vec2{3850,4450},Vec2{4150,4550},Vec2{4500,4150}})scouts.debugSpawn(Kind::Foundry,1,p);
+  scouts.debugSpawn(Kind::Processor,1,{4500,4500});scouts.debugResources(1,2000);scouts.update(Simulation::Step);
+  const auto scoutQueue=aiTrainingSince(scouts,0);
+  check(std::count(scoutQueue.begin(),scoutQueue.end(),Kind::Scout)==1,"multiple producers share the scout reservation within one decision pass");
+  std::cout<<"AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0\n";
+}
+
+void aiScoutingObjectives() {
+  Simulation s;s.reset({0,806,true,1});s.debugResources(1,0);
+  send(s,CommandType::Stop,0,ids(s,0,Kind::Worker));
+  const Vec2 original=s.find(first(s,0,Kind::Headquarters))->pos,remote{600,4200};
+  const Id originalHQ=first(s,0,Kind::Headquarters),remoteHQ=s.debugSpawn(Kind::Headquarters,0,remote);
+  std::vector<Id> army;
+  for(int n=0;n<10;++n)army.push_back(s.debugSpawn(Kind::Kite,1,{800.f+(n%5)*45,450.f+(n/5)*55}));
+  check(send(s,CommandType::Attack,1,army,{},originalHQ).accepted,"objective fixture attacks the original headquarters through ordinary combat");
+  advanceWithoutAIFunds(s,65);
+  check(!s.find(originalHQ)||!s.find(originalHQ)->alive(),"original headquarters actually falls in combat");
+  check(s.winner()<0&&s.find(remoteHQ)->alive()&&!remembered(s,remoteHQ),"hidden relocated headquarters keeps the match alive without leaking its location");
+  // Remove residual local defenders through attack-move before checking the
+  // strategic fallback. A visible enemy legitimately takes tactical priority.
+  check(send(s,CommandType::AttackMove,1,army,{800,760}).accepted,"army sweeps the original economy through ordinary attack-move");
+  advanceWithoutAIFunds(s,40);
+  check(send(s,CommandType::Move,1,army,{1300,600}).accepted,"army regroups after clearing the first site");
+  advanceWithoutAIFunds(s,20);
+  check(s.aiLastObserved(original)>0&&!remembered(s,originalHQ),"opponent has confirmed the original headquarters is gone");
+  advanceWithoutAIFunds(s,110);
+  const auto searchStart=s.recording().size();bool searched=false;
+  for(int n=0;n<520&&!searched;++n) {
+    advanceWithoutAIFunds(s,Simulation::Step);
+    for(std::size_t i=searchStart;i<s.recording().size();++i)if(s.recording()[i].command.team==1&&s.recording()[i].command.type==CommandType::AttackMove)searched=true;
+  }
+  for(std::size_t i=searchStart;i<s.recording().size();++i) {
+    const auto& c=s.recording()[i].command;
+    if(c.team==1&&c.type==CommandType::AttackMove) {
+      searched=true;check(distance(c.point,original)>300,"strategic search does not attack a confirmed empty starting point repeatedly");
+    }
+  }
+  check(searched,"an army searches a different unverified site after the original base is cleared");
+  const Id observer=s.debugSpawn(Kind::Mender,1,{remote.x+440,remote.y});
+  advanceWithoutAIFunds(s,2.1f);
+  check(remembered(s,remoteHQ)&&remembered(s,remoteHQ)->kind==Kind::Headquarters,"renewed scouting discovers the relocated headquarters");
+  check(send(s,CommandType::Move,1,{observer},{remote.x+1200,remote.y}).accepted,"observer withdraws after locating the new base");
+  for(int n=0;n<280;++n) {
+    send(s,CommandType::Move,1,army,{4200,4200});advanceWithoutAIFunds(s,Simulation::Step);
+  }
+  check(!s.visible(1,remote)&&remembered(s,remoteHQ),"new headquarters remains a known objective after vision ends");
+  const auto knownStart=s.recording().size();advanceWithoutAIFunds(s,26);bool targeted=false;
+  for(std::size_t i=knownStart;i<s.recording().size();++i) {
+    const auto& c=s.recording()[i].command;
+    if(c.team==1&&c.type==CommandType::AttackMove&&distance(c.point,remote)<150)targeted=true;
+    if(c.team==1&&c.type==CommandType::Attack&&c.target==remoteHQ)targeted=true;
+  }
+  check(targeted,"the army redirects to the discovered relocated headquarters");
+  std::cout<<"AI_OBJECTIVES original_destroyed=1 empty_start_avoided=1 relocated_hq_discovered=1 remembered_hq_targeted=1\n";
+}
+
+void aiKnowledgePersistence() {
+  auto s=aiProductionFixture(Kind::Kite,true);s.debugResources(1,0);advanceWithoutAIFunds(s,2.1f);
+  const auto path=savePath("knowledge-v3");check(s.save(path),"observed AI knowledge saves");
+  Simulation loaded;check(loaded.load(path),"observed AI knowledge loads");
+  check(s.stateHash()==loaded.stateHash()&&!loaded.aiSightings().empty(),"knowledge and observation ages participate in the saved deterministic state");
+  s.debugResources(1,2000);loaded.debugResources(1,2000);
+  for(int n=0;n<100;++n){s.update(Simulation::Step);loaded.update(Simulation::Step);check(s.stateHash()==loaded.stateHash(),"loaded knowledge drives identical paid decisions and simulation continuation");}
+  std::ifstream in(path);std::vector<std::string> lines;std::string line;
+  while(std::getline(in,line))lines.push_back(line);in.close();
+  const auto marker=std::find(lines.begin(),lines.end(),"AI_KNOWLEDGE 1");
+  check(marker!=lines.end()&&lines.front()=="CINDERLINE 3","knowledge save declares the versioned v3 section");
+  const auto start=static_cast<std::size_t>(marker-lines.begin());
+  const auto count=static_cast<std::size_t>(std::stoul(lines[start+1]));
+  check(count>0&&lines.size()>start+count+3,"knowledge save contains sightings and observation cells");
+  auto write=[&](const std::vector<std::string>& content){std::ofstream out(path);for(const auto& value:content)out<<value<<'\n';};
+  auto reject=[&](std::vector<std::string> content,const std::string& message){
+    write(content);Simulation current=quiet();const auto before=current.stateHash();
+    check(!current.load(path),message);check(current.stateHash()==before,"invalid knowledge load preserves the active match atomically");
+  };
+  auto replaceField=[](std::string row,std::size_t column,const std::string& replacement){
+    std::istringstream input(row);std::vector<std::string> fields;std::string value;while(input>>value)fields.push_back(value);
+    check(column<fields.size(),"knowledge corruption fixture field exists");fields[column]=replacement;
+    std::ostringstream output;for(std::size_t i=0;i<fields.size();++i)output<<(i?" ":"")<<fields[i];return output.str();
+  };
+  for(const auto& [column,value]:std::vector<std::pair<std::size_t,std::string>>{{0,"0"},{1,"14"},{2,"nan"},{2,"4801"},{4,std::to_string(s.tick()+1000)}}) {
+    auto broken=lines;broken[start+2]=replaceField(broken[start+2],column,value);reject(broken,"invalid sighting identity, kind, coordinate or timestamp is rejected");
+  }
+  auto duplicate=lines;duplicate[start+1]=std::to_string(count+1);duplicate.insert(duplicate.begin()+start+2,lines[start+2]);reject(duplicate,"duplicate remembered identities are rejected");
+  auto badCells=lines;badCells[start+2+count]="4095";reject(badCells,"incorrect observation-grid size is rejected");
+  auto futureCell=lines;futureCell[start+3+count]=replaceField(futureCell[start+3+count],0,std::to_string(s.tick()+1000));reject(futureCell,"future observation-grid timestamps are rejected");
+  auto truncated=lines;truncated.resize(start);reject(truncated,"v3 save without its required knowledge block is rejected");
+  for(int version:{1,2}) {
+    std::vector<std::string> legacy(lines.begin(),lines.begin()+start);legacy.front()="CINDERLINE "+std::to_string(version);
+    if(version==1)for(auto& row:legacy) {
+      std::istringstream input(row);std::vector<std::string> fields;std::string field;while(input>>field)fields.push_back(field);
+      if(fields.size()!=24)continue;
+      fields.resize(22);std::ostringstream output;for(std::size_t i=0;i<fields.size();++i)output<<(i?" ":"")<<fields[i];row=output.str();
+    }
+    write(legacy);Simulation migrated;check(migrated.load(path),"pre-knowledge save version remains readable");
+    check(migrated.aiSightings().empty()&&migrated.aiLastObserved({1100,300})==0,"legacy migration starts with unknown enemy state rather than reconstructing hidden entities");
+    check(migrated.players()[1].ore==0&&migrated.tick()>0,"legacy knowledge migration preserves ordinary match state");
+    advanceWithoutAIFunds(migrated,2.1f);check(!migrated.aiSightings().empty(),"legacy match learns only when ordinary vision updates resume");
+  }
+  std::filesystem::remove(path);
+  std::cout<<"AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1\n";
+}
+
 void benchmark() {
   for(int count:{50,100,200}) {
     auto s=quiet();std::vector<Id> groups[2];
@@ -985,7 +1212,9 @@ int main(int argc,char** argv) {
     {"obstacle paths and group movement",movementAndGroups},{"ground and air combat",airAndCombat},{"tactical orders and support",tacticalOrders},
     {"victory and defeat",victoryAndDefeat},{"save-load continuity and replay",saveLoadAndReplay},
     {"bounded fixed-step update",boundedUpdate},{"AI expansion and local defense",aiExpansionAndBaseDefense},{"AI paid economy",aiEconomy},
-    {"AI construction assignments",aiConstructionAssignments}};
+    {"AI construction assignments",aiConstructionAssignments},
+    {"AI observation lifecycle",aiObservationLifecycle},{"AI observed production",aiObservedProduction},
+    {"AI scouting objectives",aiScoutingObjectives},{"AI knowledge persistence",aiKnowledgePersistence}};
   if(argc>1&&std::string(argv[1])=="--benchmark") tests={{"performance",benchmark}};
   else if(argc>1&&std::string(argv[1])=="--match") tests={{"natural AI match durations",matchDuration}};
   else if(argc>1) {

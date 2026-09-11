@@ -1,0 +1,113 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "EDC46F6FE84642B815DC30A2C6B439FE",
+			"instanceName": "MacBook-Pro-10.local-61558",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.0 26A428",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.11-14.55.23",
+	"succeeded": 3,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.29023388028144836,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "AIKnowledgeAndPersistence",
+			"fullTestPath": "Cinderline.Integration.AIKnowledgeAndPersistence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"EDC46F6FE84642B815DC30A2C6B439FE"
+			],
+			"duration": 0.15863057971000671,
+			"dateTime": "2026.09.11-14.55.22",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=6, first_seen_tick=616, retained_seen_tick=616, continuation_ticks=60; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-14.55.23"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EconomyAndProduction",
+			"fullTestPath": "Cinderline.Integration.EconomyAndProduction",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"EDC46F6FE84642B815DC30A2C6B439FE"
+			],
+			"duration": 0.11180925369262695,
+			"dateTime": "2026.09.11-14.55.23",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=252, produced=2, built=1, ore=342; paid commands, builder travel and pause/resume, actual actor ticks, selected-controller dispatch, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-14.55.23"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorldLifecycle",
+			"fullTestPath": "Cinderline.Integration.WorldLifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"EDC46F6FE84642B815DC30A2C6B439FE"
+			],
+			"duration": 0.019794043153524399,
+			"dateTime": "2026.09.11-14.55.23",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-14.55.23"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

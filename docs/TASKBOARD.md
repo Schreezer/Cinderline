@@ -17,6 +17,7 @@ Current order, confirmed by the user on 2026-09-11: **mechanics and logic → ae
 - Asymmetric second faction, multiplayer, matchmaking, replay viewer and more content.
 
 ## DONE
+- Implemented scouting-driven AI: remembered enemy bases, recent army sightings, searches after clearing a base, adaptive paid production and version 3 knowledge persistence with version 1/2 compatibility. Passed 23 portable groups, native checks, sanitizers and all 3 Unreal integration tests. [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md) tracks completion, evidence and remaining work.
 - Fixed Drudge construction: workers travel, stop mining, build on-site, pause when interrupted and resume prior mining after completion. Added free reassignment, save migration, AI builder reservation and construction state UI. Fresh verification passed 19 rule groups, all 3 CTests, ASan/UBSan and both Unreal integration tests. See [CONSTRUCTION_PASS.md](CONSTRUCTION_PASS.md).
 - Created the source structure, original Cinderline design, centralized definitions and command interface.
 - Implemented a fixed-step C++ simulation with economy, queues, construction, research, movement, combat, fog, paid AI and saved matches.

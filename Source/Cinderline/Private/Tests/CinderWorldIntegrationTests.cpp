@@ -380,4 +380,127 @@ bool FCinderEconomyAndProductionIntegration::RunTest(const FString& Parameters)
     return !HasAnyErrors();
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderAIKnowledgeAndPersistenceIntegration,
+    "Cinderline.Integration.AIKnowledgeAndPersistence",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderAIKnowledgeAndPersistenceIntegration::RunTest(const FString& Parameters)
+{
+    using namespace CinderWorldIntegration;
+    using namespace cinder;
+    FGameFixture Fixture;
+    if (!Fixture.Initialize(*this)) return false;
+    ACinderBattlefield& Battle = *Fixture.Battle;
+    Fixture.Controller->ExecuteAction(TEXT("start"), 0);
+    if (!TestTrue(TEXT("Knowledge fixture runs the ordinary active opponent"), Battle.Sim().config().ai)) return false;
+    const auto Workers = EntitiesOfKind(Battle.Sim(), Kind::Worker);
+    const auto Headquarters = EntitiesOfKind(Battle.Sim(), Kind::Headquarters);
+    if (!TestTrue(TEXT("Knowledge fixture uses the starting player economy"), Workers.size() == 5 && Headquarters.size() == 1)) return false;
+    const Id Worker = Workers.front();
+    const Vec2 Home = Battle.Sim().find(Headquarters.front())->pos;
+    Vec2 OpponentHome;
+    bool HasOpponentHome = false;
+    for (const Entity& Entity : Battle.Sim().entities())
+        if (Entity.alive() && Entity.team == 1 && Entity.kind == Kind::Headquarters)
+        {
+            OpponentHome = Entity.pos;
+            HasOpponentHome = true;
+            break;
+        }
+    if (!TestTrue(TEXT("Knowledge fixture has the normal opponent Anchor"), HasOpponentHome)) return false;
+    auto WorkerSighting = [&]() -> const AISighting*
+    {
+        const auto& Sightings = Battle.Sim().aiSightings();
+        const auto Found = std::find_if(Sightings.begin(), Sightings.end(), [&](const AISighting& Sighting)
+            { return Sighting.id == Worker; });
+        return Found == Sightings.end() ? nullptr : &*Found;
+    };
+    TestFalse(TEXT("Opponent cannot initially see the player scout worker"), Battle.Sim().visible(1, Battle.Sim().find(Worker)->pos));
+    TestTrue(TEXT("Unseen starting worker has no AI sighting"), WorkerSighting() == nullptr);
+    TestEqual(TEXT("Opponent has never observed the player's starting Anchor cell"),
+        static_cast<uint64>(Battle.Sim().aiLastObserved(Home)), uint64(0));
+
+    const float DX = Home.x - OpponentHome.x, DY = Home.y - OpponentHome.y;
+    const float Distance = FMath::Sqrt(DX * DX + DY * DY);
+    const float ApproachRadius = definition(Kind::Headquarters).vision * 0.75f;
+    const Vec2 Approach{ OpponentHome.x + DX / Distance * ApproachRadius,
+                         OpponentHome.y + DY / Distance * ApproachRadius };
+    if (!TestTrue(TEXT("Starting Drudge accepts an ordinary scouting move"),
+        IssueAtBattlefield(Battle, CommandType::Move, {Worker}, Kind::Worker, Approach).accepted)) return false;
+    if (!TestTrue(TEXT("Opponent observes the Drudge after real travel into its vision"), Fixture.TickUntil([&]
+        { return WorkerSighting() != nullptr; }, 70))) return false;
+    const Entity* ObservedWorker = Battle.Sim().find(Worker);
+    if (!TestTrue(TEXT("Observed scout is still a living starting worker"), ObservedWorker && ObservedWorker->alive())) return false;
+    const AISighting Observed = *WorkerSighting();
+    TestTrue(TEXT("Opponent sighting records the observed unit kind"), Observed.kind == Kind::Worker);
+    TestTrue(TEXT("AI observation follows active match ticks"), Observed.lastSeenTick > 0 && Observed.lastSeenTick <= Battle.Sim().tick());
+    TestTrue(TEXT("AI observes the worker through its current team vision"), Battle.Sim().visible(1, ObservedWorker->pos));
+    TestTrue(TEXT("AI observation also timestamps the visible map cell"),
+        Battle.Sim().aiLastObserved(Observed.pos) >= Observed.lastSeenTick);
+    TestTrue(TEXT("Opponent continues its paid economy while observing"), Battle.Sim().players()[1].stats.gathered > 0);
+
+    if (!TestTrue(TEXT("Observed Drudge accepts an ordinary retreat move"),
+        IssueAtBattlefield(Battle, CommandType::Move, {Worker}, Kind::Worker, Home).accepted)) return false;
+    if (!TestTrue(TEXT("Drudge returns outside opponent vision through actor ticks"), Fixture.TickUntil([&]
+        {
+            const Entity* Entity = Battle.Sim().find(Worker);
+            return Entity && Entity->alive() && !Battle.Sim().visible(1, Entity->pos);
+        }, 25))) return false;
+    // Cross at least one AI update after vision is lost, then copy the remembered values.
+    const float HiddenAt = Battle.Sim().time();
+    if (!TestTrue(TEXT("Active opponent gets time to process the lost contact"), Fixture.TickUntil([&]
+        { return Battle.Sim().time() >= HiddenAt + 3; }, 4))) return false;
+    if (!TestTrue(TEXT("Opponent retains its recent lost-contact sighting"), WorkerSighting() != nullptr)) return false;
+    const AISighting Remembered = *WorkerSighting();
+    const float MemoryCheckAt = Battle.Sim().time();
+    if (!TestTrue(TEXT("Hidden scout keeps moving during later AI updates"), Fixture.TickUntil([&]
+        { return Battle.Sim().time() >= MemoryCheckAt + 3; }, 4))) return false;
+    const Entity* HiddenWorker = Battle.Sim().find(Worker);
+    if (!TestTrue(TEXT("Retreating worker remains alive and hidden"),
+        HiddenWorker && HiddenWorker->alive() && !Battle.Sim().visible(1, HiddenWorker->pos))) return false;
+    if (!TestTrue(TEXT("Recent mobile sighting survives additional AI decisions"), WorkerSighting() != nullptr)) return false;
+    TestEqual(TEXT("Hidden movement does not refresh the AI's last-seen tick"),
+        static_cast<uint64>(WorkerSighting()->lastSeenTick), static_cast<uint64>(Remembered.lastSeenTick));
+    TestEqual(TEXT("Hidden movement does not reveal a new X position"), WorkerSighting()->pos.x, Remembered.pos.x);
+    TestEqual(TEXT("Hidden movement does not reveal a new Y position"), WorkerSighting()->pos.y, Remembered.pos.y);
+    const float HiddenDX = HiddenWorker->pos.x - Remembered.pos.x, HiddenDY = HiddenWorker->pos.y - Remembered.pos.y;
+    TestTrue(TEXT("Remembered location differs from the worker's actual hidden location"), HiddenDX * HiddenDX + HiddenDY * HiddenDY > 200 * 200);
+    TestEqual(TEXT("Scouting contact does not reveal the player's distant Anchor cell"),
+        static_cast<uint64>(Battle.Sim().aiLastObserved(Home)), uint64(0));
+
+    FTemporarySnapshot Snapshot;
+    if (!TestTrue(TEXT("AI snapshot gets an owned temporary directory"), IFileManager::Get().MakeDirectory(*Snapshot.Directory, true))) return false;
+    const uint64 SavedHash = Battle.Sim().stateHash();
+    const uint64 SavedObservedCell = Battle.Sim().aiLastObserved(Remembered.pos);
+    if (!TestTrue(TEXT("Active AI memory saves to the temporary snapshot"), Battle.Sim().save(TCHAR_TO_UTF8(*Snapshot.Path)))) return false;
+    std::vector<uint64> ContinuedHashes;
+    for (int32 Tick = 0; Tick < 60; ++Tick)
+    {
+        Battle.Tick(0.1f);
+        ContinuedHashes.push_back(Battle.Sim().stateHash());
+    }
+    if (!TestTrue(TEXT("AI memory reloads from the temporary snapshot"), Battle.Sim().load(TCHAR_TO_UTF8(*Snapshot.Path)))) return false;
+    TestEqual(TEXT("Reload restores authoritative AI state exactly"), static_cast<uint64>(Battle.Sim().stateHash()), SavedHash);
+    if (!TestTrue(TEXT("Reload preserves the hidden-worker sighting"), WorkerSighting() != nullptr)) return false;
+    TestEqual(TEXT("Reload preserves the remembered sighting time"),
+        static_cast<uint64>(WorkerSighting()->lastSeenTick), static_cast<uint64>(Remembered.lastSeenTick));
+    TestEqual(TEXT("Reload preserves the remembered X position"), WorkerSighting()->pos.x, Remembered.pos.x);
+    TestEqual(TEXT("Reload preserves the remembered Y position"), WorkerSighting()->pos.y, Remembered.pos.y);
+    TestEqual(TEXT("Reload preserves AI map observation time"),
+        static_cast<uint64>(Battle.Sim().aiLastObserved(Remembered.pos)), SavedObservedCell);
+    Battle.RenderState();
+    bool IdenticalContinuation = true;
+    for (const uint64 ExpectedHash : ContinuedHashes)
+    {
+        Battle.Tick(0.1f);
+        if (Battle.Sim().stateHash() != ExpectedHash) IdenticalContinuation = false;
+    }
+    TestTrue(TEXT("Loaded active opponent repeats every authoritative hash across six seconds of actor ticks"), IdenticalContinuation);
+    TestTrue(TEXT("AI persistence fixture finishes in an active match"), Battle.Sim().winner() < 0);
+    if (!HasAnyErrors()) AddInfo(FString::Printf(TEXT("CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=%u, first_seen_tick=%llu, retained_seen_tick=%llu, continuation_ticks=%d; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only."),
+        Worker, static_cast<unsigned long long>(Observed.lastSeenTick),
+        static_cast<unsigned long long>(Remembered.lastSeenTick), static_cast<int32>(ContinuedHashes.size())));
+    return !HasAnyErrors();
+}
+
 #endif // WITH_DEV_AUTOMATION_TESTS

@@ -44,6 +44,7 @@ void Simulation::updateAI() {
     constexpr int team = 1;
     constexpr float pi = 3.14159265358979323846f;
     const float now = time();
+    updateAIKnowledge();
 
     std::vector<AISnapshot> own;
     std::vector<AISnapshot> visibleEnemies;
@@ -54,6 +55,10 @@ void Simulation::updateAI() {
     resources.reserve(entities_.size());
 
     for (const Entity& entity : entities_) {
+        const bool currentlyVisible = visible(team, entity.pos);
+        if (entity.team != team && entity.kind != Kind::Resource && !currentlyVisible) {
+            continue;
+        }
         if (!entity.alive()) {
             continue;
         }
@@ -68,7 +73,7 @@ void Simulation::updateAI() {
         snapshot.progress = entity.progress;
         snapshot.order = entity.order;
         snapshot.target = entity.target;
-        snapshot.currentlyVisible = visible(team, entity.pos);
+        snapshot.currentlyVisible = currentlyVisible;
         if (entity.kind == Kind::Resource && snapshot.currentlyVisible) {
             snapshot.resourceRemaining = entity.resource;
         }
@@ -101,6 +106,28 @@ void Simulation::updateAI() {
     auto plannedOfKind = [&](Kind kind) {
         return ownOfKind(kind) + queuedUnits[static_cast<int>(kind)];
     };
+
+    // A recent reconnaissance report can change purchases; old reports still
+    // guide searches for bases, but cannot lock the army into obsolete counters.
+    std::array<int, 15> observedUnits{};
+    int observedBuildings = 0;
+    int observedArmor = 0;
+    int observedAir = 0;
+    int observedInfantry = 0;
+    for (const AISighting& sighting : aiSightings()) {
+        if (tick_ - sighting.lastSeenTick > static_cast<std::uint64_t>(60.0f / Step)) {
+            continue;
+        }
+        ++observedUnits[static_cast<int>(sighting.kind)];
+        const Definition& seen = definition(sighting.kind);
+        if (seen.building) {
+            ++observedBuildings;
+        } else if (isCombatUnit(sighting.kind)) {
+            observedArmor += seen.armor >= 4 ? 1 : 0;
+            observedAir += seen.air ? 1 : 0;
+            observedInfantry += sighting.kind == Kind::Striker || sighting.kind == Kind::Lancer ? 1 : 0;
+        }
+    }
 
     std::vector<Id> workers;
     std::vector<Id> combat;
@@ -330,6 +357,91 @@ void Simulation::updateAI() {
 
     static constexpr std::array<Vec2, 4> expansionSites{{
         {2900.0f, 3800.0f}, {3800.0f, 2000.0f}, {1900.0f, 1000.0f}, {1000.0f, 2800.0f}}};
+    // These are public map landmarks, not coordinates read from hidden actors.
+    // Observation age makes a cleared start lose priority to unsearched sites.
+    static constexpr std::array<Vec2, 7> reconnaissanceSites{{
+        {600.0f, 600.0f}, {2900.0f, 3800.0f}, {3800.0f, 2000.0f},
+        {1900.0f, 1000.0f}, {1000.0f, 2800.0f}, {600.0f, 4200.0f}, {4200.0f, 600.0f}}};
+    auto reconnaissanceTarget = [&](Vec2 origin, bool preferUnseenStart) {
+        Vec2 chosen = reconnaissanceSites.front();
+        std::uint64_t oldest = std::numeric_limits<std::uint64_t>::max();
+        float nearestDistance = std::numeric_limits<float>::max();
+        bool found = false;
+        for (std::size_t i = 0; i < reconnaissanceSites.size(); ++i) {
+            const Vec2 site = reconnaissanceSites[i];
+            const bool owned = std::any_of(headquarters.begin(), headquarters.end(), [&](Vec2 hq) {
+                return distanceSquared(hq, site) < 850.0f * 850.0f;
+            });
+            if (owned) {
+                continue;
+            }
+            const std::uint64_t observed = aiLastObserved(site);
+            const float d = distanceSquared(origin, site);
+            const bool retainUnseenStart = preferUnseenStart && found && oldest == 0 &&
+                distanceSquared(chosen, reconnaissanceSites.front()) < 1.0f;
+            if (!found || observed < oldest ||
+                (observed == oldest && !retainUnseenStart && d < nearestDistance)) {
+                chosen = site;
+                oldest = observed;
+                nearestDistance = d;
+                found = true;
+            }
+        }
+        if (!found) {
+            // Unusual development/custom states may own every landmark. Search
+            // the oldest fog cell instead of falling back to the enemy start.
+            const float cellSize = WorldSize / FogSize;
+            for (int y = 0; y < FogSize; ++y) {
+                for (int x = 0; x < FogSize; ++x) {
+                    const Vec2 site{(x + 0.5f) * cellSize, (y + 0.5f) * cellSize};
+                    const bool terrainBlocked = std::any_of(obstacles_.begin(), obstacles_.end(), [&](const Obstacle& obstacle) {
+                        const float radius = definition(Kind::Scout).radius;
+                        return std::abs(site.x - obstacle.center.x) < obstacle.half.x + radius &&
+                               std::abs(site.y - obstacle.center.y) < obstacle.half.y + radius;
+                    });
+                    if (terrainBlocked) {
+                        continue;
+                    }
+                    const std::uint64_t observed = aiLastObserved(site);
+                    const float d = distanceSquared(origin, site);
+                    if (observed < oldest || (observed == oldest && d < nearestDistance)) {
+                        chosen = site;
+                        oldest = observed;
+                        nearestDistance = d;
+                    }
+                }
+            }
+        }
+        return chosen;
+    };
+    const Vec2 strategicOrigin = combat.empty() ? home : armyCenter;
+    Vec2 strategicTarget = reconnaissanceTarget(strategicOrigin, true);
+    std::string objective = "searching an unobserved site";
+    const AISighting* rememberedObjective = nullptr;
+    int objectivePriority = std::numeric_limits<int>::max();
+    float objectiveDistance = std::numeric_limits<float>::max();
+    for (const AISighting& sighting : aiSightings()) {
+        if (!definition(sighting.kind).building) {
+            continue;
+        }
+        const int priority = sighting.kind == Kind::Headquarters ? 0 :
+            (sighting.kind == Kind::Foundry || sighting.kind == Kind::MotorPool ? 1 :
+             (sighting.kind == Kind::Turret ? 3 : 2));
+        const float d = distanceSquared(strategicOrigin, sighting.pos);
+        if (priority < objectivePriority ||
+            (priority == objectivePriority && (d < objectiveDistance ||
+             (d == objectiveDistance && rememberedObjective != nullptr && sighting.id < rememberedObjective->id)))) {
+            rememberedObjective = &sighting;
+            objectivePriority = priority;
+            objectiveDistance = d;
+        }
+    }
+    if (rememberedObjective != nullptr) {
+        strategicTarget = rememberedObjective->pos;
+        objective = std::string("checking known ") + definition(rememberedObjective->kind).name;
+    } else if (aiLastObserved(strategicTarget) != 0) {
+        objective = "rechecking an old scouting report";
+    }
     int productiveHeadquarters = 0;
     for (Vec2 hq : headquarters) {
         if (remainingOreNear(hq, 900.0f) >= 650.0f) {
@@ -504,7 +616,11 @@ void Simulation::updateAI() {
         commandToIssue.team = team;
         commandToIssue.units = {producer};
         commandToIssue.kind = kind;
-        return issue(commandToIssue, std::string("training ") + definition(kind).name);
+        const bool accepted = issue(commandToIssue, std::string("training ") + definition(kind).name);
+        if (accepted) {
+            ++queuedUnits[static_cast<int>(kind)];
+        }
+        return accepted;
     };
 
     const int desiredWorkers = hqCount >= 2 ? 18 : 12;
@@ -523,11 +639,28 @@ void Simulation::updateAI() {
 
     const int desiredArmy = now < 240.0f ? 7 : (now < 400.0f ? 14 : (now < 800.0f ? 34 : 60));
     int plannedArmy = static_cast<int>(combat.size());
-    for (const AISnapshot& entity : own) {
-        if ((entity.kind == Kind::Foundry || entity.kind == Kind::MotorPool ||
-             entity.kind == Kind::Laboratory) && entity.queueSize > 0) {
-            plannedArmy += static_cast<int>(entity.queueSize);
+    for (std::size_t i = 0; i < queuedUnits.size(); ++i) {
+        if (isCombatUnit(static_cast<Kind>(i))) {
+            plannedArmy += queuedUnits[i];
         }
+    }
+
+    const int desiredCounterLancers = std::min((desiredArmy * 3 + 4) / 5,
+                                               2 * (observedArmor + observedAir));
+    const int vulnerableInfantry = observedUnits[static_cast<int>(Kind::Lancer)] +
+                                  observedUnits[static_cast<int>(Kind::Scout)];
+    const int desiredCounterStrikers = std::min((desiredArmy * 3 + 4) / 5, 2 * vulnerableInfantry);
+    const int desiredCounterBastions = std::min(std::max(1, desiredArmy / 4), (observedInfantry + 2) / 3);
+    const int desiredCounterMortars = std::min(std::max(1, desiredArmy / 5), (observedBuildings + 1) / 2);
+    const int desiredCounterKites = std::min(std::max(1, desiredArmy / 4),
+        observedUnits[static_cast<int>(Kind::Mortar)] + observedAir);
+    std::string productionFocus = "balanced production";
+    if (observedArmor + observedAir > 0) {
+        productionFocus = "Needles counter observed armor/air";
+    } else if (vulnerableInfantry > 0) {
+        productionFocus = "Embers counter observed light units";
+    } else if (observedBuildings > 0 && players_[team].tier >= 3) {
+        productionFocus = "siege counters observed structures";
     }
 
     for (const AISnapshot& foundry : own) {
@@ -538,6 +671,10 @@ void Simulation::updateAI() {
         Kind next = Kind::Striker;
         if (plannedOfKind(Kind::Scout) == 0) {
             next = Kind::Scout;
+        } else if (plannedOfKind(Kind::Lancer) < desiredCounterLancers) {
+            next = Kind::Lancer;
+        } else if (plannedOfKind(Kind::Striker) < desiredCounterStrikers) {
+            next = Kind::Striker;
         } else if (plannedOfKind(Kind::Lancer) * 2 < plannedOfKind(Kind::Striker)) {
             next = Kind::Lancer;
         }
@@ -566,7 +703,13 @@ void Simulation::updateAI() {
             const int bastions = plannedOfKind(Kind::Bastion);
             const int mortars = plannedOfKind(Kind::Mortar);
             const int kites = plannedOfKind(Kind::Kite);
-            if (kites == 0) {
+            if (kites < desiredCounterKites) {
+                next = Kind::Kite;
+            } else if (mortars < desiredCounterMortars) {
+                next = Kind::Mortar;
+            } else if (bastions < desiredCounterBastions) {
+                next = Kind::Bastion;
+            } else if (kites == 0) {
                 next = Kind::Kite;
             } else if (mortars == 0 || mortars * 2 < bastions) {
                 next = Kind::Mortar;
@@ -600,18 +743,19 @@ void Simulation::updateAI() {
         }
     }
 
-    Id expansionScoutId = 0;
+    Id reconnaissanceScoutId = 0;
     if (now >= 350.0f && needsExpansionScouting && visibleEnemies.empty()) {
         for (const AISnapshot& scout : own) {
             if (scout.kind == Kind::Scout && scout.progress >= 1.0f && scout.order == Order::Move &&
+                scout.hp / scout.maxHp >= 0.35f &&
                 distanceSquared(scout.goal, expansionScoutTarget) <= 100.0f * 100.0f) {
-                expansionScoutId = scout.id;
+                reconnaissanceScoutId = scout.id;
                 break;
             }
         }
-        if (expansionScoutId == 0) {
+        if (reconnaissanceScoutId == 0) {
             for (const AISnapshot& scout : own) {
-                if (scout.kind != Kind::Scout || scout.progress < 1.0f) {
+                if (scout.kind != Kind::Scout || scout.progress < 1.0f || scout.hp / scout.maxHp < 0.35f) {
                     continue;
                 }
                 Command move;
@@ -620,10 +764,38 @@ void Simulation::updateAI() {
                 move.units = {scout.id};
                 move.point = expansionScoutTarget;
                 if (issue(move, "checking an expansion site")) {
-                    expansionScoutId = scout.id;
+                    reconnaissanceScoutId = scout.id;
                 }
                 break;
             }
+        }
+    }
+
+    // Keep one healthy Skim gathering information independently of army orders.
+    // Finish an unseen route before choosing another; once the destination is
+    // observed, its newer timestamp sends the scout toward an older report.
+    if (reconnaissanceScoutId == 0 && visibleEnemies.empty()) {
+        for (const AISnapshot& scout : own) {
+            if (scout.kind != Kind::Scout || scout.progress < 1.0f || scout.hp / scout.maxHp < 0.35f) {
+                continue;
+            }
+            const bool knownRoute = std::any_of(reconnaissanceSites.begin(), reconnaissanceSites.end(), [&](Vec2 site) {
+                return distanceSquared(scout.goal, site) <= 100.0f * 100.0f;
+            });
+            if (scout.order == Order::Move && knownRoute && !visible(team, scout.goal)) {
+                reconnaissanceScoutId = scout.id;
+                break;
+            }
+            const Vec2 destination = reconnaissanceTarget(scout.pos, false);
+            Command move;
+            move.type = CommandType::Move;
+            move.team = team;
+            move.units = {scout.id};
+            move.point = destination;
+            if (issue(move, "scouting the least recently observed site")) {
+                reconnaissanceScoutId = scout.id;
+            }
+            break;
         }
     }
 
@@ -731,7 +903,7 @@ void Simulation::updateAI() {
     } else if (now >= 240.0f && ((tick_ / 40) % 12 == 0)) {
         std::vector<Id> advancingUnits;
         for (Id id : healthyCombat) {
-            if (id != expansionScoutId) {
+            if (id != reconnaissanceScoutId) {
                 advancingUnits.push_back(id);
             }
         }
@@ -739,26 +911,9 @@ void Simulation::updateAI() {
         attackMove.type = CommandType::AttackMove;
         attackMove.team = team;
         attackMove.units = advancingUnits;
-        attackMove.point = {600.0f, 600.0f};
+        attackMove.point = strategicTarget;
         if (advancingUnits.size() >= 7) {
-            issue(attackMove, "advancing on the enemy start");
-        }
-    } else if (now < 240.0f && ownOfKind(Kind::Scout) > 0 && visibleEnemies.empty()) {
-        for (const AISnapshot& scout : own) {
-            if (scout.kind != Kind::Scout || scout.progress < 1.0f ||
-                (scout.order != Order::Idle && scout.order != Order::Hold)) {
-                continue;
-            }
-            static constexpr std::array<Vec2, 4> scoutRoute{{
-                {2900.0f, 3800.0f}, {3800.0f, 2000.0f}, {1900.0f, 1000.0f}, {1000.0f, 2800.0f}}};
-            const Vec2 destination = scoutRoute[(tick_ / 40 + scout.id) % scoutRoute.size()];
-            Command move;
-            move.type = CommandType::Move;
-            move.team = team;
-            move.units = {scout.id};
-            move.point = destination;
-            issue(move, "scouting the map");
-            break;
+            issue(attackMove, objective);
         }
     }
 
@@ -771,6 +926,7 @@ void Simulation::updateAI() {
     } else {
         aiStatus_ += ", holding";
     }
+    aiStatus_ += "; " + objective + "; " + productionFocus;
 }
 
 } // namespace cinder

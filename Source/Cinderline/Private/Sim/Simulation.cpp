@@ -83,7 +83,7 @@ void Simulation::reset(Config config) {
  config_=config; config_.map=std::clamp(config_.map,0,2);
  if(!std::isfinite(config_.aiAggression)) config_.aiAggression=1;
  config_.aiAggression=std::clamp(config_.aiAggression,0.5f,2.0f);
- entities_.clear(); obstacles_.clear(); effects_.clear(); recording_.clear();
+ entities_.clear(); obstacles_.clear(); effects_.clear(); recording_.clear(); aiSightings_.clear(); aiObserved_={};
  players_={}; fog_={}; explored_={}; tick_=0; nextId_=1; accumulator_=0; aiTimer_=0; winner_=-1; lastStepMs_=0;
  alert_="Build a Kiln, scout, and protect your Anchor."; aiStatus_=config_.ai?"Establishing economy":"Opponent AI disabled";
  // Each map is rotationally symmetric. Every obstacle leaves multiple routes.
@@ -694,6 +694,10 @@ void Simulation::damage(Entity& victim,float amount,int attackerTeam) {
  const float dealt=std::min(victim.hp,amount);victim.hp-=dealt;
  if(validTeam(attackerTeam))players_[attackerTeam].stats.damage+=dealt;
  if(victim.hp<=0) {
+  // Record a witnessed death at the event, before periodic corpse cleanup can
+  // remove it between the opponent's strategic updates. Hidden deaths stay unknown.
+  if(victim.team==0&&visible(1,victim.pos))
+   aiSightings_.erase(std::remove_if(aiSightings_.begin(),aiSightings_.end(),[&](const AISighting& sighting){return sighting.id==victim.id;}),aiSightings_.end());
   if(victim.kind==Kind::Worker)abandonConstruction(victim);
   else if(definition(victim.kind).building)releaseConstruction(victim);
   victim.hp=0;victim.queue.clear();victim.path.clear();victim.pathIndex=0;
@@ -773,6 +777,37 @@ void Simulation::updateVision() {
  }
 }
 
+std::uint64_t Simulation::aiLastObserved(Vec2 point) const {
+ if(!finite(point)||point.x<0||point.y<0||point.x>WorldSize||point.y>WorldSize)return 0;
+ return aiObserved_[fogIndex(point)];
+}
+
+void Simulation::updateAIKnowledge() {
+ constexpr int observer=1;
+ for(int cell=0;cell<FogSize*FogSize;++cell)if(fog_[observer][cell])aiObserved_[cell]=tick_;
+ std::vector<AISighting> observed;
+ std::vector<Id> observedDeaths;
+ for(const auto& entity:entities_) {
+  if(entity.team!=0||!visible(observer,entity.pos))continue;
+  if(entity.alive())observed.push_back({entity.id,entity.kind,entity.pos,tick_});
+  else observedDeaths.push_back(entity.id);
+ }
+ const auto lifetime=static_cast<std::uint64_t>(AIMobileMemorySeconds/Step);
+ aiSightings_.erase(std::remove_if(aiSightings_.begin(),aiSightings_.end(),[&](AISighting& sighting) {
+  const auto current=std::find_if(observed.begin(),observed.end(),[&](const AISighting& item){return item.id==sighting.id;});
+  if(current!=observed.end()){sighting=*current;return false;}
+  if(std::find(observedDeaths.begin(),observedDeaths.end(),sighting.id)!=observedDeaths.end())return true;
+  // A fixed structure is disproved by vision of its empty site. A mobile unit
+  // may have left that site, so retain its observed type until memory expires.
+  if(definition(sighting.kind).building)return visible(observer,sighting.pos);
+  return tick_-sighting.lastSeenTick>lifetime;
+ }),aiSightings_.end());
+ for(const auto& sighting:observed) {
+  if(std::none_of(aiSightings_.begin(),aiSightings_.end(),[&](const AISighting& item){return item.id==sighting.id;}))aiSightings_.push_back(sighting);
+ }
+ std::sort(aiSightings_.begin(),aiSightings_.end(),[](const AISighting& left,const AISighting& right){return left.id<right.id;});
+}
+
 std::uint64_t Simulation::stateHash() const {
  Hasher hash;hash.integer(config_.map);hash.integer(config_.seed);hash.integer(config_.ai);hash.real(config_.aiAggression);
  hash.integer(tick_);hash.integer(nextId_);hash.real(accumulator_);hash.real(aiTimer_);hash.integer(winner_);
@@ -790,12 +825,14 @@ std::uint64_t Simulation::stateHash() const {
  hash.integer(obstacles_.size());for(const auto& o:obstacles_){hash.point(o.center);hash.point(o.half);}
  hash.integer(effects_.size());for(const auto& fx:effects_){hash.point(fx.from);hash.point(fx.to);hash.integer(fx.team);hash.real(fx.life);hash.integer(fx.explosion);}
  for(int t=0;t<2;++t)for(int i=0;i<FogSize*FogSize;++i){hash.byte(fog_[t][i]);hash.byte(explored_[t][i]);}
+ hash.integer(aiSightings_.size());for(const auto& sighting:aiSightings_){hash.integer(sighting.id);hash.integer(static_cast<int>(sighting.kind));hash.point(sighting.pos);hash.integer(sighting.lastSeenTick);}
+ for(auto stamp:aiObserved_)hash.integer(stamp);
  return hash.value;
 }
 
 bool Simulation::save(const std::string& path) const {
  std::ofstream out(path,std::ios::trunc);if(!out)return false;out.imbue(std::locale::classic());out<<std::setprecision(std::numeric_limits<float>::max_digits10);
- out<<"CINDERLINE 2\n"<<config_.map<<' '<<config_.seed<<' '<<config_.ai<<' '<<config_.aiAggression<<'\n';
+ out<<"CINDERLINE 3\n"<<config_.map<<' '<<config_.seed<<' '<<config_.ai<<' '<<config_.aiAggression<<'\n';
  out<<tick_<<' '<<nextId_<<' '<<accumulator_<<' '<<aiTimer_<<' '<<winner_<<'\n';
  for(const auto& p:players_) {
   const auto& s=p.stats;out<<p.ore<<' '<<p.tier<<' '<<p.weapons<<' '<<p.armor<<' '<<s.gathered<<' '<<s.produced<<' '<<s.lost<<' '<<s.killed<<' '<<s.built<<' '<<s.buildingsDestroyed<<' '<<s.expansions<<' '<<s.upgrades<<' '<<s.damage<<'\n';
@@ -811,10 +848,14 @@ bool Simulation::save(const std::string& path) const {
  out<<recording_.size()<<'\n';for(const auto& r:recording_) {
   const auto& c=r.command;out<<r.tick<<' '<<static_cast<int>(c.type)<<' '<<c.team<<' '<<c.point.x<<' '<<c.point.y<<' '<<c.target<<' '<<static_cast<int>(c.kind)<<' '<<c.queueIndex<<' '<<c.units.size();for(Id id:c.units)out<<' '<<id;out<<'\n';
  }
- out<<std::quoted(alert_)<<'\n'<<std::quoted(aiStatus_)<<'\n';out.flush();return out.good();
+ out<<std::quoted(alert_)<<'\n'<<std::quoted(aiStatus_)<<'\n';
+ out<<"AI_KNOWLEDGE 1\n"<<aiSightings_.size()<<'\n';
+ for(const auto& sighting:aiSightings_)out<<sighting.id<<' '<<static_cast<int>(sighting.kind)<<' '<<sighting.pos.x<<' '<<sighting.pos.y<<' '<<sighting.lastSeenTick<<'\n';
+ out<<aiObserved_.size()<<'\n';for(auto stamp:aiObserved_)out<<stamp<<' ';out<<'\n';
+ out.flush();return out.good();
 }
 bool Simulation::load(const std::string& path) {
- std::ifstream in(path);if(!in)return false;in.imbue(std::locale::classic());std::string magic;int version=0;in>>magic>>version;if(magic!="CINDERLINE"||(version!=1&&version!=2))return false;
+ std::ifstream in(path);if(!in)return false;in.imbue(std::locale::classic());std::string magic;int version=0;in>>magic>>version;if(magic!="CINDERLINE"||(version<1||version>3))return false;
  Simulation loaded;loaded.entities_.clear();loaded.obstacles_.clear();loaded.effects_.clear();loaded.recording_.clear();
  in>>loaded.config_.map>>loaded.config_.seed>>loaded.config_.ai>>loaded.config_.aiAggression;
  in>>loaded.tick_>>loaded.nextId_>>loaded.accumulator_>>loaded.aiTimer_>>loaded.winner_;
@@ -856,6 +897,21 @@ bool Simulation::load(const std::string& path) {
   for(std::size_t n=0;n<unitCount;++n){Id id;in>>id;c.units.push_back(id);}if(!in)return false;loaded.recording_.push_back(std::move(r));
  }
  in>>std::quoted(loaded.alert_)>>std::quoted(loaded.aiStatus_);if(!in||loaded.alert_.size()>4096||loaded.aiStatus_.size()>4096)return false;
+ if(version>=3) {
+  std::string section;int knowledgeVersion=0;in>>section>>knowledgeVersion>>count;
+  if(!in||section!="AI_KNOWLEDGE"||knowledgeVersion!=1||count>10000)return false;
+  Id previous=0;
+  for(std::size_t index=0;index<count;++index) {
+   AISighting sighting;int kind=0;in>>sighting.id>>kind>>sighting.pos.x>>sighting.pos.y>>sighting.lastSeenTick;
+   sighting.kind=static_cast<Kind>(kind);
+   if(!in||sighting.id<=previous||sighting.id>=loaded.nextId_||!validKind(sighting.kind)||sighting.kind==Kind::Resource||!finite(sighting.pos)||sighting.pos.x<0||sighting.pos.y<0||sighting.pos.x>WorldSize||sighting.pos.y>WorldSize||sighting.lastSeenTick==0||sighting.lastSeenTick>loaded.tick_)return false;
+   previous=sighting.id;loaded.aiSightings_.push_back(sighting);
+  }
+  in>>count;if(!in||count!=loaded.aiObserved_.size())return false;
+  for(auto& stamp:loaded.aiObserved_){in>>stamp;if(!in||stamp>loaded.tick_)return false;}
+  for(const auto& sighting:loaded.aiSightings_)if(loaded.aiLastObserved(sighting.pos)<sighting.lastSeenTick)return false;
+  in>>std::ws;if(!in.eof())return false;
+ }
  loaded.lastStepMs_=0;*this=std::move(loaded);return true;
 }
 } // namespace cinder

@@ -86,10 +86,18 @@ performance. See [the verification record](../artifacts/verification-summary.md)
 
 The presentation uses static Blender models and Canvas UI with interface, order
 and production audio hooks. It still needs character animation, combat audio,
-haptics, smooth fog edges, retained offscreen enemy
-building intelligence, networking or a second asymmetric faction. Camera smoothing
+haptics, smooth fog edges, player-facing last-seen enemy building markers,
+networking or a second asymmetric faction. The opponent's scouting memory and
+objective selection are tracked in [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md). Camera smoothing
 is implemented; momentum/gesture tuning still requires physical-device testing.
 Device-specific safe area and suspend/resume handling need a later iOS product pass.
+
+`./scripts/test-unreal.sh` runs three strict transient-world integration tests for
+world/controller lifecycle, paid economy and worker construction, and AI
+observation/persistence. The AI fixture uses a starting Drudge's ordinary travel
+into and out of opponent vision, then verifies a temporary save and continued
+actor ticks. The runner requires every expected path to succeed with zero errors
+or warnings. These tests open no gameplay viewport and do not modify player saves.
 
 ## iOS
 

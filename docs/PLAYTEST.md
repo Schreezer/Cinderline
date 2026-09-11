@@ -13,6 +13,8 @@ On touch layouts, tap a selected unit's destination to command it. ACTIONS shows
 
 Unfinished structures have a SITE shortcut on compact layouts. A selected Drudge can tap a site to resume it. Construction consumes one worker regardless of how many are selected. Cancelling a site refunds its unused construction cost and releases its builder. Old version 1 saves load unfinished sites paused; assign a Drudge to continue them.
 
+The opponent now scouts and remembers what it has seen. Watch for reconnaissance around expansions and attacks on discovered bases. Switching to aircraft or armor should influence its later purchases after it sees those units. Hidden changes should not immediately alter its production. This pass is tracked in [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md).
+
 Useful feedback includes the selected unit/structure, the button or ground location clicked, what happened, and what you expected. Automated absolute mouse targeting is unreliable in Unreal on this Mac, so command integration tests do not replace this hands-on check.
 
-After worker-driven construction, three scripted match trials lasted 12:25, 12:23 and 12:44. They used one seed per map against a simple scripted opponent, spent ordinary resources, and ended through gameplay. The earlier trials lasted 13:09, 14:05 and 14:25. Neither set establishes normal human balance; the intended 20–30 minute pacing remains a tuning target.
+With scouting-driven AI, the latest three scripted match trials lasted 10:56, 13:08 and 14:03. They used one seed per map against a simple scripted opponent, spent ordinary resources, and ended through gameplay. The prior construction checkpoint recorded 12:25, 12:23 and 12:44. Neither set establishes normal human balance; the intended 20–30 minute pacing remains a tuning target.

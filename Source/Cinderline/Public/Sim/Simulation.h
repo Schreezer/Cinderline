@@ -34,11 +34,13 @@ struct Command { CommandType type=CommandType::Move; int team=0; std::vector<Id>
 struct CommandResult { bool accepted=false; std::string message; };
 struct Config { int map=0; std::uint32_t seed=42; bool ai=true; float aiAggression=1; };
 struct RecordedCommand { std::uint64_t tick=0; Command command; };
+struct AISighting { Id id=0; Kind kind=Kind::Worker; Vec2 pos; std::uint64_t lastSeenTick=0; };
 class Simulation {
 public:
  static constexpr float WorldSize=4800;
  static constexpr float Step=0.05f;
  static constexpr int FogSize=64;
+ static constexpr float AIMobileMemorySeconds=90.0f;
  Simulation();
  void reset(Config config={});
  void update(float seconds);
@@ -63,6 +65,9 @@ public:
  const std::vector<RecordedCommand>& recording() const { return recording_; }
  const std::string& alert() const { return alert_; }
  std::string aiStatus() const { return aiStatus_; }
+ // Opponent knowledge contains observations, never current hidden actor state.
+ const std::vector<AISighting>& aiSightings() const { return aiSightings_; }
+ std::uint64_t aiLastObserved(Vec2 point) const;
  double lastStepMilliseconds() const { return lastStepMs_; }
  std::uint64_t stateHash() const;
  bool save(const std::string& path) const;
@@ -75,8 +80,11 @@ private:
  std::array<Player,2> players_; std::array<std::array<unsigned char,FogSize*FogSize>,2> fog_{}, explored_{};
  std::vector<RecordedCommand> recording_; std::uint64_t tick_=0; Id nextId_=1; float accumulator_=0, aiTimer_=0; int winner_=-1;
  std::string alert_,aiStatus_; double lastStepMs_=0;
+ std::vector<AISighting> aiSightings_;
+ std::array<std::uint64_t,FogSize*FogSize> aiObserved_{};
  Entity* get(Id id); Id spawn(Kind kind,int team,Vec2 position,bool complete=true);
  void step(); void updateVision(); void updateAI(); void updateMovement(Entity& e); void updateEconomy(Entity& e); void updateCombat(Entity& e);
+ void updateAIKnowledge();
  void updateProduction(Entity& e); void moveToward(Entity& e,Vec2 destination); void planPath(Entity& e,Vec2 destination);
  bool blocked(Vec2 point,float radius,Id ignore=0) const; bool hasBuilding(int team,Kind kind) const;
  Id nearest(int team,Vec2 point,Kind kind) const; void damage(Entity& victim,float amount,int attackerTeam);

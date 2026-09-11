@@ -1,5 +1,13 @@
 # Verification record
 
+## Scouting-driven AI checkpoint
+
+Current source implements fog-limited enemy sightings, remembered-base objectives, reconnaissance by observation age, paid counter production, immediate witnessed-death invalidation and version 3 persistence with version 1/2 migration. All 23 portable groups and all 3 CTests passed. A fresh ASan/UBSan run passed all 23 groups. The rebuilt Unreal target passed all three strict integration paths with zero warnings/errors, run `20260911T145449Z-61548`. The new engine scenario observes a travelling starting Drudge, retains its position after it leaves vision, and matches 60 continued actor-tick hashes across a temporary save/reload.
+
+Final normal-command match trials ended naturally at 656.35, 788.15 and 843.00 seconds on maps 0/1/2, seed 42. All were won by the game AI. These trials remain below the 20–30 minute target and do not establish human balance. The rebuilt standalone game was relaunched and its menu visually confirmed. Full human match, pointer/touch, animation, rendering performance and iOS acceptance remain open.
+
+Current evidence is in `ai-strategy-*` and `unreal-ai-strategy-*`; `ai-strategy-tested-source-sha256.txt` identifies the final source/content set. [AI_STRATEGY_PASS.md](../docs/AI_STRATEGY_PASS.md) contains the completed checklist, checkpoint report and remaining work. All sections below refer to earlier checkpoints; their use of latest/current/final is relative to those historical checkpoints.
+
 ## Worker-driven construction refresh
 
 The latest mechanics replace automatic foundation timers with an assigned Drudge travelling and working at the site. Final source passed all 19 portable rule groups, all 3 CTests (including 3,000 native render frames), a fresh ASan/UBSan run, and both exact Unreal integration tests with zero warnings/errors. UE 5.8.2 rebuilt successfully. The engine report is `unreal-construction-integration-results.json`, run `20260911T143702Z-40096`.

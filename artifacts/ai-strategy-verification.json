@@ -1,0 +1,54 @@
+{
+  "verified_at_utc": "2026-09-11T15:02:02.096614+00:00",
+  "portable_rule_groups": 23,
+  "ctests_passed": 3,
+  "native_render_frames": 3000,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "unreal_integration_run": "20260911T145449Z-61548",
+  "unreal_tests": [
+    {
+      "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "natural_matches": [
+    {
+      "map": 0,
+      "seed": 42,
+      "duration_seconds": 656.35,
+      "winner": 1
+    },
+    {
+      "map": 1,
+      "seed": 42,
+      "duration_seconds": 788.15,
+      "winner": 1
+    },
+    {
+      "map": 2,
+      "seed": 42,
+      "duration_seconds": 843.0,
+      "winner": 1
+    }
+  ],
+  "source_files_hashed": 100,
+  "runtime": "Rebuilt UE5.8.2 standalone Mac game launched; menu visually confirmed through CUA and left open.",
+  "limits": "No current full human match, pointer/touch acceptance, rendering performance or iOS validation. Scripted match durations are below the20\u201330minute target. Knowledge and behavior are verified through simulation and real transient engine-world tests."
+}

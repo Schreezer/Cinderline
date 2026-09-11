@@ -23,7 +23,7 @@ Construction occupies one Drudge. Placing a foundation pays the cost and assigns
 
 Moving, stopping or retasking the builder pauses the site. Worker death also pauses it. An unfinished site retains its progress and damage until another Drudge resumes for no additional ore, or the player cancels for the unused portion of its cost. Completion, cancellation or site destruction releases its assigned worker to its previous mining job when applicable. A newer explicit order takes precedence. Both sides follow these rules, and the AI reassigns idle sites before starting more construction.
 
-Version 2 saved matches preserve travelling and working builders, paused sites and mining return context. Version 1 saves still load; unfinished structures from those saves start paused and need a Drudge.
+Version 3 saved matches preserve travelling and working builders, paused sites, mining return context and the opponent's scouting knowledge. Version 1 and 2 saves still load, with empty scouting knowledge until the opponent makes new observations. Unfinished structures from version 1 start paused and need a Drudge.
 
 ## Touch command policy
 
@@ -42,6 +42,10 @@ The native runner also accepts mouse and keyboard input. It exists to exercise t
 - Central definitions hold balance values. Procedural visual assets let the gameplay run without purchased content.
 - A command boundary prepares for authoritative networking. No network or cross-platform determinism claim follows from that structure alone.
 - Fog has separate unexplored, previously explored and currently visible states. Enemy units must not be drawn or targeted through current fog.
+
+The opponent remembers enemy structures it has seen until renewed vision confirms that their last-known site is empty. A witnessed death clears the report immediately; hidden destruction does not. Mobile reports retain their last-seen position and type for 90 seconds. Production uses reports from the last 60 seconds to favor counters, then falls back to its balanced mix. It never reads hidden enemy upgrades or army composition for those decisions.
+
+Scouting visits public map landmarks according to observation age. Armies prioritize remembered Anchors and production structures, moving to last-known positions through fog. Direct attacks still require current vision. When no structure is known, they search less recently observed locations instead of repeatedly attacking a cleared starting base. One healthy scout can continue reconnaissance independently; existing local defense, retreat, support-follow and builder reservation rules remain active.
 
 ## Pacing validation
 
