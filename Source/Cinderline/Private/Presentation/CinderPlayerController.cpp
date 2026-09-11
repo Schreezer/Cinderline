@@ -2,6 +2,7 @@
 #include "Presentation/CinderBattlefield.h"
 #include "Presentation/CinderCamera.h"
 #include "Presentation/CinderHUD.h"
+#include "Presentation/CinderAudioSubsystem.h"
 #include "EngineUtils.h"
 #include "InputCoreTypes.h"
 #include "Engine/World.h"
@@ -240,6 +241,7 @@ void ACinderPlayerController::SelectRectangle()
         if (ProjectWorldLocationToScreen(FVector(E.pos.x, E.pos.y, cinder::definition(E.kind).air ? 125 : 25), Screen) && Bounds.IsInside(Screen)) Selected.push_back(E.id);
     }
     bBoxSelect = false;
+    if (!Selected.empty()) UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
     Notify(FString::Printf(TEXT("%d units selected"), static_cast<int>(Selected.size())));
 }
 
@@ -276,6 +278,7 @@ void ACinderPlayerController::TapWorld(FVector2D Position, bool ForceCommand)
         Cmd.team = 0; Cmd.units = Selected;
         const auto Result = Battle->Sim().command(Cmd);
         Notify(UTF8_TO_TCHAR(Result.message.c_str()));
+        UCinderAudioSubsystem::Play(this, Result.accepted ? ECinderCue::Order_Ack : ECinderCue::Order_Invalid);
         if (Result.accepted) { bBuildMode = false; bBuildMenu = false; }
         return;
     }
@@ -305,6 +308,7 @@ void ACinderPlayerController::TapWorld(FVector2D Position, bool ForceCommand)
         else Selected = { Hit->id };
         LastTapKind = Hit->kind; LastTapTime = Now;
         bBuildMenu = false;
+        UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
         return;
     }
     if (Selected.empty()) return;
@@ -323,6 +327,7 @@ void ACinderPlayerController::Issue(cinder::Command Command)
     if (Command.units.empty()) Command.units = Selected;
     const auto Result = Battle->Sim().command(Command);
     Notify(UTF8_TO_TCHAR(Result.message.c_str()));
+    UCinderAudioSubsystem::Play(this, Result.accepted ? ECinderCue::Order_Ack : ECinderCue::Order_Invalid);
 }
 bool ACinderPlayerController::IsGameplayActive() const
 {
@@ -364,6 +369,7 @@ void ACinderPlayerController::Escape()
 void ACinderPlayerController::Confirm()
 {
     if (!Battle) return;
+    if (Battle->IsMenu() || Battle->Sim().winner() >= 0 || Battle->IsPaused()) UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
     if (Battle->IsMenu())
     {
         const auto* HUD = Cast<ACinderHUD>(GetHUD());

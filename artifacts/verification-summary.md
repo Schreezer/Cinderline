@@ -71,6 +71,18 @@ The lifecycle test checks controller start and map reset, rejected training with
 
 Both tests passed. `unreal-integration-results.json` contains their exact names, results, timings and scenario messages. This is command and adapter integration evidence. It does not test pointer targeting, a local-player viewport, physical touch, player-save UI wrappers, GPU performance, packaging or iOS.
 
+## First model and sound integration
+
+The original Blender pack now imports all 15 models with exactly 29,816 triangles, the specified centimeter XYZ bounds, bottom-centered pivots and five material slots. Five shared material palettes passed read-back validation. Eight SoundWaves passed imported channel/rate/duration checks. `unreal-asset-import-results.json` records the graphics-enabled bootstrap. Skim's 64 collapsed exhaust triangles were fixed in Blender before the successful import.
+
+Live standalone diagnostics report 15/15 loaded models, 29 model batches and 10 starting-base entities rendered with no primitive fallbacks. The starting Anchor, Drudges and copper deposits were visually inspected; full-roster/enemy-palette gameplay inspection remains open. A referenced engine daylight cubemap supplies ambient fill. `unreal-presentation-results.json` records actual captures at 1280×720, 667×375 and 844×390, including the compact construction sheet with opening feedback.
+
+Interface and rejected-order audio produced two valid `PlaySound2D` submissions with no missing asset or unavailable device. Completion hooks are implemented, but their audible runtime behavior and the complete mix have not been assessed. Combat sound hooks remain deferred until effects carry explicit semantic events.
+
+Both integration tests passed after model/audio/lighting/ore-color integration in run `20260911T133448Z-14796`. A subsequent HUD-only feedback-bound fix was rebuilt and checked in the actual 667×375 construction screen; the earlier headless tests do not exercise Canvas layout. Final current source/content hashes and capture hashes are recorded. The six portable-source hashes still match the existing 14-rule, CTest and sanitizer evidence.
+
+The hands-on build/produce player journey has been requested in a fresh open game. No new full human match, iOS build, touch or listening-quality claim is made. Details and remaining work are in `docs/PRESENTATION_PASS.md`.
+
 ## Deferred product work
 
 The user set the order to mechanics and logic, aesthetics/assets, a full playtest, then iOS. Blender is installed for original models. iOS component Apply was user-reported, but installation completion, signing, packaging and physical-device gameplay remain unverified. The earlier preflight and deferred steps are in `docs/IOS_READINESS.md`. No iOS work blocks this mechanics and desktop presentation pass.

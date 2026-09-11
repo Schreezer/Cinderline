@@ -2,7 +2,7 @@
 
 An original touch-first sci-fi RTS for Unreal Engine 5, targeting iPhone and iPad. Its C++ simulation is also built as a standalone library so economy, combat and movement can be tested without launching the editor.
 
-**Current status:** UE 5.8.2 builds and runs the battlefield on macOS. Menu start, economy, camera navigation, pause/resume and compact layouts have runtime evidence. The first mechanics pass is verified; model, HUD and audio integration are next. Work proceeds through mechanics, assets and visual polish, full playtesting, then iOS. Checkpoint completion and verified behavior are tracked in [the task board](docs/TASKBOARD.md). The native macOS runner is a development tool; it is not the iOS product.
+**Current status:** UE 5.8.2 builds and runs the battlefield on macOS. Menu start, economy, camera navigation, pause/resume and compact layouts have runtime evidence. The first mechanics pass is verified. Fifteen original models, larger HUD text and initial sound feedback are integrated; the refreshed game is ready for hands-on playtesting. Work proceeds through mechanics, assets and visual polish, full playtesting, then iOS. Checkpoint completion and verified behavior are tracked in [the task board](docs/TASKBOARD.md). The native macOS runner is a development tool; it is not the iOS product.
 
 ## Development
 
@@ -48,6 +48,6 @@ All gameplay changes belong in the shared simulation. The Unreal and native pres
 
 The [design notes](docs/DESIGN.md) explain the faction, controls and architecture. The [original product brief](docs/PRODUCT_BRIEF.md) defines the full roadmap. A 20–30 minute competitive match is a design target, not an achieved balance result. Multiplayer, accounts, ranking and physical iOS validation require later checkpoints.
 
-The [checkpoint report](docs/CHECKPOINT_00.md) records what was actually exercised.
+The [foundation report](docs/CHECKPOINT_00.md), [mechanics report](docs/MECHANICS_PASS.md) and [presentation report](docs/PRESENTATION_PASS.md) record what was actually exercised.
 Exact test output, source hashes, performance samples and match durations are in
 [the verification record](artifacts/verification-summary.md).

@@ -3,6 +3,7 @@
 Idempotent. The existing map is retained unless CINDER_REBUILD_CONTENT=1. Material edits are retained.
 The game mode creates the battlefield, lights, instanced silhouettes and camera.
 """
+import importlib.util
 import os
 import unreal
 
@@ -91,6 +92,18 @@ def bootstrap():
     if not unreal.EditorAssetLibrary.save_loaded_asset(ground):
         raise RuntimeError("Could not save " + ground_path)
 
+    model_helper_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "unreal_model_assets.py")
+    model_spec = importlib.util.spec_from_file_location("cinderline_model_assets", model_helper_path)
+    model_helper = importlib.util.module_from_spec(model_spec)
+    model_spec.loader.exec_module(model_helper)
+    model_helper.import_model_assets(reimport=os.environ.get("CINDER_REIMPORT_MODELS") == "1", required=False)
+
+    audio_helper_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "unreal_audio_assets.py")
+    audio_spec = importlib.util.spec_from_file_location("cinderline_audio_assets", audio_helper_path)
+    audio_helper = importlib.util.module_from_spec(audio_spec)
+    audio_spec.loader.exec_module(audio_helper)
+    audio_helper.import_audio()
+
     map_path = "/Game/Maps/Frontier"
     if rebuild or not unreal.EditorAssetLibrary.does_asset_exist(map_path):
         world = unreal.EditorLoadingAndSavingUtils.new_blank_map(False)
@@ -100,7 +113,7 @@ def bootstrap():
         world.get_world_settings().set_editor_property("default_game_mode", mode)
         if not unreal.EditorLoadingAndSavingUtils.save_map(world, map_path):
             raise RuntimeError("Could not save /Game/Maps/Frontier")
-    unreal.log("CINDERLINE_BOOTSTRAP_OK: artwork, materials and native battlefield map are ready")
+    unreal.log("CINDERLINE_BOOTSTRAP_OK: artwork, models, audio, materials and native battlefield map are ready")
 
 
 bootstrap()

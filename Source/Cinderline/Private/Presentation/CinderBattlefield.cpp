@@ -1,17 +1,43 @@
 #include "Presentation/CinderBattlefield.h"
+#include "Presentation/CinderAudioSubsystem.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Components/DirectionalLightComponent.h"
 #include "Components/SkyLightComponent.h"
 #include "Engine/DirectionalLight.h"
 #include "Engine/SkyLight.h"
 #include "Engine/StaticMesh.h"
+#include "Engine/TextureCube.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
 #include "Misc/Paths.h"
 #include "HAL/FileManager.h"
+#include "HAL/IConsoleManager.h"
 #include "UObject/ConstructorHelpers.h"
 #include <algorithm>
+
+DEFINE_LOG_CATEGORY_STATIC(LogCinderModels, Log, All);
+
+namespace
+{
+constexpr int32 ModelCount = 15;
+const TCHAR* ModelAssetNames[ModelCount] = {
+    TEXT("SM_Drudge"), TEXT("SM_Ember"), TEXT("SM_Needle"), TEXT("SM_Skim"),
+    TEXT("SM_Anvil"), TEXT("SM_Cinderthrow"), TEXT("SM_Mend"), TEXT("SM_Veil"),
+    TEXT("SM_Anchor"), TEXT("SM_Siphon"), TEXT("SM_Kiln"), TEXT("SM_Crucible"),
+    TEXT("SM_Resonator"), TEXT("SM_Ward"), TEXT("SM_Ore")
+};
+const TCHAR* ModelSlotNames[] = { TEXT("HullDark"), TEXT("HullLight"), TEXT("Metal"), TEXT("TeamPanel"), TEXT("CoreGlow") };
+FAutoConsoleCommandWithWorld ModelStatusCommand(
+    TEXT("cinder.models"),
+    TEXT("Report imported models, primitive fallbacks and current rendered entity counts."),
+    FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
+    {
+        if (!World) return;
+        for (TActorIterator<ACinderBattlefield> It(World); It; ++It) It->LogModelStatus();
+    }));
+}
 
 ACinderBattlefield::ACinderBattlefield()
 {
@@ -21,7 +47,9 @@ ACinderBattlefield::ACinderBattlefield()
     static ConstructorHelpers::FObjectFinder<UStaticMesh> CylinderAsset(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> ConeAsset(TEXT("/Engine/BasicShapes/Cone.Cone"));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereAsset(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
+    static ConstructorHelpers::FObjectFinder<UTextureCube> AmbientAsset(TEXT("/Engine/MapTemplates/Sky/DaylightAmbientCubemap.DaylightAmbientCubemap"));
     Cube = CubeAsset.Object; Cylinder = CylinderAsset.Object; Cone = ConeAsset.Object; Sphere = SphereAsset.Object;
+    AmbientCubemap = AmbientAsset.Object;
 }
 
 ACinderBattlefield::FBatch& ACinderBattlefield::AddBatch(UStaticMesh* Mesh, FLinearColor Color)
@@ -43,6 +71,125 @@ ACinderBattlefield::FBatch& ACinderBattlefield::AddBatch(UStaticMesh* Mesh, FLin
     FBatch Batch; Batch.Mesh = Component;
     Batches.Add(MoveTemp(Batch));
     return Batches.Last();
+}
+
+bool ACinderBattlefield::ValidateModel(UStaticMesh* Mesh, cinder::Kind Kind, FString& Reason) const
+{
+    if (!Mesh) { Reason = TEXT("asset missing"); return false; }
+    const auto& Slots = Mesh->GetStaticMaterials();
+    if (Slots.Num() != UE_ARRAY_COUNT(ModelSlotNames)) { Reason = TEXT("expected five material slots"); return false; }
+    for (int32 Slot = 0; Slot < UE_ARRAY_COUNT(ModelSlotNames); ++Slot)
+        if (Slots[Slot].MaterialSlotName != FName(ModelSlotNames[Slot]))
+        {
+            Reason = FString::Printf(TEXT("slot %d is %s, expected %s"), Slot, *Slots[Slot].MaterialSlotName.ToString(), ModelSlotNames[Slot]);
+            return false;
+        }
+    const FBox Bounds = Mesh->GetBoundingBox();
+    const FVector Size = Bounds.GetSize(), Center = Bounds.GetCenter();
+    const double Diameter = cinder::definition(Kind).radius * 2;
+    const double Tolerance = FMath::Max(0.2, Diameter * 0.01);
+    if (!FMath::IsFinite(Size.X) || !FMath::IsFinite(Size.Y) || !FMath::IsFinite(Size.Z)
+        || Size.X <= 0 || Size.Y <= 0 || Size.Z <= 0
+        || FMath::Abs(FMath::Max(Size.X, Size.Y) - Diameter) > Tolerance)
+    {
+        Reason = FString::Printf(TEXT("footprint %.2fx%.2f does not match %.2f cm diameter"), Size.X, Size.Y, Diameter);
+        return false;
+    }
+    if (FMath::Abs(Center.X) > Tolerance || FMath::Abs(Center.Y) > Tolerance || FMath::Abs(Bounds.Min.Z) > Tolerance)
+    {
+        Reason = TEXT("mesh origin is not bottom-centered"); return false;
+    }
+    if (Mesh->GetNumTriangles(0) <= 0 || Mesh->GetNumSections(0) != UE_ARRAY_COUNT(ModelSlotNames))
+    {
+        Reason = TEXT("mesh must have geometry in five material sections"); return false;
+    }
+    return true;
+}
+
+void ACinderBattlefield::LoadModelBatches()
+{
+    ModelBatchStart = Batches.Num();
+    ModelBatchIndices.Init(INDEX_NONE, ModelCount * 2);
+    ModelFallbackReasons.Init(TEXT("asset missing"), ModelCount);
+    ModelMeshes.SetNum(ModelCount);
+    ModelMaterials.Reset();
+    for (const TCHAR* Slot : ModelSlotNames)
+    {
+        const FString Name = FString::Printf(TEXT("/Game/Art/Materials/MI_Cinder%s.MI_Cinder%s"), Slot, Slot);
+        auto* Material = LoadObject<UMaterialInterface>(nullptr, *Name, nullptr, LOAD_NoWarn);
+        if (!Material)
+        {
+            ModelFallbackReasons.Init(TEXT("model material pack missing"), ModelCount);
+            UE_LOG(LogCinderModels, Verbose, TEXT("Model material pack is absent; using primitive entity silhouettes."));
+            return;
+        }
+        ModelMaterials.Add(Material);
+    }
+    // Share these six dynamic instances across every kind; only the team panels and cores change.
+    const FLinearColor PanelColors[] = { FLinearColor(0.04f, 0.82f, 0.72f), FLinearColor(0.96f, 0.24f, 0.17f), FLinearColor(0.85f, 0.35f, 0.08f) };
+    const FLinearColor CoreColors[] = { FLinearColor(0.50f, 1.0f, 0.88f), FLinearColor(1.0f, 0.62f, 0.20f), FLinearColor(1.0f, 0.58f, 0.12f) };
+    for (int32 Palette = 0; Palette < 3; ++Palette)
+    {
+        auto* Panel = UMaterialInstanceDynamic::Create(ModelMaterials[3], this);
+        auto* Core = UMaterialInstanceDynamic::Create(ModelMaterials[4], this);
+        Panel->SetVectorParameterValue(TEXT("Tint"), PanelColors[Palette]);
+        Core->SetVectorParameterValue(TEXT("Tint"), CoreColors[Palette]);
+        ModelMaterials.Add(Panel); ModelMaterials.Add(Core);
+    }
+    // Warm rock faces keep ore recognizable at compact gameplay zoom.
+    const int32 OreMaterialStart = ModelMaterials.Num();
+    const FLinearColor OreColors[] = { FLinearColor(0.24f, 0.11f, 0.035f), FLinearColor(0.58f, 0.29f, 0.07f) };
+    for (int32 Slot = 0; Slot < 2; ++Slot)
+    {
+        auto* OreMaterial = UMaterialInstanceDynamic::Create(ModelMaterials[Slot], this);
+        OreMaterial->SetVectorParameterValue(TEXT("Tint"), OreColors[Slot]);
+        ModelMaterials.Add(OreMaterial);
+    }
+    int32 Loaded = 0;
+    for (int32 Index = 0; Index < ModelCount; ++Index)
+    {
+        const FString Path = FString::Printf(TEXT("/Game/Art/Models/%s.%s"), ModelAssetNames[Index], ModelAssetNames[Index]);
+        auto* Mesh = LoadObject<UStaticMesh>(nullptr, *Path, nullptr, LOAD_NoWarn);
+        if (!ValidateModel(Mesh, static_cast<cinder::Kind>(Index), ModelFallbackReasons[Index]))
+        {
+            UE_LOG(LogCinderModels, Verbose, TEXT("%s fallback: %s"), ModelAssetNames[Index], *ModelFallbackReasons[Index]);
+            continue;
+        }
+        ModelMeshes[Index] = Mesh;
+        ModelFallbackReasons[Index].Empty();
+        const bool Resource = Index == static_cast<int32>(cinder::Kind::Resource);
+        for (int32 Team = 0; Team < (Resource ? 1 : 2); ++Team)
+        {
+            const int32 BatchIndex = Batches.Num();
+            FBatch& Batch = AddBatch(Mesh, FLinearColor::White);
+            for (int32 Slot = 0; Slot < 3; ++Slot)
+                Batch.Mesh->SetMaterial(Slot, ModelMaterials[Resource && Slot < 2 ? OreMaterialStart + Slot : Slot]);
+            const int32 Palette = Resource ? 2 : Team;
+            Batch.Mesh->SetMaterial(3, ModelMaterials[5 + Palette * 2]);
+            Batch.Mesh->SetMaterial(4, ModelMaterials[6 + Palette * 2]);
+            ModelBatchIndices[Index * 2 + Team] = BatchIndex;
+        }
+        ++Loaded;
+    }
+    UE_LOG(LogCinderModels, Verbose, TEXT("Loaded %d/%d models in %d ISM batches; cinder.models reports live usage."), Loaded, ModelCount, Batches.Num() - ModelBatchStart);
+}
+
+void ACinderBattlefield::LogModelStatus() const
+{
+    int32 Loaded = 0;
+    for (const auto& Mesh : ModelMeshes) if (Mesh) ++Loaded;
+    UE_LOG(LogCinderModels, Display, TEXT("CINDERLINE_RENDER_MODELS loaded=%d/%d model_batches=%d rendered_model_entities=%d rendered_fallback_entities=%d"),
+        Loaded, ModelCount, Batches.Num() - ModelBatchStart, LastModelEntities, LastFallbackEntities);
+    for (int32 Index = 0; Index < ModelCount; ++Index)
+    {
+        if (ModelMeshes.IsValidIndex(Index) && ModelMeshes[Index])
+        {
+            const int32 First = ModelBatchIndices[Index * 2], Second = ModelBatchIndices[Index * 2 + 1];
+            const int32 Count = (First != INDEX_NONE ? Batches[First].Mesh->GetInstanceCount() : 0) + (Second != INDEX_NONE ? Batches[Second].Mesh->GetInstanceCount() : 0);
+            UE_LOG(LogCinderModels, Display, TEXT("  %s: imported, instances=%d, triangles=%d"), ModelAssetNames[Index], Count, ModelMeshes[Index]->GetNumTriangles(0));
+        }
+        else UE_LOG(LogCinderModels, Display, TEXT("  %s: primitive fallback (%s)"), ModelAssetNames[Index], ModelFallbackReasons.IsValidIndex(Index) ? *ModelFallbackReasons[Index] : TEXT("not initialized"));
+    }
 }
 
 void ACinderBattlefield::BeginPlay()
@@ -69,13 +216,25 @@ void ACinderBattlefield::BeginPlay()
     for (int Team = 0; Team < 2; ++Team)
         for (UStaticMesh* Shape : { Cube.Get(), Cylinder.Get(), Cone.Get(), Sphere.Get() })
             AddBatch(Shape, Team == 0 ? FLinearColor(0.68f, 1.0f, 0.92f) : FLinearColor(1.0f, 0.68f, 0.28f));
+    LoadModelBatches();
 
     auto* Sun = GetWorld()->SpawnActor<ADirectionalLight>(FVector::ZeroVector, FRotator(-58, -32, 0));
     Sun->GetLightComponent()->SetIntensity(3.0f);
     Sun->GetLightComponent()->SetCastShadows(false);
     auto* Sky = GetWorld()->SpawnActor<ASkyLight>();
-    Sky->GetLightComponent()->SetIntensity(0.8f);
+    auto* SkyComponent = Sky->GetLightComponent();
+    SkyComponent->SetMobility(EComponentMobility::Movable);
+    SkyComponent->SetCastShadows(false);
+    SkyComponent->bRealTimeCapture = false;
+    if (AmbientCubemap)
+    {
+        // A fixed environment lights shaded faces without capturing the empty battlefield sky.
+        SkyComponent->SourceType = SLS_SpecifiedCubemap;
+        SkyComponent->SetCubemap(AmbientCubemap);
+    }
+    SkyComponent->SetIntensity(2.0f);
     Simulation.reset();
+    AudioStatsSnapshot = Simulation.players()[0].stats;
     RenderState();
 }
 
@@ -84,17 +243,36 @@ void ACinderBattlefield::StartMatch(int MapIndex)
     CurrentMap = FMath::Clamp(MapIndex, 0, 2);
     cinder::Config Config; Config.map = CurrentMap;
     Simulation.reset(Config);
+    AudioStatsSnapshot = Simulation.players()[0].stats;
     ResourceMemory.clear();
     bMenu = false; bPaused = false;
     RenderState();
 }
 
-void ACinderBattlefield::ReturnToMenu() { bMenu = true; bPaused = false; }
+void ACinderBattlefield::ReturnToMenu()
+{
+    bMenu = true; bPaused = false;
+    AudioStatsSnapshot = Simulation.players()[0].stats;
+}
+
+void ACinderBattlefield::UpdateCompletionAudio()
+{
+    const auto& Stats = Simulation.players()[0].stats;
+    if (Stats.produced > AudioStatsSnapshot.produced)
+        UCinderAudioSubsystem::Play(this, ECinderCue::Unit_Ready);
+    if (Stats.built > AudioStatsSnapshot.built)
+        UCinderAudioSubsystem::Play(this, ECinderCue::Building_Ready);
+    AudioStatsSnapshot = Stats;
+}
 
 void ACinderBattlefield::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
-    if (!bMenu && !bPaused && Simulation.winner() < 0) Simulation.update(FMath::Min(DeltaSeconds, 0.2f));
+    if (!bMenu && !bPaused && Simulation.winner() < 0)
+    {
+        Simulation.update(FMath::Min(DeltaSeconds, 0.2f));
+        UpdateCompletionAudio();
+    }
     RenderTimer += DeltaSeconds;
     if (RenderTimer >= cinder::Simulation::Step) { RenderTimer = 0; RenderState(); }
 }
@@ -103,9 +281,26 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& Entity)
 {
     using namespace cinder;
     const Definition& Def = definition(Entity.kind);
-    if (Entity.kind == Kind::Resource)
+    const bool Resource = Entity.kind == Kind::Resource;
+    if (Resource)
     {
         if (!Simulation.explored(0, Entity.pos) || Entity.resource <= 0) return;
+    }
+    else if (Entity.team != 0 && !Simulation.visible(0, Entity.pos)) return;
+    const float Elevation = Def.air ? 125.0f : 0.0f;
+    const float BuildScale = Def.building ? FMath::Max(0.08f, Entity.progress) : 1;
+    const FQuat Facing = FRotator(0, FMath::RadiansToDegrees(Entity.facing), 0).Quaternion();
+    const int32 ModelKey = static_cast<int32>(Entity.kind) * 2 + (Resource ? 0 : Entity.team);
+    if (ModelBatchIndices.IsValidIndex(ModelKey) && ModelBatchIndices[ModelKey] != INDEX_NONE)
+    {
+        // The imported centimeter mesh is already sized to the definition and has a bottom pivot.
+        Batches[ModelBatchIndices[ModelKey]].Transforms.Add(FTransform(Facing, FVector(Entity.pos.x, Entity.pos.y, Elevation), FVector(1, 1, BuildScale)));
+        ++LastModelEntities;
+        return;
+    }
+    ++LastFallbackEntities;
+    if (Entity.kind == Kind::Resource)
+    {
         for (int I = 0; I < 3; ++I)
         {
             const float A = I * 2.0944f;
@@ -113,11 +308,7 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& Entity)
         }
         return;
     }
-    if (Entity.team != 0 && !Simulation.visible(0, Entity.pos)) return;
     const float R = Def.radius / 50.0f;
-    const float Elevation = Def.air ? 125.0f : 0.0f;
-    const float BuildScale = Def.building ? FMath::Max(0.08f, Entity.progress) : 1;
-    const FQuat Facing = FRotator(0, FMath::RadiansToDegrees(Entity.facing), 0).Quaternion();
     auto Part = [&](int Shape, FVector Offset, FVector Scale, bool Accent = false, FRotator Rotation = FRotator::ZeroRotator)
     {
         if (Def.building) { Offset.X *= 0.5; Offset.Y *= 0.5; Scale.X *= 0.5; Scale.Y *= 0.5; }
@@ -194,6 +385,7 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& Entity)
 
 void ACinderBattlefield::RenderState()
 {
+    LastModelEntities = LastFallbackEntities = 0;
     for (FBatch& Batch : Batches) Batch.Transforms.Reset();
     if (Batches.IsEmpty()) return;
     Batches[0].Transforms.Add(FTransform(FQuat::Identity, FVector(2400, 2400, -16), FVector(49, 49, 0.3f)));
@@ -253,6 +445,7 @@ bool ACinderBattlefield::LoadMatch()
 {
     const FString Filename = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*(FPaths::ProjectSavedDir() / TEXT("Matches/skirmish.cinder")));
     if (!Simulation.load(TCHAR_TO_UTF8(*Filename))) return false;
+    AudioStatsSnapshot = Simulation.players()[0].stats;
     CurrentMap = Simulation.config().map;
     ResourceMemory.clear();
     bMenu = false; bPaused = false; RenderState(); return true;

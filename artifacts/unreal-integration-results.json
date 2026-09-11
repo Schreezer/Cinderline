@@ -4,18 +4,21 @@
   "failed": 0,
   "notRun": 0,
   "inProcess": 0,
-  "totalDuration": 0.1265394240617752,
+  "totalDuration": 0.18474237620830536,
   "engine": "Unreal Engine 5.8.2, Mac Development Editor, NullRHI",
-  "scope": "Real transient world, game mode, battlefield and controller. No viewport, touch input, physical device or GPU timing proof.",
-  "run": "20260911T125437Z-98717",
+  "scope": "Real transient world, game mode, battlefield and controller with imported model assets, resource palette and referenced ambient lighting. No viewport, touch input, physical device or GPU timing proof.",
+  "run": "20260911T133448Z-14796",
   "tests": [
     {
       "testDisplayName": "EconomyAndProduction",
       "fullTestPath": "Cinderline.Integration.EconomyAndProduction",
+      "tags": [],
       "state": "Success",
-      "duration": 0.11811721324920654,
-      "warnings": 0,
-      "errors": 0,
+      "deviceInstance": [
+        "4ED44C4EDF47506A79B7B0864FE43823"
+      ],
+      "duration": 0.16965758800506592,
+      "dateTime": "2026.09.11-13.35.21",
       "entries": [
         {
           "event": {
@@ -26,17 +29,23 @@
           },
           "filename": "",
           "lineNumber": -1,
-          "timestamp": "2026.09.11-12.55.08"
+          "timestamp": "2026.09.11-13.35.21"
         }
-      ]
+      ],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
     },
     {
       "testDisplayName": "WorldLifecycle",
       "fullTestPath": "Cinderline.Integration.WorldLifecycle",
+      "tags": [],
       "state": "Success",
-      "duration": 0.008422207087278366,
-      "warnings": 0,
-      "errors": 0,
+      "deviceInstance": [
+        "4ED44C4EDF47506A79B7B0864FE43823"
+      ],
+      "duration": 0.01508479192852974,
+      "dateTime": "2026.09.11-13.35.21",
       "entries": [
         {
           "event": {
@@ -47,9 +56,12 @@
           },
           "filename": "",
           "lineNumber": -1,
-          "timestamp": "2026.09.11-12.55.08"
+          "timestamp": "2026.09.11-13.35.21"
         }
-      ]
+      ],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
     }
   ]
 }

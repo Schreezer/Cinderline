@@ -7,6 +7,7 @@
 class UInstancedStaticMeshComponent;
 class UMaterialInterface;
 class UStaticMesh;
+class UTextureCube;
 
 /** The presentation adapter is the sole owner of the portable authoritative simulation. */
 UCLASS()
@@ -29,6 +30,7 @@ public:
     void RenderState();
     bool SaveMatch() const;
     bool LoadMatch();
+    void LogModelStatus() const;
 
 private:
     struct FBatch
@@ -37,19 +39,31 @@ private:
         TArray<FTransform> Transforms;
     };
     FBatch& AddBatch(UStaticMesh* Mesh, FLinearColor Color);
+    void LoadModelBatches();
+    bool ValidateModel(UStaticMesh* Mesh, cinder::Kind Kind, FString& Reason) const;
     void AddEntity(const cinder::Entity& Entity);
     void FlushBatches();
+    void UpdateCompletionAudio();
     cinder::Simulation Simulation;
+    cinder::Stats AudioStatsSnapshot;
     std::vector<cinder::Entity> ResourceMemory;
     bool bMenu = true;
     bool bPaused = false;
     int CurrentMap = 0;
     float RenderTimer = 0;
     TArray<FBatch> Batches;
+    TArray<int32> ModelBatchIndices;
+    TArray<FString> ModelFallbackReasons;
+    int32 ModelBatchStart = 0;
+    int32 LastModelEntities = 0;
+    int32 LastFallbackEntities = 0;
     UPROPERTY() TArray<TObjectPtr<UInstancedStaticMeshComponent>> MeshComponents;
+    UPROPERTY() TArray<TObjectPtr<UStaticMesh>> ModelMeshes;
+    UPROPERTY() TArray<TObjectPtr<UMaterialInterface>> ModelMaterials;
     UPROPERTY() TObjectPtr<UStaticMesh> Cube;
     UPROPERTY() TObjectPtr<UStaticMesh> Cylinder;
     UPROPERTY() TObjectPtr<UStaticMesh> Cone;
     UPROPERTY() TObjectPtr<UStaticMesh> Sphere;
+    UPROPERTY() TObjectPtr<UTextureCube> AmbientCubemap;
     UPROPERTY() TObjectPtr<UMaterialInterface> BaseMaterial;
 };

@@ -1,0 +1,416 @@
+{
+  "engine": "UE 5.8.2 Mac Editor with Metal rendering enabled",
+  "run_utc": "2026-09-11T13:24:44Z",
+  "models": [
+    {
+      "dimensions_cm": [
+        32.0,
+        19.90703773498535,
+        25.0
+      ],
+      "kind": "Worker",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Drudge",
+      "origin_cm": [
+        0.0,
+        0.0,
+        12.5
+      ],
+      "path": "/Game/Art/Models/SM_Drudge.SM_Drudge",
+      "triangles": 1720
+    },
+    {
+      "dimensions_cm": [
+        39.99999809265137,
+        30.854467391967773,
+        48.0
+      ],
+      "kind": "Striker",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Ember",
+      "origin_cm": [
+        -9.5367431640625e-07,
+        -9.5367431640625e-07,
+        24.0
+      ],
+      "path": "/Game/Art/Models/SM_Ember.SM_Ember",
+      "triangles": 1404
+    },
+    {
+      "dimensions_cm": [
+        42.00000190734863,
+        23.806681632995605,
+        47.0
+      ],
+      "kind": "Lancer",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Needle",
+      "origin_cm": [
+        9.5367431640625e-07,
+        -1.430511474609375e-06,
+        23.5
+      ],
+      "path": "/Game/Art/Models/SM_Needle.SM_Needle",
+      "triangles": 1624
+    },
+    {
+      "dimensions_cm": [
+        36.0,
+        17.294233322143555,
+        14.0
+      ],
+      "kind": "Scout",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Skim",
+      "origin_cm": [
+        0.0,
+        -9.5367431640625e-07,
+        7.0
+      ],
+      "path": "/Game/Art/Models/SM_Skim.SM_Skim",
+      "triangles": 1180
+    },
+    {
+      "dimensions_cm": [
+        68.00000381469727,
+        59.690773010253906,
+        38.0
+      ],
+      "kind": "Bastion",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Anvil",
+      "origin_cm": [
+        -1.9073486328125e-06,
+        1.9073486328125e-06,
+        19.0
+      ],
+      "path": "/Game/Art/Models/SM_Anvil.SM_Anvil",
+      "triangles": 2984
+    },
+    {
+      "dimensions_cm": [
+        60.0,
+        41.84610366821289,
+        38.0
+      ],
+      "kind": "Mortar",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Cinderthrow",
+      "origin_cm": [
+        -1.9073486328125e-06,
+        -3.814697265625e-06,
+        19.0
+      ],
+      "path": "/Game/Art/Models/SM_Cinderthrow.SM_Cinderthrow",
+      "triangles": 3024
+    },
+    {
+      "dimensions_cm": [
+        38.0,
+        34.24365997314453,
+        39.0
+      ],
+      "kind": "Mender",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Mend",
+      "origin_cm": [
+        0.0,
+        -1.9073486328125e-06,
+        19.5
+      ],
+      "path": "/Game/Art/Models/SM_Mend.SM_Mend",
+      "triangles": 2532
+    },
+    {
+      "dimensions_cm": [
+        49.69508171081543,
+        52.0,
+        18.0
+      ],
+      "kind": "Kite",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Veil",
+      "origin_cm": [
+        -9.5367431640625e-07,
+        -1.9073486328125e-06,
+        9.0
+      ],
+      "path": "/Game/Art/Models/SM_Veil.SM_Veil",
+      "triangles": 1328
+    },
+    {
+      "dimensions_cm": [
+        250.0,
+        250.0,
+        185.0
+      ],
+      "kind": "Headquarters",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Anchor",
+      "origin_cm": [
+        0.0,
+        0.0,
+        92.5
+      ],
+      "path": "/Game/Art/Models/SM_Anchor.SM_Anchor",
+      "triangles": 2304
+    },
+    {
+      "dimensions_cm": [
+        152.0,
+        152.0,
+        112.0
+      ],
+      "kind": "Processor",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Siphon",
+      "origin_cm": [
+        0.0,
+        0.0,
+        56.0
+      ],
+      "path": "/Game/Art/Models/SM_Siphon.SM_Siphon",
+      "triangles": 1952
+    },
+    {
+      "dimensions_cm": [
+        180.0,
+        180.0,
+        120.0
+      ],
+      "kind": "Foundry",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Kiln",
+      "origin_cm": [
+        0.0,
+        0.0,
+        60.0
+      ],
+      "path": "/Game/Art/Models/SM_Kiln.SM_Kiln",
+      "triangles": 2348
+    },
+    {
+      "dimensions_cm": [
+        208.0,
+        208.0,
+        155.0
+      ],
+      "kind": "MotorPool",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Crucible",
+      "origin_cm": [
+        0.0,
+        0.0,
+        77.5
+      ],
+      "path": "/Game/Art/Models/SM_Crucible.SM_Crucible",
+      "triangles": 2000
+    },
+    {
+      "dimensions_cm": [
+        170.0,
+        170.0,
+        160.0
+      ],
+      "kind": "Laboratory",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Resonator",
+      "origin_cm": [
+        0.0,
+        0.0,
+        80.0
+      ],
+      "path": "/Game/Art/Models/SM_Resonator.SM_Resonator",
+      "triangles": 2512
+    },
+    {
+      "dimensions_cm": [
+        96.00000381469727,
+        83.16967010498047,
+        120.0
+      ],
+      "kind": "Turret",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Ward",
+      "origin_cm": [
+        1.9073486328125e-06,
+        0.0,
+        60.0
+      ],
+      "path": "/Game/Art/Models/SM_Ward.SM_Ward",
+      "triangles": 1796
+    },
+    {
+      "dimensions_cm": [
+        88.72891998291016,
+        90.00000762939453,
+        65.0
+      ],
+      "kind": "Resource",
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Ore",
+      "origin_cm": [
+        0.0,
+        0.0,
+        32.5
+      ],
+      "path": "/Game/Art/Models/SM_Ore.SM_Ore",
+      "triangles": 1108
+    }
+  ],
+  "materials": [
+    {
+      "GlowIntensity": 0.0,
+      "Metallic": 0.07999999821186066,
+      "Roughness": 0.7799999713897705,
+      "name": "MI_CinderHullDark",
+      "tint": [
+        0.04500000178813934,
+        0.07999999821186066,
+        0.0949999988079071,
+        1.0
+      ]
+    },
+    {
+      "GlowIntensity": 0.0,
+      "Metallic": 0.10000000149011612,
+      "Roughness": 0.6600000262260437,
+      "name": "MI_CinderHullLight",
+      "tint": [
+        0.3799999952316284,
+        0.5099999904632568,
+        0.5299999713897705,
+        1.0
+      ]
+    },
+    {
+      "GlowIntensity": 0.0,
+      "Metallic": 0.7200000286102295,
+      "Roughness": 0.3400000035762787,
+      "name": "MI_CinderMetal",
+      "tint": [
+        0.12999999523162842,
+        0.18000000715255737,
+        0.20000000298023224,
+        1.0
+      ]
+    },
+    {
+      "GlowIntensity": 0.07999999821186066,
+      "Metallic": 0.05000000074505806,
+      "Roughness": 0.6000000238418579,
+      "name": "MI_CinderTeamPanel",
+      "tint": [
+        0.03999999910593033,
+        0.8199999928474426,
+        0.7200000286102295,
+        1.0
+      ]
+    },
+    {
+      "GlowIntensity": 1.7999999523162842,
+      "Metallic": 0.0,
+      "Roughness": 0.4000000059604645,
+      "name": "MI_CinderCoreGlow",
+      "tint": [
+        0.5,
+        1.0,
+        0.8799999952316284,
+        1.0
+      ]
+    }
+  ],
+  "model_triangles": 29816,
+  "audio_import_count": 8,
+  "limits": "Import metadata validation. Visual facing, gameplay and listening checks are separate."
+}

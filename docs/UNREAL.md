@@ -16,13 +16,27 @@ export UE_ROOT="/Users/Shared/Epic Games/UE_5.8" # replace if installed elsewher
 ./scripts/unreal.sh play
 ```
 
+Unreal needs Apple's Metal compiler even for desktop rendering. If Xcode reports
+a missing Metal Toolchain, install it and refresh its SDK-specific lookup cache:
+
+```sh
+xcodebuild -downloadComponent MetalToolchain
+xcrun --kill-cache --sdk macosx metal --version
+```
+
+These commands repaired the active Xcode 27 installation during the desktop
+presentation pass. The `doctor` command now checks the same macOS compiler lookup.
+
 `setup` builds the Editor target, then runs the editor Python bootstrap to import
-the original terrain and menu artwork, create the materials and generate
+the original terrain and menu artwork, Blender models and audio, create materials and generate
 `/Game/Maps/Frontier`. Generated PNG sources and exact prompts are recorded in
 [ART_ASSETS.md](ART_ASSETS.md). The bootstrap configures a 1024 by 1024 texture build with mipmaps while preserving
-the original source. Cooked texture dimensions have not yet been inspected. Primitives ship with Unreal;
-each unit and building uses an original multi-part silhouette. Existing generated
-assets are preserved; required material usage and texture build settings are updated.
+the original source. Cooked texture dimensions have not yet been inspected.
+The model importer validates centimeter dimensions, bottom-centered pivots, all five
+material slots and triangle counts. Missing or invalid runtime models use the earlier
+multi-part silhouettes. Asset provenance is in [MODEL_ASSETS.md](MODEL_ASSETS.md)
+and [AUDIO_ASSETS.md](AUDIO_ASSETS.md). Existing meshes are preserved unless
+`CINDER_REIMPORT_MODELS=1` is supplied; material and texture settings are refreshed.
 `CINDER_REBUILD_CONTENT=1 ./scripts/unreal.sh bootstrap` recreates the map explicitly.
 
 The Python plugin is Editor-only. It is not needed inside the packaged game.
@@ -70,8 +84,9 @@ Unreal's cached cursor location on this Mac, so automated mouse targeting remain
 unreliable. These checks do not establish touch quality, a packaged build or iOS
 performance. See [the verification record](../artifacts/verification-summary.md).
 
-The current presentation uses placeholder primitives and Canvas UI, without
-character animation, audio, haptics, smooth fog edges, retained offscreen enemy
+The presentation uses static Blender models and Canvas UI with interface, order
+and production audio hooks. It still needs character animation, combat audio,
+haptics, smooth fog edges, retained offscreen enemy
 building intelligence, networking or a second asymmetric faction. Camera smoothing
 is implemented; momentum/gesture tuning still requires physical-device testing.
 Device-specific safe area and suspend/resume handling need a later iOS product pass.

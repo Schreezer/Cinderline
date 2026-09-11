@@ -1,11 +1,13 @@
 #include "Presentation/CinderHUD.h"
 #include "Presentation/CinderBattlefield.h"
 #include "Presentation/CinderPlayerController.h"
+#include "Presentation/CinderAudioSubsystem.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
 #include "CanvasItem.h"
 #include "Engine/World.h"
 #include "Engine/Texture2D.h"
+#include "Engine/Font.h"
 #include <algorithm>
 #include <map>
 
@@ -28,16 +30,67 @@ void ACinderHUD::BeginPlay()
     Super::BeginPlay();
     // Load once per HUD lifetime; retain the optional texture through garbage collection.
     MenuBackdrop = MenuBackdropAsset.LoadSynchronous();
+    // Engine's generic canvas font is only 10 points. Retain a legible UI font
+    // independently of the editor's fallback-font settings.
+    const auto MakeFont = [this](FName Typeface)
+    {
+        UFont* Font = NewObject<UFont>(this);
+        Font->FontCacheType = EFontCacheType::Runtime;
+        Font->RuntimeFontSource = ERuntimeFontSource::CoreStyleDefault;
+        Font->LegacyFontName = Typeface;
+        Font->LegacyFontSize = 14;
+        return Font;
+    };
+    InterfaceFont = MakeFont(TEXT("Regular"));
+    HeadingFont = MakeFont(TEXT("Bold"));
 }
 
 void ACinderHUD::Panel(float X, float Y, float W, float H, FLinearColor Color) { DrawRect(Color, X, Y, W, H); }
 void ACinderHUD::Label(const FString& Text, float X, float Y, FLinearColor Color, float Scale)
 {
     if (!GEngine || !Canvas) return;
-    FCanvasTextItem Item(FVector2D(X, Y), FText::FromString(Text), GEngine->GetMediumFont(), Color);
+    UFont* Font = Scale >= 1.5f && HeadingFont ? HeadingFont.Get() : InterfaceFont.Get();
+    FCanvasTextItem Item(FVector2D(X, Y), FText::FromString(Text), Font ? Font : GEngine->GetMediumFont(), Color);
     Item.Scale = FVector2D(Scale * UIScale);
     Item.EnableShadow(FLinearColor(0, 0, 0, 0.55f));
     Canvas->DrawItem(Item);
+}
+void ACinderHUD::WrappedLabel(const FString& Text, float X, float Y, float MaxWidth, FLinearColor Color, float Scale)
+{
+    TArray<FString> Words;
+    Text.ParseIntoArray(Words, TEXT(" "), true);
+    FString Line;
+    for (const FString& Word : Words)
+    {
+        const FString Candidate = Line.IsEmpty() ? Word : Line + TEXT(" ") + Word;
+        float TextWidth = 0, TextHeight = 0;
+        GetTextSize(Candidate, TextWidth, TextHeight, InterfaceFont ? InterfaceFont.Get() : GEngine ? GEngine->GetMediumFont() : nullptr, Scale * UIScale);
+        if (!Line.IsEmpty() && TextWidth > MaxWidth)
+        {
+            Label(Line, X, Y, Color, Scale);
+            Y += 19 * UIScale;
+            Line = Word;
+        }
+        else Line = Candidate;
+    }
+    if (!Line.IsEmpty()) Label(Line, X, Y, Color, Scale);
+}
+void ACinderHUD::SingleLineLabel(const FString& Text, float X, float Y, float MaxWidth, FLinearColor Color, float Scale)
+{
+    FString VisibleText = Text;
+    float TextWidth = 0, TextHeight = 0;
+    UFont* Font = InterfaceFont ? InterfaceFont.Get() : GEngine ? GEngine->GetMediumFont() : nullptr;
+    GetTextSize(VisibleText, TextWidth, TextHeight, Font, Scale * UIScale);
+    if (TextWidth > MaxWidth)
+    {
+        do
+        {
+            VisibleText.LeftChopInline(1);
+            GetTextSize(VisibleText + TEXT("..."), TextWidth, TextHeight, Font, Scale * UIScale);
+        } while (!VisibleText.IsEmpty() && TextWidth > MaxWidth);
+        VisibleText += TEXT("...");
+    }
+    Label(VisibleText, X, Y, Color, Scale);
 }
 void ACinderHUD::Button(const FString& Text, const FString& Action, int Arg, float X, float Y, float W, bool Active)
 {
@@ -45,7 +98,7 @@ void ACinderHUD::Button(const FString& Text, const FString& Action, int Arg, flo
     Panel(X, Y, W, H, Active ? FLinearColor(0.07f, 0.32f, 0.30f) : PanelInk);
     Panel(X, Y, W, 2 * UIScale, Active ? Mint : FLinearColor(0.14f, 0.28f, 0.29f));
     float TextWidth = 0, TextHeight = 0;
-    GetTextSize(Text, TextWidth, TextHeight, GEngine ? GEngine->GetMediumFont() : nullptr, 0.80f * UIScale);
+    GetTextSize(Text, TextWidth, TextHeight, InterfaceFont ? InterfaceFont.Get() : GEngine ? GEngine->GetMediumFont() : nullptr, 0.80f * UIScale);
     const float Fit = TextWidth > 0 ? FMath::Min(1.0f, (W - 20 * UIScale) / TextWidth) : 1;
     Label(Text, X + 10 * UIScale, Y + 12 * UIScale, Active ? Mint : White, 0.80f * Fit);
     FButton B; B.Bounds = FBox2D(FVector2D(X, Y), FVector2D(X + W, Y + H)); B.Action = Action; B.Argument = Arg; Buttons.Add(B);
@@ -67,6 +120,7 @@ bool ACinderHUD::HandleTap(FVector2D Point)
     {
         const FButton B = Buttons[I];
         if (!B.Bounds.IsInside(Point)) continue;
+        UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
         if (B.Action == TEXT("map")) SelectedMap = B.Argument;
         else if (B.Action == TEXT("groupsnext")) ++SubgroupPage;
         else if (B.Action == TEXT("sheet")) { CompactSheet = CompactSheet == B.Argument ? 0 : B.Argument; PC->bBuildMenu = false; }
@@ -152,7 +206,7 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
 void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Battle)
 {
     const float Size = (bCompactLayout ? 92 : 155) * UIScale;
-    const FVector2D Origin(Margin, bCompactLayout ? 76 * UIScale : Height - Size - 30 * UIScale);
+    const FVector2D Origin(bCompactLayout ? Width - Margin - Size : Margin, bCompactLayout ? 76 * UIScale : Height - Size - 30 * UIScale);
     Minimap = FBox2D(Origin, Origin + FVector2D(Size));
     UIRegions.Add(Minimap);
     Panel(Origin.X - 3, Origin.Y - 3, Size + 6, Size + 6, Muted);
@@ -277,7 +331,7 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
     Label(FString::Printf(TEXT("T%d W%d A%d"), Player.tier, Player.weapons, Player.armor), Margin + 248 * S, Top + 12 * S, Mint, 0.77f);
     Label(ClockString(Sim.time()), Width - Margin - 166 * S, Top + 12 * S, Muted, 0.77f);
     Button(TEXT("PAUSE"), TEXT("pause"), 0, Width - Margin - 88 * S, Top - 3 * S, 88 * S);
-    if (CompactSheet == 0 && !PC->bBuildMenu) DrawMinimap(PC, Battle);
+    if (CompactSheet == 0 && !PC->bBuildMenu && !PC->IsBuildMode()) DrawMinimap(PC, Battle);
     const cinder::Entity* First = PC->Selection().empty() ? nullptr : Sim.find(PC->Selection().front());
     Panel(0, Height - 129 * S, Width, 129 * S, Ink);
     UIRegions.Add(FBox2D(FVector2D(0, Height - 129 * S), FVector2D(Width, Height)));
@@ -360,11 +414,16 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
             Button(Options[I].Text, Options[I].Action, Options[I].Arg, X + (I % 4) * (CellW + 7 * S), Y + (35 + (I / 4) * 51) * S, CellW);
         if (Options.IsEmpty()) Label(TEXT("Select a unit or a production structure first."), X + 5 * S, Y + 56 * S, White, 0.78f);
     }
-    if (!PC->Feedback().IsEmpty()) Label(PC->Feedback(), Margin + 107 * S, 72 * S, Amber, 0.70f);
-    else if (Sim.time() < 120 && CompactSheet == 0 && !PC->bBuildMenu)
-        Label(TEXT("Select a Drudge. Build a Kiln. Train an army."), Margin + 107 * S, 72 * S, White, 0.76f);
-    if (PC->bDebug)
-        Label(FString::Printf(TEXT("%.2f ms sim / %d entities / %.0f fps"), Sim.lastStepMilliseconds(), static_cast<int>(Sim.entities().size()), 1.0f / FMath::Max(GetWorld()->GetDeltaSeconds(), 0.001f)), Margin + 107 * S, 98 * S, Mint, 0.72f);
+    const bool bSheetVisible = !PC->IsBuildMode() && (PC->bBuildMenu || CompactSheet != 0);
+    if (!PC->Feedback().IsEmpty())
+    {
+        if (bSheetVisible) SingleLineLabel(PC->Feedback(), Margin, 62 * S, InnerW, Amber, 0.70f);
+        else WrappedLabel(PC->Feedback(), Margin, 72 * S, InnerW - (PC->IsBuildMode() ? 211 : 108) * S, Amber, 0.70f);
+    }
+    else if (Sim.time() < 120 && CompactSheet == 0 && !PC->bBuildMenu && !PC->IsBuildMode())
+        WrappedLabel(TEXT("Select a Drudge. Build a Kiln. Train an army."), Margin, 72 * S, InnerW - 108 * S, White, 0.76f);
+    if (PC->bDebug && !bSheetVisible && !PC->IsBuildMode())
+        Label(FString::Printf(TEXT("%.2f ms sim / %d entities / %.0f fps"), Sim.lastStepMilliseconds(), static_cast<int>(Sim.entities().size()), 1.0f / FMath::Max(GetWorld()->GetDeltaSeconds(), 0.001f)), Margin, 134 * S, Mint, 0.72f);
     DrawOverlay(PC, Battle);
 }
 

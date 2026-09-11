@@ -1,20 +1,18 @@
 # Cinderline task board
 
-Current order, confirmed by the user on 2026-09-11: **mechanics and logic → aesthetics and assets → full playtest → iOS**. Development checks continue as mechanics change. Blender is installed for the later art pass.
+Current order, confirmed by the user on 2026-09-11: **mechanics and logic → aesthetics and assets → full playtest → iOS**. Development checks continue as mechanics change. Blender was used to create the first model pack.
 
 ## NOW
-- Import and verify the original Blender models in Unreal.
-- Improve HUD readability and add restrained command, production and combat audio.
-- Preserve the verified mechanics while completing the presentation pass.
+- Hands-on build/produce/control check in the refreshed Unreal game. The game is open at a fresh menu and feedback is requested.
+- Continue through a full skirmish using [PLAYTEST.md](PLAYTEST.md).
 
 ## NEXT
-- Run a fuller playtest of the integrated first-faction skirmish.
-- Inspect economy, production, scouting, composition choices and match pacing through gameplay.
-- Repair playtest findings before the deferred iOS stage.
+- Repair player-interaction findings and assess economy, scouting, counters, expansion and match pacing.
+- Add explicit combat sound events and review the in-game mix.
+- Inspect the full roster and enemy team palette through gameplay, then improve animation, fog edges and late-game rendering.
 
 ## LATER
-- Original 3D assets, animation, audio, effects and battlefield readability.
-- Full playtest and measured match pacing toward 20–30 minutes.
+- Measured human match pacing toward 20–30 minutes.
 - iPhone/iPad packaging, signing, physical gestures, safe areas, performance and thermal tests.
 - Asymmetric second faction, multiplayer, matchmaking, replay viewer and more content.
 
@@ -28,10 +26,13 @@ Current order, confirmed by the user on 2026-09-11: **mechanics and logic → ae
 - UE 5.8.2 Mac Editor builds and launches the generated battlefield with working simulation and HUD.
 - Actual Unreal checks covered menu start, ore gathering, arrow pan, Home, wheel zoom, pause/resume and compact menu/battlefield layouts. The user confirmed START SKIRMISH works with their own mouse.
 - Unreal reached natural defeat through AI gameplay at 5:30 while the player base was left undefended. This was not a balanced human match test.
-- Original generated basalt and menu artwork are imported, with prompts and provenance recorded. Further art work is deferred until mechanics are ready.
+- Original generated basalt and menu artwork are imported, with prompts and provenance recorded.
 
 - Fixed cover pursuit, displaced Hold orders and support following. AI now evaluates visible remaining ore, dispatches local defense workers, advances while scouting and attaches new/orphaned Menders to armed leaders. A second review found no remaining important issue in this bounded pass.
-- Authored and roundtrip-validated 15 Blender models. Unreal import and presentation are the next checks.
+- Authored and roundtrip-validated 15 Blender models; all imported into Unreal with exact dimensions, slots and triangle counts. Fixed Skim exhaust geometry before import.
+- Integrated shared materials, readable copper ore, ambient lighting, larger fonts and compact feedback bounds. Actual desktop and compact construction/battlefield captures passed.
+- Imported eight sound cues and wired interface, order and production feedback. Live interface/rejected-order submissions reached Unreal audio; listening/mix review remains open.
+- Built the presentation changes and passed both engine integration tests. [PRESENTATION_PASS.md](PRESENTATION_PASS.md) separates source, runtime and outstanding playtest evidence.
 
 ## BLOCKED
 - Automated absolute mouse clicks do not update Unreal's cached mouse location on this Mac. Physical mouse start is user-confirmed; command integration tests and keyboard checks provide separate evidence.

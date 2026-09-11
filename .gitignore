@@ -8,3 +8,5 @@ DerivedDataCache/
 *.xcodeproj/
 artifacts/*.app/
 artifacts/*.log
+__pycache__/
+*.pyc

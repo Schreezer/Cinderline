@@ -1,0 +1,276 @@
+{
+  "blender_version": "5.2.1 LTS",
+  "passed": true,
+  "checks": [
+    {
+      "name": "SM_Drudge",
+      "dimensions_cm": [
+        32.0,
+        19.907,
+        25.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 2.7e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Ember",
+      "dimensions_cm": [
+        40.0,
+        30.854,
+        48.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 3.4e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Needle",
+      "dimensions_cm": [
+        42.0,
+        23.807,
+        47.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 3.8e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Skim",
+      "dimensions_cm": [
+        36.0,
+        17.294,
+        14.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 3.1e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Anvil",
+      "dimensions_cm": [
+        68.0,
+        59.691,
+        38.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 6.9e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Cinderthrow",
+      "dimensions_cm": [
+        60.0,
+        41.846,
+        38.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 5.4e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Mend",
+      "dimensions_cm": [
+        38.0,
+        34.244,
+        39.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 3.4e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Veil",
+      "dimensions_cm": [
+        49.695,
+        52.0,
+        18.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 5.4e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Anchor",
+      "dimensions_cm": [
+        250.0,
+        250.0,
+        185.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 2.16e-05,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Siphon",
+      "dimensions_cm": [
+        152.0,
+        152.0,
+        112.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 1.14e-05,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Kiln",
+      "dimensions_cm": [
+        180.0,
+        180.0,
+        120.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 1.38e-05,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Crucible",
+      "dimensions_cm": [
+        208.0,
+        208.0,
+        155.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 1.71e-05,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Resonator",
+      "dimensions_cm": [
+        170.0,
+        170.0,
+        160.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 1.38e-05,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Ward",
+      "dimensions_cm": [
+        96.0,
+        83.17,
+        120.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 8.5e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Ore",
+      "dimensions_cm": [
+        88.729,
+        90.0,
+        65.0
+      ],
+      "bottom_z_cm": 0.0,
+      "maximum_vertex_error_cm": 7.7e-06,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    }
+  ]
+}

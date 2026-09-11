@@ -1,0 +1,275 @@
+{
+  "SM_Anchor": {
+    "triangles": 2304,
+    "vertices": 1224,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Anvil": {
+    "triangles": 2984,
+    "vertices": 1590,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Cinderthrow": {
+    "triangles": 3024,
+    "vertices": 1600,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 16
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Crucible": {
+    "triangles": 2000,
+    "vertices": 1074,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Drudge": {
+    "triangles": 1720,
+    "vertices": 916,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Ember": {
+    "triangles": 1404,
+    "vertices": 748,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Kiln": {
+    "triangles": 2348,
+    "vertices": 1248,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Mend": {
+    "triangles": 2532,
+    "vertices": 1316,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Needle": {
+    "triangles": 1624,
+    "vertices": 866,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Ore": {
+    "triangles": 1108,
+    "vertices": 606,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Resonator": {
+    "triangles": 2512,
+    "vertices": 1298,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Siphon": {
+    "triangles": 1952,
+    "vertices": 1016,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Skim": {
+    "triangles": 1180,
+    "vertices": 624,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Veil": {
+    "triangles": 1328,
+    "vertices": 708,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "SM_Ward": {
+    "triangles": 1796,
+    "vertices": 954,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "Skim_FBX": {
+    "triangles": 1180,
+    "vertices": 624,
+    "counts_below_area_cm2": {
+      "0": 0,
+      "1e-14": 0,
+      "1e-10": 0,
+      "1e-08": 0,
+      "1e-06": 0,
+      "5e-05": 0,
+      "0.0001": 0,
+      "0.001": 0,
+      "0.01": 0
+    },
+    "coincident_corner_triangles": 0,
+    "tiny_triangles": []
+  },
+  "skim_degenerate_parts_authored_coordinates": []
+}

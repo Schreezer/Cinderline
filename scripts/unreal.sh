@@ -68,7 +68,11 @@ case "$action" in
     find_engine
     printf 'Engine: %s\nPlatform: %s\nEditor: %s\n' "$engine_root" "$platform" "$editor"
     [[ -x "$editor" ]] || { printf '%s\n' 'Editor executable missing; installation may still be running.' >&2; exit 2; }
-    if [[ "$platform" == Mac ]]; then xcode-select -p; xcrun --find clang; fi
+    if [[ "$platform" == Mac ]]; then
+      xcode-select -p
+      xcrun --find clang
+      xcrun --sdk macosx metal --version
+    fi
     ;;
   build) find_engine; build "$@" ;;
   bootstrap) find_engine; bootstrap "$@" ;;

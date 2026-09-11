@@ -1,0 +1,38 @@
+{
+  "engine": "UE 5.8.2 Mac standalone Development, Metal SM5",
+  "run_utc": "2026-09-11T13:40:51Z",
+  "model_status": "[2026.09.11-13.42.09:818][267]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=10 rendered_fallback_entities=0",
+  "audio_status": "[2026.09.11-13.42.14:347][810]LogCinderAudio: Display: CinderAudio: loaded=2/8 requested=2 played=2 throttled=0 missing=0 unavailable=0; played counts PlaySound2D submissions, not listening proof.",
+  "screenshots": {
+    "unreal-battlefield.png": {
+      "dimensions": [
+        1280,
+        720
+      ],
+      "sha256": "da12b22e57c13711f0d278bf8f9fe23f0ccef80f825bc755a804edf7a65db9b1"
+    },
+    "unreal-compact-battlefield.png": {
+      "dimensions": [
+        667,
+        375
+      ],
+      "sha256": "24e5f1e030471fbcc77b0735512506f046f41522386322012f9ce78fb0343762"
+    },
+    "unreal-wide-compact-battlefield.png": {
+      "dimensions": [
+        844,
+        390
+      ],
+      "sha256": "1ba9bb69b68c854dcfc63fbd503b200c532f2f64c52c3a5eb43b230b3329dfc3"
+    },
+    "unreal-compact-construction.png": {
+      "dimensions": [
+        667,
+        375
+      ],
+      "sha256": "eb475349b12d9298b3476df9c2fdbf68d9909b294af47134bc114f40be07357c"
+    }
+  },
+  "actions": "Keyboard start, construction sheet toggle during opening feedback, rejected Hold with empty selection, Home, console diagnostics and viewport resize. Ordinary workers gathered ore. Map reloaded to leave a fresh menu.",
+  "limits": "Starting HQ, workers and resources visually inspected; all15 models loaded but the full roster and enemy palette were not visually exercised. Audio counts are submissions, not listening proof. Synthetic pointer targeting remains unreliable; hands-on build/production feedback requested."
+}
