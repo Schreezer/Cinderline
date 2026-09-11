@@ -8,8 +8,8 @@ namespace cinder {
 using Id = std::uint32_t;
 struct Vec2 { float x=0, y=0; };
 enum class Kind : int { Worker, Striker, Lancer, Scout, Bastion, Mortar, Mender, Kite, Headquarters, Processor, Foundry, MotorPool, Laboratory, Turret, Resource };
-enum class Order : int { Idle, Move, Attack, AttackMove, Gather, Hold };
-enum class CommandType : int { Move, Attack, AttackMove, Gather, Stop, Hold, Build, Train, CancelQueue, Rally, Research, CancelBuilding };
+enum class Order : int { Idle, Move, Attack, AttackMove, Gather, Hold, Construct };
+enum class CommandType : int { Move, Attack, AttackMove, Gather, Stop, Hold, Build, Train, CancelQueue, Rally, Research, CancelBuilding, ResumeConstruction };
 struct Definition {
  Kind kind; const char* name; const char* role;
  float hp, speed, range, damage, cooldown, radius, vision, buildTime;
@@ -22,6 +22,7 @@ struct Entity {
  Id id=0; Kind kind=Kind::Worker; int team=0; Vec2 pos, goal, rally;
  float hp=0, cooldown=0, progress=1, carried=0, harvestTimer=0, resource=0, facing=0;
  Order order=Order::Idle; Id target=0, resourceTarget=0; bool returning=false;
+ Id builderId=0; bool resumeGather=false;
  std::vector<QueueItem> queue; std::vector<Vec2> path; int pathIndex=0; float repath=0;
  bool alive() const { return hp>0; }
 };
@@ -51,6 +52,9 @@ public:
  bool visible(int team,Vec2 position) const;
  bool explored(int team,Vec2 position) const;
  bool canPlace(int team,Kind kind,Vec2 point,std::string* reason=nullptr) const;
+ // Assigned worker includes travel; active means the worker is physically building.
+ Id constructionWorker(Id foundation) const;
+ bool constructionActive(Id foundation) const;
  int supply(int team) const;
  int capacity(int team) const;
  float time() const { return tick_*Step; }
@@ -76,5 +80,8 @@ private:
  void updateProduction(Entity& e); void moveToward(Entity& e,Vec2 destination); void planPath(Entity& e,Vec2 destination);
  bool blocked(Vec2 point,float radius,Id ignore=0) const; bool hasBuilding(int team,Kind kind) const;
  Id nearest(int team,Vec2 point,Kind kind) const; void damage(Entity& victim,float amount,int attackerTeam);
+ Id selectConstructionWorker(const std::vector<Id>& workers,Vec2 site) const;
+ void assignConstruction(Entity& foundation,Entity& worker);
+ void abandonConstruction(Entity& worker); void releaseConstruction(Entity& foundation);
 };
 }

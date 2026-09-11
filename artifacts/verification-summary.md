@@ -1,5 +1,19 @@
 # Verification record
 
+## Worker-driven construction refresh
+
+The latest mechanics replace automatic foundation timers with an assigned Drudge travelling and working at the site. Final source passed all 19 portable rule groups, all 3 CTests (including 3,000 native render frames), a fresh ASan/UBSan run, and both exact Unreal integration tests with zero warnings/errors. UE 5.8.2 rebuilt successfully. The engine report is `unreal-construction-integration-results.json`, run `20260911T143702Z-40096`.
+
+Construction regressions cover travel, zero remote progress, retained cargo with no mining income, interruption/reassignment, single-worker progress, cancellation and combat deaths, blocked access, AI job reservation/recovery, version 2 persistence, version 1 migration, invalid saved relationships and command replay. An initial test exposed a Drudge trapped behind a collinear row of idle workers; construction-only lateral avoidance fixed it while the original test geometry and static collision checks were preserved. A separate review also led to desktop selection and work-beam fog fixes and then cleared the final source.
+
+Fresh normal-command match trials ended naturally at 744.90, 742.95 and 764.10 seconds on maps 0/1/2 with seed 42. All were won by the game AI and remain below the 20–30 minute target. No human balance claim follows. Current output is in `construction-ctest-results.txt`, `construction-portable-details.txt`, `construction-sanitizer-results.txt`, `construction-sanitizer-details.txt`, `construction-match-results.txt`, and `unreal-construction-*`. `construction-tested-source-sha256.txt` identifies this tested source/content set.
+
+The current construction flow still needs hands-on pointer and compact-layout acceptance. These automated results prove simulation and engine integration, not mouse targeting, physical touch or iOS. The checkpoint report is [CONSTRUCTION_PASS.md](../docs/CONSTRUCTION_PASS.md).
+
+## Previous mechanics and presentation checkpoint
+
+The remaining sections describe the earlier checkpoint, before worker-driven construction. Their captures, timings, performance measurements and hash files are retained as historical evidence; references below to the current or final source are relative to that earlier checkpoint.
+
 Recorded on 2026-09-11 using AppleClang 21, C++17, and a Release CMake build on this Mac. `test-environment.txt` contains the machine details. `tested-source-sha256.txt` identifies the exact simulation, native client, test, and build sources; the final checksum verification passed.
 
 The current release suite passed all 14 test groups in 1.12 seconds. CTest passed all three tests: simulation rules, native smoke, and native render stress. The simulation worker's final Debug run also passed all 14 groups with AddressSanitizer and UndefinedBehaviorSanitizer enabled. That successful run was reused after its simulation and test source hashes were checked against the frozen files; elapsed wall time was not captured. `sanitizer-provenance.txt` records the matching hashes, final review log and build configuration. `scripts/test.sh` reproduces the normal checks, and `scripts/test-sanitize.sh` reproduces the sanitizer build.

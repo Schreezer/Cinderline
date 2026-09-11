@@ -1,0 +1,33 @@
+{
+  "verified_at_utc": "2026-09-11T14:40:04.244124+00:00",
+  "portable_rule_groups": 19,
+  "ctests_passed": 3,
+  "native_render_frames": 3000,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "unreal_integration_run": "20260911T143702Z-40096",
+  "unreal_tests": [
+    {
+      "name": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "natural_match_seconds": [
+    744.9,
+    742.95,
+    764.1
+  ],
+  "source_files_hashed": 100,
+  "runtime": "Rebuilt UE5.8.2 standalone Mac game launched and menu visually confirmed through CUA. Left open at menu.",
+  "limits": "Construction pointer targeting, compact layout, full human match and iOS remain unverified in this pass. New mechanics proven by simulation and real transient engine-world tests."
+}

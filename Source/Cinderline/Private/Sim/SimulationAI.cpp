@@ -162,11 +162,62 @@ void Simulation::updateAI() {
         return result.accepted;
     };
 
-    // New workers and any workers disrupted by combat resume harvesting through the
-    // same visibility and ownership checks used for player-issued gather commands.
+    // Commands below can change assignments after AISnapshot was captured. Check
+    // live orders so a resumed builder cannot be harvested or dispatched again in
+    // this AI update. Construct also reserves workers still travelling to a site.
+    auto availableWorker = [&](Id id) {
+        const Entity* worker = find(id);
+        return worker != nullptr && worker->alive() && worker->team == team &&
+               worker->kind == Kind::Worker && worker->progress >= 1.0f &&
+               worker->order != Order::Construct;
+    };
+
+    auto closestWorker = [&](Vec2 point) -> const AISnapshot* {
+        const AISnapshot* result = nullptr;
+        float best = std::numeric_limits<float>::max();
+        for (const AISnapshot& entity : own) {
+            if (!availableWorker(entity.id)) {
+                continue;
+            }
+            const float d = distanceSquared(entity.pos, point);
+            if (d < best || (d == best && (result == nullptr || entity.id < result->id))) {
+                best = d;
+                result = &entity;
+            }
+        }
+        return result;
+    };
+
+    // Recover already-paid foundations before planning more infrastructure.
+    // constructionWorker recognizes the assigned worker even while en route;
+    // !constructionActive alone would incorrectly replace travelling builders.
+    bool orphanedConstructionPending = false;
+    for (const AISnapshot& foundation : own) {
+        if (!definition(foundation.kind).building || foundation.progress >= 1.0f ||
+            constructionWorker(foundation.id) != 0) {
+            continue;
+        }
+        if (const AISnapshot* builder = closestWorker(foundation.pos)) {
+            Command resume;
+            resume.type = CommandType::ResumeConstruction;
+            resume.team = team;
+            resume.units = {builder->id};
+            resume.target = foundation.id;
+            issue(resume, std::string("resuming ") + definition(foundation.kind).name);
+        }
+        if (constructionWorker(foundation.id) == 0) {
+            orphanedConstructionPending = true;
+        }
+    }
+
+    // New workers and workers released from completed construction resume
+    // harvesting through the same checks as player-issued gather commands.
     for (const AISnapshot& worker : own) {
-        if (worker.kind != Kind::Worker ||
-            (worker.order != Order::Idle && worker.order != Order::Hold)) {
+        if (!availableWorker(worker.id)) {
+            continue;
+        }
+        const Entity* liveWorker = find(worker.id);
+        if (liveWorker->order != Order::Idle && liveWorker->order != Order::Hold) {
             continue;
         }
         const AISnapshot* resource = nullptr;
@@ -190,22 +241,6 @@ void Simulation::updateAI() {
             issue(gather, "assigning workers");
         }
     }
-
-    auto closestWorker = [&](Vec2 point) -> const AISnapshot* {
-        const AISnapshot* result = nullptr;
-        float best = std::numeric_limits<float>::max();
-        for (const AISnapshot& entity : own) {
-            if (entity.kind != Kind::Worker || entity.progress < 1.0f) {
-                continue;
-            }
-            const float d = distanceSquared(entity.pos, point);
-            if (d < best) {
-                best = d;
-                result = &entity;
-            }
-        }
-        return result;
-    };
 
     auto tryBuild = [&](Kind kind, Vec2 anchor, bool expansion) {
         static constexpr std::array<float, 4> localRadii{220.0f, 340.0f, 470.0f, 610.0f};
@@ -389,9 +424,10 @@ void Simulation::updateAI() {
         }
     }
 
-    if (wantedBuilding != Kind::Resource && players_[team].ore >= definition(wantedBuilding).cost) {
+    if (!orphanedConstructionPending && wantedBuilding != Kind::Resource &&
+        players_[team].ore >= definition(wantedBuilding).cost) {
         buildingIssued = tryBuild(wantedBuilding, buildAnchor, wantsExpansion);
-    } else if (wantsExpansion) {
+    } else if (!orphanedConstructionPending && wantsExpansion) {
         // Exploration takes time, so dispatch the builder while the economy saves the ore.
         tryBuild(Kind::Headquarters, buildAnchor, true);
     }

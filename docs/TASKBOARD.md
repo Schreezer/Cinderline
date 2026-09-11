@@ -3,11 +3,11 @@
 Current order, confirmed by the user on 2026-09-11: **mechanics and logic → aesthetics and assets → full playtest → iOS**. Development checks continue as mechanics change. Blender was used to create the first model pack.
 
 ## NOW
-- Hands-on build/produce/control check in the refreshed Unreal game. The game is open at a fresh menu and feedback is requested.
+- Verify the Drudge construction fix from the first hands-on session: physical travel, interrupted mining, pause/resume and return to ore. See [CONSTRUCTION_PASS.md](CONSTRUCTION_PASS.md).
 - Continue through a full skirmish using [PLAYTEST.md](PLAYTEST.md).
 
 ## NEXT
-- Repair player-interaction findings and assess economy, scouting, counters, expansion and match pacing.
+- Continue repairing player-interaction findings and assess economy, scouting, counters, expansion and match pacing.
 - Add explicit combat sound events and review the in-game mix.
 - Inspect the full roster and enemy team palette through gameplay, then improve animation, fog edges and late-game rendering.
 
@@ -17,6 +17,7 @@ Current order, confirmed by the user on 2026-09-11: **mechanics and logic → ae
 - Asymmetric second faction, multiplayer, matchmaking, replay viewer and more content.
 
 ## DONE
+- Fixed Drudge construction: workers travel, stop mining, build on-site, pause when interrupted and resume prior mining after completion. Added free reassignment, save migration, AI builder reservation and construction state UI. Fresh verification passed 19 rule groups, all 3 CTests, ASan/UBSan and both Unreal integration tests. See [CONSTRUCTION_PASS.md](CONSTRUCTION_PASS.md).
 - Created the source structure, original Cinderline design, centralized definitions and command interface.
 - Implemented a fixed-step C++ simulation with economy, queues, construction, research, movement, combat, fog, paid AI and saved matches.
 - Implemented three map layouts and a first faction with eight units and six buildings.

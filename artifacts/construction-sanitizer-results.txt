@@ -1,0 +1,16 @@
+-- Configuring done (0.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/build/sanitize
+[ 20%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[ 40%] Linking CXX static library libCinderlineSimulation.a
+[ 60%] Built target CinderlineSimulation
+[ 80%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[100%] Linking CXX executable CinderlineTests
+[100%] Built target CinderlineTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/sanitize
+    Start 1: simulation_rules
+1/1 Test #1: simulation_rules .................   Passed   42.06 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =  42.06 sec

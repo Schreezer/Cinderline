@@ -105,7 +105,9 @@ bool FindBuildSite(const cinder::Simulation& Sim, cinder::Id Builder,
             const float Angle = 2 * PI * Spoke / 24;
             const cinder::Vec2 Point{ Base.x + Radius * FMath::Cos(Angle), Base.y + Radius * FMath::Sin(Angle) };
             const float DX = Worker->pos.x - Point.x, DY = Worker->pos.y - Point.y;
-            if (DX * DX + DY * DY <= 700 * 700 && Sim.canPlace(0, cinder::Kind::Foundry, Point))
+            // Keep enough approach distance to observe travel before construction can start.
+            if (DX * DX + DY * DY >= 300 * 300 && DX * DX + DY * DY <= 700 * 700
+                && Sim.canPlace(0, cinder::Kind::Foundry, Point))
             {
                 OutSite = Point;
                 return true;
@@ -288,11 +290,55 @@ bool FCinderEconomyAndProductionIntegration::RunTest(const FString& Parameters)
     const auto Foundries = EntitiesOfKind(Battle.Sim(), Kind::Foundry);
     if (!TestTrue(TEXT("Construction creates one real producer"), Foundries.size() == 1)) return false;
     const Id Foundry = Foundries.front();
+    const float FoundationProgress = Battle.Sim().find(Foundry)->progress;
+    const Vec2 BuilderStart = Battle.Sim().find(Worker)->pos;
+    TestEqual(TEXT("Paid foundation retains its assigned builder"), Battle.Sim().constructionWorker(Foundry), Worker);
+    TestTrue(TEXT("Construction command sends the Drudge to the foundation"), Battle.Sim().find(Worker)->order == Order::Construct);
+    TestFalse(TEXT("Distant builder is not constructing before arrival"), Battle.Sim().constructionActive(Foundry));
+    Battle.Tick(0.2f);
+    TestEqual(TEXT("Foundation makes no progress while builder approaches"), Battle.Sim().find(Foundry)->progress, FoundationProgress);
+    TestFalse(TEXT("First approach ticks have not reached the construction site"), Battle.Sim().constructionActive(Foundry));
+    const Vec2 BuilderAfterTravel = Battle.Sim().find(Worker)->pos;
+    TestTrue(TEXT("Builder physically travels toward its construction site"),
+        BuilderAfterTravel.x != BuilderStart.x || BuilderAfterTravel.y != BuilderStart.y);
     Before = Battle.Sim().players()[0].ore;
     TestFalse(TEXT("Unfinished structure cannot train"), IssueAtBattlefield(Battle, CommandType::Train, {Foundry}, Kind::Striker).accepted);
     TestEqual(TEXT("Rejected unfinished production spends nothing"), Battle.Sim().players()[0].ore, Before);
+    bool AdvancedBeforeArrival = false;
+    if (!TestTrue(TEXT("Builder reaches the site through battlefield ticks"), Fixture.TickUntil([&]
+        {
+            const bool Active = Battle.Sim().constructionActive(Foundry);
+            if (!Active && Battle.Sim().find(Foundry)->progress > FoundationProgress) AdvancedBeforeArrival = true;
+            return Active;
+        }, 30))) return false;
+    TestFalse(TEXT("Construction remains frozen throughout the builder approach"), AdvancedBeforeArrival);
+    if (!TestTrue(TEXT("Nearby assigned builder advances construction"), Fixture.TickUntil([&]
+        { return Battle.Sim().find(Foundry)->progress > FoundationProgress; }, 1))) return false;
+    const float WorkingProgress = Battle.Sim().find(Foundry)->progress;
+    Controller.ExecuteAction(TEXT("pause"));
+    Battle.Tick(0.2f);
+    TestEqual(TEXT("Match pause freezes active construction"), Battle.Sim().find(Foundry)->progress, WorkingProgress);
+    TestEqual(TEXT("Match pause preserves the builder assignment"), Battle.Sim().constructionWorker(Foundry), Worker);
+    Controller.ExecuteAction(TEXT("resume"));
+    if (!TestTrue(TEXT("Normal stop order releases the builder"),
+        IssueAtBattlefield(Battle, CommandType::Stop, {Worker}).accepted)) return false;
+    TestEqual(TEXT("Stopped foundation has no assigned builder"), Battle.Sim().constructionWorker(Foundry), Id(0));
+    TestFalse(TEXT("Stopped builder leaves construction inactive"), Battle.Sim().constructionActive(Foundry));
+    for (int32 Tick = 0; Tick < 20; ++Tick) Battle.Tick(0.1f);
+    TestEqual(TEXT("Unassigned foundation remains paused during an active match"), Battle.Sim().find(Foundry)->progress, WorkingProgress);
+    Before = Battle.Sim().players()[0].ore;
+    if (!TestTrue(TEXT("Normal resume construction order reassigns the Drudge"),
+        IssueAtBattlefield(Battle, CommandType::ResumeConstruction, {Worker}, Kind::Worker, {}, Foundry).accepted)) return false;
+    TestEqual(TEXT("Resuming an already-paid foundation costs no ore"), Battle.Sim().players()[0].ore, Before);
+    TestEqual(TEXT("Resumed foundation restores its builder assignment"), Battle.Sim().constructionWorker(Foundry), Worker);
+    TestTrue(TEXT("Resumed Drudge receives a construction order"), Battle.Sim().find(Worker)->order == Order::Construct);
+    if (!TestTrue(TEXT("Resumed builder continues real construction"), Fixture.TickUntil([&]
+        { return Battle.Sim().constructionActive(Foundry) && Battle.Sim().find(Foundry)->progress > WorkingProgress; }, 5))) return false;
     if (!TestTrue(TEXT("Construction finishes through battlefield tick"), Fixture.TickUntil([&]
-        { const Entity* E = Battle.Sim().find(Foundry); return E && E->alive() && E->progress >= 1; }, definition(Kind::Foundry).buildTime + 1))) return false;
+        { const Entity* E = Battle.Sim().find(Foundry); return E && E->alive() && E->progress >= 1; }, definition(Kind::Foundry).buildTime + 2))) return false;
+    TestEqual(TEXT("Completed construction releases the builder"), Battle.Sim().constructionWorker(Foundry), Id(0));
+    TestFalse(TEXT("Completed foundation no longer reports active construction"), Battle.Sim().constructionActive(Foundry));
+    TestTrue(TEXT("Builder without an earlier gather job becomes idle after completion"), Battle.Sim().find(Worker)->order == Order::Idle);
     Before = Battle.Sim().players()[0].ore;
     if (!TestTrue(TEXT("Completed producer accepts paid infantry training"),
         IssueAtBattlefield(Battle, CommandType::Train, {Foundry}, Kind::Striker).accepted)) return false;
@@ -328,7 +374,7 @@ bool FCinderEconomyAndProductionIntegration::RunTest(const FString& Parameters)
     TestEqual(TEXT("Snapshot restores authoritative state"), static_cast<uint64>(Battle.Sim().stateHash()), SavedHash);
     Battle.RenderState();
     TestTrue(TEXT("Loaded state still renders discovered resources"), !Battle.KnownResources().empty());
-    if (!HasAnyErrors()) AddInfo(FString::Printf(TEXT("CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=%d, produced=%d, built=%d, ore=%d; normal paid commands, actual actor ticks, selected-controller dispatch, temporary snapshot only."),
+    if (!HasAnyErrors()) AddInfo(FString::Printf(TEXT("CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=%d, produced=%d, built=%d, ore=%d; paid commands, builder travel and pause/resume, actual actor ticks, selected-controller dispatch, temporary snapshot only."),
         Battle.Sim().players()[0].stats.gathered, Battle.Sim().players()[0].stats.produced,
         Battle.Sim().players()[0].stats.built, Battle.Sim().players()[0].ore));
     return !HasAnyErrors();

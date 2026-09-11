@@ -32,9 +32,13 @@ struct Camera {
 struct UIButton {
  NSRect rect; std::string label,detail; int action=0; Kind kind=Kind::Worker; int parameter=0; bool enabled=true;
 };
-enum Action { Begin=1,Map0,Map1,Map2,Resume,Rematch,Help,QuitMenu,Train=100,Build,AttackMode,Stop,Hold,Research,Cancel,Rally,Army,Home,Save,Load,FilterType,GroupPage };
+enum Action { Begin=1,Map0,Map1,Map2,Resume,Rematch,Help,QuitMenu,Train=100,Build,AttackMode,Stop,Hold,Research,Cancel,Rally,Army,Home,Save,Load,FilterType,GroupPage,ResumeBuild };
 void filterSelection(std::unordered_set<Id>& selected,const Simulation& sim,Kind kind) {
  for(auto i=selected.begin();i!=selected.end();){const Entity* e=sim.find(*i);if(!e||!e->alive()||e->kind!=kind)i=selected.erase(i);else ++i;}
+}
+std::string constructionStatus(const Simulation& sim,Id foundation) {
+ if(sim.constructionActive(foundation))return "CONSTRUCTING";
+ return sim.constructionWorker(foundation)?"DRUDGE EN ROUTE":"PAUSED - NEEDS DRUDGE";
 }
 NSRect subgroupRect(NSRect area,int index) {
  const double gap=3,width=(area.size.width-2*gap)/3,height=(area.size.height-2*gap)/3;
@@ -237,11 +241,14 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 - (void)rightMouseDown:(NSEvent*)event {if(menu||paused||showHelp)return;mouse=down=lastDrag=[self eventPoint:event];panning=YES;}
 - (void)rightMouseDragged:(NSEvent*)event {[self mouseDragged:event];}
 - (void)rightMouseUp:(NSEvent*)event {
+ if(menu||paused||showHelp||sim.winner()>=0){panning=NO;return;}
  NSPoint p=[self eventPoint:event];panning=NO;if(hypot(p.x-down.x,p.y-down.y)<5){
   if(buildingMode||attackMode||rallyMode){buildingMode=NO;attackMode=NO;rallyMode=NO;return;}
   if(NSPointInRect(p,[self worldRect])){
    Vec2 world=camera.world(p,[self worldRect]);const Entity* target=[self entityAt:world];Command cmd;cmd.point=world;
+   bool workerSelected=false;for(Id id:selected){const Entity* unit=sim.find(id);if(unit&&unit->alive()&&unit->team==0&&unit->kind==Kind::Worker){workerSelected=true;break;}}
    if(target&&target->kind==Kind::Resource){cmd.type=CommandType::Gather;cmd.target=target->id;}
+   else if(target&&target->team==0&&definition(target->kind).building&&target->progress<1&&workerSelected){cmd.type=CommandType::ResumeConstruction;cmd.target=target->id;}
    else if(target&&target->team==1){cmd.type=CommandType::Attack;cmd.target=target->id;}else cmd.type=CommandType::Move;[self send:cmd];
   }
  }
@@ -272,7 +279,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  if([string.lowercaseString isEqualToString:@"r"]){rallyMode=YES;[self message:"RALLY POINT — click the battlefield."];return;}
  if([string.lowercaseString isEqualToString:@"p"]){paused=!paused;return;}
  if(event.keyCode==51){Command cmd;cmd.type=CommandType::CancelQueue;cmd.queueIndex=0;[self send:cmd];return;}
- if(string.length==1){int n=[string intValue];if(n>=1&&n<=9){if(event.modifierFlags&NSEventModifierFlagCommand){controlGroups[n].assign(selected.begin(),selected.end());[self message:"Control group "+std::to_string(n)+" assigned."];return;}if(!controlGroups[n].empty()){selected.clear();for(Id id:controlGroups[n]){const Entity*e=sim.find(id);if(e&&e->alive())selected.insert(id);}[self message:"Control group "+std::to_string(n)+" selected."];return;}int i=0;for(const auto&button:buttons)if(button.action>=Train&&button.action<=Rally){if(++i==n){[self performAction:button];break;}}}}
+ if(string.length==1){int n=[string intValue];if(n>=1&&n<=9){if(event.modifierFlags&NSEventModifierFlagCommand){controlGroups[n].assign(selected.begin(),selected.end());[self message:"Control group "+std::to_string(n)+" assigned."];return;}if(!controlGroups[n].empty()){selected.clear();for(Id id:controlGroups[n]){const Entity*e=sim.find(id);if(e&&e->alive())selected.insert(id);}[self message:"Control group "+std::to_string(n)+" selected."];return;}int i=0;for(const auto&button:buttons)if((button.action>=Train&&button.action<=Rally)||button.action==ResumeBuild){if(++i==n){[self performAction:button];break;}}}}
 }
 - (void)flagsChanged:(NSEvent*)event {if(event.modifierFlags&(NSEventModifierFlagCommand|NSEventModifierFlagControl|NSEventModifierFlagOption)){aTapEligible=NO;keys[0]=false;}}
 - (void)keyUp:(NSEvent*)event {if(event.keyCode<128)keys[event.keyCode]=false;if(event.keyCode==49)spaceHeld=NO;if(event.keyCode==0){if(aTapEligible&&!(event.modifierFlags&(NSEventModifierFlagCommand|NSEventModifierFlagControl|NSEventModifierFlagOption))&&!menu&&!paused&&!showHelp&&CACurrentMediaTime()-aKeyStart<.18){attackMode=YES;[self message:"ATTACK MOVE — click a destination. Right click or Esc cancels."];}aTapEligible=NO;}}
@@ -297,6 +304,13 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   case Hold:cmd.type=CommandType::Hold;[self send:cmd];break;
   case Research:cmd.type=CommandType::Research;cmd.queueIndex=button.parameter;if(e)cmd.units={e->id};[self send:cmd];break;
   case Cancel:cmd.type=(e&&e->progress<1)?CommandType::CancelBuilding:CommandType::CancelQueue;cmd.queueIndex=0;if(e)cmd.units={e->id};[self send:cmd];break;
+  case ResumeBuild:
+   if(menu||paused||showHelp||sim.winner()>=0||!e||e->team!=0||!definition(e->kind).building||e->progress>=1)break;
+   cmd.type=CommandType::ResumeConstruction;cmd.target=e->id;cmd.point=e->pos;
+   // The shared command chooses the nearest available Drudge from these candidates.
+   for(const Entity& worker:sim.entities())if(worker.alive()&&worker.team==0&&worker.kind==Kind::Worker&&worker.order!=Order::Construct)cmd.units.push_back(worker.id);
+   if(cmd.units.empty())[self message:"No available Drudge. Stop a builder or train another at your Anchor."];else[self send:cmd];
+   break;
   case Rally:rallyMode=YES;buildingMode=NO;attackMode=NO;[self message:"RALLY POINT — click where newly recruited units should assemble."];break;
   case Army:[self selectArmy];break;case Home:[self home];break;case Save:[self saveGame];break;case Load:[self loadGame];break;
   case FilterType:filterSelection(selected,sim,button.kind);subgroupPage=0;break;
@@ -487,11 +501,18 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   }else if(!small){
    label("INTEGRITY",NSMakeRect(sx,y+83,selectionW,13),8,Muted,true,true);box(c,NSMakeRect(sx,y+101,selectionW,5),Navy);box(c,NSMakeRect(sx,y+101,selectionW*std::clamp(e->hp/d.hp,0.f,1.f),5),Cyan);
    label(std::to_string((int)e->hp)+" / "+std::to_string((int)d.hp)+"     "+std::to_string((int)d.damage)+" DMG",NSMakeRect(sx,y+115,selectionW,16),10,Ink,false,true);
-   if(!e->queue.empty()){
+   if(d.building&&e->progress<1){
+    label(constructionStatus(sim,e->id),NSMakeRect(sx,y+145,selectionW,16),9,Amber,true,true);
+    box(c,NSMakeRect(sx,y+165,selectionW,4),Navy);box(c,NSMakeRect(sx,y+165,selectionW*e->progress,4),Amber);
+    label(std::to_string((int)(e->progress*100))+"% complete",NSMakeRect(sx,y+177,selectionW,15),9,Muted,false,true);
+   }else if(!e->queue.empty()){
     const auto&q=e->queue.front();label(q.research?"RESEARCH IN PROGRESS":std::string("ASSEMBLING ")+definition(q.kind).name,NSMakeRect(sx,y+145,selectionW,16),9,Amber,true,true);
     box(c,NSMakeRect(sx,y+165,selectionW,4),Navy);box(c,NSMakeRect(sx,y+165,selectionW*(1-q.remaining/std::max(.01f,q.total)),4),Amber);
     label(std::to_string(e->queue.size())+" queued · "+std::to_string((int)ceil(q.remaining))+"s remaining",NSMakeRect(sx,y+177,selectionW,15),9,Muted,false,true);
    }else label(d.building?"Set rally point for new units":"Click terrain to move · A to attack-move",NSMakeRect(sx,y+151,selectionW,30),10,Muted);
+  }else if(d.building&&e->progress<1){
+   label(constructionStatus(sim,e->id),NSMakeRect(sx,y+72,selectionW,20),9,Amber,true,true);
+   label(std::to_string((int)(e->progress*100))+"% complete",NSMakeRect(sx,y+96,selectionW,18),9,Muted,false,true);
   }else label(std::to_string((int)e->hp)+" HP   "+std::to_string(e->queue.size())+" QUEUED",NSMakeRect(sx,y+72,selectionW,20),9,Cyan,false,true);
  }else{
   label("FIELD COMMAND",NSMakeRect(sx,y+17,selectionW,25),small?13:18,Ink,true);label("Select a unit or structure\nto issue orders.",NSMakeRect(sx,y+52,selectionW,52),11,Muted);
@@ -500,7 +521,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  std::vector<UIButton> actions;
  auto add=[&](std::string name,std::string detail,int action,Kind kind=Kind::Worker,int parameter=0,bool enabled=true){actions.push_back({{},name,detail,action,kind,parameter,enabled});};
  if(e&&definition(e->kind).building){
-  if(e->progress<1){add("Cancel build","Refund unfinished",Cancel);}
+  if(e->progress<1){if(!sim.constructionWorker(e->id))add("Resume build","Assign nearest Drudge",ResumeBuild);add("Cancel build","Refund unfinished",Cancel);}
   else{
    for(const auto&d:definitions())if(!d.building&&d.kind!=Kind::Resource&&d.producer==e->kind)add(d.name,std::to_string(d.cost)+" ore · T"+std::to_string(d.tier),Train,d.kind,0,sim.players()[0].ore>=d.cost&&sim.players()[0].tier>=d.tier);
    if(e->kind==Kind::Laboratory){add("Advance tier",std::to_string(500*sim.players()[0].tier)+" ore · unlock units",Research,Kind::Worker,0,sim.players()[0].tier<3&&sim.players()[0].ore>=500*sim.players()[0].tier);add("Weapon tech",std::to_string(200*(sim.players()[0].weapons+1))+" ore · + attack",Research,Kind::Worker,1,sim.players()[0].weapons<3&&sim.players()[0].ore>=200*(sim.players()[0].weapons+1));add("Armor tech",std::to_string(200*(sim.players()[0].armor+1))+" ore · + armor",Research,Kind::Worker,2,sim.players()[0].armor<3&&sim.players()[0].ore>=200*(sim.players()[0].armor+1));}

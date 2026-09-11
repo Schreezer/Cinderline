@@ -1,0 +1,11 @@
+MATCH_PROGRESS map=0 simulation_seconds=300.000 entities=77
+MATCH_PROGRESS map=0 simulation_seconds=600.000 entities=93
+MATCH map=0 seed=42 duration_seconds=744.900 winner=1 wall_seconds=8.416 team0_gathered=9321 team0_produced=32 team0_lost=35 team0_ore=471 team1_gathered=15748 team1_produced=57 team1_lost=26 team1_ore=4458
+MATCH_PROGRESS map=1 simulation_seconds=300.000 entities=77
+MATCH_PROGRESS map=1 simulation_seconds=600.000 entities=87
+MATCH map=1 seed=42 duration_seconds=742.950 winner=1 wall_seconds=8.293 team0_gathered=9315 team0_produced=30 team0_lost=33 team0_ore=1935 team1_gathered=14950 team1_produced=59 team1_lost=32 team1_ore=3280
+MATCH_PROGRESS map=2 simulation_seconds=300.000 entities=77
+MATCH_PROGRESS map=2 simulation_seconds=600.000 entities=94
+MATCH map=2 seed=42 duration_seconds=764.100 winner=1 wall_seconds=9.792 team0_gathered=9435 team0_produced=34 team0_lost=32 team0_ore=625 team1_gathered=16099 team1_produced=57 team1_lost=24 team1_ore=4769
+PASS natural AI match durations
+RESULT passed=1 failed=0

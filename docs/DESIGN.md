@@ -8,7 +8,7 @@ Both sides begin with a headquarters, workers and the same resource budget. Work
 
 | Unit | Role | Intended silhouette |
 | --- | --- | --- |
-| Drudge | Worker; harvests ore | Small split diamond, exposed cargo core |
+| Drudge | Worker; harvests ore and constructs buildings | Small split diamond, exposed cargo core |
 | Ember | General ranged infantry | Compact upright wedge |
 | Needle | Anti-armor and anti-air infantry | Twin forward prongs |
 | Skim | Fast vision and harassment | Narrow horizontal dart |
@@ -19,9 +19,17 @@ Both sides begin with a headquarters, workers and the same resource budget. Work
 
 The Anchor headquarters produces Drudges. The Kiln produces infantry. The Crucible produces vehicles. The Resonator opens research and advanced production. The Siphon shortens mining travel and provides supply. The Ward protects approaches. Initial gameplay uses one faction on both sides; asymmetric factions require a later tested implementation.
 
+Construction occupies one Drudge. Placing a foundation pays the cost and assigns one selected worker, preferring an available worker and then proximity. That Drudge stops harvesting, retains its cargo, and walks to the perimeter. Progress and construction health increase only while its assigned builder is alive and physically working there. Multiple selected workers do not accelerate construction; the others keep their orders. The listed build time starts after arrival.
+
+Moving, stopping or retasking the builder pauses the site. Worker death also pauses it. An unfinished site retains its progress and damage until another Drudge resumes for no additional ore, or the player cancels for the unused portion of its cost. Completion, cancellation or site destruction releases its assigned worker to its previous mining job when applicable. A newer explicit order takes precedence. Both sides follow these rules, and the AI reassigns idle sites before starting more construction.
+
+Version 2 saved matches preserve travelling and working builders, paused sites and mining return context. Version 1 saves still load; unfinished structures from those saves start paused and need a Drudge.
+
 ## Touch command policy
 
 Tap a friendly unit to select it. Tap terrain to move selected troops, a resource to gather with workers, or a visible enemy to attack. Camera drag and selection drag have distinct modes so a camera motion cannot accidentally order an army. Pinch changes zoom. A visible attack-move control explicitly changes the next terrain command. Context buttons show available production and construction choices. Subgroup buttons narrow the selection by unit type.
+
+With a Drudge selected, tap an unfinished friendly site to resume it on touch, or right-click it on desktop. Desktop left-click still selects the site. Select a paused site and choose ASSIGN DRUDGE to send the nearest available worker; this shortcut never takes a worker from another construction job. Site labels distinguish EN ROUTE, BUILDING and PAUSED. An amber work beam appears only while construction is active.
 
 The native runner also accepts mouse and keyboard input. It exists to exercise the same C++ simulation before Unreal is ready. Native-runner results do not establish Unreal rendering, iOS usability or mobile performance.
 

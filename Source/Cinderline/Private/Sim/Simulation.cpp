@@ -19,6 +19,7 @@ constexpr float Cell = Simulation::WorldSize / Simulation::FogSize;
 constexpr float CarryCapacity = 18.0f;
 constexpr float HarvestPeriod = 0.65f;
 constexpr int MaxQueue = 8;
+constexpr float ConstructionPadding = 20.0f;
 const std::array<Definition,15> Data{{
  {Kind::Worker,"Drudge","Harvests ore and deploys structures",70,140,65,4,1.4f,16,460,12,60,0,1,1,Kind::Headquarters,false,false,false},
  {Kind::Striker,"Ember","Ranged infantry; efficient against scouts and lancers",130,150,240,14,0.8f,20,510,24,100,1,2,1,Kind::Foundry,false,false,true},
@@ -180,12 +181,67 @@ bool Simulation::canPlace(int team,Kind kind,Vec2 point,std::string* reason) con
  if(reason)reason->clear();return true;
 }
 
+Id Simulation::constructionWorker(Id foundationId) const {
+ const Entity* foundation=find(foundationId);
+ if(!foundation||!foundation->alive()||!definition(foundation->kind).building||foundation->progress>=1)return 0;
+ const Entity* worker=find(foundation->builderId);
+ if(!worker||!worker->alive()||worker->kind!=Kind::Worker||worker->team!=foundation->team||worker->order!=Order::Construct||worker->target!=foundationId)return 0;
+ return worker->id;
+}
+bool Simulation::constructionActive(Id foundationId) const {
+ const Id assigned=constructionWorker(foundationId);if(!assigned)return false;
+ const Entity* foundation=find(foundationId);const Entity* worker=find(assigned);
+ const float reach=definition(foundation->kind).radius+definition(Kind::Worker).radius+ConstructionPadding;
+ return distance(worker->pos,foundation->pos)<=reach+3&&!blocked(worker->pos,definition(Kind::Worker).radius,worker->id)&&clearFireLine(worker->pos,foundation->pos,obstacles_);
+}
+Id Simulation::selectConstructionWorker(const std::vector<Id>& workers,Vec2 site) const {
+ Id selected=0;bool selectedBusy=true;float best=std::numeric_limits<float>::max();
+ for(Id id:workers) {
+  const Entity* worker=find(id);if(!worker||!worker->alive()||worker->kind!=Kind::Worker)continue;
+  const bool busy=worker->order==Order::Construct;const float d=distanceSq(worker->pos,site);
+  if(!selected||(selectedBusy&&!busy)||(selectedBusy==busy&&(d<best||(d==best&&id<selected)))) {selected=id;selectedBusy=busy;best=d;}
+ }
+ return selected;
+}
+void Simulation::abandonConstruction(Entity& worker) {
+ if(worker.kind!=Kind::Worker)return;
+ if(worker.order==Order::Construct) {
+  Entity* foundation=get(worker.target);
+  if(foundation&&foundation->builderId==worker.id)foundation->builderId=0;
+  worker.order=Order::Idle;worker.target=0;worker.goal=worker.pos;
+  worker.path.clear();worker.pathIndex=0;worker.repath=0;
+ }
+ worker.resumeGather=false;
+}
+void Simulation::releaseConstruction(Entity& foundation) {
+ const Id assigned=foundation.builderId;foundation.builderId=0;Entity* worker=get(assigned);
+ if(!worker||!worker->alive()||worker->kind!=Kind::Worker||worker->team!=foundation.team||worker->order!=Order::Construct||worker->target!=foundation.id)return;
+ const bool resume=worker->resumeGather;abandonConstruction(*worker);
+ if(!resume)return;
+ const Entity* deposit=find(worker->resourceTarget);
+ if(!deposit||!deposit->alive()||deposit->kind!=Kind::Resource||deposit->resource<=0) {
+  Id replacement=0;float best=std::numeric_limits<float>::max();
+  for(const auto& candidate:entities_)if(candidate.alive()&&candidate.kind==Kind::Resource&&candidate.resource>0&&explored(worker->team,candidate.pos)) {
+   float d=distanceSq(worker->pos,candidate.pos);if(d<best){best=d;replacement=candidate.id;}
+  }
+  worker->resourceTarget=replacement;deposit=find(replacement);
+ }
+ if(worker->carried>=CarryCapacity||(!deposit&&worker->carried>0))worker->returning=true;
+ if(deposit||worker->carried>0) {worker->order=Order::Gather;worker->target=worker->resourceTarget;}
+}
+void Simulation::assignConstruction(Entity& foundation,Entity& worker) {
+ const bool resume=worker.order==Order::Gather||(worker.order==Order::Construct&&worker.resumeGather);
+ abandonConstruction(worker);releaseConstruction(foundation);
+ worker.resumeGather=resume;worker.order=Order::Construct;worker.target=foundation.id;worker.goal=foundation.pos;
+ worker.path.clear();worker.pathIndex=0;worker.repath=0;foundation.builderId=worker.id;
+}
+
 CommandResult Simulation::command(const Command& input) {
  auto fail=[](const std::string& why){return CommandResult{false,why};};
  if(winner_!=-1)return fail("The match has ended.");
  if(!validTeam(input.team)||!validKind(input.kind)||!finite(input.point)||input.point.x<0||input.point.y<0||input.point.x>WorldSize||input.point.y>WorldSize)return fail("Invalid command.");
  const int rawType=static_cast<int>(input.type);
- if(rawType<0||rawType>static_cast<int>(CommandType::CancelBuilding)||input.units.size()>500)return fail("Invalid command.");
+ if(rawType<0||rawType>static_cast<int>(CommandType::ResumeConstruction)||input.units.size()>500)return fail("Invalid command.");
  Command cmd=input;std::sort(cmd.units.begin(),cmd.units.end());cmd.units.erase(std::unique(cmd.units.begin(),cmd.units.end()),cmd.units.end());
  std::vector<Id> ids;
  for(Id id:cmd.units) { const Entity* e=find(id);if(!e||!e->alive()||e->team!=cmd.team||e->kind==Kind::Resource)return fail("The selection contains unavailable or foreign units.");ids.push_back(id); }
@@ -193,15 +249,23 @@ CommandResult Simulation::command(const Command& input) {
  Player& player=players_[cmd.team];std::string feedback="Order acknowledged.";
  if(cmd.type==CommandType::Build) {
   if(!definition(cmd.kind).building)return fail("Only structures can be deployed.");
-  bool worker=false;for(Id id:ids){const auto* e=find(id);if(e->kind==Kind::Worker&&distance(e->pos,cmd.point)<=700){worker=true;break;}}
-  if(!worker)return fail("A Drudge must be within 700 meters of the site.");
+  std::vector<Id> nearbyWorkers;for(Id id:ids){const auto* e=find(id);if(e->kind==Kind::Worker&&distance(e->pos,cmd.point)<=700)nearbyWorkers.push_back(id);}
+  const Id workerId=selectConstructionWorker(nearbyWorkers,cmd.point);
+  if(!workerId)return fail("Select a Drudge closer to the site.");
   if(!hasBuilding(cmd.team,Kind::Headquarters))return fail("An operational Anchor is required.");
   if(player.tier<definition(cmd.kind).tier)return fail("Research the required technology tier first.");
   if((cmd.kind==Kind::MotorPool||cmd.kind==Kind::Laboratory||cmd.kind==Kind::Turret)&&!hasBuilding(cmd.team,Kind::Foundry))return fail("Build an operational Kiln first.");
   std::string reason;if(!canPlace(cmd.team,cmd.kind,cmd.point,&reason))return fail(reason);
   if(player.ore<definition(cmd.kind).cost)return fail("Insufficient ore.");
-  player.ore-=definition(cmd.kind).cost;spawn(cmd.kind,cmd.team,cmd.point,false);
-  feedback=std::string(definition(cmd.kind).name)+" construction started.";
+  player.ore-=definition(cmd.kind).cost;const Id foundationId=spawn(cmd.kind,cmd.team,cmd.point,false);
+  assignConstruction(*get(foundationId),*get(workerId));
+  feedback=std::string(definition(cmd.kind).name)+" foundation placed; Drudge assigned.";
+ } else if(cmd.type==CommandType::ResumeConstruction) {
+  Entity* foundation=get(cmd.target);
+  if(!foundation||!foundation->alive()||foundation->team!=cmd.team||!definition(foundation->kind).building||foundation->progress>=1)return fail("Choose your unfinished structure.");
+  const Id workerId=selectConstructionWorker(ids,foundation->pos);
+  if(!workerId)return fail("Select a Drudge to resume construction.");
+  assignConstruction(*foundation,*get(workerId));feedback="Drudge assigned to resume construction.";
  } else if(cmd.type==CommandType::Train) {
   const auto& d=definition(cmd.kind);if(d.building||cmd.kind==Kind::Resource)return fail("Choose a unit to train.");
   Entity* producer=nullptr;for(Id id:ids){auto* e=get(id);if(e->kind==d.producer&&e->progress>=1&&e->queue.size()<MaxQueue){producer=e;break;}}
@@ -228,7 +292,7 @@ CommandResult Simulation::command(const Command& input) {
   const QueueItem item=e->queue[cmd.queueIndex];float fraction=item.total>0?std::clamp(item.remaining/item.total,0.0f,1.0f):1;
   player.ore+=static_cast<int>(std::floor(item.cost*fraction+0.001f));e->queue.erase(e->queue.begin()+cmd.queueIndex);feedback="Queue item cancelled; unused ore refunded.";
  } else if(cmd.type==CommandType::CancelBuilding) {
-  bool cancelled=false;for(Id id:ids){auto* e=get(id);if(definition(e->kind).building&&e->progress<1){player.ore+=static_cast<int>(std::floor(definition(e->kind).cost*(1-e->progress)));e->hp=0;e->queue.clear();cancelled=true;}}
+  bool cancelled=false;for(Id id:ids){auto* e=get(id);if(definition(e->kind).building&&e->progress<1){player.ore+=static_cast<int>(std::floor(definition(e->kind).cost*(1-e->progress)));releaseConstruction(*e);e->hp=0;e->queue.clear();cancelled=true;}}
   if(!cancelled)return fail("Select an unfinished structure.");feedback="Construction cancelled; unused ore refunded.";
  } else if(cmd.type==CommandType::Rally) {
   bool accepted=false;for(Id id:ids){auto* e=get(id);if(definition(e->kind).building){e->rally=bounded(cmd.point);accepted=true;}}
@@ -247,7 +311,7 @@ CommandResult Simulation::command(const Command& input) {
   const int columns=static_cast<int>(std::ceil(std::sqrt(static_cast<float>(movable.size()))));
   std::vector<std::pair<Vec2,float>> assignedGoals;
   for(std::size_t n=0;n<movable.size();++n) {
-   Entity* e=get(movable[n]);e->path.clear();e->pathIndex=0;e->repath=0;e->target=0;
+   Entity* e=get(movable[n]);if(e->kind==Kind::Worker)abandonConstruction(*e);e->path.clear();e->pathIndex=0;e->repath=0;e->target=0;
    switch(cmd.type) {
     case CommandType::Stop:e->order=Order::Idle;e->goal=e->pos;break;
     case CommandType::Hold:e->order=Order::Hold;e->goal=e->pos;break;
@@ -334,6 +398,7 @@ void Simulation::step() {
 void Simulation::updateProduction(Entity& producer) {
  const auto& d=definition(producer.kind);
  if(producer.progress<1) {
+  if(!constructionActive(producer.id))return;
   const float old=producer.progress;
   const float previousMaximum=d.hp*(0.1f+old*0.9f);
   const float constructionDamage=std::max(0.0f,previousMaximum-producer.hp);
@@ -341,6 +406,7 @@ void Simulation::updateProduction(Entity& producer) {
   const float currentMaximum=producer.progress>=1?d.hp:d.hp*(0.1f+producer.progress*0.9f);
   producer.hp=std::max(0.0f,currentMaximum-constructionDamage);
   if(producer.progress>=1) {
+   releaseConstruction(producer);
    ++players_[producer.team].stats.built;
    if(producer.kind==Kind::Processor||producer.kind==Kind::Headquarters)++players_[producer.team].stats.expansions;
    if(producer.team==0)alert_=std::string(d.name)+" ready.";
@@ -441,6 +507,26 @@ void Simulation::updateEconomy(Entity& worker) {
 
 void Simulation::updateMovement(Entity& e) {
  const auto& d=definition(e.kind);if(d.building||e.kind==Kind::Resource||e.order==Order::Gather)return;
+ if(e.order==Order::Construct) {
+  Entity* foundation=get(e.target);
+  if(!foundation||constructionWorker(foundation->id)!=e.id) {
+   if(foundation&&foundation->builderId==e.id)releaseConstruction(*foundation);else abandonConstruction(e);
+   return;
+  }
+  if(constructionActive(foundation->id)){e.path.clear();e.pathIndex=0;e.repath=0;return;}
+  const float reach=definition(foundation->kind).radius+d.radius+ConstructionPadding;
+  Vec2 destination=add(foundation->pos,scale(normalized(subtract(e.pos,foundation->pos)),reach));
+  if(blocked(destination,d.radius+2,e.id)||!clearFireLine(destination,foundation->pos,obstacles_)) {
+   float best=std::numeric_limits<float>::max();bool found=false;
+   for(int spoke=0;spoke<32;++spoke) {
+    float angle=spoke*(2*Pi/32);Vec2 candidate=add(foundation->pos,{std::cos(angle)*reach,std::sin(angle)*reach});
+    if(blocked(candidate,d.radius+2,e.id)||!clearFireLine(candidate,foundation->pos,obstacles_))continue;
+    float score=distanceSq(e.pos,candidate);if(score<best){best=score;destination=candidate;found=true;}
+   }
+   if(!found){e.path.clear();e.pathIndex=0;return;}
+  }
+  moveToward(e,destination);return;
+ }
  if(e.order==Order::Hold) {if(distanceSq(e.pos,e.goal)>5*5)moveToward(e,e.goal);return;}
  auto pursue=[&](const Entity& target) {
   const auto& targetDefinition=definition(target.kind);const float range=d.range+targetDefinition.radius;
@@ -516,7 +602,28 @@ void Simulation::moveToward(Entity& e,Vec2 destination) {
   ++e.pathIndex;
  }
  if(e.pathIndex>=static_cast<int>(e.path.size())){e.path.clear();e.pathIndex=0;e.repath=0;return;}
- Vec2 waypoint=e.path[e.pathIndex];Vec2 dir=normalized(subtract(waypoint,e.pos));float stepDistance=std::min(d.speed*Step,distance(e.pos,waypoint));Vec2 candidate=add(e.pos,scale(dir,stepDistance));
+ Vec2 waypoint=e.path[e.pathIndex];Vec2 dir=normalized(subtract(waypoint,e.pos));float stepDistance=std::min(d.speed*Step,distance(e.pos,waypoint));
+ if(e.order==Order::Construct) {
+  // Static paths do not include units. Give builders a lateral route through
+  // traffic so a collinear row of idle or held workers cannot pin them in place.
+  const Vec2 perpendicular{-dir.y,dir.x};const Entity* obstacle=nullptr;float nearest=80.0f;float side=0;
+  for(const auto& other:entities_) {
+   const auto& otherDefinition=definition(other.kind);
+   if(other.id==e.id||!other.alive()||otherDefinition.building||otherDefinition.air||other.kind==Kind::Resource)continue;
+   const Vec2 offset=subtract(other.pos,e.pos);const float forward=offset.x*dir.x+offset.y*dir.y;
+   const float lateral=offset.x*perpendicular.x+offset.y*perpendicular.y;
+   if(forward<=0||forward>=nearest||std::fabs(lateral)>=d.radius+otherDefinition.radius+12)continue;
+   obstacle=&other;nearest=forward;side=lateral;
+  }
+  if(obstacle) {
+   const float sign=std::fabs(side)>0.1f?(side>0?-1.0f:1.0f):(e.id%2?1.0f:-1.0f);
+   const Vec2 around=normalized(add(dir,scale(perpendicular,sign*1.5f)));
+   const Vec2 alternate=normalized(add(dir,scale(perpendicular,-sign*1.5f)));
+   if(!blocked(add(e.pos,scale(around,stepDistance)),d.radius,e.id))dir=around;
+   else if(!blocked(add(e.pos,scale(alternate,stepDistance)),d.radius,e.id))dir=alternate;
+  }
+ }
+ Vec2 candidate=add(e.pos,scale(dir,stepDistance));
  if(!blocked(candidate,d.radius,e.id))e.pos=candidate;
  else {
   Vec2 xOnly{candidate.x,e.pos.y},yOnly{e.pos.x,candidate.y};
@@ -587,6 +694,8 @@ void Simulation::damage(Entity& victim,float amount,int attackerTeam) {
  const float dealt=std::min(victim.hp,amount);victim.hp-=dealt;
  if(validTeam(attackerTeam))players_[attackerTeam].stats.damage+=dealt;
  if(victim.hp<=0) {
+  if(victim.kind==Kind::Worker)abandonConstruction(victim);
+  else if(definition(victim.kind).building)releaseConstruction(victim);
   victim.hp=0;victim.queue.clear();victim.path.clear();victim.pathIndex=0;
   if(validTeam(victim.team)) {
    if(definition(victim.kind).building){if(validTeam(attackerTeam))++players_[attackerTeam].stats.buildingsDestroyed;}
@@ -606,7 +715,7 @@ void Simulation::updateCombat(Entity& e) {
   if(patient){patient->hp=std::min(definition(patient->kind).hp,patient->hp+16);e.cooldown=d.cooldown;effects_.push_back({e.pos,patient->pos,e.team,0.24f,false});}
   return;
  }
- if(d.damage<=0||e.order==Order::Move||e.order==Order::Gather)return;
+ if(d.damage<=0||e.order==Order::Move||e.order==Order::Gather||e.order==Order::Construct)return;
  auto validTarget=[&](const Entity* target) {return target&&target->alive()&&target->team>=0&&target->team!=e.team&&target->kind!=Kind::Resource&&(!definition(target->kind).air||d.antiAir)&&visible(e.team,target->pos);};
  Entity* target=get(e.target);
  if(!validTarget(target))target=nullptr;
@@ -674,7 +783,7 @@ std::uint64_t Simulation::stateHash() const {
  hash.integer(entities_.size());for(const auto& e:entities_) {
   hash.integer(e.id);hash.integer(static_cast<int>(e.kind));hash.integer(e.team);hash.point(e.pos);hash.point(e.goal);hash.point(e.rally);
   hash.real(e.hp);hash.real(e.cooldown);hash.real(e.progress);hash.real(e.carried);hash.real(e.harvestTimer);hash.real(e.resource);hash.real(e.facing);
-  hash.integer(static_cast<int>(e.order));hash.integer(e.target);hash.integer(e.resourceTarget);hash.integer(e.returning);hash.integer(e.pathIndex);hash.real(e.repath);
+  hash.integer(static_cast<int>(e.order));hash.integer(e.target);hash.integer(e.resourceTarget);hash.integer(e.returning);hash.integer(e.pathIndex);hash.real(e.repath);hash.integer(e.builderId);hash.integer(e.resumeGather);
   hash.integer(e.queue.size());for(const auto& q:e.queue){hash.integer(static_cast<int>(q.kind));hash.real(q.remaining);hash.real(q.total);hash.integer(q.cost);hash.integer(q.research);}
   hash.integer(e.path.size());for(Vec2 p:e.path)hash.point(p);
  }
@@ -686,14 +795,14 @@ std::uint64_t Simulation::stateHash() const {
 
 bool Simulation::save(const std::string& path) const {
  std::ofstream out(path,std::ios::trunc);if(!out)return false;out.imbue(std::locale::classic());out<<std::setprecision(std::numeric_limits<float>::max_digits10);
- out<<"CINDERLINE 1\n"<<config_.map<<' '<<config_.seed<<' '<<config_.ai<<' '<<config_.aiAggression<<'\n';
+ out<<"CINDERLINE 2\n"<<config_.map<<' '<<config_.seed<<' '<<config_.ai<<' '<<config_.aiAggression<<'\n';
  out<<tick_<<' '<<nextId_<<' '<<accumulator_<<' '<<aiTimer_<<' '<<winner_<<'\n';
  for(const auto& p:players_) {
   const auto& s=p.stats;out<<p.ore<<' '<<p.tier<<' '<<p.weapons<<' '<<p.armor<<' '<<s.gathered<<' '<<s.produced<<' '<<s.lost<<' '<<s.killed<<' '<<s.built<<' '<<s.buildingsDestroyed<<' '<<s.expansions<<' '<<s.upgrades<<' '<<s.damage<<'\n';
  }
  out<<obstacles_.size()<<'\n';for(const auto& o:obstacles_)out<<o.center.x<<' '<<o.center.y<<' '<<o.half.x<<' '<<o.half.y<<'\n';
  out<<entities_.size()<<'\n';for(const auto& e:entities_) {
-  out<<e.id<<' '<<static_cast<int>(e.kind)<<' '<<e.team<<' '<<e.pos.x<<' '<<e.pos.y<<' '<<e.goal.x<<' '<<e.goal.y<<' '<<e.rally.x<<' '<<e.rally.y<<' '<<e.hp<<' '<<e.cooldown<<' '<<e.progress<<' '<<e.carried<<' '<<e.harvestTimer<<' '<<e.resource<<' '<<e.facing<<' '<<static_cast<int>(e.order)<<' '<<e.target<<' '<<e.resourceTarget<<' '<<e.returning<<' '<<e.pathIndex<<' '<<e.repath<<'\n';
+  out<<e.id<<' '<<static_cast<int>(e.kind)<<' '<<e.team<<' '<<e.pos.x<<' '<<e.pos.y<<' '<<e.goal.x<<' '<<e.goal.y<<' '<<e.rally.x<<' '<<e.rally.y<<' '<<e.hp<<' '<<e.cooldown<<' '<<e.progress<<' '<<e.carried<<' '<<e.harvestTimer<<' '<<e.resource<<' '<<e.facing<<' '<<static_cast<int>(e.order)<<' '<<e.target<<' '<<e.resourceTarget<<' '<<e.returning<<' '<<e.pathIndex<<' '<<e.repath<<' '<<e.builderId<<' '<<e.resumeGather<<'\n';
   out<<e.queue.size()<<'\n';for(const auto& q:e.queue)out<<static_cast<int>(q.kind)<<' '<<q.remaining<<' '<<q.total<<' '<<q.cost<<' '<<q.research<<'\n';
   out<<e.path.size()<<'\n';for(Vec2 p:e.path)out<<p.x<<' '<<p.y<<'\n';
  }
@@ -705,7 +814,7 @@ bool Simulation::save(const std::string& path) const {
  out<<std::quoted(alert_)<<'\n'<<std::quoted(aiStatus_)<<'\n';out.flush();return out.good();
 }
 bool Simulation::load(const std::string& path) {
- std::ifstream in(path);if(!in)return false;in.imbue(std::locale::classic());std::string magic;int version=0;in>>magic>>version;if(magic!="CINDERLINE"||version!=1)return false;
+ std::ifstream in(path);if(!in)return false;in.imbue(std::locale::classic());std::string magic;int version=0;in>>magic>>version;if(magic!="CINDERLINE"||(version!=1&&version!=2))return false;
  Simulation loaded;loaded.entities_.clear();loaded.obstacles_.clear();loaded.effects_.clear();loaded.recording_.clear();
  in>>loaded.config_.map>>loaded.config_.seed>>loaded.config_.ai>>loaded.config_.aiAggression;
  in>>loaded.tick_>>loaded.nextId_>>loaded.accumulator_>>loaded.aiTimer_>>loaded.winner_;
@@ -719,8 +828,9 @@ bool Simulation::load(const std::string& path) {
  in>>count;if(!in||count>10000)return false;Id maxId=0;
  for(std::size_t i=0;i<count;++i) {
   Entity e;int kind,order;in>>e.id>>kind>>e.team>>e.pos.x>>e.pos.y>>e.goal.x>>e.goal.y>>e.rally.x>>e.rally.y>>e.hp>>e.cooldown>>e.progress>>e.carried>>e.harvestTimer>>e.resource>>e.facing>>order>>e.target>>e.resourceTarget>>e.returning>>e.pathIndex>>e.repath;
+  if(version>=2)in>>e.builderId>>e.resumeGather;
   e.kind=static_cast<Kind>(kind);e.order=static_cast<Order>(order);
-  if(!in||!e.id||!validKind(e.kind)||(!validTeam(e.team)&&!(e.kind==Kind::Resource&&e.team==-1))||!finite(e.pos)||!finite(e.goal)||!finite(e.rally)||!std::isfinite(e.hp)||e.hp<0||!std::isfinite(e.cooldown)||e.cooldown<0||!std::isfinite(e.progress)||e.progress<0||e.progress>1||!std::isfinite(e.carried)||e.carried<0||e.carried>CarryCapacity||!std::isfinite(e.harvestTimer)||!std::isfinite(e.resource)||e.resource<0||!std::isfinite(e.facing)||!std::isfinite(e.repath)||order<0||order>static_cast<int>(Order::Hold)||loaded.find(e.id))return false;
+  if(!in||!e.id||!validKind(e.kind)||(!validTeam(e.team)&&!(e.kind==Kind::Resource&&e.team==-1))||!finite(e.pos)||!finite(e.goal)||!finite(e.rally)||!std::isfinite(e.hp)||e.hp<0||!std::isfinite(e.cooldown)||e.cooldown<0||!std::isfinite(e.progress)||e.progress<0||e.progress>1||!std::isfinite(e.carried)||e.carried<0||e.carried>CarryCapacity||!std::isfinite(e.harvestTimer)||!std::isfinite(e.resource)||e.resource<0||!std::isfinite(e.facing)||!std::isfinite(e.repath)||order<0||order>static_cast<int>(version==1?Order::Hold:Order::Construct)||loaded.find(e.id))return false;
   maxId=std::max(maxId,e.id);std::size_t queueCount;in>>queueCount;if(!in||queueCount>MaxQueue)return false;
   for(std::size_t q=0;q<queueCount;++q){QueueItem item;int qkind;in>>qkind>>item.remaining>>item.total>>item.cost>>item.research;item.kind=static_cast<Kind>(qkind);if(!in||!validKind(item.kind)||!std::isfinite(item.remaining)||!std::isfinite(item.total)||item.total<=0||item.remaining<0||item.remaining>item.total+0.001f||item.cost<0)return false;e.queue.push_back(item);}
   std::size_t pathCount;in>>pathCount;if(!in||pathCount>FogSize*FogSize+1)return false;
@@ -728,13 +838,21 @@ bool Simulation::load(const std::string& path) {
   if(e.pathIndex<0||e.pathIndex>static_cast<int>(e.path.size()))return false;loaded.entities_.push_back(std::move(e));
  }
  if(loaded.nextId_<=maxId)return false;
+ for(const auto& e:loaded.entities_) {
+  if(e.builderId&&loaded.constructionWorker(e.id)!=e.builderId)return false;
+  if(e.resumeGather&&(e.kind!=Kind::Worker||e.order!=Order::Construct||!e.alive()))return false;
+  if(e.order==Order::Construct) {
+   const Entity* foundation=loaded.find(e.target);
+   if(e.kind!=Kind::Worker||!e.alive()||!foundation||loaded.constructionWorker(foundation->id)!=e.id)return false;
+  }
+ }
  in>>count;if(!in||count>10000)return false;
  for(std::size_t i=0;i<count;++i){Effect fx;in>>fx.from.x>>fx.from.y>>fx.to.x>>fx.to.y>>fx.team>>fx.life>>fx.explosion;if(!in||!finite(fx.from)||!finite(fx.to)||!std::isfinite(fx.life))return false;loaded.effects_.push_back(fx);}
  for(int t=0;t<2;++t)for(auto* field:{&loaded.fog_[t],&loaded.explored_[t]})for(auto& value:*field){int v;in>>v;if(!in||v<0||v>1)return false;value=static_cast<unsigned char>(v);}
  in>>count;if(!in||count>1000000)return false;
  for(std::size_t i=0;i<count;++i) {
   RecordedCommand r;Command& c=r.command;int type,kind;std::size_t unitCount;in>>r.tick>>type>>c.team>>c.point.x>>c.point.y>>c.target>>kind>>c.queueIndex>>unitCount;c.type=static_cast<CommandType>(type);c.kind=static_cast<Kind>(kind);
-  if(!in||r.tick>loaded.tick_||type<0||type>static_cast<int>(CommandType::CancelBuilding)||!validTeam(c.team)||!validKind(c.kind)||!finite(c.point)||unitCount>500)return false;
+  if(!in||r.tick>loaded.tick_||type<0||type>static_cast<int>(version==1?CommandType::CancelBuilding:CommandType::ResumeConstruction)||!validTeam(c.team)||!validKind(c.kind)||!finite(c.point)||unitCount>500)return false;
   for(std::size_t n=0;n<unitCount;++n){Id id;in>>id;c.units.push_back(id);}if(!in)return false;loaded.recording_.push_back(std::move(r));
  }
  in>>std::quoted(loaded.alert_)>>std::quoted(loaded.aiStatus_);if(!in||loaded.alert_.size()>4096||loaded.aiStatus_.size()>4096)return false;

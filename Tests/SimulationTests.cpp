@@ -9,6 +9,7 @@
 #include <iostream>
 #include <limits>
 #include <numeric>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -47,6 +48,42 @@ Vec2 validPlacement(const Simulation& s,int team,Kind kind,Vec2 base) {
     if(s.canPlace(team,kind,p)) return p;
   }
   throw std::runtime_error("fixture cannot find legal placement");
+}
+Vec2 distantPlacement(const Simulation& s,int team,Kind kind,Id worker) {
+  const auto origin=s.find(worker)->pos;
+  for(float radius=350;radius<=650;radius+=50) for(int n=0;n<32;++n) {
+    const float angle=6.2831853f*n/32;
+    const Vec2 point{origin.x+radius*std::cos(angle),origin.y+radius*std::sin(angle)};
+    if(s.canPlace(team,kind,point))return point;
+  }
+  throw std::runtime_error("fixture cannot find a distant legal construction site");
+}
+void waitUntil(Simulation& s,float seconds,const std::function<bool()>& reached,const std::string& message) {
+  for(int i=0;i<static_cast<int>(std::ceil(seconds/Simulation::Step))&&!reached();++i)s.update(Simulation::Step);
+  check(reached(),message);
+}
+void waitForConstruction(Simulation& s,Id building) {
+  for(int n=0;n<600&&!s.constructionActive(building);++n)s.update(Simulation::Step);
+  if(!s.constructionActive(building)) {
+    const auto* site=s.find(building);const auto* worker=s.find(s.constructionWorker(building));
+    std::cerr<<"CONSTRUCTION_ARRIVAL_FAILURE time="<<s.time()<<" building="<<building;
+    if(site)std::cerr<<" site_x="<<site->pos.x<<" site_y="<<site->pos.y<<" progress="<<site->progress;
+    if(worker)std::cerr<<" worker="<<worker->id<<" x="<<worker->pos.x<<" y="<<worker->pos.y
+                       <<" distance="<<distance(worker->pos,site->pos)<<" order="<<static_cast<int>(worker->order)
+                       <<" path_index="<<worker->pathIndex<<" path_size="<<worker->path.size()
+                       <<" goal_x="<<worker->goal.x<<" goal_y="<<worker->goal.y;
+    std::cerr<<'\n';
+  }
+  check(s.constructionActive(building),"builder physically reaches the construction site");
+}
+Id beginCarryingOre(Simulation& s,Id worker) {
+  Id node=0;float best=1e9;
+  for(const auto& e:s.entities())if(e.kind==Kind::Resource&&e.resource>0&&s.explored(s.find(worker)->team,e.pos)) {
+    const float d=distance(s.find(worker)->pos,e.pos);if(d<best){best=d;node=e.id;}
+  }
+  check(node!=0&&send(s,CommandType::Gather,s.find(worker)->team,{worker},{},node).accepted,"builder first receives an ordinary mining order");
+  waitUntil(s,30,[&]{return s.find(worker)->carried>=6;},"builder harvests cargo before construction interrupts it");
+  return node;
 }
 std::string savePath(const std::string& suffix) {
   return (std::filesystem::temp_directory_path()/("cinderline-tests-"+suffix+".sav")).string();
@@ -156,6 +193,7 @@ void placementAndConstruction() {
   Id building=first(s,0,Kind::Foundry);
   check(s.find(building)->progress<1,"new building under construction");
   check(!send(s,CommandType::Train,0,{building},{},0,Kind::Striker).accepted,"unfinished producer rejects training");
+  waitForConstruction(s,building);
   advance(s,definition(Kind::Foundry).buildTime+1);
   check(s.find(building)->progress>=1,"construction completes after build time");
   check(s.find(building)->hp==definition(Kind::Foundry).hp,"undamaged completed building has exact full health");
@@ -180,12 +218,140 @@ void placementAndConstruction() {
   const float damageTaken=damaged.players()[1].stats.damage;
   check(damageTaken>1,"actual attack removed construction health");
   check(send(damaged,CommandType::Move,1,{attacker},{4100,100}).accepted,"attacker withdraws before completion");
+  waitForConstruction(damaged,building);
   advance(damaged,foundry.buildTime+1);
   const auto* completed=damaged.find(building);
   check(completed&&completed->alive()&&completed->progress==1,"damaged building still completes");
   check(std::abs(completed->hp-(foundry.hp-damageTaken))<0.05f,"completion preserves damage taken during construction");
   std::cout<<"CONSTRUCTION_HEALTH full_hp="<<s.find(first(s,0,Kind::Foundry))->hp
            <<" damage_taken="<<damageTaken<<" completed_damaged_hp="<<completed->hp<<'\n';
+}
+
+void workerConstructionEconomy() {
+  auto s=quiet();const Id worker=first(s,0,Kind::Worker),node=beginCarryingOre(s,worker);
+  const Vec2 start=s.find(worker)->pos,site=distantPlacement(s,0,Kind::Foundry,worker);
+  const float cargo=s.find(worker)->carried,remaining=s.find(node)->resource;
+  const int ore=s.players()[0].ore,gathered=s.players()[0].stats.gathered;
+  check(send(s,CommandType::Build,0,{worker},site,0,Kind::Foundry).accepted,"mining worker accepts a distant paid construction order");
+  const Id building=first(s,0,Kind::Foundry);const int paid=ore-definition(Kind::Foundry).cost;
+  check(s.players()[0].ore==paid&&s.find(worker)->carried==cargo,"placing a foundation charges its cost and preserves carried ore");
+  check(!s.constructionActive(building)&&s.find(building)->progress==0,"foundation does no work before its builder arrives");
+  advance(s,0.25f);
+  check(distance(start,s.find(worker)->pos)>1,"builder visibly leaves its mining position for the construction site");
+  check(s.find(building)->progress==0,"travel time does not count toward construction");
+  waitForConstruction(s,building);
+  check(distance(s.find(worker)->pos,site)<=definition(Kind::Foundry).radius+definition(Kind::Worker).radius+40,
+        "construction requires the worker at the building perimeter");
+  advance(s,5);
+  check(s.find(building)->progress>0&&s.find(building)->progress<1,"present worker advances unfinished construction");
+  check(s.find(node)->resource==remaining&&s.find(worker)->carried==cargo,"builder neither harvests nor discards its cargo while travelling or working");
+  check(s.players()[0].ore==paid&&s.players()[0].stats.gathered==gathered,"construction worker generates no mining income");
+  waitUntil(s,definition(Kind::Foundry).buildTime+1,[&]{return s.find(building)->progress==1;},"attended construction completes");
+  check(s.find(worker)->order==Order::Gather&&s.find(worker)->resourceTarget==node,"completed builder automatically returns to its prior ore deposit");
+  check(s.find(worker)->carried>=cargo,"returning builder retains ore harvested before construction");
+  check(s.constructionWorker(building)==0&&s.players()[0].stats.built==1,"completion releases its sole worker and counts the building once");
+  waitUntil(s,30,[&]{return s.players()[0].ore>paid;},"builder resumes physical mining and delivers ore after finishing");
+  check(s.players()[0].stats.gathered>gathered,"resumed mining adds actual delivered income");
+  std::cout<<"WORKER_CONSTRUCTION travelled="<<distance(start,site)<<" cargo_preserved="<<cargo
+           <<" finished_at="<<s.time()<<" delivered_after="<<s.players()[0].stats.gathered-gathered<<'\n';
+}
+
+void workerConstructionInterruptions() {
+  auto s=quiet();const Id worker=first(s,0,Kind::Worker);
+  const Vec2 site=distantPlacement(s,0,Kind::Foundry,worker);
+  check(send(s,CommandType::Build,0,{worker},site,0,Kind::Foundry).accepted,"pause fixture places a foundation");
+  const Id building=first(s,0,Kind::Foundry);waitForConstruction(s,building);advance(s,3);
+  check(send(s,CommandType::Move,0,{worker},{1300,500}).accepted,"construction worker can be ordered away");
+  const float stopped=s.find(building)->progress;const int paid=s.players()[0].ore;
+  advance(s,5);
+  check(s.find(building)->progress==stopped&&!s.constructionActive(building),"construction pauses immediately when its worker leaves");
+  check(s.constructionWorker(building)==0&&distance(s.find(worker)->pos,site)>150,"departing worker actually moves away and leaves the foundation unassigned");
+  check(!send(s,CommandType::ResumeConstruction,1,ids(s,1,Kind::Worker),{},building).accepted,"opponent cannot resume another player's foundation");
+  check(!send(s,CommandType::ResumeConstruction,0,{first(s,0,Kind::Headquarters)},{},building).accepted,"a structure cannot act as a replacement worker");
+  check(send(s,CommandType::ResumeConstruction,0,{worker},{},building).accepted,"returning worker resumes an already paid foundation");
+  check(s.players()[0].ore==paid,"resuming construction charges no additional ore");
+  waitForConstruction(s,building);advance(s,1);
+  check(s.find(building)->progress>stopped,"returning worker advances from retained progress");
+  check(send(s,CommandType::Stop,0,{worker}).accepted,"Stop also interrupts construction");
+  const float stoppedAgain=s.find(building)->progress;advance(s,2);
+  check(s.find(building)->progress==stoppedAgain&&s.find(worker)->order!=Order::Gather,"explicit Stop pauses construction and does not silently restart mining");
+  check(send(s,CommandType::ResumeConstruction,0,ids(s,0,Kind::Worker),{},building).accepted,"group selection can resume a foundation");
+  const Id assigned=s.constructionWorker(building);check(assigned!=0,"resumed site has one assigned worker");
+  int constructing=0;for(const auto& e:s.entities())if(e.alive()&&e.team==0&&e.order==Order::Construct&&e.target==building)++constructing;
+  check(constructing==1,"selecting several workers assigns only one constructor");
+  waitForConstruction(s,building);const float before=s.find(building)->progress;advance(s,2);
+  check(std::abs(s.find(building)->progress-before-2/definition(Kind::Foundry).buildTime)<0.001f,"group selection cannot accelerate the normal construction rate");
+  s.debugResources(0,1000);const Vec2 nextSite=distantPlacement(s,0,Kind::Processor,assigned);
+  check(send(s,CommandType::Build,0,{assigned},nextSite,0,Kind::Processor).accepted,"worker can be retasked to a different foundation");
+  const Id nextBuilding=first(s,0,Kind::Processor);const float oldProgress=s.find(building)->progress;advance(s,2);
+  check(s.find(building)->progress==oldProgress&&s.constructionWorker(building)==0,"retasking a builder leaves the earlier foundation paused");
+  check(s.constructionWorker(nextBuilding)==assigned,"retasked builder belongs only to its new site");
+  check(send(s,CommandType::CancelBuilding,0,{nextBuilding}).accepted,"new site may be cancelled during travel or work");
+  check(s.find(assigned)->order!=Order::Construct&&s.constructionWorker(nextBuilding)==0,"cancelled foundation releases its worker");
+  check(s.find(building)->progress==oldProgress,"cancelling another site never restarts an older foundation");
+
+  auto cancel=quiet();const Id miner=first(cancel,0,Kind::Worker),node=beginCarryingOre(cancel,miner);
+  const float cargo=cancel.find(miner)->carried;
+  const Vec2 cancelSite=distantPlacement(cancel,0,Kind::Foundry,miner);
+  check(send(cancel,CommandType::Build,0,{miner},cancelSite,0,Kind::Foundry).accepted,"mining cancellation fixture begins construction");
+  const Id cancelled=first(cancel,0,Kind::Foundry);
+  check(send(cancel,CommandType::CancelBuilding,0,{cancelled}).accepted,"unstarted foundation cancellation accepted");
+  check(cancel.players()[0].ore==500&&cancel.find(miner)->carried==cargo,"cancelling unstarted work refunds its cost and retains cargo");
+  check(cancel.find(miner)->order==Order::Gather&&cancel.find(miner)->resourceTarget==node,"cancellation returns its uninterrupted mining worker to the same node");
+
+  auto group=quiet();const auto groupWorkers=ids(group,0,Kind::Worker);
+  const Vec2 groupSite=distantPlacement(group,0,Kind::Foundry,groupWorkers.front());
+  check(send(group,CommandType::Build,0,groupWorkers,groupSite,0,Kind::Foundry).accepted,"a multi-worker selection may place one foundation");
+  const Id groupBuilding=first(group,0,Kind::Foundry);int busy=0;
+  for(Id id:groupWorkers)if(group.find(id)->order==Order::Construct)++busy;
+  check(busy==1&&group.players()[0].ore==250,"group placement spends once and reserves exactly one worker");
+  waitForConstruction(group,groupBuilding);const float groupProgress=group.find(groupBuilding)->progress;advance(group,2);
+  check(std::abs(group.find(groupBuilding)->progress-groupProgress-2/definition(Kind::Foundry).buildTime)<0.001f,"group placement does not multiply construction speed");
+}
+
+void workerConstructionHazards() {
+  auto killed=quiet();const Id worker=first(killed,0,Kind::Worker);
+  const Vec2 site=distantPlacement(killed,0,Kind::Foundry,worker);
+  check(send(killed,CommandType::Build,0,{worker},site,0,Kind::Foundry).accepted,"builder-death fixture starts construction");
+  const Id building=first(killed,0,Kind::Foundry);waitForConstruction(killed,building);advance(killed,1);
+  const Vec2 builderPosition=killed.find(worker)->pos;
+  const Id enemy=killed.debugSpawn(Kind::Bastion,1,{builderPosition.x+200,builderPosition.y});
+  check(send(killed,CommandType::Attack,1,{enemy},{},worker).accepted,"enemy attacks the actual constructor");
+  waitUntil(killed,15,[&]{return !killed.find(worker)||!killed.find(worker)->alive();},"constructor dies from ordinary enemy attacks");
+  check(send(killed,CommandType::Move,1,{enemy},{4000,500}).accepted,"attacker withdraws after killing the worker");
+  const float abandoned=killed.find(building)->progress;advance(killed,3);
+  check(killed.find(building)->progress==abandoned&&killed.constructionWorker(building)==0,"worker death leaves paid progress paused");
+  const Id replacement=first(killed,0,Kind::Worker);const int paid=killed.players()[0].ore;
+  check(send(killed,CommandType::ResumeConstruction,0,{replacement},{},building).accepted,"surviving worker can replace the killed builder");
+  waitForConstruction(killed,building);advance(killed,1);
+  check(killed.players()[0].ore==paid&&killed.find(building)->progress>abandoned,"replacement continues retained progress without another payment");
+
+  auto destroyed=quiet();const Id miner=first(destroyed,0,Kind::Worker),node=beginCarryingOre(destroyed,miner);
+  const float cargo=destroyed.find(miner)->carried;
+  const Vec2 doomedSite=distantPlacement(destroyed,0,Kind::Foundry,miner);
+  check(send(destroyed,CommandType::Build,0,{miner},doomedSite,0,Kind::Foundry).accepted,"site-destruction fixture interrupts a mining worker");
+  const Id doomed=first(destroyed,0,Kind::Foundry);std::vector<Id> siege;
+  for(int i=0;i<2;++i)siege.push_back(destroyed.debugSpawn(Kind::Mortar,1,{doomedSite.x+350,doomedSite.y+i*70.f}));
+  check(send(destroyed,CommandType::Attack,1,siege,{},doomed).accepted,"unfinished foundation can be destroyed in combat");
+  waitUntil(destroyed,1,[&]{return !destroyed.find(doomed)||!destroyed.find(doomed)->alive();},"enemy destroys the foundation before its worker arrives");
+  check(destroyed.find(miner)&&destroyed.find(miner)->alive(),"foundation destruction fixture preserves the distant worker");
+  check(destroyed.find(miner)->order==Order::Gather&&destroyed.find(miner)->resourceTarget==node,"destroyed site releases its worker back to mining");
+  check(destroyed.find(miner)->carried==cargo,"destroyed foundation never consumes the worker's carried ore");
+
+  auto blocked=quiet();const Vec2 trappedPosition{1200,700},blockedSite{1620,700};
+  const Id trapped=blocked.debugSpawn(Kind::Worker,0,trappedPosition);
+  // Real, solid ore deposits form an unbroken ring. The worker is outside the
+  // proposed building but has no traversable route to any perimeter work spot.
+  for(int n=0;n<12;++n) {
+    const float angle=6.2831853f*n/12;
+    blocked.debugSpawn(Kind::Resource,-1,{trappedPosition.x+110*std::cos(angle),trappedPosition.y+110*std::sin(angle)});
+  }
+  check(blocked.canPlace(0,Kind::Foundry,blockedSite),"blocked-builder fixture still has a legal visible building footprint");
+  check(send(blocked,CommandType::Build,0,{trapped},blockedSite,0,Kind::Foundry).accepted,"legal foundation can be placed while its worker has no access");
+  const Id unreachable=first(blocked,0,Kind::Foundry);advance(blocked,definition(Kind::Foundry).buildTime+5);
+  check(blocked.find(unreachable)->progress==0&&!blocked.constructionActive(unreachable),"inaccessible worker cannot construct remotely even after the full build timer");
+  check(distance(blocked.find(trapped)->pos,trappedPosition)<70,"blocked builder does not pass through solid deposits");
+  check(blocked.players()[0].ore==500-definition(Kind::Foundry).cost,"blocked construction does not charge repeatedly");
 }
 
 void researchAndPrerequisites() {
@@ -411,6 +577,92 @@ void saveLoadAndReplay() {
   std::filesystem::remove(aiPath);
 }
 
+void constructionPersistence() {
+  auto s=quiet();const Id worker=first(s,0,Kind::Worker),node=beginCarryingOre(s,worker);
+  const Vec2 site=distantPlacement(s,0,Kind::Foundry,worker);
+  check(send(s,CommandType::Build,0,{worker},site,0,Kind::Foundry).accepted,"save fixture begins a worker construction order");
+  const Id building=first(s,0,Kind::Foundry);
+  auto roundTrip=[&](const std::string& phase,float duration) {
+    const auto path=savePath("construction-"+phase);check(s.save(path),phase+" construction saves");
+    Simulation uninterrupted=s,loaded;check(loaded.load(path),phase+" construction loads");
+    check(loaded.stateHash()==s.stateHash(),phase+" construction retains all saved state");
+    for(int n=0;n<static_cast<int>(duration/Simulation::Step);++n) {
+      uninterrupted.update(Simulation::Step);loaded.update(Simulation::Step);
+      check(loaded.stateHash()==uninterrupted.stateHash(),phase+" construction diverges after loading");
+    }
+    std::filesystem::remove(path);return loaded;
+  };
+  const auto travelling=roundTrip("travelling",definition(Kind::Foundry).buildTime+35);
+  check(travelling.find(building)->progress==1&&travelling.find(worker)->order==Order::Gather&&travelling.find(worker)->resourceTarget==node,
+        "loading an en-route builder still completes and resumes its mining task");
+  waitForConstruction(s,building);advance(s,3);
+  check(roundTrip("working",5).find(building)->progress>s.find(building)->progress,"loaded on-site worker continues construction");
+  auto rejectBrokenPair=[&](Id entity,std::size_t column,const std::string& replacement,const std::string& failure) {
+    const auto path=savePath("construction-invalid-pair");check(s.save(path),"invalid pair fixture starts from a valid working save");
+    std::ifstream input(path);std::vector<std::string> lines;std::string line;bool changed=false;
+    while(std::getline(input,line)) {
+      std::istringstream fields(line);std::vector<std::string> values;std::string value;
+      while(fields>>value)values.push_back(value);
+      // Version 2 appends the assignment and return-to-mining flag to each
+      // 22-field legacy entity record. Alter one relationship in a real save.
+      if(!changed&&values.size()==24&&values.front()==std::to_string(entity)) {
+        values[column]=replacement;std::ostringstream edited;
+        for(std::size_t i=0;i<values.size();++i)edited<<(i?" ":"")<<values[i];line=edited.str();changed=true;
+      }
+      lines.push_back(line);
+    }
+    input.close();check(changed,"invalid pair fixture locates the intended entity record");
+    {std::ofstream output(path);for(const auto& savedLine:lines)output<<savedLine<<'\n';}
+    Simulation current=quiet();const auto before=current.stateHash();
+    check(!current.load(path),failure);check(current.stateHash()==before,"rejected construction save leaves the current match intact");
+    std::filesystem::remove(path);
+  };
+  rejectBrokenPair(building,22,"999999","save with a nonexistent constructor is rejected");
+  rejectBrokenPair(building,22,std::to_string(first(s,0,Kind::Headquarters)),"save assigning a building as constructor is rejected");
+  rejectBrokenPair(worker,17,"999999","save whose constructor targets another site is rejected");
+  check(send(s,CommandType::Stop,0,{worker}).accepted,"save fixture pauses its builder");
+  const float pausedProgress=s.find(building)->progress;
+  const auto paused=roundTrip("paused",definition(Kind::Foundry).buildTime+1);
+  check(paused.find(building)->progress==pausedProgress&&paused.constructionWorker(building)==0,"paused foundation remains paused through loading and a full build duration");
+  check(send(s,CommandType::ResumeConstruction,0,{worker},{},building).accepted,"resumed construction is recorded as a command");
+  advance(s,4);const auto commands=s.recording();Simulation replay;replay.reset({0,42,false,1});std::size_t next=0;
+  while(replay.tick()<s.tick()) {
+    while(next<commands.size()&&commands[next].tick==replay.tick()) {
+      check(replay.command(commands[next].command).accepted,"construction replay accepts each historical command");++next;
+    }
+    replay.update(Simulation::Step);
+  }
+  check(next==commands.size()&&replay.stateHash()==s.stateHash(),"build, interruption, and free resume replay deterministically");
+
+  // A fixed v1 fixture represents the old autonomous construction behavior:
+  // the paid Kiln is 40% finished while its worker is still gathering 9 ore.
+  // It deliberately omits every v2 assignment field, rather than relying on
+  // the current writer to produce a supposedly legacy snapshot.
+  const auto legacyPath=savePath("construction-v1");
+  {
+    std::ofstream legacy(legacyPath);
+    legacy<<"CINDERLINE 1\n0 42 0 1\n20 6 0 0 -1\n"
+          <<"250 1 0 0 0 0 0 0 0 0 0 0 0\n500 1 0 0 0 0 0 0 0 0 0 0 0\n0\n5\n"
+          <<"1 8 0 600 600 600 600 790 600 3400 0 1 0 0 0 0 0 0 0 0 0 0\n0\n0\n"
+          <<"2 0 0 800 700 700 850 800 700 70 0 1 9 0.2 0 0 4 5 5 0 0 0\n0\n0\n"
+          <<"3 10 0 1000 700 1000 700 1190 700 713 0 0.4 0 0 0 0 0 0 0 0 0 0\n0\n0\n"
+          <<"4 8 1 4200 4200 4200 4200 4010 4200 3400 0 1 0 0 0 0 0 0 0 0 0 0\n0\n0\n"
+          <<"5 14 -1 700 850 700 850 700 850 1 0 1 0 0 2500 0 0 0 0 0 0 0\n0\n0\n0\n";
+    for(int field=0;field<4;++field) {for(int cell=0;cell<Simulation::FogSize*Simulation::FogSize;++cell)legacy<<"1 ";legacy<<'\n';}
+    legacy<<"0\n\"Legacy partially built Kiln\"\n\"Opponent AI disabled\"\n";
+  }
+  Simulation migrated;check(migrated.load(legacyPath),"legacy v1 construction save remains readable");
+  check(migrated.find(3)->progress==0.4f&&migrated.constructionWorker(3)==0,"legacy unfinished structure migrates to a paused paid foundation");
+  check(migrated.players()[0].ore==250&&migrated.find(2)->carried==9,"legacy migration preserves currency and carried ore");
+  advance(migrated,2);
+  check(migrated.find(3)->progress==0.4f,"legacy autonomous timer cannot continue after migration");
+  const int legacyOre=migrated.players()[0].ore;
+  check(send(migrated,CommandType::ResumeConstruction,0,{2},{},3).accepted,"legacy paid foundation accepts a real worker");
+  waitForConstruction(migrated,3);advance(migrated,1);
+  check(migrated.find(3)->progress>0.4f&&migrated.players()[0].ore==legacyOre,"legacy foundation resumes remaining work without another construction cost");
+  std::filesystem::remove(legacyPath);
+}
+
 void boundedUpdate() {
   auto s=quiet(); const auto tick=s.tick();
   s.update(-1);s.update(std::numeric_limits<float>::quiet_NaN());s.update(std::numeric_limits<float>::infinity());
@@ -569,6 +821,45 @@ void aiEconomy() {
            <<" produced="<<p.stats.produced<<" built="<<p.stats.built<<" paid_command_cost="<<paid<<'\n';
 }
 
+void aiConstructionAssignments() {
+  Simulation s;s.reset({0,987,true,1});
+  const Id worker=first(s,1,Kind::Worker);const Vec2 site=distantPlacement(s,1,Kind::Foundry,worker);
+  check(send(s,CommandType::Build,1,{worker},site,0,Kind::Foundry).accepted,"AI construction fixture places a paid foundation");
+  const Id building=first(s,1,Kind::Foundry);s.debugResources(1,0);
+  advance(s,0.1f);
+  check(s.constructionWorker(building)==worker&&s.find(worker)->order==Order::Construct,"AI does not replace or harvest an assigned worker still travelling to its site");
+  waitForConstruction(s,building);advance(s,3);
+  check(s.constructionWorker(building)==worker&&s.find(building)->progress>0,"AI preserves the attending constructor across its economic decisions");
+  check(send(s,CommandType::Stop,1,{worker}).accepted,"AI fixture leaves an already paid orphan foundation");
+  const auto commandStart=s.recording().size();s.debugResources(1,0);advance(s,2.1f);
+  bool resumed=false;
+  for(std::size_t i=commandStart;i<s.recording().size();++i) {
+    const auto& c=s.recording()[i].command;
+    if(c.team==1&&c.type==CommandType::ResumeConstruction&&c.target==building)resumed=true;
+  }
+  const Id replacement=s.constructionWorker(building);
+  check(resumed&&replacement!=0&&s.find(replacement)->order==Order::Construct,"AI recovers an orphan through ResumeConstruction without overwriting it with a mining order in the same update");
+
+  Simulation reserved;reserved.reset({0,654,true,1});reserved.debugResources(1,5000);
+  const auto workers=ids(reserved,1,Kind::Worker);std::vector<Id> sites;
+  for(Id id:workers) {
+    const Vec2 point=distantPlacement(reserved,1,Kind::Processor,id);
+    check(send(reserved,CommandType::Build,1,{id},point,0,Kind::Processor).accepted,"AI reservation fixture assigns each worker a different legal site");
+    sites.push_back(ids(reserved,1,Kind::Processor).back());
+  }
+  const Vec2 extra=distantPlacement(reserved,1,Kind::Processor,workers.front());
+  check(send(reserved,CommandType::Build,1,{workers.front()},extra,0,Kind::Processor).accepted,"retasking one reserved worker creates an orphan without adding a free worker");
+  check(reserved.constructionWorker(sites.front())==0,"reservation fixture has exactly an abandoned earlier site");
+  const auto start=reserved.recording().size();advance(reserved,0.1f);
+  check(reserved.constructionWorker(sites.front())==0,"AI leaves an orphan paused when every surviving worker is already constructing");
+  for(std::size_t i=start;i<reserved.recording().size();++i) {
+    const auto& c=reserved.recording()[i].command;
+    check(c.team!=1||(c.type!=CommandType::Build&&c.type!=CommandType::ResumeConstruction),"AI cannot steal busy constructors or buy duplicate infrastructure while paid work waits");
+  }
+  for(Id id:workers)check(reserved.find(id)->order==Order::Construct,"reserved worker remains on its current construction task");
+  std::cout<<"AI_CONSTRUCTION travelling_preserved=1 orphan_resumed="<<resumed<<" all_busy_orphan_paused=1\n";
+}
+
 void benchmark() {
   for(int count:{50,100,200}) {
     auto s=quiet();std::vector<Id> groups[2];
@@ -638,7 +929,9 @@ void commandIntegrationOpponent(Simulation& s) {
   if(workers.size()<12&&s.find(hqs.front())->queue.empty()) send(s,CommandType::Train,team,{hqs.front()},{},0,Kind::Worker);
   auto build=[&](Kind kind) {
     if(workers.empty()||s.players()[team].ore<definition(kind).cost) return;
-    try {auto p=validPlacement(s,team,kind,base);send(s,CommandType::Build,team,{workers.front()},p,0,kind);} catch(const std::runtime_error&) {}
+    const auto available=std::find_if(workers.begin(),workers.end(),[&](Id id){return s.find(id)->order!=Order::Construct;});
+    if(available==workers.end())return;
+    try {auto p=validPlacement(s,team,kind,base);send(s,CommandType::Build,team,{*available},p,0,kind);} catch(const std::runtime_error&) {}
   };
   if(ids(s,team,Kind::Foundry).empty()&&workers.size()>=7) build(Kind::Foundry);
   if(s.capacity(team)-s.supply(team)<6) build(Kind::Processor);
@@ -686,10 +979,13 @@ int main(int argc,char** argv) {
   std::vector<std::pair<std::string,std::function<void()>>> tests{
     {"reset and definitions",resetAndDefinitions},{"physical gathering and depletion",gatherAndDepletion},
     {"paid commands, production and supply",paidCommandsAndQueues},{"placement and construction",placementAndConstruction},
+    {"worker construction economy",workerConstructionEconomy},{"worker construction interruptions",workerConstructionInterruptions},
+    {"worker construction hazards",workerConstructionHazards},{"construction persistence and migration",constructionPersistence},
     {"research and prerequisites",researchAndPrerequisites},{"ownership and fog",ownershipAndFog},
     {"obstacle paths and group movement",movementAndGroups},{"ground and air combat",airAndCombat},{"tactical orders and support",tacticalOrders},
     {"victory and defeat",victoryAndDefeat},{"save-load continuity and replay",saveLoadAndReplay},
-    {"bounded fixed-step update",boundedUpdate},{"AI expansion and local defense",aiExpansionAndBaseDefense},{"AI paid economy",aiEconomy}};
+    {"bounded fixed-step update",boundedUpdate},{"AI expansion and local defense",aiExpansionAndBaseDefense},{"AI paid economy",aiEconomy},
+    {"AI construction assignments",aiConstructionAssignments}};
   if(argc>1&&std::string(argv[1])=="--benchmark") tests={{"performance",benchmark}};
   else if(argc>1&&std::string(argv[1])=="--match") tests={{"natural AI match durations",matchDuration}};
   else if(argc>1) {

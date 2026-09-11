@@ -301,6 +301,17 @@ void ACinderPlayerController::TapWorld(FVector2D Position, bool ForceCommand)
             if (D < HitRadius && D < Best) { Hit = &E; Best = D; }
         }
     }
+    const bool bSelectedDrudge = std::any_of(Selected.begin(), Selected.end(), [&](cinder::Id Id)
+    {
+        const auto* Worker = Battle->Sim().find(Id);
+        return Worker && Worker->alive() && Worker->team == 0 && Worker->kind == cinder::Kind::Worker;
+    });
+    if (Hit && Hit->team == 0 && cinder::definition(Hit->kind).building && Hit->progress < 1 && bSelectedDrudge && !bAttackMove && (ForceCommand || bPointerTouch))
+    {
+        cinder::Command Cmd; Cmd.type = cinder::CommandType::ResumeConstruction; Cmd.target = Hit->id;
+        Issue(Cmd); bBuildMenu = false;
+        return;
+    }
     if (Hit && Hit->team == 0 && Hit->kind != cinder::Kind::Resource && !ForceCommand && !bAttackMove)
     {
         const float Now = GetWorld()->GetTimeSeconds();
@@ -414,6 +425,22 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
     else if (Action == TEXT("research")) { cinder::Command C; C.type = cinder::CommandType::Research; C.queueIndex = Argument; Issue(C); }
     else if (Action == TEXT("cancelqueue")) { cinder::Command C; C.type = cinder::CommandType::CancelQueue; C.queueIndex = Argument; Issue(C); }
     else if (Action == TEXT("cancelbuilding")) { cinder::Command C; C.type = cinder::CommandType::CancelBuilding; Issue(C); }
+    else if (Action == TEXT("resumeconstruction") && IsGameplayActive())
+    {
+        auto& Sim = Battle->Sim();
+        const auto* Site = Selected.empty() ? nullptr : Sim.find(Selected.front());
+        if (!Site || !Site->alive() || Site->team != 0 || !cinder::definition(Site->kind).building || Site->progress >= 1) return;
+        if (Sim.constructionWorker(Site->id)) { Notify(TEXT("A Drudge is already assigned to this site")); return; }
+        cinder::Id Builder = 0; float Nearest = TNumericLimits<float>::Max();
+        for (const auto& Worker : Sim.entities())
+        {
+            if (!Worker.alive() || Worker.team != 0 || Worker.kind != cinder::Kind::Worker || Worker.order == cinder::Order::Construct) continue;
+            const float Distance = FMath::Square(Worker.pos.x - Site->pos.x) + FMath::Square(Worker.pos.y - Site->pos.y);
+            if (Distance < Nearest || (Distance == Nearest && Worker.id < Builder)) { Builder = Worker.id; Nearest = Distance; }
+        }
+        if (!Builder) { Notify(TEXT("No available Drudge. Select a builder and tap this site to reassign it.")); return; }
+        cinder::Command C; C.type = cinder::CommandType::ResumeConstruction; C.target = Site->id; C.units = { Builder }; Issue(C);
+    }
     else if (Action == TEXT("save")) Notify(Battle->SaveMatch() ? TEXT("Match saved on this device") : TEXT("Could not save match"));
     else if (Action == TEXT("load")) { if (Battle->LoadMatch()) { ResetInteraction(true); Home(); Notify(TEXT("Match restored")); } else Notify(TEXT("No readable saved match")); }
     else if (Action == TEXT("debug")) bDebug = !bDebug;

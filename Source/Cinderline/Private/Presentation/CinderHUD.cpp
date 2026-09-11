@@ -23,6 +23,11 @@ const FLinearColor Mint(0.10f, 0.90f, 0.74f);
 const FLinearColor Amber(1.0f, 0.64f, 0.24f);
 FString Name(cinder::Kind Kind) { return UTF8_TO_TCHAR(cinder::definition(Kind).name); }
 FString ClockString(float Seconds) { return FString::Printf(TEXT("%02d:%02d"), static_cast<int>(Seconds) / 60, static_cast<int>(Seconds) % 60); }
+FString ConstructionStatus(const cinder::Simulation& Sim, const cinder::Entity& Site)
+{
+    const TCHAR* State = Sim.constructionActive(Site.id) ? TEXT("BUILDING") : Sim.constructionWorker(Site.id) ? TEXT("EN ROUTE") : TEXT("PAUSED");
+    return FString::Printf(TEXT("%s %d%%"), State, static_cast<int>(Site.progress * 100));
+}
 }
 
 void ACinderHUD::BeginPlay()
@@ -259,6 +264,19 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
         if (!E.alive() || E.kind == cinder::Kind::Resource || (E.team != 0 && !Sim.visible(0, E.pos))) continue;
         const auto& D = cinder::definition(E.kind);
         const bool Selected = std::find(PC->Selection().begin(), PC->Selection().end(), E.id) != PC->Selection().end();
+        if (E.kind == cinder::Kind::Worker && E.order == cinder::Order::Construct)
+        {
+            if (const auto* Site = Sim.find(E.target); Site && Sim.constructionWorker(Site->id) == E.id && (E.team == 0 || Sim.visible(0, Site->pos)))
+            {
+                if (Sim.constructionActive(Site->id))
+                {
+                    const FVector2D Direction = FVector2D(E.pos.x - Site->pos.x, E.pos.y - Site->pos.y).GetSafeNormal();
+                    const FVector2D Edge = FVector2D(Site->pos.x, Site->pos.y) + Direction * cinder::definition(Site->kind).radius;
+                    WorldLine(FVector(E.pos.x, E.pos.y, 44), FVector(Edge.X, Edge.Y, 56), Amber, 2);
+                }
+                else if (Selected) WorldLine(FVector(E.pos.x, E.pos.y, 10), FVector(Site->pos.x, Site->pos.y, 10), Amber.CopyWithNewOpacity(0.45f), 1);
+            }
+        }
         if (Selected)
         {
             const float R = D.radius + 9;
@@ -279,6 +297,8 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
                 Panel(P.X - BarW / 2, P.Y, BarW, 4 * UIScale, Ink);
                 Panel(P.X - BarW / 2, P.Y, BarW * FMath::Clamp(E.hp / D.hp, 0.0f, 1.0f), 4 * UIScale, E.team == 0 ? Mint : Amber);
                 if (E.progress < 1) Panel(P.X - BarW / 2, P.Y + 6 * UIScale, BarW * E.progress, 3 * UIScale, Amber);
+                if (E.team == 0 && D.building && E.progress < 1)
+                    Label(ConstructionStatus(Sim, E), P.X - BarW / 2, P.Y - 19 * UIScale, Amber, 0.62f);
             }
         }
     }
@@ -343,10 +363,17 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
 
     const float SummaryY = Height - 122 * S;
     const float SummaryW = InnerW - 238 * S;
-    const FString Summary = First ? PC->Selection().size() > 1 ? FString::Printf(TEXT("%d UNITS / FOCUS"), static_cast<int>(PC->Selection().size())) : FString::Printf(TEXT("%s / HP %d"), *Name(First->kind), static_cast<int>(First->hp)) : TEXT("SELECT A UNIT OR STRUCTURE");
+    FString Summary = First ? PC->Selection().size() > 1 ? FString::Printf(TEXT("%d UNITS / FOCUS"), static_cast<int>(PC->Selection().size())) : FString::Printf(TEXT("%s / HP %d"), *Name(First->kind), static_cast<int>(First->hp)) : TEXT("SELECT A UNIT OR STRUCTURE");
+    if (First && PC->Selection().size() == 1)
+    {
+        if (cinder::definition(First->kind).building && First->progress < 1) Summary = Name(First->kind) + TEXT(" / ") + ConstructionStatus(Sim, *First);
+        else if (First->order == cinder::Order::Construct) Summary = Sim.constructionActive(First->target) ? TEXT("DRUDGE / BUILDING") : TEXT("DRUDGE / TO SITE");
+    }
     Button(Summary, TEXT("focus"), 0, Margin, SummaryY, SummaryW);
     Button(TEXT("TYPES"), TEXT("sheet"), 2, Margin + SummaryW + 8 * S, SummaryY, 105 * S, CompactSheet == 2);
-    if (First && cinder::definition(First->kind).building)
+    if (First && cinder::definition(First->kind).building && First->progress < 1)
+        Button(TEXT("SITE"), TEXT("sheet"), 1, Width - Margin - 117 * S, SummaryY, 117 * S, CompactSheet == 1);
+    else if (First && cinder::definition(First->kind).building)
         Button(FString::Printf(TEXT("QUEUE %d"), static_cast<int>(First->queue.size())), TEXT("sheet"), 3, Width - Margin - 117 * S, SummaryY, 117 * S, CompactSheet == 3);
     else Button(TEXT("STOP"), TEXT("stop"), 0, Width - Margin - 117 * S, SummaryY, 117 * S);
 
@@ -384,7 +411,12 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
         else
         {
             Title = TEXT("CONTEXTUAL ACTIONS");
-            if (First && First->progress < 1) Options.Add({ TEXT("CANCEL BUILDING"), TEXT("cancelbuilding"), 0 });
+            if (First && First->progress < 1)
+            {
+                Title = ConstructionStatus(Sim, *First) + (Sim.constructionWorker(First->id) ? TEXT(" / DRUDGE ASSIGNED") : TEXT(" / NEEDS A DRUDGE"));
+                if (!Sim.constructionWorker(First->id)) Options.Add({ TEXT("ASSIGN DRUDGE"), TEXT("resumeconstruction"), 0 });
+                Options.Add({ TEXT("CANCEL BUILDING"), TEXT("cancelbuilding"), 0 });
+            }
             else if (First && cinder::definition(First->kind).building)
             {
                 for (const auto& D : cinder::definitions())
@@ -472,7 +504,10 @@ void ACinderHUD::DrawMatch(ACinderPlayerController* PC, ACinderBattlefield* Batt
     {
         const auto& Def = cinder::definition(First->kind);
         Label(PC->Selection().size() == 1 ? Name(First->kind).ToUpper() : FString::Printf(TEXT("%d UNITS SELECTED"), static_cast<int>(PC->Selection().size())), SX, Height - 174 * UIScale, Mint, 0.92f);
-        Label(FString::Printf(TEXT("HP %d / %d"), static_cast<int>(First->hp), static_cast<int>(Def.hp)), SX, Height - 144 * UIScale, White, 0.78f);
+        FString Detail = FString::Printf(TEXT("HP %d / %d"), static_cast<int>(First->hp), static_cast<int>(Def.hp));
+        if (Def.building && First->progress < 1) Detail = ConstructionStatus(Sim, *First);
+        else if (First->order == cinder::Order::Construct) Detail = Sim.constructionActive(First->target) ? TEXT("BUILDING / MINING PAUSED") : TEXT("TO SITE / MINING PAUSED");
+        SingleLineLabel(Detail, SX, Height - 144 * UIScale, 240 * UIScale, White, 0.78f);
         std::map<cinder::Kind, int> Counts;
         for (auto Id : PC->Selection()) if (const auto* E = Sim.find(Id)) ++Counts[E->kind];
         const int Pages = FMath::Max(1, (static_cast<int>(Counts.size()) + 1) / 2);
@@ -491,7 +526,9 @@ void ACinderHUD::DrawMatch(ACinderPlayerController* PC, ACinderBattlefield* Batt
         const float ContextY = Height - 185 * UIScale;
         if (First->progress < 1)
         {
-            Button(FString::Printf(TEXT("BUILDING %d%% / CANCEL"), static_cast<int>(First->progress * 100)), TEXT("cancelbuilding"), 0, CommandsX, ContextY, 238 * UIScale);
+            if (!Sim.constructionWorker(First->id)) Button(TEXT("ASSIGN DRUDGE"), TEXT("resumeconstruction"), 0, CommandsX, ContextY, 238 * UIScale);
+            else Label(Sim.constructionActive(First->id) ? TEXT("DRUDGE CONSTRUCTING") : TEXT("DRUDGE EN ROUTE"), CommandsX, ContextY + 12 * UIScale, Amber, 0.80f);
+            Button(TEXT("CANCEL BUILDING"), TEXT("cancelbuilding"), 0, CommandsX + 2 * Gap, ContextY, 238 * UIScale);
         }
         else if (Def.building && !PC->bBuildMenu)
         {

@@ -1,5 +1,7 @@
 # First skirmish mechanics pass
 
+This records the first mechanics checkpoint. The subsequent worker-driven construction fix and its fresh validation are tracked in [CONSTRUCTION_PASS.md](CONSTRUCTION_PASS.md).
+
 CHECKPOINT: First-faction mechanics and Unreal foundation
 
 STATUS: Automated mechanics and engine integration pass. Desktop launch and camera navigation are demonstrated. Full human playtesting, competitive pacing and physical touch acceptance remain open.
@@ -39,4 +41,4 @@ The Mac Unreal development target runs the first faction against a paid economic
 
 NEXT CHECKPOINT:
 
-Integrate the original Blender models and audio, improve HUD readability, inspect the resulting Unreal build, then perform a fuller playtest. Continue to iOS after these stages are ready.
+The initial model/audio pass is recorded in [PRESENTATION_PASS.md](PRESENTATION_PASS.md). The first hands-on session exposed remote construction while Drudges kept mining; the follow-up is [CONSTRUCTION_PASS.md](CONSTRUCTION_PASS.md). Continue the full playtest after that fix, with iOS deferred.
