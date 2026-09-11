@@ -1,0 +1,7 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+    Start 1: simulation_rules
+1/1 Test #1: simulation_rules .................   Passed    1.97 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   1.98 sec

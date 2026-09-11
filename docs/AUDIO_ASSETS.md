@@ -30,7 +30,7 @@ The generator uses fixed seeds. `RawAssets/Audio/manifest.json` records each cue
 
 The WAV generation pass established numerical and format validation only. It performed **no playback, listening review, Unreal import, or in-game mixing test**. File metrics do not establish listening quality. Multiple simultaneous cues can exceed the headroom of an individual file; runtime mixing and listening review remain necessary.
 
-## Deferred Unreal import
+## Unreal import
 
 `scripts/unreal_audio_assets.py` has no asset-import side effects when imported as a Python module. Inside Unreal Editor, explicitly call:
 
@@ -70,3 +70,19 @@ Playback quietly returns for missing contexts/game instances, disabled audio, co
 Throttling applies per cue across the game instance and uses monotonic time. It limits repeated combat submissions but does not replace a final mix/concurrency review. Readiness/combat/UI triggers belong to presentation callers.
 
 Run the explicit `cinder.audio` console command, or call the subsystem's `LogStatus()`, to report loaded cue count and requested, played, throttled, missing, and unavailable counts. The command produces no sound and the subsystem logs nothing automatically. Requests without a game instance cannot contribute instance counters. **Played counts valid `PlaySound2D` submissions; it does not prove audible output or listening quality.**
+
+## Combat dispatch
+
+The battlefield maps new Weapon, Impact and Death events to `Weapon_Pulse`, `Impact`
+and `Explosion`. Healing has its own visual treatment and no sound cue yet. Event IDs
+are consumed once, including hidden and offscreen events, so panning the camera or
+revealing fog later cannot replay them. Match start, menu return and successful load
+snapshot the cursor and readiness statistics. Playback requires both event-time and
+current endpoint visibility and, when a local viewport exists, an on-screen location.
+
+Each adapter update coalesces repeated events into at most one request per combat
+cue: destruction, firing and impact. A large volley cannot crowd out another cue.
+Existing per-cue intervals apply across the game instance.
+`cinder.combat` reports consumption and filtering; `cinder.audio` additionally reports
+requests and actual playback submissions for each cue. This is a bounded first mix;
+stereo positioning and a listening review remain later work.

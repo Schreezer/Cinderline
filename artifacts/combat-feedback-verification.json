@@ -1,0 +1,75 @@
+{
+  "verified_at_utc": "2026-09-11T15:31:59.736316+00:00",
+  "portable_rule_groups": 26,
+  "ctests_passed": 3,
+  "native_render_frames": 3000,
+  "native_ctest_seconds": 22.39,
+  "final_portable_rules_seconds": 1.98,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "sanitizer_seconds": 31.03,
+  "unreal_integration_run": "20260911T153017Z-79078",
+  "unreal_tests": [
+    {
+      "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.CombatFeedback",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "source_files_hashed": 101,
+  "rendered_fixtures": {
+    "desktop": "1280x720",
+    "compact": "667x375",
+    "scenes": [
+      "weapons",
+      "healing and destruction",
+      "live combat after 16 seconds"
+    ]
+  },
+  "audio_session": {
+    "weapon_submitted": 45,
+    "impact_submitted": 44,
+    "explosion_submitted": 5,
+    "throttled": 9,
+    "missing": 0,
+    "unavailable": 0
+  },
+  "active_live_fixture": {
+    "consumed_events": 120,
+    "weapon_requests": 46,
+    "impact_requests": 46,
+    "death_requests": 4,
+    "coalesced": 24,
+    "hidden": 0,
+    "offscreen": 0
+  },
+  "save_version": 4,
+  "legacy_save_readers": [
+    1,
+    2,
+    3
+  ],
+  "limits": "Development-spawn fixtures use normal combat but do not prove human balance or paid-economy play. PlaySound2D submissions are not listening proof. No new physical input, touch, iOS or rendering-performance validation. Human full-match and audio mix review remain open.",
+  "runtime_ready": "Final rebuilt Unreal standalone game reopened; normal skirmish menu visually confirmed through CUA and left open at 1280x720."
+}

@@ -84,20 +84,29 @@ Unreal's cached cursor location on this Mac, so automated mouse targeting remain
 unreliable. These checks do not establish touch quality, a packaged build or iOS
 performance. See [the verification record](../artifacts/verification-summary.md).
 
-The presentation uses static Blender models and Canvas UI with interface, order
-and production audio hooks. It still needs character animation, combat audio,
+The presentation uses static Blender models and Canvas UI with interface, order,
+production and event-driven combat audio hooks. It still needs character animation, listening/mix review,
 haptics, smooth fog edges, player-facing last-seen enemy building markers,
 networking or a second asymmetric faction. The opponent's scouting memory and
 objective selection are tracked in [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md). Camera smoothing
 is implemented; momentum/gesture tuning still requires physical-device testing.
 Device-specific safe area and suspend/resume handling need a later iOS product pass.
 
-`./scripts/test-unreal.sh` runs three strict transient-world integration tests for
+`./scripts/test-unreal.sh` runs four strict transient-world integration tests for
 world/controller lifecycle, paid economy and worker construction, and AI
-observation/persistence. The AI fixture uses a starting Drudge's ordinary travel
+observation/persistence, plus combat feedback consumption and lifecycle. The AI fixture uses a starting Drudge's ordinary travel
 into and out of opponent vision, then verifies a temporary save and continued
 actor ticks. The runner requires every expected path to succeed with zero errors
 or warnings. These tests open no gameplay viewport and do not modify player saves.
+
+For repeatable visual inspection in a Development build, `cinder.combatpreview weapons`
+replaces the current unsaved match with a frozen firing scene; `cinder.combatpreview support`
+shows healing and a lethal volley. Add `live` for ongoing combat. These explicit
+fixtures spawn development actors, apply normal damage/healing rules and never write
+a player save. `cinder.combatpreview reset` returns to a fresh menu. Starting or loading
+a match also restores ordinary ticking. The commands are absent from Shipping builds.
+Use `cinder.combat` for event-consumption diagnostics and `cinder.audio` for per-cue
+requests and playback submissions. Submission counts do not prove audible quality.
 
 ## iOS
 

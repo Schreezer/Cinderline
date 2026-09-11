@@ -4,11 +4,13 @@
 #include "Components/DirectionalLightComponent.h"
 #include "Components/SkyLightComponent.h"
 #include "Engine/DirectionalLight.h"
+#include "Engine/GameInstance.h"
 #include "Engine/SkyLight.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/TextureCube.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "GameFramework/PlayerController.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
 #include "Misc/Paths.h"
@@ -18,6 +20,7 @@
 #include <algorithm>
 
 DEFINE_LOG_CATEGORY_STATIC(LogCinderModels, Log, All);
+DEFINE_LOG_CATEGORY_STATIC(LogCinderCombat, Log, All);
 
 namespace
 {
@@ -36,6 +39,14 @@ FAutoConsoleCommandWithWorld ModelStatusCommand(
     {
         if (!World) return;
         for (TActorIterator<ACinderBattlefield> It(World); It; ++It) It->LogModelStatus();
+    }));
+FAutoConsoleCommandWithWorld CombatStatusCommand(
+    TEXT("cinder.combat"),
+    TEXT("Report consumed combat IDs, adapter cue requests, and actual audio submissions."),
+    FConsoleCommandWithWorldDelegate::CreateLambda([](UWorld* World)
+    {
+        if (!World) return;
+        for (TActorIterator<ACinderBattlefield> It(World); It; ++It) It->LogCombatStatus();
     }));
 }
 
@@ -234,16 +245,17 @@ void ACinderBattlefield::BeginPlay()
     }
     SkyComponent->SetIntensity(2.0f);
     Simulation.reset();
-    AudioStatsSnapshot = Simulation.players()[0].stats;
+    ResetFeedback();
     RenderState();
 }
 
 void ACinderBattlefield::StartMatch(int MapIndex)
 {
+    SetActorTickEnabled(true);
     CurrentMap = FMath::Clamp(MapIndex, 0, 2);
     cinder::Config Config; Config.map = CurrentMap;
     Simulation.reset(Config);
-    AudioStatsSnapshot = Simulation.players()[0].stats;
+    ResetFeedback();
     ResourceMemory.clear();
     bMenu = false; bPaused = false;
     RenderState();
@@ -251,8 +263,117 @@ void ACinderBattlefield::StartMatch(int MapIndex)
 
 void ACinderBattlefield::ReturnToMenu()
 {
+    SetActorTickEnabled(true);
     bMenu = true; bPaused = false;
+    // Keep the completed match counters available for diagnostics while skipping stale effects.
+    ResetFeedback(false);
+}
+
+void ACinderBattlefield::ResetFeedback(bool bClearCombatCounters)
+{
     AudioStatsSnapshot = Simulation.players()[0].stats;
+    if (bClearCombatCounters) CombatFeedback = FCinderCombatFeedbackStats{};
+    CombatFeedback.ProcessedHighWater = Simulation.lastEffectId();
+}
+
+void ACinderBattlefield::UpdateCombatFeedback()
+{
+    const uint64 LastEffectId = Simulation.lastEffectId();
+    if (LastEffectId < CombatFeedback.ProcessedHighWater)
+    {
+        // Public Sim() permits development fixtures to replace a match directly.
+        // An explicit ResetFeedback remains necessary when a replacement has a higher ID.
+        ResetFeedback(false);
+        return;
+    }
+    if (LastEffectId == CombatFeedback.ProcessedHighWater) return;
+    const uint64 PreviousHighWater = CombatFeedback.ProcessedHighWater;
+
+    int32 ViewportWidth = 0, ViewportHeight = 0;
+    APlayerController* Player = GetWorld() ? GetWorld()->GetFirstPlayerController() : nullptr;
+    if (Player && Player->IsLocalController()) Player->GetViewportSize(ViewportWidth, ViewportHeight);
+    const bool bHasViewport = Player && ViewportWidth > 0 && ViewportHeight > 0;
+    auto InViewport = [&](const cinder::Effect& Effect, bool bSource)
+    {
+        // Transient world tests have no local viewport. Fog visibility still applies there.
+        if (!bHasViewport) return true;
+        const cinder::Vec2 Point = bSource ? Effect.from : Effect.to;
+        const cinder::Kind Kind = bSource ? Effect.sourceKind : Effect.targetKind;
+        FVector2D Screen;
+        return Player->ProjectWorldLocationToScreen(FVector(Point.x, Point.y, cinder::definition(Kind).air ? 125 : 25), Screen)
+            && Screen.X >= 0 && Screen.Y >= 0 && Screen.X < ViewportWidth && Screen.Y < ViewportHeight;
+    };
+
+    bool bDeath = false, bWeapon = false, bImpact = false;
+    uint64 AudibleEvents = 0;
+    for (const cinder::Effect& Effect : Simulation.effects())
+    {
+        if (Effect.id <= PreviousHighWater || Effect.id > LastEffectId) continue;
+        ++CombatFeedback.ConsumedEvents;
+        // Healing has its own visual treatment, but there is no suitable healing audio asset.
+        if (Effect.type == cinder::EffectType::Heal) continue;
+        const bool bSource = Effect.type == cinder::EffectType::Weapon;
+        if (!Simulation.effectVisible(Effect, 0, bSource))
+        {
+            ++CombatFeedback.HiddenEvents;
+            continue;
+        }
+        if (!InViewport(Effect, bSource))
+        {
+            ++CombatFeedback.OffscreenEvents;
+            continue;
+        }
+        bool* Pending = nullptr;
+        switch (Effect.type)
+        {
+        case cinder::EffectType::Weapon: Pending = &bWeapon; break;
+        case cinder::EffectType::Impact: Pending = &bImpact; break;
+        case cinder::EffectType::Death: Pending = &bDeath; break;
+        default: break;
+        }
+        if (!Pending) continue;
+        ++AudibleEvents;
+        *Pending = true;
+    }
+    // Consume hidden, offscreen, expired and coalesced IDs too. A later reveal,
+    // camera move or audio-device recovery must never replay an old event.
+    CombatFeedback.ProcessedHighWater = LastEffectId;
+    int32 Requested = 0;
+    auto Submit = [&](bool bPending, ECinderCue Cue, uint64& Counter)
+    {
+        if (!bPending) return;
+        ++Requested;
+        ++Counter;
+        UCinderAudioSubsystem::Play(this, Cue);
+    };
+    // Global 2D cues need one request per type, at most three per update. Mass fire
+    // cannot starve impacts or deaths; the subsystem retains its per-cue time throttle.
+    Submit(bDeath, ECinderCue::Explosion, CombatFeedback.DeathRequests);
+    Submit(bWeapon, ECinderCue::Weapon_Pulse, CombatFeedback.WeaponRequests);
+    Submit(bImpact, ECinderCue::Impact, CombatFeedback.ImpactRequests);
+    CombatFeedback.CoalescedEvents += AudibleEvents - static_cast<uint64>(Requested);
+}
+
+void ACinderBattlefield::LogCombatStatus() const
+{
+    UE_LOG(LogCinderCombat, Display,
+        TEXT("CINDERLINE_COMBAT_FEEDBACK highwater=%llu consumed=%llu weapon_requests=%llu impact_requests=%llu death_requests=%llu hidden=%llu offscreen=%llu coalesced=%llu; requests are adapter intents, not playback."),
+        CombatFeedback.ProcessedHighWater, CombatFeedback.ConsumedEvents, CombatFeedback.WeaponRequests,
+        CombatFeedback.ImpactRequests, CombatFeedback.DeathRequests, CombatFeedback.HiddenEvents,
+        CombatFeedback.OffscreenEvents, CombatFeedback.CoalescedEvents);
+    UGameInstance* Instance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr;
+    const UCinderAudioSubsystem* Audio = Instance ? Instance->GetSubsystem<UCinderAudioSubsystem>() : nullptr;
+    if (!Audio)
+    {
+        UE_LOG(LogCinderCombat, Display, TEXT("CINDERLINE_COMBAT_AUDIO no game-instance subsystem; adapter requests above still count."));
+        return;
+    }
+    const FCinderCueDiagnostics Weapon = Audio->CueDiagnostics(ECinderCue::Weapon_Pulse);
+    const FCinderCueDiagnostics Impact = Audio->CueDiagnostics(ECinderCue::Impact);
+    const FCinderCueDiagnostics Death = Audio->CueDiagnostics(ECinderCue::Explosion);
+    UE_LOG(LogCinderCombat, Display,
+        TEXT("CINDERLINE_COMBAT_AUDIO weapon_submitted=%llu impact_submitted=%llu explosion_submitted=%llu weapon_throttled=%llu impact_throttled=%llu explosion_throttled=%llu; submitted counts lifetime PlaySound2D calls, not listening proof."),
+        Weapon.Submitted, Impact.Submitted, Death.Submitted, Weapon.Throttled, Impact.Throttled, Death.Throttled);
 }
 
 void ACinderBattlefield::UpdateCompletionAudio()
@@ -268,10 +389,11 @@ void ACinderBattlefield::UpdateCompletionAudio()
 void ACinderBattlefield::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
-    if (!bMenu && !bPaused && Simulation.winner() < 0)
+    if (!bMenu && !bPaused)
     {
-        Simulation.update(FMath::Min(DeltaSeconds, 0.2f));
+        if (Simulation.winner() < 0) Simulation.update(FMath::Min(DeltaSeconds, 0.2f));
         UpdateCompletionAudio();
+        UpdateCombatFeedback();
     }
     RenderTimer += DeltaSeconds;
     if (RenderTimer >= cinder::Simulation::Step) { RenderTimer = 0; RenderState(); }
@@ -445,7 +567,8 @@ bool ACinderBattlefield::LoadMatch()
 {
     const FString Filename = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*(FPaths::ProjectSavedDir() / TEXT("Matches/skirmish.cinder")));
     if (!Simulation.load(TCHAR_TO_UTF8(*Filename))) return false;
-    AudioStatsSnapshot = Simulation.players()[0].stats;
+    SetActorTickEnabled(true);
+    ResetFeedback();
     CurrentMap = Simulation.config().map;
     ResourceMemory.clear();
     bMenu = false; bPaused = false; RenderState(); return true;

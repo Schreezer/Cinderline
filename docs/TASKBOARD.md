@@ -8,7 +8,7 @@ Current order, confirmed by the user on 2026-09-11: **mechanics and logic → ae
 
 ## NEXT
 - Continue repairing player-interaction findings and assess economy, scouting, counters, expansion and match pacing.
-- Add explicit combat sound events and review the in-game mix.
+- Listen to combat, interface and production cues together and adjust the in-game mix.
 - Inspect the full roster and enemy team palette through gameplay, then improve animation, fog edges and late-game rendering.
 
 ## LATER
@@ -17,6 +17,7 @@ Current order, confirmed by the user on 2026-09-11: **mechanics and logic → ae
 - Asymmetric second faction, multiplayer, matchmaking, replay viewer and more content.
 
 ## DONE
+- Added explicit combat events, distinct weapon/healing/impact/destruction visuals, fog-safe coalesced audio and version 4 saves with version 1–3 readers. Passed 26 portable groups, native checks, sanitizers and four Unreal integration tests; inspected desktop/compact combat fixtures and live audio submissions. See [COMBAT_FEEDBACK_PASS.md](COMBAT_FEEDBACK_PASS.md) for evidence and playtest limits.
 - Implemented scouting-driven AI: remembered enemy bases, recent army sightings, searches after clearing a base, adaptive paid production and version 3 knowledge persistence with version 1/2 compatibility. Passed 23 portable groups, native checks, sanitizers and all 3 Unreal integration tests. [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md) tracks completion, evidence and remaining work.
 - Fixed Drudge construction: workers travel, stop mining, build on-site, pause when interrupted and resume prior mining after completion. Added free reassignment, save migration, AI builder reservation and construction state UI. Fresh verification passed 19 rule groups, all 3 CTests, ASan/UBSan and both Unreal integration tests. See [CONSTRUCTION_PASS.md](CONSTRUCTION_PASS.md).
 - Created the source structure, original Cinderline design, centralized definitions and command interface.

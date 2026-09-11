@@ -20,6 +20,15 @@ enum class ECinderCue : uint8
     Explosion
 };
 
+struct FCinderCueDiagnostics
+{
+    uint64 Requested = 0;
+    uint64 Submitted = 0;
+    uint64 Throttled = 0;
+    uint64 Missing = 0;
+    uint64 Unavailable = 0;
+};
+
 /** Optional presentation audio. Never reads or mutates authoritative match state. */
 UCLASS()
 class CINDERLINE_API UCinderAudioSubsystem : public UGameInstanceSubsystem
@@ -33,6 +42,9 @@ public:
 
     /** Explicit diagnostics only; also available through the cinder.audio console command. */
     void LogStatus() const;
+    FCinderCueDiagnostics CueDiagnostics(ECinderCue Cue) const;
+    /** Valid PlaySound2D calls, not a guarantee of audible output. */
+    uint64 PlaybackSubmissionCount() const { return PlayedCount; }
 
     virtual void Deinitialize() override;
 
@@ -50,4 +62,5 @@ private:
     uint64 ThrottledCount = 0;
     uint64 MissingCount = 0;
     uint64 UnavailableCount = 0;
+    FCinderCueDiagnostics PerCueDiagnostics[8];
 };

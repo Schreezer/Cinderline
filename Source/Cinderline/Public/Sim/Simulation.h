@@ -29,7 +29,13 @@ struct Entity {
 struct Stats { int gathered=0, produced=0, lost=0, killed=0, built=0, buildingsDestroyed=0, expansions=0, upgrades=0; float damage=0; };
 struct Player { int ore=500, tier=1, weapons=0, armor=0; Stats stats; };
 struct Obstacle { Vec2 center; Vec2 half; };
-struct Effect { Vec2 from,to; int team=0; float life=0.2f; bool explosion=false; };
+enum class EffectType : int { Weapon, Impact, Heal, Death };
+struct Effect {
+ Vec2 from,to; int team=0; float life=0.3f,duration=0.3f;
+ std::uint64_t id=0; EffectType type=EffectType::Weapon;
+ Kind sourceKind=Kind::Worker,targetKind=Kind::Worker;
+ std::uint8_t fromVisibleMask=0,toVisibleMask=0;
+};
 struct Command { CommandType type=CommandType::Move; int team=0; std::vector<Id> units; Vec2 point; Id target=0; Kind kind=Kind::Worker; int queueIndex=0; };
 struct CommandResult { bool accepted=false; std::string message; };
 struct Config { int map=0; std::uint32_t seed=42; bool ai=true; float aiAggression=1; };
@@ -48,6 +54,9 @@ public:
  const std::vector<Entity>& entities() const { return entities_; }
  const std::vector<Obstacle>& obstacles() const { return obstacles_; }
  const std::vector<Effect>& effects() const { return effects_; }
+ std::uint64_t lastEffectId() const { return nextEffectId_-1; }
+ bool effectVisible(const Effect& effect,int team,bool source) const;
+ bool effectLinkVisible(const Effect& effect,int team) const;
  const std::array<Player,2>& players() const { return players_; }
  const Config& config() const { return config_; }
  const Entity* find(Id id) const;
@@ -79,6 +88,7 @@ private:
  Config config_; std::vector<Entity> entities_; std::vector<Obstacle> obstacles_; std::vector<Effect> effects_;
  std::array<Player,2> players_; std::array<std::array<unsigned char,FogSize*FogSize>,2> fog_{}, explored_{};
  std::vector<RecordedCommand> recording_; std::uint64_t tick_=0; Id nextId_=1; float accumulator_=0, aiTimer_=0; int winner_=-1;
+ std::uint64_t nextEffectId_=1;
  std::string alert_,aiStatus_; double lastStepMs_=0;
  std::vector<AISighting> aiSightings_;
  std::array<std::uint64_t,FogSize*FogSize> aiObserved_{};
@@ -87,7 +97,8 @@ private:
  void updateAIKnowledge();
  void updateProduction(Entity& e); void moveToward(Entity& e,Vec2 destination); void planPath(Entity& e,Vec2 destination);
  bool blocked(Vec2 point,float radius,Id ignore=0) const; bool hasBuilding(int team,Kind kind) const;
- Id nearest(int team,Vec2 point,Kind kind) const; void damage(Entity& victim,float amount,int attackerTeam);
+ Id nearest(int team,Vec2 point,Kind kind) const; void damage(Entity& victim,float amount,int attackerTeam,Kind sourceKind);
+ void emitEffect(EffectType type,Vec2 from,Vec2 to,int team,Kind sourceKind,Kind targetKind,float duration);
  Id selectConstructionWorker(const std::vector<Id>& workers,Vec2 site) const;
  void assignConstruction(Entity& foundation,Entity& worker);
  void abandonConstruction(Entity& worker); void releaseConstruction(Entity& foundation);

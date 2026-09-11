@@ -89,6 +89,48 @@ std::string savePath(const std::string& suffix) {
   return (std::filesystem::temp_directory_path()/("cinderline-tests-"+suffix+".sav")).string();
 }
 
+
+std::vector<std::string> saveFields(const std::string& line) {
+  std::istringstream in(line);std::vector<std::string> fields;std::string field;
+  while(in>>field)fields.push_back(field);return fields;
+}
+std::string joinSaveFields(const std::vector<std::string>& fields) {
+  std::ostringstream out;for(std::size_t i=0;i<fields.size();++i)out<<(i?" ":"")<<fields[i];return out.str();
+}
+struct SavedLayout { std::vector<std::size_t> entities;std::size_t effects=0; };
+SavedLayout savedLayout(const std::vector<std::string>& lines) {
+  SavedLayout result;std::size_t cursor=5;
+  cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+  const auto entities=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+  for(std::size_t n=0;n<entities;++n) {
+    result.entities.push_back(cursor++);
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+  }
+  result.effects=cursor;return result;
+}
+std::vector<std::string> legacyCombatSave(std::vector<std::string> lines,int version) {
+  const auto layout=savedLayout(lines);const auto header=saveFields(lines.at(layout.effects));
+  check(header.size()==2,"legacy fixture begins with the v4 effect header");
+  const auto count=static_cast<std::size_t>(std::stoul(header.front()));
+  lines.front()="CINDERLINE "+std::to_string(version);lines[layout.effects]=header.front();
+  for(std::size_t n=0;n<count;++n) {
+    auto fields=saveFields(lines.at(layout.effects+1+n));
+    check(fields.size()==13,"legacy fixture begins with a typed v4 event");
+    const bool explosion=fields[8]=="3"||fields[9]=="5";
+    fields.resize(6);fields.push_back(explosion?"1":"0");lines[layout.effects+1+n]=joinSaveFields(fields);
+  }
+  if(version==1)for(std::size_t row:layout.entities) {
+    auto fields=saveFields(lines[row]);check(fields.size()==24,"v1 fixture strips only known entity assignment fields");
+    fields.resize(22);lines[row]=joinSaveFields(fields);
+  }
+  if(version<3) {
+    const auto marker=std::find(lines.begin(),lines.end(),"AI_KNOWLEDGE 1");
+    check(marker!=lines.end(),"legacy fixture identifies the knowledge section");lines.erase(marker,lines.end());
+  }
+  return lines;
+}
+
 void resetAndDefinitions() {
   auto s=quiet();
   check(definitions().size()==15,"roster must contain fifteen definitions");
@@ -1050,7 +1092,7 @@ void aiKnowledgePersistence() {
   std::ifstream in(path);std::vector<std::string> lines;std::string line;
   while(std::getline(in,line))lines.push_back(line);in.close();
   const auto marker=std::find(lines.begin(),lines.end(),"AI_KNOWLEDGE 1");
-  check(marker!=lines.end()&&lines.front()=="CINDERLINE 3","knowledge save declares the versioned v3 section");
+  check(marker!=lines.end()&&lines.front()=="CINDERLINE 4","current save retains the versioned AI knowledge section");
   const auto start=static_cast<std::size_t>(marker-lines.begin());
   const auto count=static_cast<std::size_t>(std::stoul(lines[start+1]));
   check(count>0&&lines.size()>start+count+3,"knowledge save contains sightings and observation cells");
@@ -1070,14 +1112,9 @@ void aiKnowledgePersistence() {
   auto duplicate=lines;duplicate[start+1]=std::to_string(count+1);duplicate.insert(duplicate.begin()+start+2,lines[start+2]);reject(duplicate,"duplicate remembered identities are rejected");
   auto badCells=lines;badCells[start+2+count]="4095";reject(badCells,"incorrect observation-grid size is rejected");
   auto futureCell=lines;futureCell[start+3+count]=replaceField(futureCell[start+3+count],0,std::to_string(s.tick()+1000));reject(futureCell,"future observation-grid timestamps are rejected");
-  auto truncated=lines;truncated.resize(start);reject(truncated,"v3 save without its required knowledge block is rejected");
+  auto truncated=lines;truncated.resize(start);reject(truncated,"current save without its required knowledge block is rejected");
   for(int version:{1,2}) {
-    std::vector<std::string> legacy(lines.begin(),lines.begin()+start);legacy.front()="CINDERLINE "+std::to_string(version);
-    if(version==1)for(auto& row:legacy) {
-      std::istringstream input(row);std::vector<std::string> fields;std::string field;while(input>>field)fields.push_back(field);
-      if(fields.size()!=24)continue;
-      fields.resize(22);std::ostringstream output;for(std::size_t i=0;i<fields.size();++i)output<<(i?" ":"")<<fields[i];row=output.str();
-    }
+    const auto legacy=legacyCombatSave(lines,version);
     write(legacy);Simulation migrated;check(migrated.load(path),"pre-knowledge save version remains readable");
     check(migrated.aiSightings().empty()&&migrated.aiLastObserved({1100,300})==0,"legacy migration starts with unknown enemy state rather than reconstructing hidden entities");
     check(migrated.players()[1].ore==0&&migrated.tick()>0,"legacy knowledge migration preserves ordinary match state");
@@ -1085,6 +1122,172 @@ void aiKnowledgePersistence() {
   }
   std::filesystem::remove(path);
   std::cout<<"AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1\n";
+}
+
+void combatEventSemantics() {
+  for(Kind weapon:{Kind::Striker,Kind::Lancer,Kind::Bastion,Kind::Mortar,Kind::Kite}) {
+    auto s=quiet();const Id source=s.debugSpawn(weapon,0,{1400,300});
+    const Id target=s.debugSpawn(Kind::Processor,1,{1620,300});
+    const float hp=s.find(target)->hp;
+    check(s.lastEffectId()==0,"new matches start without a combat event identity");
+    check(send(s,CommandType::Attack,0,{source},{},target).accepted,"weapon feedback fixture uses an ordinary attack");
+    s.update(Simulation::Step);
+    check(s.find(target)->hp<hp&&s.effects().size()==2,"one real shot causes one weapon event and one actual-damage impact");
+    const auto shot=s.effects()[0],impact=s.effects()[1];
+    check(shot.type==EffectType::Weapon&&impact.type==EffectType::Impact&&shot.id<impact.id,"weapon fire precedes its impact in event identity order");
+    check(shot.sourceKind==weapon&&shot.targetKind==Kind::Processor&&shot.team==0,"weapon event identifies its actual weapon profile and target");
+    check(impact.sourceKind==weapon&&impact.targetKind==Kind::Processor&&impact.team==1,"impact event records victim ownership and the actual damage source");
+    check(distance(shot.from,s.find(source)->pos)<1&&distance(shot.to,s.find(target)->pos)<1&&distance(impact.from,impact.to)==0,"weapon links real firing positions while damage is a point event");
+    check(s.lastEffectId()==impact.id,"event cursor includes the final emitted event");
+    for(const auto& fx:s.effects())check(fx.id>0&&fx.duration>=0.30f&&fx.life>0&&fx.life<=fx.duration,"every combat event has bounded positive presentation time");
+    check(send(s,CommandType::Move,0,{source},{1400,800}).accepted,"moving unit stops firing after the observed shot");
+    advance(s,1.1f);check(s.effects().empty()&&s.lastEffectId()==impact.id,"expired feedback is removed without rewinding the sound-event cursor");
+    check(send(s,CommandType::Attack,0,{source},{},target).accepted,"weapon can fire again after movement");
+    waitUntil(s,12,[&]{return s.lastEffectId()>impact.id;},"later real shot receives a new identity");
+    for(const auto& fx:s.effects())check(fx.id>impact.id,"later effects cannot reuse expired event identities");
+    s.reset({0,42,false,1});check(s.effects().empty()&&s.lastEffectId()==0,"reset starts a fresh effect identity sequence");
+  }
+  auto siege=quiet();const Id mortar=siege.debugSpawn(Kind::Mortar,0,{1400,300});
+  const Id primary=siege.debugSpawn(Kind::Worker,1,{1850,300}),secondary=siege.debugSpawn(Kind::Worker,1,{1890,345});
+  send(siege,CommandType::Hold,1,{primary,secondary});
+  check(send(siege,CommandType::Attack,0,{mortar},{},primary).accepted,"siege splash fixture uses an ordinary attack");
+  siege.update(Simulation::Step);
+  check(siege.find(primary)->hp<definition(Kind::Worker).hp&&siege.find(secondary)->hp<definition(Kind::Worker).hp,"primary and nearby splash victims take real damage");
+  int impacts=0;for(const auto& fx:siege.effects())if(fx.type==EffectType::Impact)++impacts;
+  check(impacts==2&&siege.effects().front().type==EffectType::Weapon,"one siege shot emits a separate point impact for each damaged victim");
+  const auto previous=siege.lastEffectId();
+  waitUntil(siege,5,[&]{return !siege.find(primary)||!siege.find(primary)->alive();},"siege target dies from repeated real hits");
+  const Effect* lethalImpact=nullptr;const Effect* death=nullptr;
+  for(const auto& fx:siege.effects())if(fx.id>previous&&distance(fx.to,{1850,300})<20) {
+    if(fx.type==EffectType::Impact)lethalImpact=&fx;
+    if(fx.type==EffectType::Death)death=&fx;
+  }
+  check(lethalImpact&&death&&lethalImpact->id<death->id,"lethal damage emits an impact before a distinct death event");
+  check(death->sourceKind==Kind::Worker&&death->targetKind==Kind::Worker&&death->team==1&&distance(death->from,death->to)==0,"death profile identifies the destroyed unit and its location");
+
+  auto healing=quiet();const Id ally=healing.debugSpawn(Kind::Striker,0,{1400,300});
+  const Id enemy=healing.debugSpawn(Kind::Bastion,1,{1620,300});
+  check(send(healing,CommandType::Attack,1,{enemy},{},ally).accepted,"healing fixture first takes real combat damage");
+  healing.update(Simulation::Step);const float wounded=healing.find(ally)->hp;const auto beforeHeal=healing.lastEffectId();
+  check(wounded<definition(Kind::Striker).hp,"healing requires missing health");
+  send(healing,CommandType::Move,1,{enemy},{2400,300});
+  const Id healer=healing.debugSpawn(Kind::Mender,0,{1400,450});healing.update(Simulation::Step);
+  check(healing.find(ally)->hp>wounded,"Mend applies actual healing");
+  int heals=0;for(const auto& fx:healing.effects())if(fx.id>beforeHeal&&fx.type==EffectType::Heal) {
+    ++heals;check(fx.sourceKind==Kind::Mender&&fx.targetKind==Kind::Striker&&fx.team==0&&distance(fx.from,healing.find(healer)->pos)<1,"healing has its own typed source-to-patient event");
+  }
+  check(heals==1,"one actual repair emits one healing event");
+  auto healthy=quiet();healthy.debugSpawn(Kind::Mender,0,{1400,300});healthy.debugSpawn(Kind::Striker,0,{1400,450});advance(healthy,0.1f);
+  check(healthy.effects().empty()&&healthy.lastEffectId()==0,"full-health allies produce no fake healing feedback");
+  std::cout<<"COMBAT_EVENTS weapon_profiles=5 splash_impacts=2 lethal_order=1 actual_heal=1 monotonic_ids=1\n";
+}
+
+void combatEventVisibility() {
+  auto hidden=quiet();const Id victim=hidden.debugSpawn(Kind::Worker,0,{1500,300});
+  const Id mortar=hidden.debugSpawn(Kind::Mortar,1,{2100,300});send(hidden,CommandType::Hold,0,{victim});
+  check(!hidden.visible(0,hidden.find(mortar)->pos)&&hidden.visible(1,hidden.find(victim)->pos),"long-range siege fires from beyond the victim's current vision");
+  check(send(hidden,CommandType::Attack,1,{mortar},{},victim).accepted,"hidden siege fixture fires an ordinary shared-visible attack");
+  hidden.update(Simulation::Step);
+  const auto weapon=std::find_if(hidden.effects().begin(),hidden.effects().end(),[](const Effect& fx){return fx.type==EffectType::Weapon;});
+  const auto impact=std::find_if(hidden.effects().begin(),hidden.effects().end(),[](const Effect& fx){return fx.type==EffectType::Impact;});
+  check(weapon!=hidden.effects().end()&&impact!=hidden.effects().end(),"hidden siege produces its real fire and damage records");
+  const Effect oldShot=*weapon,oldImpact=*impact;
+  check(!hidden.effectVisible(oldShot,0,true)&&hidden.effectVisible(oldShot,0,false)&&!hidden.effectLinkVisible(oldShot,0),"visible incoming endpoint never reveals an unseen shooter or connecting trajectory");
+  check(hidden.effectVisible(oldImpact,0,false)&&hidden.effectVisible(oldImpact,0,true),"damage to a visible victim remains visible without revealing the source");
+  hidden.debugSpawn(Kind::Scout,0,{2400,300});
+  check(hidden.visible(0,oldShot.from)&&!hidden.effectVisible(oldShot,0,true)&&!hidden.effectLinkVisible(oldShot,0),"vision gained after firing cannot retroactively reveal the old hidden source");
+  check(!hidden.effectVisible(oldShot,-1,true)&&!hidden.effectVisible(oldShot,2,false)&&!hidden.effectLinkVisible(oldShot,2),"invalid teams cannot observe event endpoints or links");
+
+  auto fading=quiet();const Id movingVictim=fading.debugSpawn(Kind::Worker,0,{1500,300});
+  const Id observer=fading.debugSpawn(Kind::Scout,0,{2400,300});
+  const Id shooter=fading.debugSpawn(Kind::Mortar,1,{2100,300});send(fading,CommandType::Hold,0,{movingVictim});
+  check(send(fading,CommandType::Attack,1,{shooter},{},movingVictim).accepted,"visible siege fixture fires normally");fading.update(Simulation::Step);
+  const auto shot=std::find_if(fading.effects().begin(),fading.effects().end(),[](const Effect& fx){return fx.type==EffectType::Weapon;});
+  check(shot!=fading.effects().end(),"visible siege fixture records a shot");const Effect initiallyVisible=*shot;
+  check(fading.effectVisible(initiallyVisible,0,true)&&fading.effectVisible(initiallyVisible,0,false),"both endpoints are initially observable");
+  send(fading,CommandType::Move,0,{observer},{4200,300});send(fading,CommandType::Move,0,{movingVictim},{4000,1300});
+  send(fading,CommandType::Move,1,{shooter},{2100,1200});advance(fading,22);
+  check(!fading.visible(0,initiallyVisible.from)&&!fading.visible(0,initiallyVisible.to),"observers actually leave both old firing positions in fog");
+  check(!fading.effectVisible(initiallyVisible,0,true)&&!fading.effectVisible(initiallyVisible,0,false)&&!fading.effectLinkVisible(initiallyVisible,0),"recorded visibility cannot keep drawing an endpoint after current vision is lost");
+
+  auto gap=quiet();gap.debugSpawn(Kind::Scout,0,{4200,4200});
+  Effect link;link.from={600,600};link.to={4200,4200};link.team=0;link.type=EffectType::Weapon;
+  link.sourceKind=Kind::Mortar;link.targetKind=Kind::Worker;link.id=1;link.life=link.duration=0.55f;link.fromVisibleMask=link.toVisibleMask=1;
+  check(gap.effectVisible(link,0,true)&&gap.effectVisible(link,0,false)&&!gap.visible(0,{2400,2400}),"link guard fixture has visible endpoints with unexplored terrain between them");
+  check(!gap.effectLinkVisible(link,0),"visible endpoints cannot draw a line across hidden terrain");
+  for(Vec2 point:{Vec2{1500,1500},Vec2{2400,2400},Vec2{3300,3300}})gap.debugSpawn(Kind::Headquarters,0,point);
+  check(gap.effectLinkVisible(link,0),"a connecting line is allowed when the entire segment is currently visible");
+  // A line parallel to the grid diagonal clips each adjacent off-diagonal
+  // cell for only sqrt(2) world units. Coarse distance samples can skip this
+  // hidden interval even though both endpoints and every sample are visible.
+  const auto fogPath=savePath("combat-fog-corner");auto fogFixture=quiet();
+  check(fogFixture.save(fogPath),"corner visibility fixture saves its valid match shell");
+  std::ifstream fogInput(fogPath);std::vector<std::string> fogLines;std::string fogLine;
+  while(std::getline(fogInput,fogLine))fogLines.push_back(fogLine);fogInput.close();
+  const auto fogLayout=savedLayout(fogLines);
+  const auto firstFog=fogLayout.effects+1+static_cast<std::size_t>(std::stoul(saveFields(fogLines[fogLayout.effects])[0]));
+  std::vector<std::string> cells(Simulation::FogSize*Simulation::FogSize,"0");
+  for(int n=0;n<5;++n)cells[n*Simulation::FogSize+n]="1";
+  for(int n=0;n<4;++n)cells[(n+1)*Simulation::FogSize+n]="1";
+  cells[2*Simulation::FogSize+1]="0";
+  auto loadFog=[&]() {
+    fogLines[firstFog]=joinSaveFields(cells);fogLines[firstFog+1]=fogLines[firstFog];
+    {std::ofstream out(fogPath);for(const auto& row:fogLines)out<<row<<'\n';}
+    Simulation result;check(result.load(fogPath),"controlled fog geometry loads without changing any game actors");return result;
+  };
+  Effect corner=link;corner.from={37.5f,38.5f};corner.to={337.5f,338.5f};
+  auto clipped=loadFog();
+  check(clipped.effectVisible(corner,0,true)&&clipped.effectVisible(corner,0,false)&&!clipped.visible(0,{149.5f,150.5f}),"tiny clipped-cell fixture has visible endpoints and a genuinely hidden interval");
+  check(!clipped.effectLinkVisible(corner,0),"a link cannot skip the 1.4-unit hidden interval near a fog-cell corner");
+  cells[2*Simulation::FogSize+1]="1";auto revealed=loadFog();
+  check(revealed.effectLinkVisible(corner,0),"revealing the one clipped cell permits the identical segment");
+  std::filesystem::remove(fogPath);
+  std::cout<<"COMBAT_FOG hidden_source=1 no_late_revelation=1 current_visibility_required=1 hidden_segment_blocked=1 tiny_corner_clip_blocked=1\n";
+}
+
+void combatEventPersistence() {
+  auto s=aiProductionFixture(Kind::Kite,true);s.debugResources(1,0);
+  const Id attacker=s.debugSpawn(Kind::Striker,0,{1750,300}),victim=first(s,1,Kind::Mender);
+  check(send(s,CommandType::Attack,0,{attacker},{},victim).accepted,"event persistence fixture causes ordinary combat");s.update(Simulation::Step);
+  check(s.effects().size()>=2&&!s.aiSightings().empty(),"save fixture contains live typed events and observed AI knowledge");
+  const auto path=savePath("combat-events-v4");check(s.save(path),"typed combat feedback saves");
+  Simulation loaded;check(loaded.load(path)&&loaded.stateHash()==s.stateHash(),"event metadata, lifetime, visibility and next identity survive a round trip");
+  const auto savedId=s.lastEffectId();
+  for(int n=0;n<100;++n){s.update(Simulation::Step);loaded.update(Simulation::Step);check(s.stateHash()==loaded.stateHash(),"loaded combat continues with identical damage and typed event identities");}
+  check(s.lastEffectId()>savedId,"post-load combat emits later identities instead of replaying the saved identity range");
+  std::ifstream input(path);std::vector<std::string> lines;std::string line;while(std::getline(input,line))lines.push_back(line);input.close();
+  check(lines.front()=="CINDERLINE 4","typed effect persistence declares save version four");
+  const auto layout=savedLayout(lines);const auto effectHeader=saveFields(lines[layout.effects]);
+  const auto count=static_cast<std::size_t>(std::stoul(effectHeader[0]));check(count>=2,"saved event corruption fixture has distinct ordered events");
+  auto write=[&](const std::vector<std::string>& content){std::ofstream out(path);for(const auto& value:content)out<<value<<'\n';};
+  auto reject=[&](std::vector<std::string> content,const std::string& message){
+    write(content);Simulation current=quiet();const auto before=current.stateHash();check(!current.load(path),message);
+    check(current.stateHash()==before,"invalid combat event loads preserve the existing match atomically");
+  };
+  for(const auto& [column,value]:std::vector<std::pair<std::size_t,std::string>>{{0,"nan"},{2,"4801"},{4,"2"},{5,"0"},{5,"2"},{6,"0.2"},{6,"11"},{7,"0"},{7,"-1"},{7,"18446744073709551616"},{8,"4"},{9,"14"},{9,"15"},{10,"-1"},{11,"4"},{12,"-1"}}) {
+    auto broken=lines;auto fields=saveFields(broken[layout.effects+1]);fields[column]=value;broken[layout.effects+1]=joinSaveFields(fields);
+    reject(broken,"invalid combat event coordinates, ownership, lifetime, identity, type, profile or visibility are rejected");
+  }
+  for(const auto& [column,value]:std::vector<std::pair<std::size_t,std::string>>{{0,"100"},{11,"0"},{8,"3"}}) {
+    auto broken=lines;auto fields=saveFields(broken[layout.effects+2]);
+    check(fields[8]=="1"&&fields[9]!=fields[10],"point-event corruption starts from an actual impact with distinct attacker and victim kinds");
+    fields[column]=value;broken[layout.effects+2]=joinSaveFields(fields);
+    reject(broken,"point-event geometry, visibility symmetry and death victim profiles are validated");
+  }
+  auto duplicated=lines;duplicated[layout.effects+2]=duplicated[layout.effects+1];reject(duplicated,"duplicate or non-increasing event identities are rejected");
+  for(const std::string& next:{std::string("0"),saveFields(lines[layout.effects+count])[7]}) {
+    auto broken=lines;broken[layout.effects]=effectHeader[0]+" "+next;reject(broken,"next event identity must be nonzero and follow every saved event");
+  }
+  const auto savedKnowledge=static_cast<std::size_t>(std::stoul(*(std::find(lines.begin(),lines.end(),"AI_KNOWLEDGE 1")+1)));
+  for(int version:{1,2,3}) {
+    write(legacyCombatSave(lines,version));Simulation migrated;check(migrated.load(path),"older saves with ambiguous effects remain readable");
+    check(migrated.effects().empty()&&migrated.lastEffectId()==0,"legacy migration discards ambiguous old feedback and starts a fresh event cursor");
+    check(migrated.find(victim)&&migrated.find(victim)->hp<definition(Kind::Mender).hp,"legacy feedback migration preserves actual combat damage");
+    check(migrated.aiSightings().size()==(version==3?savedKnowledge:0),"version three migration preserves knowledge while versions one and two begin unknown");
+    waitUntil(migrated,2,[&]{return migrated.lastEffectId()>0;},"legacy match emits newly typed events through subsequent ordinary combat");
+  }
+  std::filesystem::remove(path);
+  std::cout<<"COMBAT_SAVE v4_continuity=1 legacy_effects_discarded=3 v3_knowledge_retained=1 malformed_events_atomic=1\n";
 }
 
 void benchmark() {
@@ -1214,7 +1417,9 @@ int main(int argc,char** argv) {
     {"bounded fixed-step update",boundedUpdate},{"AI expansion and local defense",aiExpansionAndBaseDefense},{"AI paid economy",aiEconomy},
     {"AI construction assignments",aiConstructionAssignments},
     {"AI observation lifecycle",aiObservationLifecycle},{"AI observed production",aiObservedProduction},
-    {"AI scouting objectives",aiScoutingObjectives},{"AI knowledge persistence",aiKnowledgePersistence}};
+    {"AI scouting objectives",aiScoutingObjectives},{"AI knowledge persistence",aiKnowledgePersistence},
+    {"combat event semantics",combatEventSemantics},{"combat event visibility",combatEventVisibility},
+    {"combat event persistence",combatEventPersistence}};
   if(argc>1&&std::string(argv[1])=="--benchmark") tests={{"performance",benchmark}};
   else if(argc>1&&std::string(argv[1])=="--match") tests={{"natural AI match durations",matchDuration}};
   else if(argc>1) {

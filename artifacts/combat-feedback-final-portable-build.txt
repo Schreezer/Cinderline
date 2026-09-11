@@ -1,0 +1,5 @@
+[ 42%] Built target CinderlineSimulation
+[ 57%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 85%] Built target CinderlineNative
+[100%] Linking CXX executable CinderlineTests
+[100%] Built target CinderlineTests

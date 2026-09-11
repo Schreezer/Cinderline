@@ -84,7 +84,7 @@ def fail(message):
 if not isinstance(report, dict):
     fail("report root is not an object")
 required_counts = {
-    "succeeded": 3,
+    "succeeded": 4,
     "succeededWithWarnings": 0,
     "failed": 0,
     "notRun": 0,
@@ -99,10 +99,11 @@ expected_paths = {
     "Cinderline.Integration.WorldLifecycle",
     "Cinderline.Integration.EconomyAndProduction",
     "Cinderline.Integration.AIKnowledgeAndPersistence",
+    "Cinderline.Integration.CombatFeedback",
 }
 tests = report.get("tests")
 if not isinstance(tests, list) or len(tests) != len(expected_paths):
-    fail("report must contain exactly the three expected tests")
+    fail("report must contain exactly the four expected tests")
 seen = set()
 for test in tests:
     if not isinstance(test, dict):
@@ -118,6 +119,6 @@ for test in tests:
             fail(f"{path} has nonzero or missing {field}")
 if seen != expected_paths:
     fail("one or more expected test paths are missing")
-print("Verified all expected Unreal integration tests: 3 succeeded, no errors, warnings, or unfinished tests.")
+print("Verified all expected Unreal integration tests: 4 succeeded, no errors, warnings, or unfinished tests.")
 PY
 printf 'Unreal integration automation passed. Report: %s/index.json\n' "$report_dir"

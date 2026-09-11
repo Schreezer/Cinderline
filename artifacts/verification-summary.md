@@ -1,3 +1,17 @@
+# Combat feedback checkpoint — 2026-09-11
+
+Current evidence for the source recorded in `combat-feedback-tested-source-sha256.txt` (101 source/content files). Everything below the following divider is historical evidence for earlier checkpoints.
+
+- 26/26 portable rule groups; 3/3 CTests, including 3,000 native render frames. Final warning-free portable rebuild and rule rerun passed.
+- 26/26 groups under AddressSanitizer and UndefinedBehaviorSanitizer.
+- Unreal Development Editor build and all four strict integration tests passed with zero test errors/warnings. Final run: `20260911T153017Z-79078`.
+- Actual Unreal weapon and support/death fixtures inspected at 1280×720 and 667×375. A live fixture advanced to 16 seconds and consumed 120 events.
+- Session audio: 45 weapon, 44 impact and 5 explosion PlaySound2D submissions; nine throttled, zero missing assets or unavailable-device requests. This proves submission only.
+- Fixed exact fog-corner visibility, sound-budget starvation and development-preview framing during review. No remaining important source-review finding.
+- See `combat-feedback-verification.json`, `combat-feedback-runtime-evidence.txt`, four scene captures and `docs/COMBAT_FEEDBACK_PASS.md`. No human full-match, listening/mix, touch or iOS acceptance is claimed.
+
+---
+
 # Verification record
 
 ## Scouting-driven AI checkpoint

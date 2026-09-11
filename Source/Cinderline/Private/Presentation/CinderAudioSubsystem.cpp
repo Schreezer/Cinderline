@@ -73,12 +73,15 @@ void UCinderAudioSubsystem::PlayInWorld(UWorld* World, ECinderCue Cue, float Vol
 {
     ++RequestedCount;
     const int32 Index = static_cast<int32>(Cue);
+    FCinderCueDiagnostics* Diagnostics = Index >= 0 && Index < UE_ARRAY_COUNT(PerCueDiagnostics) ? &PerCueDiagnostics[Index] : nullptr;
+    if (Diagnostics) ++Diagnostics->Requested;
     if (!World || !GEngine || IsRunningCommandlet() || !GEngine->UseSound() ||
         !World->AllowAudioPlayback() || World->IsNetMode(NM_DedicatedServer) ||
         !World->GetAudioDevice().IsValid() || !FMath::IsFinite(Volume) || Volume <= 0.0f ||
         Index < 0 || Index >= UE_ARRAY_COUNT(CueSettings))
     {
         ++UnavailableCount;
+        if (Diagnostics) ++Diagnostics->Unavailable;
         return;
     }
 
@@ -89,6 +92,7 @@ void UCinderAudioSubsystem::PlayInWorld(UWorld* World, ECinderCue Cue, float Vol
         if (Now - *Previous < Settings.MinimumInterval)
         {
             ++ThrottledCount;
+            ++Diagnostics->Throttled;
             return;
         }
     }
@@ -97,6 +101,7 @@ void UCinderAudioSubsystem::PlayInWorld(UWorld* World, ECinderCue Cue, float Vol
     if (!Sound)
     {
         ++MissingCount;
+        ++Diagnostics->Missing;
         return;
     }
 
@@ -104,6 +109,13 @@ void UCinderAudioSubsystem::PlayInWorld(UWorld* World, ECinderCue Cue, float Vol
     UGameplayStatics::PlaySound2D(World, Sound, Settings.MixGain * FMath::Clamp(Volume, 0.0f, 1.0f));
     // This counts a valid submission to PlaySound2D, not audible output.
     ++PlayedCount;
+    ++Diagnostics->Submitted;
+}
+
+FCinderCueDiagnostics UCinderAudioSubsystem::CueDiagnostics(ECinderCue Cue) const
+{
+    const int32 Index = static_cast<int32>(Cue);
+    return Index >= 0 && Index < UE_ARRAY_COUNT(PerCueDiagnostics) ? PerCueDiagnostics[Index] : FCinderCueDiagnostics{};
 }
 
 USoundBase* UCinderAudioSubsystem::ResolveSound(ECinderCue Cue, const TCHAR* AssetName)
@@ -138,6 +150,14 @@ void UCinderAudioSubsystem::LogStatus() const
     UE_LOG(LogCinderAudio, Display,
         TEXT("CinderAudio: loaded=%d/8 requested=%llu played=%llu throttled=%llu missing=%llu unavailable=%llu; played counts PlaySound2D submissions, not listening proof."),
         CachedSounds.Num(), RequestedCount, PlayedCount, ThrottledCount, MissingCount, UnavailableCount);
+    for (int32 Index = 0; Index < UE_ARRAY_COUNT(CueSettings); ++Index)
+    {
+        const FCinderCueDiagnostics& Diagnostics = PerCueDiagnostics[Index];
+        UE_LOG(LogCinderAudio, Display,
+            TEXT("  %s requested=%llu submitted=%llu throttled=%llu missing=%llu unavailable=%llu"),
+            CueSettings[Index].AssetName, Diagnostics.Requested, Diagnostics.Submitted,
+            Diagnostics.Throttled, Diagnostics.Missing, Diagnostics.Unavailable);
+    }
 }
 
 void UCinderAudioSubsystem::Deinitialize()

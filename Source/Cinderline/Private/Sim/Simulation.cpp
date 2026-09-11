@@ -47,6 +47,17 @@ Vec2 normalized(Vec2 a) { const float len=std::sqrt(lengthSq(a)); return len>0.0
 bool finite(Vec2 p) { return std::isfinite(p.x)&&std::isfinite(p.y); }
 bool validKind(Kind kind) { const int n=static_cast<int>(kind); return n>=0&&n<15; }
 bool validTeam(int team) { return team==0||team==1; }
+bool readEffectId(std::istream& in,std::uint64_t& value) {
+ std::string token;if(!(in>>token)||token.empty())return false;
+ std::uint64_t parsed=0;
+ for(char digit:token) {
+  if(digit<'0'||digit>'9')return false;
+  const auto number=static_cast<std::uint64_t>(digit-'0');
+  if(parsed>(std::numeric_limits<std::uint64_t>::max()-number)/10)return false;
+  parsed=parsed*10+number;
+ }
+ value=parsed;return true;
+}
 Vec2 bounded(Vec2 p,float radius=1) { return {std::clamp(p.x,radius,Simulation::WorldSize-radius),std::clamp(p.y,radius,Simulation::WorldSize-radius)}; }
 bool circleBox(Vec2 p,float radius,const Obstacle& o) {
  const float dx=std::max(std::fabs(p.x-o.center.x)-o.half.x,0.0f);
@@ -84,7 +95,7 @@ void Simulation::reset(Config config) {
  if(!std::isfinite(config_.aiAggression)) config_.aiAggression=1;
  config_.aiAggression=std::clamp(config_.aiAggression,0.5f,2.0f);
  entities_.clear(); obstacles_.clear(); effects_.clear(); recording_.clear(); aiSightings_.clear(); aiObserved_={};
- players_={}; fog_={}; explored_={}; tick_=0; nextId_=1; accumulator_=0; aiTimer_=0; winner_=-1; lastStepMs_=0;
+ players_={}; fog_={}; explored_={}; tick_=0; nextId_=1; nextEffectId_=1; accumulator_=0; aiTimer_=0; winner_=-1; lastStepMs_=0;
  alert_="Build a Kiln, scout, and protect your Anchor."; aiStatus_=config_.ai?"Establishing economy":"Opponent AI disabled";
  // Each map is rotationally symmetric. Every obstacle leaves multiple routes.
  if(config_.map==0) {
@@ -689,9 +700,56 @@ void Simulation::planPath(Entity& e,Vec2 destination) {
  if(e.path.empty()&&clearLine(e.pos,destination))e.path.push_back(destination);
 }
 
-void Simulation::damage(Entity& victim,float amount,int attackerTeam) {
+void Simulation::emitEffect(EffectType type,Vec2 from,Vec2 to,int team,Kind sourceKind,Kind targetKind,float duration) {
+ // The recorded masks prevent a later reveal from exposing a hidden event.
+ // Current visibility is checked separately by each presentation consumer.
+ if(nextEffectId_==std::numeric_limits<std::uint64_t>::max())return;
+ Effect effect;effect.from=from;effect.to=to;effect.team=team;
+ effect.life=effect.duration=duration;effect.id=nextEffectId_++;
+ effect.type=type;effect.sourceKind=sourceKind;effect.targetKind=targetKind;
+ for(int observer=0;observer<2;++observer) {
+  if(visible(observer,from))effect.fromVisibleMask|=static_cast<std::uint8_t>(1u<<observer);
+  if(visible(observer,to))effect.toVisibleMask|=static_cast<std::uint8_t>(1u<<observer);
+ }
+ effects_.push_back(effect);
+}
+
+bool Simulation::effectVisible(const Effect& effect,int team,bool source) const {
+ if(!validTeam(team))return false;
+ const auto mask=source?effect.fromVisibleMask:effect.toVisibleMask;
+ return (mask&(1u<<team))!=0&&visible(team,source?effect.from:effect.to);
+}
+
+bool Simulation::effectLinkVisible(const Effect& effect,int team) const {
+ if(!effectVisible(effect,team,true)||!effectVisible(effect,team,false))return false;
+ // Test every closed grid cell crossed by the segment. Spaced samples can miss
+ // a short corner crossing; closed boxes also hide links touching a fog edge.
+ const int minX=std::clamp(static_cast<int>(std::floor(std::min(effect.from.x,effect.to.x)/Cell))-1,0,FogSize-1);
+ const int maxX=std::clamp(static_cast<int>(std::floor(std::max(effect.from.x,effect.to.x)/Cell)),0,FogSize-1);
+ const int minY=std::clamp(static_cast<int>(std::floor(std::min(effect.from.y,effect.to.y)/Cell))-1,0,FogSize-1);
+ const int maxY=std::clamp(static_cast<int>(std::floor(std::max(effect.from.y,effect.to.y)/Cell)),0,FogSize-1);
+ const double dx=static_cast<double>(effect.to.x)-effect.from.x;
+ const double dy=static_cast<double>(effect.to.y)-effect.from.y;
+ for(int y=minY;y<=maxY;++y)for(int x=minX;x<=maxX;++x) {
+  if(fog_[team][y*FogSize+x])continue;
+  double entry=0,exit=1;
+  auto crossesAxis=[&](double origin,double delta,double low,double high) {
+   if(delta==0)return origin>=low&&origin<=high;
+   double first=(low-origin)/delta,last=(high-origin)/delta;
+   if(first>last)std::swap(first,last);
+   entry=std::max(entry,first);exit=std::min(exit,last);
+   return entry<=exit+1e-10;
+  };
+  if(crossesAxis(effect.from.x,dx,x*Cell,(x+1)*Cell)&&
+     crossesAxis(effect.from.y,dy,y*Cell,(y+1)*Cell))return false;
+ }
+ return true;
+}
+
+void Simulation::damage(Entity& victim,float amount,int attackerTeam,Kind sourceKind) {
  if(!victim.alive()||victim.kind==Kind::Resource||amount<=0)return;
  const float dealt=std::min(victim.hp,amount);victim.hp-=dealt;
+ emitEffect(EffectType::Impact,victim.pos,victim.pos,victim.team,sourceKind,victim.kind,0.4f);
  if(validTeam(attackerTeam))players_[attackerTeam].stats.damage+=dealt;
  if(victim.hp<=0) {
   // Record a witnessed death at the event, before periodic corpse cleanup can
@@ -705,7 +763,7 @@ void Simulation::damage(Entity& victim,float amount,int attackerTeam) {
    if(definition(victim.kind).building){if(validTeam(attackerTeam))++players_[attackerTeam].stats.buildingsDestroyed;}
    else {++players_[victim.team].stats.lost;if(validTeam(attackerTeam))++players_[attackerTeam].stats.killed;}
   }
-  effects_.push_back({victim.pos,victim.pos,victim.team,0.7f,true});
+  emitEffect(EffectType::Death,victim.pos,victim.pos,victim.team,victim.kind,victim.kind,definition(victim.kind).building?1.0f:0.7f);
  }
 }
 void Simulation::updateCombat(Entity& e) {
@@ -716,7 +774,10 @@ void Simulation::updateCombat(Entity& e) {
   for(auto& ally:entities_)if(ally.alive()&&ally.team==e.team&&ally.id!=e.id&&!definition(ally.kind).building&&ally.hp<definition(ally.kind).hp&&distanceSq(ally.pos,e.pos)<=d.range*d.range) {
    float missing=1-ally.hp/definition(ally.kind).hp;if(missing>need){need=missing;patient=&ally;}
   }
-  if(patient){patient->hp=std::min(definition(patient->kind).hp,patient->hp+16);e.cooldown=d.cooldown;effects_.push_back({e.pos,patient->pos,e.team,0.24f,false});}
+  if(patient) {
+   patient->hp=std::min(definition(patient->kind).hp,patient->hp+16);e.cooldown=d.cooldown;
+   emitEffect(EffectType::Heal,e.pos,patient->pos,e.team,e.kind,patient->kind,0.45f);
+  }
   return;
  }
  if(d.damage<=0||e.order==Order::Move||e.order==Order::Gather||e.order==Order::Construct)return;
@@ -756,10 +817,10 @@ void Simulation::updateCombat(Entity& e) {
  const Vec2 impact=target->pos;const Id primary=target->id;
  const float weapon=d.damage*(1+0.12f*players_[e.team].weapons)*modifier;
  const float effectiveArmor=static_cast<float>(td.armor+players_[target->team].armor);
- damage(*target,std::max(1.0f,weapon-effectiveArmor),e.team);
+ emitEffect(EffectType::Weapon,e.pos,impact,e.team,e.kind,target->kind,e.kind==Kind::Mortar?0.55f:0.35f);
+ damage(*target,std::max(1.0f,weapon-effectiveArmor),e.team,e.kind);
  e.cooldown=d.cooldown;e.facing=std::atan2(impact.y-e.pos.y,impact.x-e.pos.x);
- effects_.push_back({e.pos,impact,e.team,e.kind==Kind::Mortar?0.5f:0.18f,e.kind==Kind::Mortar});
- if(e.kind==Kind::Mortar)for(auto& enemy:entities_)if(enemy.id!=primary&&enemy.alive()&&enemy.team>=0&&enemy.team!=e.team&&!definition(enemy.kind).air&&distanceSq(enemy.pos,impact)<100*100)damage(enemy,std::max(1.0f,weapon*0.42f-definition(enemy.kind).armor-players_[enemy.team].armor),e.team);
+ if(e.kind==Kind::Mortar)for(auto& enemy:entities_)if(enemy.id!=primary&&enemy.alive()&&enemy.team>=0&&enemy.team!=e.team&&!definition(enemy.kind).air&&distanceSq(enemy.pos,impact)<100*100)damage(enemy,std::max(1.0f,weapon*0.42f-definition(enemy.kind).armor-players_[enemy.team].armor),e.team,e.kind);
  // Units under direct attack can retaliate without changing deliberate move or gather orders.
  target=get(primary);if(target&&target->alive()&&target->order==Order::Idle&&!target->target&&(!d.air||td.antiAir))target->target=e.id;
 }
@@ -823,7 +884,11 @@ std::uint64_t Simulation::stateHash() const {
   hash.integer(e.path.size());for(Vec2 p:e.path)hash.point(p);
  }
  hash.integer(obstacles_.size());for(const auto& o:obstacles_){hash.point(o.center);hash.point(o.half);}
- hash.integer(effects_.size());for(const auto& fx:effects_){hash.point(fx.from);hash.point(fx.to);hash.integer(fx.team);hash.real(fx.life);hash.integer(fx.explosion);}
+ hash.integer(nextEffectId_);hash.integer(effects_.size());for(const auto& fx:effects_) {
+  hash.point(fx.from);hash.point(fx.to);hash.integer(fx.team);hash.real(fx.life);hash.real(fx.duration);
+  hash.integer(fx.id);hash.integer(static_cast<int>(fx.type));hash.integer(static_cast<int>(fx.sourceKind));hash.integer(static_cast<int>(fx.targetKind));
+  hash.byte(fx.fromVisibleMask);hash.byte(fx.toVisibleMask);
+ }
  for(int t=0;t<2;++t)for(int i=0;i<FogSize*FogSize;++i){hash.byte(fog_[t][i]);hash.byte(explored_[t][i]);}
  hash.integer(aiSightings_.size());for(const auto& sighting:aiSightings_){hash.integer(sighting.id);hash.integer(static_cast<int>(sighting.kind));hash.point(sighting.pos);hash.integer(sighting.lastSeenTick);}
  for(auto stamp:aiObserved_)hash.integer(stamp);
@@ -832,7 +897,7 @@ std::uint64_t Simulation::stateHash() const {
 
 bool Simulation::save(const std::string& path) const {
  std::ofstream out(path,std::ios::trunc);if(!out)return false;out.imbue(std::locale::classic());out<<std::setprecision(std::numeric_limits<float>::max_digits10);
- out<<"CINDERLINE 3\n"<<config_.map<<' '<<config_.seed<<' '<<config_.ai<<' '<<config_.aiAggression<<'\n';
+ out<<"CINDERLINE 4\n"<<config_.map<<' '<<config_.seed<<' '<<config_.ai<<' '<<config_.aiAggression<<'\n';
  out<<tick_<<' '<<nextId_<<' '<<accumulator_<<' '<<aiTimer_<<' '<<winner_<<'\n';
  for(const auto& p:players_) {
   const auto& s=p.stats;out<<p.ore<<' '<<p.tier<<' '<<p.weapons<<' '<<p.armor<<' '<<s.gathered<<' '<<s.produced<<' '<<s.lost<<' '<<s.killed<<' '<<s.built<<' '<<s.buildingsDestroyed<<' '<<s.expansions<<' '<<s.upgrades<<' '<<s.damage<<'\n';
@@ -843,7 +908,10 @@ bool Simulation::save(const std::string& path) const {
   out<<e.queue.size()<<'\n';for(const auto& q:e.queue)out<<static_cast<int>(q.kind)<<' '<<q.remaining<<' '<<q.total<<' '<<q.cost<<' '<<q.research<<'\n';
   out<<e.path.size()<<'\n';for(Vec2 p:e.path)out<<p.x<<' '<<p.y<<'\n';
  }
- out<<effects_.size()<<'\n';for(const auto& fx:effects_)out<<fx.from.x<<' '<<fx.from.y<<' '<<fx.to.x<<' '<<fx.to.y<<' '<<fx.team<<' '<<fx.life<<' '<<fx.explosion<<'\n';
+ out<<effects_.size()<<' '<<nextEffectId_<<'\n';for(const auto& fx:effects_) {
+  out<<fx.from.x<<' '<<fx.from.y<<' '<<fx.to.x<<' '<<fx.to.y<<' '<<fx.team<<' '<<fx.life<<' '<<fx.duration<<' '<<fx.id<<' '<<static_cast<int>(fx.type)<<' '
+     <<static_cast<int>(fx.sourceKind)<<' '<<static_cast<int>(fx.targetKind)<<' '<<static_cast<int>(fx.fromVisibleMask)<<' '<<static_cast<int>(fx.toVisibleMask)<<'\n';
+ }
  for(int t=0;t<2;++t){for(auto v:fog_[t])out<<static_cast<int>(v)<<' ';out<<'\n';for(auto v:explored_[t])out<<static_cast<int>(v)<<' ';out<<'\n';}
  out<<recording_.size()<<'\n';for(const auto& r:recording_) {
   const auto& c=r.command;out<<r.tick<<' '<<static_cast<int>(c.type)<<' '<<c.team<<' '<<c.point.x<<' '<<c.point.y<<' '<<c.target<<' '<<static_cast<int>(c.kind)<<' '<<c.queueIndex<<' '<<c.units.size();for(Id id:c.units)out<<' '<<id;out<<'\n';
@@ -855,7 +923,7 @@ bool Simulation::save(const std::string& path) const {
  out.flush();return out.good();
 }
 bool Simulation::load(const std::string& path) {
- std::ifstream in(path);if(!in)return false;in.imbue(std::locale::classic());std::string magic;int version=0;in>>magic>>version;if(magic!="CINDERLINE"||(version<1||version>3))return false;
+ std::ifstream in(path);if(!in)return false;in.imbue(std::locale::classic());std::string magic;int version=0;in>>magic>>version;if(magic!="CINDERLINE"||(version<1||version>4))return false;
  Simulation loaded;loaded.entities_.clear();loaded.obstacles_.clear();loaded.effects_.clear();loaded.recording_.clear();
  in>>loaded.config_.map>>loaded.config_.seed>>loaded.config_.ai>>loaded.config_.aiAggression;
  in>>loaded.tick_>>loaded.nextId_>>loaded.accumulator_>>loaded.aiTimer_>>loaded.winner_;
@@ -888,7 +956,32 @@ bool Simulation::load(const std::string& path) {
   }
  }
  in>>count;if(!in||count>10000)return false;
- for(std::size_t i=0;i<count;++i){Effect fx;in>>fx.from.x>>fx.from.y>>fx.to.x>>fx.to.y>>fx.team>>fx.life>>fx.explosion;if(!in||!finite(fx.from)||!finite(fx.to)||!std::isfinite(fx.life))return false;loaded.effects_.push_back(fx);}
+ if(version>=4) {
+  if(!readEffectId(in,loaded.nextEffectId_)||loaded.nextEffectId_==0)return false;
+  std::uint64_t previousEffect=0;
+  for(std::size_t i=0;i<count;++i) {
+   Effect fx;int type=0,sourceKind=0,targetKind=0,fromMask=0,toMask=0;
+   in>>fx.from.x>>fx.from.y>>fx.to.x>>fx.to.y>>fx.team>>fx.life>>fx.duration;
+   if(!readEffectId(in,fx.id))return false;
+   in>>type>>sourceKind>>targetKind>>fromMask>>toMask;
+   fx.type=static_cast<EffectType>(type);fx.sourceKind=static_cast<Kind>(sourceKind);fx.targetKind=static_cast<Kind>(targetKind);
+   auto inWorld=[](Vec2 point){return finite(point)&&point.x>=0&&point.y>=0&&point.x<=WorldSize&&point.y<=WorldSize;};
+   if(!in||!inWorld(fx.from)||!inWorld(fx.to)||!validTeam(fx.team)||!std::isfinite(fx.life)||!std::isfinite(fx.duration)||fx.duration<0.3f||fx.duration>10.0f||fx.life<=0||fx.life>fx.duration||fx.id<=previousEffect||fx.id>=loaded.nextEffectId_||type<static_cast<int>(EffectType::Weapon)||type>static_cast<int>(EffectType::Death)||!validKind(fx.sourceKind)||!validKind(fx.targetKind)||fx.sourceKind==Kind::Resource||fx.targetKind==Kind::Resource||fromMask<0||fromMask>3||toMask<0||toMask>3)return false;
+   if((fx.type==EffectType::Impact||fx.type==EffectType::Death)&&(fx.from.x!=fx.to.x||fx.from.y!=fx.to.y||fromMask!=toMask))return false;
+   if(fx.type==EffectType::Death&&fx.sourceKind!=fx.targetKind)return false;
+   fx.fromVisibleMask=static_cast<std::uint8_t>(fromMask);fx.toVisibleMask=static_cast<std::uint8_t>(toMask);
+   previousEffect=fx.id;loaded.effects_.push_back(fx);
+  }
+ } else {
+  // Older events conflate healing, fire and destruction. Consume their syntax
+  // but drop the cosmetic records rather than guessing a new event identity.
+  for(std::size_t i=0;i<count;++i) {
+   Vec2 from,to;int team=0;float life=0;bool explosion=false;
+   in>>from.x>>from.y>>to.x>>to.y>>team>>life>>explosion;
+   if(!in||!finite(from)||!finite(to)||!std::isfinite(life))return false;
+  }
+  loaded.nextEffectId_=1;
+ }
  for(int t=0;t<2;++t)for(auto* field:{&loaded.fog_[t],&loaded.explored_[t]})for(auto& value:*field){int v;in>>v;if(!in||v<0||v>1)return false;value=static_cast<unsigned char>(v);}
  in>>count;if(!in||count>1000000)return false;
  for(std::size_t i=0;i<count;++i) {

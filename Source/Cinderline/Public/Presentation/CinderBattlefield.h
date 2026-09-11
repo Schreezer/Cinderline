@@ -9,6 +9,19 @@ class UMaterialInterface;
 class UStaticMesh;
 class UTextureCube;
 
+/** Adapter requests are counted even in automation worlds without an audio subsystem. */
+struct FCinderCombatFeedbackStats
+{
+    uint64 ProcessedHighWater = 0;
+    uint64 ConsumedEvents = 0;
+    uint64 WeaponRequests = 0;
+    uint64 ImpactRequests = 0;
+    uint64 DeathRequests = 0;
+    uint64 HiddenEvents = 0;
+    uint64 OffscreenEvents = 0;
+    uint64 CoalescedEvents = 0;
+};
+
 /** The presentation adapter is the sole owner of the portable authoritative simulation. */
 UCLASS()
 class CINDERLINE_API ACinderBattlefield : public AActor
@@ -31,6 +44,12 @@ public:
     bool SaveMatch() const;
     bool LoadMatch();
     void LogModelStatus() const;
+    const FCinderCombatFeedbackStats& CombatFeedbackStats() const { return CombatFeedback; }
+    /** Call after a direct Sim().reset/load in a development fixture; existing effects are skipped. */
+    void ResetFeedback(bool bClearCombatCounters = true);
+    /** Consume current events once. Tick owns the menu/pause gate; fixtures can call this directly. */
+    void UpdateCombatFeedback();
+    void LogCombatStatus() const;
 
 private:
     struct FBatch
@@ -46,6 +65,7 @@ private:
     void UpdateCompletionAudio();
     cinder::Simulation Simulation;
     cinder::Stats AudioStatsSnapshot;
+    FCinderCombatFeedbackStats CombatFeedback;
     std::vector<cinder::Entity> ResourceMemory;
     bool bMenu = true;
     bool bPaused = false;

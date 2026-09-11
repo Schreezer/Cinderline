@@ -1,0 +1,31 @@
+[2026.09.11-15.27.21:721][942]LogCinderCombatPreview: Display: CINDERLINE_COMBAT_PREVIEW mode=weapons live=0 tick=3 effects=14; development actors, ordinary damage/healing, no save written
+[2026.09.11-15.27.44:592][569]LogCore: Display: Tracing Screenshot "combat-feedback-weapons" taken with size: 1280 x 720
+[2026.09.11-15.28.13:693][574]LogCinderCombatPreview: Display: CINDERLINE_COMBAT_PREVIEW mode=support live=0 tick=4 effects=10; development actors, ordinary damage/healing, no save written
+[2026.09.11-15.28.14:245][633]LogCore: Display: Tracing Screenshot "combat-feedback-support" taken with size: 1280 x 720
+[2026.09.11-15.29.08:344][ 31]LogCore: Display: Tracing Screenshot "combat-feedback-support-compact" taken with size: 667 x 375
+[2026.09.11-15.29.08:444][ 39]LogCinderCombatPreview: Display: CINDERLINE_COMBAT_PREVIEW mode=weapons live=0 tick=3 effects=14; development actors, ordinary damage/healing, no save written
+[2026.09.11-15.29.09:001][102]LogCore: Display: Tracing Screenshot "combat-feedback-weapons-compact" taken with size: 667 x 375
+[2026.09.11-15.29.33:448][909]LogCinderCombat: Display: CINDERLINE_COMBAT_FEEDBACK highwater=14 consumed=14 weapon_requests=1 impact_requests=1 death_requests=0 hidden=0 offscreen=0 coalesced=12; requests are adapter intents, not playback.
+[2026.09.11-15.29.33:448][909]LogCinderCombat: Display: CINDERLINE_COMBAT_AUDIO weapon_submitted=3 impact_submitted=3 explosion_submitted=1 weapon_throttled=0 impact_throttled=0 explosion_throttled=0; submitted counts lifetime PlaySound2D calls, not listening proof.
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display: CinderAudio: loaded=3/8 requested=7 played=7 throttled=0 missing=0 unavailable=0; played counts PlaySound2D submissions, not listening proof.
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   UI_Click requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   Order_Ack requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   Order_Invalid requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   Unit_Ready requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   Building_Ready requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   Weapon_Pulse requested=3 submitted=3 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   Impact requested=3 submitted=3 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:515][917]LogCinderAudio: Display:   Explosion requested=1 submitted=1 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.33:688][938]LogCinderCombatPreview: Display: CINDERLINE_COMBAT_PREVIEW mode=weapons live=1 tick=3 effects=14; development actors, ordinary damage/healing, no save written
+[2026.09.11-15.29.50:639][955]LogCinderCombat: Display: CINDERLINE_COMBAT_FEEDBACK highwater=120 consumed=120 weapon_requests=46 impact_requests=46 death_requests=4 hidden=0 offscreen=0 coalesced=24; requests are adapter intents, not playback.
+[2026.09.11-15.29.50:639][955]LogCinderCombat: Display: CINDERLINE_COMBAT_AUDIO weapon_submitted=45 impact_submitted=44 explosion_submitted=5 weapon_throttled=4 impact_throttled=5 explosion_throttled=0; submitted counts lifetime PlaySound2D calls, not listening proof.
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display: CinderAudio: loaded=3/8 requested=103 played=94 throttled=9 missing=0 unavailable=0; played counts PlaySound2D submissions, not listening proof.
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   UI_Click requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   Order_Ack requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   Order_Invalid requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   Unit_Ready requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   Building_Ready requested=0 submitted=0 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   Weapon_Pulse requested=49 submitted=45 throttled=4 missing=0 unavailable=0
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   Impact requested=49 submitted=44 throttled=5 missing=0 unavailable=0
+[2026.09.11-15.29.50:713][964]LogCinderAudio: Display:   Explosion requested=5 submitted=5 throttled=0 missing=0 unavailable=0
+[2026.09.11-15.29.51:242][ 24]LogCore: Display: Tracing Screenshot "combat-feedback-live" taken with size: 667 x 375

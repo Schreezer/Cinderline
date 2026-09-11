@@ -23,7 +23,9 @@ Construction occupies one Drudge. Placing a foundation pays the cost and assigns
 
 Moving, stopping or retasking the builder pauses the site. Worker death also pauses it. An unfinished site retains its progress and damage until another Drudge resumes for no additional ore, or the player cancels for the unused portion of its cost. Completion, cancellation or site destruction releases its assigned worker to its previous mining job when applicable. A newer explicit order takes precedence. Both sides follow these rules, and the AI reassigns idle sites before starting more construction.
 
-Version 3 saved matches preserve travelling and working builders, paused sites, mining return context and the opponent's scouting knowledge. Version 1 and 2 saves still load, with empty scouting knowledge until the opponent makes new observations. Unfinished structures from version 1 start paused and need a Drudge.
+Version 4 saved matches preserve travelling and working builders, paused sites, mining return context, the opponent's scouting knowledge and explicit combat feedback events. Versions 1–3 still load. Versions 1 and 2 start with empty scouting knowledge until the opponent makes new observations. Unfinished structures from version 1 start paused and need a Drudge. Ambiguous cosmetic effects in old saves are discarded during migration.
+
+Combat feedback records firing, actual damage, actual healing and destruction separately, with stable event IDs and source/target kinds. Visibility is captured at each endpoint when the event occurs and checked again when displayed. Links require visibility along their whole path. Hidden events cannot become visible or audible merely because the camera or fog changes later. Damage remains instantaneous; tracer and siege arc animation does not change combat timing. The presentation adapter consumes each new event once, snapshots its cursor on match/load transitions and limits combat audio requests per update.
 
 ## Touch command policy
 

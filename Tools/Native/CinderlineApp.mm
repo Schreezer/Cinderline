@@ -436,10 +436,63 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  std::vector<const Entity*> ordered;for(const auto&e:sim.entities())if(e.alive())ordered.push_back(&e);
  std::sort(ordered.begin(),ordered.end(),[](const Entity*a,const Entity*b){return a->pos.y<b->pos.y;});
  for(const auto*e:ordered)[self drawEntity:*e context:c rect:world ghost:NO];
+ // Effect links require the core's recorded/current endpoint and segment gate.
+ // Local marks are withheld if any occupied fog cell is hidden.
+ struct EffectPoint {double x,y,z;};
+ const double effectScale=self.bounds.size.height<560?.72:1.0,strokeScale=std::clamp(camera.zoom,.70,1.25);
+ auto withAlpha=[](Color color,double alpha){color.a=alpha;return color;};
+ auto effectHeight=[](Kind kind){const auto&d=definition(kind);return d.radius*(d.air?.95:d.building?.60:.30);};
+ auto effectScreen=[&](EffectPoint p){NSPoint q=camera.screen({(float)p.x,(float)p.y},world);q.y-=p.z*camera.zoom;return q;};
+ auto areaVisible=[&](EffectPoint p,double radius){
+  constexpr double cell=Simulation::WorldSize/Simulation::FogSize;
+  if(p.x-radius<0||p.y-radius<0||p.x+radius>=Simulation::WorldSize||p.y+radius>=Simulation::WorldSize)return false;
+  int x0=(int)floor((p.x-radius)/cell),x1=(int)floor((p.x+radius)/cell),y0=(int)floor((p.y-radius)/cell),y1=(int)floor((p.y+radius)/cell);
+  for(int y=y0;y<=y1;y++)for(int x=x0;x<=x1;x++)if(!sim.visible(0,{(float)((x+.5)*cell),(float)((y+.5)*cell)}))return false;
+  return true;
+ };
+ auto effectLine=[&](EffectPoint a,EffectPoint b,Color color,double width){line(c,effectScreen(a),effectScreen(b),color,width*strokeScale);};
+ auto effectRing=[&](EffectPoint p,double radius,Color color,double width){if(!areaVisible(p,radius))return;NSPoint q=effectScreen(p);double r=radius*camera.zoom;ring(c,NSMakeRect(q.x-r,q.y-r*.72,r*2,r*1.44),color,width*strokeScale);};
+ auto effectCross=[&](EffectPoint p,double radius,Color color,double width){if(!areaVisible(p,radius*2))return;NSPoint q=effectScreen(p);double r=std::clamp(radius*camera.zoom,2.5,7.0)*effectScale;line(c,NSMakePoint(q.x-r,q.y),NSMakePoint(q.x+r,q.y),color,width*strokeScale);line(c,NSMakePoint(q.x,q.y-r),NSMakePoint(q.x,q.y+r),color,width*strokeScale);};
  for(const auto&fx:sim.effects()){
-  if(!sim.visible(0,fx.to)&&!sim.visible(0,fx.from))continue;NSPoint a=camera.screen(fx.from,world),b=camera.screen(fx.to,world);Color col=fx.team==0?Cyan:Coral;
-  if(fx.explosion){double r=(.5-fx.life)*85*camera.zoom+10;oval(c,NSMakeRect(b.x-r,b.y-r*.7,r*2,r*1.4),Color{1,.55,.19,.20});ring(c,NSMakeRect(b.x-r,b.y-r*.7,r*2,r*1.4),Amber,2);for(int i=0;i<6;i++){double a=i*Pi/3+fx.to.x;line(c,NSMakePoint(b.x+cos(a)*r*.6,b.y+sin(a)*r*.42),NSMakePoint(b.x+cos(a)*r*1.2,b.y+sin(a)*r*.84),Coral,1.5);}}
-  else{line(c,a,b,Color{col.r,col.g,col.b,.14},6*camera.zoom);line(c,a,b,col,1.3*camera.zoom);oval(c,NSMakeRect(b.x-2,b.y-2,4,4),Ink);}
+  if(fx.life<=0||fx.duration<=0)continue;
+  bool sourceVisible=sim.effectVisible(fx,0,true),targetVisible=sim.effectVisible(fx,0,false);if(!sourceVisible&&!targetVisible)continue;
+  double age=std::clamp(1.0-fx.life/fx.duration,0.0,1.0),fade=(1-age)*(1-age*.4),phase=(fx.id%31)*.37;
+  Color shot=fx.team==0?Cyan:Coral;EffectPoint from{fx.from.x,fx.from.y,effectHeight(fx.sourceKind)},to{fx.to.x,fx.to.y,effectHeight(fx.targetKind)};
+  auto point=[&](double t){return EffectPoint{from.x+(to.x-from.x)*t,from.y+(to.y-from.y)*t,from.z+(to.z-from.z)*t};};
+  if(fx.type==EffectType::Weapon){
+   bool heavy=fx.sourceKind==Kind::Bastion||fx.sourceKind==Kind::Turret;
+   if(sourceVisible&&age<.30){double flash=std::max(0.0,1-age*3.5);effectCross(from,(heavy?13:8)*effectScale,withAlpha(shot,flash),heavy?2.2:1.5);if(heavy)effectRing(from,(8+age*19)*effectScale,withAlpha(shot,flash*.6),1.2);}
+   if(!sim.effectLinkVisible(fx,0))continue;
+   double head=std::clamp(age/.78,0.0,1.0);
+   if(fx.sourceKind==Kind::Lancer){
+    effectLine(from,to,withAlpha(shot,fade*.18),4.2*effectScale);effectLine(from,to,withAlpha(shot,fade),1.5);effectLine(point(std::max(0.0,head-.09)),point(head),withAlpha(Ink,fade),1.0);
+   }else if(fx.sourceKind==Kind::Mortar){
+    // Arc is visual only: damage timing remains in the shared simulation.
+    double rise=std::clamp(hypot(to.x-from.x,to.y-from.y)*.22,70.0,170.0)*effectScale;
+    auto arc=[&](double t){EffectPoint p=point(t);p.z+=sin(t*Pi)*rise;return p;};double tail=std::max(0.0,head-.20);
+    for(int i=0;i<6;i++)effectLine(arc(tail+(head-tail)*i/6),arc(tail+(head-tail)*(i+1)/6),withAlpha(Amber,fade*(.20+i*.12)),2.2);
+    effectCross(arc(head),8*effectScale,withAlpha(Ink,fade),1.6);
+   }else{
+    double length=heavy?.14:fx.sourceKind==Kind::Scout?.055:.09,width=heavy?2.8:fx.sourceKind==Kind::Worker?1.0:1.7;
+    if(heavy)effectLine(point(std::max(0.0,head-length)),point(head),withAlpha(shot,fade*.18),5*effectScale);
+    effectLine(point(std::max(0.0,head-length)),point(head),withAlpha(shot,fade),width);
+    if(fx.sourceKind==Kind::Kite||fx.sourceKind==Kind::Striker){double second=std::max(0.0,head-(fx.sourceKind==Kind::Kite?.20:.12));effectLine(point(std::max(0.0,second-length*.6)),point(second),withAlpha(shot,fade*.6),1.2);}
+   }
+  }else if(fx.type==EffectType::Heal){
+   Color green{.20,1,.64,1};double pulse=.75+.25*sin(age*Pi*2);
+   if(sourceVisible)effectRing(from,(9+age*12)*effectScale,withAlpha(green,fade*.6),1.2);
+   if(sim.effectLinkVisible(fx,0)){effectLine(from,to,withAlpha(green,fade*.22),3*effectScale);effectLine(from,to,withAlpha(green,fade*.8),1.2);double head=std::clamp(age/.85,0.0,1.0);effectLine(point(std::max(0.0,head-.07)),point(head),withAlpha(Ink,fade),1.8);}
+   if(targetVisible){EffectPoint plus=to;plus.z+=10;effectCross(plus,(10+pulse*5)*effectScale,withAlpha(green,fade*pulse),2);}
+  }else if(fx.type==EffectType::Impact&&targetVisible){
+   // Generic target-local sparks do not expose a hidden source's kind/team.
+   Color spark{1,.82,.50,1};double radius=(4+age*20)*effectScale;effectRing(to,radius,withAlpha(spark,fade*.75),1.4);
+   if(areaVisible(to,radius*1.4))for(int i=0;i<4;i++){double angle=phase+i*Pi/2;EffectPoint a{to.x+cos(angle)*radius*.65,to.y+sin(angle)*radius*.65,to.z+radius*.26},b{to.x+cos(angle)*radius*1.35,to.y+sin(angle)*radius*1.35,to.z+radius*.54};effectLine(a,b,withAlpha(spark,fade),1.4);}
+  }else if(fx.type==EffectType::Death&&targetVisible){
+   const auto&victim=definition(fx.targetKind);EffectPoint center{fx.to.x,fx.to.y,victim.air?effectHeight(fx.targetKind):2};
+   double footprint=std::clamp(victim.radius*(victim.building?1.05:1.35),25.0,135.0)*effectScale,radius=footprint*(.2+age*.9);Color fire{1,.52,.22,1};
+   effectRing(center,radius,withAlpha(fire,fade),victim.building?2.1:1.5);EffectPoint inner=center;inner.z+=6;effectRing(inner,radius*.58,withAlpha(Amber,fade*.55),1.0);
+   if(areaVisible(center,footprint*1.25))for(int i=0;i<(victim.building?6:4);i++){double angle=phase+i*Pi*2/(victim.building?6:4),lift=sin(age*Pi)*(victim.building?34:18);EffectPoint a{center.x+cos(angle)*radius*.8,center.y+sin(angle)*radius*.8,center.z+lift*.8},b{center.x+cos(angle)*radius,center.y+sin(angle)*radius,center.z+lift};effectLine(a,b,withAlpha(fire,fade),2*effectScale);}
+  }
  }
  for(Id id:selected){const Entity*e=sim.find(id);if(!e)continue;if(e->order==Order::Move||e->order==Order::AttackMove||e->order==Order::Gather){NSPoint a=camera.screen(e->pos,world),b=camera.screen(e->goal,world);CGFloat dash[]={3,6};CGContextSetLineDash(c,0,dash,2);line(c,a,b,Color{.27,.91,.83,.22});CGContextSetLineDash(c,0,nullptr,0);}if(definition(e->kind).building&&e->rally.x>0){NSPoint b=camera.screen(e->rally,world);line(c,b,NSMakePoint(b.x,b.y-23),Cyan);poly(c,{{b.x,b.y-23},{b.x+15,b.y-18},{b.x,b.y-13}},Cyan);}}
  if(commandPulse>CACurrentMediaTime()){

@@ -3,6 +3,7 @@
 #if WITH_DEV_AUTOMATION_TESTS
 
 #include "Components/InstancedStaticMeshComponent.h"
+#include "Engine/GameInstance.h"
 #include "Engine/World.h"
 #include "GameFramework/WorldSettings.h"
 #include "HAL/FileManager.h"
@@ -500,6 +501,199 @@ bool FCinderAIKnowledgeAndPersistenceIntegration::RunTest(const FString& Paramet
     if (!HasAnyErrors()) AddInfo(FString::Printf(TEXT("CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=%u, first_seen_tick=%llu, retained_seen_tick=%llu, continuation_ticks=%d; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only."),
         Worker, static_cast<unsigned long long>(Observed.lastSeenTick),
         static_cast<unsigned long long>(Remembered.lastSeenTick), static_cast<int32>(ContinuedHashes.size())));
+    return !HasAnyErrors();
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderCombatFeedbackIntegration,
+    "Cinderline.Integration.CombatFeedback",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderCombatFeedbackIntegration::RunTest(const FString& Parameters)
+{
+    using namespace CinderWorldIntegration;
+    using namespace cinder;
+    FGameFixture Fixture;
+    if (!Fixture.Initialize(*this)) return false;
+    ACinderBattlefield& Battle = *Fixture.Battle;
+    ACinderPlayerController& Controller = *Fixture.Controller;
+    Controller.ExecuteAction(TEXT("start"), 0);
+
+    // Explicit development fixtures isolate presentation event flow. Units are
+    // spawned at full health; damage, healing and death come from real combat.
+    // These fixtures do not establish paid-economy balance or physical UI proof.
+    auto ResetCombatFixture = [&]()
+    {
+        Battle.Sim().reset({0, 42, false, 1});
+        Battle.ResetFeedback();
+        for (int Team = 0; Team < 2; ++Team)
+        {
+            Command Stop;
+            Stop.type = CommandType::Stop; Stop.team = Team;
+            for (const Entity& Entity : Battle.Sim().entities())
+                if (Entity.alive() && Entity.team == Team && Entity.kind == Kind::Worker)
+                    Stop.units.push_back(Entity.id);
+            TestTrue(TEXT("Fixture stops starting workers through commands"), Battle.Sim().command(Stop).accepted);
+        }
+    };
+    auto Hold = [&](int Team, const std::vector<Id>& Units)
+    {
+        Command Command;
+        Command.type = CommandType::Hold; Command.team = Team; Command.units = Units;
+        return Battle.Sim().command(Command).accepted;
+    };
+    auto SameCounters = [](const FCinderCombatFeedbackStats& A, const FCinderCombatFeedbackStats& B)
+    {
+        return A.ProcessedHighWater == B.ProcessedHighWater && A.ConsumedEvents == B.ConsumedEvents
+            && A.WeaponRequests == B.WeaponRequests && A.ImpactRequests == B.ImpactRequests
+            && A.DeathRequests == B.DeathRequests && A.HiddenEvents == B.HiddenEvents
+            && A.OffscreenEvents == B.OffscreenEvents && A.CoalescedEvents == B.CoalescedEvents;
+    };
+    ResetCombatFixture();
+    const Id Defender = Battle.Sim().debugSpawn(Kind::Bastion, 0, {1300, 700});
+    const Id Attacker = Battle.Sim().debugSpawn(Kind::Lancer, 1, {1510, 700});
+    const Id Healer = Battle.Sim().debugSpawn(Kind::Mender, 0, {1250, 820});
+    if (!TestTrue(TEXT("Visible combat fixture accepts stationary combat orders"),
+        Defender && Attacker && Healer && Hold(0, {Defender, Healer}) && Hold(1, {Attacker}))) return false;
+    uint64 ObservedTypes[4] = {};
+    auto CheckedVisibleTick = [&]()
+    {
+        const FCinderCombatFeedbackStats Before = Battle.CombatFeedbackStats();
+        Battle.Tick(Simulation::Step);
+        uint64 NewTypes[4] = {};
+        uint64 NewEvents = 0;
+        for (const Effect& Effect : Battle.Sim().effects())
+        {
+            if (Effect.id <= Before.ProcessedHighWater) continue;
+            ++NewEvents;
+            const int Type = static_cast<int>(Effect.type);
+            if (!TestTrue(TEXT("Combat emits a recognized typed event"), Type >= 0 && Type < 4)) continue;
+            ++NewTypes[Type]; ++ObservedTypes[Type];
+            TestTrue(TEXT("Nearby combat event retains a visible endpoint"),
+                Battle.Sim().effectVisible(Effect, 0, Effect.type == EffectType::Weapon));
+            if (Effect.type == EffectType::Heal)
+                TestTrue(TEXT("Actual healing produces a visible support link"), Battle.Sim().effectLinkVisible(Effect, 0));
+        }
+        const FCinderCombatFeedbackStats After = Battle.CombatFeedbackStats();
+        TestEqual(TEXT("Actor Tick consumes each newly emitted retained event once"), After.ConsumedEvents - Before.ConsumedEvents, NewEvents);
+        TestEqual(TEXT("Actor Tick advances its cursor to the simulation event ID"), After.ProcessedHighWater,
+            static_cast<uint64>(Battle.Sim().lastEffectId()));
+        const uint64 WeaponCue = NewTypes[static_cast<int>(EffectType::Weapon)] > 0 ? 1 : 0;
+        const uint64 ImpactCue = NewTypes[static_cast<int>(EffectType::Impact)] > 0 ? 1 : 0;
+        const uint64 DeathCue = NewTypes[static_cast<int>(EffectType::Death)] > 0 ? 1 : 0;
+        TestEqual(TEXT("Visible weapon events request one shared cue per actor tick"), After.WeaponRequests - Before.WeaponRequests, WeaponCue);
+        TestEqual(TEXT("Visible impacts request one shared cue per actor tick"), After.ImpactRequests - Before.ImpactRequests, ImpactCue);
+        TestEqual(TEXT("Visible deaths request one shared cue per actor tick"), After.DeathRequests - Before.DeathRequests, DeathCue);
+        const uint64 AudibleEvents = NewEvents - NewTypes[static_cast<int>(EffectType::Heal)];
+        TestEqual(TEXT("Simultaneous cues coalesce while every event remains consumed"),
+            After.CoalescedEvents - Before.CoalescedEvents, AudibleEvents - WeaponCue - ImpactCue - DeathCue);
+        TestTrue(TEXT("Visible fixture drops no events for fog or viewport"), After.HiddenEvents == 0 && After.OffscreenEvents == 0);
+        const uint64 HashBeforeConsume = Battle.Sim().stateHash();
+        Battle.UpdateCombatFeedback();
+        Battle.RenderState();
+        Battle.UpdateCombatFeedback();
+        TestTrue(TEXT("Repeated consumption and rendering do not replay retained effects"), SameCounters(After, Battle.CombatFeedbackStats()));
+        TestEqual(TEXT("Feedback consumption and rendering leave authoritative state unchanged"),
+            static_cast<uint64>(Battle.Sim().stateHash()), HashBeforeConsume);
+    };
+
+    // The engine wrapper initializes a GameInstance. Detach it only for this
+    // synchronous call in the owned world, then restore it for normal teardown.
+    // Its world context retains ownership while the optional audio path is absent.
+    UWorld* World = Battle.GetWorld();
+    UGameInstance* SavedGameInstance = World->GetGameInstance();
+    World->SetGameInstance(nullptr);
+    TestTrue(TEXT("Missing-audio fixture has no game-instance subsystem"), World->GetGameInstance() == nullptr);
+    CheckedVisibleTick();
+    World->SetGameInstance(SavedGameInstance);
+    TestTrue(TEXT("Feedback requests survive an absent audio subsystem"),
+        Battle.CombatFeedbackStats().WeaponRequests > 0 && Battle.CombatFeedbackStats().ImpactRequests > 0);
+    TestTrue(TEXT("Actual opening exchange damages the defender and emits healing"),
+        Battle.Sim().find(Defender)->hp < definition(Kind::Bastion).hp && ObservedTypes[static_cast<int>(EffectType::Heal)] > 0);
+
+    Controller.ExecuteAction(TEXT("pause"));
+    const uint64 PausedHash = Battle.Sim().stateHash();
+    const FCinderCombatFeedbackStats PausedCounters = Battle.CombatFeedbackStats();
+    Battle.Tick(0.2f);
+    TestEqual(TEXT("Paused actor Tick freezes combat and retained effect lifetimes"), static_cast<uint64>(Battle.Sim().stateHash()), PausedHash);
+    TestTrue(TEXT("Paused actor Tick emits no repeated combat feedback"), SameCounters(PausedCounters, Battle.CombatFeedbackStats()));
+    Controller.ExecuteAction(TEXT("resume"));
+
+    FTemporarySnapshot Snapshot;
+    if (!TestTrue(TEXT("Combat snapshot gets an owned temporary directory"), IFileManager::Get().MakeDirectory(*Snapshot.Directory, true))) return false;
+    const uint64 SavedHash = Battle.Sim().stateHash();
+    const uint64 SavedEffectId = Battle.Sim().lastEffectId();
+    if (!TestTrue(TEXT("Snapshot contains retained live combat effects"), !Battle.Sim().effects().empty())) return false;
+    if (!TestTrue(TEXT("Combat snapshot saves outside the player's match path"), Battle.Sim().save(TCHAR_TO_UTF8(*Snapshot.Path)))) return false;
+    for (int32 Tick = 0; Tick < 240; ++Tick)
+    {
+        const Entity* Enemy = Battle.Sim().find(Attacker);
+        if (!Enemy || !Enemy->alive()) break;
+        CheckedVisibleTick();
+    }
+    const Entity* Defeated = Battle.Sim().find(Attacker);
+    TestTrue(TEXT("Normal combat kills the opposing fixture unit"), !Defeated || !Defeated->alive());
+    for (int Type = 0; Type < 4; ++Type)
+        TestTrue(TEXT("Actor ticks carried weapon, impact, heal and death events"), ObservedTypes[Type] > 0);
+    const FCinderCombatFeedbackStats CompletedCombat = Battle.CombatFeedbackStats();
+    const uint64 CompletedHealCount = ObservedTypes[static_cast<int>(EffectType::Heal)];
+    TestEqual(TEXT("One defeated enemy produces one death cue request"), CompletedCombat.DeathRequests, uint64(1));
+    TestTrue(TEXT("Healing is consumed silently without adding an attack or impact cue"),
+        CompletedCombat.ConsumedEvents == CompletedCombat.WeaponRequests + CompletedCombat.ImpactRequests
+            + CompletedCombat.DeathRequests + CompletedCombat.CoalescedEvents + CompletedHealCount);
+    if (!TestTrue(TEXT("Temporary combat snapshot reloads"), Battle.Sim().load(TCHAR_TO_UTF8(*Snapshot.Path)))) return false;
+    TestEqual(TEXT("Loading restores combat and effects exactly"), static_cast<uint64>(Battle.Sim().stateHash()), SavedHash);
+    // Exercise the same public feedback reset used by LoadMatch, without calling
+    // the production wrapper that reads the player's persistent match file.
+    Battle.ResetFeedback();
+    TestEqual(TEXT("Load reset snapshots the restored effect cursor"), Battle.CombatFeedbackStats().ProcessedHighWater, SavedEffectId);
+    TestEqual(TEXT("Load reset clears diagnostic counters"), Battle.CombatFeedbackStats().ConsumedEvents, uint64(0));
+    Battle.UpdateCombatFeedback();
+    Battle.UpdateCombatFeedback();
+    TestEqual(TEXT("Retained snapshot effects do not replay after load"), Battle.CombatFeedbackStats().ConsumedEvents, uint64(0));
+    for (int32 Tick = 0; Tick < 40 && Battle.CombatFeedbackStats().ConsumedEvents == 0; ++Tick) CheckedVisibleTick();
+    TestTrue(TEXT("New post-load combat events are consumed after the restored cursor"), Battle.CombatFeedbackStats().ConsumedEvents > 0);
+    TestTrue(TEXT("Restored cursor accepts event IDs below the abandoned future"),
+        Battle.CombatFeedbackStats().ProcessedHighWater < CompletedCombat.ProcessedHighWater);
+
+    ResetCombatFixture();
+    // A long-range enemy weapon is beyond the victim's vision. Its impact is
+    // visible at the friendly victim, but its hidden muzzle must remain silent.
+    const Id Siege = Battle.Sim().debugSpawn(Kind::Mortar, 1, {3400, 650});
+    const Id Victim = Battle.Sim().debugSpawn(Kind::Worker, 0, {3990, 650});
+    if (!TestTrue(TEXT("Fog fixture accepts ordinary hold orders"), Siege && Victim && Hold(1, {Siege}) && Hold(0, {Victim}))) return false;
+    TestFalse(TEXT("Long-range attacker starts outside player vision"), Battle.Sim().visible(0, Battle.Sim().find(Siege)->pos));
+    Battle.Tick(Simulation::Step);
+    const FCinderCombatFeedbackStats FogCounters = Battle.CombatFeedbackStats();
+    TestEqual(TEXT("Fog fixture consumes both authoritative events"), FogCounters.ConsumedEvents, uint64(2));
+    TestEqual(TEXT("Hidden weapon endpoint requests no weapon cue"), FogCounters.WeaponRequests, uint64(0));
+    TestEqual(TEXT("Visible victim requests one impact cue"), FogCounters.ImpactRequests, uint64(1));
+    TestEqual(TEXT("Hidden weapon advances the cursor without a cue"), FogCounters.HiddenEvents, uint64(1));
+    TestEqual(TEXT("Fog cursor still reaches the newest event"), FogCounters.ProcessedHighWater, static_cast<uint64>(Battle.Sim().lastEffectId()));
+    TestEqual(TEXT("First real siege hit does not kill this victim"), FogCounters.DeathRequests, uint64(0));
+    Effect HiddenWeapon;
+    bool FoundHiddenWeapon = false;
+    for (const Effect& Effect : Battle.Sim().effects())
+        if (Effect.type == EffectType::Weapon) { HiddenWeapon = Effect; FoundHiddenWeapon = true; }
+    if (!TestTrue(TEXT("Fog fixture retains its actual weapon event"), FoundHiddenWeapon)) return false;
+    Battle.Sim().debugSpawn(Kind::Scout, 0, {3300, 700});
+    TestTrue(TEXT("A later scout now reveals the old weapon position"), Battle.Sim().visible(0, HiddenWeapon.from));
+    TestFalse(TEXT("Later scouting cannot reveal an event hidden when emitted"), Battle.Sim().effectVisible(HiddenWeapon, 0, true));
+    Battle.UpdateCombatFeedback();
+    Battle.RenderState();
+    TestTrue(TEXT("Revealing terrain does not replay consumed hidden feedback"), SameCounters(FogCounters, Battle.CombatFeedbackStats()));
+    Controller.ExecuteAction(TEXT("menu"));
+    const uint64 MenuHash = Battle.Sim().stateHash();
+    Battle.Tick(0.2f);
+    TestEqual(TEXT("Menu transition freezes combat"), static_cast<uint64>(Battle.Sim().stateHash()), MenuHash);
+    TestTrue(TEXT("Menu transition preserves match diagnostics without replaying effects"), SameCounters(FogCounters, Battle.CombatFeedbackStats()));
+    Controller.ExecuteAction(TEXT("start"), 0);
+    TestEqual(TEXT("New match clears the authoritative event sequence"), static_cast<uint64>(Battle.Sim().lastEffectId()), uint64(0));
+    TestEqual(TEXT("New match clears the feedback cursor"), Battle.CombatFeedbackStats().ProcessedHighWater, uint64(0));
+    TestEqual(TEXT("New match clears feedback counts"), Battle.CombatFeedbackStats().ConsumedEvents, uint64(0));
+    if (!HasAnyErrors()) AddInfo(FString::Printf(TEXT("CINDERLINE_UE_INTEGRATION_COMBAT_FEEDBACK_PASS: weapon=%llu, impact=%llu, heal=%llu, death=%llu, hidden_weapon=%llu; development spawns, real combat actor ticks, exactly-once requests, pause/reset, temporary snapshot cursor, absent subsystem; no audible-output, viewport or physical-input proof."),
+        static_cast<unsigned long long>(CompletedCombat.WeaponRequests), static_cast<unsigned long long>(CompletedCombat.ImpactRequests),
+        static_cast<unsigned long long>(CompletedHealCount),
+        static_cast<unsigned long long>(CompletedCombat.DeathRequests), static_cast<unsigned long long>(FogCounters.HiddenEvents)));
     return !HasAnyErrors();
 }
 

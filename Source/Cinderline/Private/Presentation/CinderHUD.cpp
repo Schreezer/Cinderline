@@ -302,17 +302,145 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
             }
         }
     }
+    // Local effect geometry must not spill into a hidden fog cell. Link geometry
+    // uses the simulation's recorded-endpoint and complete-segment visibility gate.
+    const float EffectScale = bCompactLayout ? 0.72f : 1.0f;
+    const float FogCell = cinder::Simulation::WorldSize / cinder::Simulation::FogSize;
+    auto EffectAreaVisible = [&](FVector Center, float Radius)
+    {
+        if (Center.X - Radius < 0 || Center.Y - Radius < 0 ||
+            Center.X + Radius >= cinder::Simulation::WorldSize || Center.Y + Radius >= cinder::Simulation::WorldSize) return false;
+        const int MinX = FMath::FloorToInt((Center.X - Radius) / FogCell), MaxX = FMath::FloorToInt((Center.X + Radius) / FogCell);
+        const int MinY = FMath::FloorToInt((Center.Y - Radius) / FogCell), MaxY = FMath::FloorToInt((Center.Y + Radius) / FogCell);
+        for (int Y = MinY; Y <= MaxY; ++Y) for (int X = MinX; X <= MaxX; ++X)
+            if (!Sim.visible(0, {(X + 0.5f) * FogCell, (Y + 0.5f) * FogCell})) return false;
+        return true;
+    };
+    auto EffectRing = [&](FVector Center, float Radius, FLinearColor Color, float Thickness)
+    {
+        if (!EffectAreaVisible(Center, Radius)) return;
+        for (int I = 0; I < 16; ++I)
+        {
+            const float A = I * UE_TWO_PI / 16, B = (I + 1) * UE_TWO_PI / 16;
+            WorldLine(Center + FVector(FMath::Cos(A) * Radius, FMath::Sin(A) * Radius, 0),
+                      Center + FVector(FMath::Cos(B) * Radius, FMath::Sin(B) * Radius, 0), Color, Thickness);
+        }
+    };
+    auto EffectCross = [&](FVector Center, float Radius, FLinearColor Color, float Thickness)
+    {
+        if (!EffectAreaVisible(Center, Radius * 2)) return;
+        FVector2D Screen, Edge;
+        if (!PC->ProjectWorldLocationToScreen(Center, Screen) ||
+            !PC->ProjectWorldLocationToScreen(Center + FVector(Radius, 0, 0), Edge)) return;
+        const float Pixels = FMath::Clamp(static_cast<float>((Edge - Screen).Size()), 2.5f * UIScale, 7.0f * UIScale);
+        DrawLine(Screen.X - Pixels, Screen.Y, Screen.X + Pixels, Screen.Y, Color, Thickness * UIScale);
+        DrawLine(Screen.X, Screen.Y - Pixels, Screen.X, Screen.Y + Pixels, Color, Thickness * UIScale);
+    };
+    auto EffectHeight = [](cinder::Kind Kind)
+    {
+        const auto& D = cinder::definition(Kind);
+        return D.air ? 125.0f + D.radius : D.building ? 35.0f + D.radius * 0.45f : 20.0f + D.radius * 0.8f;
+    };
     for (const auto& FX : Sim.effects())
     {
-        if (!Sim.visible(0, FX.from) && !Sim.visible(0, FX.to)) continue;
-        const FLinearColor C = FX.team == 0 ? Mint : Amber;
-        WorldLine(FVector(FX.from.x, FX.from.y, 35), FVector(FX.to.x, FX.to.y, 35), C, FX.explosion ? 4 : 2);
-        FVector2D P;
-        if (PC->ProjectWorldLocationToScreen(FVector(FX.to.x, FX.to.y, 35), P))
+        if (FX.life <= 0 || FX.duration <= 0) continue;
+        const bool SourceVisible = Sim.effectVisible(FX, 0, true);
+        const bool TargetVisible = Sim.effectVisible(FX, 0, false);
+        if (!SourceVisible && !TargetVisible) continue;
+        const float Age = FMath::Clamp(1.0f - FX.life / FX.duration, 0.0f, 1.0f);
+        const float Fade = (1.0f - Age) * (1.0f - Age * 0.4f);
+        const float Phase = static_cast<float>(FX.id % 31) * 0.37f;
+        const FLinearColor Shot = FX.team == 0 ? Mint : Amber;
+        const FVector From(FX.from.x, FX.from.y, EffectHeight(FX.sourceKind));
+        const FVector To(FX.to.x, FX.to.y, EffectHeight(FX.targetKind));
+        const auto PointOnLink = [&](float Fraction) { return FMath::Lerp(From, To, Fraction); };
+
+        if (FX.type == cinder::EffectType::Weapon)
         {
-            const float Radius = (FX.explosion ? 13 : 4) * UIScale;
-            DrawLine(P.X - Radius, P.Y, P.X + Radius, P.Y, C, 2 * UIScale);
-            DrawLine(P.X, P.Y - Radius, P.X, P.Y + Radius, C, 2 * UIScale);
+            const bool Heavy = FX.sourceKind == cinder::Kind::Bastion || FX.sourceKind == cinder::Kind::Turret;
+            if (SourceVisible && Age < 0.30f)
+            {
+                // Symmetric flash gives no direction toward an unseen victim.
+                const float Flash = FMath::Max(0.0f, 1.0f - Age * 3.5f);
+                EffectCross(From, (Heavy ? 13 : 8) * EffectScale, Shot.CopyWithNewOpacity(Flash), Heavy ? 2.2f : 1.5f);
+                if (Heavy) EffectRing(From, (8 + Age * 19) * EffectScale, Shot.CopyWithNewOpacity(Flash * 0.6f), 1.2f);
+            }
+            if (!Sim.effectLinkVisible(FX, 0)) continue;
+            const float Head = FMath::Clamp(Age / 0.78f, 0.0f, 1.0f);
+            if (FX.sourceKind == cinder::Kind::Lancer)
+            {
+                // Needle: narrow sustained beam with a bright traveling core.
+                WorldLine(From, To, Shot.CopyWithNewOpacity(Fade * 0.18f), 4.2f * EffectScale);
+                WorldLine(From, To, Shot.CopyWithNewOpacity(Fade), 1.5f);
+                WorldLine(PointOnLink(FMath::Max(0.0f, Head - 0.09f)), PointOnLink(Head), White.CopyWithNewOpacity(Fade), 1.0f);
+            }
+            else if (FX.sourceKind == cinder::Kind::Mortar)
+            {
+                // Presentation-only ballistic arc; authoritative damage remains immediate.
+                const float Rise = FMath::Clamp(static_cast<float>((To - From).Size2D()) * 0.32f, 100.0f, 250.0f) * EffectScale;
+                const auto Arc = [&](float T) { return PointOnLink(T) + FVector(0, 0, FMath::Sin(T * UE_PI) * Rise); };
+                const float Tail = FMath::Max(0.0f, Head - 0.20f);
+                for (int I = 0; I < 6; ++I)
+                    WorldLine(Arc(FMath::Lerp(Tail, Head, I / 6.0f)), Arc(FMath::Lerp(Tail, Head, (I + 1) / 6.0f)),
+                              Amber.CopyWithNewOpacity(Fade * (0.20f + I * 0.12f)), 2.2f);
+                EffectCross(Arc(Head), 8 * EffectScale, White.CopyWithNewOpacity(Fade), 1.6f);
+            }
+            else
+            {
+                const float Length = Heavy ? 0.14f : FX.sourceKind == cinder::Kind::Scout ? 0.055f : 0.09f;
+                const float Thickness = Heavy ? 2.8f : FX.sourceKind == cinder::Kind::Worker ? 1.0f : 1.7f;
+                if (Heavy) WorldLine(PointOnLink(FMath::Max(0.0f, Head - Length)), PointOnLink(Head), Shot.CopyWithNewOpacity(Fade * 0.18f), 5 * EffectScale);
+                WorldLine(PointOnLink(FMath::Max(0.0f, Head - Length)), PointOnLink(Head), Shot.CopyWithNewOpacity(Fade), Thickness);
+                if (FX.sourceKind == cinder::Kind::Kite || FX.sourceKind == cinder::Kind::Striker)
+                {
+                    const float Second = FMath::Max(0.0f, Head - (FX.sourceKind == cinder::Kind::Kite ? 0.20f : 0.12f));
+                    WorldLine(PointOnLink(FMath::Max(0.0f, Second - Length * 0.6f)), PointOnLink(Second), Shot.CopyWithNewOpacity(Fade * 0.60f), 1.2f);
+                }
+            }
+        }
+        else if (FX.type == cinder::EffectType::Heal)
+        {
+            const FLinearColor Green(0.20f, 1.0f, 0.64f);
+            const float Pulse = 0.75f + 0.25f * FMath::Sin(Age * UE_TWO_PI);
+            if (SourceVisible) EffectRing(From, (9 + Age * 12) * EffectScale, Green.CopyWithNewOpacity(Fade * 0.6f), 1.2f);
+            if (Sim.effectLinkVisible(FX, 0))
+            {
+                WorldLine(From, To, Green.CopyWithNewOpacity(Fade * 0.22f), 3 * EffectScale);
+                WorldLine(From, To, Green.CopyWithNewOpacity(Fade * 0.8f), 1.2f);
+                const float Head = FMath::Clamp(Age / 0.85f, 0.0f, 1.0f);
+                WorldLine(PointOnLink(FMath::Max(0.0f, Head - 0.07f)), PointOnLink(Head), White.CopyWithNewOpacity(Fade), 1.8f);
+            }
+            if (TargetVisible) EffectCross(To + FVector(0, 0, 12), (10 + Pulse * 5) * EffectScale, Green.CopyWithNewOpacity(Fade * Pulse), 2.0f);
+        }
+        else if (FX.type == cinder::EffectType::Impact && TargetVisible)
+        {
+            // Fixed target-local styling never identifies a hidden shooter or weapon.
+            const FLinearColor Spark(1.0f, 0.82f, 0.50f);
+            const float Radius = (4 + Age * 20) * EffectScale;
+            EffectRing(To, Radius, Spark.CopyWithNewOpacity(Fade * 0.75f), 1.4f);
+            if (EffectAreaVisible(To, Radius * 1.4f)) for (int I = 0; I < 4; ++I)
+            {
+                const float Angle = Phase + I * UE_TWO_PI / 4;
+                const FVector Direction(FMath::Cos(Angle), FMath::Sin(Angle), 0.4f);
+                WorldLine(To + Direction * Radius * 0.65f, To + Direction * Radius * 1.35f, Spark.CopyWithNewOpacity(Fade), 1.4f);
+            }
+        }
+        else if (FX.type == cinder::EffectType::Death && TargetVisible)
+        {
+            const auto& Victim = cinder::definition(FX.targetKind);
+            const FVector Center(FX.to.x, FX.to.y, Victim.air ? EffectHeight(FX.targetKind) : 8.0f);
+            const float Footprint = FMath::Clamp(Victim.radius * (Victim.building ? 1.05f : 1.35f), 25.0f, 135.0f) * EffectScale;
+            const float Radius = Footprint * (0.20f + Age * 0.90f);
+            const FLinearColor Fire(1.0f, 0.52f, 0.22f);
+            EffectRing(Center, Radius, Fire.CopyWithNewOpacity(Fade), Victim.building ? 2.1f : 1.5f);
+            EffectRing(Center + FVector(0, 0, 12), Radius * 0.58f, Amber.CopyWithNewOpacity(Fade * 0.55f), 1.0f);
+            if (EffectAreaVisible(Center, Footprint * 1.25f)) for (int I = 0; I < (Victim.building ? 6 : 4); ++I)
+            {
+                const float Angle = Phase + I * UE_TWO_PI / (Victim.building ? 6 : 4);
+                const FVector Offset(FMath::Cos(Angle) * Radius, FMath::Sin(Angle) * Radius,
+                                     FMath::Sin(Age * UE_PI) * (Victim.building ? 55 : 28));
+                WorldLine(Center + Offset * 0.80f, Center + Offset, Fire.CopyWithNewOpacity(Fade), 2 * EffectScale);
+            }
         }
     }
     if (PC->IsSelecting())
