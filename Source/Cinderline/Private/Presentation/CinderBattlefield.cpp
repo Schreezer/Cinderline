@@ -55,6 +55,8 @@ void ACinderBattlefield::BeginPlay()
         BaseMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
     }
     AddBatch(Cube, FLinearColor(0.065f, 0.12f, 0.13f));
+    if (auto* GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Generated/M_CinderGround.M_CinderGround")))
+        Batches[0].Mesh->SetMaterial(0, GroundMaterial);
     AddBatch(Cube, FLinearColor(0.14f, 0.21f, 0.22f));
     AddBatch(Cone, FLinearColor(1.0f, 0.52f, 0.12f));
     AddBatch(Cube, FLinearColor(0.012f, 0.022f, 0.035f));

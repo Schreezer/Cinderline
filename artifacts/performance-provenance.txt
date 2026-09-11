@@ -1,0 +1,22 @@
+The final AI acceptance refresh reused the preceding same-day Release benchmark measurements.
+Command originally measured: build/native/CinderlineTests --benchmark
+Preserved output: artifacts/performance-results.txt
+Preserved output SHA256: 276f9311f1576f54b9f8a367423f9e2c9c6438c2434fa8dbc2d7fd2c40a29bc7
+The benchmark was not rerun during this final AI-only refresh.
+
+The preceding measured build and current frozen build have identical relevant simulation and build sources:
+12d1f883fc17d0162cd76243b4f1f7380bdd64bddb727710ef580478eb06fb7b  Source/Cinderline/Private/Sim/Simulation.cpp
+97cffc3fe5b268410b943834a6e823018ebc3a15474bed2ac95fab9d3c312b8a  Source/Cinderline/Public/Sim/Simulation.h
+6bd102a35af0d19ab66560de35b64edea9b0969dcb8e7cf2e3c1faa5d5e7502e  CMakeLists.txt
+
+The preceding full AI/test files were:
+739922f0316286784182458cdd6ecd7f8af9a65a48602da18d63a4a162e574bd  Source/Cinderline/Private/Sim/SimulationAI.cpp
+ec368aa13161de53a847831f75052e04599e077fe1355be296775a6a9dedb795  Tests/SimulationTests.cpp
+
+The current full AI/test files are:
+4d55cf274e53bf10056b8ab59fe9f6498fed8ae3d5b5d1acd376eacbeeb3c681  Source/Cinderline/Private/Sim/SimulationAI.cpp
+99d7cf8c65d8deca24c33c476d85ace2822f8a778630a86c15fb745bd8096d47  Tests/SimulationTests.cpp
+
+Review confirmed benchmark() constructs every simulation through quiet(), which resets with Config {map,42,false,1}; AI is disabled. Simulation::update invokes updateAI only when config_.ai is true. The final test additions cover AI army/scout/support coordination and are reached through aiEconomy(), which --benchmark does not execute. Benchmark fixtures and measurement loops remain unchanged.
+
+These reused numbers measure simulation update calls only, including a sustained 200-unit movement fixture. They do not measure native or Unreal rendering, interactive FPS, GPU work, or iOS. Combat fixture counts decrease through combat. The earlier historical 32.590 ms maximum remains disclosed in verification-summary.md.

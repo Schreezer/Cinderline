@@ -5,8 +5,11 @@
 #include "Engine/Engine.h"
 #include "CanvasItem.h"
 #include "Engine/World.h"
+#include "Engine/Texture2D.h"
 #include <algorithm>
 #include <map>
+
+DEFINE_LOG_CATEGORY_STATIC(LogCinderHUD, Log, All);
 
 namespace
 {
@@ -18,6 +21,13 @@ const FLinearColor Mint(0.10f, 0.90f, 0.74f);
 const FLinearColor Amber(1.0f, 0.64f, 0.24f);
 FString Name(cinder::Kind Kind) { return UTF8_TO_TCHAR(cinder::definition(Kind).name); }
 FString ClockString(float Seconds) { return FString::Printf(TEXT("%02d:%02d"), static_cast<int>(Seconds) / 60, static_cast<int>(Seconds) % 60); }
+}
+
+void ACinderHUD::BeginPlay()
+{
+    Super::BeginPlay();
+    // Load once per HUD lifetime; retain the optional texture through garbage collection.
+    MenuBackdrop = MenuBackdropAsset.LoadSynchronous();
 }
 
 void ACinderHUD::Panel(float X, float Y, float W, float H, FLinearColor Color) { DrawRect(Color, X, Y, W, H); }
@@ -50,6 +60,7 @@ bool ACinderHUD::ContainsUI(FVector2D Point) const
 
 bool ACinderHUD::HandleTap(FVector2D Point)
 {
+    UE_LOG(LogCinderHUD, Verbose, TEXT("Tap %.1f,%.1f canvas=%.0fx%.0f buttons=%d"), Point.X, Point.Y, Width, Height, Buttons.Num());
     auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
     if (!PC) return false;
     for (int I = Buttons.Num() - 1; I >= 0; --I)
@@ -96,16 +107,25 @@ void ACinderHUD::DrawHUD()
 
 void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
 {
-    Panel(0, 0, Width, Height, FLinearColor(0.015f, 0.035f, 0.045f, 0.85f));
+    const bool bHasBackdrop = MenuBackdrop && MenuBackdrop->GetSizeX() > 0 && MenuBackdrop->GetSizeY() > 0 && Height > 0;
+    if (bHasBackdrop)
+    {
+        const float TextureAspect = static_cast<float>(MenuBackdrop->GetSizeX()) / MenuBackdrop->GetSizeY();
+        const float ViewAspect = Width / Height;
+        const float UWidth = FMath::Min(1.0f, ViewAspect / TextureAspect);
+        const float VHeight = FMath::Min(1.0f, TextureAspect / ViewAspect);
+        DrawTexture(MenuBackdrop, 0, 0, Width, Height, (1 - UWidth) * 0.5f, (1 - VHeight) * 0.5f, UWidth, VHeight, FLinearColor::White, BLEND_Opaque);
+    }
+    Panel(0, 0, Width, Height, FLinearColor(0.015f, 0.035f, 0.045f, bHasBackdrop ? 0.40f : 0.85f));
     UIRegions.Add(FBox2D(FVector2D::ZeroVector, FVector2D(Width, Height)));
     if (bCompactLayout)
     {
         const float X = Margin, Y = 25 * UIScale;
         Label(TEXT("C I N D E R L I N E"), X, Y, White, 1.6f);
-        Label(TEXT("EMBER COMPACT / FRONTIER SKIRMISH"), X, Y + 39 * UIScale, Mint, 0.75f);
+        Label(TEXT("CAIRN ASSEMBLY / FRONTIER SKIRMISH"), X, Y + 39 * UIScale, Mint, 0.75f);
         Label(TEXT("Grow your economy. Scout the dark. Destroy the opposing Anchor."), X, Y + 78 * UIScale, White, 0.85f);
         const float MapW = (Width - 2 * Margin - 16 * UIScale) / 3;
-        const TCHAR* Names[] = { TEXT("Broken Meridian"), TEXT("Furnace Reach"), TEXT("Glass Divide") };
+        const TCHAR* Names[] = { TEXT("Shattered Rift"), TEXT("Glass Basin"), TEXT("Iron Reach") };
         for (int I = 0; I < 3; ++I) Button(Names[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), Y + 117 * UIScale, MapW, SelectedMap == I);
         Button(TEXT("START SKIRMISH"), TEXT("start"), SelectedMap, X, Y + 177 * UIScale, MapW, true);
         Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + MapW + 8 * UIScale, Y + 177 * UIScale, MapW);
@@ -116,12 +136,12 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
     }
     const float X = Width * 0.12f, Y = Height * 0.14f;
     Label(TEXT("C I N D E R L I N E"), X, Y, White, 2.35f);
-    Label(TEXT("THE EMBER COMPACT  /  FRONTIER SKIRMISH"), X + 3 * UIScale, Y + 61 * UIScale, Mint, 0.90f);
+    Label(TEXT("THE CAIRN ASSEMBLY  /  FRONTIER SKIRMISH"), X + 3 * UIScale, Y + 61 * UIScale, Mint, 0.90f);
     Label(TEXT("Grow a frontier settlement. Scout the dark. Command a combined army."), X, Y + 112 * UIScale, White, 0.94f);
     Label(TEXT("Destroy the opposing Anchor to win."), X, Y + 141 * UIScale, Muted, 0.9f);
-    const TCHAR* MapNames[] = { TEXT("01  Broken Meridian"), TEXT("02  Furnace Reach"), TEXT("03  Glass Divide") };
+    const TCHAR* MapNames[] = { TEXT("01  Shattered Rift"), TEXT("02  Glass Basin"), TEXT("03  Iron Reach") };
     for (int I = 0; I < 3; ++I) Button(MapNames[I], TEXT("map"), I, X + I * 251 * UIScale, Y + 204 * UIScale, 238 * UIScale, SelectedMap == I);
-    Button(TEXT("START SKIRMISH"), TEXT("start"), SelectedMap, X, Y + 272 * UIScale, 238 * UIScale, true);
+    Button(TEXT("START SKIRMISH  [ENTER]"), TEXT("start"), SelectedMap, X, Y + 272 * UIScale, 238 * UIScale, true);
     Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + 251 * UIScale, Y + 272 * UIScale, 238 * UIScale);
     Label(TEXT("TOUCH   Drag to pan  |  Pinch to zoom  |  Tap to select and command"), X, Y + 351 * UIScale, Muted, 0.84f);
     Label(TEXT("ARMY    Hold, then drag to select  |  Double-tap a unit to select its type"), X, Y + 379 * UIScale, Muted, 0.84f);
@@ -478,7 +498,7 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
             Label(FString::Printf(TEXT("Produced %d    Lost %d    Destroyed %d"), S.produced, S.lost, S.killed), X, Y + 96 * UIScale, White, 0.9f);
             Label(FString::Printf(TEXT("Structures %d    Razed %d    Expansions %d"), S.built, S.buildingsDestroyed, S.expansions), X, Y + 130 * UIScale, White, 0.9f);
             Label(FString::Printf(TEXT("Technology upgrades %d"), S.upgrades), X, Y + 164 * UIScale, White, 0.9f);
-            Button(TEXT("REMATCH"), TEXT("start"), Battle->MapIndex(), X, Y + 224 * UIScale, 230 * UIScale, true);
+            Button(bCompactLayout ? TEXT("REMATCH") : TEXT("REMATCH  [ENTER]"), TEXT("start"), Battle->MapIndex(), X, Y + 224 * UIScale, 230 * UIScale, true);
             Button(TEXT("MAIN MENU"), TEXT("menu"), 0, X + 250 * UIScale, Y + 224 * UIScale, 230 * UIScale);
         }
         else

@@ -13,8 +13,7 @@ ACinderGameMode::ACinderGameMode()
 }
 void ACinderGameMode::StartPlay()
 {
-    bool bHasBattlefield = false;
-    for (TActorIterator<ACinderBattlefield> It(GetWorld()); It; ++It) { bHasBattlefield = true; break; }
-    if (!bHasBattlefield) GetWorld()->SpawnActor<ACinderBattlefield>();
+    if (TActorIterator<ACinderBattlefield> It(GetWorld()); !It)
+        GetWorld()->SpawnActor<ACinderBattlefield>();
     Super::StartPlay();
 }

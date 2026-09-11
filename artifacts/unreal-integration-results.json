@@ -1,0 +1,55 @@
+{
+  "succeeded": 2,
+  "succeededWithWarnings": 0,
+  "failed": 0,
+  "notRun": 0,
+  "inProcess": 0,
+  "totalDuration": 0.1265394240617752,
+  "engine": "Unreal Engine 5.8.2, Mac Development Editor, NullRHI",
+  "scope": "Real transient world, game mode, battlefield and controller. No viewport, touch input, physical device or GPU timing proof.",
+  "run": "20260911T125437Z-98717",
+  "tests": [
+    {
+      "testDisplayName": "EconomyAndProduction",
+      "fullTestPath": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success",
+      "duration": 0.11811721324920654,
+      "warnings": 0,
+      "errors": 0,
+      "entries": [
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=252, produced=2, built=1, ore=342; normal paid commands, actual actor ticks, selected-controller dispatch, temporary snapshot only.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-12.55.08"
+        }
+      ]
+    },
+    {
+      "testDisplayName": "WorldLifecycle",
+      "fullTestPath": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success",
+      "duration": 0.008422207087278366,
+      "warnings": 0,
+      "errors": 0,
+      "entries": [
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-12.55.08"
+        }
+      ]
+    }
+  ]
+}

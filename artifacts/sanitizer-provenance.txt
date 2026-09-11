@@ -1,0 +1,13 @@
+The final simulation worker run was reused; acceptance did not rebuild or rerun it.
+Original captured output: /tmp/cinder-mechanics-final-review-asan.log
+Preserved output: artifacts/sanitizer-test-results.txt
+Build directory: build/mechanics-asan
+Verified CMake cache: CMAKE_BUILD_TYPE=Debug, CINDERLINE_SANITIZE=ON, CINDERLINE_BUILD_NATIVE=OFF
+Worker reported exit code 0; captured output reports RESULT passed=14 failed=0.
+No AddressSanitizer or UndefinedBehaviorSanitizer finding appears in the captured output.
+Elapsed wall time was not recorded for this reused run.
+
+Source/test hashes supplied for that successful run and checked against current files:
+12d1f883fc17d0162cd76243b4f1f7380bdd64bddb727710ef580478eb06fb7b  Source/Cinderline/Private/Sim/Simulation.cpp
+4d55cf274e53bf10056b8ab59fe9f6498fed8ae3d5b5d1acd376eacbeeb3c681  Source/Cinderline/Private/Sim/SimulationAI.cpp
+99d7cf8c65d8deca24c33c476d85ace2822f8a778630a86c15fb745bd8096d47  Tests/SimulationTests.cpp

@@ -29,9 +29,11 @@ struct AISnapshot {
     Vec2 goal{};
     float hp = 0;
     float maxHp = 1;
+    float resourceRemaining = 0;
     float progress = 0;
     Order order = Order::Idle;
     Id target = 0;
+    bool currentlyVisible = false;
     std::size_t queueSize = 0;
     bool queueHasResearch = false;
 };
@@ -66,6 +68,10 @@ void Simulation::updateAI() {
         snapshot.progress = entity.progress;
         snapshot.order = entity.order;
         snapshot.target = entity.target;
+        snapshot.currentlyVisible = visible(team, entity.pos);
+        if (entity.kind == Kind::Resource && snapshot.currentlyVisible) {
+            snapshot.resourceRemaining = entity.resource;
+        }
         snapshot.queueSize = entity.queue.size();
         snapshot.queueHasResearch = std::any_of(
             entity.queue.begin(), entity.queue.end(), [](const QueueItem& item) { return item.research; });
@@ -79,7 +85,7 @@ void Simulation::updateAI() {
             }
             own.push_back(snapshot);
         } else if (entity.kind == Kind::Resource) {
-            if (visible(team, entity.pos)) {
+            if (explored(team, entity.pos)) {
                 resources.push_back(snapshot);
             }
         } else if (entity.team == 0 && visible(team, entity.pos)) {
@@ -101,6 +107,7 @@ void Simulation::updateAI() {
     std::vector<Id> healthyCombat;
     std::vector<Id> hurtCombat;
     std::vector<Vec2> headquarters;
+    std::vector<Vec2> operationalHeadquarters;
     Vec2 armyCenter{};
     for (const AISnapshot& entity : own) {
         if (entity.kind == Kind::Worker) {
@@ -108,6 +115,9 @@ void Simulation::updateAI() {
         }
         if (entity.kind == Kind::Headquarters) {
             headquarters.push_back(entity.pos);
+            if (entity.progress >= 1.0f) {
+                operationalHeadquarters.push_back(entity.pos);
+            }
         }
         if (isCombatUnit(entity.kind) && entity.progress >= 1.0f) {
             combat.push_back(entity.id);
@@ -125,12 +135,22 @@ void Simulation::updateAI() {
         armyCenter.y /= static_cast<float>(combat.size());
     }
 
-    Vec2 home = headquarters.empty() ? Vec2{4200.0f, 4200.0f} : headquarters.front();
-    if (!headquarters.empty()) {
-        home = *std::min_element(headquarters.begin(), headquarters.end(), [](Vec2 a, Vec2 b) {
-            return distanceSquared(a, Vec2{4200.0f, 4200.0f}) <
-                   distanceSquared(b, Vec2{4200.0f, 4200.0f});
-        });
+    const std::vector<Vec2>& retreatBases = operationalHeadquarters.empty() ? headquarters : operationalHeadquarters;
+    Vec2 home = retreatBases.empty() ? Vec2{4200.0f, 4200.0f} : retreatBases.front();
+    float bestSafety = -1.0f;
+    for (Vec2 base : retreatBases) {
+        float nearestVisibleEnemy = std::numeric_limits<float>::max();
+        for (const AISnapshot& enemy : visibleEnemies) {
+            nearestVisibleEnemy = std::min(nearestVisibleEnemy, distanceSquared(base, enemy.pos));
+        }
+        const bool safer = nearestVisibleEnemy > bestSafety;
+        const bool equallySafeAndCloserToStart = nearestVisibleEnemy == bestSafety &&
+            distanceSquared(base, Vec2{4200.0f, 4200.0f}) <
+                distanceSquared(home, Vec2{4200.0f, 4200.0f});
+        if (safer || equallySafeAndCloserToStart) {
+            home = base;
+            bestSafety = nearestVisibleEnemy;
+        }
     }
 
     std::string action;
@@ -152,6 +172,9 @@ void Simulation::updateAI() {
         const AISnapshot* resource = nullptr;
         float best = std::numeric_limits<float>::max();
         for (const AISnapshot& candidate : resources) {
+            if (!candidate.currentlyVisible || candidate.resourceRemaining <= 0) {
+                continue;
+            }
             const float d = distanceSquared(worker.pos, candidate.pos);
             if (d < best) {
                 best = d;
@@ -217,7 +240,7 @@ void Simulation::updateAI() {
             }
         }
 
-        if (expansion) {
+        if (expansion || kind == Kind::Turret) {
             const AISnapshot* builder = closestWorker(anchor);
             if (builder != nullptr && distanceSquared(builder->pos, anchor) > 360.0f * 360.0f &&
                 (builder->order != Order::Move || distanceSquared(builder->goal, anchor) > 100.0f * 100.0f)) {
@@ -226,7 +249,7 @@ void Simulation::updateAI() {
                 move.team = team;
                 move.units = {builder->id};
                 move.point = anchor;
-                issue(move, "moving an expansion worker");
+                issue(move, expansion ? "moving an expansion worker" : "moving a construction worker");
             }
         }
         return false;
@@ -236,12 +259,108 @@ void Simulation::updateAI() {
     const bool hasProcessor = ownOfKind(Kind::Processor) > 0;
     const bool hasLaboratory = ownOfKind(Kind::Laboratory) > 0;
     const bool hasMotorPool = ownOfKind(Kind::MotorPool) > 0;
-    const bool hasTurret = ownOfKind(Kind::Turret) > 0;
     const int hqCount = ownOfKind(Kind::Headquarters);
     const int processorCount = ownOfKind(Kind::Processor);
     const bool processorUnderConstruction = std::any_of(own.begin(), own.end(), [](const AISnapshot& entity) {
         return entity.kind == Kind::Processor && entity.progress < 1.0f;
     });
+
+    auto remainingOreNear = [&](Vec2 point, float radius) {
+        float total = 0;
+        for (const AISnapshot& resource : resources) {
+            if (resource.currentlyVisible && resource.resourceRemaining > 0 &&
+                distanceSquared(point, resource.pos) <= radius * radius) {
+                total += resource.resourceRemaining;
+            }
+        }
+        return total;
+    };
+
+    Vec2 exposedHeadquarters{};
+    bool needsTurret = false;
+    for (const AISnapshot& hq : own) {
+        if (hq.kind != Kind::Headquarters) {
+            continue;
+        }
+        const bool covered = std::any_of(own.begin(), own.end(), [&](const AISnapshot& defense) {
+            return defense.kind == Kind::Turret &&
+                   distanceSquared(defense.pos, hq.pos) <= 900.0f * 900.0f;
+        });
+        if (!covered) {
+            exposedHeadquarters = hq.pos;
+            needsTurret = true;
+            break;
+        }
+    }
+
+    static constexpr std::array<Vec2, 4> expansionSites{{
+        {2900.0f, 3800.0f}, {3800.0f, 2000.0f}, {1900.0f, 1000.0f}, {1000.0f, 2800.0f}}};
+    int productiveHeadquarters = 0;
+    for (Vec2 hq : headquarters) {
+        if (remainingOreNear(hq, 900.0f) >= 650.0f) {
+            ++productiveHeadquarters;
+        }
+    }
+    Vec2 bestExpansion{};
+    float bestExpansionOre = 0;
+    for (Vec2 site : expansionSites) {
+        const bool occupied = std::any_of(headquarters.begin(), headquarters.end(), [&](Vec2 hq) {
+            return distanceSquared(hq, site) < 850.0f * 850.0f;
+        });
+        if (occupied) {
+            continue;
+        }
+        const float remainingOre = remainingOreNear(site, 600.0f);
+        if (remainingOre > bestExpansionOre) {
+            bestExpansion = site;
+            bestExpansionOre = remainingOre;
+        }
+    }
+    const bool richExpansionDiscovered = hqCount < 4 && productiveHeadquarters < 2 &&
+                                         bestExpansionOre >= 650.0f;
+    Vec2 expansionScoutTarget{};
+    bool needsExpansionScouting = false;
+    if (hqCount < 4 && productiveHeadquarters < 2 && !richExpansionDiscovered) {
+        for (const AISnapshot& scout : own) {
+            if (scout.kind != Kind::Scout || scout.progress < 1.0f || scout.order != Order::Move) {
+                continue;
+            }
+            const auto destination = std::find_if(expansionSites.begin(), expansionSites.end(), [&](Vec2 site) {
+                const bool occupied = std::any_of(headquarters.begin(), headquarters.end(), [&](Vec2 hq) {
+                    return distanceSquared(hq, site) < 850.0f * 850.0f;
+                });
+                return !occupied && distanceSquared(scout.goal, site) <= 100.0f * 100.0f;
+            });
+            if (destination != expansionSites.end()) {
+                expansionScoutTarget = *destination;
+                needsExpansionScouting = true;
+                break;
+            }
+        }
+        for (Vec2 site : expansionSites) {
+            if (needsExpansionScouting) {
+                break;
+            }
+            const bool occupied = std::any_of(headquarters.begin(), headquarters.end(), [&](Vec2 hq) {
+                return distanceSquared(hq, site) < 850.0f * 850.0f;
+            });
+            if (occupied) {
+                continue;
+            }
+            bool hasVisibleResourceInformation = false;
+            for (const AISnapshot& resource : resources) {
+                if (resource.currentlyVisible && distanceSquared(site, resource.pos) <= 600.0f * 600.0f) {
+                    hasVisibleResourceInformation = true;
+                    break;
+                }
+            }
+            if (!hasVisibleResourceInformation || remainingOreNear(site, 600.0f) >= 650.0f) {
+                expansionScoutTarget = site;
+                needsExpansionScouting = true;
+                break;
+            }
+        }
+    }
 
     bool buildingIssued = false;
     Kind wantedBuilding = Kind::Resource;
@@ -252,22 +371,13 @@ void Simulation::updateAI() {
         wantedBuilding = Kind::Foundry;
     } else if (!hasProcessor && now >= 30.0f) {
         wantedBuilding = Kind::Processor;
-    } else if (!hasTurret && now >= 100.0f) {
+    } else if (needsTurret && now >= 100.0f) {
         wantedBuilding = Kind::Turret;
+        buildAnchor = exposedHeadquarters;
     } else if (!hasLaboratory && now >= 210.0f) {
         wantedBuilding = Kind::Laboratory;
-    } else if (hqCount < 2 && now >= 400.0f) {
-        static constexpr std::array<Vec2, 4> expansionSites{{
-            {2900.0f, 3800.0f}, {3800.0f, 2000.0f}, {1900.0f, 1000.0f}, {1000.0f, 2800.0f}}};
-        for (Vec2 site : expansionSites) {
-            const bool occupied = std::any_of(headquarters.begin(), headquarters.end(), [&](Vec2 hq) {
-                return distanceSquared(hq, site) < 850.0f * 850.0f;
-            });
-            if (!occupied) {
-                buildAnchor = site;
-                break;
-            }
-        }
+    } else if (richExpansionDiscovered && now >= 400.0f) {
+        buildAnchor = bestExpansion;
         wantedBuilding = Kind::Headquarters;
         wantsExpansion = true;
     } else if (!hasMotorPool && players_[team].tier >= 2) {
@@ -334,7 +444,7 @@ void Simulation::updateAI() {
         reserve = definition(Kind::Laboratory).cost;
     } else if (players_[team].tier < 2 && hasLaboratory && now >= 270.0f) {
         reserve = 500 * players_[team].tier;
-    } else if (hqCount < 2 && now >= 370.0f) {
+    } else if (richExpansionDiscovered && now >= 370.0f) {
         reserve = definition(Kind::Headquarters).cost;
     } else if (!hasMotorPool && players_[team].tier >= 2) {
         reserve = definition(Kind::MotorPool).cost;
@@ -454,6 +564,33 @@ void Simulation::updateAI() {
         }
     }
 
+    Id expansionScoutId = 0;
+    if (now >= 350.0f && needsExpansionScouting && visibleEnemies.empty()) {
+        for (const AISnapshot& scout : own) {
+            if (scout.kind == Kind::Scout && scout.progress >= 1.0f && scout.order == Order::Move &&
+                distanceSquared(scout.goal, expansionScoutTarget) <= 100.0f * 100.0f) {
+                expansionScoutId = scout.id;
+                break;
+            }
+        }
+        if (expansionScoutId == 0) {
+            for (const AISnapshot& scout : own) {
+                if (scout.kind != Kind::Scout || scout.progress < 1.0f) {
+                    continue;
+                }
+                Command move;
+                move.type = CommandType::Move;
+                move.team = team;
+                move.units = {scout.id};
+                move.point = expansionScoutTarget;
+                if (issue(move, "checking an expansion site")) {
+                    expansionScoutId = scout.id;
+                }
+                break;
+            }
+        }
+    }
+
     std::vector<const AISnapshot*> combatTargets;
     for (const AISnapshot& enemy : visibleEnemies) {
         const bool threatensBase = std::any_of(headquarters.begin(), headquarters.end(), [&](Vec2 hq) {
@@ -504,12 +641,46 @@ void Simulation::updateAI() {
         }
         if (target != nullptr) {
             std::vector<Id> unitsToAttack;
+            bool hasArmedLeader = false;
+            bool hasMenderNeedingLeader = false;
+            auto eligibleArmedUnit = [&](const AISnapshot& unit) {
+                const Definition& unitDefinition = definition(unit.kind);
+                return !unitDefinition.building && unitDefinition.damage > 0 &&
+                       (!definition(target->kind).air || unitDefinition.antiAir);
+            };
             for (Id id : healthyCombat) {
                 const auto found = std::find_if(own.begin(), own.end(), [&](const AISnapshot& entity) {
                     return entity.id == id;
                 });
-                if (found != own.end() && (found->order != Order::Attack || found->target != target->id)) {
+                if (found == own.end()) {
+                    continue;
+                }
+                if (found->kind == Kind::Mender) {
+                    const auto leader = std::find_if(own.begin(), own.end(), [&](const AISnapshot& entity) {
+                        return entity.id == found->target && !definition(entity.kind).building &&
+                               definition(entity.kind).damage > 0;
+                    });
+                    const bool validFollow = found->order == Order::Attack && leader != own.end();
+                    if (!validFollow) {
+                        unitsToAttack.push_back(id);
+                        hasMenderNeedingLeader = true;
+                    }
+                } else if (eligibleArmedUnit(*found) &&
+                           (found->order != Order::Attack || found->target != target->id)) {
                     unitsToAttack.push_back(id);
+                    hasArmedLeader = true;
+                }
+            }
+            if (hasMenderNeedingLeader && !hasArmedLeader) {
+                for (Id id : healthyCombat) {
+                    const auto leader = std::find_if(own.begin(), own.end(), [&](const AISnapshot& entity) {
+                        return entity.id == id;
+                    });
+                    if (leader != own.end() && eligibleArmedUnit(*leader)) {
+                        unitsToAttack.push_back(id);
+                        hasArmedLeader = true;
+                        break;
+                    }
                 }
             }
             Command attack;
@@ -517,17 +688,25 @@ void Simulation::updateAI() {
             attack.team = team;
             attack.units = unitsToAttack;
             attack.target = target->id;
-            if (!unitsToAttack.empty()) {
+            if (!unitsToAttack.empty() && (!hasMenderNeedingLeader || hasArmedLeader)) {
                 issue(attack, "engaging a visible threat");
             }
         }
-    } else if (now >= 240.0f && healthyCombat.size() >= 7 && ((tick_ / 40) % 12 == 0)) {
+    } else if (now >= 240.0f && ((tick_ / 40) % 12 == 0)) {
+        std::vector<Id> advancingUnits;
+        for (Id id : healthyCombat) {
+            if (id != expansionScoutId) {
+                advancingUnits.push_back(id);
+            }
+        }
         Command attackMove;
         attackMove.type = CommandType::AttackMove;
         attackMove.team = team;
-        attackMove.units = healthyCombat;
+        attackMove.units = advancingUnits;
         attackMove.point = {600.0f, 600.0f};
-        issue(attackMove, "advancing on the enemy start");
+        if (advancingUnits.size() >= 7) {
+            issue(attackMove, "advancing on the enemy start");
+        }
     } else if (now < 240.0f && ownOfKind(Kind::Scout) > 0 && visibleEnemies.empty()) {
         for (const AISnapshot& scout : own) {
             if (scout.kind != Kind::Scout || scout.progress < 1.0f ||

@@ -6,9 +6,7 @@ Gameplay rules are not duplicated in this presentation layer.
 
 ## First run
 
-Finish installing a compatible modern UE5 release and its supported Xcode toolchain.
-The launcher installation started in this session is UE 5.8.2, and the project
-uses the 5.8 association. Supply the installed engine explicitly when more than
+UE 5.8.2 and its Mac toolchain are installed. The project uses the 5.8 association. Supply the installed engine explicitly when more than
 one version exists:
 
 ```sh
@@ -18,10 +16,13 @@ export UE_ROOT="/Users/Shared/Epic Games/UE_5.8" # replace if installed elsewher
 ./scripts/unreal.sh play
 ```
 
-`setup` builds the Editor target, then runs the editor Python bootstrap to create
-the original parameterized material and `/Game/Maps/Frontier`. There are no copied
-third-party models or textures. Primitives ship with Unreal; each unit and building
-uses an original multi-part silhouette. Existing generated assets are preserved.
+`setup` builds the Editor target, then runs the editor Python bootstrap to import
+the original terrain and menu artwork, create the materials and generate
+`/Game/Maps/Frontier`. Generated PNG sources and exact prompts are recorded in
+[ART_ASSETS.md](ART_ASSETS.md). The bootstrap configures a 1024 by 1024 texture build with mipmaps while preserving
+the original source. Cooked texture dimensions have not yet been inspected. Primitives ship with Unreal;
+each unit and building uses an original multi-part silhouette. Existing generated
+assets are preserved; required material usage and texture build settings are updated.
 `CINDER_REBUILD_CONTENT=1 ./scripts/unreal.sh bootstrap` recreates the map explicitly.
 
 The Python plugin is Editor-only. It is not needed inside the packaged game.
@@ -36,7 +37,9 @@ before pressing Play. On a fresh checkout run `setup` before packaging.
   then drag to select. SELECT BOX arms selection without needing a hold. Double-tap
   a unit to select its visible type. The camera remains bounded to the battlefield.
 - Mouse: left-drag selects; middle-drag pans; wheel zooms; right-click commands.
-  Arrow keys pan. A attack-move, S stop, H hold, B build, F focus, Space home, Esc pause.
+  Arrow keys pan, including short taps. Enter starts, resumes or rematches.
+  A attack-move, S stop, H hold, B build, F focus, Space home. Esc cancels an active
+  command mode before pausing; the PAUSE button always pauses immediately.
 - Build with a Drudge selected. The placement ring reports collision/vision validity;
   the simulation authoritatively checks resources, workers and prerequisites.
 - Select a structure to train units or queue research. Queue buttons cancel entries.
@@ -58,11 +61,14 @@ insets. This layout still needs physical-device and actual safe-area verificatio
 Native APIs handle all
 mouse/touch input; this build does not rely on a touch joystick overlay.
 
-No Unreal installation was available when these sources were initially authored.
-Source review and portable simulation tests do not prove UHT compilation, shader
-compilation, touch behavior, Metal performance, packaging or iOS correctness.
-The first required validation is `setup`, followed by an actual Unreal play session.
-Do not mark checkpoint 0 complete until the battlefield launches and camera works.
+The Editor C++ build and content bootstrap passed on UE 5.8.2. The actual Unreal
+window displayed the menu and lit battlefield, gathered ore, moved the camera
+with arrows and Home, zoomed with the wheel, paused/resumed and displayed natural
+defeat. Desktop and compact HUDs were inspected. The user confirmed the menu
+button works with their own mouse. Synthetic absolute clicks do not update
+Unreal's cached cursor location on this Mac, so automated mouse targeting remains
+unreliable. These checks do not establish touch quality, a packaged build or iOS
+performance. See [the verification record](../artifacts/verification-summary.md).
 
 The current presentation uses placeholder primitives and Canvas UI, without
 character animation, audio, haptics, smooth fog edges, retained offscreen enemy
@@ -72,6 +78,8 @@ Device-specific safe area and suspend/resume handling need a later iOS product p
 
 ## iOS
 
+iOS work is deferred until the mechanics, assets and full-playtest passes are ready.
+The preflight findings and remaining steps are in [IOS_READINESS.md](IOS_READINESS.md).
 The project configures landscape iPhone/iPad rendering and modest mobile effects.
 Set your own signing team and bundle identifier in Project Settings → iOS; the
 included identifier is a placeholder. `./scripts/unreal.sh package-ios` invokes UAT

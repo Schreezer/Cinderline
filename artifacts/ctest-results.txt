@@ -23,13 +23,25 @@ test 1
 1: GROUP_MOVE units=15 mean_destination_distance=92.819 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
 1: PASS obstacle paths and group movement
 1: PASS ground and air combat
+1: COVER_ATTACK order=1 damage=70.000
+1: COVER_ATTACK order=2 damage=70.000
+1: HOLD_TRAFFIC displacement=0.000
+1: SUPPORT_ORDER order=1 distance=168.959 healed=39.000
+1: SUPPORT_ORDER order=2 distance=174.234 healed=39.000
+1: PASS tactical orders and support
 1: PASS victory and defeat
 1: PASS save-load continuity and replay
 1: PASS bounded fixed-step update
+1: AI_EXPANSION depleted_ore=0.000 gathered=22488 alternate_built=1
+1: AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+1: PASS AI expansion and local defense
+1: AI_SCOUT_AND_ARMY scout=0 attack_move=1
+1: AI_SCOUT_AND_ARMY scout=1 attack_move=1
+1: AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
 1: AI_ECONOMY seconds=330.700 ore=4817 gathered=7807 produced=17 built=4 paid_command_cost=2990
 1: PASS AI paid economy
-1: RESULT passed=12 failed=0
-1/3 Test #1: simulation_rules .................   Passed    0.25 sec
+1: RESULT passed=14 failed=0
+1/3 Test #1: simulation_rules .................   Passed    1.12 sec
 test 2
     Start 2: native_smoke
 
@@ -37,7 +49,7 @@ test 2
 2: Working Directory: /Users/chirag13/Documents/ChatGPT/starCraft/build/native
 2: Test timeout computed to be: 15
 2: PASS: camera transforms/world bounds and subgroup layout at desktop/compact dimensions; subgroup filters only current selection without changing orders; shared simulation advanced 20 ticks.
-2/3 Test #2: native_smoke .....................   Passed    0.48 sec
+2/3 Test #2: native_smoke .....................   Passed    0.38 sec
 test 3
     Start 3: native_render_stress
 
@@ -49,12 +61,12 @@ test 3
 3: Rendered 2000 frames; simulation 100.0s
 3: Rendered 3000 frames; simulation 150.0s
 3: PASS: 3000 offscreen frames, 150.0 simulated seconds, no Cocoa drawing exception.
-3/3 Test #3: native_render_stress .............   Passed   16.29 sec
+3/3 Test #3: native_render_stress .............   Passed   16.45 sec
 
 100% tests passed, 0 tests failed out of 3
 
 Label Time Summary:
-native    =  16.29 sec*proc (1 test)
-render    =  16.29 sec*proc (1 test)
+native    =  16.45 sec*proc (1 test)
+render    =  16.45 sec*proc (1 test)
 
-Total Test time (real) =  17.03 sec
+Total Test time (real) =  17.96 sec

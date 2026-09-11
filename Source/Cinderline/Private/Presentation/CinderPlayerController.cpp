@@ -8,6 +8,8 @@
 #include "Components/InputComponent.h"
 #include <algorithm>
 
+DEFINE_LOG_CATEGORY_STATIC(LogCinderInput, Log, All);
+
 namespace
 {
 float TouchScale(const APlayerController* Controller)
@@ -22,9 +24,12 @@ void ACinderPlayerController::BeginPlay()
     Super::BeginPlay();
     bShowMouseCursor = true;
     bEnableTouchEvents = true;
-    SetInputMode(FInputModeGameOnly());
+    FInputModeGameAndUI InputMode;
+    InputMode.SetHideCursorDuringCapture(false);
+    InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    SetInputMode(InputMode);
     Rig = Cast<ACinderCamera>(GetPawn());
-    for (TActorIterator<ACinderBattlefield> It(GetWorld()); It; ++It) { Battle = *It; break; }
+    if (TActorIterator<ACinderBattlefield> It(GetWorld()); It) Battle = *It;
 }
 
 ACinderBattlefield* ACinderPlayerController::Battlefield() const { return Battle; }
@@ -39,11 +44,16 @@ void ACinderPlayerController::SetupInputComponent()
     InputComponent->BindKey(EKeys::MouseScrollDown, IE_Pressed, this, &ACinderPlayerController::ZoomOut);
     InputComponent->BindKey(EKeys::SpaceBar, IE_Pressed, this, &ACinderPlayerController::Home);
     InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ACinderPlayerController::Escape);
+    InputComponent->BindKey(EKeys::Enter, IE_Pressed, this, &ACinderPlayerController::Confirm);
     InputComponent->BindKey(EKeys::A, IE_Pressed, this, &ACinderPlayerController::AttackMode);
     InputComponent->BindKey(EKeys::S, IE_Pressed, this, &ACinderPlayerController::Stop);
     InputComponent->BindKey(EKeys::H, IE_Pressed, this, &ACinderPlayerController::Hold);
     InputComponent->BindKey(EKeys::B, IE_Pressed, this, &ACinderPlayerController::ToggleBuild);
     InputComponent->BindKey(EKeys::F, IE_Pressed, this, &ACinderPlayerController::FocusSelection);
+    InputComponent->BindKey(EKeys::Up, IE_Pressed, this, &ACinderPlayerController::ArrowUp);
+    InputComponent->BindKey(EKeys::Down, IE_Pressed, this, &ACinderPlayerController::ArrowDown);
+    InputComponent->BindKey(EKeys::Left, IE_Pressed, this, &ACinderPlayerController::ArrowLeft);
+    InputComponent->BindKey(EKeys::Right, IE_Pressed, this, &ACinderPlayerController::ArrowRight);
     InputComponent->BindTouch(IE_Pressed, this, &ACinderPlayerController::TouchPressed);
     InputComponent->BindTouch(IE_Released, this, &ACinderPlayerController::TouchReleased);
 }
@@ -69,7 +79,8 @@ void ACinderPlayerController::PlayerTick(float DeltaSeconds)
 {
     Super::PlayerTick(DeltaSeconds);
     if (!Rig) Rig = Cast<ACinderCamera>(GetPawn());
-    if (!Battle) for (TActorIterator<ACinderBattlefield> It(GetWorld()); It; ++It) { Battle = *It; break; }
+    if (!Battle)
+        if (TActorIterator<ACinderBattlefield> It(GetWorld()); It) Battle = *It;
     if (!Battle || !Rig) return;
     FeedbackLife -= DeltaSeconds;
     if (FeedbackLife <= 0) FeedbackText.Empty();
@@ -115,17 +126,36 @@ void ACinderPlayerController::PlayerTick(float DeltaSeconds)
     if (!Battle->IsMenu() && !Battle->IsPaused())
     {
         FVector Pan = FVector::ZeroVector;
-        const float Speed = Rig->Distance() * DeltaSeconds;
-        if (IsInputKeyDown(EKeys::Up)) Pan += FVector(1, -1, 0) * Speed;
-        if (IsInputKeyDown(EKeys::Down)) Pan += FVector(-1, 1, 0) * Speed;
-        if (IsInputKeyDown(EKeys::Left)) Pan += FVector(-1, -1, 0) * Speed;
-        if (IsInputKeyDown(EKeys::Right)) Pan += FVector(1, 1, 0) * Speed;
+        const FKey Keys[] = { EKeys::Up, EKeys::Down, EKeys::Left, EKeys::Right };
+        const FVector Directions[] = { FVector(1, -1, 0), FVector(-1, 1, 0), FVector(-1, -1, 0), FVector(1, 1, 0) };
+        for (int I = 0; I < 4; ++I)
+        {
+            if (!IsInputKeyDown(Keys[I])) { ArrowPanCredit[I] = 0; continue; }
+            // The press nudge already advanced one frame; do not double-count it during a hold.
+            const float HeldSeconds = FMath::Max(0.0f, DeltaSeconds - ArrowPanCredit[I]);
+            ArrowPanCredit[I] = FMath::Max(0.0f, ArrowPanCredit[I] - DeltaSeconds);
+            Pan += Directions[I] * Rig->Distance() * HeldSeconds;
+        }
         Rig->Pan(Pan);
     }
 }
 
+void ACinderPlayerController::ArrowUp() { NudgeArrow(0); }
+void ACinderPlayerController::ArrowDown() { NudgeArrow(1); }
+void ACinderPlayerController::ArrowLeft() { NudgeArrow(2); }
+void ACinderPlayerController::ArrowRight() { NudgeArrow(3); }
+void ACinderPlayerController::NudgeArrow(int Direction)
+{
+    if (!Rig || !Battle || Battle->IsMenu() || Battle->IsPaused()) return;
+    const FVector Directions[] = { FVector(1, -1, 0), FVector(-1, 1, 0), FVector(-1, -1, 0), FVector(1, 1, 0) };
+    constexpr float NudgeSeconds = 1.0f / 60.0f;
+    Rig->Pan(Directions[Direction] * Rig->Distance() * NudgeSeconds);
+    ArrowPanCredit[Direction] = NudgeSeconds;
+}
+
 void ACinderPlayerController::PointerPressed(FVector2D Position, bool Touch)
 {
+    UE_LOG(LogCinderInput, Verbose, TEXT("Press at %.1f,%.1f touch=%d"), Position.X, Position.Y, Touch);
     bPointerDown = true; bPointerTouch = Touch;
     PointerStart = PointerLast = Position; PointerHeld = 0; bDragging = false;
     bGestureSelect = !Touch || bBoxSelect;
@@ -152,6 +182,7 @@ void ACinderPlayerController::PointerMoved(FVector2D Position, float DeltaSecond
 
 void ACinderPlayerController::PointerReleased(FVector2D Position)
 {
+    UE_LOG(LogCinderInput, Verbose, TEXT("Release at %.1f,%.1f down=%d ui=%d dragging=%d multi=%d"), Position.X, Position.Y, bPointerDown, bPointerUI, bDragging, bMultiTouch);
     if (!bPointerDown) return;
     PointerLast = Position;
     if (!bMultiTouch)
@@ -293,6 +324,25 @@ void ACinderPlayerController::Issue(cinder::Command Command)
     const auto Result = Battle->Sim().command(Command);
     Notify(UTF8_TO_TCHAR(Result.message.c_str()));
 }
+bool ACinderPlayerController::IsGameplayActive() const
+{
+    return Battle && !Battle->IsMenu() && !Battle->IsPaused() && Battle->Sim().winner() < 0;
+}
+void ACinderPlayerController::ResetInteraction(bool bClearSelection)
+{
+    bBuildMode = bBuildMenu = bAttackMove = bBoxSelect = false;
+    bPointerDown = bDragging = bGestureSelect = bPointerTouch = false;
+    bPointerUI = bMultiTouch = bTwoDown = bMousePan = false;
+    PointerStart = PointerLast = PreviousCentroid = PreviousMouse = FVector2D::ZeroVector;
+    PointerHeld = PreviousPinch = 0;
+    LastTapTime = -1;
+    LastTapKind = cinder::Kind::Resource;
+    PendingBuilding = cinder::Kind::Foundry;
+    Placement = {};
+    for (float& Credit : ArrowPanCredit) Credit = 0;
+    FeedbackText.Empty(); FeedbackLife = 0;
+    if (bClearSelection) Selected.clear();
+}
 void ACinderPlayerController::Notify(const FString& Message) { FeedbackText = Message; FeedbackLife = 3.5f; }
 void ACinderPlayerController::Home()
 {
@@ -308,27 +358,39 @@ void ACinderPlayerController::FocusSelection()
 }
 void ACinderPlayerController::Escape()
 {
-    if (bBuildMode || bBuildMenu || bAttackMove || bBoxSelect) { bBuildMode = bBuildMenu = bAttackMove = bBoxSelect = false; return; }
-    if (Battle && !Battle->IsMenu()) Battle->SetPaused(!Battle->IsPaused());
+    if (bBuildMode || bBuildMenu || bAttackMove || bBoxSelect) { ResetInteraction(false); return; }
+    if (Battle && !Battle->IsMenu()) { ResetInteraction(false); Battle->SetPaused(!Battle->IsPaused()); }
 }
-void ACinderPlayerController::AttackMode() { bAttackMove = !bAttackMove; bBuildMode = false; }
+void ACinderPlayerController::Confirm()
+{
+    if (!Battle) return;
+    if (Battle->IsMenu())
+    {
+        const auto* HUD = Cast<ACinderHUD>(GetHUD());
+        ExecuteAction(TEXT("start"), HUD ? HUD->MenuMap() : 0);
+    }
+    else if (Battle->Sim().winner() >= 0) ExecuteAction(TEXT("start"), Battle->MapIndex());
+    else if (Battle->IsPaused()) ExecuteAction(TEXT("resume"));
+}
+void ACinderPlayerController::AttackMode() { if (IsGameplayActive()) { bAttackMove = !bAttackMove; bBuildMode = false; } }
 void ACinderPlayerController::Stop() { cinder::Command C; C.type = cinder::CommandType::Stop; Issue(C); }
 void ACinderPlayerController::Hold() { cinder::Command C; C.type = cinder::CommandType::Hold; Issue(C); }
-void ACinderPlayerController::ToggleBuild() { bBuildMenu = !bBuildMenu; bBuildMode = false; }
+void ACinderPlayerController::ToggleBuild() { if (IsGameplayActive()) { bBuildMenu = !bBuildMenu; bBuildMode = false; } }
 void ACinderPlayerController::ZoomIn() { if (Rig) Rig->Zoom(-180); }
 void ACinderPlayerController::ZoomOut() { if (Rig) Rig->Zoom(180); }
 
 void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
 {
+    UE_LOG(LogCinderInput, Verbose, TEXT("Action %s argument=%d"), *Action, Argument);
     if (!Battle) return;
-    if (Action == TEXT("start")) { Battle->StartMatch(Argument); Selected.clear(); bBuildMenu = bBuildMode = bAttackMove = bBoxSelect = false; Home(); Notify(TEXT("Select a Drudge, then tap amber ore. Build a Kiln to raise your army.")); }
-    else if (Action == TEXT("menu")) { Battle->ReturnToMenu(); Selected.clear(); }
-    else if (Action == TEXT("pause")) Escape();
-    else if (Action == TEXT("resume")) Battle->SetPaused(false);
+    if (Action == TEXT("start")) { Battle->StartMatch(Argument); ResetInteraction(true); Home(); Notify(TEXT("Select a Drudge, then tap amber ore. Build a Kiln to raise your army.")); }
+    else if (Action == TEXT("menu")) { Battle->ReturnToMenu(); ResetInteraction(true); }
+    else if (Action == TEXT("pause")) { ResetInteraction(false); Battle->SetPaused(true); }
+    else if (Action == TEXT("resume")) { ResetInteraction(false); Battle->SetPaused(false); }
     else if (Action == TEXT("home")) Home();
     else if (Action == TEXT("focus")) FocusSelection();
     else if (Action == TEXT("army")) SelectArmy();
-    else if (Action == TEXT("box")) { bBoxSelect = !bBoxSelect; Notify(TEXT("Drag across units to select. Two fingers pan and zoom.")); }
+    else if (Action == TEXT("box") && IsGameplayActive()) { bBoxSelect = !bBoxSelect; Notify(TEXT("Drag across units to select. Two fingers pan and zoom.")); }
     else if (Action == TEXT("attack")) AttackMode();
     else if (Action == TEXT("stop")) Stop();
     else if (Action == TEXT("hold")) Hold();
@@ -340,14 +402,14 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
         const auto Kind = static_cast<cinder::Kind>(Argument);
         Selected.erase(std::remove_if(Selected.begin(), Selected.end(), [&](cinder::Id Id) { const auto* E = Battle->Sim().find(Id); return !E || E->kind != Kind; }), Selected.end());
     }
-    else if (Action == TEXT("build")) { PendingBuilding = static_cast<cinder::Kind>(Argument); bBuildMode = true; bAttackMove = false; Notify(TEXT("Tap a clear, explored site near your workers. Cancel to exit placement.")); }
+    else if (Action == TEXT("build") && IsGameplayActive()) { PendingBuilding = static_cast<cinder::Kind>(Argument); bBuildMode = true; bAttackMove = false; Notify(TEXT("Tap a clear, explored site near your workers. Cancel to exit placement.")); }
     else if (Action == TEXT("cancelplacement")) { bBuildMode = false; bBuildMenu = false; }
     else if (Action == TEXT("train")) { cinder::Command C; C.type = cinder::CommandType::Train; C.kind = static_cast<cinder::Kind>(Argument); Issue(C); }
     else if (Action == TEXT("research")) { cinder::Command C; C.type = cinder::CommandType::Research; C.queueIndex = Argument; Issue(C); }
     else if (Action == TEXT("cancelqueue")) { cinder::Command C; C.type = cinder::CommandType::CancelQueue; C.queueIndex = Argument; Issue(C); }
     else if (Action == TEXT("cancelbuilding")) { cinder::Command C; C.type = cinder::CommandType::CancelBuilding; Issue(C); }
     else if (Action == TEXT("save")) Notify(Battle->SaveMatch() ? TEXT("Match saved on this device") : TEXT("Could not save match"));
-    else if (Action == TEXT("load")) { if (Battle->LoadMatch()) { Selected.clear(); Home(); Notify(TEXT("Match restored")); } else Notify(TEXT("No readable saved match")); }
+    else if (Action == TEXT("load")) { if (Battle->LoadMatch()) { ResetInteraction(true); Home(); Notify(TEXT("Match restored")); } else Notify(TEXT("No readable saved match")); }
     else if (Action == TEXT("debug")) bDebug = !bDebug;
     else if (Action == TEXT("minimap")) { const int X = Argument % 10000, Y = Argument / 10000; if (Rig) Rig->Focus(FVector(X, Y, 0)); }
 }

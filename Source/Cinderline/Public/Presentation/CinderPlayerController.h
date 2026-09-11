@@ -41,9 +41,12 @@ private:
     void TapWorld(FVector2D Position, bool ForceCommand = false);
     void PanScreen(FVector2D Previous, FVector2D Current);
     void Issue(cinder::Command Command);
+    bool IsGameplayActive() const;
+    void ResetInteraction(bool bClearSelection);
     void SelectRectangle();
     void Home();
     void Escape();
+    void Confirm();
     void AttackMode();
     void Stop();
     void Hold();
@@ -51,6 +54,11 @@ private:
     void ZoomIn();
     void ZoomOut();
     void FocusSelection();
+    void ArrowUp();
+    void ArrowDown();
+    void ArrowLeft();
+    void ArrowRight();
+    void NudgeArrow(int Direction);
     void TouchPressed(ETouchIndex::Type Finger, FVector Location);
     void TouchReleased(ETouchIndex::Type Finger, FVector Location);
     void MousePressed();
@@ -68,4 +76,5 @@ private:
     cinder::Kind PendingBuilding = cinder::Kind::Foundry;
     cinder::Vec2 Placement;
     FString FeedbackText;
+    float ArrowPanCredit[4] = { 0, 0, 0, 0 };
 };

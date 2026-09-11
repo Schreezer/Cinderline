@@ -305,6 +305,52 @@ void airAndCombat() {
   check(chase.find(victim)->hp<definition(Kind::Foundry).hp,"explicit chase closes distance and fires");
 }
 
+void tacticalOrders() {
+  // The target is already in range across a thin wall. Attack must find a real
+  // firing position instead of stopping because range alone is satisfied.
+  for(CommandType order:{CommandType::Attack,CommandType::AttackMove}) {
+    auto s=quiet(2);const Id attacker=s.debugSpawn(Kind::Lancer,0,{1600,1950});
+    const Id victim=s.debugSpawn(Kind::Worker,1,{1600,2250});
+    send(s,CommandType::Hold,1,{victim});
+    check(send(s,order,0,{attacker},{1600,2250},victim).accepted,"attack across cover accepted");
+    advance(s,0.5f);
+    check(s.find(victim)->hp==definition(Kind::Worker).hp,"cover blocks the initial ground shot");
+    advance(s,44.5f);
+    check(!s.find(victim)||s.find(victim)->hp<definition(Kind::Worker).hp,"attacker routes around cover and fires");
+    std::cout<<"COVER_ATTACK order="<<static_cast<int>(order)<<" damage="<<s.players()[0].stats.damage<<'\n';
+  }
+  auto held=quiet();const Vec2 anchor{1200,1300};
+  const Id guard=held.debugSpawn(Kind::Striker,0,anchor);
+  check(send(held,CommandType::Hold,0,{guard}).accepted,"hold position accepted");
+  std::vector<Id> traffic;
+  for(int i=0;i<80;++i)traffic.push_back(held.debugSpawn(Kind::Striker,0,{800.f+(i%10)*42,900.f+(i/10)*42}));
+  check(send(held,CommandType::Move,0,traffic,{1400,1600}).accepted,"friendly traffic crosses held position");
+  advance(held,30);
+  check(held.find(guard)->order==Order::Hold&&distance(held.find(guard)->pos,anchor)<=10,"held unit retains its ordered position after traffic");
+  std::cout<<"HOLD_TRAFFIC displacement="<<distance(held.find(guard)->pos,anchor)<<'\n';
+
+  for(CommandType order:{CommandType::Attack,CommandType::AttackMove}) {
+    auto s=quiet();const Id soldier=s.debugSpawn(Kind::Bastion,0,{800,1600});
+    const Id harasser=s.debugSpawn(Kind::Lancer,1,{1030,1600});
+    check(send(s,CommandType::Attack,1,{harasser},{},soldier).accepted,"support fixture suffers a real attack");
+    s.update(Simulation::Step);const float wounded=s.find(soldier)->hp;
+    check(wounded<definition(Kind::Bastion).hp,"support fixture has real combat damage");
+    send(s,CommandType::Move,1,{harasser},{4100,100});
+    const Id support=s.debugSpawn(Kind::Mender,0,{800,1700});
+    const Id target=s.debugSpawn(Kind::Foundry,1,{1800,1600});
+    s.debugSpawn(Kind::Scout,0,{1700,1900});
+    check(!send(s,CommandType::Attack,0,{support},{},target).accepted,"support alone cannot attack enemies");
+    check(send(s,order,0,{soldier,support},{1800,1600},target).accepted,"mixed army attack order accepted");
+    advance(s,10);
+    const auto* mend=s.find(support);const auto* ally=s.find(soldier);
+    check(mend&&ally&&mend->pos.x>1100,"support advances with attacking army");
+    check(distance(mend->pos,ally->pos)<=definition(Kind::Mender).range,"support remains within healing range of attack leader");
+    check(ally->hp>wounded,"following support heals actual combat damage");
+    check(definition(Kind::Mender).damage==0&&mend->target==soldier,"support follows an ally without acquiring a weapon target");
+    std::cout<<"SUPPORT_ORDER order="<<static_cast<int>(order)<<" distance="<<distance(mend->pos,ally->pos)<<" healed="<<ally->hp-wounded<<'\n';
+  }
+}
+
 void victoryAndDefeat() {
   for(int winningTeam=0;winningTeam<2;++winningTeam) {
     auto s=quiet(); int loser=1-winningTeam; Id hq=first(s,loser,Kind::Headquarters);
@@ -374,7 +420,138 @@ void boundedUpdate() {
   for(const auto& e:s.entities()) check(std::isfinite(e.pos.x)&&std::isfinite(e.pos.y),"bounded update preserves finite positions");
 }
 
+void aiExpansionAndBaseDefense() {
+  Simulation economy;economy.reset({0,123,true,1});
+  const Vec2 depletedSite{2900,3800},richSite{3800,2000};
+  std::vector<Id> deposits;
+  for(const auto& e:economy.entities())if(e.kind==Kind::Resource&&distance(e.pos,depletedSite)<350)deposits.push_back(e.id);
+  check(deposits.size()==3,"expansion fixture identifies three real ore deposits");
+  economy.debugSpawn(Kind::Processor,0,{2900,3500});
+  for(int i=0;i<30;++i) {
+    const Id worker=economy.debugSpawn(Kind::Worker,0,{2760.f+(i%10)*32,3610.f+(i/10)*36});
+    check(send(economy,CommandType::Gather,0,{worker},{},deposits[i%3]).accepted,"depletion fixture uses ordinary gather commands");
+  }
+  // Zero the opponent's development-fixture funds while its clock advances;
+  // ore removal itself must happen through workers harvesting and delivering.
+  for(int n=0;n<8000;++n){economy.debugResources(1,0);economy.update(Simulation::Step);}
+  float remaining=0;for(Id id:deposits)remaining+=economy.find(id)->resource;
+  check(remaining==0,"first expansion is actually depleted by workers before AI chooses");
+  check(economy.players()[0].stats.gathered>=12000,"depletion produced delivered ore rather than edited resource state");
+  economy.debugSpawn(Kind::Foundry,1,{3900,4300});
+  economy.debugSpawn(Kind::Processor,1,{4300,3900});
+  economy.debugSpawn(Kind::Laboratory,1,{4450,4400});
+  economy.debugSpawn(Kind::Turret,1,{3900,3950});
+  const Id surveyor=economy.debugSpawn(Kind::Scout,1,{2900,3320});
+  send(economy,CommandType::Hold,1,{surveyor});
+  economy.debugSpawn(Kind::Worker,1,{3600,2150});
+  economy.debugResources(1,5000);const std::size_t commandStart=economy.recording().size();
+  advance(economy,6);
+  bool expanded=false;
+  for(std::size_t i=commandStart;i<economy.recording().size();++i) {
+    const auto& c=economy.recording()[i].command;
+    if(c.team!=1||c.type!=CommandType::Build||c.kind!=Kind::Headquarters)continue;
+    expanded=true;
+    check(distance(c.point,richSite)<850,"AI expands beside the visible rich cluster");
+    check(distance(c.point,depletedSite)>850,"AI does not spend on the depleted first expansion");
+  }
+  check(expanded,"AI issues a paid expansion command at the viable alternate site");
+  std::cout<<"AI_EXPANSION depleted_ore="<<remaining<<" gathered="<<economy.players()[0].stats.gathered<<" alternate_built="<<expanded<<'\n';
+
+  Simulation defense;defense.reset({0,321,true,1});
+  for(int n=0;n<2020;++n){defense.debugResources(1,0);defense.update(Simulation::Step);}
+  defense.debugSpawn(Kind::Foundry,1,{3900,4300});
+  defense.debugSpawn(Kind::Processor,1,{4300,3900});
+  defense.debugSpawn(Kind::Laboratory,1,{4450,4400});
+  const Id oldTurret=defense.debugSpawn(Kind::Turret,1,{3900,4200});
+  const Vec2 remoteBase{2200,4200};
+  defense.debugSpawn(Kind::Headquarters,1,remoteBase);
+  check(distance(defense.find(oldTurret)->pos,remoteBase)>900,"old turret cannot defend the second base");
+  defense.debugResources(1,1000);const std::size_t defenseStart=defense.recording().size();
+  advance(defense,20);bool defended=false,builderDispatched=false;
+  for(std::size_t i=defenseStart;i<defense.recording().size();++i) {
+    const auto& c=defense.recording()[i].command;
+    if(c.team==1&&c.type==CommandType::Build&&c.kind==Kind::Turret&&distance(c.point,remoteBase)<=900)defended=true;
+    if(c.team==1&&c.type==CommandType::Move&&distance(c.point,remoteBase)<150&&!c.units.empty()) {
+      const auto* builder=defense.find(c.units.front());
+      if(builder&&builder->kind==Kind::Worker)builderDispatched=true;
+    }
+  }
+  check(builderDispatched,"AI dispatches a distant worker to construct remote defense");
+  check(defended,"AI buys local defense despite an old surviving turret elsewhere");
+  check(defense.find(oldTurret)&&defense.find(oldTurret)->alive(),"local defense is added while original turret survives");
+  std::cout<<"AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched="<<builderDispatched<<" remote_turret_built="<<defended<<'\n';
+}
+
+void aiArmyAndSupportCoordination() {
+  Simulation waiting;waiting.reset({0,123,true,1});
+  for(int n=0;n<7160;++n){waiting.debugResources(1,0);waiting.update(Simulation::Step);}
+  check(waiting.time()>=358&&ids(waiting,1,Kind::Scout).empty(),"army cadence fixture has no scout after350 seconds");
+  std::vector<Id> army;
+  for(int i=0;i<7;++i)army.push_back(waiting.debugSpawn(Kind::Striker,1,{3800.f+(i%4)*70,4200.f+(i/4)*70}));
+  for(bool withScout:{false,true}) {
+    Simulation advancing=waiting;Id scout=0;
+    if(withScout)scout=advancing.debugSpawn(Kind::Scout,1,{4500,4500});
+    const auto firstCommand=advancing.recording().size();advance(advancing,4);
+    bool attackRecorded=false;
+    for(std::size_t i=firstCommand;i<advancing.recording().size();++i) {
+      const auto& c=advancing.recording()[i].command;
+      if(c.team!=1||c.type!=CommandType::AttackMove)continue;
+      attackRecorded=true;
+      for(Id soldier:army)check(std::find(c.units.begin(),c.units.end(),soldier)!=c.units.end(),"strategic attack includes the ready army");
+      if(scout)check(std::find(c.units.begin(),c.units.end(),scout)==c.units.end(),"expansion scout remains outside advancing army");
+    }
+    check(attackRecorded,"expansion scouting does not suppress the strategic attack cadence");
+    if(scout)check(advancing.find(scout)->order==Order::Move,"assigned expansion scout continues its scouting route");
+    std::cout<<"AI_SCOUT_AND_ARMY scout="<<withScout<<" attack_move="<<attackRecorded<<'\n';
+  }
+
+  Simulation joining;joining.reset({0,456,true,1});joining.debugResources(1,0);
+  const Id target=joining.debugSpawn(Kind::Foundry,0,{3300,4200});
+  const Id firstSoldier=joining.debugSpawn(Kind::Striker,1,{3570,4200});
+  const Id secondSoldier=joining.debugSpawn(Kind::Lancer,1,{3600,4300});
+  check(send(joining,CommandType::Attack,1,{firstSoldier,secondSoldier},{},target).accepted,"armed units already attack the chosen enemy");
+  const Id newSupport=joining.debugSpawn(Kind::Mender,1,{3770,4280});
+  joining.update(Simulation::Step);
+  check(joining.find(newSupport)->order==Order::Attack&&
+        (joining.find(newSupport)->target==firstSoldier||joining.find(newSupport)->target==secondSoldier),"new Mender joins an attack already underway");
+  const auto settledCommand=joining.recording().size();advance(joining,4.2f);int redundant=0;
+  for(std::size_t i=settledCommand;i<joining.recording().size();++i) {
+    const auto& c=joining.recording()[i].command;
+    if(c.team==1&&c.type==CommandType::Attack&&c.target==target)++redundant;
+  }
+  check(redundant==0,"valid support follow does not reset the armed leader every AI tick");
+
+  Simulation replacement;replacement.reset({0,789,true,1});replacement.debugResources(1,0);
+  const Id enemy=replacement.debugSpawn(Kind::Bastion,0,{3340,4200});
+  replacement.debugSpawn(Kind::Mender,0,{3105,4200});
+  replacement.debugSpawn(Kind::Mender,0,{3120,4100});
+  const Id doomed=replacement.debugSpawn(Kind::Striker,1,{3590,4200});
+  const Id survivor=replacement.debugSpawn(Kind::Lancer,1,{3650,4300});
+  const Id follower=replacement.debugSpawn(Kind::Mender,1,{3790,4230});
+  check(send(replacement,CommandType::Attack,1,{doomed,survivor,follower},{},enemy).accepted,"support initially follows its first armed leader");
+  check(replacement.find(follower)->target==doomed,"leader-death fixture begins with the intended follow target");
+  std::size_t handoffStart=replacement.recording().size();
+  for(int n=0;n<1800&&replacement.find(doomed)&&replacement.find(doomed)->alive();++n) {
+    // Keep this unit fighting through the opponent's retreat recommendation;
+    // its eventual death must come from ordinary combat, not edited health.
+    send(replacement,CommandType::Attack,1,{doomed,follower},{},enemy);
+    handoffStart=replacement.recording().size();replacement.debugResources(1,0);replacement.update(Simulation::Step);
+  }
+  check(!replacement.find(doomed)||!replacement.find(doomed)->alive(),"support leader actually dies in combat");
+  check(replacement.find(survivor)&&replacement.find(survivor)->alive(),"another armed leader remains available");
+  advance(replacement,3);bool reassigned=false;
+  for(std::size_t i=handoffStart;i<replacement.recording().size();++i) {
+    const auto& c=replacement.recording()[i].command;
+    if(c.team==1&&c.type==CommandType::Attack&&c.target==enemy&&
+       std::find(c.units.begin(),c.units.end(),follower)!=c.units.end()&&
+       std::find(c.units.begin(),c.units.end(),survivor)!=c.units.end())reassigned=true;
+  }
+  check(reassigned&&replacement.find(follower)->target==survivor,"AI reassigns orphaned support with an existing eligible armed leader");
+  std::cout<<"AI_SUPPORT joined_existing_attack=1 redundant_orders="<<redundant<<" dead_leader_replaced="<<reassigned<<'\n';
+}
+
 void aiEconomy() {
+  aiArmyAndSupportCoordination();
   Simulation s;s.reset({0,123,true,1});
   for(int i=0;i<12000&&s.winner()<0;++i) s.update(Simulation::Step);
   const auto& p=s.players()[1];
@@ -510,9 +687,9 @@ int main(int argc,char** argv) {
     {"reset and definitions",resetAndDefinitions},{"physical gathering and depletion",gatherAndDepletion},
     {"paid commands, production and supply",paidCommandsAndQueues},{"placement and construction",placementAndConstruction},
     {"research and prerequisites",researchAndPrerequisites},{"ownership and fog",ownershipAndFog},
-    {"obstacle paths and group movement",movementAndGroups},{"ground and air combat",airAndCombat},
+    {"obstacle paths and group movement",movementAndGroups},{"ground and air combat",airAndCombat},{"tactical orders and support",tacticalOrders},
     {"victory and defeat",victoryAndDefeat},{"save-load continuity and replay",saveLoadAndReplay},
-    {"bounded fixed-step update",boundedUpdate},{"AI paid economy",aiEconomy}};
+    {"bounded fixed-step update",boundedUpdate},{"AI expansion and local defense",aiExpansionAndBaseDefense},{"AI paid economy",aiEconomy}};
   if(argc>1&&std::string(argv[1])=="--benchmark") tests={{"performance",benchmark}};
   else if(argc>1&&std::string(argv[1])=="--match") tests={{"natural AI match durations",matchDuration}};
   else if(argc>1) {

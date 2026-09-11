@@ -2,7 +2,7 @@
 
 An original touch-first sci-fi RTS for Unreal Engine 5, targeting iPhone and iPad. Its C++ simulation is also built as a standalone library so economy, combat and movement can be tested without launching the editor.
 
-**Current status:** active development from an empty repository. Unreal installation is in progress. Checkpoint completion and verified behavior are tracked in [the task board](docs/TASKBOARD.md). The native macOS runner is a development tool; it is not the iOS product.
+**Current status:** UE 5.8.2 builds and runs the battlefield on macOS. Menu start, economy, camera navigation, pause/resume and compact layouts have runtime evidence. The first mechanics pass is verified; model, HUD and audio integration are next. Work proceeds through mechanics, assets and visual polish, full playtesting, then iOS. Checkpoint completion and verified behavior are tracked in [the task board](docs/TASKBOARD.md). The native macOS runner is a development tool; it is not the iOS product.
 
 ## Development
 

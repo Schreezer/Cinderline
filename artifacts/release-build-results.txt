@@ -1,8 +1,11 @@
--- Configuring done (0.2s)
--- Generating done (0.1s)
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
 -- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+[ 14%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 28%] Linking CXX static library libCinderlineSimulation.a
 [ 42%] Built target CinderlineSimulation
-[ 71%] Built target CinderlineTests
-[ 85%] Building OBJCXX object CMakeFiles/CinderlineNative.dir/Tools/Native/CinderlineApp.mm.o
-[100%] Linking CXX executable CinderlineNative
-[100%] Built target CinderlineNative
+[ 57%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 71%] Linking CXX executable CinderlineNative
+[ 85%] Built target CinderlineNative
+[100%] Linking CXX executable CinderlineTests
+[100%] Built target CinderlineTests

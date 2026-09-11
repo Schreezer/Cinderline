@@ -1,3 +1,6 @@
+Test command: /Users/chirag13/Documents/ChatGPT/starCraft/build/native/CinderlineTests
+Working Directory: /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+Test timeout computed to be: 120
 PASS reset and definitions
 PASS physical gathering and depletion
 PASS paid commands, production and supply
@@ -8,9 +11,21 @@ PASS ownership and fog
 GROUP_MOVE units=15 mean_destination_distance=92.819 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
 PASS obstacle paths and group movement
 PASS ground and air combat
+COVER_ATTACK order=1 damage=70.000
+COVER_ATTACK order=2 damage=70.000
+HOLD_TRAFFIC displacement=0.000
+SUPPORT_ORDER order=1 distance=168.959 healed=39.000
+SUPPORT_ORDER order=2 distance=174.234 healed=39.000
+PASS tactical orders and support
 PASS victory and defeat
 PASS save-load continuity and replay
 PASS bounded fixed-step update
+AI_EXPANSION depleted_ore=0.000 gathered=22488 alternate_built=1
+AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+PASS AI expansion and local defense
+AI_SCOUT_AND_ARMY scout=0 attack_move=1
+AI_SCOUT_AND_ARMY scout=1 attack_move=1
+AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
 AI_ECONOMY seconds=330.700 ore=4817 gathered=7807 produced=17 built=4 paid_command_cost=2990
 PASS AI paid economy
-RESULT passed=12 failed=0
+RESULT passed=14 failed=0

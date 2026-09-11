@@ -1,19 +1,23 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "UObject/SoftObjectPtr.h"
 #include "CinderHUD.generated.h"
 
 class ACinderPlayerController;
 class ACinderBattlefield;
+class UTexture2D;
 
 UCLASS()
 class CINDERLINE_API ACinderHUD : public AHUD
 {
     GENERATED_BODY()
 public:
+    virtual void BeginPlay() override;
     virtual void DrawHUD() override;
     bool ContainsUI(FVector2D Point) const;
     bool HandleTap(FVector2D Point);
+    int MenuMap() const { return SelectedMap; }
 private:
     struct FButton { FBox2D Bounds; FString Action; int Argument = 0; };
     void Panel(float X, float Y, float W, float H, FLinearColor Color);
@@ -33,4 +37,8 @@ private:
     int SubgroupPage = 0;
     int CompactSheet = 0;
     bool bCompactLayout = false;
+    UPROPERTY(EditDefaultsOnly, Category="Presentation")
+    TSoftObjectPtr<UTexture2D> MenuBackdropAsset = TSoftObjectPtr<UTexture2D>(FSoftObjectPath(TEXT("/Game/Art/UI/T_CinderBackdrop.T_CinderBackdrop")));
+    UPROPERTY(Transient)
+    TObjectPtr<UTexture2D> MenuBackdrop;
 };

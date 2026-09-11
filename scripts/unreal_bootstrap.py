@@ -7,6 +7,42 @@ import os
 import unreal
 
 
+def import_texture(relative_path, destination, name, terrain=False):
+    asset_path = destination + "/" + name
+    texture = unreal.load_asset(asset_path)
+    if texture is None:
+        source = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), relative_path)
+        if not os.path.isfile(source):
+            raise RuntimeError("Missing source artwork: " + source)
+        task = unreal.AssetImportTask()
+        task.set_editor_property("filename", source)
+        task.set_editor_property("destination_path", destination)
+        task.set_editor_property("destination_name", name)
+        task.set_editor_property("automated", True)
+        task.set_editor_property("save", True)
+        task.set_editor_property("replace_existing", False)
+        unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
+        texture = unreal.load_asset(asset_path)
+    if not isinstance(texture, unreal.Texture2D):
+        raise RuntimeError("Could not import texture: " + asset_path)
+    texture.set_editor_property("srgb", True)
+    if terrain:
+        texture.set_editor_property("lod_group", unreal.TextureGroup.TEXTUREGROUP_WORLD)
+        # Resize during the engine texture build; retain the original generated PNG.
+        texture.set_editor_property("power_of_two_mode", unreal.TexturePowerOfTwoSetting.RESIZE_TO_SPECIFIC_RESOLUTION)
+        texture.set_editor_property("resize_during_build_x", 1024)
+        texture.set_editor_property("resize_during_build_y", 1024)
+        texture.set_editor_property("max_texture_size", 1024)
+        texture.set_editor_property("mip_gen_settings", unreal.TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP)
+    else:
+        texture.set_editor_property("lod_group", unreal.TextureGroup.TEXTUREGROUP_UI)
+        texture.set_editor_property("never_stream", True)
+        texture.set_editor_property("mip_gen_settings", unreal.TextureMipGenSettings.TMGS_NO_MIPMAPS)
+    if not unreal.EditorAssetLibrary.save_loaded_asset(texture):
+        raise RuntimeError("Could not save texture: " + asset_path)
+    return texture
+
+
 def bootstrap():
     rebuild = os.environ.get("CINDER_REBUILD_CONTENT") == "1"
     tools = unreal.AssetToolsHelpers.get_asset_tools()
@@ -28,8 +64,32 @@ def bootstrap():
         multiply.set_editor_property("const_b", 0.12)
         unreal.MaterialEditingLibrary.connect_material_expressions(tint, "RGB", multiply, "A")
         unreal.MaterialEditingLibrary.connect_material_property(multiply, "", unreal.MaterialProperty.MP_EMISSIVE_COLOR)
-        unreal.MaterialEditingLibrary.recompile_material(material)
-        unreal.EditorAssetLibrary.save_loaded_asset(material)
+
+    unreal.MaterialEditingLibrary.set_base_material_usage(material, unreal.MaterialUsage.MATUSAGE_INSTANCED_STATIC_MESHES, True)
+    unreal.MaterialEditingLibrary.recompile_material(material)
+    if not unreal.EditorAssetLibrary.save_loaded_asset(material):
+        raise RuntimeError("Could not save /Game/Generated/M_CinderTint")
+
+    basalt = import_texture("RawAssets/Textures/T_CinderBasalt.png", "/Game/Art/Textures", "T_CinderBasalt", terrain=True)
+    import_texture("RawAssets/UI/T_CinderBackdrop.png", "/Game/Art/UI", "T_CinderBackdrop")
+    ground_path = "/Game/Generated/M_CinderGround"
+    ground = unreal.load_asset(ground_path)
+    if ground is None:
+        ground = tools.create_asset("M_CinderGround", "/Game/Generated", unreal.Material, unreal.MaterialFactoryNew())
+        sample = unreal.MaterialEditingLibrary.create_material_expression(ground, unreal.MaterialExpressionTextureSample, -280, 0)
+        sample.set_editor_property("texture", basalt)
+        coords = unreal.MaterialEditingLibrary.create_material_expression(ground, unreal.MaterialExpressionTextureCoordinate, -500, 0)
+        coords.set_editor_property("u_tiling", 8.0)
+        coords.set_editor_property("v_tiling", 8.0)
+        unreal.MaterialEditingLibrary.connect_material_expressions(coords, "", sample, "UVs")
+        unreal.MaterialEditingLibrary.connect_material_property(sample, "RGB", unreal.MaterialProperty.MP_BASE_COLOR)
+        rough = unreal.MaterialEditingLibrary.create_material_expression(ground, unreal.MaterialExpressionConstant, -280, 180)
+        rough.set_editor_property("r", 0.92)
+        unreal.MaterialEditingLibrary.connect_material_property(rough, "", unreal.MaterialProperty.MP_ROUGHNESS)
+    unreal.MaterialEditingLibrary.set_base_material_usage(ground, unreal.MaterialUsage.MATUSAGE_INSTANCED_STATIC_MESHES, True)
+    unreal.MaterialEditingLibrary.recompile_material(ground)
+    if not unreal.EditorAssetLibrary.save_loaded_asset(ground):
+        raise RuntimeError("Could not save " + ground_path)
 
     map_path = "/Game/Maps/Frontier"
     if rebuild or not unreal.EditorAssetLibrary.does_asset_exist(map_path):
@@ -40,7 +100,7 @@ def bootstrap():
         world.get_world_settings().set_editor_property("default_game_mode", mode)
         if not unreal.EditorLoadingAndSavingUtils.save_map(world, map_path):
             raise RuntimeError("Could not save /Game/Maps/Frontier")
-    unreal.log("CINDERLINE_BOOTSTRAP_OK: material and native battlefield map are ready")
+    unreal.log("CINDERLINE_BOOTSTRAP_OK: artwork, materials and native battlefield map are ready")
 
 
 bootstrap()

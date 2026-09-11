@@ -1,14 +1,11 @@
 MATCH_PROGRESS map=0 simulation_seconds=300.000 entities=79
-MATCH_PROGRESS map=0 simulation_seconds=600.000 entities=84
-MATCH_PROGRESS map=0 simulation_seconds=900.000 entities=75
-MATCH map=0 seed=42 duration_seconds=933.750 winner=1 wall_seconds=2.302 team0_gathered=13273 team0_produced=58 team0_lost=63 team0_ore=2443 team1_gathered=18200 team1_produced=72 team1_lost=40 team1_ore=3390
-MATCH_PROGRESS map=1 simulation_seconds=300.000 entities=70
-MATCH_PROGRESS map=1 simulation_seconds=600.000 entities=73
-MATCH_PROGRESS map=1 simulation_seconds=900.000 entities=91
-MATCH_PROGRESS map=1 simulation_seconds=1200.000 entities=76
-MATCH map=1 seed=42 duration_seconds=1227.700 winner=1 wall_seconds=2.601 team0_gathered=11548 team0_produced=67 team0_lost=72 team0_ore=48 team1_gathered=18550 team1_produced=87 team1_lost=51 team1_ore=790
+MATCH_PROGRESS map=0 simulation_seconds=600.000 entities=88
+MATCH map=0 seed=42 duration_seconds=788.900 winner=1 wall_seconds=0.981 team0_gathered=10249 team0_produced=58 team0_lost=63 team0_ore=69 team1_gathered=15412 team1_produced=58 team1_lost=26 team1_ore=2852
+MATCH_PROGRESS map=1 simulation_seconds=300.000 entities=73
+MATCH_PROGRESS map=1 simulation_seconds=600.000 entities=85
+MATCH map=1 seed=42 duration_seconds=845.300 winner=1 wall_seconds=1.591 team0_gathered=12778 team0_produced=46 team0_lost=49 team0_ore=3108 team1_gathered=16447 team1_produced=74 team1_lost=58 team1_ore=2217
 MATCH_PROGRESS map=2 simulation_seconds=300.000 entities=80
-MATCH_PROGRESS map=2 simulation_seconds=600.000 entities=82
-MATCH map=2 seed=42 duration_seconds=843.650 winner=1 wall_seconds=2.842 team0_gathered=12427 team0_produced=50 team0_lost=55 team0_ore=2407 team1_gathered=14503 team1_produced=68 team1_lost=38 team1_ore=1863
+MATCH_PROGRESS map=2 simulation_seconds=600.000 entities=74
+MATCH map=2 seed=42 duration_seconds=865.100 winner=1 wall_seconds=1.499 team0_gathered=12733 team0_produced=50 team0_lost=52 team0_ore=2633 team1_gathered=18595 team1_produced=99 team1_lost=76 team1_ore=1945
 PASS natural AI match durations
 RESULT passed=1 failed=0

@@ -6,4 +6,4 @@ Rendered 1000 frames; simulation 50.0s
 Rendered 2000 frames; simulation 100.0s
 Rendered 3000 frames; simulation 150.0s
 PASS: 3000 offscreen frames, 150.0 simulated seconds, no Cocoa drawing exception.
-3/3 Test #3: native_render_stress .............   Passed   16.29 sec
+3/3 Test #3: native_render_stress .............   Passed   16.45 sec

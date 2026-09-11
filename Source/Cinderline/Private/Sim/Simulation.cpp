@@ -52,6 +52,14 @@ bool circleBox(Vec2 p,float radius,const Obstacle& o) {
  const float dy=std::max(std::fabs(p.y-o.center.y)-o.half.y,0.0f);
  return dx*dx+dy*dy<radius*radius;
 }
+bool clearFireLine(Vec2 from,Vec2 to,const std::vector<Obstacle>& obstacles) {
+ const Vec2 delta=subtract(to,from);const int samples=std::max(1,static_cast<int>(std::ceil(distance(from,to)/24)));
+ for(int sample=1;sample<samples;++sample) {
+  const Vec2 p=add(from,scale(delta,static_cast<float>(sample)/samples));
+  for(const auto& obstacle:obstacles)if(circleBox(p,2,obstacle))return false;
+ }
+ return true;
+}
 Kind researchKind(int index) { return index==1?Kind::Striker:index==2?Kind::Lancer:Kind::Worker; }
 int fogIndex(Vec2 p) {
  int x=std::clamp(static_cast<int>(p.x/Cell),0,Simulation::FogSize-1);
@@ -233,6 +241,9 @@ CommandResult Simulation::command(const Command& input) {
   if(cmd.type==CommandType::Gather&&(!target||!target->alive()||target->kind!=Kind::Resource||target->resource<=0||!explored(cmd.team,target->pos)))return fail("Choose an explored ore deposit.");
   std::vector<Id> movable;for(Id id:ids){const auto* e=find(id);if(!definition(e->kind).building&&(cmd.type!=CommandType::Gather||e->kind==Kind::Worker)&&(cmd.type!=CommandType::Attack||definition(e->kind).damage>0)&&!(cmd.type==CommandType::Attack&&definition(target->kind).air&&!definition(e->kind).antiAir))movable.push_back(id);}
   if(movable.empty())return fail("Selected units cannot execute this order.");
+  Id attackLeader=0;
+  if(cmd.type==CommandType::Attack||cmd.type==CommandType::AttackMove)for(Id id:movable)if(definition(find(id)->kind).damage>0){attackLeader=id;break;}
+  if(cmd.type==CommandType::Attack&&attackLeader)for(Id id:ids)if(find(id)->kind==Kind::Mender)movable.push_back(id);
   const int columns=static_cast<int>(std::ceil(std::sqrt(static_cast<float>(movable.size()))));
   std::vector<std::pair<Vec2,float>> assignedGoals;
   for(std::size_t n=0;n<movable.size();++n) {
@@ -241,8 +252,11 @@ CommandResult Simulation::command(const Command& input) {
     case CommandType::Stop:e->order=Order::Idle;e->goal=e->pos;break;
     case CommandType::Hold:e->order=Order::Hold;e->goal=e->pos;break;
     case CommandType::Gather:e->order=Order::Gather;e->target=cmd.target;e->resourceTarget=cmd.target;e->returning=e->carried>=CarryCapacity;break;
-    case CommandType::Attack:e->order=Order::Attack;e->target=cmd.target;e->goal=target->pos;break;
+    case CommandType::Attack:e->order=Order::Attack;e->target=e->kind==Kind::Mender?attackLeader:cmd.target;e->goal=find(e->target)->pos;break;
     case CommandType::Move:case CommandType::AttackMove: {
+     if(cmd.type==CommandType::AttackMove&&e->kind==Kind::Mender&&attackLeader) {
+      e->order=Order::Attack;e->target=attackLeader;e->goal=find(attackLeader)->pos;break;
+     }
      const float spacing=64;Vec2 offset{(static_cast<int>(n)%columns-(columns-1)*0.5f)*spacing,(static_cast<int>(n)/columns-(columns-1)*0.5f)*spacing};
      e->order=cmd.type==CommandType::Move?Order::Move:Order::AttackMove;
      const auto& unit=definition(e->kind);const Vec2 desired=bounded(add(cmd.point,offset),unit.radius);Vec2 destination=desired;
@@ -298,7 +312,10 @@ void Simulation::step() {
    float desired=(ld.radius+rd.radius)*1.04f;Vec2 delta=subtract(left.pos,right.pos);float dist2=lengthSq(delta);if(dist2>=desired*desired)continue;
    float dist=std::sqrt(dist2);Vec2 direction=dist>0.01f?scale(delta,1/dist):normalized(Vec2{(left.id%2)?1.0f:-1.0f,(right.id%3)?0.7f:-0.7f});
    float displacement=std::min(8.0f,(desired-dist)*0.5f);
-   Vec2 lp=bounded(add(left.pos,scale(direction,displacement)),ld.radius),rp=bounded(subtract(right.pos,scale(direction,displacement)),rd.radius);
+   const bool leftAnchored=left.order==Order::Hold,rightAnchored=right.order==Order::Hold;
+   const float leftShift=leftAnchored&&!rightAnchored?0:displacement*(rightAnchored&&!leftAnchored?2.0f:1.0f);
+   const float rightShift=rightAnchored&&!leftAnchored?0:displacement*(leftAnchored&&!rightAnchored?2.0f:1.0f);
+   Vec2 lp=bounded(add(left.pos,scale(direction,leftShift)),ld.radius),rp=bounded(subtract(right.pos,scale(direction,rightShift)),rd.radius);
    if(ld.air||!blocked(lp,ld.radius,left.id))left.pos=lp;
    if(rd.air||!blocked(rp,rd.radius,right.id))right.pos=rp;
   }
@@ -424,13 +441,41 @@ void Simulation::updateEconomy(Entity& worker) {
 
 void Simulation::updateMovement(Entity& e) {
  const auto& d=definition(e.kind);if(d.building||e.kind==Kind::Resource||e.order==Order::Gather)return;
+ if(e.order==Order::Hold) {if(distanceSq(e.pos,e.goal)>5*5)moveToward(e,e.goal);return;}
+ auto pursue=[&](const Entity& target) {
+  const auto& targetDefinition=definition(target.kind);const float range=d.range+targetDefinition.radius;
+  const bool requiresSight=e.kind!=Kind::Mortar&&!d.air&&!targetDefinition.air;
+  const bool shotClear=!requiresSight||clearFireLine(e.pos,target.pos,obstacles_);
+  if(distance(e.pos,target.pos)<=range*0.95f&&shotClear)return;
+  Vec2 destination=add(target.pos,scale(normalized(subtract(e.pos,target.pos)),range*0.82f));
+  if(!shotClear) {
+   // Range alone is not a firing position. Find a terrain-clear point on the
+   // target's side of cover and let A* take the unit around the obstruction.
+   bool cached=!e.path.empty()&&distance(e.path.back(),target.pos)<=range&&clearFireLine(e.path.back(),target.pos,obstacles_);
+   if(cached)destination=e.path.back();
+   else {
+    float best=std::numeric_limits<float>::max();
+    for(int spoke=0;spoke<24;++spoke) {
+     const float angle=spoke*(2*Pi/24);Vec2 candidate=add(target.pos,{std::cos(angle)*range*0.82f,std::sin(angle)*range*0.82f});
+     if(blocked(candidate,d.radius+3,e.id)||!clearFireLine(candidate,target.pos,obstacles_))continue;
+     const float score=distanceSq(e.pos,candidate);if(score<best){best=score;destination=candidate;}
+    }
+   }
+  }
+  moveToward(e,destination);
+ };
+ if(e.kind==Kind::Mender&&e.order==Order::Attack) {
+  const Entity* ally=find(e.target);
+  if(!ally||!ally->alive()||ally->team!=e.team){e.target=0;e.order=Order::Idle;e.goal=e.pos;return;}
+  e.goal=ally->pos;
+  if(distance(e.pos,ally->pos)>d.range*0.7f)moveToward(e,add(ally->pos,scale(normalized(subtract(e.pos,ally->pos)),d.range*0.55f)));
+  return;
+ }
  if(e.order==Order::Move||e.order==Order::AttackMove) {
   if(e.order==Order::AttackMove&&e.target) {
    const Entity* target=find(e.target);
    if(target&&target->alive()&&visible(e.team,target->pos)&&distance(e.pos,target->pos)<=d.vision) {
-    float range=d.range+definition(target->kind).radius;
-    if(distance(e.pos,target->pos)>range*0.95f)moveToward(e,add(target->pos,scale(normalized(subtract(e.pos,target->pos)),range*0.82f)));
-    return;
+    pursue(*target);return;
    }
    e.target=0;
   }
@@ -440,8 +485,7 @@ void Simulation::updateMovement(Entity& e) {
   const Entity* target=find(e.target);
   if(!target||!target->alive()){e.target=0;e.order=Order::Idle;return;}
   if(!visible(e.team,target->pos)) {e.target=0;e.order=Order::AttackMove;moveToward(e,e.goal);return;}
-  e.goal=target->pos;float range=d.range+definition(target->kind).radius;
-  if(distance(e.pos,target->pos)>range*0.95f)moveToward(e,add(target->pos,scale(normalized(subtract(e.pos,target->pos)),range*0.82f)));
+  e.goal=target->pos;pursue(*target);
  } else if(e.order==Order::Idle&&!e.target&&distanceSq(e.pos,e.goal)>30*30) {
   // A unit that reached its formation slot can be displaced by traffic arriving
   // behind it. Reclaim the slot after that traffic passes instead of staying
@@ -450,8 +494,7 @@ void Simulation::updateMovement(Entity& e) {
  } else if(e.order==Order::Idle&&e.target) {
   const Entity* target=find(e.target);
   if(target&&target->alive()&&visible(e.team,target->pos)&&distance(e.pos,target->pos)<=d.vision&&distance(target->pos,e.goal)<d.vision) {
-   float range=d.range+definition(target->kind).radius;
-   if(distance(e.pos,target->pos)>range)moveToward(e,add(target->pos,scale(normalized(subtract(e.pos,target->pos)),range*0.82f)));
+   pursue(*target);
   } else e.target=0;
  }
 }
@@ -589,10 +632,7 @@ void Simulation::updateCombat(Entity& e) {
  const auto& td=definition(target->kind);
  if(distance(e.pos,target->pos)>d.range+td.radius)return;
  // Ground direct fire cannot shoot through terrain. Siege and aircraft arc over it.
- if(e.kind!=Kind::Mortar&&!d.air&&!td.air) {
-  Vec2 delta=subtract(target->pos,e.pos);const int samples=std::max(1,static_cast<int>(distance(e.pos,target->pos)/35));
-  for(int n=1;n<samples;++n){Vec2 p=add(e.pos,scale(delta,static_cast<float>(n)/samples));for(const auto& o:obstacles_)if(circleBox(p,2,o))return;}
- }
+ if(e.kind!=Kind::Mortar&&!d.air&&!td.air&&!clearFireLine(e.pos,target->pos,obstacles_))return;
  float modifier=1;
  if(e.kind==Kind::Striker&&(target->kind==Kind::Lancer||target->kind==Kind::Scout))modifier=1.35f;
  if(e.kind==Kind::Lancer&&(td.armor>=4||td.air))modifier=1.8f;

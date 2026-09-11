@@ -1,3 +1,2 @@
 CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
 PASS placement and construction
-RESULT passed=1 failed=0

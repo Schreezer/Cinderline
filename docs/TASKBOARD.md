@@ -1,35 +1,40 @@
 # Cinderline task board
 
+Current order, confirmed by the user on 2026-09-11: **mechanics and logic → aesthetics and assets → full playtest → iOS**. Development checks continue as mechanics change. Blender is installed for the later art pass.
+
 ## NOW
-- Checkpoint 0 acceptance: build and launch the Unreal project after UE 5.8.2 installation completes.
-- Validate the generated map, materials, camera, touch input, command HUD and a real skirmish inside Unreal.
+- Import and verify the original Blender models in Unreal.
+- Improve HUD readability and add restrained command, production and combat audio.
+- Preserve the verified mechanics while completing the presentation pass.
 
 ## NEXT
-- Launch the project in Unreal on macOS; test touch camera and selection on iOS.
-- Verify economy, construction, production, combat, technology and AI in the engine.
+- Run a fuller playtest of the integrated first-faction skirmish.
+- Inspect economy, production, scouting, composition choices and match pacing through gameplay.
+- Repair playtest findings before the deferred iOS stage.
 
 ## LATER
-- Tune measured match pacing toward 20–30 minutes.
-- Full mobile gesture pass, physical device performance and thermal profiling.
-- Asymmetric second faction, multiplayer, matchmaking, replay viewer and content.
+- Original 3D assets, animation, audio, effects and battlefield readability.
+- Full playtest and measured match pacing toward 20–30 minutes.
+- iPhone/iPad packaging, signing, physical gestures, safe areas, performance and thermal tests.
+- Asymmetric second faction, multiplayer, matchmaking, replay viewer and more content.
 
 ## DONE
-- Inspected repository: empty initial Git checkout.
-- Confirmed Xcode 26.6 / Apple Clang 21 are available.
-- Shared C++ simulation compiles with fixed-step economy, queues, construction, research, movement, combat, fog, paid AI and saved matches.
-- Three map layouts and a first faction with eight units and six buildings are implemented.
-- Standalone simulation rule tests and address/undefined-behavior sanitizer runs passed.
-- 200-unit movement regression passes after repairing blocked formation goals and displacement after arrival.
-- Three automated matches end through HQ destruction. The 20–30 minute balance target is still unproven.
-- Native macOS runner builds and launches. Actual UI checks covered menu, worker production, group selection, build preview, occupied-site rejection, construction, queue cancellation, pause/manual, save/load and army movement.
-- Native HUD crash traced to a nil text-attribute dictionary value. Font cache/fallback and safe attribute insertion passed a 6,000-frame saved-match rendering stress run.
-- Live native playtest reached natural defeat, displayed results, and successfully rematched. Exact construction health and damage preservation now have regression coverage.
-- Final frozen-source verification passed 12 simulation groups, all 3 CTests including 3,000 offscreen frames, and ASan/UBSan. Native subgroup filtering, viewport bounds, shortcut modifiers and priority damage alerts passed regression checks.
-- Unreal game mode, camera, controller, battlefield rendering, fog/minimap, HUD, touch controls and asset bootstrap are implemented and independently source-reviewed.
-- User started installing UE 5.8.2 in Epic Games Launcher.
+- Created the source structure, original Cinderline design, centralized definitions and command interface.
+- Implemented a fixed-step C++ simulation with economy, queues, construction, research, movement, combat, fog, paid AI and saved matches.
+- Implemented three map layouts and a first faction with eight units and six buildings.
+- Final mechanics verification passed 14 simulation groups, all 3 CTests including 3,000 native render frames, ASan/UBSan and both Unreal integration tests. Exact source hashes and results are recorded.
+- Repaired worker final approach, invalid placement, formation destinations, native HUD stability and exact construction health.
+- Native UI checks exercised production, selection, building, cancellation, pause, save/load, army movement, natural defeat and rematch.
+- UE 5.8.2 Mac Editor builds and launches the generated battlefield with working simulation and HUD.
+- Actual Unreal checks covered menu start, ore gathering, arrow pan, Home, wheel zoom, pause/resume and compact menu/battlefield layouts. The user confirmed START SKIRMISH works with their own mouse.
+- Unreal reached natural defeat through AI gameplay at 5:30 while the player base was left undefended. This was not a balanced human match test.
+- Original generated basalt and menu artwork are imported, with prompts and provenance recorded. Further art work is deferred until mechanics are ready.
+
+- Fixed cover pursuit, displaced Hold orders and support following. AI now evaluates visible remaining ore, dispatches local defense workers, advances while scouting and attaches new/orphaned Menders to armed leaders. A second review found no remaining important issue in this bounded pass.
+- Authored and roundtrip-validated 15 Blender models. Unreal import and presentation are the next checks.
 
 ## BLOCKED
-- Unreal build and launch: UE 5.8.2 installation is in progress. The earlier UE 5.3 directory was empty. `scripts/unreal.sh doctor` has not yet confirmed an installed editor.
-- iOS Unreal package and physical-device validation require a working engine and compatible toolchain.
+- Automated absolute mouse clicks do not update Unreal's cached mouse location on this Mac. Physical mouse start is user-confirmed; command integration tests and keyboard checks provide separate evidence.
+- No current mechanics work is blocked by iOS. Its deferred preflight is in [IOS_READINESS.md](IOS_READINESS.md).
 
-Checkpoint 0 remains incomplete until the Unreal development target launches successfully.
+Unreal desktop launch and camera navigation are now demonstrated. Physical touch acceptance and the later gameplay checkpoints remain open; source implementation alone does not complete them.
