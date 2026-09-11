@@ -6,6 +6,7 @@
 #include "EngineUtils.h"
 #include "InputCoreTypes.h"
 #include "Engine/World.h"
+#include "Engine/GameViewportClient.h"
 #include "Components/InputComponent.h"
 #include <algorithm>
 
@@ -17,6 +18,12 @@ float TouchScale(const APlayerController* Controller)
 {
     int W = 0, H = 0; Controller->GetViewportSize(W, H);
     return FMath::Max(1.0f, FMath::Min(W / 667.0f, H / 375.0f));
+}
+float MouseScale(const APlayerController* Controller)
+{
+    const UWorld* World = Controller->GetWorld();
+    const UGameViewportClient* Viewport = World ? World->GetGameViewport() : nullptr;
+    return Viewport ? FMath::Max(1.0f, Viewport->GetDPIScale()) : 1.0f;
 }
 }
 
@@ -174,7 +181,7 @@ void ACinderPlayerController::PointerMoved(FVector2D Position, float DeltaSecond
         bGestureSelect = true;
         Notify(TEXT("Drag to select an army"));
     }
-    const float Threshold = bPointerTouch ? 10.0f * TouchScale(this) : 7.0f;
+    const float Threshold = bPointerTouch ? 10.0f * TouchScale(this) : 7.0f * MouseScale(this);
     if (FVector2D::Distance(Position, PointerStart) > Threshold) bDragging = true;
     if (bDragging && !bGestureSelect && !bPointerUI && Battle && !Battle->IsMenu() && !Battle->IsPaused()) PanScreen(PointerLast, Position);
     PointerLast = Position;
@@ -190,7 +197,7 @@ void ACinderPlayerController::PointerReleased(FVector2D Position)
     {
         if (bPointerUI)
         {
-            if (!bDragging && FVector2D::Distance(Position, PointerStart) < (bPointerTouch ? 12.0f * TouchScale(this) : 15.0f))
+            if (!bDragging && FVector2D::Distance(Position, PointerStart) < (bPointerTouch ? 12.0f * TouchScale(this) : 15.0f * MouseScale(this)))
                 if (auto* HUD = Cast<ACinderHUD>(GetHUD())) HUD->HandleTap(PointerStart);
         }
         else if (Battle && !Battle->IsMenu() && !Battle->IsPaused() && Battle->Sim().winner() < 0)
@@ -284,7 +291,7 @@ void ACinderPlayerController::TapWorld(FVector2D Position, bool ForceCommand)
     }
     const cinder::Entity* Hit = nullptr;
     float Best = TNumericLimits<float>::Max();
-    const float PointerRadius = bPointerTouch ? 22.0f * TouchScale(this) : 24.0f;
+    const float PointerRadius = bPointerTouch ? 22.0f * TouchScale(this) : 24.0f * MouseScale(this);
     for (const auto& E : Battle->Sim().entities())
     {
         if (!E.alive() || (E.team != 0 && !Battle->Sim().visible(0, E.pos))) continue;

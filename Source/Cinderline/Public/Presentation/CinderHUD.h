@@ -8,6 +8,7 @@ class ACinderPlayerController;
 class ACinderBattlefield;
 class UTexture2D;
 class UFont;
+struct FSlateFontInfo;
 
 UCLASS()
 class CINDERLINE_API ACinderHUD : public AHUD
@@ -23,6 +24,8 @@ private:
     struct FButton { FBox2D Bounds; FString Action; int Argument = 0; };
     void Panel(float X, float Y, float W, float H, FLinearColor Color);
     void Label(const FString& Text, float X, float Y, FLinearColor Color, float Scale = 1);
+    FSlateFontInfo FontForScale(float Scale) const;
+    FVector2D MeasureLabel(const FString& Text, float Scale) const;
     void WrappedLabel(const FString& Text, float X, float Y, float MaxWidth, FLinearColor Color, float Scale);
     void SingleLineLabel(const FString& Text, float X, float Y, float MaxWidth, FLinearColor Color, float Scale);
     void Button(const FString& Text, const FString& Action, int Arg, float X, float Y, float W, bool Active = false);

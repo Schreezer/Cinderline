@@ -6,7 +6,9 @@
 
 class UInstancedStaticMeshComponent;
 class UMaterialInterface;
+class UMaterialInstanceDynamic;
 class UStaticMesh;
+class UTexture2D;
 class UTextureCube;
 
 /** Adapter requests are counted even in automation worlds without an audio subsystem. */
@@ -56,9 +58,16 @@ private:
     {
         UInstancedStaticMeshComponent* Mesh = nullptr;
         TArray<FTransform> Transforms;
+        bool bDynamic = true;
+        bool bDirty = true;
     };
-    FBatch& AddBatch(UStaticMesh* Mesh, FLinearColor Color);
+    FBatch& AddBatch(UStaticMesh* Mesh, FLinearColor Color, bool bCastShadow = false, bool bDynamic = true);
     void LoadModelBatches();
+    void InitializeEnvironment();
+    void InvalidateEnvironment();
+    void RefreshEnvironment();
+    void UpdateFogTexture();
+    void AddBuildingPad(const cinder::Entity& Entity);
     bool ValidateModel(UStaticMesh* Mesh, cinder::Kind Kind, FString& Reason) const;
     void AddEntity(const cinder::Entity& Entity);
     void FlushBatches();
@@ -75,6 +84,15 @@ private:
     TArray<int32> ModelBatchIndices;
     TArray<FString> ModelFallbackReasons;
     int32 ModelBatchStart = 0;
+    int32 ModelBatchCount = 0;
+    int32 FogPlaneBatch = INDEX_NONE;
+    int32 PadBatch = INDEX_NONE;
+    TArray<int32> RockBatchIndices;
+    TArray<uint8> LastFogCells;
+    TArray<uint8> LastObstacleReveal;
+    uint32 ObstacleGeometryHash = 0;
+    uint64 FogTextureUploads = 0;
+    bool bEnvironmentInvalid = true;
     int32 LastModelEntities = 0;
     int32 LastFallbackEntities = 0;
     UPROPERTY() TArray<TObjectPtr<UInstancedStaticMeshComponent>> MeshComponents;
@@ -84,6 +102,9 @@ private:
     UPROPERTY() TObjectPtr<UStaticMesh> Cylinder;
     UPROPERTY() TObjectPtr<UStaticMesh> Cone;
     UPROPERTY() TObjectPtr<UStaticMesh> Sphere;
+    UPROPERTY() TObjectPtr<UStaticMesh> Plane;
+    UPROPERTY(Transient) TObjectPtr<UTexture2D> FogTexture;
+    UPROPERTY(Transient) TObjectPtr<UMaterialInstanceDynamic> FogMaterial;
     UPROPERTY() TObjectPtr<UTextureCube> AmbientCubemap;
     UPROPERTY() TObjectPtr<UMaterialInterface> BaseMaterial;
 };

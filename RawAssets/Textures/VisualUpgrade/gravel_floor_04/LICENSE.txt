@@ -1,0 +1,8 @@
+Gravel Floor 04
+Author: Charlotte Baglioni
+Publisher: Poly Haven
+Asset: https://polyhaven.com/a/gravel_floor_04
+License: CC0-1.0
+Publisher license statement: https://polyhaven.com/license
+CC0 deed: https://creativecommons.org/publicdomain/zero/1.0/
+The four texture images retain their original upstream names and bytes.

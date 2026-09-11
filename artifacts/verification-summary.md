@@ -1,3 +1,17 @@
+# Desktop visual upgrade checkpoint — 2026-09-11
+
+Current evidence matches `visual-upgrade-tested-source-sha256.txt`: 132 source/configuration/asset inputs. Everything after the divider below is historical evidence for earlier checkpoints.
+
+- Native 2560×1440 Retina output, DPI 2, TSR at 100% primary/secondary resolution, selective shadows, AO, bloom and screen-space reflections verified through effective runtime settings.
+- Four original Blender cliffs, four 2K PBR texture maps, four versioned material graphs and five model material instances imported and validated. Runtime loaded 15/15 models with zero primitive fallbacks.
+- 26 portable rule groups, all 3 CTests including 3,000 native frames, UE Development build, and all 4 strict Unreal integrations passed. Final engine run: `20260911T161206Z-13681`, zero test errors/warnings.
+- Actual menu, combat, cliff/roster, normal-match, pause and compact screenshots inspected. A normal game gathered from 500 to 1,526 ore by the 1:13 pause; keyboard start/camera/pause/resume exercised.
+- Three 180-frame foreground samples at 2560×1440 measured 45.80, 46.63 and 47.58 FPS. These are brief wall-clock samples, not GPU, sustained late-game, shipping or mobile performance claims.
+- Fixed font rasterization, Retina layout/input tolerances, menu seams, material projection/tone and repeat-import graph deletion. No simulation or native code changed.
+- See `visual-upgrade-verification.json`, `visual-upgrade-runtime-evidence.txt`, `visual-upgrade-import-results.json` and `docs/VISUAL_UPGRADE_PASS.md`. Physical pointer/touch, rigged animation, full-match balance, sustained 60 FPS and iOS remain open.
+
+---
+
 # Combat feedback checkpoint — 2026-09-11
 
 Current evidence for the source recorded in `combat-feedback-tested-source-sha256.txt` (101 source/content files). Everything below the following divider is historical evidence for earlier checkpoints.

@@ -1,0 +1,159 @@
+{
+  "utc": "2026-09-11T16:19:00.843351+00:00",
+  "engine": "Unreal Engine 5.8.2 Mac Development SF_METAL_SM5",
+  "hardware": "Apple M1 Max, 32 GPU cores, 32 GB RAM",
+  "source_input_count": 132,
+  "source_manifest": "artifacts/visual-upgrade-tested-source-sha256.txt",
+  "portable": {
+    "groups": 26,
+    "ctest_passed": 3,
+    "native_render_frames": 3000,
+    "result": "artifacts/visual-upgrade-ctest-results.txt"
+  },
+  "unreal": {
+    "build": "passed",
+    "integration_run": "20260911T161206Z-13681",
+    "integration_passed": 4,
+    "test_errors": 0,
+    "test_warnings": 0
+  },
+  "import": {
+    "version": "desktop-pbr-v2.2.1",
+    "success": true,
+    "materials": 4,
+    "pbr_textures": 4,
+    "fog_default_textures": 1,
+    "model_instances": 5,
+    "cliff_meshes": 4,
+    "report": "artifacts/visual-upgrade-import-results.json"
+  },
+  "profiles": [
+    {
+      "map": "Frontier",
+      "samples": "180",
+      "warmup_frames": "30",
+      "viewport_px": "2560x1440",
+      "window_seconds": "3.930",
+      "mean_ms": "21.833",
+      "median_ms": "21.779",
+      "p95_ms": "23.093",
+      "fps": "45.80",
+      "foreground": "1",
+      "background_frames": "0",
+      "measurement": "rendered_viewport_wall_clock",
+      "gpu_timing": "unavailable",
+      "scene": "frozen_weapon_fixture"
+    },
+    {
+      "map": "Frontier",
+      "samples": "180",
+      "warmup_frames": "30",
+      "viewport_px": "2560x1440",
+      "window_seconds": "3.860",
+      "mean_ms": "21.445",
+      "median_ms": "21.443",
+      "p95_ms": "22.398",
+      "fps": "46.63",
+      "foreground": "1",
+      "background_frames": "0",
+      "measurement": "rendered_viewport_wall_clock",
+      "gpu_timing": "unavailable",
+      "scene": "live_cliff_roster_fixture"
+    },
+    {
+      "map": "Frontier",
+      "samples": "180",
+      "warmup_frames": "30",
+      "viewport_px": "2560x1440",
+      "window_seconds": "3.783",
+      "mean_ms": "21.016",
+      "median_ms": "20.911",
+      "p95_ms": "22.091",
+      "fps": "47.58",
+      "foreground": "1",
+      "background_frames": "0",
+      "measurement": "rendered_viewport_wall_clock",
+      "gpu_timing": "unavailable",
+      "scene": "normal_skirmish_gathering"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "artifacts/visual-upgrade-after-battlefield.png",
+      "width": 2560,
+      "height": 1440,
+      "sha256": "fbad5cdc3249016161d99ffa175a55729a10a48753156f7e90e40d960c1294f7",
+      "inspected": true
+    },
+    {
+      "file": "artifacts/visual-upgrade-after-cliffs.png",
+      "width": 2560,
+      "height": 1440,
+      "sha256": "8b2fff4b644f40102ccd83137868302ab3a94ec5bae66a80f9502a364157e6cf",
+      "inspected": true
+    },
+    {
+      "file": "artifacts/visual-upgrade-after-compact-battlefield.png",
+      "width": 1334,
+      "height": 750,
+      "sha256": "b890e4c5c65b9321f54b5421d8f816488e102b9ee2f78b400e1b4c1a4f868ac8",
+      "inspected": true
+    },
+    {
+      "file": "artifacts/visual-upgrade-after-compact-menu.png",
+      "width": 1334,
+      "height": 750,
+      "sha256": "2091fe66d9dfd065752139a9df2dc9429ae28b4fee7a6a85c59fc8c6c4888e35",
+      "inspected": true
+    },
+    {
+      "file": "artifacts/visual-upgrade-after-menu.png",
+      "width": 2560,
+      "height": 1440,
+      "sha256": "ebd964e5d9645d38b687ee6d582240fbb0da296130518ef9261d3829718db87e",
+      "inspected": true
+    },
+    {
+      "file": "artifacts/visual-upgrade-after-normal-match.png",
+      "width": 2560,
+      "height": 1440,
+      "sha256": "713b53446f17bacdb91a2ebe838bc86c4de20f400fe4c9acb64dcc25fafdaa90",
+      "inspected": true
+    },
+    {
+      "file": "artifacts/visual-upgrade-after-pause.png",
+      "width": 2560,
+      "height": 1440,
+      "sha256": "b588e62643f35d62b787d9b485f7ed9649ad19988c7b19eadb663813070e7ba2",
+      "inspected": true
+    }
+  ],
+  "runtime": {
+    "desktop_pixels": [
+      2560,
+      1440
+    ],
+    "compact_pixels": [
+      1334,
+      750
+    ],
+    "dpi_scale": 2,
+    "primary_screen_percentage": 100,
+    "secondary_screen_percentage": 100,
+    "high_dpi_active": true,
+    "models_loaded": 15,
+    "model_fallbacks": 0,
+    "cliff_kinds_loaded": 4,
+    "cliff_instances_visible_in_fixture": 2,
+    "fog": "256_texture_plane",
+    "normal_match_observation": "Enter started a fresh skirmish; ore increased from 500 at 0:05 to 1166 at 0:50. Pause at 1:13 showed 1526 ore. Keyboard pan, home, pause and resume exercised. Fresh menu restored."
+  },
+  "limits": [
+    "Short 180-frame wall-clock samples, not GPU or sustained late-game performance.",
+    "No new ASan run; simulation and native code unchanged, with fresh portable/native CTests.",
+    "Unreal headless integrations do not prove pointer or physical touch interaction.",
+    "Automated absolute clicks still did not activate Start; keyboard Start worked. Physical mouse worked when the user tested the earlier build.",
+    "No full human match, final animation, color-vision accessibility, iOS build or physical-device test claimed.",
+    "No runtime Error/Fatal/ensure found; engine/editor startup warnings remain in Saved/Logs/CinderlineVisualUpgradeFinalPlay.log."
+  ]
+}

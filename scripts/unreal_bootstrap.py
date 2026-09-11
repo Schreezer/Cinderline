@@ -98,6 +98,14 @@ def bootstrap():
     model_spec.loader.exec_module(model_helper)
     model_helper.import_model_assets(reimport=os.environ.get("CINDER_REIMPORT_MODELS") == "1", required=False)
 
+    # The legacy model importer refreshes the five slot instances. Reapply the
+    # explicit V2 contract once installed so future bootstraps retain that upgrade.
+    if os.environ.get("CINDER_VISUAL_UPGRADE") == "1" or unreal.EditorAssetLibrary.does_asset_exist("/Game/Art/Materials/M_CinderModelV2"):
+        visual_spec = importlib.util.spec_from_file_location("cinderline_visual_upgrade", os.path.join(os.path.dirname(__file__), "unreal_visual_upgrade.py"))
+        visual_helper = importlib.util.module_from_spec(visual_spec)
+        visual_spec.loader.exec_module(visual_helper)
+        visual_helper.upgrade_visual_assets()
+
     audio_helper_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "unreal_audio_assets.py")
     audio_spec = importlib.util.spec_from_file_location("cinderline_audio_assets", audio_helper_path)
     audio_helper = importlib.util.module_from_spec(audio_spec)

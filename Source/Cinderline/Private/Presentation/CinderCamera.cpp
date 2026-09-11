@@ -33,6 +33,25 @@ ACinderCamera::ACinderCamera()
     Camera->PostProcessSettings.AutoExposureApplyPhysicalCameraExposure = false;
     Camera->PostProcessSettings.bOverride_AutoExposureBias = true;
     Camera->PostProcessSettings.AutoExposureBias = 0;
+#if PLATFORM_MAC
+    // Ground contact and a restrained core glow give the small RTS silhouettes depth.
+    Camera->PostProcessSettings.bOverride_AmbientOcclusionIntensity = true;
+    Camera->PostProcessSettings.AmbientOcclusionIntensity = 0.6f;
+    Camera->PostProcessSettings.bOverride_AmbientOcclusionRadius = true;
+    Camera->PostProcessSettings.AmbientOcclusionRadius = 70.0f;
+    Camera->PostProcessSettings.bOverride_AmbientOcclusionRadiusInWS = true;
+    Camera->PostProcessSettings.AmbientOcclusionRadiusInWS = true;
+    Camera->PostProcessSettings.bOverride_AmbientOcclusionQuality = true;
+    Camera->PostProcessSettings.AmbientOcclusionQuality = 80.0f;
+    Camera->PostProcessSettings.bOverride_BloomIntensity = true;
+    Camera->PostProcessSettings.BloomIntensity = 0.2f;
+    Camera->PostProcessSettings.bOverride_BloomThreshold = true;
+    Camera->PostProcessSettings.BloomThreshold = 1.0f;
+    Camera->PostProcessSettings.bOverride_MotionBlurAmount = true;
+    Camera->PostProcessSettings.MotionBlurAmount = 0.0f;
+    Camera->PostProcessSettings.bOverride_DepthOfFieldEnabled = true;
+    Camera->PostProcessSettings.DepthOfFieldEnabled = false;
+#endif
     SetActorLocation(TargetPosition);
 }
 

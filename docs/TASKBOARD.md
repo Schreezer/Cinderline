@@ -7,6 +7,7 @@ Current order, confirmed by the user on 2026-09-11: **mechanics and logic → ae
 - Continue through a full skirmish using [PLAYTEST.md](PLAYTEST.md).
 
 ## NEXT
+- Improve locomotion/work animation and terrain composition; profile sustained late-game rendering toward 60 FPS at the chosen desktop quality. The first visual upgrade is complete in [VISUAL_UPGRADE_PASS.md](VISUAL_UPGRADE_PASS.md).
 - Continue repairing player-interaction findings and assess economy, scouting, counters, expansion and match pacing.
 - Listen to combat, interface and production cues together and adjust the in-game mix.
 - Inspect the full roster and enemy team palette through gameplay, then improve animation, fog edges and late-game rendering.
@@ -17,6 +18,7 @@ Current order, confirmed by the user on 2026-09-11: **mechanics and logic → ae
 - Asymmetric second faction, multiplayer, matchmaking, replay viewer and more content.
 
 ## DONE
+- Upgraded the desktop menu/HUD to crisp Retina rendering, added shadows/AO/bloom/TSR, PBR terrain/model materials, four original Blender cliff meshes and softer fog. Imported and validated all assets; passed 26 portable groups, 3 CTests and 4 Unreal integrations. Inspected desktop/compact scenes and sampled 45.8–47.6 FPS at 2560×1440. See [VISUAL_UPGRADE_PASS.md](VISUAL_UPGRADE_PASS.md) for evidence and remaining art/performance work.
 - Added explicit combat events, distinct weapon/healing/impact/destruction visuals, fog-safe coalesced audio and version 4 saves with version 1–3 readers. Passed 26 portable groups, native checks, sanitizers and four Unreal integration tests; inspected desktop/compact combat fixtures and live audio submissions. See [COMBAT_FEEDBACK_PASS.md](COMBAT_FEEDBACK_PASS.md) for evidence and playtest limits.
 - Implemented scouting-driven AI: remembered enemy bases, recent army sightings, searches after clearing a base, adaptive paid production and version 3 knowledge persistence with version 1/2 compatibility. Passed 23 portable groups, native checks, sanitizers and all 3 Unreal integration tests. [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md) tracks completion, evidence and remaining work.
 - Fixed Drudge construction: workers travel, stop mining, build on-site, pause when interrupted and resume prior mining after completion. Added free reassignment, save migration, AI builder reservation and construction state UI. Fresh verification passed 19 rule groups, all 3 CTests, ASan/UBSan and both Unreal integration tests. See [CONSTRUCTION_PASS.md](CONSTRUCTION_PASS.md).

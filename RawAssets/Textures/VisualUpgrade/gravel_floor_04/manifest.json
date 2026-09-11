@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "downloaded_at_utc": "2026-09-11T15:48:57.440058+00:00",
+  "asset_id": "gravel_floor_04",
+  "asset_name": "Gravel Floor 04",
+  "publisher": "Poly Haven",
+  "authors": {
+    "Charlotte Baglioni": "All"
+  },
+  "asset_page": "https://polyhaven.com/a/gravel_floor_04",
+  "metadata_api": "https://api.polyhaven.com/info/gravel_floor_04",
+  "files_api": "https://api.polyhaven.com/files/gravel_floor_04",
+  "license": "CC0-1.0",
+  "license_verified_at": "https://polyhaven.com/license",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source_tile_dimensions_mm": [
+    2460.0000381469727,
+    2460.0000381469727
+  ],
+  "tile_dimensions_cm": [
+    246.0,
+    246.0
+  ],
+  "normal_convention": "DirectX tangent space; no green-channel flip required for Unreal",
+  "files": [
+    {
+      "filename": "gravel_floor_04_diff_2k.png",
+      "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_diff_2k.png",
+      "role": "base_color",
+      "color_space": "sRGB",
+      "channels": "RGB",
+      "width": 2048,
+      "height": 2048,
+      "bit_depth": 16,
+      "png_color_type": 2,
+      "bytes": 23242841,
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_diff_2k.png",
+      "upstream_md5": "72062ebb7db8129a038681637a53d646",
+      "sha256": "1c07ed534bdfc7572e43d8a57c1e00285685c9134862331a23d1b904a0d5da88"
+    },
+    {
+      "filename": "gravel_floor_04_nor_dx_2k.png",
+      "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_nor_dx_2k.png",
+      "role": "normal",
+      "color_space": "linear",
+      "channels": "RGB tangent-space DirectX",
+      "width": 2048,
+      "height": 2048,
+      "bit_depth": 16,
+      "png_color_type": 2,
+      "bytes": 24364042,
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_nor_dx_2k.png",
+      "upstream_md5": "724148e5643c6ada928532d33d604afc",
+      "sha256": "215d17c4bf39273d1fdb1185d3c369b011137182cc88b52b44a5f78ffcffdee4"
+    },
+    {
+      "filename": "gravel_floor_04_rough_2k.png",
+      "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_rough_2k.png",
+      "role": "roughness",
+      "color_space": "linear",
+      "channels": "R",
+      "width": 2048,
+      "height": 2048,
+      "bit_depth": 16,
+      "png_color_type": 0,
+      "bytes": 6518222,
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_rough_2k.png",
+      "upstream_md5": "458fe89fc433292ee74359bfb0c40647",
+      "sha256": "9ca48f93f051c12eca19648d5efe8c2f6bfb6bb18475cdf3edab43cd46ab84ba"
+    },
+    {
+      "filename": "gravel_floor_04_ao_2k.png",
+      "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_ao_2k.png",
+      "role": "ambient_occlusion",
+      "color_space": "linear",
+      "channels": "R",
+      "width": 2048,
+      "height": 2048,
+      "bit_depth": 16,
+      "png_color_type": 0,
+      "bytes": 7812901,
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_ao_2k.png",
+      "upstream_md5": "f0682fbb4044f3ad103703d281b34ee9",
+      "sha256": "51082bff9d1e94114dc79d91f53fcd3df63318c1d95bd7ced393244c0c3de5dd"
+    }
+  ],
+  "validation": "Original files unchanged; upstream size and MD5 matched, SHA256 computed, PNG IHDR2048x2048 verified. No image resizing, editing, or packing performed."
+}

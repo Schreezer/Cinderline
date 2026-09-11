@@ -62,6 +62,9 @@ case "$action" in
       '  ./scripts/unreal.sh setup        Build, then bootstrap' \
       '  ./scripts/unreal.sh editor       Open the Unreal editor' \
       '  ./scripts/unreal.sh play         Run the native game in a standalone window' \
+      '    Mac defaults to 2560x1440 framebuffer pixels; Linux defaults to 1280x720.' \
+      '    Override with CINDERLINE_RES_X / CINDERLINE_RES_Y or -ResX=667 -ResY=375.' \
+      '    CLI resolution values take precedence over environment values.' \
       '  ./scripts/unreal.sh package-ios  Cook/package development iOS (requires signing)'
     ;;
   doctor)
@@ -81,7 +84,33 @@ case "$action" in
   play)
     find_engine
     [[ -f "$project_root/Content/Maps/Frontier.umap" ]] || { printf '%s\n' 'Run ./scripts/unreal.sh setup first to generate the map.' >&2; exit 2; }
-    exec "$editor" "$project_file" /Game/Maps/Frontier -game -windowed -ResX=1280 -ResY=720 -log "$@"
+    if [[ "$platform" == Mac ]]; then
+      play_res_x="${CINDERLINE_RES_X:-2560}"
+      play_res_y="${CINDERLINE_RES_Y:-1440}"
+    else
+      play_res_x="${CINDERLINE_RES_X:-1280}"
+      play_res_y="${CINDERLINE_RES_Y:-720}"
+    fi
+    play_window_mode=-windowed
+    play_arguments=("$project_file" /Game/Maps/Frontier -game -log)
+    # Resolve overrides once: Unreal otherwise receives conflicting resolution flags.
+    while (( $# )); do
+      case "$1" in
+        -[Rr][Ee][Ss][Xx]=*) play_res_x="${1#*=}" ;;
+        -[Rr][Ee][Ss][Yy]=*) play_res_y="${1#*=}" ;;
+        -[Ww][Ii][Nn][Dd][Oo][Ww][Ee][Dd]) play_window_mode=-windowed ;;
+        -[Ff][Uu][Ll][Ll][Ss][Cc][Rr][Ee][Ee][Nn]) play_window_mode=-fullscreen ;;
+        *) play_arguments+=("$1") ;;
+      esac
+      shift
+    done
+    for play_dimension in "$play_res_x" "$play_res_y"; do
+      if [[ ! "$play_dimension" =~ ^[1-9][0-9]{0,4}$ ]] || (( play_dimension > 16384 )); then
+        printf '%s\n' 'Framebuffer dimensions must be integers from 1 to 16384.' >&2
+        exit 2
+      fi
+    done
+    exec "$editor" "${play_arguments[@]}" "$play_window_mode" "-ResX=$play_res_x" "-ResY=$play_res_y"
     ;;
   package-ios)
     find_engine

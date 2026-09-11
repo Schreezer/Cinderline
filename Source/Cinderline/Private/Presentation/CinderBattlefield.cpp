@@ -7,6 +7,7 @@
 #include "Engine/GameInstance.h"
 #include "Engine/SkyLight.h"
 #include "Engine/StaticMesh.h"
+#include "Engine/Texture2D.h"
 #include "Engine/TextureCube.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -14,6 +15,8 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
 #include "Misc/Paths.h"
+#include "Misc/App.h"
+#include "RHITypes.h"
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
 #include "UObject/ConstructorHelpers.h"
@@ -25,6 +28,14 @@ DEFINE_LOG_CATEGORY_STATIC(LogCinderCombat, Log, All);
 namespace
 {
 constexpr int32 ModelCount = 15;
+constexpr int32 FogTextureSize = 256;
+constexpr int32 FogPixelsPerCell = FogTextureSize / cinder::Simulation::FogSize;
+static_assert(FogPixelsPerCell == 4, "Fog edge guards assume four pixels per simulation cell");
+struct FFogTextureUpload
+{
+    FUpdateTextureRegion2D Region{0, 0, 0, 0, FogTextureSize, FogTextureSize};
+    TArray<uint8> Pixels;
+};
 const TCHAR* ModelAssetNames[ModelCount] = {
     TEXT("SM_Drudge"), TEXT("SM_Ember"), TEXT("SM_Needle"), TEXT("SM_Skim"),
     TEXT("SM_Anvil"), TEXT("SM_Cinderthrow"), TEXT("SM_Mend"), TEXT("SM_Veil"),
@@ -58,19 +69,22 @@ ACinderBattlefield::ACinderBattlefield()
     static ConstructorHelpers::FObjectFinder<UStaticMesh> CylinderAsset(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> ConeAsset(TEXT("/Engine/BasicShapes/Cone.Cone"));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereAsset(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
+    static ConstructorHelpers::FObjectFinder<UStaticMesh> PlaneAsset(TEXT("/Engine/BasicShapes/Plane.Plane"));
     static ConstructorHelpers::FObjectFinder<UTextureCube> AmbientAsset(TEXT("/Engine/MapTemplates/Sky/DaylightAmbientCubemap.DaylightAmbientCubemap"));
     Cube = CubeAsset.Object; Cylinder = CylinderAsset.Object; Cone = ConeAsset.Object; Sphere = SphereAsset.Object;
+    Plane = PlaneAsset.Object;
     AmbientCubemap = AmbientAsset.Object;
 }
 
-ACinderBattlefield::FBatch& ACinderBattlefield::AddBatch(UStaticMesh* Mesh, FLinearColor Color)
+ACinderBattlefield::FBatch& ACinderBattlefield::AddBatch(UStaticMesh* Mesh, FLinearColor Color, bool bCastShadow, bool bDynamic)
 {
     auto* Component = NewObject<UInstancedStaticMeshComponent>(this);
     Component->SetupAttachment(RootComponent);
     Component->SetStaticMesh(Mesh);
     Component->SetMobility(EComponentMobility::Movable);
     Component->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-    Component->SetCastShadow(false);
+    Component->SetCastShadow(bCastShadow);
+    Component->SetCastContactShadow(bCastShadow);
     Component->RegisterComponent();
     if (BaseMaterial)
     {
@@ -79,7 +93,7 @@ ACinderBattlefield::FBatch& ACinderBattlefield::AddBatch(UStaticMesh* Mesh, FLin
         Component->SetMaterial(0, Material);
     }
     MeshComponents.Add(Component);
-    FBatch Batch; Batch.Mesh = Component;
+    FBatch Batch; Batch.Mesh = Component; Batch.bDynamic = bDynamic;
     Batches.Add(MoveTemp(Batch));
     return Batches.Last();
 }
@@ -172,7 +186,7 @@ void ACinderBattlefield::LoadModelBatches()
         for (int32 Team = 0; Team < (Resource ? 1 : 2); ++Team)
         {
             const int32 BatchIndex = Batches.Num();
-            FBatch& Batch = AddBatch(Mesh, FLinearColor::White);
+            FBatch& Batch = AddBatch(Mesh, FLinearColor::White, true);
             for (int32 Slot = 0; Slot < 3; ++Slot)
                 Batch.Mesh->SetMaterial(Slot, ModelMaterials[Resource && Slot < 2 ? OreMaterialStart + Slot : Slot]);
             const int32 Palette = Resource ? 2 : Team;
@@ -182,7 +196,8 @@ void ACinderBattlefield::LoadModelBatches()
         }
         ++Loaded;
     }
-    UE_LOG(LogCinderModels, Verbose, TEXT("Loaded %d/%d models in %d ISM batches; cinder.models reports live usage."), Loaded, ModelCount, Batches.Num() - ModelBatchStart);
+    ModelBatchCount = Batches.Num() - ModelBatchStart;
+    UE_LOG(LogCinderModels, Verbose, TEXT("Loaded %d/%d models in %d ISM batches; cinder.models reports live usage."), Loaded, ModelCount, ModelBatchCount);
 }
 
 void ACinderBattlefield::LogModelStatus() const
@@ -190,7 +205,16 @@ void ACinderBattlefield::LogModelStatus() const
     int32 Loaded = 0;
     for (const auto& Mesh : ModelMeshes) if (Mesh) ++Loaded;
     UE_LOG(LogCinderModels, Display, TEXT("CINDERLINE_RENDER_MODELS loaded=%d/%d model_batches=%d rendered_model_entities=%d rendered_fallback_entities=%d"),
-        Loaded, ModelCount, Batches.Num() - ModelBatchStart, LastModelEntities, LastFallbackEntities);
+        Loaded, ModelCount, ModelBatchCount, LastModelEntities, LastFallbackEntities);
+    int32 RockKinds = 0, RockInstances = 0;
+    for (int32 Index : RockBatchIndices) if (Index != INDEX_NONE)
+    {
+        ++RockKinds;
+        RockInstances += Batches[Index].Mesh->GetInstanceCount();
+    }
+    UE_LOG(LogCinderModels, Display, TEXT("CINDERLINE_RENDER_WORLD rock_kinds=%d/4 rock_instances=%d fog=%s fog_uploads=%llu pads=%d"),
+        RockKinds, RockInstances, FogPlaneBatch == INDEX_NONE ? TEXT("grid_fallback") : TEXT("256_texture_plane"),
+        FogTextureUploads, PadBatch == INDEX_NONE ? 0 : Batches[PadBatch].Mesh->GetInstanceCount());
     for (int32 Index = 0; Index < ModelCount; ++Index)
     {
         if (ModelMeshes.IsValidIndex(Index) && ModelMeshes[Index])
@@ -203,6 +227,210 @@ void ACinderBattlefield::LogModelStatus() const
     }
 }
 
+void ACinderBattlefield::InitializeEnvironment()
+{
+    RockBatchIndices.Init(INDEX_NONE, 4);
+    auto* RockMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2"), nullptr, LOAD_NoWarn);
+    for (int32 Index = 0; Index < 4; ++Index)
+    {
+        const FString Name = FString::Printf(TEXT("SM_BasaltCliff_%c"), TCHAR('A' + Index));
+        const FString Path = FString::Printf(TEXT("/Game/Art/Environment/%s.%s"), *Name, *Name);
+        auto* Mesh = LoadObject<UStaticMesh>(nullptr, *Path, nullptr, LOAD_NoWarn);
+        if (!Mesh) continue;
+        // Environment imports use a separate one-slot contract, not the unit-model validator.
+        const FBox Bounds = Mesh->GetBoundingBox();
+        if (!Bounds.GetSize().Equals(FVector(100), 1.0f) || !Bounds.GetCenter().Equals(FVector(0, 0, 50), 1.0f)) continue;
+        RockBatchIndices[Index] = Batches.Num();
+        FBatch& Batch = AddBatch(Mesh, FLinearColor(0.15f, 0.18f, 0.19f), true, false);
+        if (RockMaterial) Batch.Mesh->SetMaterial(0, RockMaterial);
+        else if (Mesh->GetMaterial(0)) Batch.Mesh->SetMaterial(0, Mesh->GetMaterial(0));
+    }
+    PadBatch = Batches.Num();
+    FBatch& Pad = AddBatch(Cube, FLinearColor(0.10f, 0.14f, 0.15f), false);
+    if (auto* PadMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal"), nullptr, LOAD_NoWarn))
+        Pad.Mesh->SetMaterial(0, PadMaterial);
+
+    auto* FogBase = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/Materials/M_CinderFogV2.M_CinderFogV2"), nullptr, LOAD_NoWarn);
+    if (FogBase && Plane && FApp::CanEverRender())
+    {
+        // An opaque initial texture prevents a reveal while the first region upload is queued.
+        TArray64<uint8> InitialPixels;
+        InitialPixels.SetNumZeroed(FogTextureSize * FogTextureSize * 4);
+        for (int32 Pixel = 0; Pixel < FogTextureSize * FogTextureSize; ++Pixel)
+        {
+            InitialPixels[Pixel * 4 + 2] = 255; // BGRA storage; material samples R for opacity.
+            InitialPixels[Pixel * 4 + 3] = 255;
+        }
+        FogTexture = UTexture2D::CreateTransient(FogTextureSize, FogTextureSize, PF_B8G8R8A8, NAME_None, InitialPixels);
+        if (FogTexture)
+        {
+            FogTexture->SRGB = false;
+            FogTexture->NeverStream = true;
+            FogTexture->Filter = TF_Bilinear;
+            FogTexture->AddressX = TA_Clamp;
+            FogTexture->AddressY = TA_Clamp;
+            FogTexture->UpdateResource();
+            FogMaterial = UMaterialInstanceDynamic::Create(FogBase, this);
+            FogMaterial->SetTextureParameterValue(TEXT("FogMask"), FogTexture);
+            FogMaterial->SetVectorParameterValue(TEXT("FogColor"), FLinearColor(0.010f, 0.017f, 0.027f));
+            FogMaterial->SetVectorParameterValue(TEXT("FogExploredColor"), FLinearColor(0.027f, 0.041f, 0.049f));
+            FogPlaneBatch = Batches.Num();
+            FBatch& Fog = AddBatch(Plane, FLinearColor::Black, false, false);
+            Fog.Mesh->SetMaterial(0, FogMaterial);
+            Fog.Mesh->bVisibleInReflectionCaptures = false;
+            Fog.Mesh->bVisibleInRealTimeSkyCaptures = false;
+            Fog.Mesh->bVisibleInReflections = false;
+            Fog.Mesh->SetVisibleInRayTracing(false);
+            Fog.Mesh->SetAffectDistanceFieldLighting(false);
+            Fog.Mesh->SetAffectDynamicIndirectLighting(false);
+            Fog.Mesh->SetReceivesDecals(false);
+            Fog.Mesh->SetRenderInDepthPass(false);
+            Fog.Mesh->SetTranslucentSortPriority(10);
+        }
+    }
+    InvalidateEnvironment();
+}
+
+void ACinderBattlefield::InvalidateEnvironment()
+{
+    bEnvironmentInvalid = true;
+    LastFogCells.Reset();
+    LastObstacleReveal.Reset();
+}
+
+void ACinderBattlefield::RefreshEnvironment()
+{
+    // Static terrain is submitted only after reset/load or a newly explored obstacle.
+    uint32 GeometryHash = GetTypeHash(Simulation.config().map);
+    TArray<uint8> Revealed;
+    Revealed.Reserve(static_cast<int32>(Simulation.obstacles().size()));
+    for (const auto& Obstacle : Simulation.obstacles())
+    {
+        GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.center.x));
+        GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.center.y));
+        GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.half.x));
+        GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.half.y));
+        Revealed.Add(Simulation.explored(0, Obstacle.center) ? 1 : 0);
+    }
+    if (!bEnvironmentInvalid && GeometryHash == ObstacleGeometryHash && Revealed == LastObstacleReveal) return;
+    if (bEnvironmentInvalid)
+    {
+        Batches[0].Transforms.Reset();
+        Batches[0].Transforms.Add(FTransform(FQuat::Identity, FVector(2400, 2400, -16), FVector(49, 49, 0.3f)));
+        Batches[0].bDirty = true;
+        if (FogPlaneBatch != INDEX_NONE)
+        {
+            FBatch& Fog = Batches[FogPlaneBatch];
+            Fog.Transforms.Reset();
+            Fog.Transforms.Add(FTransform(FQuat::Identity, FVector(2400, 2400, 2.5f), FVector(48, 48, 1)));
+            Fog.bDirty = true;
+        }
+    }
+    Batches[1].Transforms.Reset(); Batches[1].bDirty = true;
+    for (int32 Index : RockBatchIndices) if (Index != INDEX_NONE)
+    {
+        Batches[Index].Transforms.Reset(); Batches[Index].bDirty = true;
+    }
+    int32 ObstacleIndex = 0;
+    for (const auto& Obstacle : Simulation.obstacles())
+    {
+        const int32 Seed = ObstacleIndex++;
+        if (!Revealed[Seed]) continue;
+        const bool bLongX = Obstacle.half.x >= Obstacle.half.y;
+        const float LongSize = 2 * (bLongX ? Obstacle.half.x : Obstacle.half.y);
+        const int32 Segments = FMath::Clamp(FMath::CeilToInt(LongSize / 430.0f), 1, 4);
+        for (int32 Segment = 0; Segment < Segments; ++Segment)
+        {
+            const int32 Variant = (Seed * 3 + Segment) % 4;
+            const int32 BatchIndex = RockBatchIndices.IsValidIndex(Variant) ? RockBatchIndices[Variant] : INDEX_NONE;
+            const float Width = Obstacle.half.x * 2 / (bLongX ? Segments : 1);
+            const float Depth = Obstacle.half.y * 2 / (bLongX ? 1 : Segments);
+            const float Offset = (Segment + 0.5f) * LongSize / Segments - LongSize * 0.5f;
+            const FVector Position(Obstacle.center.x + (bLongX ? Offset : 0), Obstacle.center.y + (bLongX ? 0 : Offset), -0.5f);
+            const float Height = FMath::Clamp(FMath::Min(Width, Depth) * (0.48f + 0.06f * ((Seed + Segment) % 4)), 70.0f, 195.0f);
+            if (BatchIndex == INDEX_NONE)
+            {
+                Batches[1].Transforms.Add(FTransform(FQuat::Identity, Position + FVector(0, 0, Height * 0.5f), FVector(Width / 100, Depth / 100, Height / 100)));
+                continue;
+            }
+            // Quarter-turn variation preserves the exact authored blocked rectangle.
+            const int32 QuarterTurn = (Seed + Segment * 3) % 4;
+            const FVector Scale(QuarterTurn % 2 ? Depth / 100 : Width / 100,
+                                QuarterTurn % 2 ? Width / 100 : Depth / 100, Height / 100);
+            Batches[BatchIndex].Transforms.Add(FTransform(FRotator(0, QuarterTurn * 90.0f, 0), Position, Scale));
+        }
+    }
+    LastObstacleReveal = MoveTemp(Revealed);
+    ObstacleGeometryHash = GeometryHash;
+    bEnvironmentInvalid = false;
+}
+
+void ACinderBattlefield::UpdateFogTexture()
+{
+    constexpr int32 Cells = cinder::Simulation::FogSize;
+    constexpr float CellSize = cinder::Simulation::WorldSize / Cells;
+    TArray<uint8> Current;
+    Current.SetNumUninitialized(Cells * Cells);
+    for (int32 Y = 0; Y < Cells; ++Y) for (int32 X = 0; X < Cells; ++X)
+    {
+        const cinder::Vec2 Point{(X + 0.5f) * CellSize, (Y + 0.5f) * CellSize};
+        Current[Y * Cells + X] = Simulation.visible(0, Point) ? 2 : Simulation.explored(0, Point) ? 1 : 0;
+    }
+    if (FogPlaneBatch == INDEX_NONE)
+    {
+        // Missing optional material and headless tests retain the original grid adapter.
+        for (int32 Y = 0; Y < Cells; ++Y) for (int32 X = 0; X < Cells; ++X)
+            if (Current[Y * Cells + X] != 2)
+                Batches[Current[Y * Cells + X] ? 4 : 3].Transforms.Add(FTransform(FQuat::Identity,
+                    FVector((X + 0.5f) * CellSize, (Y + 0.5f) * CellSize, 1), FVector(CellSize / 100 + 0.001f, CellSize / 100 + 0.001f, 0.02f)));
+        return;
+    }
+    if (Current == LastFogCells || !FogTexture || !FogTexture->GetResource()) return;
+    auto Upload = MakeShared<FFogTextureUpload, ESPMode::ThreadSafe>();
+    Upload->Pixels.SetNumUninitialized(FogTextureSize * FogTextureSize * 4);
+    for (int32 Y = 0; Y < FogTextureSize; ++Y) for (int32 X = 0; X < FogTextureSize; ++X)
+    {
+        const int32 CX = X / FogPixelsPerCell, CY = Y / FogPixelsPerCell;
+        const uint8 State = Current[CY * Cells + CX];
+        float Opacity = 1;
+        if (State == 2)
+        {
+            float Distance = 4;
+            for (int32 NY = CY - 1; NY <= CY + 1; ++NY) for (int32 NX = CX - 1; NX <= CX + 1; ++NX)
+            {
+                if (NX >= 0 && NY >= 0 && NX < Cells && NY < Cells && Current[NY * Cells + NX] == 2) continue;
+                const float DX = FMath::Max(0.0f, FMath::Max(NX * FogPixelsPerCell - (X + 0.5f), (X + 0.5f) - (NX + 1) * FogPixelsPerCell));
+                const float DY = FMath::Max(0.0f, FMath::Max(NY * FogPixelsPerCell - (Y + 0.5f), (Y + 0.5f) - (NY + 1) * FogPixelsPerCell));
+                Distance = FMath::Min(Distance, FMath::Sqrt(DX * DX + DY * DY));
+            }
+            // Guard texels alongside hidden cells remain fully opaque, including corners.
+            // Bilinear filtering therefore cannot uncover ground outside observed cells.
+            const float T = FMath::Clamp((Distance - 0.75f) / 2.25f, 0.0f, 1.0f);
+            Opacity = 1 - T * T * (3 - 2 * T);
+        }
+        const int32 Pixel = (Y * FogTextureSize + X) * 4;
+        Upload->Pixels[Pixel] = 0;
+        Upload->Pixels[Pixel + 1] = State ? 255 : 0;
+        Upload->Pixels[Pixel + 2] = static_cast<uint8>(FMath::RoundToInt(Opacity * 255));
+        Upload->Pixels[Pixel + 3] = 255;
+    }
+    // Shared ownership survives both render/RHI queues. If UE rejects the update,
+    // destruction of its cleanup function still releases the region and pixel buffer.
+    FogTexture->UpdateTextureRegions(0, 1, &Upload->Region, FogTextureSize * 4, 4, Upload->Pixels.GetData(),
+        [Upload](uint8*, const FUpdateTextureRegion2D*) { (void)Upload; });
+    ++FogTextureUploads;
+    LastFogCells = MoveTemp(Current);
+}
+
+void ACinderBattlefield::AddBuildingPad(const cinder::Entity& Entity)
+{
+    if (PadBatch == INDEX_NONE) return;
+    const float Diameter = cinder::definition(Entity.kind).radius * 2;
+    // A single shallow rectangular service slab grounds the silhouette without a second ring.
+    Batches[PadBatch].Transforms.Add(FTransform(FRotator(0, FMath::RadiansToDegrees(Entity.facing), 0),
+        FVector(Entity.pos.x, Entity.pos.y, -0.5f), FVector(Diameter * 1.08f / 100, Diameter * 1.08f / 100, 0.03f)));
+}
+
 void ACinderBattlefield::BeginPlay()
 {
     Super::BeginPlay();
@@ -212,26 +440,37 @@ void ACinderBattlefield::BeginPlay()
         UE_LOG(LogTemp, Warning, TEXT("Cinderline generated material missing. Run scripts/unreal.sh bootstrap before playing."));
         BaseMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
     }
-    AddBatch(Cube, FLinearColor(0.065f, 0.12f, 0.13f));
-    if (auto* GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Generated/M_CinderGround.M_CinderGround")))
+    AddBatch(Cube, FLinearColor(0.065f, 0.12f, 0.13f), false, false);
+    auto* GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/Materials/M_CinderGroundV2.M_CinderGroundV2"), nullptr, LOAD_NoWarn);
+    if (!GroundMaterial) GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Generated/M_CinderGround.M_CinderGround"), nullptr, LOAD_NoWarn);
+    if (GroundMaterial)
         Batches[0].Mesh->SetMaterial(0, GroundMaterial);
-    AddBatch(Cube, FLinearColor(0.14f, 0.21f, 0.22f));
-    AddBatch(Cone, FLinearColor(1.0f, 0.52f, 0.12f));
+    AddBatch(Cube, FLinearColor(0.14f, 0.21f, 0.22f), true, false);
+    AddBatch(Cone, FLinearColor(1.0f, 0.52f, 0.12f), true);
     AddBatch(Cube, FLinearColor(0.012f, 0.022f, 0.035f));
     AddBatch(Cube, FLinearColor(0.034f, 0.067f, 0.080f));
     for (int Team = 0; Team < 2; ++Team)
     {
         const FLinearColor Color = Team == 0 ? FLinearColor(0.04f, 0.82f, 0.72f) : FLinearColor(0.96f, 0.24f, 0.17f);
-        for (UStaticMesh* Shape : { Cube.Get(), Cylinder.Get(), Cone.Get(), Sphere.Get() }) AddBatch(Shape, Color);
+        for (UStaticMesh* Shape : { Cube.Get(), Cylinder.Get(), Cone.Get(), Sphere.Get() }) AddBatch(Shape, Color, true);
     }
     for (int Team = 0; Team < 2; ++Team)
         for (UStaticMesh* Shape : { Cube.Get(), Cylinder.Get(), Cone.Get(), Sphere.Get() })
-            AddBatch(Shape, Team == 0 ? FLinearColor(0.68f, 1.0f, 0.92f) : FLinearColor(1.0f, 0.68f, 0.28f));
+            AddBatch(Shape, Team == 0 ? FLinearColor(0.68f, 1.0f, 0.92f) : FLinearColor(1.0f, 0.68f, 0.28f), true);
     LoadModelBatches();
+    InitializeEnvironment();
 
     auto* Sun = GetWorld()->SpawnActor<ADirectionalLight>(FVector::ZeroVector, FRotator(-58, -32, 0));
-    Sun->GetLightComponent()->SetIntensity(3.0f);
-    Sun->GetLightComponent()->SetCastShadows(false);
+    auto* SunComponent = Cast<UDirectionalLightComponent>(Sun->GetLightComponent());
+    SunComponent->SetMobility(EComponentMobility::Movable);
+    SunComponent->SetIntensity(3.0f);
+    SunComponent->SetLightColor(FLinearColor(1.0f, 0.925f, 0.84f));
+    SunComponent->SetCastShadows(true);
+    SunComponent->SetDynamicShadowDistanceMovableLight(9000);
+    SunComponent->SetDynamicShadowCascades(4);
+    SunComponent->SetCascadeDistributionExponent(2.0f);
+    SunComponent->SetShadowBias(0.35f);
+    SunComponent->SetShadowSlopeBias(0.4f);
     auto* Sky = GetWorld()->SpawnActor<ASkyLight>();
     auto* SkyComponent = Sky->GetLightComponent();
     SkyComponent->SetMobility(EComponentMobility::Movable);
@@ -243,7 +482,8 @@ void ACinderBattlefield::BeginPlay()
         SkyComponent->SourceType = SLS_SpecifiedCubemap;
         SkyComponent->SetCubemap(AmbientCubemap);
     }
-    SkyComponent->SetIntensity(2.0f);
+    SkyComponent->SetIntensity(0.72f);
+    SkyComponent->SetLightColor(FLinearColor(0.82f, 0.90f, 1.0f));
     Simulation.reset();
     ResetFeedback();
     RenderState();
@@ -255,6 +495,7 @@ void ACinderBattlefield::StartMatch(int MapIndex)
     CurrentMap = FMath::Clamp(MapIndex, 0, 2);
     cinder::Config Config; Config.map = CurrentMap;
     Simulation.reset(Config);
+    InvalidateEnvironment();
     ResetFeedback();
     ResourceMemory.clear();
     bMenu = false; bPaused = false;
@@ -409,7 +650,9 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& Entity)
         if (!Simulation.explored(0, Entity.pos) || Entity.resource <= 0) return;
     }
     else if (Entity.team != 0 && !Simulation.visible(0, Entity.pos)) return;
-    const float Elevation = Def.air ? 125.0f : 0.0f;
+    // Cosmetic motion follows match time and stops with pause; authoritative positions stay flat.
+    const float Elevation = Def.air ? 125.0f + FMath::Sin(Simulation.time() * 1.7f + Entity.id * 0.73f) * 2.5f : 0.0f;
+    if (Def.building && Simulation.visible(0, Entity.pos)) AddBuildingPad(Entity);
     const float BuildScale = Def.building ? FMath::Max(0.08f, Entity.progress) : 1;
     const FQuat Facing = FRotator(0, FMath::RadiansToDegrees(Entity.facing), 0).Quaternion();
     const int32 ModelKey = static_cast<int32>(Entity.kind) * 2 + (Resource ? 0 : Entity.team);
@@ -508,20 +751,10 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& Entity)
 void ACinderBattlefield::RenderState()
 {
     LastModelEntities = LastFallbackEntities = 0;
-    for (FBatch& Batch : Batches) Batch.Transforms.Reset();
+    for (FBatch& Batch : Batches) if (Batch.bDynamic) Batch.Transforms.Reset();
     if (Batches.IsEmpty()) return;
-    Batches[0].Transforms.Add(FTransform(FQuat::Identity, FVector(2400, 2400, -16), FVector(49, 49, 0.3f)));
-    for (const auto& Obstacle : Simulation.obstacles())
-        if (Simulation.explored(0, Obstacle.center))
-            Batches[1].Transforms.Add(FTransform(FQuat::Identity, FVector(Obstacle.center.x, Obstacle.center.y, 38), FVector(Obstacle.half.x / 50, Obstacle.half.y / 50, 0.8f)));
-    constexpr float Cell = cinder::Simulation::WorldSize / cinder::Simulation::FogSize;
-    for (int Y = 0; Y < cinder::Simulation::FogSize; ++Y)
-        for (int X = 0; X < cinder::Simulation::FogSize; ++X)
-        {
-            cinder::Vec2 P{(X + 0.5f) * Cell, (Y + 0.5f) * Cell};
-            if (!Simulation.visible(0, P))
-                Batches[Simulation.explored(0, P) ? 4 : 3].Transforms.Add(FTransform(FQuat::Identity, FVector(P.x, P.y, 1), FVector(Cell / 100 + 0.001f, Cell / 100 + 0.001f, 0.02f)));
-        }
+    RefreshEnvironment();
+    UpdateFogTexture();
     for (const auto& Entity : Simulation.entities())
     {
         if (Entity.kind == cinder::Kind::Resource)
@@ -543,6 +776,7 @@ void ACinderBattlefield::FlushBatches()
 {
     for (FBatch& Batch : Batches)
     {
+        if (!Batch.bDynamic && !Batch.bDirty) continue;
         if (Batch.Mesh->GetInstanceCount() == Batch.Transforms.Num())
         {
             if (!Batch.Transforms.IsEmpty()) Batch.Mesh->BatchUpdateInstancesTransforms(0, Batch.Transforms, false, true, true);
@@ -552,6 +786,7 @@ void ACinderBattlefield::FlushBatches()
             Batch.Mesh->ClearInstances();
             Batch.Mesh->AddInstances(Batch.Transforms, false, false);
         }
+        Batch.bDirty = false;
     }
 }
 
@@ -567,6 +802,7 @@ bool ACinderBattlefield::LoadMatch()
 {
     const FString Filename = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*(FPaths::ProjectSavedDir() / TEXT("Matches/skirmish.cinder")));
     if (!Simulation.load(TCHAR_TO_UTF8(*Filename))) return false;
+    InvalidateEnvironment();
     SetActorTickEnabled(true);
     ResetFeedback();
     CurrentMap = Simulation.config().map;

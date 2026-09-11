@@ -1,0 +1,897 @@
+{
+  "generator_sha256": "7e05ad2eb9f5ad315a0649b3fc7797b922dc4b4cea99fe03c730fb23a87729e0",
+  "instances": [
+    {
+      "GlowIntensity": 0.0,
+      "Metallic": 0.2,
+      "Roughness": 0.5,
+      "parent": "/Game/Art/Materials/M_CinderModelV2.M_CinderModelV2",
+      "path": "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+      "slot": "HullDark",
+      "tint": [
+        0.055,
+        0.075,
+        0.09
+      ]
+    },
+    {
+      "GlowIntensity": 0.0,
+      "Metallic": 0.2,
+      "Roughness": 0.46,
+      "parent": "/Game/Art/Materials/M_CinderModelV2.M_CinderModelV2",
+      "path": "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+      "slot": "HullLight",
+      "tint": [
+        0.17,
+        0.22,
+        0.24
+      ]
+    },
+    {
+      "GlowIntensity": 0.0,
+      "Metallic": 0.8,
+      "Roughness": 0.34,
+      "parent": "/Game/Art/Materials/M_CinderModelV2.M_CinderModelV2",
+      "path": "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+      "slot": "Metal",
+      "tint": [
+        0.12,
+        0.16,
+        0.18
+      ]
+    },
+    {
+      "GlowIntensity": 0.04,
+      "Metallic": 0.18,
+      "Roughness": 0.45,
+      "parent": "/Game/Art/Materials/M_CinderModelV2.M_CinderModelV2",
+      "path": "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel",
+      "slot": "TeamPanel",
+      "tint": [
+        0.04,
+        0.7,
+        0.59
+      ]
+    },
+    {
+      "GlowIntensity": 1.2,
+      "Metallic": 0.0,
+      "Roughness": 0.4,
+      "parent": "/Game/Art/Materials/M_CinderModelV2.M_CinderModelV2",
+      "path": "/Game/Art/Materials/MI_CinderCoreGlow.MI_CinderCoreGlow",
+      "slot": "CoreGlow",
+      "tint": [
+        0.5,
+        1.0,
+        0.88
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "albedo_treatment": {
+        "desaturation": 0.94,
+        "tint": [
+          0.5,
+          0.62,
+          0.72
+        ]
+      },
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "World XY"
+        },
+        {
+          "from": "World XY",
+          "input": "A",
+          "output": "",
+          "to": "World centimeters to texture UV"
+        },
+        {
+          "from": "World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundColor"
+        },
+        {
+          "from": "GroundColor",
+          "input": "",
+          "output": "RGB",
+          "to": "Neutral basalt grain"
+        },
+        {
+          "from": "Desaturation",
+          "input": "Fraction",
+          "output": "",
+          "to": "Neutral basalt grain"
+        },
+        {
+          "from": "Neutral basalt grain",
+          "input": "A",
+          "output": "",
+          "to": "Ground color and tint"
+        },
+        {
+          "from": "GroundTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Ground color and tint"
+        },
+        {
+          "from": "Macro Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "Macro World XY"
+        },
+        {
+          "from": "Macro World XY",
+          "input": "A",
+          "output": "",
+          "to": "Macro World centimeters to texture UV"
+        },
+        {
+          "from": "Macro World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "BasaltMacroColor"
+        },
+        {
+          "from": "BasaltMacroColor",
+          "input": "",
+          "output": "RGB",
+          "to": "Macro rock luminance"
+        },
+        {
+          "from": "Macro desaturation",
+          "input": "Fraction",
+          "output": "",
+          "to": "Macro rock luminance"
+        },
+        {
+          "from": "Macro rock luminance",
+          "input": "A",
+          "output": "",
+          "to": "Macro luminance scale"
+        },
+        {
+          "from": "Macro luminance scale",
+          "input": "A",
+          "output": "",
+          "to": "Macro luminance bias"
+        },
+        {
+          "from": "Macro luminance bias",
+          "input": "",
+          "output": "",
+          "to": "Restrained macro albedo modulation"
+        },
+        {
+          "from": "Ground color and tint",
+          "input": "A",
+          "output": "",
+          "to": "Slate ground with broad rock variation"
+        },
+        {
+          "from": "Restrained macro albedo modulation",
+          "input": "B",
+          "output": "",
+          "to": "Slate ground with broad rock variation"
+        },
+        {
+          "from": "World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundNormal"
+        },
+        {
+          "from": "Flat tangent normal",
+          "input": "A",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "GroundNormal",
+          "input": "B",
+          "output": "RGB",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "NormalStrength",
+          "input": "Alpha",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "Restrained normal detail",
+          "input": "VectorInput",
+          "output": "",
+          "to": "Normalized tangent normal"
+        },
+        {
+          "from": "World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundRoughness"
+        },
+        {
+          "from": "World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundAO"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 14,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "macro_albedo": {
+        "asset_modified": false,
+        "luminance_bias": 0.72,
+        "luminance_gain": 5.0,
+        "modulation_bounds": [
+          0.84,
+          1.14
+        ],
+        "original_source": "RawAssets/Textures/T_CinderBasalt.png",
+        "original_source_sha256": "2f210f766cf91a3aadfaa21e1c773c8de5d91c07df3353f89ab2206b6663b190",
+        "path": "/Game/Art/Textures/T_CinderBasalt.T_CinderBasalt",
+        "tile_width_cm": 1050.0,
+        "usage": "desaturated albedo modulation only"
+      },
+      "nodes": 26,
+      "outputs": {
+        "AMBIENT_OCCLUSION": {
+          "node": "GroundAO",
+          "output": "R"
+        },
+        "BASE_COLOR": {
+          "node": "Slate ground with broad rock variation",
+          "output": ""
+        },
+        "METALLIC": {
+          "node": "Nonmetal mineral",
+          "output": ""
+        },
+        "NORMAL": {
+          "node": "Normalized tangent normal",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "GroundRoughness",
+          "output": "R"
+        }
+      },
+      "path": "/Game/Art/Materials/M_CinderGroundV2.M_CinderGroundV2",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "texture_coordinates": {
+        "fine_tile_width_cm": 246.0,
+        "macro_tile_width_cm": 1050.0,
+        "mode": "absolute world XY"
+      },
+      "two_sided": false,
+      "version": "desktop-pbr-v2.2.1"
+    },
+    {
+      "albedo_treatment": {
+        "desaturation": 0.9,
+        "tint": [
+          0.34,
+          0.43,
+          0.47
+        ]
+      },
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundColor"
+        },
+        {
+          "from": "GroundColor",
+          "input": "",
+          "output": "RGB",
+          "to": "Neutral basalt grain"
+        },
+        {
+          "from": "Desaturation",
+          "input": "Fraction",
+          "output": "",
+          "to": "Neutral basalt grain"
+        },
+        {
+          "from": "Neutral basalt grain",
+          "input": "A",
+          "output": "",
+          "to": "Ground color and tint"
+        },
+        {
+          "from": "GroundTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Ground color and tint"
+        },
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundNormal"
+        },
+        {
+          "from": "Flat tangent normal",
+          "input": "A",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "GroundNormal",
+          "input": "B",
+          "output": "RGB",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "NormalStrength",
+          "input": "Alpha",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "Restrained normal detail",
+          "input": "VectorInput",
+          "output": "",
+          "to": "Normalized tangent normal"
+        },
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundRoughness"
+        },
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundAO"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 16,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "nodes": 14,
+      "outputs": {
+        "AMBIENT_OCCLUSION": {
+          "node": "GroundAO",
+          "output": "R"
+        },
+        "BASE_COLOR": {
+          "node": "Ground color and tint",
+          "output": ""
+        },
+        "METALLIC": {
+          "node": "Nonmetal mineral",
+          "output": ""
+        },
+        "NORMAL": {
+          "node": "Normalized tangent normal",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "GroundRoughness",
+          "output": "R"
+        }
+      },
+      "path": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "texture_coordinates": {
+        "channel": 0,
+        "mode": "authored UV0",
+        "tiling": [
+          2.0,
+          2.0
+        ]
+      },
+      "two_sided": false,
+      "version": "desktop-pbr-v2.2.1"
+    },
+    {
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "MicroNormal"
+        },
+        {
+          "from": "Flat tangent normal",
+          "input": "A",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "MicroNormal",
+          "input": "B",
+          "output": "RGB",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "NormalStrength",
+          "input": "Alpha",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "Restrained normal detail",
+          "input": "VectorInput",
+          "output": "",
+          "to": "Normalized tangent normal"
+        },
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "MicroRoughness"
+        },
+        {
+          "from": "MicroRoughness",
+          "input": "A",
+          "output": "R",
+          "to": "Centered micro roughness"
+        },
+        {
+          "from": "Centered micro roughness",
+          "input": "A",
+          "output": "",
+          "to": "Small roughness variation"
+        },
+        {
+          "from": "RoughnessVariation",
+          "input": "B",
+          "output": "",
+          "to": "Small roughness variation"
+        },
+        {
+          "from": "Small roughness variation",
+          "input": "A",
+          "output": "",
+          "to": "Paint roughness with micro detail"
+        },
+        {
+          "from": "Roughness",
+          "input": "B",
+          "output": "",
+          "to": "Paint roughness with micro detail"
+        },
+        {
+          "from": "Paint roughness with micro detail",
+          "input": "",
+          "output": "",
+          "to": "Physical roughness bounds"
+        },
+        {
+          "from": "Tint",
+          "input": "A",
+          "output": "RGB",
+          "to": "Team core glow"
+        },
+        {
+          "from": "GlowIntensity",
+          "input": "B",
+          "output": "",
+          "to": "Team core glow"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 19,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "nodes": 17,
+      "outputs": {
+        "BASE_COLOR": {
+          "node": "Tint",
+          "output": "RGB"
+        },
+        "EMISSIVE_COLOR": {
+          "node": "Team core glow",
+          "output": ""
+        },
+        "METALLIC": {
+          "node": "Metallic",
+          "output": ""
+        },
+        "NORMAL": {
+          "node": "Normalized tangent normal",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "Physical roughness bounds",
+          "output": ""
+        }
+      },
+      "path": "/Game/Art/Materials/M_CinderModelV2.M_CinderModelV2",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "texture_coordinates": {
+        "channel": 0,
+        "mode": "authored UV0",
+        "normal_and_roughness_share_uvs": true,
+        "tiling": [
+          4.0,
+          4.0
+        ]
+      },
+      "two_sided": false,
+      "version": "desktop-pbr-v2.2.1"
+    },
+    {
+      "blend_mode": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+      "connections": [
+        {
+          "from": "Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "World XY"
+        },
+        {
+          "from": "World XY",
+          "input": "A",
+          "output": "",
+          "to": "World centimeters to texture UV"
+        },
+        {
+          "from": "World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "FogMask"
+        },
+        {
+          "from": "FogColor",
+          "input": "A",
+          "output": "RGB",
+          "to": "Unknown and explored fog colors"
+        },
+        {
+          "from": "FogExploredColor",
+          "input": "B",
+          "output": "RGB",
+          "to": "Unknown and explored fog colors"
+        },
+        {
+          "from": "FogMask",
+          "input": "Alpha",
+          "output": "G",
+          "to": "Unknown and explored fog colors"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 7,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "nodes": 7,
+      "outputs": {
+        "EMISSIVE_COLOR": {
+          "node": "Unknown and explored fog colors",
+          "output": ""
+        },
+        "OPACITY": {
+          "node": "FogMask",
+          "output": "R"
+        }
+      },
+      "path": "/Game/Art/Materials/M_CinderFogV2.M_CinderFogV2",
+      "runtime_contract": {
+        "FogMask": "256x256 PF_B8G8R8A8, sRGB=false, clamp, bilinear, no mips",
+        "G": "explored factor",
+        "R": "opacity",
+        "component_cast_shadow": "must be false in runtime adapter",
+        "strict_fog": "CPU mask keeps hidden cells opaque; feather only inside visible cells",
+        "uv": "absolute world XY / 4800"
+      },
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_UNLIT: 0>",
+      "two_sided": true,
+      "version": "desktop-pbr-v2.2.1"
+    }
+  ],
+  "source_manifest": {
+    "authors": {
+      "Charlotte Baglioni": "All"
+    },
+    "files": [
+      {
+        "bit_depth": 16,
+        "bytes": 23242841,
+        "channels": "RGB",
+        "color_space": "sRGB",
+        "filename": "gravel_floor_04_diff_2k.png",
+        "height": 2048,
+        "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_diff_2k.png",
+        "png_color_type": 2,
+        "role": "base_color",
+        "sha256": "1c07ed534bdfc7572e43d8a57c1e00285685c9134862331a23d1b904a0d5da88",
+        "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_diff_2k.png",
+        "upstream_md5": "72062ebb7db8129a038681637a53d646",
+        "width": 2048
+      },
+      {
+        "bit_depth": 16,
+        "bytes": 24364042,
+        "channels": "RGB tangent-space DirectX",
+        "color_space": "linear",
+        "filename": "gravel_floor_04_nor_dx_2k.png",
+        "height": 2048,
+        "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_nor_dx_2k.png",
+        "png_color_type": 2,
+        "role": "normal",
+        "sha256": "215d17c4bf39273d1fdb1185d3c369b011137182cc88b52b44a5f78ffcffdee4",
+        "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_nor_dx_2k.png",
+        "upstream_md5": "724148e5643c6ada928532d33d604afc",
+        "width": 2048
+      },
+      {
+        "bit_depth": 16,
+        "bytes": 6518222,
+        "channels": "R",
+        "color_space": "linear",
+        "filename": "gravel_floor_04_rough_2k.png",
+        "height": 2048,
+        "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_rough_2k.png",
+        "png_color_type": 0,
+        "role": "roughness",
+        "sha256": "9ca48f93f051c12eca19648d5efe8c2f6bfb6bb18475cdf3edab43cd46ab84ba",
+        "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_rough_2k.png",
+        "upstream_md5": "458fe89fc433292ee74359bfb0c40647",
+        "width": 2048
+      },
+      {
+        "bit_depth": 16,
+        "bytes": 7812901,
+        "channels": "R",
+        "color_space": "linear",
+        "filename": "gravel_floor_04_ao_2k.png",
+        "height": 2048,
+        "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_ao_2k.png",
+        "png_color_type": 0,
+        "role": "ambient_occlusion",
+        "sha256": "51082bff9d1e94114dc79d91f53fcd3df63318c1d95bd7ced393244c0c3de5dd",
+        "source_url": "https://dl.polyhaven.org/file/ph-assets/Textures/png/2k/gravel_floor_04/gravel_floor_04_ao_2k.png",
+        "upstream_md5": "f0682fbb4044f3ad103703d281b34ee9",
+        "width": 2048
+      }
+    ],
+    "path": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/manifest.json",
+    "sha256": "71525688c132128ad7bf3f0d859b6de87e87455069aee11041abfe5e91229411"
+  },
+  "success": true,
+  "terrain": [
+    {
+      "dimensions_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        0.0,
+        0.0,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_A.SM_BasaltCliff_A",
+      "sha256": "f206379d4fbc418f0f59fade1bb73b9fb98e79156cc76f53afb423df736e3c3b",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_A.fbx",
+      "triangles": 1128
+    },
+    {
+      "dimensions_cm": [
+        99.99999618530273,
+        100.00000381469727,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        1.9073486328125e-06,
+        -1.9073486328125e-06,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_B.SM_BasaltCliff_B",
+      "sha256": "cb77dff681ee8b9de48eb994192ae7edbc2d92aa618b8b88d52b52d7d363f531",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_B.fbx",
+      "triangles": 1128
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        100.00000381469727,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        0.0,
+        -1.9073486328125e-06,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_C.SM_BasaltCliff_C",
+      "sha256": "8f64d42d3842fea6722aa957f6b1e432b6216b920bc765e323c3a46d19c88138",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_C.fbx",
+      "triangles": 1128
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        99.99999618530273,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        0.0,
+        -1.9073486328125e-06,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_D.SM_BasaltCliff_D",
+      "sha256": "ab815907e35beb01d67e66e0acfb5ee33fb575c9ffe9d4ce49f7b4decb42b3c8",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_D.fbx",
+      "triangles": 1128
+    }
+  ],
+  "texture_source": {
+    "asset": "Gravel Floor 04",
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "normal_convention": "DirectX, green channel unchanged",
+    "tile_width_cm": 246.0,
+    "url": "https://polyhaven.com/a/gravel_floor_04"
+  },
+  "textures": [
+    {
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "path": "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Color.T_CinderGroundV2_Color",
+      "role": "Color",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "True",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "1c07ed534bdfc7572e43d8a57c1e00285685c9134862331a23d1b904a0d5da88",
+      "source": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_diff_2k.png",
+      "srgb": true
+    },
+    {
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "path": "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Normal.T_CinderGroundV2_Normal",
+      "role": "Normal",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "flip_green_channel": "False",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD_NORMAL_MAP: 1>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "215d17c4bf39273d1fdb1185d3c369b011137182cc88b52b44a5f78ffcffdee4",
+      "source": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_nor_dx_2k.png",
+      "srgb": false
+    },
+    {
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "path": "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Roughness.T_CinderGroundV2_Roughness",
+      "role": "Roughness",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "9ca48f93f051c12eca19648d5efe8c2f6bfb6bb18475cdf3edab43cd46ab84ba",
+      "source": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_rough_2k.png",
+      "srgb": false
+    },
+    {
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "path": "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_AO.T_CinderGroundV2_AO",
+      "role": "AO",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "51082bff9d1e94114dc79d91f53fcd3df63318c1d95bd7ced393244c0c3de5dd",
+      "source": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_ao_2k.png",
+      "srgb": false
+    },
+    {
+      "compression": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+      "dimensions": [
+        4,
+        4
+      ],
+      "path": "/Game/Art/Textures/VisualUpgrade/T_CinderFogDefaultV2.T_CinderFogDefaultV2",
+      "role": "FogMask",
+      "settings": {
+        "address_x": "<TextureAddress.TA_CLAMP: 1>",
+        "address_y": "<TextureAddress.TA_CLAMP: 1>",
+        "compression_settings": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+        "filter": "<TextureFilter.TF_BILINEAR: 1>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "4",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+        "never_stream": "True",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "1284b3c3991161f10af007e4b890476cf4f356e3021ea927b037c2f01b24952f",
+      "source": "Intermediate/VisualUpgrade/T_CinderFogDefault.png",
+      "srgb": false
+    }
+  ],
+  "utc": "2026-09-11T16:11:48.830391+00:00",
+  "version": "desktop-pbr-v2.2.1"
+}

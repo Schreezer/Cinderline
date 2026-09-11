@@ -8,6 +8,10 @@
 #include "Engine/World.h"
 #include "Engine/Texture2D.h"
 #include "Engine/Font.h"
+#include "Engine/GameViewportClient.h"
+#include "Framework/Application/SlateApplication.h"
+#include "Rendering/SlateRenderer.h"
+#include "Fonts/FontMeasure.h"
 #include <algorithm>
 #include <map>
 
@@ -15,10 +19,10 @@ DEFINE_LOG_CATEGORY_STATIC(LogCinderHUD, Log, All);
 
 namespace
 {
-const FLinearColor Ink(0.025f, 0.06f, 0.08f, 0.96f);
-const FLinearColor PanelInk(0.04f, 0.10f, 0.12f, 0.97f);
-const FLinearColor White(0.87f, 0.96f, 0.95f);
-const FLinearColor Muted(0.46f, 0.67f, 0.68f);
+const FLinearColor Ink(0.004f, 0.010f, 0.018f, 0.97f);
+const FLinearColor PanelInk(0.012f, 0.027f, 0.037f, 0.98f);
+const FLinearColor White(0.88f, 0.94f, 0.97f);
+const FLinearColor Muted(0.38f, 0.50f, 0.55f);
 const FLinearColor Mint(0.10f, 0.90f, 0.74f);
 const FLinearColor Amber(1.0f, 0.64f, 0.24f);
 FString Name(cinder::Kind Kind) { return UTF8_TO_TCHAR(cinder::definition(Kind).name); }
@@ -51,13 +55,28 @@ void ACinderHUD::BeginPlay()
 }
 
 void ACinderHUD::Panel(float X, float Y, float W, float H, FLinearColor Color) { DrawRect(Color, X, Y, W, H); }
+FSlateFontInfo ACinderHUD::FontForScale(float Scale) const
+{
+    const UFont* Font = Scale >= 1.5f ? HeadingFont.Get() : InterfaceFont.Get();
+    if (!Font && GEngine) Font = GEngine->GetMediumFont();
+    FSlateFontInfo Info = Font ? Font->GetLegacySlateFontInfo() : FSlateFontInfo();
+    const float DPI = Canvas && Canvas->Canvas ? FMath::Max(1.0f, Canvas->Canvas->GetDPIScale()) : 1.0f;
+    // Rasterize at the final glyph size. Scaling a small cached glyph blurred
+    // both large headings and fractional-size labels, especially on Retina.
+    Info.Size = FMath::Clamp(FMath::RoundToInt(14 * Scale * UIScale / DPI), 6, 128);
+    return Info;
+}
+FVector2D ACinderHUD::MeasureLabel(const FString& Text, float Scale) const
+{
+    if (!Canvas || !Canvas->Canvas) return FVector2D::ZeroVector;
+    return FSlateApplication::Get().GetRenderer()->GetFontMeasureService()->Measure(
+        Text, FontForScale(Scale), Canvas->Canvas->GetDPIScale());
+}
 void ACinderHUD::Label(const FString& Text, float X, float Y, FLinearColor Color, float Scale)
 {
     if (!GEngine || !Canvas) return;
-    UFont* Font = Scale >= 1.5f && HeadingFont ? HeadingFont.Get() : InterfaceFont.Get();
-    FCanvasTextItem Item(FVector2D(X, Y), FText::FromString(Text), Font ? Font : GEngine->GetMediumFont(), Color);
-    Item.Scale = FVector2D(Scale * UIScale);
-    Item.EnableShadow(FLinearColor(0, 0, 0, 0.55f));
+    FCanvasTextItem Item(FVector2D(FMath::RoundToFloat(X), FMath::RoundToFloat(Y)), FText::FromString(Text), FontForScale(Scale), Color);
+    Item.Scale = FVector2D(1);
     Canvas->DrawItem(Item);
 }
 void ACinderHUD::WrappedLabel(const FString& Text, float X, float Y, float MaxWidth, FLinearColor Color, float Scale)
@@ -68,9 +87,7 @@ void ACinderHUD::WrappedLabel(const FString& Text, float X, float Y, float MaxWi
     for (const FString& Word : Words)
     {
         const FString Candidate = Line.IsEmpty() ? Word : Line + TEXT(" ") + Word;
-        float TextWidth = 0, TextHeight = 0;
-        GetTextSize(Candidate, TextWidth, TextHeight, InterfaceFont ? InterfaceFont.Get() : GEngine ? GEngine->GetMediumFont() : nullptr, Scale * UIScale);
-        if (!Line.IsEmpty() && TextWidth > MaxWidth)
+        if (!Line.IsEmpty() && MeasureLabel(Candidate, Scale).X > MaxWidth)
         {
             Label(Line, X, Y, Color, Scale);
             Y += 19 * UIScale;
@@ -83,16 +100,12 @@ void ACinderHUD::WrappedLabel(const FString& Text, float X, float Y, float MaxWi
 void ACinderHUD::SingleLineLabel(const FString& Text, float X, float Y, float MaxWidth, FLinearColor Color, float Scale)
 {
     FString VisibleText = Text;
-    float TextWidth = 0, TextHeight = 0;
-    UFont* Font = InterfaceFont ? InterfaceFont.Get() : GEngine ? GEngine->GetMediumFont() : nullptr;
-    GetTextSize(VisibleText, TextWidth, TextHeight, Font, Scale * UIScale);
-    if (TextWidth > MaxWidth)
+    if (MeasureLabel(VisibleText, Scale).X > MaxWidth)
     {
         do
         {
             VisibleText.LeftChopInline(1);
-            GetTextSize(VisibleText + TEXT("..."), TextWidth, TextHeight, Font, Scale * UIScale);
-        } while (!VisibleText.IsEmpty() && TextWidth > MaxWidth);
+        } while (!VisibleText.IsEmpty() && MeasureLabel(VisibleText + TEXT("..."), Scale).X > MaxWidth);
         VisibleText += TEXT("...");
     }
     Label(VisibleText, X, Y, Color, Scale);
@@ -100,12 +113,16 @@ void ACinderHUD::SingleLineLabel(const FString& Text, float X, float Y, float Ma
 void ACinderHUD::Button(const FString& Text, const FString& Action, int Arg, float X, float Y, float W, bool Active)
 {
     const float H = 44 * UIScale;
-    Panel(X, Y, W, H, Active ? FLinearColor(0.07f, 0.32f, 0.30f) : PanelInk);
-    Panel(X, Y, W, 2 * UIScale, Active ? Mint : FLinearColor(0.14f, 0.28f, 0.29f));
-    float TextWidth = 0, TextHeight = 0;
-    GetTextSize(Text, TextWidth, TextHeight, InterfaceFont ? InterfaceFont.Get() : GEngine ? GEngine->GetMediumFont() : nullptr, 0.80f * UIScale);
+    float MouseX = -1, MouseY = -1;
+    if (PlayerOwner) PlayerOwner->GetMousePosition(MouseX, MouseY);
+    const bool Hover = MouseX >= X && MouseY >= Y && MouseX < X + W && MouseY < Y + H;
+    const bool Primary = Action == TEXT("start");
+    Panel(X, Y, W, H, Primary ? Mint : Active ? FLinearColor(0.018f, 0.11f, 0.105f) : Hover ? FLinearColor(0.026f, 0.055f, 0.072f) : PanelInk);
+    Panel(X, Y, W, UIScale, Active || Primary ? Mint : FLinearColor(0.065f, 0.12f, 0.15f));
+    if (Active && !Primary) Panel(X, Y, 3 * UIScale, H, Mint);
+    const float TextWidth = MeasureLabel(Text, 0.80f).X;
     const float Fit = TextWidth > 0 ? FMath::Min(1.0f, (W - 20 * UIScale) / TextWidth) : 1;
-    Label(Text, X + 10 * UIScale, Y + 12 * UIScale, Active ? Mint : White, 0.80f * Fit);
+    Label(Text, X + 12 * UIScale, Y + 12 * UIScale, Primary ? Ink : Active ? Mint : White, 0.80f * Fit);
     FButton B; B.Bounds = FBox2D(FVector2D(X, Y), FVector2D(X + W, Y + H)); B.Action = Action; B.Argument = Arg; Buttons.Add(B);
 }
 
@@ -151,7 +168,9 @@ void ACinderHUD::DrawHUD()
 #if PLATFORM_IOS || PLATFORM_ANDROID
     bCompactLayout = true;
 #else
-    bCompactLayout = Width / Height > 2.0f || Height < 500;
+    const UGameViewportClient* Viewport = GetWorld() ? GetWorld()->GetGameViewport() : nullptr;
+    const float WindowDPI = Viewport ? FMath::Max(1.0f, Viewport->GetDPIScale()) : 1.0f;
+    bCompactLayout = Width / Height > 2.0f || Height / WindowDPI < 500;
 #endif
     UIScale = bCompactLayout ? FMath::Min(Width / 667.0f, Height / 375.0f) : FMath::Max(0.45f, FMath::Min(Width / 1280.0f, Height / 720.0f));
     // Conservative landscape insets reserve room for phone cutouts and the home indicator.
@@ -175,37 +194,54 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
         const float VHeight = FMath::Min(1.0f, TextureAspect / ViewAspect);
         DrawTexture(MenuBackdrop, 0, 0, Width, Height, (1 - UWidth) * 0.5f, (1 - VHeight) * 0.5f, UWidth, VHeight, FLinearColor::White, BLEND_Opaque);
     }
-    Panel(0, 0, Width, Height, FLinearColor(0.015f, 0.035f, 0.045f, bHasBackdrop ? 0.40f : 0.85f));
+    // Keep the illustration clear on the right and provide a quiet reading area.
+    const float Strip = FMath::Max(2.0f, 6 * UIScale);
+    for (float X = 0; X < Width; X += Strip)
+    {
+        const float T = FMath::Clamp(X / (Width * 0.82f), 0.0f, 1.0f);
+        const float Opacity = bHasBackdrop ? FMath::Lerp(0.94f, 0.04f, T * T * (3 - 2 * T)) : 1.0f;
+        Panel(X, 0, FMath::Min(Strip, Width - X), Height, FLinearColor(0.002f, 0.006f, 0.012f, Opacity));
+    }
+    Panel(0, Height - 58 * UIScale, Width, 58 * UIScale, FLinearColor(0.002f, 0.005f, 0.009f, 0.6f));
     UIRegions.Add(FBox2D(FVector2D::ZeroVector, FVector2D(Width, Height)));
+    const TCHAR* MapNames[] = { TEXT("Shattered Rift"), TEXT("Glass Basin"), TEXT("Iron Reach") };
+    const TCHAR* MapDescriptions[] = {
+        TEXT("Split the front. Control the crossing."),
+        TEXT("Circle the basin. Find the open flank."),
+        TEXT("Hold the lanes. Break through the ridges.")
+    };
     if (bCompactLayout)
     {
-        const float X = Margin, Y = 25 * UIScale;
-        Label(TEXT("C I N D E R L I N E"), X, Y, White, 1.6f);
-        Label(TEXT("CAIRN ASSEMBLY / FRONTIER SKIRMISH"), X, Y + 39 * UIScale, Mint, 0.75f);
-        Label(TEXT("Grow your economy. Scout the dark. Destroy the opposing Anchor."), X, Y + 78 * UIScale, White, 0.85f);
-        const float MapW = (Width - 2 * Margin - 16 * UIScale) / 3;
-        const TCHAR* Names[] = { TEXT("Shattered Rift"), TEXT("Glass Basin"), TEXT("Iron Reach") };
-        for (int I = 0; I < 3; ++I) Button(Names[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), Y + 117 * UIScale, MapW, SelectedMap == I);
-        Button(TEXT("START SKIRMISH"), TEXT("start"), SelectedMap, X, Y + 177 * UIScale, MapW, true);
-        Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + MapW + 8 * UIScale, Y + 177 * UIScale, MapW);
-        Label(TEXT("Drag to pan / Pinch to zoom / Tap a unit, then tap its destination"), X, Y + 247 * UIScale, Muted, 0.78f);
-        Label(TEXT("Hold, then drag to select / Double-tap a unit to select its type"), X, Y + 273 * UIScale, Muted, 0.78f);
-        Label(TEXT("Development build / Offline opponent / One faction"), X, Height - 32 * UIScale, Amber, 0.72f);
+        const float X = Margin, W = Width - 2 * Margin;
+        Label(TEXT("THE CAIRN ASSEMBLY"), X, 19 * UIScale, Mint, 0.65f);
+        Label(TEXT("CINDERLINE"), X - UIScale, 45 * UIScale, White, 2.35f);
+        Label(TEXT("Build your foothold. Command the frontier."), X, 99 * UIScale, White, 0.83f);
+        const float MapW = (W - 16 * UIScale) / 3;
+        for (int I = 0; I < 3; ++I)
+            Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), 139 * UIScale, MapW, SelectedMap == I);
+        SingleLineLabel(MapDescriptions[SelectedMap], X, 194 * UIScale, W, Muted, 0.75f);
+        Button(TEXT("START SKIRMISH"), TEXT("start"), SelectedMap, X, 235 * UIScale, W * 0.55f - 5 * UIScale, true);
+        Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + W * 0.55f + 5 * UIScale, 235 * UIScale, W * 0.45f - 5 * UIScale);
+        SingleLineLabel(TEXT("Drag to pan. Pinch to zoom. Tap to select and command."), X, Height - 37 * UIScale, W, Muted, 0.70f);
         return;
     }
-    const float X = Width * 0.12f, Y = Height * 0.14f;
-    Label(TEXT("C I N D E R L I N E"), X, Y, White, 2.35f);
-    Label(TEXT("THE CAIRN ASSEMBLY  /  FRONTIER SKIRMISH"), X + 3 * UIScale, Y + 61 * UIScale, Mint, 0.90f);
-    Label(TEXT("Grow a frontier settlement. Scout the dark. Command a combined army."), X, Y + 112 * UIScale, White, 0.94f);
-    Label(TEXT("Destroy the opposing Anchor to win."), X, Y + 141 * UIScale, Muted, 0.9f);
-    const TCHAR* MapNames[] = { TEXT("01  Shattered Rift"), TEXT("02  Glass Basin"), TEXT("03  Iron Reach") };
-    for (int I = 0; I < 3; ++I) Button(MapNames[I], TEXT("map"), I, X + I * 251 * UIScale, Y + 204 * UIScale, 238 * UIScale, SelectedMap == I);
-    Button(TEXT("START SKIRMISH  [ENTER]"), TEXT("start"), SelectedMap, X, Y + 272 * UIScale, 238 * UIScale, true);
-    Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + 251 * UIScale, Y + 272 * UIScale, 238 * UIScale);
-    Label(TEXT("TOUCH   Drag to pan  |  Pinch to zoom  |  Tap to select and command"), X, Y + 351 * UIScale, Muted, 0.84f);
-    Label(TEXT("ARMY    Hold, then drag to select  |  Double-tap a unit to select its type"), X, Y + 379 * UIScale, Muted, 0.84f);
-    Label(TEXT("MOUSE   Left drag selects  |  Middle drag pans  |  Right click commands"), X, Y + 407 * UIScale, Muted, 0.84f);
-    Label(TEXT("Development build  /  Offline opponent  /  One faction"), X, Height - 58 * UIScale, Amber, 0.78f);
+    const float X = 72 * UIScale, W = 540 * UIScale;
+    Label(TEXT("THE CAIRN ASSEMBLY"), X, 83 * UIScale, Mint, 0.78f);
+    Label(TEXT("CINDERLINE"), X - 4 * UIScale, 122 * UIScale, White, 3.65f);
+    Label(TEXT("Build your foothold."), X, 219 * UIScale, White, 1.17f);
+    Label(TEXT("Command the frontier."), X, 250 * UIScale, White, 1.17f);
+    Label(TEXT("A tactical war for the world's last resources."), X, 296 * UIScale, Muted, 0.84f);
+    Panel(X, 350 * UIScale, W, UIScale, FLinearColor(0.10f, 0.17f, 0.19f, 0.8f));
+    Label(TEXT("DEPLOYMENT SECTOR"), X, 371 * UIScale, Muted, 0.68f);
+    const float MapW = (W - 16 * UIScale) / 3;
+    for (int I = 0; I < 3; ++I)
+        Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), 401 * UIScale, MapW, SelectedMap == I);
+    Label(MapDescriptions[SelectedMap], X, 461 * UIScale, Muted, 0.78f);
+    Button(TEXT("START SKIRMISH   [ENTER]"), TEXT("start"), SelectedMap, X, 510 * UIScale, 302 * UIScale, true);
+    Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + 314 * UIScale, 510 * UIScale, 226 * UIScale);
+    Label(TEXT("SOLO SKIRMISH"), X, Height - 35 * UIScale, Mint, 0.70f);
+    Label(TEXT("ESC  Pause     /     SPACE  Home     /     Right click  Command"), 317 * UIScale, Height - 35 * UIScale, Muted, 0.70f);
+
 }
 
 void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Battle)

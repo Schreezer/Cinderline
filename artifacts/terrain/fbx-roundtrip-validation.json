@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "SM_BasaltCliff_A",
+      "passed": true,
+      "dimensions_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "minimum_cm": [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      "triangles": 1128,
+      "uv_channels": 1
+    },
+    {
+      "name": "SM_BasaltCliff_B",
+      "passed": true,
+      "dimensions_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "minimum_cm": [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      "triangles": 1128,
+      "uv_channels": 1
+    },
+    {
+      "name": "SM_BasaltCliff_C",
+      "passed": true,
+      "dimensions_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "minimum_cm": [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      "triangles": 1128,
+      "uv_channels": 1
+    },
+    {
+      "name": "SM_BasaltCliff_D",
+      "passed": true,
+      "dimensions_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "minimum_cm": [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      "triangles": 1128,
+      "uv_channels": 1
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "generator": "scripts/create_terrain_assets.py",
+  "blender_version": "5.2.1 LTS",
+  "original_geometry": true,
+  "unit": "centimeter",
+  "origin": "bottom center of bounds",
+  "forward_axis": "+X",
+  "up_axis": "+Z",
+  "collision": "none; portable simulation owns obstacle rectangles",
+  "material_slots": [
+    "Basalt"
+  ],
+  "assets": [
+    {
+      "name": "SM_BasaltCliff_A",
+      "seed": 74101,
+      "dimensions_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_min_cm": [
+        -50,
+        -50,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        100
+      ],
+      "vertices": 594,
+      "triangles": 1128,
+      "minimum_triangle_area_cm2": 4.61245330564646,
+      "material_slots": [
+        "Basalt"
+      ],
+      "uv_channels": 1,
+      "vertex_color": "RockTint",
+      "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_A.fbx",
+      "sha256": "f206379d4fbc418f0f59fade1bb73b9fb98e79156cc76f53afb423df736e3c3b"
+    },
+    {
+      "name": "SM_BasaltCliff_B",
+      "seed": 74102,
+      "dimensions_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_min_cm": [
+        -50,
+        -50,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        100
+      ],
+      "vertices": 594,
+      "triangles": 1128,
+      "minimum_triangle_area_cm2": 5.779509562697363,
+      "material_slots": [
+        "Basalt"
+      ],
+      "uv_channels": 1,
+      "vertex_color": "RockTint",
+      "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_B.fbx",
+      "sha256": "cb77dff681ee8b9de48eb994192ae7edbc2d92aa618b8b88d52b52d7d363f531"
+    },
+    {
+      "name": "SM_BasaltCliff_C",
+      "seed": 74103,
+      "dimensions_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_min_cm": [
+        -50,
+        -50,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        100
+      ],
+      "vertices": 594,
+      "triangles": 1128,
+      "minimum_triangle_area_cm2": 4.943471733212018,
+      "material_slots": [
+        "Basalt"
+      ],
+      "uv_channels": 1,
+      "vertex_color": "RockTint",
+      "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_C.fbx",
+      "sha256": "8f64d42d3842fea6722aa957f6b1e432b6216b920bc765e323c3a46d19c88138"
+    },
+    {
+      "name": "SM_BasaltCliff_D",
+      "seed": 74104,
+      "dimensions_cm": [
+        100,
+        100,
+        100
+      ],
+      "bounds_min_cm": [
+        -50,
+        -50,
+        0
+      ],
+      "bounds_max_cm": [
+        50,
+        50,
+        100
+      ],
+      "vertices": 594,
+      "triangles": 1128,
+      "minimum_triangle_area_cm2": 4.3293442420395545,
+      "material_slots": [
+        "Basalt"
+      ],
+      "uv_channels": 1,
+      "vertex_color": "RockTint",
+      "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_D.fbx",
+      "sha256": "ab815907e35beb01d67e66e0acfb5ee33fb575c9ffe9d4ce49f7b4decb42b3c8"
+    }
+  ]
+}
