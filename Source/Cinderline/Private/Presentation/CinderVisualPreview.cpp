@@ -158,7 +158,7 @@ FAutoConsoleCommandWithWorldAndArgs VisualPreviewCommand(
         }
 
         FrameVisualPreview(PC, FramePoints);
-        Battle->ResetFeedback();
+        Battle->ResetPresentation();
         // Three normal fixed steps settle vision and movement before the rendered inspection.
         // Disabling the adapter tick freezes only this explicit preview; the camera remains usable.
         Battle->Tick(0.15f);

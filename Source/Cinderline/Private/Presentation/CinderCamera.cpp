@@ -17,7 +17,7 @@ ACinderCamera::ACinderCamera()
     RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("CameraRoot"));
     Boom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
     Boom->SetupAttachment(RootComponent);
-    Boom->SetRelativeRotation(FRotator(-60, -45, 0));
+    Boom->SetRelativeRotation(FRotator(-54, -45, 0));
     Boom->TargetArmLength = TargetDistance;
     Boom->bDoCollisionTest = false;
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
@@ -36,22 +36,22 @@ ACinderCamera::ACinderCamera()
 #if PLATFORM_MAC
     // Ground contact and a restrained core glow give the small RTS silhouettes depth.
     Camera->PostProcessSettings.bOverride_AmbientOcclusionIntensity = true;
-    Camera->PostProcessSettings.AmbientOcclusionIntensity = 0.6f;
+    Camera->PostProcessSettings.AmbientOcclusionIntensity = 0.4f;
     Camera->PostProcessSettings.bOverride_AmbientOcclusionRadius = true;
-    Camera->PostProcessSettings.AmbientOcclusionRadius = 70.0f;
+    Camera->PostProcessSettings.AmbientOcclusionRadius = 25.0f;
     Camera->PostProcessSettings.bOverride_AmbientOcclusionRadiusInWS = true;
     Camera->PostProcessSettings.AmbientOcclusionRadiusInWS = true;
     Camera->PostProcessSettings.bOverride_AmbientOcclusionQuality = true;
     Camera->PostProcessSettings.AmbientOcclusionQuality = 80.0f;
+#endif
     Camera->PostProcessSettings.bOverride_BloomIntensity = true;
-    Camera->PostProcessSettings.BloomIntensity = 0.2f;
+    Camera->PostProcessSettings.BloomIntensity = 0.24f;
     Camera->PostProcessSettings.bOverride_BloomThreshold = true;
     Camera->PostProcessSettings.BloomThreshold = 1.0f;
     Camera->PostProcessSettings.bOverride_MotionBlurAmount = true;
     Camera->PostProcessSettings.MotionBlurAmount = 0.0f;
     Camera->PostProcessSettings.bOverride_DepthOfFieldEnabled = true;
     Camera->PostProcessSettings.DepthOfFieldEnabled = false;
-#endif
     SetActorLocation(TargetPosition);
 }
 

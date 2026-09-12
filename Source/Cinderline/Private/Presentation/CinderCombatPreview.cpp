@@ -94,7 +94,7 @@ FAutoConsoleCommandWithWorldAndArgs CombatPreviewCommand(
         }
         // Update the camera's cached projection before the first audible events.
         if (PC && PC->PlayerCameraManager) PC->PlayerCameraManager->UpdateCamera(0);
-        Battle->ResetFeedback();
+        Battle->ResetPresentation();
         Battle->Tick(0.15f);
         Battle->RenderState();
         const bool Live = Args.Contains(TEXT("live"));

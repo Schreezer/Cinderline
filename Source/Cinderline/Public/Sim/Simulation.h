@@ -5,6 +5,7 @@
 #include <vector>
 
 namespace cinder {
+namespace net { struct Snapshot; }
 using Id = std::uint32_t;
 struct Vec2 { float x=0, y=0; };
 enum class Kind : int { Worker, Striker, Lancer, Scout, Bastion, Mortar, Mender, Kite, Headquarters, Processor, Foundry, MotorPool, Laboratory, Turret, Resource };
@@ -46,6 +47,7 @@ public:
  static constexpr float WorldSize=4800;
  static constexpr float Step=0.05f;
  static constexpr int FogSize=64;
+ static constexpr int MaxQueue=20;
  static constexpr float AIMobileMemorySeconds=90.0f;
  Simulation();
  void reset(Config config={});
@@ -63,6 +65,8 @@ public:
  bool visible(int team,Vec2 position) const;
  bool explored(int team,Vec2 position) const;
  bool canPlace(int team,Kind kind,Vec2 point,std::string* reason=nullptr) const;
+ // Read-only build validation. A null site omits only distance and placement checks.
+ CommandResult buildStatus(int team,Kind kind,const std::vector<Id>& units,const Vec2* site=nullptr) const;
  // Assigned worker includes travel; active means the worker is physically building.
  Id constructionWorker(Id foundation) const;
  bool constructionActive(Id foundation) const;
@@ -81,6 +85,9 @@ public:
  std::uint64_t stateHash() const;
  bool save(const std::string& path) const;
  bool load(const std::string& path);
+ bool applySnapshot(const net::Snapshot& snapshot,std::string* error=nullptr);
+ bool isReplica() const { return replica_; }
+ void forfeit(int team);
  // Explicit development tools, never called by the opponent.
  Id debugSpawn(Kind kind,int team,Vec2 position);
  void debugResources(int team,int ore);
@@ -89,6 +96,7 @@ private:
  std::array<Player,2> players_; std::array<std::array<unsigned char,FogSize*FogSize>,2> fog_{}, explored_{};
  std::vector<RecordedCommand> recording_; std::uint64_t tick_=0; Id nextId_=1; float accumulator_=0, aiTimer_=0; int winner_=-1;
  std::uint64_t nextEffectId_=1;
+ bool replica_=false;
  std::string alert_,aiStatus_; double lastStepMs_=0;
  std::vector<AISighting> aiSightings_;
  std::array<std::uint64_t,FogSize*FogSize> aiObserved_{};
@@ -100,6 +108,7 @@ private:
  Id nearest(int team,Vec2 point,Kind kind) const; void damage(Entity& victim,float amount,int attackerTeam,Kind sourceKind);
  void emitEffect(EffectType type,Vec2 from,Vec2 to,int team,Kind sourceKind,Kind targetKind,float duration);
  Id selectConstructionWorker(const std::vector<Id>& workers,Vec2 site) const;
+ CommandResult checkBuild(int team,Kind kind,const std::vector<Id>& units,const Vec2* site,Id* worker) const;
  void assignConstruction(Entity& foundation,Entity& worker);
  void abandonConstruction(Entity& worker); void releaseConstruction(Entity& foundation);
 };

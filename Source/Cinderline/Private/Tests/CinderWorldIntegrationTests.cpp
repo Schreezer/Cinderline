@@ -6,15 +6,22 @@
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
 #include "GameFramework/WorldSettings.h"
+#include "GameFramework/PlayerInput.h"
 #include "HAL/FileManager.h"
 #include "Misc/AutomationTest.h"
+#include "Misc/CoreDelegates.h"
 #include "Misc/Guid.h"
 #include "Misc/Paths.h"
 #include "Presentation/CinderBattlefield.h"
+#include "Presentation/CinderCamera.h"
+#include "Presentation/CinderHelpContent.h"
+#include "Presentation/CinderGameEngine.h"
 #include "Presentation/CinderGameMode.h"
 #include "Presentation/CinderPlayerController.h"
+#include "Presentation/CinderTerrainSurface.h"
 #include "Tests/AutomationCommon.h"
 #include <algorithm>
+#include <array>
 #include <functional>
 
 namespace CinderWorldIntegration
@@ -151,23 +158,199 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
 {
     using namespace CinderWorldIntegration;
     using namespace cinder;
+
+    TestFalse(TEXT("F1 help cannot execute Unreal's inherited wireframe command"),
+        GetDefault<UPlayerInput>()->DebugExecBindings.ContainsByPredicate([](const FKeyBind& Binding)
+        { return Binding.Key == EKeys::F1 && Binding.Command.Contains(TEXT("viewmode")); }));
+
+    FCinderMotionObservation Prior;
+    Prior.Id = 17; Prior.Kind = Kind::Worker; Prior.Position = {100, 100};
+    Prior.Order = Order::Move; Prior.Tick = 10; Prior.Time = 0.5f;
+    FCinderMotionObservation Current = Prior;
+    Current.Tick = 11; Current.Time = 0.55f;
+    const FCinderEntityPose StationaryPose = FCinderEntityMotion::CalculatePose(Current, &Prior);
+    TestFalse(TEXT("A movement order without an actual position delta has no walk pose"), StationaryPose.bMoving);
+    TestTrue(TEXT("A stationary ground unit retains an exact neutral body pose"),
+        StationaryPose.BodyZ == 0 && StationaryPose.BodyRotation.IsNearlyZero());
+    Current.Position.x += 4;
+    const FCinderEntityPose WalkingPose = FCinderEntityMotion::CalculatePose(Current, &Prior);
+    TestTrue(TEXT("An observed authoritative position delta starts locomotion"), WalkingPose.bMoving);
+    TestTrue(TEXT("Drudge diagonal legs alternate around manifest pivots"),
+        WalkingPose.LegFrontLeftRotation.Pitch * WalkingPose.LegFrontRightRotation.Pitch < 0
+        && FMath::IsNearlyEqual(WalkingPose.LegFrontLeftRotation.Pitch, WalkingPose.LegRearRightRotation.Pitch));
+
+    Prior.Order = Current.Order = Order::Gather; Prior.HarvestTimer = Current.HarvestTimer = 0.2f;
+    const FCinderEntityPose TravellingGather = FCinderEntityMotion::CalculatePose(Current, &Prior);
+    TestFalse(TEXT("A Drudge travelling on a gather order keeps its tool still"), TravellingGather.bToolActive);
+    Current.Position = Prior.Position; Current.HarvestTimer += Simulation::Step;
+    const FCinderEntityPose ActiveGather = FCinderEntityMotion::CalculatePose(Current, &Prior);
+    TestTrue(TEXT("An observed harvest timer advance drives the mining tool"), ActiveGather.bToolActive);
+    Current.bReturning = true;
+    TestFalse(TEXT("Returning with ore stops mining tool motion"),
+        FCinderEntityMotion::CalculatePose(Current, &Prior).bToolActive);
+    Current.bReturning = false; Current.Order = Order::Construct; Current.bConstructionActive = false;
+    TestFalse(TEXT("A travelling or interrupted builder keeps its tool still"),
+        FCinderEntityMotion::CalculatePose(Current, &Prior).bToolActive);
+    Current.bConstructionActive = true;
+    TestTrue(TEXT("Only an active construction worker drives its tool"),
+        FCinderEntityMotion::CalculatePose(Current, &Prior).bToolActive);
+
+    Current.Kind = Kind::Mortar; Current.Order = Order::Hold; Current.Time = 1.11f;
+    const FCinderEntityPose RecoilPose = FCinderEntityMotion::CalculatePose(Current, &Prior, 1.0f);
+    TestTrue(TEXT("A recent observed cooldown increase produces sloped Cinderthrow recoil"),
+        RecoilPose.bRecoil && RecoilPose.WeaponOffset.X < 0 && RecoilPose.WeaponOffset.Z < 0);
+    Current.Time = 1.3f;
+    TestFalse(TEXT("Recoil ends from simulation time after its bounded impulse"),
+        FCinderEntityMotion::CalculatePose(Current, &Prior, 1.0f).bRecoil);
+    Current.Kind = Kind::Scout; Current.Position = {104, 106}; Current.Facing = 0;
+    Current.Time = 0.55f;
+    const FCinderEntityPose AircraftPose = FCinderEntityMotion::CalculatePose(Current, &Prior);
+    TestTrue(TEXT("A moving aircraft banks while retaining a root-local hover"),
+        AircraftPose.bMoving && !FMath::IsNearlyZero(AircraftPose.BodyRotation.Roll));
+    const FVector Pivot(6.71087, 0, 17.01571), Root(1200, 1400, 0);
+    const FTransform Pivoted = CinderPartWorldTransform(Root, FQuat::Identity, Pivot, FRotator(25, 0, 0));
+    TestTrue(TEXT("Manifest pivot rotation leaves the tool hinge fixed in world space"),
+        Pivoted.TransformPosition(Pivot).Equals(Root + Pivot, KINDA_SMALL_NUMBER));
+
+    FCinderEntityMotion MotionCache;
+    FCinderMotionObservation OtherEntity = Current; OtherEntity.Id = Current.Id + 1;
+    MotionCache.BeginFrame(); MotionCache.Observe(Prior); MotionCache.Observe(OtherEntity); MotionCache.EndFrame();
+    TestEqual(TEXT("Pose cache contains only entities observed in its frame"), MotionCache.CachedEntities(), 2);
+    MotionCache.BeginFrame(); MotionCache.Observe(OtherEntity); MotionCache.EndFrame();
+    TestTrue(TEXT("Pose cache removes hidden or dead entities at the frame boundary"),
+        MotionCache.CachedEntities() == 1 && !MotionCache.HasSample(Prior.Id));
+    MotionCache.Reset();
+    TestEqual(TEXT("Pose cache reset clears prior match samples"), MotionCache.CachedEntities(), 0);
+
+    FCinderMotionObservation ShooterOne;
+    ShooterOne.Id = 101; ShooterOne.Kind = Kind::Bastion; ShooterOne.Tick = 20; ShooterOne.Time = 1.0f;
+    FCinderMotionObservation ShooterTwo = ShooterOne; ShooterTwo.Id = 102;
+    MotionCache.BeginFrame(); MotionCache.Observe(ShooterOne); MotionCache.Observe(ShooterTwo); MotionCache.EndFrame();
+    ++ShooterOne.Tick; ++ShooterTwo.Tick; ShooterOne.Time += Simulation::Step; ShooterTwo.Time += Simulation::Step;
+    ShooterOne.Cooldown = definition(Kind::Bastion).cooldown;
+    MotionCache.BeginFrame();
+    const FCinderEntityPose FiredPose = MotionCache.Observe(ShooterOne);
+    const FCinderEntityPose NeighborPose = MotionCache.Observe(ShooterTwo);
+    MotionCache.EndFrame();
+    TestTrue(TEXT("Observe starts recoil only for the exact entity whose cooldown rose"),
+        FiredPose.bRecoil && !NeighborPose.bRecoil);
+
+    CinderTerrainSurface::FFeatures Terrain;
+    const FColor EmptyTerrain = CinderTerrainSurface::Sample(Terrain, 1000, 1000);
+    TestTrue(TEXT("Terrain without observed inputs has no exposed stone or mineral stain"),
+        EmptyTerrain.R == 0 && EmptyTerrain.G == 0);
+    Terrain.Minerals.Add({1000, 1000});
+    const FColor MineralCenter = CinderTerrainSurface::Sample(Terrain, 1000, 1000);
+    const FColor MineralFar = CinderTerrainSurface::Sample(Terrain, 1800, 1800);
+    TestTrue(TEXT("Observed ore stains only its local terrain"), MineralCenter.G > 0 && MineralFar.G == 0);
+    Terrain.Cliffs.Add({{600, 700}, {120, 80}});
+    const FColor CliffCenter = CinderTerrainSurface::Sample(Terrain, 600, 700);
+    const FColor CliffFar = CinderTerrainSurface::Sample(Terrain, 1800, 1800);
+    TestTrue(TEXT("A cliff mask exposes stone inside its rectangle and not at a distant point"),
+        CliffCenter.R > 0 && CliffFar.R == 0);
+    TArray<FColor> MapZeroSamples;
+    for (const Vec2 Point : {Vec2{375, 425}, Vec2{1375, 1925}, Vec2{3175, 925}})
+        MapZeroSamples.Add(CinderTerrainSurface::Sample(Terrain, Point.x, Point.y));
+    Terrain.Map = 2;
+    bool bMapChangesAsh = false, bSameInputDeterministic = true;
+    int32 SampleIndex = 0;
+    for (const Vec2 Point : {Vec2{375, 425}, Vec2{1375, 1925}, Vec2{3175, 925}})
+    {
+        const FColor MapTwo = CinderTerrainSurface::Sample(Terrain, Point.x, Point.y);
+        bMapChangesAsh |= MapZeroSamples[SampleIndex++].B != MapTwo.B;
+        bSameInputDeterministic &= MapTwo == CinderTerrainSurface::Sample(Terrain, Point.x, Point.y);
+    }
+    TestTrue(TEXT("Map seed changes the ash mask while identical inputs stay deterministic"),
+        bMapChangesAsh && bSameInputDeterministic);
+
     FGameFixture Fixture;
     if (!Fixture.Initialize(*this)) return false;
     ACinderBattlefield& Battle = *Fixture.Battle;
     ACinderPlayerController& Controller = *Fixture.Controller;
+    TestTrue(TEXT("BeginPlay fixture has observed resource presentation state"), !Battle.ResourceMemory.empty());
+    Battle.Sim().reset({0, 42, false, 1});
+    Battle.ResetPresentation();
+    TestTrue(TEXT("Direct simulation replacement clears prior resource memory and pose samples"),
+        Battle.ResourceMemory.empty() && Battle.EntityMotion.CachedEntities() == 0);
+    for (const Kind KindWithParts : {Kind::Worker, Kind::Striker, Kind::Lancer, Kind::Bastion, Kind::Mortar})
+    {
+        const int32 KindIndex = static_cast<int32>(KindWithParts);
+        const bool bAvailable = Battle.MotionKindAvailable.IsValidIndex(KindIndex)
+            && Battle.MotionKindAvailable[KindIndex] != 0;
+        bool bAllParts = true, bAnyParts = false;
+        for (int32 Team = 0; Team < 2; ++Team)
+            for (const FCinderMotionAssetPart& Part : CinderMotionAssetParts(KindWithParts))
+            {
+                const int32 Key = (KindIndex * 2 + Team) * static_cast<int32>(ECinderMotionPart::Count)
+                    + static_cast<int32>(Part.Part);
+                const bool bLoaded = Battle.MotionPartBatchIndices.IsValidIndex(Key)
+                    && Battle.MotionPartBatchIndices[Key] != INDEX_NONE;
+                bAllParts &= bLoaded; bAnyParts |= bLoaded;
+            }
+        TestTrue(TEXT("A motion kind loads every required part or retains its complete static model"),
+            bAvailable ? bAllParts : !bAnyParts);
+        TestTrue(TEXT("Motion completeness fallback always retains a body batch"),
+            Battle.ModelBatchIndices[KindIndex * 2] != INDEX_NONE);
+    }
+    const auto UploadStamp = [&]
+    {
+        const auto& Uploads = Battle.InstanceUploads;
+        return std::array<uint64, 9>{ Uploads.Passes, Uploads.DeltaCalls, Uploads.Transforms,
+            Uploads.Added, Uploads.Removed, Uploads.FullRebuilds, Uploads.UnchangedSkips,
+            Uploads.StaticSkips, Battle.FogTextureUploads };
+    };
+    const auto FrameCap = [&](float EngineLimit = 0.0f, bool bForeground = true)
+    {
+        return UCinderGameEngine::ApplyStateCap(EngineLimit,
+            UCinderGameEngine::ClassifyMatchState(&Battle, bForeground));
+    };
+    using FrameState = ECinderFramePacingState;
+    const FrameState CappedStates[] = { FrameState::Gameplay, FrameState::Idle, FrameState::Background };
+    const float ExpectedCaps[] = { 120.0f, 30.0f, 10.0f };
+    for (int32 Index = 0; Index < UE_ARRAY_COUNT(CappedStates); ++Index)
+    {
+        TestEqual(TEXT("Unlimited engine policy receives the applicable state cap"),
+            UCinderGameEngine::ApplyStateCap(0.0f, CappedStates[Index]), ExpectedCaps[Index]);
+        TestEqual(TEXT("Negative unlimited engine policy receives the applicable state cap"),
+            UCinderGameEngine::ApplyStateCap(-1.0f, CappedStates[Index]), ExpectedCaps[Index]);
+        TestEqual(TEXT("A stricter engine cap is retained in every state"),
+            UCinderGameEngine::ApplyStateCap(5.0f, CappedStates[Index]), 5.0f);
+    }
+    TestEqual(TEXT("Scope bypass retains an unlimited engine policy"), UCinderGameEngine::ApplyStateCap(0.0f, FrameState::Bypass), 0.0f);
+    TestEqual(TEXT("Scope bypass retains a higher configured engine cap"), UCinderGameEngine::ApplyStateCap(144.0f, FrameState::Bypass), 144.0f);
+    TestTrue(TEXT("Engine context detection bypasses a viewport-free automation engine"),
+        GetDefault<UCinderGameEngine>()->GetFramePacingState() == FrameState::Bypass);
+    TestTrue(TEXT("A foreground without a battlefield uses the idle policy"),
+        UCinderGameEngine::ClassifyMatchState(nullptr, true) == FrameState::Idle);
+    TestTrue(TEXT("Background policy takes precedence even without a battlefield"),
+        UCinderGameEngine::ClassifyMatchState(nullptr, false) == FrameState::Background);
     TestTrue(TEXT("World begins at the menu"), Battle.IsMenu());
+    TestEqual(TEXT("Actual menu state limits foreground presentation to 30 FPS"), FrameCap(), 30.0f);
+    TestEqual(TEXT("Actual menu state limits background presentation to 10 FPS"), FrameCap(0.0f, false), 10.0f);
     TryArmModes(Controller);
     TestFalse(TEXT("Menu rejects gameplay targeting and placement modes"), HasPendingModes(Controller));
     const uint64 MenuTick = Battle.Sim().tick();
+    const uint64 MenuHash = Battle.Sim().stateHash();
+    const size_t MenuCommands = Battle.Sim().recording().size();
+    const auto MenuUploads = UploadStamp();
     Battle.Tick(0.2f);
     TestEqual(TEXT("Menu prevents simulation advancement"), static_cast<uint64>(Battle.Sim().tick()), MenuTick);
+    TestEqual(TEXT("Menu Tick leaves all authoritative state unchanged"), static_cast<uint64>(Battle.Sim().stateHash()), MenuHash);
+    TestTrue(TEXT("Menu Tick records no commands"), Battle.Sim().recording().size() == MenuCommands);
+    TestTrue(TEXT("Menu Tick submits no instance or fog uploads"), UploadStamp() == MenuUploads);
 
     Controller.ExecuteAction(TEXT("start"), 2);
     TestTrue(TEXT("Controller start exits menu and pause"), !Battle.IsMenu() && !Battle.IsPaused());
     TestEqual(TEXT("Controller start chooses map two"), Battle.MapIndex(), 2);
     TestEqual(TEXT("Start resets the simulation clock"), static_cast<uint64>(Battle.Sim().tick()), uint64(0));
+    TestEqual(TEXT("Actual running match permits the 120 FPS gameplay cap"), FrameCap(), 120.0f);
+    TestEqual(TEXT("Gameplay retains an existing 60 FPS engine limit"), FrameCap(60.0f), 60.0f);
+    TestEqual(TEXT("Background gameplay is capped at 10 FPS"), FrameCap(0.0f, false), 10.0f);
+    TestTrue(TEXT("Starting a match immediately repopulates rendering after idle"), Battle.InstanceUploads.Passes > MenuUploads[0]);
+    const uint64 StartedRenderPasses = Battle.InstanceUploads.Passes;
     Battle.Tick(Simulation::Step);
     TestTrue(TEXT("Battlefield Tick advances active match"), Battle.Sim().tick() > 0);
+    TestTrue(TEXT("Active Tick resumes rendering passes"), Battle.InstanceUploads.Passes > StartedRenderPasses);
 
     const int Ore = Battle.Sim().players()[0].ore;
     const size_t Recorded = Battle.Sim().recording().size();
@@ -176,20 +359,76 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     TestTrue(TEXT("Rejected controller training is not recorded"), Battle.Sim().recording().size() == Recorded);
     TestTrue(TEXT("Rejected controller training produces feedback"), !Controller.Feedback().IsEmpty());
 
+    Controller.Selected = EntitiesOfKind(Battle.Sim(), Kind::Worker);
+    if (!TestTrue(TEXT("Pause-flush fixture has a real selected worker"), !Controller.Selected.empty())) return false;
+    const Id PauseWorker = Controller.Selected.front();
+    const Vec2 LastRenderedWorker = Battle.Sim().find(PauseWorker)->pos;
+    UInstancedStaticMeshComponent* PauseWorkerComponent = nullptr;
+    int32 PauseWorkerInstance = INDEX_NONE;
+    TArray<UInstancedStaticMeshComponent*> PauseComponents;
+    Battle.GetComponents<UInstancedStaticMeshComponent>(PauseComponents);
+    for (UInstancedStaticMeshComponent* Component : PauseComponents)
+    {
+        if (!Component) continue;
+        for (int32 Index = 0; Index < Component->GetInstanceCount(); ++Index)
+        {
+            FTransform Pose;
+            if (Component->GetInstanceTransform(Index, Pose, true)
+                && FMath::Abs(Pose.GetTranslation().X - LastRenderedWorker.x) < 0.01
+                && FMath::Abs(Pose.GetTranslation().Y - LastRenderedWorker.y) < 0.01)
+            { PauseWorkerComponent = Component; PauseWorkerInstance = Index; break; }
+        }
+        if (PauseWorkerComponent) break;
+    }
+    if (!TestNotNull(TEXT("Pause-flush fixture locates an actual centered worker instance"), PauseWorkerComponent)) return false;
+    if (!TestTrue(TEXT("Pause-flush fixture issues a normal worker move"),
+        IssueAtBattlefield(Battle, CommandType::Move, {PauseWorker}, Kind::Worker,
+            {LastRenderedWorker.x + 160, LastRenderedWorker.y + 140}).accepted)) return false;
+    const uint64 BeforePendingMovementRender = Battle.InstanceUploads.Passes;
+    Battle.Sim().update(Simulation::Step);
+    const Vec2 PendingWorkerPosition = Battle.Sim().find(PauseWorker)->pos;
+    if (!TestTrue(TEXT("Actual simulation movement creates a pending worker pose"),
+        FMath::Abs(PendingWorkerPosition.x - LastRenderedWorker.x) > 0.01
+        || FMath::Abs(PendingWorkerPosition.y - LastRenderedWorker.y) > 0.01)) return false;
+    FTransform StaleWorkerPose;
+    TestTrue(TEXT("Worker instance still has the previous pose before the pause flush"),
+        PauseWorkerComponent->GetInstanceTransform(PauseWorkerInstance, StaleWorkerPose, true)
+        && FMath::Abs(StaleWorkerPose.GetTranslation().X - LastRenderedWorker.x) < 0.01
+        && FMath::Abs(StaleWorkerPose.GetTranslation().Y - LastRenderedWorker.y) < 0.01);
+    TestEqual(TEXT("Simulation-only movement has not submitted a presentation pass"), Battle.InstanceUploads.Passes, BeforePendingMovementRender);
     TryArmModes(Controller);
     TestTrue(TEXT("Active match permits a placement mode"), Controller.IsBuildMode());
     Controller.ExecuteAction(TEXT("pause"));
+    TestEqual(TEXT("Entering pause flushes exactly one presentation pass"), Battle.InstanceUploads.Passes, BeforePendingMovementRender + uint64(1));
+    FTransform PausedWorkerPose;
+    TestTrue(TEXT("Pause flush submits the latest actual worker position"),
+        PauseWorkerComponent->GetInstanceTransform(PauseWorkerInstance, PausedWorkerPose, true)
+        && FMath::Abs(PausedWorkerPose.GetTranslation().X - PendingWorkerPosition.x) < 0.01
+        && FMath::Abs(PausedWorkerPose.GetTranslation().Y - PendingWorkerPosition.y) < 0.01);
+    TestEqual(TEXT("Pause flush resets the presentation interval"), Battle.RenderTimer, 0.0f);
+    const auto EnteredPauseUploads = UploadStamp();
     const uint64 PausedTick = Battle.Sim().tick();
     TestTrue(TEXT("One pause action cancels modes and pauses the battlefield"), Battle.IsPaused() && !HasPendingModes(Controller));
+    TestEqual(TEXT("Actual pause transition lowers foreground cap to 30 FPS"), FrameCap(), 30.0f);
+    TestEqual(TEXT("A paused match in the background uses 10 FPS"), FrameCap(0.0f, false), 10.0f);
     TryArmModes(Controller);
     TestFalse(TEXT("Paused match rejects gameplay modes"), HasPendingModes(Controller));
     Controller.ExecuteAction(TEXT("pause"));
     TestTrue(TEXT("Explicit pause remains paused when repeated"), Battle.IsPaused());
+    TestTrue(TEXT("Repeated pause submits no additional instance or fog work"), UploadStamp() == EnteredPauseUploads);
+    const uint64 PausedHash = Battle.Sim().stateHash();
+    const size_t PausedCommands = Battle.Sim().recording().size();
+    const auto PausedUploads = UploadStamp();
     Battle.Tick(0.2f);
     TestEqual(TEXT("Paused battlefield does not advance"), static_cast<uint64>(Battle.Sim().tick()), PausedTick);
+    TestEqual(TEXT("Paused Tick leaves all authoritative state unchanged"), static_cast<uint64>(Battle.Sim().stateHash()), PausedHash);
+    TestTrue(TEXT("Paused Tick records no commands"), Battle.Sim().recording().size() == PausedCommands);
+    TestTrue(TEXT("Paused Tick submits no instance or fog uploads"), UploadStamp() == PausedUploads);
     Controller.ExecuteAction(TEXT("resume"));
+    TestEqual(TEXT("Actual resume transition restores the gameplay cap"), FrameCap(), 120.0f);
     Battle.Tick(Simulation::Step);
     TestTrue(TEXT("Controller resume permits advancement"), !Battle.IsPaused() && Battle.Sim().tick() > PausedTick);
+    TestTrue(TEXT("Resume restores render submission on the next simulation step"), Battle.InstanceUploads.Passes > PausedUploads[0]);
     Controller.ExecuteAction(TEXT("attack"));
     TestTrue(TEXT("Active match can arm attack targeting"), Controller.bAttackMove);
     Controller.ExecuteAction(TEXT("pause"));
@@ -205,9 +444,18 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     Controller.ExecuteAction(TEXT("menu"));
     TestFalse(TEXT("Menu transition clears all pending gameplay modes"), HasPendingModes(Controller));
     const uint64 ReturnedMenuTick = Battle.Sim().tick();
+    const uint64 ReturnedMenuHash = Battle.Sim().stateHash();
+    const size_t ReturnedMenuCommands = Battle.Sim().recording().size();
+    const auto ReturnedMenuUploads = UploadStamp();
     Battle.Tick(0.2f);
     TestTrue(TEXT("Returning to menu freezes the current match"), Battle.IsMenu() && Battle.Sim().tick() == ReturnedMenuTick);
+    TestEqual(TEXT("Returning to menu reinstates the idle frame cap"), FrameCap(), 30.0f);
+    TestEqual(TEXT("Returned-menu Tick preserves authoritative state"), static_cast<uint64>(Battle.Sim().stateHash()), ReturnedMenuHash);
+    TestTrue(TEXT("Returned-menu Tick records no commands"), Battle.Sim().recording().size() == ReturnedMenuCommands);
+    TestTrue(TEXT("Returned-menu Tick submits no instance or fog uploads"), UploadStamp() == ReturnedMenuUploads);
     Controller.ExecuteAction(TEXT("start"), 0);
+    TestTrue(TEXT("A new match refreshes presentation after returning to the menu"), Battle.InstanceUploads.Passes > ReturnedMenuUploads[0]);
+    Controller.Selected = EntitiesOfKind(Battle.Sim(), Kind::Worker);
     TryArmModes(Controller);
     TestTrue(TEXT("Reset fixture arms gameplay modes in an active match"), HasPendingModes(Controller));
     Controller.ExecuteAction(TEXT("start"), 0);
@@ -219,10 +467,269 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     for (const Entity& Entity : Battle.Sim().entities())
         TestTrue(TEXT("New match clears old production queues"), Entity.queue.empty());
 
+    // The lifecycle test is a friend of the controller so it can exercise the
+    // actual gesture reducer without inventing a local-player viewport. Seed
+    // selection with real starting IDs; screen positions here test thresholds,
+    // not world targeting, camera motion, or physical Alt/trackpad delivery.
+    const auto GestureWorkers = EntitiesOfKind(Battle.Sim(), Kind::Worker);
+    if (!TestTrue(TEXT("Gesture fixture has its normal five starting workers"), GestureWorkers.size() == 5)) return false;
+    const FVector2D GestureStart(600, 400);
+    const FVector2D LargeDrag(128, 64);
+    Controller.Selected = GestureWorkers;
+    Controller.PointerPressed(GestureStart, false, false);
+    Controller.PointerMoved(GestureStart + LargeDrag, 0.1f);
+    TestTrue(TEXT("Ordinary left drag enters rectangle selection"), Controller.IsSelecting() && !Controller.bPointerCameraPan);
+    Controller.PointerReleased(GestureStart + LargeDrag);
+    TestFalse(TEXT("Ordinary release ends rectangle selection"), Controller.IsSelecting());
+    TestTrue(TEXT("Ordinary rectangle release replaces selection in this viewport-free fixture"), Controller.Selection().empty());
+
+    const FVector2D PanOffsets[] = { FVector2D::ZeroVector, FVector2D(2, 1), LargeDrag };
+    for (int32 Mode = 0; Mode < 3; ++Mode)
+        for (const FVector2D& Offset : PanOffsets)
+        {
+            Controller.ResetInteraction(false);
+            Controller.Selected = GestureWorkers;
+            Controller.ExecuteAction(TEXT("box"));
+            if (Mode == 1)
+            {
+                Controller.ExecuteAction(TEXT("buildmenu"));
+                Controller.ExecuteAction(TEXT("build"), static_cast<int>(Kind::Foundry));
+            }
+            else if (Mode == 2) Controller.ExecuteAction(TEXT("attack"));
+            const bool BuildBefore = Controller.IsBuildMode(), MenuBefore = Controller.bBuildMenu;
+            const bool AttackBefore = Controller.bAttackMove, BoxBefore = Controller.bBoxSelect;
+            const FString FeedbackBefore = Controller.Feedback();
+            const float LastTapBefore = Controller.LastTapTime;
+            const uint64 HashBefore = Battle.Sim().stateHash();
+            const size_t CommandsBefore = Battle.Sim().recording().size();
+            Controller.PointerPressed(GestureStart, false, true);
+            TestTrue(TEXT("Explicit desktop pan latches and overrides armed box selection"),
+                Controller.bPointerCameraPan && !Controller.bGestureSelect && !Controller.bPointerTouch && !Controller.bPointerUI);
+            // No modifier state is supplied after the press, as when Alt is
+            // released before the mouse button. The latched gesture must persist.
+            Controller.PointerMoved(GestureStart + Offset, 0.1f);
+            TestFalse(TEXT("Desktop pan never enters rectangle selection"), Controller.IsSelecting());
+            TestTrue(TEXT("Desktop pan remains latched until release"), Controller.bPointerCameraPan);
+            TestEqual(TEXT("Only a pan beyond the movement threshold becomes a drag"), Controller.bDragging, Offset == LargeDrag);
+            Controller.PointerReleased(GestureStart + Offset);
+            TestTrue(TEXT("Pan release consumes and clears the pointer even below the drag threshold"),
+                !Controller.bPointerDown && !Controller.bDragging && !Controller.bPointerCameraPan);
+            TestTrue(TEXT("Every pan release preserves the selected workers"), Controller.Selection() == GestureWorkers);
+            TestTrue(TEXT("Pan preserves build, attack, menu and box modes"), Controller.IsBuildMode() == BuildBefore
+                && Controller.bBuildMenu == MenuBefore && Controller.bAttackMove == AttackBefore && Controller.bBoxSelect == BoxBefore);
+            TestEqual(TEXT("Pan release does not change click feedback"), Controller.Feedback(), FeedbackBefore);
+            TestEqual(TEXT("Pan release does not prime a later double tap"), Controller.LastTapTime, LastTapBefore);
+            TestEqual(TEXT("Pan neither orders units nor creates a foundation"), static_cast<uint64>(Battle.Sim().stateHash()), HashBefore);
+            TestTrue(TEXT("Pan adds no authoritative command recording"), Battle.Sim().recording().size() == CommandsBefore);
+        }
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    const uint64 BeforeTierRejection = Battle.Sim().stateHash();
+    const size_t CommandsBeforeTierRejection = Battle.Sim().recording().size();
+    TestEqual(TEXT("Crucible prerequisite fixture starts at Tier 1"), Battle.Sim().players()[0].tier, 1);
+    Controller.ExecuteAction(TEXT("build"), static_cast<int>(Kind::MotorPool));
+    TestFalse(TEXT("Tier 1 cannot arm Crucible placement"), Controller.IsBuildMode());
+    TestTrue(TEXT("Rejected Crucible placement explains the Tier 2 research requirement"),
+        Controller.Feedback().Contains(TEXT("T2")) && Controller.Feedback().Contains(TEXT("TECH TIER"))
+        && Controller.Feedback().Contains(TEXT("Resonator")));
+    TestTrue(TEXT("Rejected Crucible placement preserves its selected builders"), Controller.Selection() == GestureWorkers);
+    TestEqual(TEXT("Rejected Crucible placement leaves the simulation unchanged"), static_cast<uint64>(Battle.Sim().stateHash()), BeforeTierRejection);
+    TestTrue(TEXT("Rejected Crucible placement records no command"), Battle.Sim().recording().size() == CommandsBeforeTierRejection);
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    Controller.ExecuteAction(TEXT("build"), static_cast<int>(Kind::Foundry));
+    if (!TestTrue(TEXT("Selected starting workers can arm plain mouse placement"),
+        Controller.IsBuildMode() && Controller.BuildingKind() == Kind::Foundry)) return false;
+    const uint64 BeforePlacementDrag = Battle.Sim().stateHash();
+    const size_t CommandsBeforePlacementDrag = Battle.Sim().recording().size();
+    const FString PlacementFeedback = Controller.Feedback();
+    Controller.PointerPressed(GestureStart, false, false);
+    TestTrue(TEXT("Ordinary placement press latches placement without desktop pan"), Controller.bPointerPlacement && !Controller.bPointerCameraPan);
+    Controller.PointerMoved(GestureStart + LargeDrag, 0.1f);
+    TestTrue(TEXT("Plain placement drag crosses the drag threshold without a selection box"), Controller.bDragging && !Controller.IsSelecting());
+    TestTrue(TEXT("Plain placement drag keeps the selected builders while held"), Controller.Selection() == GestureWorkers);
+    Controller.PointerReleased(GestureStart + LargeDrag);
+    TestTrue(TEXT("Plain placement release ends the gesture without a selection box"),
+        !Controller.bPointerDown && !Controller.bDragging && !Controller.bPointerPlacement && !Controller.IsSelecting());
+    TestTrue(TEXT("Plain placement drag preserves the workers, placement mode and pending building"),
+        Controller.Selection() == GestureWorkers && Controller.IsBuildMode() && Controller.BuildingKind() == Kind::Foundry);
+    TestEqual(TEXT("Plain placement drag preserves placement guidance"), Controller.Feedback(), PlacementFeedback);
+    TestEqual(TEXT("Plain placement drag neither builds nor issues another order"), static_cast<uint64>(Battle.Sim().stateHash()), BeforePlacementDrag);
+    TestTrue(TEXT("Plain placement drag records no command"), Battle.Sim().recording().size() == CommandsBeforePlacementDrag);
+
+    // Cancelling while the primary button is held must consume its later release,
+    // even with no movement, rather than reinterpret it as a world-selection click.
+    Controller.PointerPressed(GestureStart, false, false);
+    Controller.MouseContext();
+    TestFalse(TEXT("Secondary click cancels active placement"), Controller.IsBuildMode());
+    TestTrue(TEXT("Secondary-click placement cancellation gives explicit feedback"), Controller.Feedback().Contains(TEXT("cancelled")));
+    const FString CancelledFeedback = Controller.Feedback();
+    Controller.PointerReleased(GestureStart);
+    TestTrue(TEXT("Release after placement cancellation preserves builders and clears the gesture"),
+        Controller.Selection() == GestureWorkers && !Controller.bPointerDown && !Controller.bPointerPlacement && !Controller.IsSelecting());
+    TestTrue(TEXT("Cancelled placement release preserves the pending building without rearming"),
+        !Controller.IsBuildMode() && Controller.BuildingKind() == Kind::Foundry);
+    TestEqual(TEXT("Cancelled placement release preserves cancellation feedback"), Controller.Feedback(), CancelledFeedback);
+    TestEqual(TEXT("Cancelled placement release cannot mutate the simulation"), static_cast<uint64>(Battle.Sim().stateHash()), BeforePlacementDrag);
+    TestTrue(TEXT("Cancelled placement release records no command"), Battle.Sim().recording().size() == CommandsBeforePlacementDrag);
+
+    Controller.ExecuteAction(TEXT("build"), static_cast<int>(Kind::Foundry));
+    Controller.PointerPressed(GestureStart, false, false);
+    TestTrue(TEXT("Placement can be rearmed before a pause"), Controller.IsBuildMode() && Controller.bPointerPlacement);
+    Controller.ExecuteAction(TEXT("pause"));
+    TestTrue(TEXT("Pause clears a held placement gesture immediately"), Battle.IsPaused()
+        && !Controller.IsBuildMode() && !Controller.bPointerPlacement && !Controller.bPointerDown && !Controller.IsSelecting());
+    Controller.PointerReleased(GestureStart);
+    TestTrue(TEXT("Release after placement pause preserves the workers"), Controller.Selection() == GestureWorkers);
+    TestEqual(TEXT("Paused placement release leaves the simulation unchanged"), static_cast<uint64>(Battle.Sim().stateHash()), BeforePlacementDrag);
+    TestTrue(TEXT("Paused placement release records no command"), Battle.Sim().recording().size() == CommandsBeforePlacementDrag);
+    Controller.ExecuteAction(TEXT("resume"));
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    TestTrue(TEXT("Normal touch cases begin outside placement mode"), !Controller.IsBuildMode() && !Controller.bPointerPlacement);
+    Controller.PointerPressed(GestureStart, true, true);
+    TestTrue(TEXT("Touch ignores the desktop camera-pan modifier"), Controller.bPointerTouch && !Controller.bPointerCameraPan && !Controller.bGestureSelect);
+    Controller.PointerMoved(GestureStart + LargeDrag, 0.1f);
+    TestTrue(TEXT("A short one-finger drag keeps the ordinary touch pan path"), Controller.bDragging && !Controller.IsSelecting());
+    Controller.PointerReleased(GestureStart + LargeDrag);
+    TestTrue(TEXT("Touch pan preserves existing selection"), Controller.Selection() == GestureWorkers);
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    const uint64 BeforeStationaryHold = Battle.Sim().stateHash();
+    const size_t CommandsBeforeStationaryHold = Battle.Sim().recording().size();
+    Controller.PointerPressed(GestureStart, true, false);
+    Controller.PointerMoved(GestureStart, 0.5f);
+    TestTrue(TEXT("A stationary touch hold arms selection once"), Controller.bLongPress && Controller.bGestureSelect && !Controller.bDragging);
+    const float HoldFeedbackLife = Controller.FeedbackLife;
+    Controller.PointerMoved(GestureStart, 0.1f);
+    TestEqual(TEXT("An armed stationary hold does not refresh its feedback every frame"), Controller.FeedbackLife, HoldFeedbackLife);
+    Controller.PointerReleased(GestureStart);
+    TestTrue(TEXT("Stationary hold release retains selection and clears its gesture"),
+        Controller.Selection() == GestureWorkers && !Controller.bPointerDown && !Controller.bLongPress && !Controller.IsSelecting());
+    TestEqual(TEXT("Stationary hold release issues no terrain action"), static_cast<uint64>(Battle.Sim().stateHash()), BeforeStationaryHold);
+    TestTrue(TEXT("Stationary hold release records no command"), Battle.Sim().recording().size() == CommandsBeforeStationaryHold);
+
+    Controller.ResetInteraction(false);
+    Controller.PointerPressed(GestureStart, true, false);
+    Controller.PointerMoved(GestureStart, 0.5f);
+    Controller.PointerMoved(GestureStart + LargeDrag, 0.01f);
+    TestTrue(TEXT("Touch hold then drag still enters rectangle selection"), Controller.IsSelecting() && !Controller.bPointerCameraPan);
+    Controller.PointerReleased(GestureStart + LargeDrag);
+    TestTrue(TEXT("Touch selection release finishes the normal rectangle path"), !Controller.IsSelecting() && Controller.Selection().empty());
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    Controller.ExecuteAction(TEXT("build"), static_cast<int>(Kind::Foundry));
+    const uint64 BeforeTouchPlacement = Battle.Sim().stateHash();
+    const size_t CommandsBeforeTouchPlacement = Battle.Sim().recording().size();
+    const FString TouchPlacementFeedback = Controller.Feedback();
+    Controller.PointerPressed(GestureStart, true, false);
+    Controller.PointerMoved(GestureStart, 0.5f);
+    TestTrue(TEXT("A held placement touch stays in placement instead of arming selection"),
+        Controller.bPointerPlacement && !Controller.bLongPress && !Controller.bGestureSelect && Controller.Feedback() == TouchPlacementFeedback);
+    Controller.PointerMoved(GestureStart + LargeDrag, 0.01f);
+    Controller.PointerReleased(GestureStart + LargeDrag);
+    TestTrue(TEXT("Touch placement drag retains its worker and pending building"),
+        Controller.Selection() == GestureWorkers && Controller.IsBuildMode() && Controller.BuildingKind() == Kind::Foundry);
+    TestEqual(TEXT("Touch placement drag issues no order"), static_cast<uint64>(Battle.Sim().stateHash()), BeforeTouchPlacement);
+    TestTrue(TEXT("Touch placement drag records no command"), Battle.Sim().recording().size() == CommandsBeforeTouchPlacement);
+
+    Controller.ResetInteraction(false);
+    Controller.bMultiTouch = true; Controller.bTwoDown = true;
+    Controller.TouchPressed(ETouchIndex::Touch1, FVector(GestureStart.X, GestureStart.Y, 0));
+    TestTrue(TEXT("Fresh primary touch clears a completed multi-touch gesture"),
+        Controller.bPointerDown && Controller.bPointerTouch && !Controller.bMultiTouch && !Controller.bTwoDown);
+    Controller.PointerReleased(GestureStart);
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    const uint64 BeforeSecondaryTouch = Battle.Sim().stateHash();
+    const size_t CommandsBeforeSecondaryTouch = Battle.Sim().recording().size();
+    Controller.PointerPressed(GestureStart, true, false);
+    Controller.PointerMoved(GestureStart, 0.5f);
+    TestTrue(TEXT("Secondary-contact fixture begins with armed touch selection"), Controller.bLongPress && Controller.bGestureSelect);
+    Controller.TouchPressed(ETouchIndex::Touch2, FVector(GestureStart.X + 20, GestureStart.Y + 20, 0));
+    TestTrue(TEXT("Secondary contact cancels pending one-finger selection intent"),
+        Controller.bMultiTouch && !Controller.bLongPress && !Controller.bGestureSelect);
+    Controller.PointerReleased(GestureStart);
+    TestTrue(TEXT("Primary release after secondary contact retains selection"), Controller.Selection() == GestureWorkers && !Controller.IsSelecting());
+    TestEqual(TEXT("Multi-touch release issues no terrain action"), static_cast<uint64>(Battle.Sim().stateHash()), BeforeSecondaryTouch);
+    TestTrue(TEXT("Multi-touch release records no command"), Battle.Sim().recording().size() == CommandsBeforeSecondaryTouch);
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    Controller.PointerPressed(GestureStart, true, false);
+    Controller.PointerMoved(GestureStart, 0.5f);
+    const uint64 BeforeBackground = Battle.Sim().stateHash();
+    const size_t CommandsBeforeBackground = Battle.Sim().recording().size();
+    FCoreDelegates::ApplicationWillEnterBackgroundDelegate.Broadcast();
+    TestTrue(TEXT("Application background pauses an active match and clears held touch state"), Battle.IsPaused()
+        && !Controller.bPointerDown && !Controller.bLongPress && Controller.Selection() == GestureWorkers);
+    Battle.Tick(0.2f);
+    TestEqual(TEXT("Background pause freezes authoritative state"), static_cast<uint64>(Battle.Sim().stateHash()), BeforeBackground);
+    FCoreDelegates::ApplicationHasEnteredForegroundDelegate.Broadcast();
+    TestTrue(TEXT("Foreground leaves the background pause for the player to resume"), Battle.IsPaused());
+    TestTrue(TEXT("Background and foreground record no command"), Battle.Sim().recording().size() == CommandsBeforeBackground);
+    Controller.ExecuteAction(TEXT("resume"));
+    TestFalse(TEXT("Explicit Resume continues a background-paused match"), Battle.IsPaused());
+    Controller.ExecuteAction(TEXT("pause"));
+    FCoreDelegates::ApplicationWillEnterBackgroundDelegate.Broadcast();
+    FCoreDelegates::ApplicationHasEnteredForegroundDelegate.Broadcast();
+    TestTrue(TEXT("Foreground also preserves a pause chosen by the player"), Battle.IsPaused());
+    const FString PausedFeedback = Controller.Feedback();
+    Controller.PointerPressed(GestureStart, true, false);
+    Controller.PointerMoved(GestureStart, 0.5f);
+    TestTrue(TEXT("Paused gameplay cannot arm long-press selection or feedback"),
+        !Controller.bLongPress && !Controller.bGestureSelect && Controller.Feedback() == PausedFeedback);
+    Controller.PointerReleased(GestureStart);
+    Controller.ExecuteAction(TEXT("resume"));
+
+    Controller.ResetInteraction(false);
+    Controller.Selected = GestureWorkers;
+    Controller.PointerPressed(GestureStart, false, true);
+    Controller.PointerMoved(GestureStart + LargeDrag, 0.1f);
+    const uint64 BeforePanPause = Battle.Sim().stateHash();
+    Controller.ExecuteAction(TEXT("pause"));
+    TestTrue(TEXT("Pause immediately clears every active desktop-pan gesture flag"), Battle.IsPaused()
+        && !Controller.bPointerDown && !Controller.bDragging && !Controller.bPointerCameraPan && !Controller.bGestureSelect);
+    Controller.PointerReleased(GestureStart + LargeDrag);
+    TestTrue(TEXT("Release after a paused pan preserves selection"), Controller.Selection() == GestureWorkers);
+    TestEqual(TEXT("Release after pause cannot dispatch a stale order"), static_cast<uint64>(Battle.Sim().stateHash()), BeforePanPause);
+    Controller.PointerPressed(GestureStart, false, true);
+    TestFalse(TEXT("Paused match cannot latch desktop camera pan"), Controller.bPointerCameraPan);
+    Controller.PointerReleased(GestureStart);
+    Controller.ExecuteAction(TEXT("resume"));
+    Controller.PointerPressed(GestureStart, false, true);
+    Controller.PointerMoved(GestureStart + LargeDrag, 0.1f);
+    Controller.ExecuteAction(TEXT("start"), 0);
+    TestTrue(TEXT("New match clears pending desktop pan and selection"), !Controller.bPointerDown
+        && !Controller.bDragging && !Controller.bPointerCameraPan && !Controller.bGestureSelect && Controller.Selection().empty());
+    const uint64 AfterPanReset = Battle.Sim().stateHash();
+    Controller.PointerReleased(GestureStart + LargeDrag);
+    TestEqual(TEXT("Release from the prior match cannot alter the reset simulation"), static_cast<uint64>(Battle.Sim().stateHash()), AfterPanReset);
+    TestTrue(TEXT("Reset leaves no command from the old pan gesture"), Battle.Sim().recording().empty());
+    if (!HasAnyErrors()) AddInfo(TEXT("CINDERLINE_UE_INTEGRATION_GESTURES_PASS: ordinary mouse rectangle selection, nine desktop-pan mode/distance cases, plain placement drag/cancel/pause, Tier 2 Crucible rejection, touch drag/hold/placement/multi-touch, app background pause, player-pause preservation and reset; real gesture methods with explicit pan intent and starting worker selection. NullRHI does not prove viewport targeting, camera movement, physical modifier routing, or internal TapWorld non-invocation when deprojection is unavailable."));
+
+    Battle.Sim().reset({0, 42, false, 1});
+    Battle.ResetPresentation();
+    const Id HiddenEnemy = Battle.Sim().debugSpawn(Kind::Striker, 1, {4400, 4400});
+    Battle.RenderState();
+    TestTrue(TEXT("Fog filtering runs before animation state can observe a hidden enemy"),
+        !Battle.Sim().visible(0, {4400, 4400}) && !Battle.EntityMotion.HasSample(HiddenEnemy));
+    Battle.Sim().debugSpawn(Kind::Scout, 0, {4280, 4400});
+    Battle.Sim().update(Simulation::Step);
+    Battle.RenderState();
+    TestTrue(TEXT("A newly visible live enemy enters the bounded pose cache"),
+        Battle.Sim().visible(0, {4400, 4400}) && Battle.EntityMotion.HasSample(HiddenEnemy));
+
     // Check actual renderer output through public actors/components. Skim has one
     // centered body instance in both the imported-model and primitive-fallback adapters.
     Battle.Sim().reset({0, 42, false, 1});
-    Battle.ResetFeedback();
+    Battle.ResetPresentation();
     auto& Sim = Battle.Sim();
     const Id FirstSkim = Sim.debugSpawn(Kind::Scout, 0, {1103, 1309});
     const Id SecondSkim = Sim.debugSpawn(Kind::Scout, 0, {1337, 1309});
@@ -325,6 +832,161 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     }
     TestEqual(TEXT("Repeated rendering does not change authoritative state"), static_cast<uint64>(Sim.stateHash()), BeforeRepeatHash);
     if (!HasAnyErrors()) AddInfo(TEXT("CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render."));
+
+    // A development-only siege fixture ends a real match through ordinary damage.
+    // No health or winner is injected. Stage the simulation accumulator so the
+    // winning adapter tick is shorter than its normal presentation interval.
+    Controller.ExecuteAction(TEXT("start"), 0);
+    Sim.reset({0, 42, false, 1});
+    Battle.ResetPresentation();
+    Battle.Tick(Simulation::Step);
+    const auto FinalHeadquarters = EntitiesOfKind(Sim, Kind::Headquarters);
+    if (!TestTrue(TEXT("Terminal-render fixture has one normal player headquarters"), FinalHeadquarters.size() == 1)) return false;
+    const Id FinalHQ = FinalHeadquarters.front();
+    const Vec2 FinalHQPosition = Sim.find(FinalHQ)->pos;
+    Command FinalAttack;
+    FinalAttack.type = CommandType::Attack; FinalAttack.team = 1; FinalAttack.target = FinalHQ;
+    for (int32 Index = 0; Index < 40; ++Index)
+    {
+        const float Angle = 2 * PI * Index / 40;
+        FinalAttack.units.push_back(Sim.debugSpawn(Kind::Mortar, 1,
+            { FinalHQPosition.x + 420 * FMath::Cos(Angle), FinalHQPosition.y + 420 * FMath::Sin(Angle) }));
+    }
+    Battle.RenderState();
+    const int32 FinalHQBatch = Battle.ModelBatchIndices[static_cast<int32>(Kind::Headquarters) * 2];
+    if (!TestTrue(TEXT("Terminal-render fixture has the validated headquarters model batch"),
+        FinalHQBatch != INDEX_NONE)) return false;
+    UInstancedStaticMeshComponent* FinalHQComponent = Battle.Batches[FinalHQBatch].Mesh;
+    const auto InstancesAtFinalHQ = [&]
+    {
+        // World-space destruction effects can legitimately remain at this position.
+        // This regression checks removal of the headquarters mesh itself.
+        int32 Count = 0;
+        for (int32 Index = 0; Index < FinalHQComponent->GetInstanceCount(); ++Index)
+        {
+            FTransform Pose;
+            if (FinalHQComponent->GetInstanceTransform(Index, Pose, true) && AtPoint(Pose, FinalHQPosition)) ++Count;
+        }
+        return Count;
+    };
+    if (!TestTrue(TEXT("Headquarters is actually rendered before the final volley"), InstancesAtFinalHQ() > 0)) return false;
+    if (!TestTrue(TEXT("Terminal-render fixture accepts an ordinary enemy attack"), Sim.command(FinalAttack).accepted)) return false;
+    const uint64 BeforeFinalTick = Sim.tick();
+    Sim.update(Simulation::Step * 0.8f);
+    TestEqual(TEXT("Partial simulation step has not fired the staged volley"), static_cast<uint64>(Sim.tick()), BeforeFinalTick);
+    TestEqual(TEXT("Terminal-render fixture starts with an empty presentation timer"), Battle.RenderTimer, 0.0f);
+    const uint64 BeforeFinalRender = Battle.InstanceUploads.Passes;
+    Battle.Tick(Simulation::Step * 0.2f);
+    if (!TestEqual(TEXT("Normal siege damage ends the match on the short adapter tick"), Sim.winner(), 1)) return false;
+    TestTrue(TEXT("The terminal tick removes the defeated headquarters through simulation combat"), !Sim.find(FinalHQ) || !Sim.find(FinalHQ)->alive());
+    TestTrue(TEXT("A winning tick submits its final render below the normal interval"), Battle.InstanceUploads.Passes > BeforeFinalRender);
+    TestEqual(TEXT("Terminal render removes the defeated headquarters instances"), InstancesAtFinalHQ(), 0);
+    TestEqual(TEXT("Actual results state uses the 30 FPS foreground cap"), FrameCap(), 30.0f);
+    TestEqual(TEXT("Actual results state uses the 10 FPS background cap"), FrameCap(0.0f, false), 10.0f);
+    const auto ResultUploads = UploadStamp();
+    const uint64 ResultHash = Sim.stateHash();
+    const size_t ResultCommands = Sim.recording().size();
+    Battle.Tick(0.2f); Battle.Tick(0.2f);
+    TestTrue(TEXT("Subsequent results ticks submit no instance or fog uploads"), UploadStamp() == ResultUploads);
+    TestEqual(TEXT("Results ticks leave authoritative state unchanged"), static_cast<uint64>(Sim.stateHash()), ResultHash);
+    TestTrue(TEXT("Results ticks record no commands"), Sim.recording().size() == ResultCommands);
+    Controller.ExecuteAction(TEXT("start"), 0);
+    TestEqual(TEXT("Starting after results restores the gameplay frame cap"), FrameCap(), 120.0f);
+    TestTrue(TEXT("Starting after results immediately refreshes the scene"), Battle.InstanceUploads.Passes > ResultUploads[0]);
+    const uint64 AfterResultsStartRender = Battle.InstanceUploads.Passes;
+    Battle.Tick(Simulation::Step);
+    TestTrue(TEXT("New match ticks resume both simulation and rendering after results"),
+        Sim.tick() > 0 && Battle.InstanceUploads.Passes > AfterResultsStartRender);
+    if (!HasAnyErrors()) AddInfo(TEXT("CINDERLINE_UE_IDLE_WORK_POLICY_PASS: production state classifier/cap helpers, 120/30/10 transitions, stricter/unlimited engine limits, automation scope bypass, one pause-transition flush of actual pending movement, frozen menu/pause/results upload counters, final combat death rendered on a short tick, and new-match render recovery. This does not measure native focus delivery, presented FPS, GPU load or thermal behavior."));
+
+    Controller.Rig = Fixture.WorldOwner.GetTestWorld()->SpawnActor<ACinderCamera>();
+    if (!TestNotNull(TEXT("Help checks have a real camera rig"), Controller.Rig.Get())) return false;
+    Controller.Selected = EntitiesOfKind(Sim, Kind::Worker);
+    Controller.bBuildMenu = true;
+    Controller.bPointerDown = true;
+    Controller.ExecuteAction(TEXT("help"), 5);
+    TestTrue(TEXT("Help pauses the active match and clears in-flight input"),
+        Controller.IsHelpOpen() && Battle.IsPaused() && !Controller.bPointerDown && !HasPendingModes(Controller));
+    TestEqual(TEXT("Contextual help opens the requested technology topic"), Controller.HelpPage(), 5);
+    const uint64 HelpHash = Sim.stateHash();
+    const uint64 HelpTick = Sim.tick();
+    const float HelpZoom = Controller.Rig->Distance();
+    Controller.ExecuteAction(TEXT("resume"));
+    Controller.ExecuteAction(TEXT("start"), 1);
+    Controller.ExecuteAction(TEXT("army"));
+    Controller.ExecuteAction(TEXT("train"), static_cast<int32>(Kind::Worker));
+    Controller.ZoomIn(); Controller.Home(); Controller.NudgeArrow(0);
+    Battle.Tick(1);
+    TestTrue(TEXT("Help blocks underlying actions, camera changes and simulation advancement"),
+        Controller.IsHelpOpen() && Battle.IsPaused() && Sim.stateHash() == HelpHash
+        && Sim.tick() == HelpTick && Controller.Rig->Distance() == HelpZoom);
+    Controller.ExecuteAction(TEXT("helppage"), -1);
+    TestEqual(TEXT("Help previous-page navigation wraps safely"), Controller.HelpPage(), CinderHelp::TopicCount - 1);
+    Controller.ExecuteAction(TEXT("helpreference"), 1000);
+    TestTrue(TEXT("Reference navigation remains in range"), Controller.HelpReference() >= 0 && Controller.HelpReference() < CinderHelp::ReferenceCount);
+    Controller.ExecuteAction(TEXT("helpinput"), 1);
+    TestTrue(TEXT("Touch instructions can be selected on desktop"), Controller.HelpUsesTouch());
+    Controller.ExecuteAction(TEXT("helpinput"), 0);
+    Controller.ApplicationWillEnterBackground(); Controller.ApplicationHasEnteredForeground();
+    Controller.Confirm();
+    TestTrue(TEXT("Closing help after foreground return keeps explicit pause"), !Controller.IsHelpOpen() && Battle.IsPaused());
+    Controller.ExecuteAction(TEXT("resume"));
+    TestTrue(TEXT("Resume works after help closes"), Controller.IsGameplayActive());
+    Controller.ExecuteAction(TEXT("menu"));
+    Controller.ExecuteAction(TEXT("help"));
+    Controller.Escape();
+    TestTrue(TEXT("Menu help closes back to the menu without starting or pausing a match"), Battle.IsMenu() && !Battle.IsPaused() && !Controller.IsHelpOpen());
+
+    Controller.ExecuteAction(TEXT("tutorial"));
+    TestTrue(TEXT("Training starts from the menu with no AI and a separate scenario seed"),
+        Battle.Tutorial().IsActive() && !Sim.config().ai && Sim.config().seed == FCinderTutorial::Seed && !Battle.IsMenu());
+    TestEqual(TEXT("Training preserves the normal starting ore"), Sim.players()[0].ore, 500);
+    TestEqual(TEXT("Training preserves the normal five starting Drudges"), static_cast<int32>(EntitiesOfKind(Sim, Kind::Worker).size()), 5);
+    TestTrue(TEXT("Automatic initial camera setup does not complete the first lesson"), Battle.Tutorial().Step() == ECinderTutorialStep::Camera);
+    Controller.ZoomIn(); Controller.UpdateTutorial();
+    TestTrue(TEXT("A real controller camera action advances the camera lesson"), Battle.Tutorial().Step() != ECinderTutorialStep::Camera);
+    Controller.Selected = EntitiesOfKind(Sim, Kind::Worker);
+    Controller.UpdateTutorial();
+    const auto BeforeBadTraining = Battle.Tutorial().Step();
+    Controller.Selected.clear();
+    Controller.ExecuteAction(TEXT("train"), static_cast<int32>(Kind::Worker));
+    Controller.UpdateTutorial();
+    TestTrue(TEXT("Rejected training does not advance the walkthrough"), Battle.Tutorial().Step() == BeforeBadTraining);
+    Controller.Selected = {EntitiesOfKind(Sim, Kind::Worker).front()};
+    Command LearnGather;
+    LearnGather.type = CommandType::Gather;
+    for (const auto& Entity : Sim.entities())
+        if (Entity.kind == Kind::Resource && Sim.explored(0, Entity.pos)) { LearnGather.target = Entity.id; break; }
+    Controller.Issue(LearnGather);
+    TestTrue(TEXT("Accepted controller gathering feeds the tutorial and waits for actual mining"),
+        Fixture.TickUntil([&]
+        {
+            Controller.UpdateTutorial();
+            return static_cast<int32>(Battle.Tutorial().Step()) > static_cast<int32>(ECinderTutorialStep::GatherOre);
+        }, 20));
+    Controller.ExecuteAction(TEXT("save"));
+    TestTrue(TEXT("Training save action explains protection without entering the skirmish save branch"), Controller.Feedback().Contains(TEXT("skirmish save is kept")));
+    Controller.ExecuteAction(TEXT("load"));
+    TestTrue(TEXT("Training cannot silently replace itself with the saved skirmish"), Battle.Tutorial().IsActive() && Controller.Feedback().Contains(TEXT("End training")));
+    Controller.ExecuteAction(TEXT("pause"));
+    Controller.TutorialShortcut();
+    TestTrue(TEXT("Restart first opens a paused confirmation"), Controller.IsTutorialRestartPending() && Battle.IsPaused());
+    const uint64 RestartHash = Sim.stateHash();
+    Controller.ExecuteAction(TEXT("start"), 2);
+    Controller.ExecuteAction(TEXT("resume"));
+    Controller.Escape();
+    TestTrue(TEXT("Escape cancels restart without destroying training progress"),
+        !Controller.IsTutorialRestartPending() && Battle.IsPaused() && Sim.stateHash() == RestartHash);
+    Controller.ExecuteAction(TEXT("tutorialrestart"));
+    Controller.Confirm();
+    TestTrue(TEXT("Explicit restart resets objectives and interaction state"),
+        Battle.Tutorial().Step() == ECinderTutorialStep::Camera && Sim.tick() == 0
+        && !Battle.IsPaused() && Controller.Selection().empty() && !Controller.IsTutorialRestartPending());
+    Controller.ExecuteAction(TEXT("tutorialend"));
+    TestTrue(TEXT("End training returns to menu and clears objective state"), Battle.IsMenu() && !Battle.Tutorial().IsActive());
+    Controller.ExecuteAction(TEXT("start"), 1);
+    TestTrue(TEXT("A later normal skirmish restores AI and does not inherit training"), Sim.config().ai && !Battle.Tutorial().IsActive() && Battle.MapIndex() == 1);
+    if (!HasAnyErrors()) AddInfo(TEXT("CINDERLINE_UE_HELP_TUTORIAL_LIFECYCLE_PASS: modal input isolation, explicit help resume, tutorial start/action tracking, rejected command, save/load routing, restart confirmation and normal-match restoration. No player save or completion preference was written."));
     if (!HasAnyErrors()) AddInfo(TEXT("CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset."));
     return !HasAnyErrors();
 }
@@ -385,8 +1047,15 @@ bool FCinderEconomyAndProductionIntegration::RunTest(const FString& Parameters)
     if (!TestTrue(TEXT("Adapter ticks finish worker production"), Fixture.TickUntil([&]
         { return EntitiesOfKind(Battle.Sim(), Kind::Worker).size() == 6; }, definition(Kind::Worker).buildTime + 1))) return false;
 
+    const uint64 BeforeEmptyBuild = Battle.Sim().stateHash();
+    const size_t CommandsBeforeEmptyBuild = Battle.Sim().recording().size();
+    TestTrue(TEXT("Build rejection fixture has an empty controller selection"), Controller.Selection().empty());
     Controller.ExecuteAction(TEXT("build"), static_cast<int>(Kind::Foundry));
-    TestTrue(TEXT("Public controller action enters placement mode"), Controller.IsBuildMode() && Controller.BuildingKind() == Kind::Foundry);
+    TestFalse(TEXT("Public build action rejects placement without a selected worker"), Controller.IsBuildMode());
+    TestTrue(TEXT("Empty-selection build rejection asks for a Drudge"), Controller.Feedback().Contains(TEXT("Drudge")));
+    TestEqual(TEXT("Empty-selection build rejection leaves the economy and units unchanged"),
+        static_cast<uint64>(Battle.Sim().stateHash()), BeforeEmptyBuild);
+    TestTrue(TEXT("Empty-selection build rejection records no command"), Battle.Sim().recording().size() == CommandsBeforeEmptyBuild);
     Vec2 Site;
     if (!TestTrue(TEXT("Existing worker has a visible legal build site"), FindBuildSite(Battle.Sim(), Worker, Base, Site))) return false;
     Before = Battle.Sim().players()[0].ore;
@@ -631,7 +1300,7 @@ bool FCinderCombatFeedbackIntegration::RunTest(const FString& Parameters)
     auto ResetCombatFixture = [&]()
     {
         Battle.Sim().reset({0, 42, false, 1});
-        Battle.ResetFeedback();
+        Battle.ResetPresentation();
         for (int Team = 0; Team < 2; ++Team)
         {
             Command Stop;

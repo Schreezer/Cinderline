@@ -217,6 +217,59 @@ void paidCommandsAndQueues() {
   check(capped.players()[0].ore==before,"rejected supply command costs nothing");
 }
 
+void boundedProductionQueue() {
+  auto s=quiet();
+  const Id foundry=s.debugSpawn(Kind::Foundry,0,{1500,1200});
+  s.debugSpawn(Kind::Processor,0,{1250,1450});
+  s.debugResources(0,100000);
+  const std::vector<Kind> pattern{Kind::Striker,Kind::Lancer,Kind::Scout};
+  const int initialOre=s.players()[0].ore,initialSupply=s.supply(0);
+  int queuedCost=0,queuedSupply=0;
+  std::vector<Kind> queued;
+  for(int i=0;i<Simulation::MaxQueue;++i) {
+    const Kind kind=pattern[static_cast<std::size_t>(i)%pattern.size()];
+    check(send(s,CommandType::Train,0,{foundry},{},0,kind).accepted,"production queue accepts item through the public cap");
+    queued.push_back(kind);queuedCost+=definition(kind).cost;queuedSupply+=definition(kind).supply;
+  }
+  check(s.find(foundry)->queue.size()==Simulation::MaxQueue,"production queue reaches twenty items");
+  check(s.players()[0].ore==initialOre-queuedCost&&s.supply(0)==initialSupply+queuedSupply,
+        "twenty accepted items debit their exact cumulative cost and reserve their exact cumulative supply");
+  const int oreAtCap=s.players()[0].ore,supplyAtCap=s.supply(0);
+  const auto rejected=send(s,CommandType::Train,0,{foundry},{},0,Kind::Striker);
+  check(!rejected.accepted&&rejected.message=="Queue full (20).","twenty-first item reports the explicit queue cap");
+  check(s.players()[0].ore==oreAtCap&&s.supply(0)==supplyAtCap&&s.find(foundry)->queue.size()==Simulation::MaxQueue,
+        "queue-cap rejection does not charge ore or reserve supply");
+
+  const auto path=savePath("queue-cap");check(s.save(path),"full twenty-item queue saves");
+  Simulation loaded;check(loaded.load(path),"full twenty-item queue loads");
+  check(loaded.stateHash()==s.stateHash(),"full queue preserves its save-load hash");
+
+  advance(s,definition(queued.front()).buildTime/2);advance(loaded,definition(queued.front()).buildTime/2);
+  const int tailCost=definition(queued.back()).cost,tailSupply=definition(queued.back()).supply;
+  const int oreBeforeTail=s.players()[0].ore,supplyBeforeTail=s.supply(0);
+  check(send(s,CommandType::CancelQueue,0,{foundry},{},0,Kind::Worker,Simulation::MaxQueue-1).accepted,
+        "tail item beyond the former cap can be cancelled");
+  check(send(loaded,CommandType::CancelQueue,0,{foundry},{},0,Kind::Worker,Simulation::MaxQueue-1).accepted,
+        "loaded tail item beyond the former cap can be cancelled");
+  check(s.players()[0].ore==oreBeforeTail+tailCost&&s.supply(0)==supplyBeforeTail-tailSupply,
+        "unstarted tail cancellation refunds its full cost and supply reservation");
+  const int oreBeforeHead=s.players()[0].ore;
+  check(send(s,CommandType::CancelQueue,0,{foundry},{},0,Kind::Worker,0).accepted,"partially started head can be cancelled");
+  check(send(loaded,CommandType::CancelQueue,0,{foundry},{},0,Kind::Worker,0).accepted,"loaded partially started head can be cancelled");
+  const int headRefund=s.players()[0].ore-oreBeforeHead;
+  check(headRefund>0&&headRefund<definition(queued.front()).cost,"partially started head refunds only its unused cost");
+  check(s.stateHash()==loaded.stateHash(),"loaded queue stays deterministic through tail and head cancellation");
+  const auto* producer=s.find(foundry);check(producer->queue.size()==Simulation::MaxQueue-2,"two cancellations leave eighteen items");
+  for(std::size_t i=0;i<producer->queue.size();++i)
+    check(producer->queue[i].kind==queued[i+1],"cancellation preserves the remaining FIFO order");
+  const int producedBefore=s.players()[0].stats.produced;
+  advance(s,definition(queued[1]).buildTime+0.1f);advance(loaded,definition(queued[1]).buildTime+0.1f);
+  check(s.players()[0].stats.produced==producedBefore+1&&s.find(foundry)->queue.front().kind==queued[2],
+        "the next remaining item completes first");
+  check(s.stateHash()==loaded.stateHash(),"loaded full queue continues deterministically");
+  std::filesystem::remove(path);
+}
+
 void placementAndConstruction() {
   auto s=quiet(); auto h=s.find(first(s,0,Kind::Headquarters))->pos;
   auto w=first(s,0,Kind::Worker); int ore=s.players()[0].ore;
@@ -419,6 +472,71 @@ void researchAndPrerequisites() {
   advance(gated,60.1f);const int remaining=gated.players()[0].ore;
   check(!send(gated,CommandType::Research,0,{lab},{},0,Kind::Worker,1).accepted,"second weapon level requires higher tier");
   check(gated.players()[0].ore==remaining,"tier-gated research does not charge");
+
+  auto query=[&](const Simulation& sim,const std::vector<Id>& workers,const Vec2* site=nullptr) {
+    const auto hash=sim.stateHash();const auto recorded=sim.recording().size();
+    const auto result=sim.buildStatus(0,Kind::MotorPool,workers,site);
+    check(sim.stateHash()==hash&&sim.recording().size()==recorded,"build query leaves all authoritative state and recorded commands untouched");
+    return result;
+  };
+  auto rejectLikeCommand=[&](Simulation& sim,const std::vector<Id>& workers,Vec2 site,const std::string& expected) {
+    const auto hash=sim.stateHash();const auto recorded=sim.recording().size();
+    const auto status=query(sim,workers,&site);
+    check(!status.accepted&&status.message.find(expected)!=std::string::npos,"Crucible query explains "+expected);
+    const auto command=send(sim,CommandType::Build,0,workers,site,0,Kind::MotorPool);
+    check(!command.accepted&&command.message==status.message,"rejected Build returns exactly the read-only placement reason");
+    check(sim.stateHash()==hash&&sim.recording().size()==recorded,"rejected Build spends nothing and records nothing");
+  };
+  auto locked=quiet();const Id lockedWorker=first(locked,0,Kind::Worker);
+  const Vec2 lockedSite=distantPlacement(locked,0,Kind::MotorPool,lockedWorker);
+  const auto tierLock=query(locked,{lockedWorker});
+  check(!tierLock.accepted&&tierLock.message.find("T2")!=std::string::npos&&tierLock.message.find("Resonator")!=std::string::npos,
+        "Crucible menu status names required T2 and the Resonator upgrade path");
+  rejectLikeCommand(locked,{lockedWorker},lockedSite,"T2");
+  rejectLikeCommand(locked,{},lockedSite,"Select");
+  rejectLikeCommand(locked,{first(locked,1,Kind::Worker)},lockedSite,"foreign");
+  rejectLikeCommand(locked,{first(locked,0,Kind::Headquarters)},lockedSite,"Drudge");
+  rejectLikeCommand(locked,{lockedWorker},{std::numeric_limits<float>::quiet_NaN(),0},"Invalid command");
+  check(!query(locked,{}).accepted&&!query(locked,{first(locked,0,Kind::Headquarters)}).accepted,
+        "menu availability still requires a selected live friendly Drudge");
+
+  // Reuse the real completed T2 research above, rather than setting a tier directly.
+  w=first(s,0,Kind::Worker);
+  Vec2 crucibleSite=distantPlacement(s,0,Kind::MotorPool,w);
+  check(!query(s,{w}).accepted,"T2 alone does not bypass the operational Kiln requirement");
+  rejectLikeCommand(s,{w},crucibleSite,"operational Kiln");
+  const Vec2 kilnSite=distantPlacement(s,0,Kind::Foundry,w);
+  check(send(s,CommandType::Build,0,{w},kilnSite,0,Kind::Foundry).accepted,"availability fixture places a normal paid Kiln");
+  const Id kiln=first(s,0,Kind::Foundry);
+  rejectLikeCommand(s,{w},crucibleSite,"operational Kiln");
+  waitForConstruction(s,kiln);
+  waitUntil(s,definition(Kind::Foundry).buildTime+1,[&]{return s.find(kiln)->progress>=1;},"availability fixture completes its assigned-worker Kiln");
+  crucibleSite=distantPlacement(s,0,Kind::MotorPool,w);
+  s.debugResources(0,definition(Kind::MotorPool).cost-1);
+  check(!query(s,{w}).accepted,"Crucible menu status rejects insufficient funds without a site");
+  rejectLikeCommand(s,{w},crucibleSite,"Insufficient ore");
+  s.debugResources(0,definition(Kind::MotorPool).cost);
+  check(query(s,{w}).accepted&&query(s,{w},&crucibleSite).accepted,"funded T2 player with an operational Kiln can build at a valid site");
+  const Id distantWorker=s.debugSpawn(Kind::Worker,0,{3100,650});
+  check(query(s,{distantWorker}).accepted,"menu query omits distance until a site is chosen");
+  rejectLikeCommand(s,{distantWorker},crucibleSite,"closer");
+  rejectLikeCommand(s,{distantWorker},{3100,1200},"current vision");
+  const Vec2 occupied=s.find(w)->pos;
+  check(!s.canPlace(0,Kind::MotorPool,occupied),"placement fixture is physically occupied");
+  rejectLikeCommand(s,{w},occupied,"");
+
+  const std::vector<Id> selected{distantWorker,w,w};
+  const auto hashBefore=s.stateHash();const auto commandsBefore=s.recording().size();
+  const auto entitiesBefore=s.entities().size();const int oreBefore=s.players()[0].ore;
+  check(query(s,selected,&crucibleSite).accepted&&query(s,selected,&crucibleSite).accepted,"repeated valid queries accept the same legal duplicate selection");
+  check(s.stateHash()==hashBefore&&s.entities().size()==entitiesBefore&&s.recording().size()==commandsBefore,
+        "accepted queries neither place a foundation nor retask a builder");
+  check(send(s,CommandType::Build,0,selected,crucibleSite,0,Kind::MotorPool).accepted,"authoritative Build accepts the queried Crucible site");
+  const Id crucible=first(s,0,Kind::MotorPool);
+  check(s.players()[0].ore==oreBefore-definition(Kind::MotorPool).cost&&s.entities().size()==entitiesBefore+1
+        &&s.recording().size()==commandsBefore+1,"accepted Crucible command pays, spawns and records exactly once");
+  check(s.constructionWorker(crucible)==w&&s.find(w)->order==Order::Construct&&s.find(distantWorker)->order!=Order::Construct,
+        "shared validation preserves the eligible nearby worker assignment");
 }
 
 void ownershipAndFog() {
@@ -1409,6 +1527,7 @@ int main(int argc,char** argv) {
   std::vector<std::pair<std::string,std::function<void()>>> tests{
     {"reset and definitions",resetAndDefinitions},{"physical gathering and depletion",gatherAndDepletion},
     {"paid commands, production and supply",paidCommandsAndQueues},{"placement and construction",placementAndConstruction},
+    {"bounded production queue",boundedProductionQueue},
     {"worker construction economy",workerConstructionEconomy},{"worker construction interruptions",workerConstructionInterruptions},
     {"worker construction hazards",workerConstructionHazards},{"construction persistence and migration",constructionPersistence},
     {"research and prerequisites",researchAndPrerequisites},{"ownership and fog",ownershipAndFog},

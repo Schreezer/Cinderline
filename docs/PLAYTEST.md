@@ -1,17 +1,21 @@
 # First skirmish playtest
 
-Use the Unreal Cinderline window. This pass checks the ordinary player controls before broader balance work and iOS.
+Use the Unreal Cinderline window for desktop checks. The same gameplay scenarios apply to the upcoming iOS build; deployment and native touch acceptance are tracked in [IOS_READINESS.md](IOS_READINESS.md).
 
 1. Choose Shattered Rift and start a skirmish.
 2. Select a Drudge worker, open BUILD, choose Kiln, then place it on clear explored ground near your workers.
 3. Watch that Drudge stop mining and travel to the foundation. Progress must stay at zero until it arrives; the other workers should keep mining. Give the builder STOP or MOVE: the site should show PAUSED. Right-click the site with a Drudge selected, or select the site and choose ASSIGN DRUDGE, to resume without paying again. Let it finish and watch the original miner return to ore. Then select the completed Kiln and queue Ember infantry.
-4. Select an Ember and right-click clear terrain to move. Try ARMY, ATTACK MOVE, STOP and HOLD. Space returns the camera home; arrows pan and the wheel zooms.
-5. Build more workers, production and technology. Explore toward the red Anchor, reinforce losses and keep harvesting. Try an expansion before the starting ore runs out.
+4. Select an Ember and right-click clear terrain to move. Try ARMY, ATTACK MOVE, STOP and HOLD. On Mac, hold Option and click-drag over the battlefield to pan without changing the selection or issuing an order. Release Option and click-drag to select a group. Two-finger scrolling or the mouse wheel zooms; Space returns the camera home and arrows also pan. Other desktop platforms use Alt instead of Option.
+5. Build more workers, production and technology. For the Crucible, complete a Kiln, then a Resonator. Select the Resonator and choose TECH TIER (500 ore, 100 seconds of research); wait for T2. Select a Drudge, choose the 400-ore Crucible, and click clear ground to confirm. Its active construction takes 85 seconds after the worker arrives; keep an operational Anchor and Kiln. Explore toward the red Anchor, reinforce losses and keep harvesting. Try an expansion before the starting ore runs out.
 6. Finish through victory or defeat, inspect the results, then rematch. Record the duration and the first interaction that felt unclear or failed.
 
-On touch layouts, tap a selected unit's destination to command it. ACTIONS shows contextual commands, TYPES shows subgroups, and QUEUE shows production. These compact layouts have desktop window checks; physical touch remains deferred.
+On iOS/Android, tap a selected unit's destination to command it; drag to pan, pinch to zoom, or hold then drag to select. Compact Mac windows retain the desktop controls above. In compact layouts, ACTIONS shows contextual commands, TYPES shows subgroups, and QUEUE shows production. These layouts have desktop window checks; physical touch remains unverified. On the iOS build, also verify a stationary hold sends no terrain command, a second finger on a HUD control does not move the camera, and returning from the background leaves the match paused until Resume is tapped. Check controls around the cutout and home indicator in both landscape orientations.
 
 Unfinished structures have a SITE shortcut on compact layouts. A selected Drudge can tap a site to resume it. Construction consumes one worker regardless of how many are selected. Cancelling a site refunds its unused construction cost and releases its builder. Old version 1 saves load unfinished sites paused; assign a Drudge to continue them.
+
+Build buttons show cost, required tier and READY/LOCKED status. Select a locked item to read the reason. Before confirming a foundation, the read-only preview checks all construction rules, including prerequisites, ore, a selected Drudge within 700 cm, visibility and a clear site. The preview spends nothing. On desktop, click ground to confirm or use right/secondary click to cancel; dragging during placement must keep the selected Drudge. Record any green preview that still rejects construction when those conditions have not changed.
+
+Production queues hold up to 20 entries per building, subject to ore and crew capacity. With enough resources, queue more than eight units at a Kiln. Confirm the total rises, use the queue arrows to see later entries, and cancel an entry beyond the first page. The ore and reserved crew should be returned and the remaining order preserved. Switch producers to check the page resets, then let production or cancellation empty the last page and confirm navigation stays valid. Repeat using the compact QUEUE shortcut.
 
 The opponent now scouts and remembers what it has seen. Watch for reconnaissance around expansions and attacks on discovered bases. Switching to aircraft or armor should influence its later purchases after it sees those units. Hidden changes should not immediately alter its production. This pass is tracked in [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md).
 

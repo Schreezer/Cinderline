@@ -1,4 +1,5 @@
 #include "Sim/Simulation.h"
+#include "Sim/Network.h"
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -18,7 +19,6 @@ constexpr float Pi = 3.14159265358979323846f;
 constexpr float Cell = Simulation::WorldSize / Simulation::FogSize;
 constexpr float CarryCapacity = 18.0f;
 constexpr float HarvestPeriod = 0.65f;
-constexpr int MaxQueue = 8;
 constexpr float ConstructionPadding = 20.0f;
 const std::array<Definition,15> Data{{
  {Kind::Worker,"Drudge","Harvests ore and deploys structures",70,140,65,4,1.4f,16,460,12,60,0,1,1,Kind::Headquarters,false,false,false},
@@ -91,6 +91,7 @@ const std::array<Definition,15>& definitions() { return Data; }
 const Definition& definition(Kind kind) { return Data[validKind(kind)?static_cast<int>(kind):0]; }
 Simulation::Simulation() { reset(); }
 void Simulation::reset(Config config) {
+ replica_=false;
  config_=config; config_.map=std::clamp(config_.map,0,2);
  if(!std::isfinite(config_.aiAggression)) config_.aiAggression=1;
  config_.aiAggression=std::clamp(config_.aiAggression,0.5f,2.0f);
@@ -140,8 +141,8 @@ Id Simulation::spawn(Kind kind,int team,Vec2 position,bool complete) {
  if(kind==Kind::Resource)e.resource=4000;
  const Id id=e.id;entities_.push_back(std::move(e));return id;
 }
-Id Simulation::debugSpawn(Kind kind,int team,Vec2 position) { Id id=spawn(kind,team,position);updateVision();return id; }
-void Simulation::debugResources(int team,int ore) { if(validTeam(team))players_[team].ore=std::clamp(ore,0,100000000); }
+Id Simulation::debugSpawn(Kind kind,int team,Vec2 position) { if(replica_)return 0;Id id=spawn(kind,team,position);updateVision();return id; }
+void Simulation::debugResources(int team,int ore) { if(!replica_&&validTeam(team))players_[team].ore=std::clamp(ore,0,100000000); }
 int Simulation::supply(int team) const {
  if(!validTeam(team))return 0;int n=0;
  for(const auto& e:entities_)if(e.alive()&&e.team==team) {
@@ -190,6 +191,36 @@ bool Simulation::canPlace(int team,Kind kind,Vec2 point,std::string* reason) con
  if(blocked(point,definition(kind).radius+15))return fail("Blocked by terrain, a structure, or an ore deposit.");
  for(const auto& e:entities_)if(e.alive()&&e.kind!=Kind::Resource&&!definition(e.kind).building&&!definition(e.kind).air&&distance(e.pos,point)<definition(kind).radius+definition(e.kind).radius+8)return fail("A ground unit occupies this site.");
  if(reason)reason->clear();return true;
+}
+
+CommandResult Simulation::buildStatus(int team,Kind kind,const std::vector<Id>& units,const Vec2* site) const {
+ return checkBuild(team,kind,units,site,nullptr);
+}
+CommandResult Simulation::checkBuild(int team,Kind kind,const std::vector<Id>& units,const Vec2* site,Id* worker) const {
+ auto fail=[](const std::string& why){return CommandResult{false,why};};
+ if(worker)*worker=0;
+ if(winner_!=-1)return fail("The match has ended.");
+ if(!validTeam(team)||!validKind(kind)||units.size()>500
+    ||(site&&(!finite(*site)||site->x<0||site->y<0||site->x>WorldSize||site->y>WorldSize)))return fail("Invalid command.");
+ std::vector<Id> selected=units;std::sort(selected.begin(),selected.end());selected.erase(std::unique(selected.begin(),selected.end()),selected.end());
+ for(Id id:selected) {
+  const Entity* e=find(id);
+  if(!e||!e->alive()||e->team!=team||e->kind==Kind::Resource)return fail("The selection contains unavailable or foreign units.");
+ }
+ if(selected.empty())return fail(site?"Select your units or a structure first.":"Select a Drudge to build this structure.");
+ if(!definition(kind).building)return fail("Only structures can be deployed.");
+ std::vector<Id> nearbyWorkers;
+ for(Id id:selected) {const Entity* e=find(id);if(e->kind==Kind::Worker&&(!site||distance(e->pos,*site)<=700))nearbyWorkers.push_back(id);}
+ const Id chosen=selectConstructionWorker(nearbyWorkers,site?*site:Vec2{});
+ if(!chosen)return fail(site?"Select a Drudge closer to the site.":"Select a Drudge to build this structure.");
+ if(!hasBuilding(team,Kind::Headquarters))return fail("An operational Anchor is required.");
+ if(players_[team].tier<definition(kind).tier)
+  return fail("Requires T"+std::to_string(definition(kind).tier)+". Choose TECH TIER at an operational Resonator.");
+ if((kind==Kind::MotorPool||kind==Kind::Laboratory||kind==Kind::Turret)&&!hasBuilding(team,Kind::Foundry))return fail("Build an operational Kiln first.");
+ if(site) {std::string reason;if(!canPlace(team,kind,*site,&reason))return fail(reason);}
+ if(players_[team].ore<definition(kind).cost)return fail("Insufficient ore.");
+ if(worker)*worker=chosen;
+ return {true,site?"Ready to build.":"Ready to choose a construction site."};
 }
 
 Id Simulation::constructionWorker(Id foundationId) const {
@@ -249,6 +280,7 @@ void Simulation::assignConstruction(Entity& foundation,Entity& worker) {
 
 CommandResult Simulation::command(const Command& input) {
  auto fail=[](const std::string& why){return CommandResult{false,why};};
+ if(replica_)return fail("Online replicas accept server snapshots only.");
  if(winner_!=-1)return fail("The match has ended.");
  if(!validTeam(input.team)||!validKind(input.kind)||!finite(input.point)||input.point.x<0||input.point.y<0||input.point.x>WorldSize||input.point.y>WorldSize)return fail("Invalid command.");
  const int rawType=static_cast<int>(input.type);
@@ -259,15 +291,8 @@ CommandResult Simulation::command(const Command& input) {
  if(ids.empty())return fail("Select your units or a structure first.");
  Player& player=players_[cmd.team];std::string feedback="Order acknowledged.";
  if(cmd.type==CommandType::Build) {
-  if(!definition(cmd.kind).building)return fail("Only structures can be deployed.");
-  std::vector<Id> nearbyWorkers;for(Id id:ids){const auto* e=find(id);if(e->kind==Kind::Worker&&distance(e->pos,cmd.point)<=700)nearbyWorkers.push_back(id);}
-  const Id workerId=selectConstructionWorker(nearbyWorkers,cmd.point);
-  if(!workerId)return fail("Select a Drudge closer to the site.");
-  if(!hasBuilding(cmd.team,Kind::Headquarters))return fail("An operational Anchor is required.");
-  if(player.tier<definition(cmd.kind).tier)return fail("Research the required technology tier first.");
-  if((cmd.kind==Kind::MotorPool||cmd.kind==Kind::Laboratory||cmd.kind==Kind::Turret)&&!hasBuilding(cmd.team,Kind::Foundry))return fail("Build an operational Kiln first.");
-  std::string reason;if(!canPlace(cmd.team,cmd.kind,cmd.point,&reason))return fail(reason);
-  if(player.ore<definition(cmd.kind).cost)return fail("Insufficient ore.");
+  Id workerId=0;const auto status=checkBuild(cmd.team,cmd.kind,ids,&cmd.point,&workerId);
+  if(!status.accepted)return status;
   player.ore-=definition(cmd.kind).cost;const Id foundationId=spawn(cmd.kind,cmd.team,cmd.point,false);
   assignConstruction(*get(foundationId),*get(workerId));
   feedback=std::string(definition(cmd.kind).name)+" foundation placed; Drudge assigned.";
@@ -279,8 +304,8 @@ CommandResult Simulation::command(const Command& input) {
   assignConstruction(*foundation,*get(workerId));feedback="Drudge assigned to resume construction.";
  } else if(cmd.type==CommandType::Train) {
   const auto& d=definition(cmd.kind);if(d.building||cmd.kind==Kind::Resource)return fail("Choose a unit to train.");
-  Entity* producer=nullptr;for(Id id:ids){auto* e=get(id);if(e->kind==d.producer&&e->progress>=1&&e->queue.size()<MaxQueue){producer=e;break;}}
-  if(!producer)return fail("Select an operational producer with queue space.");
+  Entity* producer=nullptr;bool operational=false;for(Id id:ids){auto* e=get(id);if(e->kind==d.producer&&e->progress>=1){operational=true;if(e->queue.size()<MaxQueue){producer=e;break;}}}
+  if(!producer)return fail(operational?"Queue full ("+std::to_string(MaxQueue)+").":"Select an operational producer with queue space.");
   if(player.tier<d.tier)return fail("Research the required technology tier first.");
   if(player.ore<d.cost)return fail("Insufficient ore.");
   if(supply(cmd.team)+d.supply>capacity(cmd.team))return fail("Supply full. Build a Siphon or Anchor.");
@@ -288,8 +313,8 @@ CommandResult Simulation::command(const Command& input) {
   feedback=std::string(d.name)+" queued.";
  } else if(cmd.type==CommandType::Research) {
   if(cmd.queueIndex<0||cmd.queueIndex>2)return fail("Unknown research.");
-  Entity* lab=nullptr;for(Id id:ids){auto* e=get(id);if(e->kind==Kind::Laboratory&&e->progress>=1&&e->queue.size()<MaxQueue){lab=e;break;}}
-  if(!lab)return fail("Select an operational Resonator with queue space.");
+  Entity* lab=nullptr;bool operational=false;for(Id id:ids){auto* e=get(id);if(e->kind==Kind::Laboratory&&e->progress>=1){operational=true;if(e->queue.size()<MaxQueue){lab=e;break;}}}
+  if(!lab)return fail(operational?"Queue full ("+std::to_string(MaxQueue)+").":"Select an operational Resonator with queue space.");
   const Kind itemKind=researchKind(cmd.queueIndex);
   for(const auto& e:entities_)if(e.alive()&&e.team==cmd.team)for(const auto& q:e.queue)if(q.research&&q.kind==itemKind)return fail("This research is already queued.");
   int level=cmd.queueIndex==0?player.tier:cmd.queueIndex==1?player.weapons:player.armor;
@@ -360,6 +385,7 @@ CommandResult Simulation::command(const Command& input) {
 }
 
 void Simulation::update(float seconds) {
+ if(replica_)return;
  if(!std::isfinite(seconds)||seconds<=0||winner_!=-1)return;
  accumulator_=std::min(accumulator_+std::min(seconds,1.0f),1.0f);
  while(accumulator_+0.000001f>=Step&&winner_==-1) {
@@ -896,6 +922,7 @@ std::uint64_t Simulation::stateHash() const {
 }
 
 bool Simulation::save(const std::string& path) const {
+ if(replica_)return false;
  std::ofstream out(path,std::ios::trunc);if(!out)return false;out.imbue(std::locale::classic());out<<std::setprecision(std::numeric_limits<float>::max_digits10);
  out<<"CINDERLINE 4\n"<<config_.map<<' '<<config_.seed<<' '<<config_.ai<<' '<<config_.aiAggression<<'\n';
  out<<tick_<<' '<<nextId_<<' '<<accumulator_<<' '<<aiTimer_<<' '<<winner_<<'\n';
@@ -923,6 +950,7 @@ bool Simulation::save(const std::string& path) const {
  out.flush();return out.good();
 }
 bool Simulation::load(const std::string& path) {
+ if(replica_)return false;
  std::ifstream in(path);if(!in)return false;in.imbue(std::locale::classic());std::string magic;int version=0;in>>magic>>version;if(magic!="CINDERLINE"||(version<1||version>4))return false;
  Simulation loaded;loaded.entities_.clear();loaded.obstacles_.clear();loaded.effects_.clear();loaded.recording_.clear();
  in>>loaded.config_.map>>loaded.config_.seed>>loaded.config_.ai>>loaded.config_.aiAggression;
@@ -1006,5 +1034,25 @@ bool Simulation::load(const std::string& path) {
   in>>std::ws;if(!in.eof())return false;
  }
  loaded.lastStepMs_=0;*this=std::move(loaded);return true;
+}
+
+bool Simulation::applySnapshot(const net::Snapshot& snapshot,std::string* error) {
+ auto fail=[&](const std::string& message){if(error)*error=message;return false;};
+ const auto bytes=net::encodeSnapshot(snapshot);if(bytes.empty())return fail("Invalid server snapshot.");
+ net::Snapshot checked;std::string codecError;
+ if(!net::decodeSnapshot(bytes.data(),bytes.size(),checked,codecError))return fail(codecError);
+ Simulation replica;
+ replica.config_=checked.config;replica.config_.ai=false;replica.entities_=std::move(checked.entities);replica.obstacles_=std::move(checked.obstacles);replica.effects_=std::move(checked.effects);
+ replica.players_={};replica.players_[0]=checked.player;replica.players_[1]=Player{};replica.players_[1].ore=0;replica.players_[1].tier=0;replica.players_[1].weapons=0;replica.players_[1].armor=0;replica.players_[1].stats={};
+ replica.fog_={};replica.explored_={};
+ for(std::size_t cell=0;cell<checked.fog.size();++cell){replica.fog_[0][cell]=checked.fog[cell]==2;replica.explored_[0][cell]=checked.fog[cell]!=0;}
+ replica.recording_.clear();replica.tick_=checked.tick;replica.accumulator_=0;replica.aiTimer_=0;replica.winner_=checked.winner;replica.nextId_=1;
+ for(const auto& entity:replica.entities_)if(entity.id>=replica.nextId_)replica.nextId_=entity.id==std::numeric_limits<Id>::max()?entity.id:entity.id+1;
+ replica.nextEffectId_=checked.lastEffectId+1;replica.alert_="Online match synchronized.";replica.aiStatus_="Server authoritative";replica.lastStepMs_=0;replica.aiSightings_.clear();replica.aiObserved_={};replica.replica_=true;
+ *this=std::move(replica);if(error)error->clear();return true;
+}
+
+void Simulation::forfeit(int team) {
+ if(replica_||winner_!=-1||!validTeam(team))return;winner_=1-team;accumulator_=0;
 }
 } // namespace cinder
