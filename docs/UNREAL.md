@@ -76,24 +76,62 @@ The upgrade validates source hashes, all four PBR channels, material connections
 
 `cinder.visualpreview` replaces the unsaved match with a frozen development scene containing cliffs, buildings and both team palettes. `cinder.visualpreview live` advances it with ordinary simulation rules; `cinder.visualpreview reset` clears it and returns to a fresh menu. It never writes a save and is separate from a normal skirmish.
 
+The animation/terrain pass adds `scripts/unreal_motion_assets.py` for 18 articulated mesh parts and `scripts/unreal_terrain_surface.py` for fractured cliffs and the layered ground material. Bootstrap runs these helpers when their source manifests are present. Both validate their reports before recording success. Runtime ground variation uses a 256×256 linear mask refreshed only when observed terrain features change; it does not sample hidden ore state. See [ANIMATION_TERRAIN_PASS.md](ANIMATION_TERRAIN_PASS.md).
+
+`cinder.motionpreview walk`, `work` and `weapons` replace the unsaved match with development fixtures using normal simulation commands. Walking patrols last 30 seconds. Append `freeze` for a still pose or `shot` to request an engine screenshot. `cinder.motionpreview reset` returns to a fresh menu without writing a save. These commands are excluded from shipping builds.
+
 ## Play
 
-- Tap a friendly unit or structure to select it; tap terrain, enemy or ore to issue
+Desktop standalone builds use a frame limit of 120 FPS during gameplay, 30 FPS
+for menus/pause/results, and 10 FPS when unfocused or minimized. Any lower engine
+or user limit still wins. This is a render-frequency limit, not a quality preset;
+it does not rewrite `t.MaxFPS`. An unpaused background match continues advancing.
+Editor/PIE, unattended/headless runs, fixed-timing benchmarks and mobile pacing
+keep their existing engine policy. See [IDLE_GPU_PASS.md](IDLE_GPU_PASS.md) for
+build and live verification status. `cinder.quality` logs the effective limit
+separately from the stored `t.MaxFPS` value.
+
+- Touch commands: tap a friendly unit or structure to select it; tap terrain, enemy or ore to issue
   a contextual command. Tap terrain with production structures selected to rally.
 - Touch: drag to pan; use two fingers to pan and pinch; hold still for 0.42 seconds,
   then drag to select. SELECT BOX arms selection without needing a hold. Double-tap
   a unit to select its visible type. The camera remains bounded to the battlefield.
-- Mouse: left-drag selects; middle-drag pans; wheel zooms; right-click commands.
+- Mac mouse/trackpad: click selects; click-drag selects a group. Hold Option while
+  click-dragging over the battlefield to pan the camera. Two-finger scrolling or
+  the mouse wheel zooms; right-click commands. Middle-drag also pans.
+  Other desktop platforms use Alt in place of Option. These desktop controls also
+  apply in compact Mac windows; a compact layout does not enable touch gestures.
   Arrow keys pan, including short taps. Enter starts, resumes or rematches.
   A attack-move, S stop, H hold, B build, F focus, Space home. Esc cancels an active
   command mode before pausing; the PAUSE button always pauses immediately.
-- Build with a Drudge selected. The placement ring reports collision/vision validity;
-  the simulation authoritatively checks resources, workers and prerequisites.
-- Select a structure to train units or queue research. Queue buttons cancel entries.
+- Build with a Drudge selected. Build buttons show the ore cost, required tier and
+  READY/LOCKED status. Select a locked button to see the blocking requirement.
+  The placement preview checks the full construction rules without spending ore:
+  operational buildings, technology, funds, selected worker and its 700 cm range,
+  current vision, terrain and occupancy. Click clear ground to confirm; right-click
+  or the trackpad's secondary click cancels placement. Touch uses a tap to confirm.
+- To unlock the Crucible, complete a Kiln, then build and complete a Resonator.
+  Select the Resonator and choose TECH TIER: the first upgrade costs 500 ore and
+  takes 100 seconds of research. Wait for T2, select a Drudge, then choose the
+  400-ore Crucible. It needs an operational Anchor and Kiln and takes 85 seconds
+  of active on-site construction; worker travel or interruption adds to that time.
+- Select a structure to train units or queue research, up to 20 paid entries per building when ore and crew capacity permit. The queue header shows its total and visible range; arrow buttons reach later pages. Queue buttons cancel the displayed entry. Desktop shows six entries per page, compact layouts eight.
   An unfinished building exposes cancellation. Selected-army type buttons isolate
   a subgroup; NEXT TYPES pages through large mixed compositions.
 - The pause menu saves/loads a local match and exposes performance counters.
   Destroy the opposing Anchor to show results, rematch or return to the main menu.
+
+## Help and guided training
+
+`FIELD GUIDE` is available from the main menu and pause screen; `HELP` opens it during play. F1 toggles it on desktop. Reading during a match pauses the simulation, and closing the guide returns to Pause. Resume is explicit, including after the app returns from the background.
+
+The guide covers controls, economy, construction, army roles, scouting/fog, technology, common problems, winning/saving and all fifteen unit/building/resource definitions. Desktop and touch instructions can be selected independently of the platform. Left/Right changes topics, Up/Down browses the roster on the reference page, T switches the instruction mode, and Escape/Enter closes the guide. On Mac, desktop instructions describe Option-drag panning and the trackpad's secondary click.
+
+The project removes Unreal's inherited F1 wireframe binding so the same help shortcut is safe in Development builds.
+
+`GUIDED TRAINING` starts a separate practice match on Shattered Rift. T is its desktop menu shortcut; while training is paused, T opens the restart confirmation. Nine objectives teach camera movement, selection, mining, worker production, a completed Kiln, three Embers, a Siphon, scouting and attack-move against a stationary practice Drudge. Training uses ordinary costs, crew reservations, movement, work and combat rules; the opponent AI does not raid. FIND locates the lesson's subject or static waypoint, while HELP opens the relevant guide topic. Compact cards show the actionable hint first and offer MORE/LESS for context. The compact guide pages through each section so all instructions remain accessible; Tab cycles sections on desktop. Completed objectives are remembered during the current practice session, including actions performed early.
+
+Training never overwrites `Saved/Matches/skirmish.cinder`. Training sessions can be restarted from Pause, with an explicit restart confirmation (Enter confirms, Escape cancels on desktop). Ending training returns to the menu, where CONTINUE SAVE can restore the normal skirmish. Only walkthrough completion is remembered across launches, in `Saved/Config/Training.ini`; the practice battlefield itself is not saved. Automation does not write the player's completion preference. See [HELP_TUTORIAL_PASS.md](HELP_TUTORIAL_PASS.md) for verification and remaining acceptance.
 
 ## Implementation boundaries
 
@@ -117,13 +155,15 @@ Unreal's cached cursor location on this Mac, so automated mouse targeting remain
 unreliable. These checks do not establish touch quality, a packaged build or iOS
 performance. See [the verification record](../artifacts/verification-summary.md).
 
-The presentation uses static Blender models and Canvas UI with interface, order,
-production and event-driven combat audio hooks. It still needs character animation, listening/mix review,
+The presentation uses articulated instanced Blender parts, hover poses and Canvas UI with interface, order,
+production and event-driven combat audio hooks. It still needs further animation polish, listening/mix review,
 haptics, smooth fog edges, player-facing last-seen enemy building markers,
 networking or a second asymmetric faction. The opponent's scouting memory and
 objective selection are tracked in [AI_STRATEGY_PASS.md](AI_STRATEGY_PASS.md). Camera smoothing
 is implemented; momentum/gesture tuning still requires physical-device testing.
-Device-specific safe area and suspend/resume handling need a later iOS product pass.
+Native safe-area handling and background pausing are implemented. Shared-code
+compilation and lifecycle tests pass; the actual iOS layout and app transitions
+still require validation in an iOS build.
 
 `./scripts/test-unreal.sh` runs four strict transient-world integration tests for
 world/controller lifecycle, paid economy and worker construction, and AI
@@ -131,6 +171,8 @@ observation/persistence, plus combat feedback consumption and lifecycle. The AI 
 into and out of opponent vision, then verifies a temporary save and continued
 actor ticks. The runner requires every expected path to succeed with zero errors
 or warnings. These tests open no gameplay viewport and do not modify player saves.
+
+Add `--tutorials` to run eight tests: the four integrations plus tutorial command gates, Ember production, early actions/help content, and the complete normal-rule practice sequence. The runner checks the exact expected paths and refuses warnings or unfinished results. The lifecycle integration also verifies guide isolation, explicit resume, protected training save/load routing, restart confirmation and return to a normal skirmish.
 
 For repeatable visual inspection in a Development build, `cinder.combatpreview weapons`
 replaces the current unsaved match with a frozen firing scene; `cinder.combatpreview support`
@@ -184,11 +226,17 @@ setting or frame-rate target has been verified.
 
 ## iOS
 
-iOS work is deferred until the mechanics, assets and full-playtest passes are ready.
-The preflight findings and remaining steps are in [IOS_READINESS.md](IOS_READINESS.md).
-The project configures landscape iPhone/iPad rendering and modest mobile effects.
-Set your own signing team and bundle identifier in Project Settings → iOS; the
-included identifier is a placeholder. `./scripts/unreal.sh package-ios` invokes UAT
-after native build/bootstrap, with signing supplied through your Unreal settings.
-It does not install, upload or publish an application. Actual iPhone/iPad build,
-installation, touch input, and full-length thermal/performance tests remain required.
+The current platform checkpoint is an ARM64 iOS Simulator build and gameplay test.
+The installed UE 5.8.2 build tools expose `iossimulator`; use
+`./scripts/unreal.sh build-ios-simulator` for the two-job build without deployment.
+An architecture definition does not establish that precompiled objects, shaders,
+packaging or launch work. See [IOS_READINESS.md](IOS_READINESS.md) for the actual
+build evidence and Launcher component recovery.
+
+The project configures landscape iPhone/iPad rendering, mobile effects, touch
+controls and native safe-area margins. `./scripts/unreal.sh package-ios` packages
+for a physical device; `./scripts/unreal.sh package-ios-on-mac` deploys a Designed
+for iPad wrapper under Saved/StagedBuilds/iOSonMac. These two routes require matching
+development signing. They are separate from unsigned simulator testing.
+Neither helper launches or publishes the app. Actual iOS gameplay, safe areas,
+and physical touch/thermal performance remain unverified.

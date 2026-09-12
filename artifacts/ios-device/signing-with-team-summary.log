@@ -1,0 +1,2 @@
+warning: All interface orientations must be supported unless the app requires full screen. (in target 'SigningBootstrap' from project 'SigningBootstrap')
+** BUILD SUCCEEDED **

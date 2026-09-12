@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-12T04:29:42.561398+00:00",
+  "bundleIdentifier": "com.cinderline.game",
+  "signedBuildPassed": true,
+  "codesignVerifyExit": 0,
+  "profileAllowsBundle": true,
+  "profileMatchesLocalIdentity": true,
+  "phoneRegistered": true,
+  "developmentProfile": true,
+  "profileUnexpired": true,
+  "installedOnDevice": false
+}

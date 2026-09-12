@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-09-11T19:28:22.230251+00:00",
+  "source_manifest": {
+    "path": "artifacts/ios-readiness/tested-source-sha256.txt",
+    "matches": 30,
+    "mismatches": 0
+  },
+  "mac_build": {
+    "status": "Succeeded",
+    "seconds": 11.61,
+    "parallel_compile_actions": 2,
+    "artifact": "artifacts/ios-readiness/mac-build-results.txt",
+    "coverage": "Final shared touch/HUD source; latest incremental build includes placement-label safe-area correction."
+  },
+  "unreal_integration": {
+    "passed": 4,
+    "errors": 0,
+    "warnings": 0,
+    "unfinished": 0,
+    "artifact": "artifacts/ios-readiness/integration-results.json",
+    "coverage": "Final source revision: desktop regressions plus touch hold/placement/multitouch state and actual app lifecycle delegates. Rendering remains unverified.",
+    "report_path": "Saved/Automation/Integration/20260911T192656Z-5984/index.json"
+  },
+  "ios_compile_preflight": {
+    "exit_code": 6,
+    "status": "Missing optional iOS engine payload; no iOS source compilation/link/deploy completed.",
+    "artifact": "artifacts/ios-readiness/initial-compile-preflight.txt"
+  },
+  "package_helper": {
+    "syntax": "Passed",
+    "missing_payload_guard_exit_code": 2,
+    "artifact": "artifacts/ios-readiness/package-helper-preflight.txt",
+    "sha256": "5046908bbfdc622041ab18d37e04f91a4e318da7aa98e10d0df7137d3a6d338c"
+  },
+  "signing": {
+    "initial_audit": "artifacts/ios-readiness/signing-preflight.json",
+    "status": "Automatic provisioning attempted once; blocked by missing or invalid Xcode account credentials for the unambiguous existing development team. No matching profile obtained.",
+    "bootstrap_artifact": "artifacts/ios-readiness/signing-bootstrap-result.json",
+    "user_action": "Restore existing account session in Xcode Settings > Accounts."
+  },
+  "ios_launch": false,
+  "native_touch_delivery_verified": false,
+  "physical_device_gameplay_verified": false,
+  "limitations": [
+    "Mac compilation and transient-world tests do not prove iOS compilation, rendering, UIKit input, safe-area pixels, multitouch, performance or a physical skirmish.",
+    "UE 5.8 supported Mac-hosted iOS testing uses Designed for iPad, not standard Xcode iOS Simulator."
+  ],
+  "ios_payload_final_check": {
+    "install_tags": [
+      "",
+      "templates",
+      "engine_source"
+    ],
+    "target_exists": false
+  }
+}

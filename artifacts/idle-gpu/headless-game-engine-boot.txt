@@ -1,0 +1,32 @@
+[2026.09.11-18.35.21:982][  0]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=bypass effective_fps=0.00 engine_fps=0.00
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY map=Entry viewport_px=0x0 render_target_px=0x0 dpi_scale=1.000 high_dpi_active=1 foreground=0 rendered_viewport_available=0
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_FRAME_LIMIT engine=CinderGameEngine state=0 effective_fps=0.00; limit is not measured cadence or GPU utilization
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=0 set_by=Scalability
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.35.22:657][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile

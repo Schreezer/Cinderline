@@ -1,0 +1,17 @@
+{
+  "reason": "Record the user-selected iOS component only after all 15223 original-manifest files passed verification",
+  "engineVersion": "5.8.2-56702186+++UE5+Release-5.8-Mac",
+  "beforeInstallTags": [
+    "",
+    "templates",
+    "engine_source"
+  ],
+  "afterInstallTags": [
+    "",
+    "templates",
+    "engine_source",
+    "platform_IOS"
+  ],
+  "onlyFieldChanged": "InstallTags",
+  "backup": "Saved/IOSLauncherReceiptBackup.item"
+}

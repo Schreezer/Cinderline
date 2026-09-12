@@ -1,0 +1,11 @@
+********** STAGE COMMAND STARTED **********
+** BUILD SUCCEEDED **
+********** STAGE COMMAND COMPLETED **********
+********** PACKAGE COMMAND STARTED **********
+** BUILD SUCCEEDED **
+********** PACKAGE COMMAND COMPLETED **********
+********** ARCHIVE COMMAND STARTED **********
+********** ARCHIVE COMMAND COMPLETED **********
+BuildCookRun time: 41.15 s
+BUILD SUCCESSFUL
+AutomationTool exiting with ExitCode=0 (Success)

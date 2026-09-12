@@ -1,0 +1,10 @@
+{
+  "engineVersion": "5.8.2-56702186+++UE5+Release-5.8-Mac",
+  "method": "Epic BuildPatchTool InstallManifest with an iOS-only derived manifest; every file checked against original manifest",
+  "filesVerified": 15223,
+  "bytesVerified": 4202991029,
+  "newFilesInstalled": 15223,
+  "existingIdenticalFiles": 0,
+  "launcherReceiptModified": false,
+  "status": "verified"
+}

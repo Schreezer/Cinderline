@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-09-12",
+  "device": "iPhone 17 Pro Max",
+  "os": "iOS 27.0",
+  "sdk": "27.0",
+  "bundleIdentifier": "com.cinderline.game",
+  "exception": "EXC_BREAKPOINT / SIGTRAP",
+  "faultingThread": 0,
+  "topFrame": "___UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption_block_invoke",
+  "engineInitialized": false,
+  "sceneManifestPresent": false,
+  "sceneDelegateInPrecompiledApplicationCore": false,
+  "rawReportKeptPrivate": "Saved/IOSDevice/launch-crash.ips",
+  "fixStatus": "Scene-enabled modules rebuilt and packaged with SDK 27; device connection pending"
+}

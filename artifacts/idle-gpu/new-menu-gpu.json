@@ -1,0 +1,163 @@
+{
+  "elapsed_seconds": 8.040240916991024,
+  "finished_at_utc": "2026-09-11T18:41:32.255Z",
+  "interval_seconds": 0.5,
+  "label": "new_menu_foreground",
+  "requested_seconds": 8.0,
+  "samples": [
+    {
+      "timestamp_utc": "2026-09-11T18:41:24.248Z",
+      "values": {
+        "device_utilization_percent": 50,
+        "renderer_utilization_percent": 48,
+        "tiler_utilization_percent": 49
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:24.789Z",
+      "values": {
+        "device_utilization_percent": 48,
+        "renderer_utilization_percent": 45,
+        "tiler_utilization_percent": 46
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:25.329Z",
+      "values": {
+        "device_utilization_percent": 48,
+        "renderer_utilization_percent": 46,
+        "tiler_utilization_percent": 47
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:25.873Z",
+      "values": {
+        "device_utilization_percent": 51,
+        "renderer_utilization_percent": 49,
+        "tiler_utilization_percent": 49
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:26.415Z",
+      "values": {
+        "device_utilization_percent": 49,
+        "renderer_utilization_percent": 47,
+        "tiler_utilization_percent": 48
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:26.956Z",
+      "values": {
+        "device_utilization_percent": 50,
+        "renderer_utilization_percent": 48,
+        "tiler_utilization_percent": 49
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:27.500Z",
+      "values": {
+        "device_utilization_percent": 49,
+        "renderer_utilization_percent": 47,
+        "tiler_utilization_percent": 48
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:28.043Z",
+      "values": {
+        "device_utilization_percent": 54,
+        "renderer_utilization_percent": 52,
+        "tiler_utilization_percent": 53
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:28.589Z",
+      "values": {
+        "device_utilization_percent": 48,
+        "renderer_utilization_percent": 46,
+        "tiler_utilization_percent": 47
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:29.138Z",
+      "values": {
+        "device_utilization_percent": 52,
+        "renderer_utilization_percent": 50,
+        "tiler_utilization_percent": 51
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:29.684Z",
+      "values": {
+        "device_utilization_percent": 36,
+        "renderer_utilization_percent": 34,
+        "tiler_utilization_percent": 35
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:30.223Z",
+      "values": {
+        "device_utilization_percent": 48,
+        "renderer_utilization_percent": 46,
+        "tiler_utilization_percent": 46
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:30.765Z",
+      "values": {
+        "device_utilization_percent": 52,
+        "renderer_utilization_percent": 50,
+        "tiler_utilization_percent": 50
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:31.304Z",
+      "values": {
+        "device_utilization_percent": 48,
+        "renderer_utilization_percent": 46,
+        "tiler_utilization_percent": 47
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:31.843Z",
+      "values": {
+        "device_utilization_percent": 60,
+        "renderer_utilization_percent": 58,
+        "tiler_utilization_percent": 59
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:41:32.255Z",
+      "values": {
+        "device_utilization_percent": 69,
+        "renderer_utilization_percent": 67,
+        "tiler_utilization_percent": 68
+      }
+    }
+  ],
+  "schema_version": 1,
+  "started_at_utc": "2026-09-11T18:41:24.215Z",
+  "summary": {
+    "device_utilization_percent": {
+      "count": 16,
+      "max": 69,
+      "mean": 50.75,
+      "median": 49.5,
+      "min": 36
+    },
+    "renderer_utilization_percent": {
+      "count": 16,
+      "max": 67,
+      "mean": 48.6875,
+      "median": 47.5,
+      "min": 34
+    },
+    "tiler_utilization_percent": {
+      "count": 16,
+      "max": 68,
+      "mean": 49.5,
+      "median": 48.5,
+      "min": 35
+    }
+  },
+  "warning": "These are whole-GPU utilization counters from macOS AGX ioreg. They are not process-specific and do not measure power consumption."
+}

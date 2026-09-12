@@ -11,13 +11,19 @@ if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
   printf '%s\n' \
     'Build first with: ./scripts/unreal.sh build' \
     'Close the Cinderline editor/runtime, then run: ./scripts/test-unreal.sh' \
+    'Add --tutorials to include guided-practice and help-content tests.' \
     'UE_ROOT may select another compatible UE 5.8 installation.' \
     'Runs transient-world integration tests through UnrealEditor-Cmd with NullRHI.' \
     'Reports go to a new Saved/Automation/Integration directory. Player saves are untouched.'
   exit 0
 fi
-if [[ $# -ne 0 ]]; then
-  printf '%s\n' 'No positional arguments are supported. Use --help or set UE_ROOT.' >&2
+test_filter=Cinderline.Integration
+include_tutorials=false
+if [[ $# -eq 1 && "$1" == --tutorials ]]; then
+  test_filter=Cinderline.Integration+Cinderline.Tutorial
+  include_tutorials=true
+elif [[ $# -ne 0 ]]; then
+  printf '%s\n' 'Use --tutorials, --help, or set UE_ROOT. No other arguments are supported.' >&2
   exit 2
 fi
 
@@ -52,7 +58,7 @@ printf 'Running Cinderline integration automation. Report directory: %s\n' "$rep
 # it is not an immediate engine Quit command. Validate JSON even after exit zero.
 if "$editor" "$project_file" /Engine/Maps/Entry -unattended -nop4 -nosplash -NullRHI -nosound \
   -stdout -FullStdOutLogOutput \
-  '-ExecCmds=Automation RunTests Cinderline.Integration; Quit' \
+  "-ExecCmds=Automation RunTests $test_filter; Quit" \
   "-ReportExportPath=$report_dir" "-abslog=$report_dir/UnrealEditor.log" \
   > "$report_dir/stdout.log" 2>&1; then
   if [[ ! -s "$report_dir/index.json" ]]; then
@@ -64,7 +70,7 @@ else
   printf 'Unreal integration automation failed with status %s. Inspect %s\n' "$result" "$report_dir/stdout.log" >&2
   exit "$result"
 fi
-"$validation_python" - "$report_dir/index.json" <<'PY'
+"$validation_python" - "$report_dir/index.json" "$include_tutorials" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -83,8 +89,21 @@ def fail(message):
 # through FJsonObjectConverter using lower-initial case and enum name strings.
 if not isinstance(report, dict):
     fail("report root is not an object")
+expected_paths = {
+    "Cinderline.Integration.WorldLifecycle",
+    "Cinderline.Integration.EconomyAndProduction",
+    "Cinderline.Integration.AIKnowledgeAndPersistence",
+    "Cinderline.Integration.CombatFeedback",
+}
+if sys.argv[2] == "true":
+    expected_paths.update({
+        "Cinderline.Tutorial.CommandGates",
+        "Cinderline.Tutorial.EmberGate",
+        "Cinderline.Tutorial.EarlyActionsAndContent",
+        "Cinderline.Tutorial.EndToEnd",
+    })
 required_counts = {
-    "succeeded": 4,
+    "succeeded": len(expected_paths),
     "succeededWithWarnings": 0,
     "failed": 0,
     "notRun": 0,
@@ -95,15 +114,9 @@ for field, expected_count in required_counts.items():
     if type(actual) is not int or actual != expected_count:
         fail(f"{field}={actual!r}, expected {expected_count}")
 
-expected_paths = {
-    "Cinderline.Integration.WorldLifecycle",
-    "Cinderline.Integration.EconomyAndProduction",
-    "Cinderline.Integration.AIKnowledgeAndPersistence",
-    "Cinderline.Integration.CombatFeedback",
-}
 tests = report.get("tests")
 if not isinstance(tests, list) or len(tests) != len(expected_paths):
-    fail("report must contain exactly the four expected tests")
+    fail(f"report must contain exactly the {len(expected_paths)} expected tests")
 seen = set()
 for test in tests:
     if not isinstance(test, dict):
@@ -119,6 +132,6 @@ for test in tests:
             fail(f"{path} has nonzero or missing {field}")
 if seen != expected_paths:
     fail("one or more expected test paths are missing")
-print("Verified all expected Unreal integration tests: 4 succeeded, no errors, warnings, or unfinished tests.")
+print(f"Verified all expected Unreal tests: {len(expected_paths)} succeeded, no errors, warnings, or unfinished tests.")
 PY
 printf 'Unreal integration automation passed. Report: %s/index.json\n' "$report_dir"

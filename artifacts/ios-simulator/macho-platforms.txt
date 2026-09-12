@@ -1,0 +1,17 @@
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/IOS/iossimulator/UnrealGame/Development/Cinderline/Module.Cinderline.cpp.o:
+Load command 1
+      cmd LC_BUILD_VERSION
+  cmdsize 24
+ platform IOSSIMULATOR
+    minos 15.0
+      sdk 27.0
+   ntools 0
+
+/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.13.cpp.o:
+Load command 1
+      cmd LC_BUILD_VERSION
+  cmdsize 24
+ platform IOS
+    minos 15.0
+      sdk 26.1
+   ntools 0

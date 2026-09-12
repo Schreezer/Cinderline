@@ -1,0 +1,10 @@
+Compile-only preflight before platform installation; does not prove linking or deployment.
+Setting up bundled DotNet SDK
+/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll Cinderline IOS Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -NoLink -SkipDeploy -MaxParallelActions=2
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Missing files required to build IOS targets. Enable IOS as an optional download component in the Epic Games Launcher.
+
+Result: Failed (OtherCompilationError)
+Total execution time: 1.02 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 495b

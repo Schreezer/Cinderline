@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "scope": "Structured evidence for the idle/background frame-pacing change. This record distinguishes accepted evidence from excluded and incomplete measurements.",
+  "source_provenance": {
+    "tested_manifest": "artifacts/idle-gpu/tested-source-sha256.txt",
+    "manifest_entry_count": 91,
+    "current_root_verification": {
+      "command": "shasum -a 256 -c artifacts/idle-gpu/tested-source-sha256.txt",
+      "ok": 91,
+      "mismatched": 0,
+      "missing": 0,
+      "meaning": "The current corresponding root sources matched the isolated validation manifest at verification time."
+    }
+  },
+  "build_evidence": {
+    "isolated_validation": {
+      "artifact": "artifacts/idle-gpu/build-results.txt",
+      "project_copy": "isolated temporary project copy",
+      "result": "Succeeded",
+      "total_seconds": 48.44
+    },
+    "applied_root_build": {
+      "artifact": "artifacts/idle-gpu/applied-build-results.txt",
+      "project": "current root project",
+      "result": "Succeeded",
+      "total_seconds": 30.64,
+      "max_parallel_actions": 2,
+      "linked_module": "libUnrealEditor-Cinderline.dylib"
+    }
+  },
+  "integration_evidence": {
+    "artifact": "artifacts/idle-gpu/integration-results.json",
+    "expected_test_count": 4,
+    "succeeded": 4,
+    "failed": 0,
+    "succeeded_with_warnings": 0,
+    "not_run": 0,
+    "in_process": 0,
+    "tests": [
+      "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "Cinderline.Integration.CombatFeedback",
+      "Cinderline.Integration.EconomyAndProduction",
+      "Cinderline.Integration.WorldLifecycle"
+    ],
+    "idle_policy_coverage": "WorldLifecycle reports CINDERLINE_UE_IDLE_WORK_POLICY_PASS for the state classifier/cap helpers, 120/30/10 transitions, stricter/unlimited engine limits, commandlet/automation bypass, one pause-transition flush, frozen menu/pause/results upload counters, and recovery. It explicitly does not measure native focus delivery, presented FPS, GPU load, or thermal behavior."
+  },
+  "engine_hook_evidence": {
+    "artifact": "artifacts/idle-gpu/headless-game-engine-boot.txt",
+    "result": "The headless boot log identifies CinderGameEngine and reports bypass with effective_fps=0.00 and engine_fps=0.00. This supports the commandlet/headless bypass hook, not interactive cadence."
+  },
+  "accepted_profile_windows": [
+    {
+      "name": "old_menu_foreground_baseline",
+      "artifact": "Saved/Logs/CinderlineIdleBefore.log",
+      "timestamp_utc": "2026-09-11T18:38:09.927Z",
+      "map": "Frontier",
+      "viewport_px": "2560x1440",
+      "samples": 120,
+      "warmup_frames": 30,
+      "fps": 91.66,
+      "foreground": true,
+      "background_frames": 0
+    },
+    {
+      "name": "new_menu_foreground",
+      "artifact": "Saved/Logs/CinderlineIdleAfter.log",
+      "timestamp_utc": "2026-09-11T18:41:20.409Z",
+      "map": "Frontier",
+      "viewport_px": "2560x1440",
+      "samples": 120,
+      "warmup_frames": 30,
+      "fps": 30.0,
+      "foreground": true,
+      "background_frames": 0,
+      "selected_cap": 30
+    },
+    {
+      "name": "new_paused_foreground",
+      "artifact": "Saved/Logs/CinderlineIdleAfter.log",
+      "timestamp_utc": "2026-09-11T18:42:10.259Z",
+      "map": "Frontier",
+      "viewport_px": "2560x1440",
+      "samples": 120,
+      "warmup_frames": 30,
+      "fps": 30.0,
+      "foreground": true,
+      "background_frames": 0,
+      "selected_cap": 30
+    }
+  ],
+  "accepted_gpu_comparison": {
+    "interpretation": "Short same-scene, foreground whole-GPU comparison only; it does not establish process attribution, power, thermal behavior, fan behavior, or a settled baseline.",
+    "old_menu": {
+      "artifact": "artifacts/idle-gpu/old-menu-gpu.json",
+      "label": "old_menu_foreground",
+      "window_utc": {
+        "started": "2026-09-11T18:38:18.044Z",
+        "finished": "2026-09-11T18:38:28.084Z"
+      },
+      "interval_seconds": 0.5,
+      "sample_count": 20,
+      "device_utilization_percent": {
+        "mean": 99.7,
+        "median": 100.0,
+        "min": 95,
+        "max": 100
+      }
+    },
+    "new_menu": {
+      "artifact": "artifacts/idle-gpu/new-menu-gpu.json",
+      "label": "new_menu_foreground",
+      "window_utc": {
+        "started": "2026-09-11T18:41:24.215Z",
+        "finished": "2026-09-11T18:41:32.255Z"
+      },
+      "interval_seconds": 0.5,
+      "sample_count": 16,
+      "device_utilization_percent": {
+        "mean": 50.75,
+        "median": 49.5,
+        "min": 36,
+        "max": 69
+      }
+    },
+    "difference_in_mean_device_utilization_percentage_points": -48.95
+  },
+  "excluded_measurements": [
+    {
+      "artifact": "artifacts/idle-gpu/old-paused.png",
+      "reason": "Screenshot hitch; no accepted old paused profile comparison."
+    },
+    {
+      "artifact": "artifacts/idle-gpu/new-paused-gpu.json",
+      "window_utc": {
+        "started": "2026-09-11T18:42:16.024Z",
+        "finished": "2026-09-11T18:42:24.065Z"
+      },
+      "reason": "The log changes to background at 2026-09-11T18:42:21.893Z within this GPU sample window."
+    },
+    {
+      "artifact": "artifacts/idle-gpu/new-background-gpu.json",
+      "reason": "Label is misleading: associated profile frames remained foreground at 30 FPS. Excluded from background claims."
+    },
+    {
+      "artifact": "artifacts/idle-gpu/new-background-confirmed-gpu.json",
+      "window_utc": {
+        "started": "2026-09-11T18:47:18.478Z",
+        "finished": "2026-09-11T18:47:26.519Z"
+      },
+      "reason": "Label is misleading: associated profile frames remained foreground at 30 FPS. Excluded from background claims."
+    },
+    {
+      "artifact": "artifacts/idle-gpu/new-minimized-gpu.json",
+      "window_utc": {
+        "started": "2026-09-11T18:48:31.398Z",
+        "finished": "2026-09-11T18:48:39.446Z"
+      },
+      "device_utilization_percent": {
+        "mean": 56.25,
+        "median": 56.0,
+        "min": 49,
+        "max": 64
+      },
+      "reason": "Begins before/at the transition. The 10 FPS cap selection is logged at 2026-09-11T18:48:31.923Z, but this is not a rendered 10-FPS cadence result and cannot be used as a settled minimized or GPU claim."
+    },
+    {
+      "artifact": "artifacts/idle-gpu/game-closed-gpu.json",
+      "window_utc": {
+        "started": "2026-09-11T18:48:50.428Z",
+        "finished": "2026-09-11T18:48:55.452Z"
+      },
+      "device_utilization_percent": {
+        "mean": 32.5,
+        "median": 29.0,
+        "min": 27,
+        "max": 58
+      },
+      "reason": "Shutdown-transition whole-GPU sample: it begins after the engine exit request but before the log closes. It is supplemental only and must not be attributed to Cinderline or treated as a settled post-exit baseline."
+    }
+  ],
+  "shutdown_evidence": {
+    "runtime_log": "Saved/Logs/CinderlineIdleAfter.log",
+    "engine_exit_requested_utc": "2026-09-11T18:48:50.315Z",
+    "log_closed_utc": "2026-09-11T18:48:50.787Z",
+    "process_id": 88451,
+    "process_absence_artifact": "artifacts/idle-gpu/process-closed.txt",
+    "post_runtime_artifact": "artifacts/idle-gpu/after-runtime.txt",
+    "interpretation": "The exact game process was terminated for the heat complaint. Process absence is separate from system-wide GPU utilization."
+  },
+  "limitations_and_outstanding_evidence": [
+    "macOS AGX ioreg counters are whole-GPU utilization counters. They are not process-specific and do not measure power consumption, temperature, fans, or thermal state.",
+    "The profile's CPU/GPU timings are engine-global and asynchronously completed; they are not synchronized per-frame attribution or utilization measurements.",
+    "No accepted rendered 10-FPS minimized/background cadence window exists. The minimized log establishes cap selection only.",
+    "The short accepted GPU comparison is not a repeated controlled experiment and establishes no settled baseline or source thermal result.",
+    "No claim is made about production, packaged Shipping behavior, other hardware, or sustained gameplay."
+  ]
+}

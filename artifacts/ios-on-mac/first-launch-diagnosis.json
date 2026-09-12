@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-09-12T07:30:31.259773+00:00",
+  "route": "native iOS Designed for iPad on Apple Silicon Mac",
+  "sdk": "27.0",
+  "firstLaunch": "failed after scene initialization and Metal UIView creation",
+  "exception": {
+    "codes": "0x0000000000000000, 0x0000000000000000",
+    "rawCodes": [
+      0,
+      0
+    ],
+    "type": "EXC_CRASH",
+    "signal": "SIGABRT"
+  },
+  "faultingThread": "GameThread",
+  "frames": [
+    "__pthread_kill",
+    "pthread_kill",
+    "abort",
+    "FGenericPlatformMisc::RequestExit(bool, char16_t const*)",
+    "FIOSErrorOutputDevice::Serialize(char16_t const*, ELogVerbosity::Type, FName const&)",
+    "FOutputDevice::LogfImpl(char16_t const*, ...)",
+    "FDebug::CheckVerifyFailedImpl2V(char const*, char const*, int, char16_t const*, char*)",
+    "FDebug::CheckVerifyFailedImpl2(char const*, char const*, int, char16_t const*, ...)",
+    "LegacyShaderPlatformToShaderFormat(EShaderPlatform) (.cold.1)",
+    "LegacyShaderPlatformToShaderFormat(EShaderPlatform)",
+    "UE::FIOSPlatformDynamicRHI::AddTargetedShaderFormats(TArray<FString, TSizedDefaultAllocator<32>>&)",
+    "PlatformCreateDynamicRHI()",
+    "RHIInit(bool)",
+    "FEngineLoop::PreInitPreStartupScreen(char16_t const*)",
+    "FAppEntry::Init()",
+    "-[IOSAppDelegate MainAppThread:]",
+    "__NSThread__start__",
+    "_pthread_start"
+  ],
+  "rootCause": "UAT classified the nested engine as project content, so engine DDPI/config/content was staged at the wrong virtual paths.",
+  "incorrectDDPIPath": "Cinderline/Saved/EngineIOS27/Engine/Config/IOS/DataDrivenPlatformInfo.ini",
+  "requiredDDPIPath": "Engine/Config/IOS/DataDrivenPlatformInfo.ini",
+  "affected": "Both previously staged phone and native Mac wrappers shared the same pak.",
+  "repair": "Move prepared engine outside project, regenerate build paths, restage, and verify package plus runtime."
+}

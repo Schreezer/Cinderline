@@ -1,0 +1,80 @@
+{
+  "checkedAtUtc": "2026-09-12T07:55:37.382164+00:00",
+  "startedAtUtc": "2026-09-12T07:51:14.826136+00:00",
+  "route": "Native Designed for iPad on Apple Silicon Mac",
+  "hostOS": "macOS 27.0",
+  "xcode": "27.0",
+  "iOSSDK": "27.0",
+  "machoPlatform": "IOS",
+  "architecture": "arm64",
+  "bundleIdentifier": "com.cinderline.game",
+  "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/iOSonMac/Cinderline.app",
+  "strictSignatureVerified": true,
+  "macProvisioningVerified": true,
+  "phoneArchiveSignatureVerified": true,
+  "matchesCurrentPhoneExecutableAndCookedData": true,
+  "executableSha256": "bb91366c4d79235f5b80a375007f5557049a055938249a6bb54f6463555c399e",
+  "cookedFileSha256": {
+    "cookeddata/cinderline/content/paks/global.ucas": "3caaf04434a3d66defdb5746a5d4878bc832efebae4a568e84493163662f4d55",
+    "cookeddata/cinderline/content/paks/cinderline-ios.pak": "cd0e6d65d511fb1dab49cdd2f848dbcb7215f97875840657be70995e35d8f3c9",
+    "cookeddata/cinderline/content/paks/global.utoc": "07f1e9eda41b9761f7acd9e8f758d0598d37e043310056e014de4ca540ba8912",
+    "cookeddata/cinderline/content/paks/cinderline-ios.utoc": "7d76b18460bd58527f92999d0ecf6d3cd2c38492d915ff6933b4ebd30feae553",
+    "cookeddata/cinderline/content/paks/cinderline-ios.ucas": "4821a356da42947eb92f63a7c001f3254e61de1ffdad828cc2c4e28f03a5e5f6"
+  },
+  "runtimeGraphicsOverrides": false,
+  "testFpsCap": 30,
+  "viewportPixels": [
+    2052,
+    1536
+  ],
+  "frameSample": {
+    "samples": 180,
+    "fps": 29.27,
+    "p95FrameIntervalMs": 38.345,
+    "scope": "Short Mac menu sample; not phone performance or GPU utilization"
+  },
+  "criticalAssertionsOrEnsures": 0,
+  "verified": [
+    "native SDK 27 app launch",
+    "menu rendering",
+    "skirmish start via keyboard",
+    "terrain, Anchor, Drudges, ore and fog rendering",
+    "resource gathering increases ore",
+    "guided training starts via keyboard",
+    "keyboard camera movement advances first training objective",
+    "field guide opens and preserves paused match",
+    "pause and resume via keyboard"
+  ],
+  "notVerified": [
+    "automated pointer or touch delivery: CUA clicks return noWindowsAvailable",
+    "tap unit selection or orders",
+    "construction and production button input on native iOS",
+    "hold-drag selection",
+    "multitouch pan and pinch",
+    "full skirmish completion",
+    "physical Aeon launch, touch usability and thermal performance",
+    "iOS Simulator execution"
+  ],
+  "settings": {
+    "r.OcclusionFeedback.Enable": 0,
+    "r.MSAACount": 1,
+    "r.Mobile.AntiAliasing": 0,
+    "DefaultPlatformService": "Null",
+    "OnlineSubsystemIOS.bEnabled": false
+  },
+  "screenshots": [
+    "menu.png",
+    "skirmish.png",
+    "training.png",
+    "field-guide.png",
+    "paused.png",
+    "resumed.png"
+  ],
+  "testAppClosedAfterVerification": true,
+  "pauseResumeEvidence": {
+    "pausedTimer": "00:31",
+    "pausedOre": 978,
+    "resumedTimer": "01:25",
+    "resumedOre": 1724
+  }
+}

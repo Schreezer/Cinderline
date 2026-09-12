@@ -1,0 +1,28 @@
+Compiling with IOS SDK 27.0, minimum Target OS version 15.0
+[1/26] Compile [iossimulator] SharedPCH.Engine.Project.ValApi.ValExpApi.Cpp20.h
+[2/26] Compile [iossimulator] CinderCombatPreview.cpp
+[3/26] Compile [iossimulator] CinderBattlefield.cpp
+[4/26] Compile [iossimulator] CinderEntityMotion.cpp
+[5/26] Compile [iossimulator] CinderGameEngine.cpp
+[6/26] Compile [iossimulator] CinderHelpContent.cpp
+[7/26] Compile [iossimulator] CinderHUD.cpp
+[8/26] Compile [iossimulator] CinderMotionPreview.cpp
+[9/26] Compile [iossimulator] CinderOnlineIntegrationTests.cpp
+[10/26] Compile [iossimulator] CinderOnlineSubsystem.cpp
+[11/26] Compile [iossimulator] CinderOnlinePanel.cpp
+[12/26] Compile [iossimulator] CinderQualityDiagnostics.cpp
+[13/26] Compile [iossimulator] CinderPlayerController.cpp
+[14/26] Compile [iossimulator] CinderTerrainSurface.cpp
+[15/26] Compile [iossimulator] CinderTutorial.cpp
+[16/26] Compile [iossimulator] CinderTutorialTests.cpp
+[17/26] Compile [iossimulator] CinderVisualPreview.cpp
+[18/26] Compile [iossimulator] CinderWorldIntegrationTests.cpp
+[19/26] Compile [iossimulator] Module.Cinderline.cpp
+[20/26] Compile [iossimulator] Network.cpp
+[21/26] Compile [iossimulator] Simulation.cpp
+[22/26] Compile [iossimulator] SimulationAI.cpp
+[23/26] Link [iossimulator] Cinderline
+ld: library 'ThirdParty/PLCrashReporter/lib/lib-Xcode-16.2/iOS/Simulator/libCrashReporter.a' not found
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+Result: Failed (OtherCompilationError)
+Total execution time: 86.34 seconds

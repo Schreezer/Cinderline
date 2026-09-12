@@ -1,0 +1,24 @@
+********** COOK COMMAND STARTED **********
+LogShaderCompilers: Display: Using 1 local workers for shader compilation
+LogShaderCompilers: Display: Shaders Compiled: 1,047
+LogShaderCompilers: Display: Shaders Compiled: 1,203
+LogShaderCompilers: Display: Shaders Compiled: 1,378
+LogShaderCompilers: Display: Shaders Compiled: 1,553
+LogShaderCompilers: Display: Shaders Compiled: 1,728
+LogShaderCompilers: Display: Shaders Compiled: 1,903
+LogShaderCompilers: Display: Shaders Compiled: 2,078
+LogShaderCompilers: Display: Shaders Compiled: 2,228
+LogCook: Display: Cooked packages 565 Packages Remain 0 Total 565
+LogShaderCompilers: Display: Shaders Compiled: 2,325
+********** COOK COMMAND COMPLETED **********
+********** STAGE COMMAND STARTED **********
+** BUILD SUCCEEDED **
+********** STAGE COMMAND COMPLETED **********
+********** PACKAGE COMMAND STARTED **********
+** BUILD SUCCEEDED **
+********** PACKAGE COMMAND COMPLETED **********
+********** ARCHIVE COMMAND STARTED **********
+********** ARCHIVE COMMAND COMPLETED **********
+BuildCookRun time: 2162.01 s
+BUILD SUCCESSFUL
+AutomationTool exiting with ExitCode=0 (Success)

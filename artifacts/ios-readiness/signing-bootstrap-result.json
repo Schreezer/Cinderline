@@ -1,0 +1,20 @@
+{
+  "checked_at_utc": "2026-09-11T19:24:30Z",
+  "status": "blocked_account_credentials",
+  "bundle_identifier": "com.cinderline.game",
+  "team_selection": "unambiguous",
+  "apple_development_team_count": 1,
+  "build_attempts": 1,
+  "xcodebuild_exit_code": 65,
+  "destination": "generic/platform=iOS",
+  "automatic_signing": true,
+  "allow_provisioning_updates": true,
+  "matching_profile_obtained": false,
+  "primary_error": "No Account for Team <redacted-team>. Add a new account in Accounts settings or verify that your accounts have valid credentials.",
+  "secondary_error": "No iOS App Development provisioning profile matching com.cinderline.game was found.",
+  "required_user_action": "Restore valid credentials for the existing development team in Xcode Accounts, then repeat the generic iOS automatic-signing build.",
+  "installed_or_launched": false,
+  "global_settings_changed": false,
+  "credentials_or_private_keys_exported": false,
+  "scope": "Signing preparation only; no Unreal build, device install, or app launch."
+}

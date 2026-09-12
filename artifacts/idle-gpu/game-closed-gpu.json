@@ -1,0 +1,115 @@
+{
+  "elapsed_seconds": 5.024293041002238,
+  "finished_at_utc": "2026-09-11T18:48:55.452Z",
+  "interval_seconds": 0.5,
+  "label": "game_closed",
+  "requested_seconds": 5.0,
+  "samples": [
+    {
+      "timestamp_utc": "2026-09-11T18:48:50.464Z",
+      "values": {
+        "device_utilization_percent": 58,
+        "renderer_utilization_percent": 56,
+        "tiler_utilization_percent": 57
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:51.013Z",
+      "values": {
+        "device_utilization_percent": 33,
+        "renderer_utilization_percent": 31,
+        "tiler_utilization_percent": 33
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:51.557Z",
+      "values": {
+        "device_utilization_percent": 34,
+        "renderer_utilization_percent": 33,
+        "tiler_utilization_percent": 34
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:52.112Z",
+      "values": {
+        "device_utilization_percent": 28,
+        "renderer_utilization_percent": 26,
+        "tiler_utilization_percent": 28
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:52.674Z",
+      "values": {
+        "device_utilization_percent": 30,
+        "renderer_utilization_percent": 28,
+        "tiler_utilization_percent": 30
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:53.216Z",
+      "values": {
+        "device_utilization_percent": 28,
+        "renderer_utilization_percent": 27,
+        "tiler_utilization_percent": 28
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:53.778Z",
+      "values": {
+        "device_utilization_percent": 27,
+        "renderer_utilization_percent": 25,
+        "tiler_utilization_percent": 27
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:54.334Z",
+      "values": {
+        "device_utilization_percent": 27,
+        "renderer_utilization_percent": 26,
+        "tiler_utilization_percent": 27
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:54.891Z",
+      "values": {
+        "device_utilization_percent": 32,
+        "renderer_utilization_percent": 31,
+        "tiler_utilization_percent": 32
+      }
+    },
+    {
+      "timestamp_utc": "2026-09-11T18:48:55.452Z",
+      "values": {
+        "device_utilization_percent": 28,
+        "renderer_utilization_percent": 27,
+        "tiler_utilization_percent": 28
+      }
+    }
+  ],
+  "schema_version": 1,
+  "started_at_utc": "2026-09-11T18:48:50.428Z",
+  "summary": {
+    "device_utilization_percent": {
+      "count": 10,
+      "max": 58,
+      "mean": 32.5,
+      "median": 29.0,
+      "min": 27
+    },
+    "renderer_utilization_percent": {
+      "count": 10,
+      "max": 56,
+      "mean": 31.0,
+      "median": 27.5,
+      "min": 25
+    },
+    "tiler_utilization_percent": {
+      "count": 10,
+      "max": 57,
+      "mean": 32.4,
+      "median": 29.0,
+      "min": 27
+    }
+  },
+  "warning": "These are whole-GPU utilization counters from macOS AGX ioreg. They are not process-specific and do not measure power consumption."
+}

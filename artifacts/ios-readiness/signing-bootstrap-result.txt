@@ -1,0 +1,24 @@
+Signing bootstrap: blocked by Xcode account credentials
+
+Bundle: com.cinderline.game
+Team selection: unambiguous (one Apple Development team)
+Build attempts: 1
+Command shape: xcodebuild, generic iOS destination, automatic signing,
+  -allowProvisioningUpdates
+Result: exit 65; no matching profile obtained
+
+Primary blocker:
+  No Account for Team <redacted-team>. Add a new account in Accounts settings
+  or verify that your accounts have valid credentials.
+
+Secondary error:
+  No iOS App Development provisioning profile matching
+  com.cinderline.game was found.
+
+Required user action:
+  Restore valid credentials for the existing development team in Xcode
+  Accounts, then repeat the generic iOS automatic-signing build.
+
+No app was installed or launched. No Unreal build ran. No global signing
+settings, certificates, private keys, or existing profiles were changed by
+this task.

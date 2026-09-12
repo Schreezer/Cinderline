@@ -1,0 +1,36 @@
+{
+  "route": "native iOS Designed for iPad on Apple Silicon Mac",
+  "exception": {
+    "codes": "0x0000000000000001, 0x0000000000000000",
+    "rawCodes": [
+      1,
+      0
+    ],
+    "type": "EXC_BAD_ACCESS",
+    "signal": "SIGSEGV",
+    "subtype": "KERN_INVALID_ADDRESS at 0x0000000000000000"
+  },
+  "faultingFrames": [
+    null,
+    "closure #1 in static AppDistributorWrapper.getCurrent(CompletionHandler:)",
+    "partial apply for closure #1 in static AppDistributorWrapper.getCurrent(CompletionHandler:)",
+    "completeTaskWithClosure(swift::AsyncContext*, swift::SwiftError*)"
+  ],
+  "gameThreadFrames": [
+    "semaphore_wait_trap",
+    "_dispatch_sema4_wait",
+    "_dispatch_semaphore_wait_slow",
+    "FMarketplaceKitModule::StartupModule()",
+    "FModuleManager::LoadModuleWithFailureReason(FName, EModuleLoadResult&, ELoadModuleFlags)",
+    "FModuleManager::GetOrLoadModule(FName, EModuleLoadResult&, ELoadModuleFlags)",
+    "FModuleManager::LoadModule(FName, ELoadModuleFlags)",
+    "FMarketplaceKitModule::GetCurrentTypeStatic()",
+    "FOnlineSubsystemIOS::Init()",
+    "FOnlineFactoryIOS::CreateSubsystem(FName)",
+    "FOnlineSubsystemModule::GetOnlineSubsystem(FName)",
+    "FOnlineSubsystemModule::TryLoadSubsystemAndSetDefault(FName)",
+    "FOnlineSubsystemModule::LoadDefaultSubsystem()",
+    "FOnlineSubsystemModule::StartupModule()"
+  ],
+  "repair": "Use Null instead of default IOS online platform service; disable unused OnlineSubsystemIOS. Cinderline multiplayer uses its own WebSocket subsystem."
+}

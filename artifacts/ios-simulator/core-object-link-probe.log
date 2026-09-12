@@ -1,0 +1,4 @@
+Diagnostic object-only link; no game package is produced.
+ld: building for 'iOS-simulator', but linking in object file (/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.13.cpp.o) built for 'iOS'
+
+Exit code: 1

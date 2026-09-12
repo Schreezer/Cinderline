@@ -1,0 +1,6 @@
+Compiling with IOS SDK 27.0, minimum Target OS version 15.0
+[28/33] Compile [arm64] Module.ApplicationCore.cpp
+[29/33] Compile [arm64] Module.Launch.cpp
+[30/33] Link [arm64] Cinderline
+Total time in Unreal Build Accelerator local executor: 102.98 seconds
+Result: Succeeded

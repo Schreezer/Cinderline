@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-12T05:57:57.439478+00:00",
+  "sdk": "27.0",
+  "minimumOS": "15.0",
+  "engineVersion": "5.8.2",
+  "isolatedEngine": "Saved/EngineIOS27",
+  "rebuiltModules": [
+    "ApplicationCore",
+    "Launch"
+  ],
+  "buildActions": 33,
+  "nativeObjectRebuildSeconds": 102.98,
+  "linkedImageUUID": "A57F8EE9-B12D-33C4-B2B8-3E6182CF9274",
+  "packagedUUIDMatchesLinkedImage": true,
+  "sceneClassPresent": true,
+  "sceneConnectionAndLifecycleMethodsPresent": true,
+  "manifestDelegate": "IOSSceneDelegate",
+  "multipleScenesEnabled": false,
+  "strictPackagedSignatureVerified": true,
+  "stockEngineModified": false,
+  "phoneLaunchVerified": false
+}

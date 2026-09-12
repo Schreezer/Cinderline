@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-09-11T19:10:57.789434+00:00",
+  "usable_signing_identities": 2,
+  "profiles_inspected": 49,
+  "unexpired_profiles_matching_bundle": [
+    {
+      "matching_usable_certificate": false,
+      "development": true,
+      "phone_registered": true,
+      "mac_registered": true,
+      "wildcard": true
+    }
+  ],
+  "matching_development_phone_profiles": 0,
+  "matching_development_mac_profiles": 0,
+  "mac_identifier_discovered": true,
+  "scope": "Read-only signing compatibility check; no certificate, key, profile or account was changed."
+}

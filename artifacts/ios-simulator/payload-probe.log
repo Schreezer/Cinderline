@@ -1,0 +1,20 @@
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+Creating thread BuildPatchInstaller #0
+Creating thread BuildPatchInstaller #1
+Using MinCompressionPct=10
+Using MinCompressionBytes=65536
+DiskOverflowStore is: Enabled - MaxSize = 0, Additional Headroom = 0
+ChunkStoreMemoryLimits: 9,219,473,408 using headroom of 2,097,152,000 (11,316,625,408 available memory, 241,796,296 used physical, 501,774,712,832 used virtual)
+Chunk Locations: Cloud 2 (639,257 bytes) Install 0 (0 bytes) ChunkDb 0 (0 bytes)
+Starting File: Engine/Binaries/IOS/UnrealGame.target [104,347 bytes, 2 chunks], New ActiveFileCount = 1
+Initial Disk Sizes: Required: 104,347 Available: 110,857,277,440
+Completing: Engine/Binaries/IOS/UnrealGame.target
+Construction done: 2.23 sec. Hash 0.0% Wait 99.8% ReadCheck 0.0% WriteStart 0.0% ReadDone 0.0% WriteDone 0.0% CloudTick 0.2% Unaccounted 0.0%
+Allocating installer thread, free list exhausted, check PreallocateResources()
+Creating thread BuildPatchInstaller #2
+Allocating installer thread, free list exhausted, check PreallocateResources()
+Creating thread BuildPatchInstaller #3
+Allocating installer thread, free list exhausted, check PreallocateResources()
+Creating thread BuildPatchInstaller #4
+Install completed successfully.

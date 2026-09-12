@@ -1,0 +1,6 @@
+Checked UTC: 2026-09-11T18:50:32.827917+00:00
+Command: pgrep -fl UnrealEditor|UnrealBuildTool|ShaderCompileWorker|sample_mac_gpu
+Exit code: 1
+Output:
+
+Stderr:

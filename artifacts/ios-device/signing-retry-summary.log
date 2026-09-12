@@ -1,0 +1,2 @@
+/Users/chirag13/Documents/ChatGPT/starCraft/Saved/SigningBootstrap/SigningBootstrap.xcodeproj: error: Signing for "SigningBootstrap" requires a development team. Select a development team in the Signing & Capabilities editor. (in target 'SigningBootstrap' from project 'SigningBootstrap')
+** BUILD FAILED **

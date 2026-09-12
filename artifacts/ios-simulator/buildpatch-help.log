@@ -1,0 +1,17 @@
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+BUILDPATCHTOOL v1.9.0
+
+-help can be added with any mode selection to get extended usage information.
+
+Available modes are:
+  -mode=ChunkBuildDirectory    Generates patch data for a new binary.
+  -mode=ChunkDeltaOptimise     Produces a more optimal chunked patch between two specific binaries.
+  -mode=ExtractMetaData        Takes a manifest and produces a portable output with information about the contents in human or json form.
+  -mode=InstallManifest        Can rebuild the files given a manifest and clouddir source.
+  -mode=DiffManifests          Diffs the manifests for two binaries and outputs statistics for applying the update.
+  -mode=Compactify             Cleans up unneeded patch data from a given cloud directory with redundant data.
+  -mode=Enumeration            Outputs the paths to referenced patch data given a single manifest.
+  -mode=MergeManifests         Combines two manifest files to create a new one, primarily used to create hotfixes.
+  -mode=PackageChunks          Packages data required for an installation into larger files which can be used as local sources for build patch installers.
+  -mode=VerifyChunks           Allows you to verify the integrity of patch data. It will load chunk or chunkdb files to verify they are not corrupt.

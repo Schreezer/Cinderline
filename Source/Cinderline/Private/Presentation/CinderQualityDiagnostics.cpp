@@ -3,6 +3,7 @@
 #if UE_BUILD_DEVELOPMENT
 
 #include "Engine/GameViewportClient.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformApplicationMisc.h"
@@ -16,6 +17,7 @@
 #include "Misc/CoreDelegates.h"
 #include "UnrealClient.h"
 #include "Widgets/SWindow.h"
+#include "Presentation/CinderGameEngine.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogCinderQuality, Log, All);
 
@@ -34,6 +36,17 @@ UGameViewportClient* RenderedViewport(UWorld* World)
     return Client;
 }
 
+const TCHAR* ForegroundStatus()
+{
+#if PLATFORM_IOS
+    // iOS does not implement IsThisApplicationForeground, and FApp::HasFocus
+    // defaults to true there instead of reflecting UIApplication state.
+    return TEXT("unavailable");
+#else
+    return FPlatformApplicationMisc::IsThisApplicationForeground() ? TEXT("1") : TEXT("0");
+#endif
+}
+
 void LogQuality(UWorld* World)
 {
     UGameViewportClient* Client = World ? World->GetGameViewport() : nullptr;
@@ -46,10 +59,17 @@ void LogQuality(UWorld* World)
     const bool HighDPIActive = FPlatformApplicationMisc::IsHighDPIAwarenessEnabled();
 #endif
     UE_LOG(LogCinderQuality, Display,
-        TEXT("CINDERLINE_QUALITY map=%s viewport_px=%dx%d render_target_px=%dx%d dpi_scale=%.3f high_dpi_active=%d foreground=%d rendered_viewport_available=%d"),
+        TEXT("CINDERLINE_QUALITY map=%s viewport_px=%dx%d render_target_px=%dx%d dpi_scale=%.3f high_dpi_active=%d foreground=%s rendered_viewport_available=%d"),
         World ? *World->GetMapName() : TEXT("none"), Size.X, Size.Y, TargetSize.X, TargetSize.Y,
         Client ? Client->GetDPIScale() : 0.0f, HighDPIActive,
-        FPlatformApplicationMisc::IsThisApplicationForeground(), RenderedViewport(World) != nullptr);
+        ForegroundStatus(), RenderedViewport(World) != nullptr);
+
+    const auto* CinderEngine = Cast<UCinderGameEngine>(GEngine);
+    UE_LOG(LogCinderQuality, Display,
+        TEXT("CINDERLINE_QUALITY_FRAME_LIMIT engine=%s state=%d effective_fps=%.2f; limit is not measured cadence or GPU utilization"),
+        GEngine ? *GEngine->GetClass()->GetName() : TEXT("none"),
+        CinderEngine ? static_cast<int32>(CinderEngine->GetFramePacingState()) : -1,
+        GEngine ? GEngine->GetMaxTickRate(static_cast<float>(FApp::GetDeltaTime())) : 0.0f);
 
     static const TCHAR* Names[] = {
         TEXT("EnableHighDPIAwareness"), TEXT("r.AntiAliasingMethod"),
@@ -260,7 +280,9 @@ private:
             return;
         }
         if (!FMath::IsFinite(IntervalMS) || IntervalMS <= 0) { Abort(TEXT("invalid_clock_interval")); return; }
+#if !PLATFORM_IOS
         if (!FPlatformApplicationMisc::IsThisApplicationForeground()) ++BackgroundSamples;
+#endif
         Samples.Add(IntervalMS);
         // These are the same raw published counters used by stat unit, not
         // per-thread CPU utilization. Publication is asynchronous; engine waits
@@ -278,11 +300,16 @@ private:
         const double MedianMS = (Samples[(Count - 1) / 2] + Samples[Count / 2]) * 0.5;
         const int32 P95Index = FMath::Clamp(FMath::CeilToInt(Count * 0.95f) - 1, 0, Count - 1);
         const double MeanMS = TotalMS / Count;
+#if PLATFORM_IOS
+        const FString BackgroundFrameStatus(TEXT("unavailable"));
+#else
+        const FString BackgroundFrameStatus = FString::FromInt(BackgroundSamples);
+#endif
         UE_LOG(LogCinderQuality, Display,
-            TEXT("CINDERLINE_FRAME_PROFILE result map=%s samples=%d warmup_frames=%d viewport_px=%dx%d window_seconds=%.3f mean_ms=%.3f median_ms=%.3f p95_ms=%.3f fps=%.2f foreground=%d background_frames=%d measurement=rendered_viewport_wall_clock gpu_timing=%s"),
+            TEXT("CINDERLINE_FRAME_PROFILE result map=%s samples=%d warmup_frames=%d viewport_px=%dx%d window_seconds=%.3f mean_ms=%.3f median_ms=%.3f p95_ms=%.3f fps=%.2f foreground=%s background_frames=%s measurement=rendered_viewport_wall_clock gpu_timing=%s"),
             *SampleWorld->GetMapName(), Count, WarmupFrames, StartSize.X, StartSize.Y, TotalMS / 1000.0,
             MeanMS, MedianMS, Samples[P95Index], 1000.0 / MeanMS,
-            FPlatformApplicationMisc::IsThisApplicationForeground(), BackgroundSamples,
+            ForegroundStatus(), *BackgroundFrameStatus,
             GPUTiming.Values.IsEmpty() ? TEXT("unavailable") : TEXT("completed_engine_frames"));
         GameTiming.Log(TEXT("game_thread"), TEXT("GGameThreadTime"), Count, TEXT("positive_latest_published_counter"));
         RenderTiming.Log(TEXT("render_thread"), TEXT("GRenderThreadTime"), Count, TEXT("separate_thread_and_positive_latest_published_counter"));

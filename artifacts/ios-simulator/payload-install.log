@@ -1,0 +1,831 @@
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+Creating thread BuildPatchInstaller #0
+Creating thread BuildPatchInstaller #1
+Using MinCompressionPct=10
+Using MinCompressionBytes=65536
+DiskOverflowStore is: Enabled - MaxSize = 0, Additional Headroom = 0
+ChunkStoreMemoryLimits: 10,162,831,360 using headroom of 2,097,152,000 (12,259,983,360 available memory, 794,773,136 used physical, 502,354,329,600 used virtual)
+Chunk Locations: Cloud 40946 (17,020,497,417 bytes) Install 0 (0 bytes) ChunkDb 0 (0 bytes)
+Starting File: Directory.Build.props [900 bytes, 1 chunks], New ActiveFileCount = 1
+Initial Disk Sizes: Required: 44,653,953,114 Available: 110,872,395,776
+Starting File: Directory.Build.targets [1,308 bytes, 1 chunks], New ActiveFileCount = 2
+Starting File: Engine/Binaries/DotNET/AgentInterface.dll [11,264 bytes, 1 chunks], New ActiveFileCount = 3
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/AutomatedPerfTesting.Automation.deps.json [62,756 bytes, 1 chunks], New ActiveFileCount = 4
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/AutomatedPerfTesting.Automation.dll [70,656 bytes, 1 chunks], New ActiveFileCount = 5
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/AutomationUtils.Automation.dll [510,464 bytes, 1 chunks], New ActiveFileCount = 6
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Analytics.Telemetry.dll [12,288 bytes, 1 chunks], New ActiveFileCount = 7
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Build.dll [165,888 bytes, 1 chunks], New ActiveFileCount = 8
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Horde.dll [1,987,072 bytes, 3 chunks], New ActiveFileCount = 9
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Horde.xml [1,571,623 bytes, 4 chunks], New ActiveFileCount = 10
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.IoHash.dll [17,408 bytes, 1 chunks], New ActiveFileCount = 11
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.LogMatchers.dll [53,248 bytes, 1 chunks], New ActiveFileCount = 12
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.MsBuild.dll [40,960 bytes, 1 chunks], New ActiveFileCount = 13
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.OIDC.dll [157,184 bytes, 1 chunks], New ActiveFileCount = 14
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Oodle.dll [9,216 bytes, 1 chunks], New ActiveFileCount = 15
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Oodle.xml [7,515 bytes, 1 chunks], New ActiveFileCount = 16
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.dll [325,120 bytes, 1 chunks], New ActiveFileCount = 17
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.Native.dll [4,102,144 bytes, 5 chunks], New ActiveFileCount = 18
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.Native.dylib [5,111,184 bytes, 6 chunks], New ActiveFileCount = 19
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.Native.so [6,554,992 bytes, 7 chunks], New ActiveFileCount = 20
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Serialization.dll [116,224 bytes, 2 chunks], New ActiveFileCount = 21
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UBA.dll [49,152 bytes, 1 chunks], New ActiveFileCount = 22
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UBA.xml [56,624 bytes, 1 chunks], New ActiveFileCount = 23
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UHT.dll [995,840 bytes, 2 chunks], New ActiveFileCount = 24
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UHT.xml [941,644 bytes, 1 chunks], New ActiveFileCount = 25
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/linux-x64/native/UbaStaticStub.bin [335,937 bytes, 3 chunks], New ActiveFileCount = 26
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/osx-arm64/native/liboo2core.dylib [1,239,584 bytes, 3 chunks], New ActiveFileCount = 27
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/osx-arm64/native/libUbaDetours.dylib [1,778,272 bytes, 2 chunks], New ActiveFileCount = 28
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/osx-arm64/native/libUbaHost.dylib [4,799,632 bytes, 6 chunks], New ActiveFileCount = 29
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-arm64/native/oo2core.dll [503,808 bytes, 1 chunks], New ActiveFileCount = 30
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-arm64/native/UbaDetours.dll [1,078,712 bytes, 2 chunks], New ActiveFileCount = 31
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-arm64/native/UbaHost.dll [1,911,224 bytes, 3 chunks], New ActiveFileCount = 32
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/oo2core.dll [637,952 bytes, 2 chunks], New ActiveFileCount = 33
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/UbaDetours.dll [1,212,856 bytes, 2 chunks], New ActiveFileCount = 34
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/UbaHost.dll [2,183,608 bytes, 3 chunks], New ActiveFileCount = 35
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/UbaWine.dll.so [160,272 bytes, 1 chunks], New ActiveFileCount = 36
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x86/native/oo2core.dll [583,168 bytes, 3 chunks], New ActiveFileCount = 37
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/selenium-manager/linux/selenium-manager [5,453,248 bytes, 7 chunks], New ActiveFileCount = 38
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/selenium-manager/macos/selenium-manager [8,060,864 bytes, 9 chunks], New ActiveFileCount = 39
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/selenium-manager/windows/selenium-manager.exe [3,689,984 bytes, 5 chunks], New ActiveFileCount = 40
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool [124,712 bytes, 1 chunks], New ActiveFileCount = 41
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.deps.json [53,763 bytes, 1 chunks], New ActiveFileCount = 42
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.dll [3,200,512 bytes, 4 chunks], New ActiveFileCount = 43
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.runtimeconfig.json [727 bytes, 1 chunks], New ActiveFileCount = 44
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.xml [1,866,255 bytes, 3 chunks], New ActiveFileCount = 45
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/BuildGraph.Automation.deps.json [59,333 bytes, 1 chunks], New ActiveFileCount = 46
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/BuildGraph.Automation.dll [604,672 bytes, 2 chunks], New ActiveFileCount = 47
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/BuildGraph.Automation.xml [411,267 bytes, 1 chunks], New ActiveFileCount = 48
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Analytics.Telemetry.dll [11,776 bytes, 1 chunks], New ActiveFileCount = 49
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Build.dll [156,160 bytes, 1 chunks], New ActiveFileCount = 50
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.BuildGraph.dll [132,096 bytes, 1 chunks], New ActiveFileCount = 51
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.BuildGraph.xml [157,080 bytes, 2 chunks], New ActiveFileCount = 52
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Horde.dll [1,825,280 bytes, 4 chunks], New ActiveFileCount = 53
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.IoHash.dll [16,896 bytes, 1 chunks], New ActiveFileCount = 54
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.LogMatchers.dll [50,688 bytes, 1 chunks], New ActiveFileCount = 55
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.MsBuild.dll [39,936 bytes, 1 chunks], New ActiveFileCount = 56
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.OIDC.dll [147,968 bytes, 1 chunks], New ActiveFileCount = 57
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Oodle.dll [9,216 bytes, 1 chunks], New ActiveFileCount = 58
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Perforce.dll [289,280 bytes, 1 chunks], New ActiveFileCount = 59
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 60
+Completing: Directory.Build.props
+Completing: Directory.Build.targets
+Completing: Engine/Binaries/DotNET/AgentInterface.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/AutomatedPerfTesting.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/AutomatedPerfTesting.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/AutomationUtils.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Analytics.Telemetry.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Build.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Horde.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Horde.xml
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.IoHash.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.LogMatchers.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.MsBuild.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.OIDC.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Oodle.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Oodle.xml
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.Native.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.ProjectStore.dll [91,648 bytes, 1 chunks], New ActiveFileCount = 43
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Serialization.dll [107,520 bytes, 1 chunks], New ActiveFileCount = 44
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.UBA.dll [47,616 bytes, 1 chunks], New ActiveFileCount = 45
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.UHT.dll [888,832 bytes, 2 chunks], New ActiveFileCount = 46
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/fastJSON.dll [34,816 bytes, 1 chunks], New ActiveFileCount = 47
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/Ionic.Zip.Reduced.dll [253,440 bytes, 2 chunks], New ActiveFileCount = 48
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Apple.Automation.dll [66,048 bytes, 1 chunks], New ActiveFileCount = 49
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/AutomationScripts.Automation.dll [804,352 bytes, 2 chunks], New ActiveFileCount = 50
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/CookedEditor.Automation.deps.json [66,931 bytes, 2 chunks], New ActiveFileCount = 51
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/CookedEditor.Automation.dll [44,544 bytes, 2 chunks], New ActiveFileCount = 52
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 53
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Linux.Automation.dll [19,968 bytes, 1 chunks], New ActiveFileCount = 53
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Mac.Automation.dll [16,896 bytes, 1 chunks], New ActiveFileCount = 54
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/SteamDeck.Automation.dll [15,360 bytes, 1 chunks], New ActiveFileCount = 55
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Win.Automation.dll [78,336 bytes, 1 chunks], New ActiveFileCount = 56
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/BitFaster.Caching.dll [149,504 bytes, 2 chunks], New ActiveFileCount = 57
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Blake3.dll [18,944 bytes, 1 chunks], New ActiveFileCount = 58
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/CrowdinLocalization.Automation.deps.json [54,733 bytes, 1 chunks], New ActiveFileCount = 59
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/CrowdinLocalization.Automation.dll [33,280 bytes, 1 chunks], New ActiveFileCount = 60
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Dapper.dll [245,760 bytes, 1 chunks], New ActiveFileCount = 61
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 62
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Perforce.Native.so
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Google.Protobuf.dll [472,672 bytes, 2 chunks], New ActiveFileCount = 62
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Grpc.Core.Api.dll [70,432 bytes, 1 chunks], New ActiveFileCount = 63
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Grpc.Net.Client.dll [295,200 bytes, 1 chunks], New ActiveFileCount = 64
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Grpc.Net.Common.dll [22,304 bytes, 1 chunks], New ActiveFileCount = 65
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/IdentityModel.dll [191,488 bytes, 1 chunks], New ActiveFileCount = 66
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/IdentityModel.OidcClient.dll [166,912 bytes, 1 chunks], New ActiveFileCount = 67
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/JetBrains.Annotations.dll [113,664 bytes, 2 chunks], New ActiveFileCount = 68
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/K4os.Compression.LZ4.dll [65,024 bytes, 1 chunks], New ActiveFileCount = 69
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Build.Locator.dll [50,720 bytes, 2 chunks], New ActiveFileCount = 70
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.CodeAnalysis.CSharp.dll [6,605,600 bytes, 9 chunks], New ActiveFileCount = 71
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.Serialization.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UBA.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UBA.xml
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UHT.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/EpicGames.UHT.xml
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/linux-x64/native/UbaStaticStub.bin
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/osx-arm64/native/liboo2core.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/osx-arm64/native/libUbaDetours.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.CodeAnalysis.dll [3,024,168 bytes, 4 chunks], New ActiveFileCount = 64
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/osx-arm64/native/libUbaHost.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Data.Sqlite.dll [177,696 bytes, 2 chunks], New ActiveFileCount = 64
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Caching.Abstractions.dll [38,160 bytes, 1 chunks], New ActiveFileCount = 65
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Caching.Memory.dll [48,440 bytes, 1 chunks], New ActiveFileCount = 66
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll [28,944 bytes, 1 chunks], New ActiveFileCount = 67
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.Binder.dll [43,792 bytes, 1 chunks], New ActiveFileCount = 68
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.dll [45,328 bytes, 1 chunks], New ActiveFileCount = 69
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.FileExtensions.dll [28,976 bytes, 1 chunks], New ActiveFileCount = 70
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.Json.dll [28,432 bytes, 1 chunks], New ActiveFileCount = 71
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll [66,320 bytes, 1 chunks], New ActiveFileCount = 72
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.DependencyInjection.dll [96,016 bytes, 1 chunks], New ActiveFileCount = 73
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Diagnostics.Abstractions.dll [31,504 bytes, 1 chunks], New ActiveFileCount = 74
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Diagnostics.dll [36,664 bytes, 1 chunks], New ActiveFileCount = 75
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.FileProviders.Abstractions.dll [23,816 bytes, 1 chunks], New ActiveFileCount = 76
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.FileProviders.Physical.dll [45,840 bytes, 1 chunks], New ActiveFileCount = 77
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.FileSystemGlobbing.dll [48,392 bytes, 1 chunks], New ActiveFileCount = 78
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Http.dll [93,456 bytes, 1 chunks], New ActiveFileCount = 79
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Http.Polly.dll [33,032 bytes, 1 chunks], New ActiveFileCount = 80
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.Abstractions.dll [67,336 bytes, 1 chunks], New ActiveFileCount = 81
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.Configuration.dll [28,936 bytes, 1 chunks], New ActiveFileCount = 82
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.Console.dll [76,560 bytes, 1 chunks], New ActiveFileCount = 83
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.dll [51,984 bytes, 1 chunks], New ActiveFileCount = 84
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.ObjectPool.dll [22,840 bytes, 1 chunks], New ActiveFileCount = 85
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll [22,288 bytes, 2 chunks], New ActiveFileCount = 86
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Options.dll [65,848 bytes, 1 chunks], New ActiveFileCount = 87
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Primitives.dll [45,328 bytes, 1 chunks], New ActiveFileCount = 88
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.VisualStudio.Setup.Configuration.Interop.dll [22,568 bytes, 1 chunks], New ActiveFileCount = 89
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.VisualStudio.SolutionPersistence.dll [172,072 bytes, 1 chunks], New ActiveFileCount = 90
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Win32.SystemEvents.dll [27,920 bytes, 1 chunks], New ActiveFileCount = 91
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/OpenTelemetry.Api.dll [69,632 bytes, 1 chunks], New ActiveFileCount = 92
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/OpenTracing.dll [28,160 bytes, 2 chunks], New ActiveFileCount = 93
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Polly.dll [287,984 bytes, 1 chunks], New ActiveFileCount = 94
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Polly.Extensions.Http.dll [6,144 bytes, 1 chunks], New ActiveFileCount = 95
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/browser-wasm/nativeassets/net9.0/e_sqlite3.a [1,202,596 bytes, 2 chunks], New ActiveFileCount = 96
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-arm64/native/oo2core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-arm64/native/UbaDetours.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-armel/native/libe_sqlite3.so [1,257,916 bytes, 2 chunks], New ActiveFileCount = 95
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-arm64/native/UbaHost.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-musl-arm/native/libe_sqlite3.so [1,219,860 bytes, 2 chunks], New ActiveFileCount = 95
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-musl-riscv64/native/libe_sqlite3.so [941,944 bytes, 2 chunks], New ActiveFileCount = 96
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/oo2core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/UbaDetours.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-musl-s390x/native/libe_sqlite3.so [1,554,416 bytes, 3 chunks], New ActiveFileCount = 95
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/UbaHost.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-riscv64/native/libe_sqlite3.so [955,392 bytes, 2 chunks], New ActiveFileCount = 95
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-x86/native/libe_sqlite3.so [1,416,232 bytes, 4 chunks], New ActiveFileCount = 96
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x64/native/UbaWine.dll.so
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/runtimes/win-x86/native/oo2core.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/maccatalyst-arm64/native/libe_sqlite3.dylib [1,569,856 bytes, 4 chunks], New ActiveFileCount = 95
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/selenium-manager/linux/selenium-manager
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/maccatalyst-x64/native/libe_sqlite3.dylib [1,624,336 bytes, 3 chunks], New ActiveFileCount = 95
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-arm64/native/libblake3_dotnet.dylib [443,456 bytes, 1 chunks], New ActiveFileCount = 96
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-arm64/native/libe_sqlite3.dylib [1,554,624 bytes, 3 chunks], New ActiveFileCount = 97
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-x64/native/libblake3_dotnet.dylib [514,744 bytes, 2 chunks], New ActiveFileCount = 98
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-x64/native/libe_sqlite3.dylib [1,591,680 bytes, 3 chunks], New ActiveFileCount = 99
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/selenium-manager/macos/selenium-manager
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-arm/native/e_sqlite3.dll [1,282,560 bytes, 2 chunks], New ActiveFileCount = 99
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-arm64/native/blake3_dotnet.dll [219,136 bytes, 2 chunks], New ActiveFileCount = 100
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-arm64/native/e_sqlite3.dll [1,592,320 bytes, 3 chunks], New ActiveFileCount = 101
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x64/native/blake3_dotnet.dll [379,904 bytes, 3 chunks], New ActiveFileCount = 102
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x64/native/e_sqlite3.dll [1,795,072 bytes, 3 chunks], New ActiveFileCount = 103
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x86/native/blake3_dotnet.dll [380,416 bytes, 2 chunks], New ActiveFileCount = 104
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x86/native/e_sqlite3.dll [1,453,568 bytes, 4 chunks], New ActiveFileCount = 105
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/selenium-manager/windows/selenium-manager.exe
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/Microsoft.Win32.SystemEvents.dll [81,160 bytes, 1 chunks], New ActiveFileCount = 105
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Diagnostics.EventLog.dll [176,912 bytes, 1 chunks], New ActiveFileCount = 106
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Diagnostics.EventLog.Messages.dll [801,032 bytes, 2 chunks], New ActiveFileCount = 107
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Management.dll [314,672 bytes, 1 chunks], New ActiveFileCount = 108
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.ServiceProcess.ServiceController.dll [92,432 bytes, 1 chunks], New ActiveFileCount = 109
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Windows.Extensions.dll [76,592 bytes, 1 chunks], New ActiveFileCount = 110
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/SQLitePCLRaw.batteries_v2.dll [5,120 bytes, 1 chunks], New ActiveFileCount = 111
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/SQLitePCLRaw.core.dll [51,200 bytes, 2 chunks], New ActiveFileCount = 112
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/SQLitePCLRaw.provider.e_sqlite3.dll [36,864 bytes, 1 chunks], New ActiveFileCount = 113
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.CodeDom.dll [185,104 bytes, 1 chunks], New ActiveFileCount = 114
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Diagnostics.EventLog.dll [54,032 bytes, 1 chunks], New ActiveFileCount = 115
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Drawing.Common.dll [422,672 bytes, 2 chunks], New ActiveFileCount = 116
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.IO.Hashing.dll [56,592 bytes, 1 chunks], New ActiveFileCount = 117
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Management.dll [74,512 bytes, 1 chunks], New ActiveFileCount = 118
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Private.Windows.Core.dll [1,226,512 bytes, 4 chunks], New ActiveFileCount = 119
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.deps.json
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Private.Windows.GdiPlus.dll [169,232 bytes, 1 chunks], New ActiveFileCount = 118
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Security.Permissions.dll [118,544 bytes, 1 chunks], New ActiveFileCount = 119
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.ServiceProcess.ServiceController.dll [35,128 bytes, 1 chunks], New ActiveFileCount = 119
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Windows.Extensions.dll [29,456 bytes, 1 chunks], New ActiveFileCount = 120
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/ZstdSharp.dll [396,288 bytes, 1 chunks], New ActiveFileCount = 121
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Appium.Net.dll [120,832 bytes, 1 chunks], New ActiveFileCount = 122
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 123
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.runtimeconfig.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/AutomatedPerfTesting/net10.0/UnrealBuildTool.xml
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/BuildGraph.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/BuildGraph.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/BuildGraph.Automation.xml
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Gauntlet.Automation.deps.json [67,387 bytes, 1 chunks], New ActiveFileCount = 119
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Gauntlet.Automation.dll [976,384 bytes, 2 chunks], New ActiveFileCount = 120
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Analytics.Telemetry.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Build.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.BuildGraph.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.BuildGraph.xml
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Horde.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Magick.NET-Q16-HDRI-AnyCPU.dll [1,136,816 bytes, 2 chunks], New ActiveFileCount = 116
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Magick.NET.Core.dll [1,539,248 bytes, 3 chunks], New ActiveFileCount = 117
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.IoHash.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.LogMatchers.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.MsBuild.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.OIDC.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Oodle.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Perforce.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.IdentityModel.Abstractions.dll [19,528 bytes, 1 chunks], New ActiveFileCount = 111
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.IdentityModel.Logging.dll [38,472 bytes, 1 chunks], New ActiveFileCount = 112
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.IdentityModel.Tokens.dll [391,200 bytes, 1 chunks], New ActiveFileCount = 113
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll [22,264 bytes, 1 chunks], New ActiveFileCount = 114
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.VisualStudio.Interop.dll [1,907,272 bytes, 4 chunks], New ActiveFileCount = 115
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.VisualStudio.OLE.Interop.dll [25,640 bytes, 1 chunks], New ActiveFileCount = 116
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/MySql.Data.dll [400,896 bytes, 1 chunks], New ActiveFileCount = 117
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Newtonsoft.Json.dll [723,368 bytes, 2 chunks], New ActiveFileCount = 118
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/osx-arm64/native/Magick.Native-Q16-HDRI-arm64.dll.dylib [28,138,680 bytes, 29 chunks], New ActiveFileCount = 119
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.ProjectStore.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.Serialization.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.UBA.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/EpicGames.UHT.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/fastJSON.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/BuildGraph/net10.0/Ionic.Zip.Reduced.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Apple.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/AutomationScripts.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/CookedEditor.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/CookedEditor.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Linux.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Mac.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/SteamDeck.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CookedEditor/net10.0/Win.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/BitFaster.Caching.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Blake3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/CrowdinLocalization.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/CrowdinLocalization.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Dapper.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Google.Protobuf.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Grpc.Core.Api.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Grpc.Net.Client.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Grpc.Net.Common.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/IdentityModel.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/IdentityModel.OidcClient.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/JetBrains.Annotations.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/K4os.Compression.LZ4.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Build.Locator.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.CodeAnalysis.CSharp.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.CodeAnalysis.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Data.Sqlite.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Caching.Abstractions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Caching.Memory.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.Abstractions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.Binder.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.FileExtensions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Configuration.Json.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.DependencyInjection.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Diagnostics.Abstractions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Diagnostics.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.FileProviders.Abstractions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.FileProviders.Physical.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.FileSystemGlobbing.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Http.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Http.Polly.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.Abstractions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.Configuration.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.Console.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Logging.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.ObjectPool.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Options.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Extensions.Primitives.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.VisualStudio.Setup.Configuration.Interop.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.VisualStudio.SolutionPersistence.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Microsoft.Win32.SystemEvents.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/OpenTelemetry.Api.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/OpenTracing.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Polly.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/Polly.Extensions.Http.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/browser-wasm/nativeassets/net9.0/e_sqlite3.a
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-armel/native/libe_sqlite3.so
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/osx-x64/native/Magick.Native-Q16-HDRI-x64.dll.dylib [34,974,336 bytes, 35 chunks], New ActiveFileCount = 54
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-musl-arm/native/libe_sqlite3.so
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-musl-riscv64/native/libe_sqlite3.so
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-musl-s390x/native/libe_sqlite3.so
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-riscv64/native/libe_sqlite3.so
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/linux-x86/native/libe_sqlite3.so
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/maccatalyst-arm64/native/libe_sqlite3.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/maccatalyst-x64/native/libe_sqlite3.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-arm64/native/libblake3_dotnet.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-arm64/native/libe_sqlite3.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-x64/native/libblake3_dotnet.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/osx-x64/native/libe_sqlite3.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-arm/native/e_sqlite3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-arm64/native/blake3_dotnet.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-arm64/native/e_sqlite3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x64/native/blake3_dotnet.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x64/native/e_sqlite3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x86/native/blake3_dotnet.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win-x86/native/e_sqlite3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/Microsoft.Win32.SystemEvents.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Diagnostics.EventLog.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Diagnostics.EventLog.Messages.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Management.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.ServiceProcess.ServiceController.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/runtimes/win/lib/net10.0/System.Windows.Extensions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/SQLitePCLRaw.batteries_v2.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/SQLitePCLRaw.core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/SQLitePCLRaw.provider.e_sqlite3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.CodeDom.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Diagnostics.EventLog.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Drawing.Common.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.IO.Hashing.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Management.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Private.Windows.Core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Private.Windows.GdiPlus.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Security.Permissions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.ServiceProcess.ServiceController.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/System.Windows.Extensions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/CrowdinLocalization/net10.0/ZstdSharp.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Appium.Net.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Gauntlet.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Gauntlet.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Magick.NET-Q16-HDRI-AnyCPU.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Magick.NET.Core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.IdentityModel.Abstractions.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.IdentityModel.Logging.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.IdentityModel.Tokens.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.VisualStudio.Imaging.Interop.14.0.DesignTime.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.VisualStudio.Interop.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win-arm64/native/Magick.Native-Q16-HDRI-arm64.dll [20,073,648 bytes, 20 chunks], New ActiveFileCount = 6
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Microsoft.VisualStudio.OLE.Interop.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/MySql.Data.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/Newtonsoft.Json.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win-x64/native/Magick.Native-Q16-HDRI-x64.dll [23,152,816 bytes, 23 chunks], New ActiveFileCount = 4
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/osx-arm64/native/Magick.Native-Q16-HDRI-arm64.dll.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win-x86/native/Magick.Native-Q16-HDRI-x86.dll [19,255,984 bytes, 19 chunks], New ActiveFileCount = 4
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win/lib/net6.0/System.Security.Cryptography.Pkcs.dll [292,632 bytes, 1 chunks], New ActiveFileCount = 5
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/System.Configuration.ConfigurationManager.dll [444,720 bytes, 2 chunks], New ActiveFileCount = 6
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/System.Security.Cryptography.Pkcs.dll [250,632 bytes, 1 chunks], New ActiveFileCount = 7
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/osx-x64/native/Magick.Native-Q16-HDRI-x64.dll.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/System.Security.Cryptography.ProtectedData.dll [40,208 bytes, 1 chunks], New ActiveFileCount = 7
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/WebDriver.dll [6,039,040 bytes, 8 chunks], New ActiveFileCount = 8
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/AutomationScripts.Automation.dll [803,840 bytes, 2 chunks], New ActiveFileCount = 9
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/EpicGames.Core.dll [637,952 bytes, 2 chunks], New ActiveFileCount = 10
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/EpicGames.ProjectStore.dll [99,328 bytes, 2 chunks], New ActiveFileCount = 11
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Gauntlet.Automation.dll [976,384 bytes, 2 chunks], New ActiveFileCount = 12
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Auth.dll [107,008 bytes, 1 chunks], New ActiveFileCount = 13
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Core.dll [67,584 bytes, 1 chunks], New ActiveFileCount = 14
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.dll [72,192 bytes, 1 chunks], New ActiveFileCount = 15
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Drive.v3.dll [103,424 bytes, 1 chunks], New ActiveFileCount = 16
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Sheets.v4.dll [172,032 bytes, 2 chunks], New ActiveFileCount = 17
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/ICVFX.Automation.deps.json [74,240 bytes, 1 chunks], New ActiveFileCount = 18
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/ICVFX.Automation.dll [47,104 bytes, 1 chunks], New ActiveFileCount = 19
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Localization.Automation.dll [62,976 bytes, 1 chunks], New ActiveFileCount = 20
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Microsoft.Bcl.AsyncInterfaces.dll [14,720 bytes, 1 chunks], New ActiveFileCount = 21
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.Private.ServiceModel.dll [2,686,400 bytes, 4 chunks], New ActiveFileCount = 22
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.Security.Cryptography.Xml.dll [174,232 bytes, 1 chunks], New ActiveFileCount = 23
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.ServiceModel.Http.dll [16,416 bytes, 1 chunks], New ActiveFileCount = 24
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.ServiceModel.Primitives.dll [23,080 bytes, 1 chunks], New ActiveFileCount = 25
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/XLocLocalization.Automation.dll [47,616 bytes, 1 chunks], New ActiveFileCount = 26
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Insights/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 27
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win-arm64/native/Magick.Native-Q16-HDRI-arm64.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Insights/net10.0/Insights.Automation.deps.json [61,345 bytes, 1 chunks], New ActiveFileCount = 27
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Insights/net10.0/Insights.Automation.dll [37,888 bytes, 1 chunks], New ActiveFileCount = 28
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/AutomationUtils.Automation.dll [510,464 bytes, 1 chunks], New ActiveFileCount = 29
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/EpicGames.Core.dll [587,776 bytes, 2 chunks], New ActiveFileCount = 30
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 31
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/LiveLinkHub.Automation.deps.json [73,175 bytes, 1 chunks], New ActiveFileCount = 32
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/LiveLinkHub.Automation.dll [11,264 bytes, 1 chunks], New ActiveFileCount = 33
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/Newtonsoft.Json.dll [636,416 bytes, 1 chunks], New ActiveFileCount = 34
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/UnrealBuildTool [142,160 bytes, 1 chunks], New ActiveFileCount = 35
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/UnrealBuildTool.dll [3,200,512 bytes, 6 chunks], New ActiveFileCount = 36
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Localization/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 37
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Localization/net10.0/Localization.Automation.deps.json [57,677 bytes, 1 chunks], New ActiveFileCount = 38
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Localization/net10.0/Localization.Automation.dll [62,976 bytes, 1 chunks], New ActiveFileCount = 39
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LowLevelTests/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 40
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LowLevelTests/net10.0/LowLevelTests.Automation.deps.json [62,333 bytes, 1 chunks], New ActiveFileCount = 41
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LowLevelTests/net10.0/LowLevelTests.Automation.dll [53,248 bytes, 1 chunks], New ActiveFileCount = 42
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Mutable/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 43
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Mutable/net10.0/Mutable.Automation.deps.json [41,544 bytes, 1 chunks], New ActiveFileCount = 44
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Mutable/net10.0/Mutable.Automation.dll [5,632 bytes, 1 chunks], New ActiveFileCount = 45
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/OneSkyLocalization/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 46
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win-x64/native/Magick.Native-Q16-HDRI-x64.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/OneSkyLocalization/net10.0/OneSkyLocalization.Automation.deps.json [57,695 bytes, 1 chunks], New ActiveFileCount = 46
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/OneSkyLocalization/net10.0/OneSkyLocalization.Automation.dll [16,384 bytes, 1 chunks], New ActiveFileCount = 47
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Android/net10.0/Android.Automation.deps.json [59,869 bytes, 1 chunks], New ActiveFileCount = 48
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Android/net10.0/Android.Automation.dll [138,240 bytes, 3 chunks], New ActiveFileCount = 49
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Android/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 6 chunks], New ActiveFileCount = 50
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Apple/net10.0/Apple.Automation.deps.json [61,933 bytes, 1 chunks], New ActiveFileCount = 51
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Apple/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 52
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win-x86/native/Magick.Native-Q16-HDRI-x86.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/IOS/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 52
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/IOS/net10.0/IOS.Automation.deps.json [63,975 bytes, 1 chunks], New ActiveFileCount = 53
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/IOS/net10.0/IOS.Automation.dll [78,336 bytes, 2 chunks], New ActiveFileCount = 54
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Linux/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 6 chunks], New ActiveFileCount = 55
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/runtimes/win/lib/net6.0/System.Security.Cryptography.Pkcs.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/System.Configuration.ConfigurationManager.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/System.Security.Cryptography.Pkcs.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/System.Security.Cryptography.ProtectedData.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Gauntlet/net10.0/WebDriver.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Linux/net10.0/Linux.Automation.deps.json [58,059 bytes, 1 chunks], New ActiveFileCount = 51
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Mac/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 52
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/AutomationScripts.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/EpicGames.Core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/EpicGames.ProjectStore.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Gauntlet.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Auth.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Drive.v3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Google.Apis.Sheets.v4.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/ICVFX.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/ICVFX.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Localization.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/Microsoft.Bcl.AsyncInterfaces.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.Private.ServiceModel.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Mac/net10.0/Mac.Automation.deps.json [62,314 bytes, 1 chunks], New ActiveFileCount = 39
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Microsoft/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 40
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.Security.Cryptography.Xml.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.ServiceModel.Http.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/System.ServiceModel.Primitives.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/ICVFX/net10.0/XLocLocalization.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Insights/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Microsoft/net10.0/Microsoft.Automation.deps.json [57,668 bytes, 1 chunks], New ActiveFileCount = 36
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Microsoft/net10.0/Microsoft.Automation.dll [66,560 bytes, 1 chunks], New ActiveFileCount = 37
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/SteamDeck/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 38
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Insights/net10.0/Insights.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Insights/net10.0/Insights.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/AutomationUtils.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/EpicGames.Core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/SteamDeck/net10.0/SteamDeck.Automation.deps.json [57,668 bytes, 1 chunks], New ActiveFileCount = 34
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/TVOS/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 35
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/LiveLinkHub.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/LiveLinkHub.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/Newtonsoft.Json.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/UnrealBuildTool
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LiveLinkHub/net10.0/UnrealBuildTool.dll
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/TVOS/net10.0/TVOS.Automation.deps.json [61,653 bytes, 1 chunks], New ActiveFileCount = 31
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/TVOS/net10.0/TVOS.Automation.dll [9,216 bytes, 1 chunks], New ActiveFileCount = 32
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Windows/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 33
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Localization/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Windows/net10.0/Win.Automation.deps.json [58,459 bytes, 1 chunks], New ActiveFileCount = 33
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Scripts/net10.0/AutomationScripts.Automation.deps.json [61,012 bytes, 1 chunks], New ActiveFileCount = 34
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Scripts/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 35
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Localization/net10.0/Localization.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Localization/net10.0/Localization.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LowLevelTests/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/SmartlingLocalization/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 33
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LowLevelTests/net10.0/LowLevelTests.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/LowLevelTests/net10.0/LowLevelTests.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Mutable/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/SmartlingLocalization/net10.0/SmartlingLocalization.Automation.deps.json [54,739 bytes, 2 chunks], New ActiveFileCount = 31
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/SmartlingLocalization/net10.0/SmartlingLocalization.Automation.dll [31,232 bytes, 1 chunks], New ActiveFileCount = 32
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 8 chunks], New ActiveFileCount = 33
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Mutable/net10.0/Mutable.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Mutable/net10.0/Mutable.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/OneSkyLocalization/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/Google.Apis.Auth.PlatformServices.dll [5,120 bytes, 1 chunks], New ActiveFileCount = 31
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/Turnkey.Automation.deps.json [61,087 bytes, 1 chunks], New ActiveFileCount = 32
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/Turnkey.Automation.dll [148,480 bytes, 1 chunks], New ActiveFileCount = 33
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/UnrealWindowsForms.dll [20,480 bytes, 1 chunks], New ActiveFileCount = 34
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/EpicGames.Perforce.Native.dylib [5,099,744 bytes, 7 chunks], New ActiveFileCount = 35
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/OneSkyLocalization/net10.0/OneSkyLocalization.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/OneSkyLocalization/net10.0/OneSkyLocalization.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Android/net10.0/Android.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Android/net10.0/Android.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Android/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/System.ServiceModel.dll [25,120 bytes, 1 chunks], New ActiveFileCount = 31
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/XLocLocalization.Automation.deps.json [59,364 bytes, 2 chunks], New ActiveFileCount = 32
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/XLocLocalization.Automation.dll [47,616 bytes, 1 chunks], New ActiveFileCount = 33
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationTool [124,712 bytes, 1 chunks], New ActiveFileCount = 34
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationTool.deps.json [59,759 bytes, 1 chunks], New ActiveFileCount = 35
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationTool.dll [23,552 bytes, 1 chunks], New ActiveFileCount = 36
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationTool.runtimeconfig.json [364 bytes, 1 chunks], New ActiveFileCount = 37
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/AutomationUtils.Automation.deps.json [67,573 bytes, 1 chunks], New ActiveFileCount = 38
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll [437,032 bytes, 1 chunks], New ActiveFileCount = 39
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/cs/Microsoft.CodeAnalysis.resources.dll [48,424 bytes, 1 chunks], New ActiveFileCount = 40
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll [467,240 bytes, 1 chunks], New ActiveFileCount = 41
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/de/Microsoft.CodeAnalysis.resources.dll [50,472 bytes, 1 chunks], New ActiveFileCount = 42
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll [457,000 bytes, 1 chunks], New ActiveFileCount = 43
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/es/Microsoft.CodeAnalysis.resources.dll [49,960 bytes, 1 chunks], New ActiveFileCount = 44
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll [469,296 bytes, 2 chunks], New ActiveFileCount = 45
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/fr/Microsoft.CodeAnalysis.resources.dll [50,472 bytes, 1 chunks], New ActiveFileCount = 46
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll [463,656 bytes, 1 chunks], New ActiveFileCount = 47
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/it/Microsoft.CodeAnalysis.resources.dll [50,480 bytes, 1 chunks], New ActiveFileCount = 48
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll [511,288 bytes, 2 chunks], New ActiveFileCount = 49
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ja/Microsoft.CodeAnalysis.resources.dll [54,056 bytes, 1 chunks], New ActiveFileCount = 50
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll [468,776 bytes, 2 chunks], New ActiveFileCount = 51
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ko/Microsoft.CodeAnalysis.resources.dll [50,472 bytes, 1 chunks], New ActiveFileCount = 52
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll [469,800 bytes, 2 chunks], New ActiveFileCount = 53
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pl/Microsoft.CodeAnalysis.resources.dll [50,472 bytes, 1 chunks], New ActiveFileCount = 54
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll [449,320 bytes, 2 chunks], New ActiveFileCount = 55
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Apple/net10.0/Apple.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Apple/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pt-BR/Microsoft.CodeAnalysis.resources.dll [49,448 bytes, 1 chunks], New ActiveFileCount = 54
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll [617,768 bytes, 1 chunks], New ActiveFileCount = 55
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ru/Microsoft.CodeAnalysis.resources.dll [60,720 bytes, 1 chunks], New ActiveFileCount = 56
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll [445,224 bytes, 1 chunks], New ActiveFileCount = 57
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/tr/Microsoft.CodeAnalysis.resources.dll [48,936 bytes, 1 chunks], New ActiveFileCount = 58
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll [396,080 bytes, 2 chunks], New ActiveFileCount = 59
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll [45,360 bytes, 1 chunks], New ActiveFileCount = 60
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll [395,568 bytes, 2 chunks], New ActiveFileCount = 61
+Starting File: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll [45,352 bytes, 1 chunks], New ActiveFileCount = 62
+Starting File: Engine/Binaries/DotNET/AutomationTool/AWSSDK.Core.dll [2,620,072 bytes, 5 chunks], New ActiveFileCount = 63
+Starting File: Engine/Binaries/DotNET/AutomationTool/AWSSDK.S3.dll [871,592 bytes, 1 chunks], New ActiveFileCount = 64
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/IOS/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/AutomationTool/AWSSDK.SecurityToken.dll [95,400 bytes, 2 chunks], New ActiveFileCount = 64
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.Analytics.Telemetry.dll [12,288 bytes, 1 chunks], New ActiveFileCount = 65
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.Build.dll [165,888 bytes, 1 chunks], New ActiveFileCount = 66
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.Core.dll [637,952 bytes, 3 chunks], New ActiveFileCount = 67
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.Horde.dll [1,987,072 bytes, 3 chunks], New ActiveFileCount = 68
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.IoHash.dll [17,408 bytes, 1 chunks], New ActiveFileCount = 69
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.LogMatchers.dll [53,248 bytes, 1 chunks], New ActiveFileCount = 70
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.MsBuild.dll [40,960 bytes, 1 chunks], New ActiveFileCount = 71
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.OIDC.dll [157,184 bytes, 1 chunks], New ActiveFileCount = 72
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.Oodle.dll [9,216 bytes, 1 chunks], New ActiveFileCount = 73
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.Serialization.dll [116,224 bytes, 1 chunks], New ActiveFileCount = 74
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.UBA.dll [49,152 bytes, 1 chunks], New ActiveFileCount = 75
+Starting File: Engine/Binaries/DotNET/AutomationTool/EpicGames.UHT.dll [995,840 bytes, 2 chunks], New ActiveFileCount = 76
+Starting File: Engine/Binaries/DotNET/AutomationTool/UnrealBuildTool.dll [3,200,512 bytes, 4 chunks], New ActiveFileCount = 77
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/IOS/net10.0/IOS.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/IOS/net10.0/IOS.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Linux/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/EpicGames.Perforce.Native/mac-x64/Debug/EpicGames.Perforce.Native.dylib [5,123,376 bytes, 8 chunks], New ActiveFileCount = 75
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Linux/net10.0/Linux.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Mac/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/EpicGames.Perforce.Native/win-x64/Debug/EpicGames.Perforce.Native.dll [5,215,744 bytes, 6 chunks], New ActiveFileCount = 74
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Mac/net10.0/Mac.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Microsoft/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/EpicGames.Perforce.Native/win-x64/Debug/EpicGames.Perforce.Native.lib [2,704 bytes, 1 chunks], New ActiveFileCount = 73
+Starting File: Engine/Binaries/DotNET/IOS/BouncyCastle.Crypto.dll [1,402,136 bytes, 3 chunks], New ActiveFileCount = 74
+Starting File: Engine/Binaries/DotNET/IOS/iPhonePackager.deps.json [3,812 bytes, 1 chunks], New ActiveFileCount = 75
+Starting File: Engine/Binaries/DotNET/IOS/iPhonePackager.dll [256,000 bytes, 1 chunks], New ActiveFileCount = 76
+Starting File: Engine/Binaries/DotNET/IOS/IPhonePackager.exe [157,696 bytes, 1 chunks], New ActiveFileCount = 77
+Starting File: Engine/Binaries/DotNET/IOS/IPhonePackager.runtimeconfig.json [411 bytes, 1 chunks], New ActiveFileCount = 78
+Starting File: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.deps.json [4,253 bytes, 1 chunks], New ActiveFileCount = 79
+Starting File: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.dll [175,104 bytes, 2 chunks], New ActiveFileCount = 80
+Starting File: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.exe [156,160 bytes, 1 chunks], New ActiveFileCount = 81
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Microsoft/net10.0/Microsoft.Automation.deps.json
+Starting File: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.runtimeconfig.json [257 bytes, 1 chunks], New ActiveFileCount = 81
+Starting File: Engine/Binaries/DotNET/IOS/Microsoft.Bcl.Cryptography.dll [96,008 bytes, 1 chunks], New ActiveFileCount = 82
+Starting File: Engine/Binaries/DotNET/IOS/openssl.exe [1,807,840 bytes, 3 chunks], New ActiveFileCount = 83
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Microsoft/net10.0/Microsoft.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/SteamDeck/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/IOS/runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll [318,216 bytes, 1 chunks], New ActiveFileCount = 82
+Starting File: Engine/Binaries/DotNET/IOS/SysadminsLV.Asn1Parser.dll [58,880 bytes, 2 chunks], New ActiveFileCount = 83
+Starting File: Engine/Binaries/DotNET/IOS/System.Formats.Asn1.dll [96,056 bytes, 1 chunks], New ActiveFileCount = 84
+Starting File: Engine/Binaries/DotNET/IOS/System.Security.Cryptography.Pkcs.dll [264,480 bytes, 1 chunks], New ActiveFileCount = 85
+Starting File: Engine/Binaries/DotNET/OidcToken/linux-x64/appsettings.json [196 bytes, 1 chunks], New ActiveFileCount = 86
+Starting File: Engine/Binaries/DotNET/OidcToken/linux-x64/OidcToken [18,835,419 bytes, 20 chunks], New ActiveFileCount = 87
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/SteamDeck/net10.0/SteamDeck.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/TVOS/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/TVOS/net10.0/TVOS.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/TVOS/net10.0/TVOS.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Windows/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Platforms/Windows/net10.0/Win.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Scripts/net10.0/AutomationScripts.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Scripts/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/SmartlingLocalization/net10.0/EpicGames.Perforce.Native.dylib
+Starting File: Engine/Binaries/DotNET/OidcToken/osx-x64/OidcToken [18,908,752 bytes, 21 chunks], New ActiveFileCount = 79
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/SmartlingLocalization/net10.0/SmartlingLocalization.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/SmartlingLocalization/net10.0/SmartlingLocalization.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/Google.Apis.Auth.PlatformServices.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/Turnkey.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/Turnkey.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/Turnkey/net10.0/UnrealWindowsForms.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/System.ServiceModel.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/XLocLocalization.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationScripts/XLocLocalization/net10.0/XLocLocalization.Automation.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationTool
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationTool.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationTool.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationTool.runtimeconfig.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/AutomationUtils.Automation.deps.json
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/cs/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/de/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/es/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/fr/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/it/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ja/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ko/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pl/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/ru/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/tr/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/EpicGames.OIDC.dll [116,224 bytes, 1 chunks], New ActiveFileCount = 41
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.Abstractions.dll [27,936 bytes, 2 chunks], New ActiveFileCount = 42
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.Binder.dll [42,784 bytes, 1 chunks], New ActiveFileCount = 43
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.CommandLine.dll [24,736 bytes, 1 chunks], New ActiveFileCount = 44
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.dll [43,800 bytes, 1 chunks], New ActiveFileCount = 45
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.EnvironmentVariables.dll [21,280 bytes, 1 chunks], New ActiveFileCount = 46
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.FileExtensions.dll [27,936 bytes, 1 chunks], New ActiveFileCount = 47
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.Json.dll [26,920 bytes, 1 chunks], New ActiveFileCount = 48
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.UserSecrets.dll [25,384 bytes, 1 chunks], New ActiveFileCount = 49
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.DependencyInjection.Abstractions.dll [63,768 bytes, 1 chunks], New ActiveFileCount = 50
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.DependencyInjection.dll [92,952 bytes, 1 chunks], New ActiveFileCount = 51
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.DependencyModel.dll [79,664 bytes, 1 chunks], New ActiveFileCount = 52
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Diagnostics.Abstractions.dll [30,480 bytes, 1 chunks], New ActiveFileCount = 53
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Diagnostics.dll [35,592 bytes, 1 chunks], New ActiveFileCount = 54
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.FileProviders.Abstractions.dll [22,176 bytes, 1 chunks], New ActiveFileCount = 55
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.FileProviders.Physical.dll [44,808 bytes, 1 chunks], New ActiveFileCount = 56
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.FileSystemGlobbing.dll [45,848 bytes, 1 chunks], New ActiveFileCount = 57
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Hosting.Abstractions.dll [51,472 bytes, 1 chunks], New ActiveFileCount = 58
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Hosting.dll [72,488 bytes, 1 chunks], New ActiveFileCount = 59
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Abstractions.dll [65,320 bytes, 1 chunks], New ActiveFileCount = 60
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Configuration.dll [27,912 bytes, 1 chunks], New ActiveFileCount = 61
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Console.dll [71,464 bytes, 1 chunks], New ActiveFileCount = 62
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Debug.dll [20,248 bytes, 1 chunks], New ActiveFileCount = 63
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.dll [50,976 bytes, 1 chunks], New ActiveFileCount = 64
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.EventLog.dll [25,760 bytes, 1 chunks], New ActiveFileCount = 65
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.EventSource.dll [34,568 bytes, 2 chunks], New ActiveFileCount = 66
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Options.ConfigurationExtensions.dll [22,688 bytes, 1 chunks], New ActiveFileCount = 67
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Options.DataAnnotations.dll [21,280 bytes, 1 chunks], New ActiveFileCount = 68
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Options.dll [64,776 bytes, 1 chunks], New ActiveFileCount = 69
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Primitives.dll [43,680 bytes, 1 chunks], New ActiveFileCount = 70
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.deps.json [33,987 bytes, 1 chunks], New ActiveFileCount = 71
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.dll [68,096 bytes, 1 chunks], New ActiveFileCount = 72
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.exe [150,016 bytes, 1 chunks], New ActiveFileCount = 73
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.runtimeconfig.json [461 bytes, 1 chunks], New ActiveFileCount = 74
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll [71,448 bytes, 1 chunks], New ActiveFileCount = 75
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll [172,704 bytes, 1 chunks], New ActiveFileCount = 76
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll [801,080 bytes, 2 chunks], New ActiveFileCount = 77
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AutomationUtils/net10.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AWSSDK.Core.dll
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/runtimes/win/lib/netcoreapp2.0/System.Diagnostics.EventLog.dll [130,440 bytes, 1 chunks], New ActiveFileCount = 74
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Serilog.dll [153,088 bytes, 1 chunks], New ActiveFileCount = 75
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Extensions.Hosting.dll [29,696 bytes, 1 chunks], New ActiveFileCount = 76
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Extensions.Logging.dll [29,696 bytes, 1 chunks], New ActiveFileCount = 77
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Settings.Configuration.dll [70,144 bytes, 1 chunks], New ActiveFileCount = 78
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Sinks.Console.dll [38,400 bytes, 1 chunks], New ActiveFileCount = 79
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Sinks.File.dll [30,720 bytes, 1 chunks], New ActiveFileCount = 80
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/System.Diagnostics.EventLog.dll [51,992 bytes, 1 chunks], New ActiveFileCount = 81
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/System.Text.Encodings.Web.dll [71,440 bytes, 1 chunks], New ActiveFileCount = 82
+Starting File: Engine/Binaries/DotNET/OidcToken/portable/System.Text.Json.dll [578,832 bytes, 2 chunks], New ActiveFileCount = 83
+Starting File: Engine/Binaries/DotNET/OidcToken/win-x64/OidcToken.exe [36,700,552 bytes, 42 chunks], New ActiveFileCount = 84
+Completing: Engine/Binaries/DotNET/AutomationTool/AWSSDK.S3.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/AWSSDK.SecurityToken.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.Analytics.Telemetry.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.Build.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.Core.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.Horde.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.IoHash.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.LogMatchers.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.MsBuild.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.OIDC.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.Oodle.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.Serialization.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.UBA.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/EpicGames.UHT.dll
+Completing: Engine/Binaries/DotNET/AutomationTool/UnrealBuildTool.dll
+Completing: Engine/Binaries/DotNET/EpicGames.Perforce.Native/mac-x64/Debug/EpicGames.Perforce.Native.dylib
+Completing: Engine/Binaries/DotNET/EpicGames.Perforce.Native/win-x64/Debug/EpicGames.Perforce.Native.dll
+Completing: Engine/Binaries/DotNET/EpicGames.Perforce.Native/win-x64/Debug/EpicGames.Perforce.Native.lib
+Completing: Engine/Binaries/DotNET/IOS/BouncyCastle.Crypto.dll
+Completing: Engine/Binaries/DotNET/IOS/iPhonePackager.deps.json
+Completing: Engine/Binaries/DotNET/IOS/iPhonePackager.dll
+Completing: Engine/Binaries/DotNET/IOS/IPhonePackager.exe
+Completing: Engine/Binaries/DotNET/IOS/IPhonePackager.runtimeconfig.json
+Completing: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.deps.json
+Completing: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.dll
+Completing: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.exe
+Completing: Engine/Binaries/DotNET/IOS/IPhonePackagerCLI.runtimeconfig.json
+Completing: Engine/Binaries/DotNET/IOS/Microsoft.Bcl.Cryptography.dll
+Completing: Engine/Binaries/DotNET/IOS/openssl.exe
+Completing: Engine/Binaries/DotNET/IOS/runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll
+Completing: Engine/Binaries/DotNET/IOS/SysadminsLV.Asn1Parser.dll
+Completing: Engine/Binaries/DotNET/IOS/System.Formats.Asn1.dll
+Completing: Engine/Binaries/DotNET/IOS/System.Security.Cryptography.Pkcs.dll
+Completing: Engine/Binaries/DotNET/OidcToken/linux-x64/appsettings.json
+Completing: Engine/Binaries/DotNET/OidcToken/linux-x64/OidcToken
+Starting File: Engine/Binaries/DotNET/OneSky.dll [48,128 bytes, 1 chunks], New ActiveFileCount = 50
+Starting File: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidDeviceDetection.dylib [550,992 bytes, 2 chunks], New ActiveFileCount = 51
+Starting File: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidPlatformEditor.dylib [944,160 bytes, 2 chunks], New ActiveFileCount = 52
+Starting File: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidRuntimeSettings.dylib [590,224 bytes, 1 chunks], New ActiveFileCount = 53
+Starting File: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidTargetPlatform.dylib [270,224 bytes, 2 chunks], New ActiveFileCount = 54
+Starting File: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidTargetPlatformControls.dylib [538,032 bytes, 1 chunks], New ActiveFileCount = 55
+Starting File: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidTargetPlatformSettings.dylib [299,776 bytes, 1 chunks], New ActiveFileCount = 56
+Starting File: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidDeviceDetection.dylib [529,056 bytes, 2 chunks], New ActiveFileCount = 57
+Starting File: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidTargetPlatform.dylib [227,424 bytes, 1 chunks], New ActiveFileCount = 58
+Starting File: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidTargetPlatformControls.dylib [458,448 bytes, 2 chunks], New ActiveFileCount = 59
+Starting File: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidTargetPlatformSettings.dylib [241,536 bytes, 1 chunks], New ActiveFileCount = 60
+Starting File: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidDeviceDetection.dylib [528,432 bytes, 1 chunks], New ActiveFileCount = 61
+Starting File: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidTargetPlatform.dylib [227,424 bytes, 2 chunks], New ActiveFileCount = 62
+Starting File: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidTargetPlatformControls.dylib [458,112 bytes, 1 chunks], New ActiveFileCount = 63
+Starting File: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidTargetPlatformSettings.dylib [241,536 bytes, 1 chunks], New ActiveFileCount = 64
+Starting File: Engine/Binaries/Mac/Android/libUnrealPak-AndroidDeviceDetection.dylib [512,560 bytes, 2 chunks], New ActiveFileCount = 65
+Starting File: Engine/Binaries/Mac/Android/libUnrealPak-AndroidTargetPlatform.dylib [227,328 bytes, 1 chunks], New ActiveFileCount = 66
+Starting File: Engine/Binaries/Mac/Android/libUnrealPak-AndroidTargetPlatformControls.dylib [455,216 bytes, 1 chunks], New ActiveFileCount = 67
+Starting File: Engine/Binaries/Mac/Android/libUnrealPak-AndroidTargetPlatformSettings.dylib [241,456 bytes, 2 chunks], New ActiveFileCount = 68
+Starting File: Engine/Binaries/Mac/Android/UnrealEditor.modules [525 bytes, 1 chunks], New ActiveFileCount = 69
+Starting File: Engine/Binaries/Mac/Android/UnrealFrontend.modules [383 bytes, 1 chunks], New ActiveFileCount = 70
+Starting File: Engine/Binaries/Mac/Android/UnrealInsights.modules [383 bytes, 1 chunks], New ActiveFileCount = 71
+Starting File: Engine/Binaries/Mac/Android/UnrealPak.modules [363 bytes, 1 chunks], New ActiveFileCount = 72
+Starting File: Engine/Binaries/Mac/BootstrapPackagedGame.app/Contents/Info.plist [1,149 bytes, 1 chunks], New ActiveFileCount = 73
+Starting File: Engine/Binaries/Mac/BootstrapPackagedGame.app/Contents/MacOS/BootstrapPackagedGame [14,108 bytes, 1 chunks], New ActiveFileCount = 74
+Starting File: Engine/Binaries/Mac/BootstrapPackagedGame.app/Contents/PkgInfo [8 bytes, 1 chunks], New ActiveFileCount = 75
+Starting File: Engine/Binaries/Mac/BuildPatchTool [54,167,672 bytes, 57 chunks], New ActiveFileCount = 76
+Completing: Engine/Binaries/DotNET/OidcToken/osx-x64/OidcToken
+Completing: Engine/Binaries/DotNET/OidcToken/portable/EpicGames.OIDC.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.Abstractions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.Binder.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.CommandLine.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.FileExtensions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.Json.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Configuration.UserSecrets.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.DependencyInjection.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.DependencyModel.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Diagnostics.Abstractions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Diagnostics.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.FileProviders.Abstractions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.FileProviders.Physical.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.FileSystemGlobbing.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Hosting.Abstractions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Hosting.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Abstractions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Configuration.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Console.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.Debug.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.EventLog.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Logging.EventSource.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Options.DataAnnotations.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Options.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Microsoft.Extensions.Primitives.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.deps.json
+Completing: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.exe
+Completing: Engine/Binaries/DotNET/OidcToken/portable/OidcToken.runtimeconfig.json
+Completing: Engine/Binaries/DotNET/OidcToken/portable/runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/runtimes/win/lib/netcoreapp2.0/System.Diagnostics.EventLog.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Serilog.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Extensions.Hosting.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Extensions.Logging.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Settings.Configuration.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Sinks.Console.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/Serilog.Sinks.File.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/System.Diagnostics.EventLog.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/System.Text.Encodings.Web.dll
+Completing: Engine/Binaries/DotNET/OidcToken/portable/System.Text.Json.dll
+Completing: Engine/Binaries/DotNET/OidcToken/win-x64/OidcToken.exe
+Completing: Engine/Binaries/DotNET/OneSky.dll
+Completing: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidDeviceDetection.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidPlatformEditor.dylib
+Starting File: Engine/Binaries/Mac/BuildPatchTool-Mac-Shipping.target [1,860 bytes, 1 chunks], New ActiveFileCount = 25
+Starting File: Engine/Binaries/Mac/crashpad_handler [2,289,728 bytes, 5 chunks], New ActiveFileCount = 26
+Starting File: Engine/Binaries/Mac/CrashReportClient [84,703,080 bytes, 90 chunks], New ActiveFileCount = 27
+Completing: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidRuntimeSettings.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidTargetPlatform.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidTargetPlatformControls.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealEditor-AndroidTargetPlatformSettings.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidDeviceDetection.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidTargetPlatform.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidTargetPlatformControls.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealFrontend-AndroidTargetPlatformSettings.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidDeviceDetection.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidTargetPlatform.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidTargetPlatformControls.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealInsights-AndroidTargetPlatformSettings.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealPak-AndroidDeviceDetection.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealPak-AndroidTargetPlatform.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealPak-AndroidTargetPlatformControls.dylib
+Completing: Engine/Binaries/Mac/Android/libUnrealPak-AndroidTargetPlatformSettings.dylib
+Completing: Engine/Binaries/Mac/Android/UnrealEditor.modules
+Completing: Engine/Binaries/Mac/Android/UnrealFrontend.modules
+Completing: Engine/Binaries/Mac/Android/UnrealInsights.modules
+Completing: Engine/Binaries/Mac/Android/UnrealPak.modules
+Completing: Engine/Binaries/Mac/BootstrapPackagedGame.app/Contents/Info.plist
+Completing: Engine/Binaries/Mac/BootstrapPackagedGame.app/Contents/MacOS/BootstrapPackagedGame
+Completing: Engine/Binaries/Mac/BootstrapPackagedGame.app/Contents/PkgInfo
+Completing: Engine/Binaries/Mac/BuildPatchTool
+Completing: Engine/Binaries/Mac/BuildPatchTool-Mac-Shipping.target
+Completing: Engine/Binaries/Mac/crashpad_handler

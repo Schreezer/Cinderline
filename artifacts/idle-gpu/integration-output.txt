@@ -1,0 +1,3 @@
+Isolated project: /private/var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/cinderline-idle-validation-oga_q13i
+Report: /private/var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/cinderline-idle-validation-oga_q13i/Saved/Automation/Integration/20260911T183403Z
+Verified exactly four expected integrations: all succeeded, zero errors/warnings or unfinished tests.

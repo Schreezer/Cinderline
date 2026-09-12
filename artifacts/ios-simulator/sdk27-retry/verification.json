@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-09-12T06:33:32.276184+00:00",
+  "simulator": {
+    "name": "iPhone 18 Pro",
+    "runtime": "iOS 27.0",
+    "udid": "DAE4CD1A-DF2D-4086-A01A-9CB6FAEEB9F3",
+    "bootSucceeded": true,
+    "shutdownAfterBlockedTest": true
+  },
+  "existingPhoneApp": {
+    "bundleIdentifier": "com.cinderline.game",
+    "sdk": "27.0",
+    "platform": "IOS",
+    "architecture": "arm64",
+    "installExitCode": 4,
+    "installed": false,
+    "reason": "Executable platform IOS is not runnable on IOSSIMULATOR"
+  },
+  "freshSimulatorBuild": {
+    "sdk": "iPhoneSimulator 27.0",
+    "architecture": "iossimulator",
+    "compileActionsPassed": 22,
+    "buildExitCode": 6,
+    "buildSeconds": 86.34,
+    "firstLinkError": "PLCrashReporter iOS/Simulator/libCrashReporter.a not found",
+    "installedCoreObjectPlatform": "IOS",
+    "installedCoreObjectSDK": "26.1"
+  },
+  "gameLaunched": false,
+  "gameplayVerified": false,
+  "phoneAppSha256": "f2cb9b28319f0d69b9ccec7461107f2d594fdcbabcb4173eab2c444c92929b57",
+  "sourceRepositoryAccess": {
+    "repository": "EpicGames/UnrealEngine",
+    "availableToCurrentGitHubCLI": false,
+    "error": "Could not resolve to a Repository with the name EpicGames/UnrealEngine"
+  },
+  "dependencyAudit": {
+    "deviceEngineAndPluginObjectInputs": 785,
+    "simulatorProjectObjectInputs": 21,
+    "missingArchives": [
+      "PLCrashReporter",
+      "libPNG 1.6.44",
+      "FreeType 2.14.1",
+      "OodleNetwork 2.9.16"
+    ],
+    "implementationSourcesForMissingArchivesInInstallation": false
+  }
+}

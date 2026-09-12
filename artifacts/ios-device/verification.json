@@ -1,0 +1,64 @@
+{
+  "updatedAt": "2026-09-12T06:04:17.957274+00:00",
+  "device": {
+    "model": "iPhone 17 Pro Max",
+    "os": "iOS 27.0",
+    "developerModeEnabled": true,
+    "connection": "paired local network"
+  },
+  "bundleIdentifier": "com.cinderline.game",
+  "sdk": "iPhoneOS 27.0",
+  "compileAndLinkPassed": true,
+  "targetReceiptExists": true,
+  "directXcodeAssemblyPassed": true,
+  "cook": {
+    "status": "passed",
+    "localShaderWorkers": 1,
+    "cookProcesses": 1,
+    "workerLimitVerified": true,
+    "packagesCooked": 565,
+    "packagesRemaining": 0,
+    "packagesDiscovered": 565,
+    "shadersCompiled": 2325
+  },
+  "finalPackageVerified": true,
+  "installed": false,
+  "launched": false,
+  "gameplayVerified": false,
+  "sourceSha256": {
+    "Config/DefaultEngine.ini": "467d780a087fde1ce41730d9003f4996c45392b0a4c775b5ab48e08757f982a3",
+    "scripts/unreal.sh": "9b40039cf2c485a4ff1a2db101d86dd807e8a8c613b6e170339512c379e472b2",
+    "Source/Cinderline/Private/Presentation/CinderQualityDiagnostics.cpp": "ba7fb5c328f527c8d2789c295d3050533ea750e5a7336f2707df059cf95d7a75",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "6decd711a1a0c936e54a61931e9a2655fd37e7aad08e7f2811b2400cd6a7ce68",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "05c11738eff3e633c5d8e1c5683615e03a3919b631476a569dca39d0bcaba1ad",
+    "scripts/prepare-ios27-engine.py": "ce44e70fcecc6df4858329b32f15b29be6db570f44e37b2e2f3b79457814ae99",
+    "scripts/archive-ios-app.py": "f28dc941c81ff49c6bf4ee2a6181bad4fc0113ca6fd0ab0b7ef1a72e18f54e1c"
+  },
+  "packageHelperExitCode": 0,
+  "sceneLifecycleEnabled": true,
+  "sceneEngineModulesRebuilt": [
+    "ApplicationCore",
+    "Launch"
+  ],
+  "compileActions": 33,
+  "deviceConnection": "paired; developer tunnel unavailable; waiting for USB/unlock",
+  "previousInstalledAttempt": {
+    "sdk": "27.0",
+    "sceneLifecycleEnabled": false,
+    "installed": true,
+    "launch": "crashed in UIKit before engine initialization"
+  },
+  "archive": {
+    "uatPassed": true,
+    "staleResourceMergeDetected": true,
+    "freshCopyStrictlyVerified": true
+  },
+  "workflowChecks": {
+    "preparedEngineIdentityAndHashes": "passed",
+    "automaticPhysicalEngineSelection": "passed",
+    "explicitStockEngineRejection": "passed",
+    "archiveSignatureAfterFreshReplacement": "passed",
+    "scriptSyntaxAndPathGuards": "passed",
+    "independentReview": "three issues fixed; no remaining important findings in bounded scope"
+  }
+}

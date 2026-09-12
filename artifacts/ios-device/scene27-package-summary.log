@@ -1,0 +1,8 @@
+Compiling with IOS SDK 27.0, minimum Target OS version 15.0
+** BUILD SUCCEEDED **
+********** STAGE COMMAND COMPLETED **********
+** BUILD SUCCEEDED **
+********** PACKAGE COMMAND COMPLETED **********
+********** ARCHIVE COMMAND COMPLETED **********
+BUILD SUCCESSFUL
+AutomationTool exiting with ExitCode=0 (Success)

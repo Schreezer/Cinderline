@@ -1,0 +1,2 @@
+Unreal's iOS platform payload is missing: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/IOS/UnrealGame.target
+In Epic Games Launcher, open Library -> UE 5.8 -> Options, enable iOS, apply the change, and wait for the download to finish.

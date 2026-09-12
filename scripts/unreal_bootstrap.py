@@ -106,6 +106,19 @@ def bootstrap():
         visual_spec.loader.exec_module(visual_helper)
         visual_helper.upgrade_visual_assets()
 
+    # Articulated parts and layered terrain have separate import contracts. Keep
+    # fresh checkouts and explicit content rebuilds on the current presentation.
+    for helper_name, function_name, manifest in (
+        ("unreal_motion_assets", "import_motion_assets", "RawAssets/Motion/manifest.json"),
+        ("unreal_terrain_surface", "build_terrain_surface", "RawAssets/Terrain/manifest.json"),
+    ):
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        if os.path.isfile(os.path.join(project_root, manifest)):
+            helper_spec = importlib.util.spec_from_file_location(helper_name, os.path.join(os.path.dirname(__file__), helper_name + ".py"))
+            helper_module = importlib.util.module_from_spec(helper_spec)
+            helper_spec.loader.exec_module(helper_module)
+            getattr(helper_module, function_name)()
+
     audio_helper_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "unreal_audio_assets.py")
     audio_spec = importlib.util.spec_from_file_location("cinderline_audio_assets", audio_helper_path)
     audio_helper = importlib.util.module_from_spec(audio_spec)

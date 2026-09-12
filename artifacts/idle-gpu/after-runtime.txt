@@ -1,0 +1,206 @@
+[2026.09.11-18.40.33:460][  0]LogMetal: Warning: To use SM6 on this system, please ensure you are running Mac OS 15. Falling back to SM5
+[2026.09.11-18.40.33:461][  0]LogMetal: Display:       Vendor ID: 4203
+[2026.09.11-18.40.33:461][  0]LogMetal: Display:       Device ID: 909194058
+[2026.09.11-18.40.33:461][  0]LogMetal: Display:       VRAM (MB): 24576
+[2026.09.11-18.40.35:790][  0]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb31dbb3ea00
+[2026.09.11-18.40.41:586][  0]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=bypass effective_fps=0.00 engine_fps=0.00
+[2026.09.11-18.40.42:148][  0]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=idle effective_fps=30.00 engine_fps=0.00
+[2026.09.11-18.40.43:577][ 41]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=background effective_fps=10.00 engine_fps=0.00
+[2026.09.11-18.40.56:337][168]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=idle effective_fps=30.00 engine_fps=0.00
+[2026.09.11-18.41.01:033][307]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=background effective_fps=10.00 engine_fps=0.00
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY map=Frontier viewport_px=2560x1440 render_target_px=2560x1440 dpi_scale=2.000 high_dpi_active=1 foreground=1 rendered_viewport_available=1
+[2026.09.11-18.41.15:365][447]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=idle effective_fps=30.00 engine_fps=0.00
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_FRAME_LIMIT engine=CinderGameEngine state=2 effective_fps=30.00; limit is not measured cadence or GPU utilization
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=0 set_by=Scalability
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:365][447]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE started map=Frontier warmup_frames=30 sample_frames=120 viewport_px=2560x1440; measures viewport wall-clock cadence plus asynchronous raw engine timings
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY map=Frontier viewport_px=2560x1440 render_target_px=2560x1440 dpi_scale=2.000 high_dpi_active=1 foreground=1 rendered_viewport_available=1
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_FRAME_LIMIT engine=CinderGameEngine state=2 effective_fps=30.00; limit is not measured cadence or GPU utilization
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=0 set_by=Scalability
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.41.15:409][449]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.41.20:409][599]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE result map=Frontier samples=120 warmup_frames=30 viewport_px=2560x1440 window_seconds=4.000 mean_ms=33.335 median_ms=33.347 p95_ms=33.473 fps=30.00 foreground=1 background_frames=0 measurement=rendered_viewport_wall_clock gpu_timing=completed_engine_frames
+[2026.09.11-18.41.20:409][599]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=game_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=1.482 median_ms=1.493 p95_ms=1.579 source=GGameThreadTime availability=positive_latest_published_counter
+[2026.09.11-18.41.20:409][599]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=render_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.203 median_ms=2.245 p95_ms=2.375 source=GRenderThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.41.20:409][600]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=rhi_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.003 median_ms=2.054 p95_ms=2.154 source=GRHIThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.41.20:409][600]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=gpu status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=10.497 median_ms=10.426 p95_ms=11.510 source=FRHIGPUFrameTimeHistory availability=fresh_positive_completed_gpu_frames
+[2026.09.11-18.41.20:409][600]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING_SCOPE scope=global_engine cpu_alignment=latest_published gpu_alignment=asynchronous_completed gpu_frames=120 viewport_frames_without_gpu_completion=0 gpu_disjoint_events=0 gpu_poll_limit_hits=0 gpu_overflow_discarded=0 gpu_frame_bubbles_removed=1 render_thread_separate=1 rhi_thread_separate=1; CPU engine timings may include waits and are not CPU utilization or pure active work. GPU completions can lag, include other engine viewport work, and are not paired with these viewport frames; zero or missing timings are unavailable, not measured zero. No GPU utilization or synchronized frame attribution is inferred.
+[2026.09.11-18.42.05:152][941]LogCinderVisualPreview: Display: CINDERLINE_VISUAL_PREVIEW_FRAME viewport=2560x1440 distance=1917.3 focus=(949.6,2373.6) target_screen=(307,187)-(2150,1037); framing is a development camera setup
+[2026.09.11-18.42.05:153][941]LogCinderVisualPreview: Display: CINDERLINE_VISUAL_PREVIEW scene=frontier_western_cliff live=0 staged=18 tick=3 obstacle=(1320,2400) enemy_palette_visible=1; ordinary terrain and rules, no save written
+[2026.09.11-18.42.05:153][941]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=34 rendered_fallback_entities=0
+[2026.09.11-18.42.05:153][941]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=2 fog=256_texture_plane fog_uploads=3 pads=6
+[2026.09.11-18.42.05:153][941]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=4 delta_calls=0 transforms=0 added=44 removed=0 full_rebuilds=0 unchanged_skips=189 static_skips=9; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-18.42.05:158][942]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=gameplay effective_fps=120.00 engine_fps=0.00
+[2026.09.11-18.42.05:178][943]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=idle effective_fps=30.00 engine_fps=0.00
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE started map=Frontier warmup_frames=30 sample_frames=120 viewport_px=2560x1440; measures viewport wall-clock cadence plus asynchronous raw engine timings
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY map=Frontier viewport_px=2560x1440 render_target_px=2560x1440 dpi_scale=2.000 high_dpi_active=1 foreground=1 rendered_viewport_available=1
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_FRAME_LIMIT engine=CinderGameEngine state=2 effective_fps=30.00; limit is not measured cadence or GPU utilization
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=0 set_by=Scalability
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][945]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.42.05:260][946]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.42.10:259][ 95]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE result map=Frontier samples=120 warmup_frames=30 viewport_px=2560x1440 window_seconds=4.000 mean_ms=33.334 median_ms=33.329 p95_ms=33.490 fps=30.00 foreground=1 background_frames=0 measurement=rendered_viewport_wall_clock gpu_timing=completed_engine_frames
+[2026.09.11-18.42.10:259][ 96]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=game_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=1.435 median_ms=1.436 p95_ms=1.572 source=GGameThreadTime availability=positive_latest_published_counter
+[2026.09.11-18.42.10:259][ 96]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=render_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.249 median_ms=2.264 p95_ms=2.556 source=GRenderThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.42.10:260][ 96]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=rhi_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.327 median_ms=2.398 p95_ms=2.602 source=GRHIThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.42.10:260][ 96]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=gpu status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=11.732 median_ms=11.726 p95_ms=12.086 source=FRHIGPUFrameTimeHistory availability=fresh_positive_completed_gpu_frames
+[2026.09.11-18.42.10:260][ 96]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING_SCOPE scope=global_engine cpu_alignment=latest_published gpu_alignment=asynchronous_completed gpu_frames=120 viewport_frames_without_gpu_completion=0 gpu_disjoint_events=0 gpu_poll_limit_hits=0 gpu_overflow_discarded=0 gpu_frame_bubbles_removed=1 render_thread_separate=1 rhi_thread_separate=1; CPU engine timings may include waits and are not CPU utilization or pure active work. GPU completions can lag, include other engine viewport work, and are not paired with these viewport frames; zero or missing timings are unavailable, not measured zero. No GPU utilization or synchronized frame attribution is inferred.
+[2026.09.11-18.42.21:893][445]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=background effective_fps=10.00 engine_fps=0.00
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE started map=Frontier warmup_frames=30 sample_frames=120 viewport_px=2560x1440; measures viewport wall-clock cadence plus asynchronous raw engine timings
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY map=Frontier viewport_px=2560x1440 render_target_px=2560x1440 dpi_scale=2.000 high_dpi_active=1 foreground=1 rendered_viewport_available=1
+[2026.09.11-18.43.07:296][897]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=idle effective_fps=30.00 engine_fps=0.00
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_FRAME_LIMIT engine=CinderGameEngine state=2 effective_fps=30.00; limit is not measured cadence or GPU utilization
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=0 set_by=Scalability
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.43.07:296][897]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.43.12:265][ 47]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE result map=Frontier samples=120 warmup_frames=30 viewport_px=2560x1440 window_seconds=4.000 mean_ms=33.334 median_ms=33.330 p95_ms=33.469 fps=30.00 foreground=1 background_frames=0 measurement=rendered_viewport_wall_clock gpu_timing=completed_engine_frames
+[2026.09.11-18.43.12:265][ 47]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=game_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=1.393 median_ms=1.373 p95_ms=1.516 source=GGameThreadTime availability=positive_latest_published_counter
+[2026.09.11-18.43.12:265][ 47]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=render_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.272 median_ms=2.241 p95_ms=2.596 source=GRenderThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.43.12:265][ 48]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=rhi_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.419 median_ms=2.418 p95_ms=2.798 source=GRHIThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.43.12:265][ 48]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=gpu status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=12.227 median_ms=12.245 p95_ms=12.566 source=FRHIGPUFrameTimeHistory availability=fresh_positive_completed_gpu_frames
+[2026.09.11-18.43.12:265][ 48]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING_SCOPE scope=global_engine cpu_alignment=latest_published gpu_alignment=asynchronous_completed gpu_frames=120 viewport_frames_without_gpu_completion=0 gpu_disjoint_events=0 gpu_poll_limit_hits=0 gpu_overflow_discarded=0 gpu_frame_bubbles_removed=1 render_thread_separate=1 rhi_thread_separate=1; CPU engine timings may include waits and are not CPU utilization or pure active work. GPU completions can lag, include other engine viewport work, and are not paired with these viewport frames; zero or missing timings are unavailable, not measured zero. No GPU utilization or synchronized frame attribution is inferred.
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE started map=Frontier warmup_frames=30 sample_frames=120 viewport_px=2560x1440; measures viewport wall-clock cadence plus asynchronous raw engine timings
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY map=Frontier viewport_px=2560x1440 render_target_px=2560x1440 dpi_scale=2.000 high_dpi_active=1 foreground=1 rendered_viewport_available=1
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_FRAME_LIMIT engine=CinderGameEngine state=2 effective_fps=30.00; limit is not measured cadence or GPU utilization
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][182]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][183]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][183]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][183]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.11-18.47.10:110][183]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=0 set_by=Scalability
+[2026.09.11-18.47.10:110][183]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][183]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.47.10:110][183]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile
+[2026.09.11-18.47.15:109][332]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE result map=Frontier samples=120 warmup_frames=30 viewport_px=2560x1440 window_seconds=4.000 mean_ms=33.335 median_ms=33.340 p95_ms=33.427 fps=30.00 foreground=1 background_frames=0 measurement=rendered_viewport_wall_clock gpu_timing=completed_engine_frames
+[2026.09.11-18.47.15:109][332]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=game_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=1.448 median_ms=1.442 p95_ms=1.557 source=GGameThreadTime availability=positive_latest_published_counter
+[2026.09.11-18.47.15:109][333]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=render_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.249 median_ms=2.248 p95_ms=2.455 source=GRenderThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.47.15:109][333]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=rhi_thread status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=2.321 median_ms=2.342 p95_ms=2.484 source=GRHIThreadTime availability=separate_thread_and_positive_latest_published_counter
+[2026.09.11-18.47.15:109][333]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=gpu status=available samples=120 viewport_samples=120 unavailable_observations=0 mean_ms=11.674 median_ms=11.686 p95_ms=11.994 source=FRHIGPUFrameTimeHistory availability=fresh_positive_completed_gpu_frames
+[2026.09.11-18.47.15:109][333]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING_SCOPE scope=global_engine cpu_alignment=latest_published gpu_alignment=asynchronous_completed gpu_frames=120 viewport_frames_without_gpu_completion=0 gpu_disjoint_events=0 gpu_poll_limit_hits=0 gpu_overflow_discarded=0 gpu_frame_bubbles_removed=1 render_thread_separate=1 rhi_thread_separate=1; CPU engine timings may include waits and are not CPU utilization or pure active work. GPU completions can lag, include other engine viewport work, and are not paired with these viewport frames; zero or missing timings are unavailable, not measured zero. No GPU utilization or synchronized frame attribution is inferred.
+[2026.09.11-18.48.31:923][637]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=background effective_fps=10.00 engine_fps=0.00
+[2026.09.11-18.48.50:315][820]LogCore: Engine exit requested (reason: Mac GracefulTerminationHandler)
+[2026.09.11-18.48.50:787][821]Log file closed, 09/12/26 00:18:50
