@@ -7,6 +7,8 @@
   "forward_axis": "+X",
   "up_axis": "+Z",
   "collision": "none; portable simulation owns obstacle rectangles",
+  "geometry_pass": "fractured crowns, asymmetric fault ledges, cluster fissures, low scree",
+  "triangle_budget_per_asset": 2000,
   "material_slots": [
     "Basalt"
   ],
@@ -29,16 +31,16 @@
         50,
         100
       ],
-      "vertices": 594,
-      "triangles": 1128,
-      "minimum_triangle_area_cm2": 4.61245330564646,
+      "vertices": 423,
+      "triangles": 770,
+      "minimum_triangle_area_cm2": 1.9424654874472758,
       "material_slots": [
         "Basalt"
       ],
       "uv_channels": 1,
       "vertex_color": "RockTint",
       "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_A.fbx",
-      "sha256": "f206379d4fbc418f0f59fade1bb73b9fb98e79156cc76f53afb423df736e3c3b"
+      "sha256": "a4750fb217696620adbba353c6f722a552cbdb2e593048e6e7c67e09650256e2"
     },
     {
       "name": "SM_BasaltCliff_B",
@@ -58,16 +60,16 @@
         50,
         100
       ],
-      "vertices": 594,
-      "triangles": 1128,
-      "minimum_triangle_area_cm2": 5.779509562697363,
+      "vertices": 443,
+      "triangles": 802,
+      "minimum_triangle_area_cm2": 2.27631223948573,
       "material_slots": [
         "Basalt"
       ],
       "uv_channels": 1,
       "vertex_color": "RockTint",
       "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_B.fbx",
-      "sha256": "cb77dff681ee8b9de48eb994192ae7edbc2d92aa618b8b88d52b52d7d363f531"
+      "sha256": "7a35e22b06c5820e5024622d034bc54b0af4c60bb05259d5ddca16b565163350"
     },
     {
       "name": "SM_BasaltCliff_C",
@@ -87,16 +89,16 @@
         50,
         100
       ],
-      "vertices": 594,
-      "triangles": 1128,
-      "minimum_triangle_area_cm2": 4.943471733212018,
+      "vertices": 414,
+      "triangles": 748,
+      "minimum_triangle_area_cm2": 2.267161407425717,
       "material_slots": [
         "Basalt"
       ],
       "uv_channels": 1,
       "vertex_color": "RockTint",
       "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_C.fbx",
-      "sha256": "8f64d42d3842fea6722aa957f6b1e432b6216b920bc765e323c3a46d19c88138"
+      "sha256": "9c9197860deaaab3054a8d5d80c669988701e5c986f4d299e5dcfd64803c40cb"
     },
     {
       "name": "SM_BasaltCliff_D",
@@ -116,16 +118,16 @@
         50,
         100
       ],
-      "vertices": 594,
-      "triangles": 1128,
-      "minimum_triangle_area_cm2": 4.3293442420395545,
+      "vertices": 399,
+      "triangles": 722,
+      "minimum_triangle_area_cm2": 1.5006476459478546,
       "material_slots": [
         "Basalt"
       ],
       "uv_channels": 1,
       "vertex_color": "RockTint",
       "fbx": "RawAssets/Terrain/FBX/SM_BasaltCliff_D.fbx",
-      "sha256": "ab815907e35beb01d67e66e0acfb5ee33fb575c9ffe9d4ce49f7b4decb42b3c8"
+      "sha256": "da5505ecddd6ea62656bcdf0d066b9d87878b79ee510e5cbf7e6284d28d36f5d"
     }
   ]
 }

@@ -1,0 +1,1867 @@
+{
+  "asset_paths": {
+    "core_surface": "/Game/Art/VisualTarget/Materials/M_VT_CoreSurface",
+    "dirt_road": "/Game/Art/VisualTarget/Materials/M_VT_DirtRoad",
+    "dust": "/Game/Art/VisualTarget/Materials/M_VT_Dust",
+    "emissive": "/Game/Art/VisualTarget/Materials/M_VT_Emissive",
+    "ground": "/Game/Art/VisualTarget/Materials/M_CinderGroundV4",
+    "model": "/Game/Art/VisualTarget/Materials/M_CinderModelV3",
+    "scenery_rock": "/Game/Art/VisualTarget/Materials/M_VT_SceneryRock"
+  },
+  "effects": [
+    {
+      "blend_mode": "<BlendMode.BLEND_ADDITIVE: 3>",
+      "connections": [
+        {
+          "from": "Tint",
+          "input": "A",
+          "output": "RGB",
+          "to": "Tint times glow"
+        },
+        {
+          "from": "GlowIntensity",
+          "input": "B",
+          "output": "",
+          "to": "Tint times glow"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 3,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "nodes": 3,
+      "outputs": {
+        "EMISSIVE_COLOR": {
+          "node": "Tint times glow",
+          "output": ""
+        }
+      },
+      "parameters": {
+        "GlowIntensity": 0.55,
+        "Tint": [
+          0.3,
+          0.85,
+          0.72
+        ]
+      },
+      "path": "/Game/Art/VisualTarget/Materials/M_VT_Emissive.M_VT_Emissive",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_UNLIT: 0>",
+      "two_sided": true,
+      "usage": "two-sided unlit additive world-effect mesh",
+      "version": "cinematic-visual-target-materials-v1.6.1"
+    },
+    {
+      "blend_mode": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+      "connections": [
+        {
+          "from": "Opacity",
+          "input": "Opacity",
+          "output": "",
+          "to": "Soft intersection fade"
+        },
+        {
+          "from": "FadeDistance",
+          "input": "FadeDistance",
+          "output": "",
+          "to": "Soft intersection fade"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 4,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "nodes": 4,
+      "outputs": {
+        "EMISSIVE_COLOR": {
+          "node": "Tint",
+          "output": "RGB"
+        },
+        "OPACITY": {
+          "node": "Soft intersection fade",
+          "output": ""
+        }
+      },
+      "parameters": {
+        "FadeDistance": 42.0,
+        "Opacity": 0.22,
+        "Tint": [
+          0.38,
+          0.2,
+          0.085
+        ]
+      },
+      "path": "/Game/Art/VisualTarget/Materials/M_VT_Dust.M_VT_Dust",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_UNLIT: 0>",
+      "two_sided": true,
+      "usage": "two-sided unlit translucent soft-intersection world-effect mesh",
+      "version": "cinematic-visual-target-materials-v1.6.1"
+    }
+  ],
+  "generator_sha256": "45a75a3b78aa2d345e84521530ee24b136222d54a8611c595ed57f935c056315",
+  "instances": [
+    {
+      "parameters": {
+        "AO": 1.0,
+        "FinishVariation": 0.05000000074505806,
+        "GlowIntensity": 0.0,
+        "Metallic": 0.30000001192092896,
+        "Roughness": 0.4300000071525574,
+        "SurfaceWear": 0.09000000357627869,
+        "Tint": [
+          0.045,
+          0.065,
+          0.075
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_CinderModelV3.M_CinderModelV3",
+      "path": "/Game/Art/VisualTarget/Materials/MI_VT_HullDark.MI_VT_HullDark",
+      "slot": "HullDark"
+    },
+    {
+      "parameters": {
+        "AO": 1.0,
+        "FinishVariation": 0.03999999910593033,
+        "GlowIntensity": 0.0,
+        "Metallic": 0.2199999988079071,
+        "Roughness": 0.4000000059604645,
+        "SurfaceWear": 0.05000000074505806,
+        "Tint": [
+          0.42,
+          0.5,
+          0.52
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_CinderModelV3.M_CinderModelV3",
+      "path": "/Game/Art/VisualTarget/Materials/MI_VT_HullLight.MI_VT_HullLight",
+      "slot": "HullLight"
+    },
+    {
+      "parameters": {
+        "AO": 0.9399999976158142,
+        "FinishVariation": 0.02500000037252903,
+        "GlowIntensity": 0.0,
+        "Metallic": 0.9200000166893005,
+        "Roughness": 0.25,
+        "SurfaceWear": 0.07999999821186066,
+        "Tint": [
+          0.07,
+          0.085,
+          0.095
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_CinderModelV3.M_CinderModelV3",
+      "path": "/Game/Art/VisualTarget/Materials/MI_VT_Metal.MI_VT_Metal",
+      "slot": "Metal"
+    },
+    {
+      "parameters": {
+        "AO": 1.0,
+        "FinishVariation": 0.03500000014901161,
+        "GlowIntensity": 0.009999999776482582,
+        "Metallic": 0.2199999988079071,
+        "Roughness": 0.3799999952316284,
+        "SurfaceWear": 0.05000000074505806,
+        "Tint": [
+          0.025,
+          0.44,
+          0.37
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_CinderModelV3.M_CinderModelV3",
+      "path": "/Game/Art/VisualTarget/Materials/MI_VT_TeamPanel.MI_VT_TeamPanel",
+      "slot": "TeamPanel"
+    },
+    {
+      "parameters": {
+        "AO": 0.9200000166893005,
+        "FinishVariation": 0.03500000014901161,
+        "GlowIntensity": 0.0,
+        "Metallic": 0.8799999952316284,
+        "Roughness": 0.30000001192092896,
+        "SurfaceWear": 0.10999999940395355,
+        "Tint": [
+          0.065,
+          0.078,
+          0.085
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_CinderModelV3.M_CinderModelV3",
+      "path": "/Game/Art/VisualTarget/Materials/MI_CinderSceneryMetal.MI_CinderSceneryMetal",
+      "slot": "SceneryMetal"
+    },
+    {
+      "parameters": {
+        "AO": 0.949999988079071,
+        "FinishVariation": 0.05000000074505806,
+        "GlowIntensity": 0.0,
+        "Metallic": 0.2800000011920929,
+        "Roughness": 0.46000000834465027,
+        "SurfaceWear": 0.14000000059604645,
+        "Tint": [
+          0.235,
+          0.135,
+          0.055
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_CinderModelV3.M_CinderModelV3",
+      "path": "/Game/Art/VisualTarget/Materials/MI_CinderSceneryPaint.MI_CinderSceneryPaint",
+      "slot": "SceneryPaint"
+    },
+    {
+      "parameters": {
+        "GlowIntensity": 0.8,
+        "Tint": [
+          0.18,
+          0.46,
+          0.4
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_VT_CoreSurface.M_VT_CoreSurface",
+      "path": "/Game/Art/VisualTarget/Materials/MI_VT_CoreGlow.MI_VT_CoreGlow",
+      "slot": "CoreGlow"
+    },
+    {
+      "coordinates": "three world-position projections blended by world vertex normal",
+      "parameters": {
+        "Desaturation": 0.82,
+        "NormalStrength": 0.32,
+        "RockTint": [
+          0.36,
+          0.28,
+          0.22
+        ]
+      },
+      "parent": "/Game/Art/VisualTarget/Materials/M_VT_SceneryRock.M_VT_SceneryRock",
+      "path": "/Game/Art/VisualTarget/Materials/MI_CinderSceneryRock.MI_CinderSceneryRock",
+      "pbr_maps": [
+        "Color",
+        "Normal",
+        "Roughness",
+        "AO"
+      ],
+      "slot": "SceneryRock",
+      "texture_samples": 12
+    }
+  ],
+  "materials": [
+    {
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Authored UV0",
+          "input": "",
+          "output": "",
+          "to": "Authored UV U"
+        },
+        {
+          "from": "Authored UV0",
+          "input": "",
+          "output": "",
+          "to": "Authored UV V"
+        },
+        {
+          "from": "Authored UV U",
+          "input": "A",
+          "output": "",
+          "to": "Irregular U frequency"
+        },
+        {
+          "from": "Authored UV V",
+          "input": "A",
+          "output": "",
+          "to": "Irregular V frequency"
+        },
+        {
+          "from": "Irregular U frequency",
+          "input": "A",
+          "output": "",
+          "to": "Broad finish coordinate"
+        },
+        {
+          "from": "Irregular V frequency",
+          "input": "B",
+          "output": "",
+          "to": "Broad finish coordinate"
+        },
+        {
+          "from": "Broad finish coordinate",
+          "input": "",
+          "output": "",
+          "to": "Broad finish wave"
+        },
+        {
+          "from": "Broad finish wave",
+          "input": "",
+          "output": "",
+          "to": "Unsigned finish patches"
+        },
+        {
+          "from": "Unsigned finish patches",
+          "input": "A",
+          "output": "",
+          "to": "Centered finish patches"
+        },
+        {
+          "from": "Centered finish patches",
+          "input": "A",
+          "output": "",
+          "to": "Bounded finish variation"
+        },
+        {
+          "from": "FinishVariation",
+          "input": "B",
+          "output": "",
+          "to": "Bounded finish variation"
+        },
+        {
+          "from": "Bounded finish variation",
+          "input": "A",
+          "output": "",
+          "to": "Finish color gain"
+        },
+        {
+          "from": "Tint",
+          "input": "A",
+          "output": "RGB",
+          "to": "Tint with subtle finish variation"
+        },
+        {
+          "from": "Finish color gain",
+          "input": "B",
+          "output": "",
+          "to": "Tint with subtle finish variation"
+        },
+        {
+          "from": "Mesh vertex color",
+          "input": "A",
+          "output": "A",
+          "to": "Visible baked AO scale"
+        },
+        {
+          "from": "Visible baked AO scale",
+          "input": "A",
+          "output": "",
+          "to": "Gentle baked AO floor"
+        },
+        {
+          "from": "Tint with subtle finish variation",
+          "input": "A",
+          "output": "",
+          "to": "Finish color with baked recess AO"
+        },
+        {
+          "from": "Gentle baked AO floor",
+          "input": "B",
+          "output": "",
+          "to": "Finish color with baked recess AO"
+        },
+        {
+          "from": "Centered finish patches",
+          "input": "A",
+          "output": "",
+          "to": "Finish roughness variation"
+        },
+        {
+          "from": "Unsigned finish patches",
+          "input": "A",
+          "output": "",
+          "to": "Wear roughness response"
+        },
+        {
+          "from": "SurfaceWear",
+          "input": "B",
+          "output": "",
+          "to": "Wear roughness response"
+        },
+        {
+          "from": "Roughness",
+          "input": "A",
+          "output": "",
+          "to": "Roughness plus finish"
+        },
+        {
+          "from": "Finish roughness variation",
+          "input": "B",
+          "output": "",
+          "to": "Roughness plus finish"
+        },
+        {
+          "from": "Roughness plus finish",
+          "input": "A",
+          "output": "",
+          "to": "Roughness plus wear"
+        },
+        {
+          "from": "Wear roughness response",
+          "input": "B",
+          "output": "",
+          "to": "Roughness plus wear"
+        },
+        {
+          "from": "Roughness plus wear",
+          "input": "",
+          "output": "",
+          "to": "Physical roughness bounds"
+        },
+        {
+          "from": "Mesh vertex color",
+          "input": "A",
+          "output": "A",
+          "to": "Vertex AO times instance AO"
+        },
+        {
+          "from": "AO",
+          "input": "B",
+          "output": "",
+          "to": "Vertex AO times instance AO"
+        },
+        {
+          "from": "Tint",
+          "input": "A",
+          "output": "RGB",
+          "to": "Restrained emissive"
+        },
+        {
+          "from": "GlowIntensity",
+          "input": "B",
+          "output": "",
+          "to": "Restrained emissive"
+        }
+      ],
+      "depth_test_enabled": true,
+      "finish": {
+        "animated": false,
+        "ao_source": "vertex color alpha multiplied by AO parameter",
+        "base_color_gain_bounds_at_default": [
+          0.9825,
+          1.0175
+        ],
+        "coordinates": "authored UV0",
+        "texture_samples": 0,
+        "vertex_alpha_contract": "1.0 fully lit; lower values mark baked crevices",
+        "visible_vertex_ao_multiplier": "0.65 + 0.35 * vertex color alpha"
+      },
+      "graph_replacement": {
+        "before_count": 30,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "nodes": 30,
+      "outputs": {
+        "AMBIENT_OCCLUSION": {
+          "node": "Vertex AO times instance AO",
+          "output": ""
+        },
+        "BASE_COLOR": {
+          "node": "Finish color with baked recess AO",
+          "output": ""
+        },
+        "EMISSIVE_COLOR": {
+          "node": "Restrained emissive",
+          "output": ""
+        },
+        "METALLIC": {
+          "node": "Metallic",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "Physical roughness bounds",
+          "output": ""
+        }
+      },
+      "parameters": {
+        "scalars": [
+          "AO",
+          "FinishVariation",
+          "GlowIntensity",
+          "Metallic",
+          "Roughness",
+          "SurfaceWear"
+        ],
+        "vectors": [
+          "Tint"
+        ]
+      },
+      "path": "/Game/Art/VisualTarget/Materials/M_CinderModelV3.M_CinderModelV3",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "two_sided": false,
+      "version": "cinematic-visual-target-materials-v1.6.1"
+    },
+    {
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Tint",
+          "input": "A",
+          "output": "RGB",
+          "to": "Tint times restrained glow"
+        },
+        {
+          "from": "GlowIntensity",
+          "input": "B",
+          "output": "",
+          "to": "Tint times restrained glow"
+        },
+        {
+          "from": "Mesh vertex color",
+          "input": "A",
+          "output": "A",
+          "to": "Gentle vertex alpha AO"
+        },
+        {
+          "from": "Gentle vertex alpha AO",
+          "input": "A",
+          "output": "",
+          "to": "Core AO floor"
+        },
+        {
+          "from": "Tint times restrained glow",
+          "input": "A",
+          "output": "",
+          "to": "Stable teal core emissive"
+        },
+        {
+          "from": "Core AO floor",
+          "input": "B",
+          "output": "",
+          "to": "Stable teal core emissive"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 7,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "lighting": {
+        "directional_light_independent": true,
+        "shading": "opaque unlit",
+        "texture_samples": 0,
+        "vertex_alpha_multiplier": "0.75 + 0.25 * alpha"
+      },
+      "nodes": 7,
+      "outputs": {
+        "EMISSIVE_COLOR": {
+          "node": "Stable teal core emissive",
+          "output": ""
+        }
+      },
+      "parameters": {
+        "scalars": [
+          "GlowIntensity"
+        ],
+        "vectors": [
+          "Tint"
+        ]
+      },
+      "path": "/Game/Art/VisualTarget/Materials/M_VT_CoreSurface.M_VT_CoreSurface",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_UNLIT: 0>",
+      "two_sided": false,
+      "version": "cinematic-visual-target-materials-v1.6.1"
+    },
+    {
+      "albedo_response": {
+        "basis": "direct photographed RGB times BasaltTint; no clamp or desaturation",
+        "regular_procedural_bands": false,
+        "runtime_tints_are_low_strength_multipliers": true,
+        "source": "Poly Haven dry_ground_rocks 2K diffuse"
+      },
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Dry ground Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "Dry ground World XY"
+        },
+        {
+          "from": "Dry ground World XY",
+          "input": "A",
+          "output": "",
+          "to": "Dry ground World centimeters to texture UV"
+        },
+        {
+          "from": "Dry ground World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundColor"
+        },
+        {
+          "from": "Dry ground World centimeters to texture UV",
+          "input": "",
+          "output": "",
+          "to": "Primary ground U"
+        },
+        {
+          "from": "Dry ground World centimeters to texture UV",
+          "input": "",
+          "output": "",
+          "to": "Primary ground V"
+        },
+        {
+          "from": "Primary ground U",
+          "input": "A",
+          "output": "",
+          "to": "Rotated U cosine"
+        },
+        {
+          "from": "Primary ground V",
+          "input": "A",
+          "output": "",
+          "to": "Rotated U negative sine"
+        },
+        {
+          "from": "Rotated U cosine",
+          "input": "A",
+          "output": "",
+          "to": "Ground U rotated 37 degrees"
+        },
+        {
+          "from": "Rotated U negative sine",
+          "input": "B",
+          "output": "",
+          "to": "Ground U rotated 37 degrees"
+        },
+        {
+          "from": "Primary ground U",
+          "input": "A",
+          "output": "",
+          "to": "Rotated V sine"
+        },
+        {
+          "from": "Primary ground V",
+          "input": "A",
+          "output": "",
+          "to": "Rotated V cosine"
+        },
+        {
+          "from": "Rotated V sine",
+          "input": "A",
+          "output": "",
+          "to": "Ground V rotated 37 degrees"
+        },
+        {
+          "from": "Rotated V cosine",
+          "input": "B",
+          "output": "",
+          "to": "Ground V rotated 37 degrees"
+        },
+        {
+          "from": "Ground U rotated 37 degrees",
+          "input": "A",
+          "output": "",
+          "to": "Golden ratio secondary U"
+        },
+        {
+          "from": "Ground V rotated 37 degrees",
+          "input": "A",
+          "output": "",
+          "to": "Golden ratio secondary V"
+        },
+        {
+          "from": "Golden ratio secondary U",
+          "input": "A",
+          "output": "",
+          "to": "Offset secondary U"
+        },
+        {
+          "from": "Golden ratio secondary V",
+          "input": "A",
+          "output": "",
+          "to": "Offset secondary V"
+        },
+        {
+          "from": "Offset secondary U",
+          "input": "A",
+          "output": "",
+          "to": "Rotated offset ground UV"
+        },
+        {
+          "from": "Offset secondary V",
+          "input": "B",
+          "output": "",
+          "to": "Rotated offset ground UV"
+        },
+        {
+          "from": "Rotated offset ground UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundColorOffset"
+        },
+        {
+          "from": "GroundColor",
+          "input": "A",
+          "output": "RGB",
+          "to": "Low-cost anti-tiled ground color"
+        },
+        {
+          "from": "GroundColorOffset",
+          "input": "B",
+          "output": "RGB",
+          "to": "Low-cost anti-tiled ground color"
+        },
+        {
+          "from": "AntiTileBlend",
+          "input": "Alpha",
+          "output": "",
+          "to": "Low-cost anti-tiled ground color"
+        },
+        {
+          "from": "Low-cost anti-tiled ground color",
+          "input": "A",
+          "output": "",
+          "to": "Warm photographed dry ground"
+        },
+        {
+          "from": "BasaltTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Warm photographed dry ground"
+        },
+        {
+          "from": "Layers Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "Layers World XY"
+        },
+        {
+          "from": "Layers World XY",
+          "input": "A",
+          "output": "",
+          "to": "Layers World centimeters to texture UV"
+        },
+        {
+          "from": "Layers World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "TerrainLayers"
+        },
+        {
+          "from": "Warm photographed dry ground",
+          "input": "A",
+          "output": "",
+          "to": "Ochre dust photographed detail"
+        },
+        {
+          "from": "DustTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Ochre dust photographed detail"
+        },
+        {
+          "from": "TerrainLayers",
+          "input": "A",
+          "output": "B",
+          "to": "Ochre dust weight"
+        },
+        {
+          "from": "DustStrength",
+          "input": "B",
+          "output": "",
+          "to": "Ochre dust weight"
+        },
+        {
+          "from": "Warm photographed dry ground",
+          "input": "A",
+          "output": "",
+          "to": "Ochre dust transition"
+        },
+        {
+          "from": "Ochre dust photographed detail",
+          "input": "B",
+          "output": "",
+          "to": "Ochre dust transition"
+        },
+        {
+          "from": "Ochre dust weight",
+          "input": "Alpha",
+          "output": "",
+          "to": "Ochre dust transition"
+        },
+        {
+          "from": "Warm photographed dry ground",
+          "input": "A",
+          "output": "",
+          "to": "Dark recess stone photographed detail"
+        },
+        {
+          "from": "StoneTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Dark recess stone photographed detail"
+        },
+        {
+          "from": "TerrainLayers",
+          "input": "A",
+          "output": "R",
+          "to": "Dark recess stone weight"
+        },
+        {
+          "from": "StoneStrength",
+          "input": "B",
+          "output": "",
+          "to": "Dark recess stone weight"
+        },
+        {
+          "from": "Ochre dust transition",
+          "input": "A",
+          "output": "",
+          "to": "Dark recess stone transition"
+        },
+        {
+          "from": "Dark recess stone photographed detail",
+          "input": "B",
+          "output": "",
+          "to": "Dark recess stone transition"
+        },
+        {
+          "from": "Dark recess stone weight",
+          "input": "Alpha",
+          "output": "",
+          "to": "Dark recess stone transition"
+        },
+        {
+          "from": "Warm photographed dry ground",
+          "input": "A",
+          "output": "",
+          "to": "Iron mineral photographed detail"
+        },
+        {
+          "from": "MineralTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Iron mineral photographed detail"
+        },
+        {
+          "from": "TerrainLayers",
+          "input": "A",
+          "output": "G",
+          "to": "Iron mineral weight"
+        },
+        {
+          "from": "MineralStrength",
+          "input": "B",
+          "output": "",
+          "to": "Iron mineral weight"
+        },
+        {
+          "from": "Dark recess stone transition",
+          "input": "A",
+          "output": "",
+          "to": "Iron mineral transition"
+        },
+        {
+          "from": "Iron mineral photographed detail",
+          "input": "B",
+          "output": "",
+          "to": "Iron mineral transition"
+        },
+        {
+          "from": "Iron mineral weight",
+          "input": "Alpha",
+          "output": "",
+          "to": "Iron mineral transition"
+        },
+        {
+          "from": "Dry ground World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundRoughness"
+        },
+        {
+          "from": "GroundRoughness",
+          "input": "",
+          "output": "R",
+          "to": "Poly Haven surface cuts"
+        },
+        {
+          "from": "Poly Haven surface cuts",
+          "input": "A",
+          "output": "",
+          "to": "Road scuffs within dust"
+        },
+        {
+          "from": "TerrainLayers",
+          "input": "B",
+          "output": "B",
+          "to": "Road scuffs within dust"
+        },
+        {
+          "from": "Road scuffs within dust",
+          "input": "A",
+          "output": "",
+          "to": "Road scuff weight"
+        },
+        {
+          "from": "RoadScuffStrength",
+          "input": "B",
+          "output": "",
+          "to": "Road scuff weight"
+        },
+        {
+          "from": "Warm photographed dry ground",
+          "input": "A",
+          "output": "",
+          "to": "Road scuff grain"
+        },
+        {
+          "from": "RoadScuffTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Road scuff grain"
+        },
+        {
+          "from": "Iron mineral transition",
+          "input": "A",
+          "output": "",
+          "to": "Textured road wear"
+        },
+        {
+          "from": "Road scuff grain",
+          "input": "B",
+          "output": "",
+          "to": "Textured road wear"
+        },
+        {
+          "from": "Road scuff weight",
+          "input": "Alpha",
+          "output": "",
+          "to": "Textured road wear"
+        },
+        {
+          "from": "Dry ground World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundNormal"
+        },
+        {
+          "from": "Flat tangent normal",
+          "input": "A",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "GroundNormal",
+          "input": "B",
+          "output": "RGB",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "NormalStrength",
+          "input": "Alpha",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "Restrained normal detail",
+          "input": "VectorInput",
+          "output": "",
+          "to": "Normalized tangent normal"
+        },
+        {
+          "from": "GroundRoughness",
+          "input": "A",
+          "output": "R",
+          "to": "Centered ground roughness"
+        },
+        {
+          "from": "Centered ground roughness",
+          "input": "A",
+          "output": "",
+          "to": "Ground roughness response"
+        },
+        {
+          "from": "Ground roughness response",
+          "input": "A",
+          "output": "",
+          "to": "Ground roughness midpoint"
+        },
+        {
+          "from": "Ground roughness midpoint",
+          "input": "",
+          "output": "",
+          "to": "Bounded base roughness"
+        },
+        {
+          "from": "Bounded base roughness",
+          "input": "A",
+          "output": "",
+          "to": "Ochre dust roughness"
+        },
+        {
+          "from": "TerrainLayers",
+          "input": "Alpha",
+          "output": "B",
+          "to": "Ochre dust roughness"
+        },
+        {
+          "from": "Road scuff weight",
+          "input": "A",
+          "output": "",
+          "to": "Road roughness reduction"
+        },
+        {
+          "from": "Ochre dust roughness",
+          "input": "A",
+          "output": "",
+          "to": "Ground roughness with road scuffs"
+        },
+        {
+          "from": "Road roughness reduction",
+          "input": "B",
+          "output": "",
+          "to": "Ground roughness with road scuffs"
+        },
+        {
+          "from": "Ground roughness with road scuffs",
+          "input": "",
+          "output": "",
+          "to": "Ground roughness bounds"
+        },
+        {
+          "from": "Dry ground World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundAO"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 48,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "mapping": {
+        "albedo_anti_tiling": {
+          "normal_roughness_ao_alignment": "primary projection",
+          "primary_weight": 0.65,
+          "secondary_frequency_ratio": 1.61803399,
+          "secondary_rotation_degrees": 37.0,
+          "secondary_uv_offset": [
+            0.173,
+            0.619
+          ],
+          "secondary_weight": 0.35
+        },
+        "pbr_set": "primary planar absolute world XY / 400 cm",
+        "terrain_mask": "planar absolute world XY / 4800 cm",
+        "world_aligned_triplanar_samples": 0
+      },
+      "nodes": 64,
+      "outputs": {
+        "AMBIENT_OCCLUSION": {
+          "node": "GroundAO",
+          "output": "R"
+        },
+        "BASE_COLOR": {
+          "node": "Textured road wear",
+          "output": ""
+        },
+        "METALLIC": {
+          "node": "Nonmetal ground",
+          "output": ""
+        },
+        "NORMAL": {
+          "node": "Normalized tangent normal",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "Ground roughness bounds",
+          "output": ""
+        }
+      },
+      "parameters": {
+        "scalars": [
+          "AntiTileBlend",
+          "DustStrength",
+          "StoneStrength",
+          "MineralStrength",
+          "RoadScuffStrength",
+          "NormalStrength"
+        ],
+        "textures": [
+          "GroundColor",
+          "GroundColorOffset",
+          "GroundNormal",
+          "GroundRoughness",
+          "GroundAO",
+          "TerrainLayers"
+        ],
+        "vectors": [
+          "BasaltTint",
+          "DustTint",
+          "StoneTint",
+          "MineralTint",
+          "RoadScuffTint"
+        ]
+      },
+      "path": "/Game/Art/VisualTarget/Materials/M_CinderGroundV4.M_CinderGroundV4",
+      "runtime_mask": {
+        "channels": {
+          "A": "unused opaque upload channel",
+          "B": "map-seeded ash and dust",
+          "G": "observed mineral positions",
+          "R": "explored cliff stone"
+        },
+        "parameter": "TerrainLayers"
+      },
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "texture_samples": 6,
+      "two_sided": false,
+      "version": "cinematic-visual-target-materials-v1.6.1"
+    },
+    {
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "X facing planar coordinates"
+        },
+        {
+          "from": "X facing planar coordinates",
+          "input": "A",
+          "output": "",
+          "to": "X projection at 246 cm"
+        },
+        {
+          "from": "Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "Y facing planar coordinates"
+        },
+        {
+          "from": "Y facing planar coordinates",
+          "input": "A",
+          "output": "",
+          "to": "Y projection at 246 cm"
+        },
+        {
+          "from": "Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "Z facing planar coordinates"
+        },
+        {
+          "from": "Z facing planar coordinates",
+          "input": "A",
+          "output": "",
+          "to": "Z projection at 246 cm"
+        },
+        {
+          "from": "World vertex normal",
+          "input": "",
+          "output": "",
+          "to": "Absolute world normal"
+        },
+        {
+          "from": "Absolute world normal",
+          "input": "",
+          "output": "",
+          "to": "X normal component"
+        },
+        {
+          "from": "X normal component",
+          "input": "A",
+          "output": "",
+          "to": "X dominant projection weight"
+        },
+        {
+          "from": "X normal component",
+          "input": "B",
+          "output": "",
+          "to": "X dominant projection weight"
+        },
+        {
+          "from": "Absolute world normal",
+          "input": "",
+          "output": "",
+          "to": "Y normal component"
+        },
+        {
+          "from": "Y normal component",
+          "input": "A",
+          "output": "",
+          "to": "Y dominant projection weight"
+        },
+        {
+          "from": "Y normal component",
+          "input": "B",
+          "output": "",
+          "to": "Y dominant projection weight"
+        },
+        {
+          "from": "Absolute world normal",
+          "input": "",
+          "output": "",
+          "to": "Z normal component"
+        },
+        {
+          "from": "Z normal component",
+          "input": "A",
+          "output": "",
+          "to": "Z dominant projection weight"
+        },
+        {
+          "from": "Z normal component",
+          "input": "B",
+          "output": "",
+          "to": "Z dominant projection weight"
+        },
+        {
+          "from": "X projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Color X projection"
+        },
+        {
+          "from": "Rock Color X projection",
+          "input": "A",
+          "output": "RGB",
+          "to": "Weighted Color X"
+        },
+        {
+          "from": "X dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Color X"
+        },
+        {
+          "from": "Y projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Color Y projection"
+        },
+        {
+          "from": "Rock Color Y projection",
+          "input": "A",
+          "output": "RGB",
+          "to": "Weighted Color Y"
+        },
+        {
+          "from": "Y dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Color Y"
+        },
+        {
+          "from": "Z projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Color Z projection"
+        },
+        {
+          "from": "Rock Color Z projection",
+          "input": "A",
+          "output": "RGB",
+          "to": "Weighted Color Z"
+        },
+        {
+          "from": "Z dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Color Z"
+        },
+        {
+          "from": "Weighted Color X",
+          "input": "A",
+          "output": "",
+          "to": "Blended Color XY"
+        },
+        {
+          "from": "Weighted Color Y",
+          "input": "B",
+          "output": "",
+          "to": "Blended Color XY"
+        },
+        {
+          "from": "Blended Color XY",
+          "input": "A",
+          "output": "",
+          "to": "Blended Color XYZ"
+        },
+        {
+          "from": "Weighted Color Z",
+          "input": "B",
+          "output": "",
+          "to": "Blended Color XYZ"
+        },
+        {
+          "from": "Blended Color XYZ",
+          "input": "",
+          "output": "",
+          "to": "Desaturated rock grain"
+        },
+        {
+          "from": "Desaturation",
+          "input": "Fraction",
+          "output": "",
+          "to": "Desaturated rock grain"
+        },
+        {
+          "from": "Desaturated rock grain",
+          "input": "A",
+          "output": "",
+          "to": "Warm PBR rock"
+        },
+        {
+          "from": "RockTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Warm PBR rock"
+        },
+        {
+          "from": "X projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Normal X projection"
+        },
+        {
+          "from": "Rock Normal X projection",
+          "input": "A",
+          "output": "RGB",
+          "to": "Weighted Normal X"
+        },
+        {
+          "from": "X dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Normal X"
+        },
+        {
+          "from": "Y projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Normal Y projection"
+        },
+        {
+          "from": "Rock Normal Y projection",
+          "input": "A",
+          "output": "RGB",
+          "to": "Weighted Normal Y"
+        },
+        {
+          "from": "Y dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Normal Y"
+        },
+        {
+          "from": "Z projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Normal Z projection"
+        },
+        {
+          "from": "Rock Normal Z projection",
+          "input": "A",
+          "output": "RGB",
+          "to": "Weighted Normal Z"
+        },
+        {
+          "from": "Z dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Normal Z"
+        },
+        {
+          "from": "Weighted Normal X",
+          "input": "A",
+          "output": "",
+          "to": "Blended Normal XY"
+        },
+        {
+          "from": "Weighted Normal Y",
+          "input": "B",
+          "output": "",
+          "to": "Blended Normal XY"
+        },
+        {
+          "from": "Blended Normal XY",
+          "input": "A",
+          "output": "",
+          "to": "Blended Normal XYZ"
+        },
+        {
+          "from": "Weighted Normal Z",
+          "input": "B",
+          "output": "",
+          "to": "Blended Normal XYZ"
+        },
+        {
+          "from": "Flat tangent normal",
+          "input": "A",
+          "output": "",
+          "to": "Restrained rock normal"
+        },
+        {
+          "from": "Blended Normal XYZ",
+          "input": "B",
+          "output": "",
+          "to": "Restrained rock normal"
+        },
+        {
+          "from": "NormalStrength",
+          "input": "Alpha",
+          "output": "",
+          "to": "Restrained rock normal"
+        },
+        {
+          "from": "Restrained rock normal",
+          "input": "VectorInput",
+          "output": "",
+          "to": "Normalized rock detail"
+        },
+        {
+          "from": "X projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Roughness X projection"
+        },
+        {
+          "from": "Rock Roughness X projection",
+          "input": "A",
+          "output": "R",
+          "to": "Weighted Roughness X"
+        },
+        {
+          "from": "X dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Roughness X"
+        },
+        {
+          "from": "Y projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Roughness Y projection"
+        },
+        {
+          "from": "Rock Roughness Y projection",
+          "input": "A",
+          "output": "R",
+          "to": "Weighted Roughness Y"
+        },
+        {
+          "from": "Y dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Roughness Y"
+        },
+        {
+          "from": "Z projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock Roughness Z projection"
+        },
+        {
+          "from": "Rock Roughness Z projection",
+          "input": "A",
+          "output": "R",
+          "to": "Weighted Roughness Z"
+        },
+        {
+          "from": "Z dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted Roughness Z"
+        },
+        {
+          "from": "Weighted Roughness X",
+          "input": "A",
+          "output": "",
+          "to": "Blended Roughness XY"
+        },
+        {
+          "from": "Weighted Roughness Y",
+          "input": "B",
+          "output": "",
+          "to": "Blended Roughness XY"
+        },
+        {
+          "from": "Blended Roughness XY",
+          "input": "A",
+          "output": "",
+          "to": "Blended Roughness XYZ"
+        },
+        {
+          "from": "Weighted Roughness Z",
+          "input": "B",
+          "output": "",
+          "to": "Blended Roughness XYZ"
+        },
+        {
+          "from": "Blended Roughness XYZ",
+          "input": "",
+          "output": "",
+          "to": "Rock roughness bounds"
+        },
+        {
+          "from": "X projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock AO X projection"
+        },
+        {
+          "from": "Rock AO X projection",
+          "input": "A",
+          "output": "R",
+          "to": "Weighted AO X"
+        },
+        {
+          "from": "X dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted AO X"
+        },
+        {
+          "from": "Y projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock AO Y projection"
+        },
+        {
+          "from": "Rock AO Y projection",
+          "input": "A",
+          "output": "R",
+          "to": "Weighted AO Y"
+        },
+        {
+          "from": "Y dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted AO Y"
+        },
+        {
+          "from": "Z projection at 246 cm",
+          "input": "UVs",
+          "output": "",
+          "to": "Rock AO Z projection"
+        },
+        {
+          "from": "Rock AO Z projection",
+          "input": "A",
+          "output": "R",
+          "to": "Weighted AO Z"
+        },
+        {
+          "from": "Z dominant projection weight",
+          "input": "B",
+          "output": "",
+          "to": "Weighted AO Z"
+        },
+        {
+          "from": "Weighted AO X",
+          "input": "A",
+          "output": "",
+          "to": "Blended AO XY"
+        },
+        {
+          "from": "Weighted AO Y",
+          "input": "B",
+          "output": "",
+          "to": "Blended AO XY"
+        },
+        {
+          "from": "Blended AO XY",
+          "input": "A",
+          "output": "",
+          "to": "Blended AO XYZ"
+        },
+        {
+          "from": "Weighted AO Z",
+          "input": "B",
+          "output": "",
+          "to": "Blended AO XYZ"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 57,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "mapping": {
+        "blend_weights": "squared absolute world vertex normal; weights sum to one",
+        "mode": "three planar world-position projections",
+        "scope": "small scenery rocks only",
+        "stable_under_instance_scale": true,
+        "tile_width_cm": 246.0
+      },
+      "nodes": 57,
+      "outputs": {
+        "AMBIENT_OCCLUSION": {
+          "node": "Blended AO XYZ",
+          "output": ""
+        },
+        "BASE_COLOR": {
+          "node": "Warm PBR rock",
+          "output": ""
+        },
+        "METALLIC": {
+          "node": "Nonmetal rock",
+          "output": ""
+        },
+        "NORMAL": {
+          "node": "Normalized rock detail",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "Rock roughness bounds",
+          "output": ""
+        }
+      },
+      "parameters": {
+        "scalars": [
+          "Desaturation",
+          "NormalStrength"
+        ],
+        "vectors": [
+          "RockTint"
+        ]
+      },
+      "path": "/Game/Art/VisualTarget/Materials/M_VT_SceneryRock.M_VT_SceneryRock",
+      "pbr_maps": [
+        "Color",
+        "Normal",
+        "Roughness",
+        "AO"
+      ],
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "texture_samples": 12,
+      "two_sided": false,
+      "version": "cinematic-visual-target-materials-v1.6.1"
+    },
+    {
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Road Absolute world position",
+          "input": "",
+          "output": "",
+          "to": "Road World XY"
+        },
+        {
+          "from": "Road World XY",
+          "input": "A",
+          "output": "",
+          "to": "Road World centimeters to texture UV"
+        },
+        {
+          "from": "Road World centimeters to texture UV",
+          "input": "UVs",
+          "output": "",
+          "to": "GroundColor"
+        },
+        {
+          "from": "GroundColor",
+          "input": "",
+          "output": "RGB",
+          "to": "Packed earth grain"
+        },
+        {
+          "from": "Desaturation",
+          "input": "Fraction",
+          "output": "",
+          "to": "Packed earth grain"
+        },
+        {
+          "from": "Packed earth grain",
+          "input": "A",
+          "output": "",
+          "to": "Dark packed earth"
+        },
+        {
+          "from": "Tint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Dark packed earth"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 11,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "mapping": {
+        "animated": false,
+        "mode": "planar absolute world XY",
+        "shared_model_finish": false,
+        "tile_width_cm": 740.0
+      },
+      "nodes": 11,
+      "outputs": {
+        "BASE_COLOR": {
+          "node": "Dark packed earth",
+          "output": ""
+        },
+        "METALLIC": {
+          "node": "Nonmetal road",
+          "output": ""
+        },
+        "NORMAL": {
+          "node": "Flat road normal",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "Packed earth roughness",
+          "output": ""
+        }
+      },
+      "parameters": {
+        "scalars": [
+          "Desaturation"
+        ],
+        "vectors": [
+          "Tint"
+        ]
+      },
+      "path": "/Game/Art/VisualTarget/Materials/M_VT_DirtRoad.M_VT_DirtRoad",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "surface": {
+        "metallic": 0.0,
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "roughness": 0.95
+      },
+      "texture_samples": 1,
+      "two_sided": false,
+      "version": "cinematic-visual-target-materials-v1.6.1"
+    }
+  ],
+  "owner": "scripts/unreal_visual_target_materials.py",
+  "success": true,
+  "textures": [
+    {
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "license": "CC0-1.0",
+      "md5": "3106a1157ea4c6823b78494988ac0269",
+      "path": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Color.T_VT_DryGroundRocks_Color",
+      "role": "Color",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "True",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "ebfb8b98b48a4fcafac354d1e206944824c549e93ea6d977f69664f0dc3dbb6a",
+      "source": "RawAssets/VisualTarget/Materials/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
+      "source_url": "https://polyhaven.com/a/dry_ground_rocks",
+      "srgb": true,
+      "tile_width_cm": 400.0
+    },
+    {
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "license": "CC0-1.0",
+      "md5": "8907b86aed5000d0a40e41f49580ad53",
+      "path": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Normal.T_VT_DryGroundRocks_Normal",
+      "role": "Normal",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "flip_green_channel": "False",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD_NORMAL_MAP: 1>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "af1c800442a5541597ceab75c8133b9561ce64a66755cb5f9a6a5fe4417ec4cd",
+      "source": "RawAssets/VisualTarget/Materials/dry_ground_rocks/dry_ground_rocks_nor_dx_2k.jpg",
+      "source_url": "https://polyhaven.com/a/dry_ground_rocks",
+      "srgb": false,
+      "tile_width_cm": 400.0
+    },
+    {
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "license": "CC0-1.0",
+      "md5": "5a461a436095cbe54cbd1de156bdc164",
+      "path": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Roughness.T_VT_DryGroundRocks_Roughness",
+      "role": "Roughness",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "261aa42d1626d7b71675d918239f4b2be10d40c00bd9f954273a5aba4a19baaf",
+      "source": "RawAssets/VisualTarget/Materials/dry_ground_rocks/dry_ground_rocks_rough_2k.jpg",
+      "source_url": "https://polyhaven.com/a/dry_ground_rocks",
+      "srgb": false,
+      "tile_width_cm": 400.0
+    },
+    {
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "license": "CC0-1.0",
+      "md5": "b1151db9b276cbf92e9d05185eebaeb7",
+      "path": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_AO.T_VT_DryGroundRocks_AO",
+      "role": "AO",
+      "settings": {
+        "address_x": "<TextureAddress.TA_WRAP: 0>",
+        "address_y": "<TextureAddress.TA_WRAP: 0>",
+        "compression_settings": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "filter": "<TextureFilter.TF_DEFAULT: 3>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "2048",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_FROM_TEXTURE_GROUP: 0>",
+        "never_stream": "False",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "d1ea8fe7260e21dce9734e18d3fdbe5d159a4f0e47772279370a9e57b7c53b8b",
+      "source": "RawAssets/VisualTarget/Materials/dry_ground_rocks/dry_ground_rocks_ao_2k.jpg",
+      "source_url": "https://polyhaven.com/a/dry_ground_rocks",
+      "srgb": false,
+      "tile_width_cm": 400.0
+    }
+  ],
+  "utc": "2026-09-12T10:56:48.364346+00:00",
+  "version": "cinematic-visual-target-materials-v1.6.1"
+}

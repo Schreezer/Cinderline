@@ -1,0 +1,751 @@
+{
+  "assets": [
+    {
+      "asset": "/Game/Art/Motion/SM_Drudge_LegRR.SM_Drudge_LegRR",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        -4.096790790557861,
+        9.803603172302246,
+        15.074385643005371
+      ],
+      "bounds_min_cm": [
+        -11.4338960647583,
+        3.180652618408203,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -5.61366,
+        4.67572,
+        14.39791
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Drudge_LegRR",
+      "nanite": false,
+      "part": "LegRR",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "6672a893ea569406baf5808f9b69ba8e87001f4897030999fe593dd49a02b9b4",
+      "triangles": 180,
+      "unit": "Drudge"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Drudge_LegFR.SM_Drudge_LegFR",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        7.706474304199219,
+        9.803605079650879,
+        15.074385643005371
+      ],
+      "bounds_min_cm": [
+        0.36936914920806885,
+        3.1806538105010986,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        1.88624,
+        4.67572,
+        14.39791
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Drudge_LegFR",
+      "nanite": false,
+      "part": "LegFR",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "04918ab95afcc97f4c12b943e8aa9a26ed927d9f31b74f3840136216ed578d12",
+      "triangles": 180,
+      "unit": "Drudge"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Drudge_LegRL.SM_Drudge_LegRL",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        -4.096789360046387,
+        -3.1806559562683105,
+        15.074385643005371
+      ],
+      "bounds_min_cm": [
+        -11.433894157409668,
+        -9.803606033325195,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -5.61366,
+        -4.67572,
+        14.39791
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Drudge_LegRL",
+      "nanite": false,
+      "part": "LegRL",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "a10d4de9702ee2f6ca18d71f60fca4d2f6d836cc1987e8325c7adaec1196a8b7",
+      "triangles": 180,
+      "unit": "Drudge"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Drudge_LegFL.SM_Drudge_LegFL",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        7.70647668838501,
+        -3.180654764175415,
+        15.074385643005371
+      ],
+      "bounds_min_cm": [
+        0.3693709969520569,
+        -9.803604125976562,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        1.88624,
+        -4.67572,
+        14.39791
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Drudge_LegFL",
+      "nanite": false,
+      "part": "LegFL",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "9ec146903ebf59822445c6a86a645891330806918834f7ce2bb4c7cca184f8a4",
+      "triangles": 180,
+      "unit": "Drudge"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Drudge_Tools.SM_Drudge_Tools",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        16.0,
+        6.526211738586426,
+        19.109949111938477
+      ],
+      "bounds_min_cm": [
+        3.1381289958953857,
+        -6.526207447052002,
+        6.020942687988281
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        6.71087,
+        -0.0,
+        17.01571
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal"
+      ],
+      "material_slots": [
+        "HullLight",
+        "Metal"
+      ],
+      "motion": "rotate",
+      "name": "SM_Drudge_Tools",
+      "nanite": false,
+      "part": "Tools",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "b1891a5146f4efeb7781a0126f10cd35c3684386a5ef3b5d6f0ccdf64f5b8e91",
+      "triangles": 316,
+      "unit": "Drudge"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Drudge_Body.SM_Drudge_Body",
+      "axis": "+Z",
+      "bounds_max_cm": [
+        11.129207611083984,
+        9.953518867492676,
+        25.000001907348633
+      ],
+      "bounds_min_cm": [
+        -16.0,
+        -9.953518867492676,
+        10.73298454284668
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel",
+        "/Game/Art/Materials/MI_CinderCoreGlow.MI_CinderCoreGlow"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "motion": "root",
+      "name": "SM_Drudge_Body",
+      "nanite": false,
+      "part": "Body",
+      "recoil_direction": null,
+      "sections": 5,
+      "simple_collisions": 0,
+      "source_sha256": "5b55bb0614e6899e93c1e98e85b54cc4cbb9e4dda4ec190f8a0ecfd7690cedcd",
+      "triangles": 684,
+      "unit": "Drudge"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Ember_LegR.SM_Ember_LegR",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        -1.1661654710769653,
+        15.42723274230957,
+        21.59708023071289
+      ],
+      "bounds_min_cm": [
+        -11.656684875488281,
+        5.51715612411499,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -6.41142,
+        7.38656,
+        20.70588
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Ember_LegR",
+      "nanite": false,
+      "part": "LegR",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "3d4d227b0b57536f306d28ac4ede3a35893ce266633166a09c107b6f1465e884",
+      "triangles": 180,
+      "unit": "Ember"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Ember_LegL.SM_Ember_LegL",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        -1.1661618947982788,
+        -5.517159461975098,
+        21.59708023071289
+      ],
+      "bounds_min_cm": [
+        -11.656682014465332,
+        -15.427234649658203,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -6.41142,
+        -7.38656,
+        20.70588
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Ember_LegL",
+      "nanite": false,
+      "part": "LegL",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "476ff3b3f26bef3cf29271426fa05a0867d815f02bd97f943ee7a897f15262c7",
+      "triangles": 180,
+      "unit": "Ember"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Ember_Weapon.SM_Ember_Weapon",
+      "axis": "-X",
+      "bounds_max_cm": [
+        20.0,
+        11.04590129852295,
+        36.81882095336914
+      ],
+      "bounds_min_cm": [
+        0.3765566349029541,
+        6.232604026794434,
+        30.945880889892578
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.37656,
+        8.63925,
+        33.88235
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal"
+      ],
+      "motion": "recoil",
+      "name": "SM_Ember_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "recoil_direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "sections": 3,
+      "simple_collisions": 0,
+      "source_sha256": "b88f36471da45e2fc3571a13d0ca1adf6c8d1e24a7d2c37883dff64f8de54c04",
+      "triangles": 148,
+      "unit": "Ember"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Ember_Body.SM_Ember_Body",
+      "axis": "+Z",
+      "bounds_max_cm": [
+        6.958324909210205,
+        13.50872802734375,
+        48.0
+      ],
+      "bounds_min_cm": [
+        -20.0,
+        -13.508729934692383,
+        15.811763763427734
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel",
+        "/Game/Art/Materials/MI_CinderCoreGlow.MI_CinderCoreGlow"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "motion": "root",
+      "name": "SM_Ember_Body",
+      "nanite": false,
+      "part": "Body",
+      "recoil_direction": null,
+      "sections": 5,
+      "simple_collisions": 0,
+      "source_sha256": "ba6c6d89f8e713811195b26d8301b37bb63c50a52af3b47c18ef2a96d434bc4e",
+      "triangles": 896,
+      "unit": "Ember"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Needle_LegR.SM_Needle_LegR",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        -3.170048713684082,
+        11.903339385986328,
+        19.83361053466797
+      ],
+      "bounds_min_cm": [
+        -11.264321327209473,
+        4.167798042297363,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -7.21718,
+        5.69932,
+        19.04937
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Needle_LegR",
+      "nanite": false,
+      "part": "LegR",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "75d549fb78837905affa642e77a5dc283072c82038f26ffa6bef05e1565fa745",
+      "triangles": 180,
+      "unit": "Needle"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Needle_LegL.SM_Needle_LegL",
+      "axis": "+Y",
+      "bounds_max_cm": [
+        -3.170046091079712,
+        -4.167800426483154,
+        19.83361053466797
+      ],
+      "bounds_min_cm": [
+        -11.264318466186523,
+        -11.903342247009277,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -7.21718,
+        -5.69932,
+        19.04937
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "rotate",
+      "name": "SM_Needle_LegL",
+      "nanite": false,
+      "part": "LegL",
+      "recoil_direction": null,
+      "sections": 2,
+      "simple_collisions": 0,
+      "source_sha256": "916996d2a619a58fe8069655bb33336ae75ffdafb903d767cc6570e8d079fb41",
+      "triangles": 180,
+      "unit": "Needle"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Needle_Weapon.SM_Needle_Weapon",
+      "axis": "-X",
+      "bounds_max_cm": [
+        20.999998092651367,
+        8.620527267456055,
+        39.276344299316406
+      ],
+      "bounds_min_cm": [
+        -4.323484420776367,
+        -8.620521545410156,
+        30.75906753540039
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -3.95943,
+        -0.0,
+        36.36699
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "motion": "recoil",
+      "name": "SM_Needle_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "recoil_direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "sections": 4,
+      "simple_collisions": 0,
+      "source_sha256": "3991c97181d09a840fea2832cd5b7660a0105e540b57aa07d254f076ba1f8bbe",
+      "triangles": 480,
+      "unit": "Needle"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Needle_Body.SM_Needle_Body",
+      "axis": "+Z",
+      "bounds_max_cm": [
+        -1.1652945280075073,
+        9.594767570495605,
+        47.0
+      ],
+      "bounds_min_cm": [
+        -21.0,
+        -9.594772338867188,
+        18.52984619140625
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel",
+        "/Game/Art/Materials/MI_CinderCoreGlow.MI_CinderCoreGlow"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "motion": "root",
+      "name": "SM_Needle_Body",
+      "nanite": false,
+      "part": "Body",
+      "recoil_direction": null,
+      "sections": 5,
+      "simple_collisions": 0,
+      "source_sha256": "3112d740fbcc1caeb143ee83e5358449fa318c1588b22cb5e69281e882c71762",
+      "triangles": 784,
+      "unit": "Needle"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Anvil_Weapon.SM_Anvil_Weapon",
+      "axis": "-X",
+      "bounds_max_cm": [
+        34.0,
+        4.621592998504639,
+        34.69627380371094
+      ],
+      "bounds_min_cm": [
+        7.007246971130371,
+        -4.621583938598633,
+        26.80165672302246
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        7.00725,
+        -0.0,
+        30.74896
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal"
+      ],
+      "motion": "recoil",
+      "name": "SM_Anvil_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "recoil_direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "sections": 3,
+      "simple_collisions": 0,
+      "source_sha256": "3a30fff17fc0708232157fef1837e5d7f283b0e083cdc7a3a46095a6be9f0a5a",
+      "triangles": 148,
+      "unit": "Anvil"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Anvil_Body.SM_Anvil_Body",
+      "axis": "+Z",
+      "bounds_max_cm": [
+        26.684955596923828,
+        29.84539031982422,
+        38.0
+      ],
+      "bounds_min_cm": [
+        -34.000003814697266,
+        -29.84538459777832,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel",
+        "/Game/Art/Materials/MI_CinderCoreGlow.MI_CinderCoreGlow"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "motion": "root",
+      "name": "SM_Anvil_Body",
+      "nanite": false,
+      "part": "Body",
+      "recoil_direction": null,
+      "sections": 5,
+      "simple_collisions": 0,
+      "source_sha256": "4a48463f1db46fe89bf084bdb47b1c8bd98573878d80f16b415c5ef11a7ad468",
+      "triangles": 2836,
+      "unit": "Anvil"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Cinderthrow_Weapon.SM_Cinderthrow_Weapon",
+      "axis": "barrel -X",
+      "bounds_max_cm": [
+        29.999996185302734,
+        4.888413906097412,
+        37.999996185302734
+      ],
+      "bounds_min_cm": [
+        -12.619516372680664,
+        -4.888413429260254,
+        22.95233154296875
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -11.99535,
+        -0.0,
+        25.97186
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal"
+      ],
+      "motion": "recoil",
+      "name": "SM_Cinderthrow_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "recoil_direction": [
+        -0.9777859,
+        0.0,
+        -0.2096061
+      ],
+      "sections": 3,
+      "simple_collisions": 0,
+      "source_sha256": "7e75bbc5400e3502b4f63e46c96df2247614642303697562bf9ef3682f1e775f",
+      "triangles": 296,
+      "unit": "Cinderthrow"
+    },
+    {
+      "asset": "/Game/Art/Motion/SM_Cinderthrow_Body.SM_Cinderthrow_Body",
+      "axis": "+Z",
+      "bounds_max_cm": [
+        12.726301193237305,
+        20.92304801940918,
+        30.002429962158203
+      ],
+      "bounds_min_cm": [
+        -30.000001907348633,
+        -20.923057556152344,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "material_assets": [
+        "/Game/Art/Materials/MI_CinderHullDark.MI_CinderHullDark",
+        "/Game/Art/Materials/MI_CinderHullLight.MI_CinderHullLight",
+        "/Game/Art/Materials/MI_CinderMetal.MI_CinderMetal",
+        "/Game/Art/Materials/MI_CinderTeamPanel.MI_CinderTeamPanel",
+        "/Game/Art/Materials/MI_CinderCoreGlow.MI_CinderCoreGlow"
+      ],
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "motion": "root",
+      "name": "SM_Cinderthrow_Body",
+      "nanite": false,
+      "part": "Body",
+      "recoil_direction": null,
+      "sections": 5,
+      "simple_collisions": 0,
+      "source_sha256": "6a62fa589eafa192b5c20a97dd15d5785a284cac5b28954100b0c31cae3c1cf4",
+      "triangles": 2728,
+      "unit": "Cinderthrow"
+    }
+  ],
+  "count": 18,
+  "destination": "/Game/Art/Motion",
+  "generator_sha256": "cbbbfdd0b9378615b9963e21d524a62d53156aceddb1425f1e203f6f67d31ea3",
+  "manifest_sha256": "46a9b3273f94ba50572afb193e94e25a35f35008573b5191f75852359922cacc",
+  "owner": "scripts/unreal_motion_assets.py",
+  "success": true,
+  "utc": "2026-09-11T19:54:03.657455+00:00"
+}

@@ -1,0 +1,230 @@
+{
+  "destination": "/Game/Art/VisualTarget/Models",
+  "validated": [
+    {
+      "name": "SM_Anchor",
+      "path": "/Game/Art/VisualTarget/Models/SM_Anchor.SM_Anchor",
+      "dimensions_cm": [
+        250.00001525878906,
+        250.00001525878906,
+        185.0
+      ],
+      "triangles_lod0": 19476,
+      "lod_count": 3,
+      "lods_created": true,
+      "lod_policy": {
+        "triangle_percentages": [
+          1.0,
+          0.68,
+          0.36
+        ],
+        "screen_sizes": [
+          1.0,
+          0.08,
+          0.025
+        ]
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Kiln",
+      "path": "/Game/Art/VisualTarget/Models/SM_Kiln.SM_Kiln",
+      "dimensions_cm": [
+        180.0,
+        180.0,
+        120.0
+      ],
+      "triangles_lod0": 15388,
+      "lod_count": 3,
+      "lods_created": true,
+      "lod_policy": {
+        "triangle_percentages": [
+          1.0,
+          0.68,
+          0.36
+        ],
+        "screen_sizes": [
+          1.0,
+          0.08,
+          0.025
+        ]
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Siphon",
+      "path": "/Game/Art/VisualTarget/Models/SM_Siphon.SM_Siphon",
+      "dimensions_cm": [
+        152.0,
+        152.0,
+        112.0
+      ],
+      "triangles_lod0": 10276,
+      "lod_count": 3,
+      "lods_created": true,
+      "lod_policy": {
+        "triangle_percentages": [
+          1.0,
+          0.68,
+          0.36
+        ],
+        "screen_sizes": [
+          1.0,
+          0.08,
+          0.025
+        ]
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Crucible",
+      "path": "/Game/Art/VisualTarget/Models/SM_Crucible.SM_Crucible",
+      "dimensions_cm": [
+        208.0,
+        208.0,
+        155.0
+      ],
+      "triangles_lod0": 14416,
+      "lod_count": 3,
+      "lods_created": true,
+      "lod_policy": {
+        "triangle_percentages": [
+          1.0,
+          0.68,
+          0.36
+        ],
+        "screen_sizes": [
+          1.0,
+          0.08,
+          0.025
+        ]
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Resonator",
+      "path": "/Game/Art/VisualTarget/Models/SM_Resonator.SM_Resonator",
+      "dimensions_cm": [
+        170.0,
+        170.0,
+        160.0
+      ],
+      "triangles_lod0": 12364,
+      "lod_count": 3,
+      "lods_created": true,
+      "lod_policy": {
+        "triangle_percentages": [
+          1.0,
+          0.68,
+          0.36
+        ],
+        "screen_sizes": [
+          1.0,
+          0.08,
+          0.025
+        ]
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Ward",
+      "path": "/Game/Art/VisualTarget/Models/SM_Ward.SM_Ward",
+      "dimensions_cm": [
+        96.00000381469727,
+        83.16999816894531,
+        120.0
+      ],
+      "triangles_lod0": 10616,
+      "lod_count": 3,
+      "lods_created": true,
+      "lod_policy": {
+        "triangle_percentages": [
+          1.0,
+          0.68,
+          0.36
+        ],
+        "screen_sizes": [
+          1.0,
+          0.08,
+          0.025
+        ]
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Ore",
+      "path": "/Game/Art/VisualTarget/Models/SM_Ore.SM_Ore",
+      "dimensions_cm": [
+        88.72899627685547,
+        90.0,
+        65.0
+      ],
+      "triangles_lod0": 4516,
+      "lod_count": 3,
+      "lods_created": true,
+      "lod_policy": {
+        "triangle_percentages": [
+          1.0,
+          0.68,
+          0.36
+        ],
+        "screen_sizes": [
+          1.0,
+          0.08,
+          0.025
+        ]
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

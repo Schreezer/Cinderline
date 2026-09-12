@@ -1,0 +1,812 @@
+{
+  "generator": "scripts/create_motion_assets.py",
+  "canonical_builder": "scripts/create_blender_assets.py allow-listed AST function declarations",
+  "canonical_builder_sha256": "c52eb6832cc50ec4af01ee8d8197473eed7a62282157b3d52ca47b44f63311dc",
+  "blender_version": "5.2.1 LTS",
+  "original_geometry": true,
+  "unit": "centimeter",
+  "forward_axis": "+X",
+  "up_axis": "+Z",
+  "handedness": "Unreal left-handed coordinates",
+  "fbx_coordinate_conversion": "post-import Unreal position = (source X, -source Y, source Z)",
+  "root_origin": "same (0,0,0) complete-model root in every part; vertices are not recentered",
+  "destination": "/Game/Art/Motion",
+  "collision": "none",
+  "nanite": false,
+  "material_slot_order": [
+    "HullDark",
+    "HullLight",
+    "Metal",
+    "TeamPanel",
+    "CoreGlow"
+  ],
+  "units": {
+    "Drudge": {
+      "bounds_min_cm": [
+        -16.0,
+        -9.95352,
+        0.0
+      ],
+      "bounds_max_cm": [
+        16.0,
+        9.95352,
+        25.0
+      ],
+      "triangles": 1720
+    },
+    "Ember": {
+      "bounds_min_cm": [
+        -20.0,
+        -15.42723,
+        0.0
+      ],
+      "bounds_max_cm": [
+        20.0,
+        15.42723,
+        48.0
+      ],
+      "triangles": 1404
+    },
+    "Needle": {
+      "bounds_min_cm": [
+        -21.0,
+        -11.90334,
+        0.0
+      ],
+      "bounds_max_cm": [
+        21.0,
+        11.90334,
+        47.0
+      ],
+      "triangles": 1624
+    },
+    "Anvil": {
+      "bounds_min_cm": [
+        -34.0,
+        -29.84539,
+        0.0
+      ],
+      "bounds_max_cm": [
+        34.0,
+        29.84539,
+        38.0
+      ],
+      "triangles": 2984
+    },
+    "Cinderthrow": {
+      "bounds_min_cm": [
+        -30.0,
+        -20.92305,
+        0.0
+      ],
+      "bounds_max_cm": [
+        30.0,
+        20.92305,
+        38.0
+      ],
+      "triangles": 3024
+    }
+  },
+  "assets": [
+    {
+      "name": "SM_Drudge_LegRR",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegRR",
+      "bounds_min_cm": [
+        -11.4339,
+        3.18065,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -4.09679,
+        9.8036,
+        15.07439
+      ],
+      "dimensions_cm": [
+        7.33711,
+        6.62295,
+        15.07439
+      ],
+      "joint_pivot_cm": [
+        -5.61366,
+        4.67572,
+        14.39791
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.023655687014852583,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Drudge_LegRR.fbx",
+      "sha256": "6672a893ea569406baf5808f9b69ba8e87001f4897030999fe593dd49a02b9b4"
+    },
+    {
+      "name": "SM_Drudge_LegFR",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegFR",
+      "bounds_min_cm": [
+        0.36937,
+        3.18065,
+        0.0
+      ],
+      "bounds_max_cm": [
+        7.70648,
+        9.8036,
+        15.07439
+      ],
+      "dimensions_cm": [
+        7.33711,
+        6.62295,
+        15.07439
+      ],
+      "joint_pivot_cm": [
+        1.88624,
+        4.67572,
+        14.39791
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.02365571238998461,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Drudge_LegFR.fbx",
+      "sha256": "04918ab95afcc97f4c12b943e8aa9a26ed927d9f31b74f3840136216ed578d12"
+    },
+    {
+      "name": "SM_Drudge_LegRL",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegRL",
+      "bounds_min_cm": [
+        -11.4339,
+        -9.8036,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -4.09679,
+        -3.18066,
+        15.07439
+      ],
+      "dimensions_cm": [
+        7.3371,
+        6.62295,
+        15.07439
+      ],
+      "joint_pivot_cm": [
+        -5.61366,
+        -4.67572,
+        14.39791
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.02365577498186057,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Drudge_LegRL.fbx",
+      "sha256": "a10d4de9702ee2f6ca18d71f60fca4d2f6d836cc1987e8325c7adaec1196a8b7"
+    },
+    {
+      "name": "SM_Drudge_LegFL",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegFL",
+      "bounds_min_cm": [
+        0.36937,
+        -9.8036,
+        0.0
+      ],
+      "bounds_max_cm": [
+        7.70648,
+        -3.18066,
+        15.07439
+      ],
+      "dimensions_cm": [
+        7.3371,
+        6.62295,
+        15.07439
+      ],
+      "joint_pivot_cm": [
+        1.88624,
+        -4.67572,
+        14.39791
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.02365576821517926,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Drudge_LegFL.fbx",
+      "sha256": "9ec146903ebf59822445c6a86a645891330806918834f7ce2bb4c7cca184f8a4"
+    },
+    {
+      "name": "SM_Drudge_Tools",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "Tools",
+      "bounds_min_cm": [
+        3.13813,
+        -6.52621,
+        6.02094
+      ],
+      "bounds_max_cm": [
+        16.0,
+        6.52621,
+        19.10995
+      ],
+      "dimensions_cm": [
+        12.86187,
+        13.05242,
+        13.08901
+      ],
+      "joint_pivot_cm": [
+        6.71087,
+        -0.0,
+        17.01571
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 168,
+      "triangles": 316,
+      "minimum_triangle_area_cm2": 0.023097257618213202,
+      "material_slots": [
+        "HullLight",
+        "Metal"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Drudge_Tools.fbx",
+      "sha256": "b1891a5146f4efeb7781a0126f10cd35c3684386a5ef3b5d6f0ccdf64f5b8e91"
+    },
+    {
+      "name": "SM_Drudge_Body",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "Body",
+      "bounds_min_cm": [
+        -16.0,
+        -9.95352,
+        10.73298
+      ],
+      "bounds_max_cm": [
+        11.12921,
+        9.95352,
+        25.0
+      ],
+      "dimensions_cm": [
+        27.12921,
+        19.90704,
+        14.26702
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion": "root",
+      "axis": "+Z",
+      "recoil_direction": null,
+      "vertices": 364,
+      "triangles": 684,
+      "minimum_triangle_area_cm2": 0.02568837333715379,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Drudge_Body.fbx",
+      "sha256": "5b55bb0614e6899e93c1e98e85b54cc4cbb9e4dda4ec190f8a0ecfd7690cedcd"
+    },
+    {
+      "name": "SM_Ember_LegR",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "LegR",
+      "bounds_min_cm": [
+        -11.65668,
+        5.51716,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -1.16616,
+        15.42723,
+        21.59708
+      ],
+      "dimensions_cm": [
+        10.49052,
+        9.91008,
+        21.59708
+      ],
+      "joint_pivot_cm": [
+        -6.41142,
+        7.38656,
+        20.70588
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.04137001037421781,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Ember_LegR.fbx",
+      "sha256": "3d4d227b0b57536f306d28ac4ede3a35893ce266633166a09c107b6f1465e884"
+    },
+    {
+      "name": "SM_Ember_LegL",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "LegL",
+      "bounds_min_cm": [
+        -11.65668,
+        -15.42723,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -1.16616,
+        -5.51716,
+        21.59708
+      ],
+      "dimensions_cm": [
+        10.49052,
+        9.91007,
+        21.59708
+      ],
+      "joint_pivot_cm": [
+        -6.41142,
+        -7.38656,
+        20.70588
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.04136990836649335,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Ember_LegL.fbx",
+      "sha256": "476ff3b3f26bef3cf29271426fa05a0867d815f02bd97f943ee7a897f15262c7"
+    },
+    {
+      "name": "SM_Ember_Weapon",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "Weapon",
+      "bounds_min_cm": [
+        0.37656,
+        6.2326,
+        30.94588
+      ],
+      "bounds_max_cm": [
+        20.0,
+        11.0459,
+        36.81882
+      ],
+      "dimensions_cm": [
+        19.62344,
+        4.8133,
+        5.87294
+      ],
+      "joint_pivot_cm": [
+        0.37656,
+        8.63925,
+        33.88235
+      ],
+      "motion": "recoil",
+      "axis": "-X",
+      "recoil_direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "vertices": 80,
+      "triangles": 148,
+      "minimum_triangle_area_cm2": 0.04163285377610097,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Ember_Weapon.fbx",
+      "sha256": "b88f36471da45e2fc3571a13d0ca1adf6c8d1e24a7d2c37883dff64f8de54c04"
+    },
+    {
+      "name": "SM_Ember_Body",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "Body",
+      "bounds_min_cm": [
+        -20.0,
+        -13.50873,
+        15.81176
+      ],
+      "bounds_max_cm": [
+        6.95832,
+        13.50873,
+        48.0
+      ],
+      "dimensions_cm": [
+        26.95832,
+        27.01746,
+        32.18824
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion": "root",
+      "axis": "+Z",
+      "recoil_direction": null,
+      "vertices": 476,
+      "triangles": 896,
+      "minimum_triangle_area_cm2": 0.023732733667473034,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Ember_Body.fbx",
+      "sha256": "ba6c6d89f8e713811195b26d8301b37bb63c50a52af3b47c18ef2a96d434bc4e"
+    },
+    {
+      "name": "SM_Needle_LegR",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "LegR",
+      "bounds_min_cm": [
+        -11.26432,
+        4.1678,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -3.17005,
+        11.90334,
+        19.83361
+      ],
+      "dimensions_cm": [
+        8.09427,
+        7.73554,
+        19.83361
+      ],
+      "joint_pivot_cm": [
+        -7.21718,
+        5.69932,
+        19.04937
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.02891459451308753,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Needle_LegR.fbx",
+      "sha256": "75d549fb78837905affa642e77a5dc283072c82038f26ffa6bef05e1565fa745"
+    },
+    {
+      "name": "SM_Needle_LegL",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "LegL",
+      "bounds_min_cm": [
+        -11.26432,
+        -11.90334,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -3.17005,
+        -4.1678,
+        19.83361
+      ],
+      "dimensions_cm": [
+        8.09427,
+        7.73554,
+        19.83361
+      ],
+      "joint_pivot_cm": [
+        -7.21718,
+        -5.69932,
+        19.04937
+      ],
+      "motion": "rotate",
+      "axis": "+Y",
+      "recoil_direction": null,
+      "vertices": 96,
+      "triangles": 180,
+      "minimum_triangle_area_cm2": 0.028914499897735486,
+      "material_slots": [
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Needle_LegL.fbx",
+      "sha256": "916996d2a619a58fe8069655bb33336ae75ffdafb903d767cc6570e8d079fb41"
+    },
+    {
+      "name": "SM_Needle_Weapon",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "Weapon",
+      "bounds_min_cm": [
+        -4.32348,
+        -8.62052,
+        30.75907
+      ],
+      "bounds_max_cm": [
+        21.0,
+        8.62052,
+        39.27634
+      ],
+      "dimensions_cm": [
+        25.32348,
+        17.24105,
+        8.51728
+      ],
+      "joint_pivot_cm": [
+        -3.95943,
+        -0.0,
+        36.36699
+      ],
+      "motion": "recoil",
+      "axis": "-X",
+      "recoil_direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "vertices": 256,
+      "triangles": 480,
+      "minimum_triangle_area_cm2": 0.028184414131764375,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Needle_Weapon.fbx",
+      "sha256": "3991c97181d09a840fea2832cd5b7660a0105e540b57aa07d254f076ba1f8bbe"
+    },
+    {
+      "name": "SM_Needle_Body",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "Body",
+      "bounds_min_cm": [
+        -21.0,
+        -9.59477,
+        18.52985
+      ],
+      "bounds_max_cm": [
+        -1.1653,
+        9.59477,
+        47.0
+      ],
+      "dimensions_cm": [
+        19.83471,
+        19.18954,
+        28.47015
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion": "root",
+      "axis": "+Z",
+      "recoil_direction": null,
+      "vertices": 418,
+      "triangles": 784,
+      "minimum_triangle_area_cm2": 0.033780464004420634,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Needle_Body.fbx",
+      "sha256": "3112d740fbcc1caeb143ee83e5358449fa318c1588b22cb5e69281e882c71762"
+    },
+    {
+      "name": "SM_Anvil_Weapon",
+      "unit": "Anvil",
+      "kind": "Bastion",
+      "part": "Weapon",
+      "bounds_min_cm": [
+        7.00725,
+        -4.62159,
+        26.80166
+      ],
+      "bounds_max_cm": [
+        34.0,
+        4.62159,
+        34.69627
+      ],
+      "dimensions_cm": [
+        26.99275,
+        9.24318,
+        7.89462
+      ],
+      "joint_pivot_cm": [
+        7.00725,
+        -0.0,
+        30.74896
+      ],
+      "motion": "recoil",
+      "axis": "-X",
+      "recoil_direction": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "vertices": 80,
+      "triangles": 148,
+      "minimum_triangle_area_cm2": 0.038885311502881305,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Anvil_Weapon.fbx",
+      "sha256": "3a30fff17fc0708232157fef1837e5d7f283b0e083cdc7a3a46095a6be9f0a5a"
+    },
+    {
+      "name": "SM_Anvil_Body",
+      "unit": "Anvil",
+      "kind": "Bastion",
+      "part": "Body",
+      "bounds_min_cm": [
+        -34.0,
+        -29.84539,
+        0.0
+      ],
+      "bounds_max_cm": [
+        26.68495,
+        29.84539,
+        38.0
+      ],
+      "dimensions_cm": [
+        60.68495,
+        59.69077,
+        38.0
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion": "root",
+      "axis": "+Z",
+      "recoil_direction": null,
+      "vertices": 1510,
+      "triangles": 2836,
+      "minimum_triangle_area_cm2": 0.026131732668719463,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Anvil_Body.fbx",
+      "sha256": "4a48463f1db46fe89bf084bdb47b1c8bd98573878d80f16b415c5ef11a7ad468"
+    },
+    {
+      "name": "SM_Cinderthrow_Weapon",
+      "unit": "Cinderthrow",
+      "kind": "Mortar",
+      "part": "Weapon",
+      "bounds_min_cm": [
+        -12.61952,
+        -4.88841,
+        22.95233
+      ],
+      "bounds_max_cm": [
+        30.0,
+        4.88841,
+        38.0
+      ],
+      "dimensions_cm": [
+        42.61951,
+        9.77683,
+        15.04766
+      ],
+      "joint_pivot_cm": [
+        -11.99535,
+        -0.0,
+        25.97186
+      ],
+      "motion": "recoil",
+      "axis": "barrel -X",
+      "recoil_direction": [
+        -0.9777859,
+        0.0,
+        -0.2096061
+      ],
+      "vertices": 156,
+      "triangles": 296,
+      "minimum_triangle_area_cm2": 0.0018824663789634571,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Cinderthrow_Weapon.fbx",
+      "sha256": "7e75bbc5400e3502b4f63e46c96df2247614642303697562bf9ef3682f1e775f"
+    },
+    {
+      "name": "SM_Cinderthrow_Body",
+      "unit": "Cinderthrow",
+      "kind": "Mortar",
+      "part": "Body",
+      "bounds_min_cm": [
+        -30.0,
+        -20.92305,
+        0.0
+      ],
+      "bounds_max_cm": [
+        12.7263,
+        20.92305,
+        30.00243
+      ],
+      "dimensions_cm": [
+        42.7263,
+        41.84611,
+        30.00243
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "motion": "root",
+      "axis": "+Z",
+      "recoil_direction": null,
+      "vertices": 1444,
+      "triangles": 2728,
+      "minimum_triangle_area_cm2": 0.021958392711395797,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/Motion/FBX/SM_Cinderthrow_Body.fbx",
+      "sha256": "6a62fa589eafa192b5c20a97dd15d5785a284cac5b28954100b0c31cae3c1cf4"
+    }
+  ]
+}

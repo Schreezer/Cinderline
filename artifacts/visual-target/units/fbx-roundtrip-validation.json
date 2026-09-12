@@ -1,0 +1,743 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "SM_Drudge",
+      "passed": true,
+      "triangles": 6072,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -16.0,
+        -9.9535,
+        0.0
+      ],
+      "bounds_max_cm": [
+        16.0,
+        9.9535,
+        25.0
+      ],
+      "maximum_vertex_error_cm": 3e-06,
+      "minimum_triangle_area_cm2": 0.0026742714415983657,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Drudge_Body",
+      "passed": true,
+      "triangles": 872,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -16.0,
+        -8.82398,
+        10.85106
+      ],
+      "bounds_max_cm": [
+        12.41096,
+        8.82398,
+        25.0
+      ],
+      "maximum_vertex_error_cm": 3e-06,
+      "minimum_triangle_area_cm2": 0.01661099892309042,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Drudge_LegFL",
+      "passed": true,
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -1.50073,
+        3.78824,
+        0.0
+      ],
+      "bounds_max_cm": [
+        10.91585,
+        9.9535,
+        17.07234
+      ],
+      "maximum_vertex_error_cm": 2.7e-06,
+      "minimum_triangle_area_cm2": 0.017098466596233187,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Drudge_LegFR",
+      "passed": true,
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -1.50073,
+        -9.9535,
+        0.0
+      ],
+      "bounds_max_cm": [
+        10.91585,
+        -3.78824,
+        17.07234
+      ],
+      "maximum_vertex_error_cm": 2.7e-06,
+      "minimum_triangle_area_cm2": 0.017098464744500705,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Drudge_LegRL",
+      "passed": true,
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -12.76612,
+        3.78976,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -4.97211,
+        9.9535,
+        17.07234
+      ],
+      "maximum_vertex_error_cm": 2.7e-06,
+      "minimum_triangle_area_cm2": 0.01709847925250352,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Drudge_LegRR",
+      "passed": true,
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -12.76612,
+        -9.9535,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -4.97212,
+        -3.78976,
+        17.07234
+      ],
+      "maximum_vertex_error_cm": 2.7e-06,
+      "minimum_triangle_area_cm2": 0.01709847333826646,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Drudge_Tools",
+      "passed": true,
+      "triangles": 1472,
+      "material_slots": [
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        4.5341,
+        -5.89637,
+        0.10638
+      ],
+      "bounds_max_cm": [
+        16.0,
+        5.89636,
+        18.68211
+      ],
+      "maximum_vertex_error_cm": 2.6e-06,
+      "minimum_triangle_area_cm2": 0.0026742714415983657,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Ember",
+      "passed": true,
+      "triangles": 6096,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -20.0,
+        -15.427,
+        0.0
+      ],
+      "bounds_max_cm": [
+        20.0,
+        15.427,
+        48.0
+      ],
+      "maximum_vertex_error_cm": 3.4e-06,
+      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Ember_Body",
+      "passed": true,
+      "triangles": 2820,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -20.0,
+        -15.427,
+        19.41177
+      ],
+      "bounds_max_cm": [
+        7.71707,
+        15.427,
+        48.0
+      ],
+      "maximum_vertex_error_cm": 3.4e-06,
+      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Ember_LegL",
+      "passed": true,
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -13.96325,
+        4.57896,
+        0.0
+      ],
+      "bounds_max_cm": [
+        2.60754,
+        11.20274,
+        22.99765
+      ],
+      "maximum_vertex_error_cm": 2.7e-06,
+      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Ember_LegR",
+      "passed": true,
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -13.96325,
+        -11.20274,
+        0.0
+      ],
+      "bounds_max_cm": [
+        2.60754,
+        -4.57896,
+        22.99765
+      ],
+      "maximum_vertex_error_cm": 2.7e-06,
+      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Ember_Weapon",
+      "passed": true,
+      "triangles": 980,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -4.73701,
+        -12.56704,
+        31.39361
+      ],
+      "bounds_max_cm": [
+        20.0,
+        -5.89194,
+        38.25076
+      ],
+      "maximum_vertex_error_cm": 3.4e-06,
+      "minimum_triangle_area_cm2": 0.010280047173083295,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Needle",
+      "passed": true,
+      "triangles": 6752,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -21.0,
+        -11.9035,
+        0.0
+      ],
+      "bounds_max_cm": [
+        21.0,
+        11.9035,
+        47.0
+      ],
+      "maximum_vertex_error_cm": 3.8e-06,
+      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Needle_Body",
+      "passed": true,
+      "triangles": 2820,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -21.0,
+        -11.9035,
+        19.00735
+      ],
+      "bounds_max_cm": [
+        6.44206,
+        11.9035,
+        47.0
+      ],
+      "maximum_vertex_error_cm": 3.8e-06,
+      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Needle_LegL",
+      "passed": true,
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -15.98909,
+        2.37978,
+        0.0
+      ],
+      "bounds_max_cm": [
+        0.41729,
+        8.05684,
+        20.88242
+      ],
+      "maximum_vertex_error_cm": 2.6e-06,
+      "minimum_triangle_area_cm2": 0.013772927233871864,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Needle_LegR",
+      "passed": true,
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -15.9891,
+        -8.05684,
+        0.0
+      ],
+      "bounds_max_cm": [
+        0.41729,
+        -2.37978,
+        20.88242
+      ],
+      "maximum_vertex_error_cm": 2.6e-06,
+      "minimum_triangle_area_cm2": 0.013772928092326319,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Needle_Weapon",
+      "passed": true,
+      "triangles": 1636,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -11.08488,
+        -3.47948,
+        33.19326
+      ],
+      "bounds_max_cm": [
+        21.0,
+        3.47949,
+        39.90754
+      ],
+      "maximum_vertex_error_cm": 3.2e-06,
+      "minimum_triangle_area_cm2": 0.00881478709855401,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Skim",
+      "passed": true,
+      "triangles": 3216,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -18.0,
+        -8.647,
+        0.0
+      ],
+      "bounds_max_cm": [
+        18.0,
+        8.647,
+        14.0
+      ],
+      "maximum_vertex_error_cm": 3.4e-06,
+      "minimum_triangle_area_cm2": 0.006393363018783723,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Anvil",
+      "passed": true,
+      "triangles": 7308,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -34.0,
+        -29.8455,
+        0.0
+      ],
+      "bounds_max_cm": [
+        34.0,
+        29.8455,
+        38.0
+      ],
+      "maximum_vertex_error_cm": 6.9e-06,
+      "minimum_triangle_area_cm2": 0.0004448430121685109,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Anvil_Body",
+      "passed": true,
+      "triangles": 5452,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -34.0,
+        -29.8455,
+        0.0
+      ],
+      "bounds_max_cm": [
+        28.10019,
+        29.8455,
+        32.02452
+      ],
+      "maximum_vertex_error_cm": 6.9e-06,
+      "minimum_triangle_area_cm2": 0.0004448430121685109,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Anvil_Weapon",
+      "passed": true,
+      "triangles": 1856,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -8.84464,
+        -13.07406,
+        23.21322
+      ],
+      "bounds_max_cm": [
+        34.0,
+        13.07405,
+        38.0
+      ],
+      "maximum_vertex_error_cm": 5.2e-06,
+      "minimum_triangle_area_cm2": 0.015758056665792136,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Cinderthrow",
+      "passed": true,
+      "triangles": 7084,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -30.0,
+        -20.923,
+        0.0
+      ],
+      "bounds_max_cm": [
+        30.0,
+        20.923,
+        38.0
+      ],
+      "maximum_vertex_error_cm": 5.4e-06,
+      "minimum_triangle_area_cm2": 0.00039138190891145044,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Cinderthrow_Body",
+      "passed": true,
+      "triangles": 5452,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -30.0,
+        -20.923,
+        0.0
+      ],
+      "bounds_max_cm": [
+        24.96942,
+        20.923,
+        30.79344
+      ],
+      "maximum_vertex_error_cm": 5.4e-06,
+      "minimum_triangle_area_cm2": 0.00039138190891145044,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Cinderthrow_Weapon",
+      "passed": true,
+      "triangles": 1632,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "bounds_min_cm": [
+        -19.45866,
+        -9.97178,
+        21.41358
+      ],
+      "bounds_max_cm": [
+        30.0,
+        9.97178,
+        38.0
+      ],
+      "maximum_vertex_error_cm": 4.7e-06,
+      "minimum_triangle_area_cm2": 0.013944113535373297,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Mend",
+      "passed": true,
+      "triangles": 3368,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -19.0,
+        -17.122,
+        0.0
+      ],
+      "bounds_max_cm": [
+        19.0,
+        17.122,
+        39.0
+      ],
+      "maximum_vertex_error_cm": 3.4e-06,
+      "minimum_triangle_area_cm2": 0.002998353699553523,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    },
+    {
+      "name": "SM_Veil",
+      "passed": true,
+      "triangles": 3352,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "bounds_min_cm": [
+        -24.8475,
+        -26.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        24.8475,
+        26.0,
+        18.0
+      ],
+      "maximum_vertex_error_cm": 5.4e-06,
+      "minimum_triangle_area_cm2": 0.00984754282719378,
+      "triangles_below_unreal_threshold": 0,
+      "vertex_color_alpha_range": [
+        0.2784,
+        1.0
+      ]
+    }
+  ]
+}

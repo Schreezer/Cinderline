@@ -1,0 +1,32 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "info",
+      "processes",
+      "--device",
+      "00008150-00060CE12684401C",
+      "--search",
+      "Cinderline",
+      "--json-output",
+      "artifacts/visual-target/aeon/processes.json"
+    ],
+    "commandType" : "devicectl.device.info.processes",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "runningProcesses" : [
+      {
+        "executable" : "file:///private/var/containers/Bundle/Application/B8A95B32-651D-4FDF-BD1F-8432DBB5BD91/Cinderline.app/Cinderline",
+        "processIdentifier" : 14386
+      }
+    ]
+  }
+}

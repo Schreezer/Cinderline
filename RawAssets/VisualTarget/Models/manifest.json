@@ -1,0 +1,281 @@
+{
+  "generator": "scripts/create_visual_target_models.py",
+  "blender_version": "5.2.1 LTS",
+  "unit": "centimeter",
+  "forward_axis": "+X",
+  "up_axis": "+Z",
+  "origin": "bottom center of bounds",
+  "material_slots": [
+    "HullDark",
+    "HullLight",
+    "Metal",
+    "TeamPanel",
+    "CoreGlow"
+  ],
+  "destination": "/Game/Art/VisualTarget/Models",
+  "fbx_export": {
+    "global_scale": 1,
+    "scene_unit_scale_length": 0.01,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "use_space_transform": true,
+    "bake_space_transform": false,
+    "triangulated": true
+  },
+  "assets": [
+    {
+      "name": "SM_Anchor",
+      "kind": "Headquarters",
+      "definition_radius_cm": 125.0,
+      "dimensions_cm": [
+        250.0,
+        250.0,
+        185.0
+      ],
+      "vertices": 10008,
+      "triangles": 19476,
+      "minimum_triangle_area_cm2": 0.0048318171234572535,
+      "unreal_degenerate_triangles": 0,
+      "vertex_ao": {
+        "attribute": "AO",
+        "channel": "alpha",
+        "fully_lit": 1.0,
+        "minimum": 0.28,
+        "mean": 0.5181,
+        "samples": 16
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/VisualTarget/Models/FBX/SM_Anchor.fbx",
+      "sha256": "5c4a4cf3b8641db4a5cf9397f775374018ecbaf6566093cddb1bc201818b4ef8",
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ]
+    },
+    {
+      "name": "SM_Kiln",
+      "kind": "Foundry",
+      "definition_radius_cm": 90.0,
+      "dimensions_cm": [
+        180.0,
+        180.0,
+        120.0
+      ],
+      "vertices": 7896,
+      "triangles": 15388,
+      "minimum_triangle_area_cm2": 0.0004116533872365162,
+      "unreal_degenerate_triangles": 0,
+      "vertex_ao": {
+        "attribute": "AO",
+        "channel": "alpha",
+        "fully_lit": 1.0,
+        "minimum": 0.28,
+        "mean": 0.5651,
+        "samples": 16
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/VisualTarget/Models/FBX/SM_Kiln.fbx",
+      "sha256": "7e5e0af2538267dffc535aaec60cf68224ba270b897c378b416370df61110095",
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ]
+    },
+    {
+      "name": "SM_Siphon",
+      "kind": "Processor",
+      "definition_radius_cm": 76.0,
+      "dimensions_cm": [
+        152.0,
+        152.0,
+        112.0
+      ],
+      "vertices": 5228,
+      "triangles": 10276,
+      "minimum_triangle_area_cm2": 0.012933265238570416,
+      "unreal_degenerate_triangles": 0,
+      "vertex_ao": {
+        "attribute": "AO",
+        "channel": "alpha",
+        "fully_lit": 1.0,
+        "minimum": 0.28,
+        "mean": 0.5741,
+        "samples": 16
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/VisualTarget/Models/FBX/SM_Siphon.fbx",
+      "sha256": "3356627acb00c0648f31fece9c130520a14c8c26d17898143ce689e592b5a0be",
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ]
+    },
+    {
+      "name": "SM_Crucible",
+      "kind": "MotorPool",
+      "definition_radius_cm": 104.0,
+      "dimensions_cm": [
+        208.0,
+        208.0,
+        155.0
+      ],
+      "vertices": 7396,
+      "triangles": 14416,
+      "minimum_triangle_area_cm2": 0.0013037804843034444,
+      "unreal_degenerate_triangles": 0,
+      "vertex_ao": {
+        "attribute": "AO",
+        "channel": "alpha",
+        "fully_lit": 1.0,
+        "minimum": 0.28,
+        "mean": 0.564,
+        "samples": 16
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/VisualTarget/Models/FBX/SM_Crucible.fbx",
+      "sha256": "76342f4225d248bc9e639c95d8cc208599215e7cc4c5f038c14ef60f41e773c1",
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ]
+    },
+    {
+      "name": "SM_Resonator",
+      "kind": "Laboratory",
+      "definition_radius_cm": 85.0,
+      "dimensions_cm": [
+        170.0,
+        170.0,
+        160.0
+      ],
+      "vertices": 6294,
+      "triangles": 12364,
+      "minimum_triangle_area_cm2": 0.016135577378109233,
+      "unreal_degenerate_triangles": 0,
+      "vertex_ao": {
+        "attribute": "AO",
+        "channel": "alpha",
+        "fully_lit": 1.0,
+        "minimum": 0.28,
+        "mean": 0.5853,
+        "samples": 16
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/VisualTarget/Models/FBX/SM_Resonator.fbx",
+      "sha256": "4dfec7f8bab84d9183abaf68e1fb85133e2fb0f4b82115a9e059cc25ae2c78b7",
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ]
+    },
+    {
+      "name": "SM_Ward",
+      "kind": "Turret",
+      "definition_radius_cm": 48.0,
+      "dimensions_cm": [
+        96.0,
+        83.17,
+        120.0
+      ],
+      "vertices": 5412,
+      "triangles": 10616,
+      "minimum_triangle_area_cm2": 0.008425243723010217,
+      "unreal_degenerate_triangles": 0,
+      "vertex_ao": {
+        "attribute": "AO",
+        "channel": "alpha",
+        "fully_lit": 1.0,
+        "minimum": 0.28,
+        "mean": 0.561,
+        "samples": 16
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/VisualTarget/Models/FBX/SM_Ward.fbx",
+      "sha256": "75454c46ba55bd01d0015f437e97ce5affcbf801b8343d91b0745e094e07d2de",
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ]
+    },
+    {
+      "name": "SM_Ore",
+      "kind": "Resource",
+      "definition_radius_cm": 45.0,
+      "dimensions_cm": [
+        88.729,
+        90.0,
+        65.0
+      ],
+      "vertices": 2312,
+      "triangles": 4516,
+      "minimum_triangle_area_cm2": 0.01676211339964088,
+      "unreal_degenerate_triangles": 0,
+      "vertex_ao": {
+        "attribute": "AO",
+        "channel": "alpha",
+        "fully_lit": 1.0,
+        "minimum": 0.28,
+        "mean": 0.5833,
+        "samples": 16
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "fbx": "RawAssets/VisualTarget/Models/FBX/SM_Ore.fbx",
+      "sha256": "7aa8dfc849a5588345b01d2f441ff01cf1f180d5d288776674664e9974887d8f",
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ]
+    }
+  ]
+}

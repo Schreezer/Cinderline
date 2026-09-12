@@ -1,0 +1,49 @@
+{
+  "api_files": "https://api.polyhaven.com/files/dry_ground_rocks",
+  "api_metadata": "https://api.polyhaven.com/assets?t=textures",
+  "asset_id": "dry_ground_rocks",
+  "authors": {
+    "Rob Tuytel": "All"
+  },
+  "categories": [
+    "terrain",
+    "outdoor",
+    "natural"
+  ],
+  "description": "Free 8K texture of dry, cracked ground with rough stony soil, parched brown dirt, compacted mud and scattered small rocks, gritty surface detail.",
+  "files": {
+    "AO": {
+      "bytes": 2361466,
+      "filename": "dry_ground_rocks_ao_2k.jpg",
+      "md5": "b1151db9b276cbf92e9d05185eebaeb7",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_ao_2k.jpg"
+    },
+    "Color": {
+      "bytes": 3428360,
+      "filename": "dry_ground_rocks_diff_2k.jpg",
+      "md5": "3106a1157ea4c6823b78494988ac0269",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg"
+    },
+    "Normal": {
+      "bytes": 5426178,
+      "filename": "dry_ground_rocks_nor_dx_2k.jpg",
+      "md5": "8907b86aed5000d0a40e41f49580ad53",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_nor_dx_2k.jpg"
+    },
+    "Roughness": {
+      "bytes": 1890402,
+      "filename": "dry_ground_rocks_rough_2k.jpg",
+      "md5": "5a461a436095cbe54cbd1de156bdc164",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/dry_ground_rocks/dry_ground_rocks_rough_2k.jpg"
+    }
+  },
+  "license": "CC0 1.0 Universal",
+  "license_url": "https://polyhaven.com/license",
+  "name": "Dry Ground Rocks",
+  "physical_dimensions_mm": [
+    4000,
+    4000
+  ],
+  "resolution": "2k",
+  "source_page": "https://polyhaven.com/a/dry_ground_rocks"
+}

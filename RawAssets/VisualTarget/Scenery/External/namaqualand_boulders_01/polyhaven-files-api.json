@@ -1,0 +1,904 @@
+{
+  "Diffuse": {
+    "8k": {
+      "jpg": {
+        "size": 28012199,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_diff_8k.jpg",
+        "md5": "69259c508c3ca47910d6a8bfb95d8af7"
+      },
+      "png": {
+        "size": 180364151,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/namaqualand_boulders_01/namaqualand_boulders_01_diff_8k.png",
+        "md5": "80739e53c40d1b75bf007f3ba267abb0"
+      },
+      "exr": {
+        "size": 46360436,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_diff_8k.exr",
+        "md5": "b38e5d5ab815027e19cb87c71eac22b3"
+      }
+    },
+    "4k": {
+      "jpg": {
+        "size": 9190031,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_diff_4k.jpg",
+        "md5": "da39c44e39ad37480b4535add6096aeb"
+      },
+      "png": {
+        "size": 65420241,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/namaqualand_boulders_01/namaqualand_boulders_01_diff_4k.png",
+        "md5": "f09564d5e1e7c99f2cd15aefa624aeec"
+      },
+      "exr": {
+        "size": 14673572,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_diff_4k.exr",
+        "md5": "8b5d351c387e2ed0f4be2c385d6925f5"
+      }
+    },
+    "2k": {
+      "jpg": {
+        "size": 2855649,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.jpg",
+        "md5": "97c35767a39c957e19bbbe75edf99627"
+      },
+      "png": {
+        "size": 18443914,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.png",
+        "md5": "176b77d0be040457458566b1d7b57ad3"
+      },
+      "exr": {
+        "size": 4871033,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.exr",
+        "md5": "7e0b5ff2e14646da8e9a5874384726a8"
+      }
+    },
+    "1k": {
+      "jpg": {
+        "size": 830079,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_diff_1k.jpg",
+        "md5": "1ed791727bbb6f26f77246e5de17d901"
+      },
+      "png": {
+        "size": 5017527,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/namaqualand_boulders_01/namaqualand_boulders_01_diff_1k.png",
+        "md5": "d6a6e92209413f52f63f4d4dcddc0498"
+      },
+      "exr": {
+        "size": 1512427,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_diff_1k.exr",
+        "md5": "1717b996ca4d95513afcd714e20fed23"
+      }
+    }
+  },
+  "nor_dx": {
+    "8k": {
+      "jpg": {
+        "size": 42213021,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_8k.jpg",
+        "md5": "48b21196b3aac2e7f2ff845421ddce70"
+      },
+      "png": {
+        "size": 246386983,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_8k.png",
+        "md5": "8c0d4e1e2a5b5c4db3635db531957406"
+      },
+      "exr": {
+        "size": 78723654,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_8k.exr",
+        "md5": "088c390c48868a934bf3180d942a1531"
+      }
+    },
+    "4k": {
+      "jpg": {
+        "size": 14052062,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_4k.jpg",
+        "md5": "c6a046d5404f899e81543199471e9f5b"
+      },
+      "png": {
+        "size": 69131042,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_4k.png",
+        "md5": "0cccb28476846ca588e259955be5cc22"
+      },
+      "exr": {
+        "size": 28276762,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_4k.exr",
+        "md5": "03dace5e5f3398a13cbf0bca516d2f1f"
+      }
+    },
+    "2k": {
+      "jpg": {
+        "size": 4150644,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_2k.jpg",
+        "md5": "46534d5aa0ebeb3a8ac5ea7ea4540aab"
+      },
+      "png": {
+        "size": 19223544,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_2k.png",
+        "md5": "1fdd4d5362ae47018de9fecb6939fe73"
+      },
+      "exr": {
+        "size": 8357298,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_2k.exr",
+        "md5": "ed0c39d6c14be5ed4edf143316e942a6"
+      }
+    },
+    "1k": {
+      "jpg": {
+        "size": 1157703,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_1k.jpg",
+        "md5": "2bd5ade976604a233b654525f219a717"
+      },
+      "png": {
+        "size": 5205600,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_1k.png",
+        "md5": "854bf904fdc6f98eed21358c3a95a778"
+      },
+      "exr": {
+        "size": 2331627,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_dx_1k.exr",
+        "md5": "1670fd24a11b58e2f2c93bda9c8f364f"
+      }
+    }
+  },
+  "nor_gl": {
+    "8k": {
+      "jpg": {
+        "size": 42228385,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_8k.jpg",
+        "md5": "ef6afdc63e2470bebbb09c81ebb8fddf"
+      },
+      "png": {
+        "size": 246391266,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_8k.png",
+        "md5": "cad247a5be37b63661479efe2f2411e9"
+      },
+      "exr": {
+        "size": 78727252,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_8k.exr",
+        "md5": "1ae6c19666e85402070cc8667f732853"
+      }
+    },
+    "4k": {
+      "jpg": {
+        "size": 14059277,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_4k.jpg",
+        "md5": "e9a347ec6875b2d67604c179facbddc5"
+      },
+      "png": {
+        "size": 69125716,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_4k.png",
+        "md5": "b44915aa5da50641d01bf56e6bb62fc9"
+      },
+      "exr": {
+        "size": 28282215,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_4k.exr",
+        "md5": "38a18cf995b54dd5975c41c10dee28a9"
+      }
+    },
+    "2k": {
+      "jpg": {
+        "size": 4153995,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.jpg",
+        "md5": "9e3097a5834701165c5bf29970f92086"
+      },
+      "png": {
+        "size": 19223804,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.png",
+        "md5": "0fab309d5f93124f7ea5c6c9eac9ea80"
+      },
+      "exr": {
+        "size": 8359392,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.exr",
+        "md5": "b9d1f114980c8c5696274638b1f41384"
+      }
+    },
+    "1k": {
+      "jpg": {
+        "size": 1159170,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_1k.jpg",
+        "md5": "0f3ad6c29c72b9fe28fc91dc3cf15c00"
+      },
+      "png": {
+        "size": 5203681,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_1k.png",
+        "md5": "e8255597da654c3257417a4b970fbb1b"
+      },
+      "exr": {
+        "size": 2330954,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_1k.exr",
+        "md5": "4bc3e016774cd698e360d435cd6481f7"
+      }
+    }
+  },
+  "blend": {
+    "8k": {
+      "blend": {
+        "include": {
+          "textures/namaqualand_boulders_01_rough_8k.exr": {
+            "size": 14572485,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_rough_8k.exr",
+            "md5": "812a885ac543445e5eebe9dd9687d298"
+          },
+          "textures/namaqualand_boulders_01_diff_8k.jpg": {
+            "size": 28012199,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_diff_8k.jpg",
+            "md5": "69259c508c3ca47910d6a8bfb95d8af7"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_8k.exr": {
+            "size": 78727252,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_8k.exr",
+            "md5": "1ae6c19666e85402070cc8667f732853"
+          }
+        },
+        "size": 2728807,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/8k/namaqualand_boulders_01/namaqualand_boulders_01_8k.blend",
+        "md5": "0f387fdbb19ade71b2d5aedde074e6d6"
+      }
+    },
+    "4k": {
+      "blend": {
+        "include": {
+          "textures/namaqualand_boulders_01_nor_gl_4k.exr": {
+            "size": 28282215,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_4k.exr",
+            "md5": "38a18cf995b54dd5975c41c10dee28a9"
+          },
+          "textures/namaqualand_boulders_01_diff_4k.jpg": {
+            "size": 9190031,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_diff_4k.jpg",
+            "md5": "da39c44e39ad37480b4535add6096aeb"
+          },
+          "textures/namaqualand_boulders_01_rough_4k.exr": {
+            "size": 4980282,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_rough_4k.exr",
+            "md5": "cd8d247d0debc8f6a91ce473dafdf58e"
+          }
+        },
+        "size": 2728842,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/4k/namaqualand_boulders_01/namaqualand_boulders_01_4k.blend",
+        "md5": "ef3538617fc55a0cb9b5aad9c96f5e9f"
+      }
+    },
+    "2k": {
+      "blend": {
+        "include": {
+          "textures/namaqualand_boulders_01_rough_2k.exr": {
+            "size": 1541027,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_rough_2k.exr",
+            "md5": "cf65d2c198373f7dacc6278013c1c2ce"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_2k.exr": {
+            "size": 8359392,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.exr",
+            "md5": "b9d1f114980c8c5696274638b1f41384"
+          },
+          "textures/namaqualand_boulders_01_diff_2k.jpg": {
+            "size": 2855649,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.jpg",
+            "md5": "97c35767a39c957e19bbbe75edf99627"
+          }
+        },
+        "size": 2728484,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/2k/namaqualand_boulders_01/namaqualand_boulders_01_2k.blend",
+        "md5": "74891545afc9c5ee427538a321f993af"
+      }
+    },
+    "1k": {
+      "blend": {
+        "include": {
+          "textures/namaqualand_boulders_01_diff_1k.jpg": {
+            "size": 830079,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_diff_1k.jpg",
+            "md5": "1ed791727bbb6f26f77246e5de17d901"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_1k.exr": {
+            "size": 2330954,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_1k.exr",
+            "md5": "4bc3e016774cd698e360d435cd6481f7"
+          },
+          "textures/namaqualand_boulders_01_rough_1k.exr": {
+            "size": 449848,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_rough_1k.exr",
+            "md5": "cacdcf7c7164d78b198289ad9aba5004"
+          }
+        },
+        "size": 2728524,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/1k/namaqualand_boulders_01/namaqualand_boulders_01_1k.blend",
+        "md5": "b74a31c28040c3f2f65a9c41eaf51f60"
+      }
+    }
+  },
+  "gltf": {
+    "8k": {
+      "gltf": {
+        "include": {
+          "textures/namaqualand_boulders_01_nor_gl_8k.jpg": {
+            "size": 42228385,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_8k.jpg",
+            "md5": "ef6afdc63e2470bebbb09c81ebb8fddf"
+          },
+          "textures/namaqualand_boulders_01_arm_8k.jpg": {
+            "size": 29428392,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_arm_8k.jpg",
+            "md5": "f30746b5aa772f4f0296b2fb0e33f920"
+          },
+          "textures/namaqualand_boulders_01_diff_8k.jpg": {
+            "size": 28012199,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_diff_8k.jpg",
+            "md5": "69259c508c3ca47910d6a8bfb95d8af7"
+          },
+          "namaqualand_boulders_01.bin": {
+            "size": 927724,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulders_01/namaqualand_boulders_01.bin",
+            "md5": "58ed8a29120ad0807320ce49a9d14c2a"
+          }
+        },
+        "size": 4427,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulders_01/namaqualand_boulders_01_8k.gltf",
+        "md5": "751d2a82df349978a611c213d3507211"
+      }
+    },
+    "4k": {
+      "gltf": {
+        "include": {
+          "textures/namaqualand_boulders_01_arm_4k.jpg": {
+            "size": 8859101,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_arm_4k.jpg",
+            "md5": "eff136f0123b3cb916f2c3809505ca03"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_4k.jpg": {
+            "size": 14059277,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_4k.jpg",
+            "md5": "e9a347ec6875b2d67604c179facbddc5"
+          },
+          "textures/namaqualand_boulders_01_diff_4k.jpg": {
+            "size": 9190031,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_diff_4k.jpg",
+            "md5": "da39c44e39ad37480b4535add6096aeb"
+          },
+          "namaqualand_boulders_01.bin": {
+            "size": 927724,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulders_01/namaqualand_boulders_01.bin",
+            "md5": "58ed8a29120ad0807320ce49a9d14c2a"
+          }
+        },
+        "size": 4427,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/namaqualand_boulders_01/namaqualand_boulders_01_4k.gltf",
+        "md5": "93558f958298e39a958ca6ea0be451cb"
+      }
+    },
+    "2k": {
+      "gltf": {
+        "include": {
+          "textures/namaqualand_boulders_01_arm_2k.jpg": {
+            "size": 2568715,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_arm_2k.jpg",
+            "md5": "cbfae923e097de8f0f080bbb80adcae1"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_2k.jpg": {
+            "size": 4153995,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.jpg",
+            "md5": "9e3097a5834701165c5bf29970f92086"
+          },
+          "namaqualand_boulders_01.bin": {
+            "size": 927724,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulders_01/namaqualand_boulders_01.bin",
+            "md5": "58ed8a29120ad0807320ce49a9d14c2a"
+          },
+          "textures/namaqualand_boulders_01_diff_2k.jpg": {
+            "size": 2855649,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.jpg",
+            "md5": "97c35767a39c957e19bbbe75edf99627"
+          }
+        },
+        "size": 4427,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/2k/namaqualand_boulders_01/namaqualand_boulders_01_2k.gltf",
+        "md5": "c44025a1e5ad690f097cd4db5167dae7"
+      }
+    },
+    "1k": {
+      "gltf": {
+        "include": {
+          "textures/namaqualand_boulders_01_diff_1k.jpg": {
+            "size": 830079,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_diff_1k.jpg",
+            "md5": "1ed791727bbb6f26f77246e5de17d901"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_1k.jpg": {
+            "size": 1159170,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_1k.jpg",
+            "md5": "0f3ad6c29c72b9fe28fc91dc3cf15c00"
+          },
+          "namaqualand_boulders_01.bin": {
+            "size": 927724,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulders_01/namaqualand_boulders_01.bin",
+            "md5": "58ed8a29120ad0807320ce49a9d14c2a"
+          },
+          "textures/namaqualand_boulders_01_arm_1k.jpg": {
+            "size": 719208,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_arm_1k.jpg",
+            "md5": "9827ad42f724de4fc327b063878939d6"
+          }
+        },
+        "size": 4427,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/namaqualand_boulders_01/namaqualand_boulders_01_1k.gltf",
+        "md5": "904c7349856f65f757b7f6fd36f57641"
+      }
+    }
+  },
+  "usd": {
+    "8k": {
+      "usd": {
+        "include": {
+          "textures/namaqualand_boulders_01_rough_8k.exr": {
+            "size": 14572485,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_rough_8k.exr",
+            "md5": "812a885ac543445e5eebe9dd9687d298"
+          },
+          "textures/namaqualand_boulders_01_diff_8k.jpg": {
+            "size": 28012199,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_diff_8k.jpg",
+            "md5": "69259c508c3ca47910d6a8bfb95d8af7"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_8k.exr": {
+            "size": 78727252,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_8k.exr",
+            "md5": "1ae6c19666e85402070cc8667f732853"
+          }
+        },
+        "size": 2856014,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/8k/namaqualand_boulders_01/namaqualand_boulders_01_8k.usdc",
+        "md5": "4cfc5ecc93376f2db1a6689678d3b9ea"
+      }
+    },
+    "4k": {
+      "usd": {
+        "include": {
+          "textures/namaqualand_boulders_01_nor_gl_4k.exr": {
+            "size": 28282215,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_4k.exr",
+            "md5": "38a18cf995b54dd5975c41c10dee28a9"
+          },
+          "textures/namaqualand_boulders_01_diff_4k.jpg": {
+            "size": 9190031,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_diff_4k.jpg",
+            "md5": "da39c44e39ad37480b4535add6096aeb"
+          },
+          "textures/namaqualand_boulders_01_rough_4k.exr": {
+            "size": 4980282,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_rough_4k.exr",
+            "md5": "cd8d247d0debc8f6a91ce473dafdf58e"
+          }
+        },
+        "size": 2856014,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/4k/namaqualand_boulders_01/namaqualand_boulders_01_4k.usdc",
+        "md5": "adbd7a06a7d25c55a5f110dd83ae3dbf"
+      }
+    },
+    "2k": {
+      "usd": {
+        "include": {
+          "textures/namaqualand_boulders_01_rough_2k.exr": {
+            "size": 1541027,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_rough_2k.exr",
+            "md5": "cf65d2c198373f7dacc6278013c1c2ce"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_2k.exr": {
+            "size": 8359392,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.exr",
+            "md5": "b9d1f114980c8c5696274638b1f41384"
+          },
+          "textures/namaqualand_boulders_01_diff_2k.jpg": {
+            "size": 2855649,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.jpg",
+            "md5": "97c35767a39c957e19bbbe75edf99627"
+          }
+        },
+        "size": 2856029,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/2k/namaqualand_boulders_01/namaqualand_boulders_01_2k.usdc",
+        "md5": "b0c402308dc290d2fec87e84ca250233"
+      }
+    },
+    "1k": {
+      "usd": {
+        "include": {
+          "textures/namaqualand_boulders_01_diff_1k.jpg": {
+            "size": 830079,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_diff_1k.jpg",
+            "md5": "1ed791727bbb6f26f77246e5de17d901"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_1k.exr": {
+            "size": 2330954,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_1k.exr",
+            "md5": "4bc3e016774cd698e360d435cd6481f7"
+          },
+          "textures/namaqualand_boulders_01_rough_1k.exr": {
+            "size": 449848,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_rough_1k.exr",
+            "md5": "cacdcf7c7164d78b198289ad9aba5004"
+          }
+        },
+        "size": 2856014,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/1k/namaqualand_boulders_01/namaqualand_boulders_01_1k.usdc",
+        "md5": "3c19861dcb38ebfb8fa54a475b03d2d0"
+      }
+    }
+  },
+  "arm": {
+    "8k": {
+      "jpg": {
+        "size": 29428392,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_arm_8k.jpg",
+        "md5": "f30746b5aa772f4f0296b2fb0e33f920"
+      },
+      "png": {
+        "size": 68928906,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/namaqualand_boulders_01/namaqualand_boulders_01_arm_8k.png",
+        "md5": "8faef88f92df97b297c89f200e850997"
+      },
+      "exr": {
+        "size": 46978885,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_arm_8k.exr",
+        "md5": "117fc9aedff537aaa03806b1ccff4871"
+      }
+    },
+    "4k": {
+      "jpg": {
+        "size": 8859101,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_arm_4k.jpg",
+        "md5": "eff136f0123b3cb916f2c3809505ca03"
+      },
+      "png": {
+        "size": 40879955,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/namaqualand_boulders_01/namaqualand_boulders_01_arm_4k.png",
+        "md5": "a4f1c23978c972ffc5833f1bd672ef04"
+      },
+      "exr": {
+        "size": 15093034,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_arm_4k.exr",
+        "md5": "895fe27a7f9f83544daa1ef24fac2276"
+      }
+    },
+    "2k": {
+      "jpg": {
+        "size": 2568715,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_arm_2k.jpg",
+        "md5": "cbfae923e097de8f0f080bbb80adcae1"
+      },
+      "png": {
+        "size": 13216049,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/namaqualand_boulders_01/namaqualand_boulders_01_arm_2k.png",
+        "md5": "faee5c4826244b9e3103a37e20c49c69"
+      },
+      "exr": {
+        "size": 4614499,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_arm_2k.exr",
+        "md5": "5a75f1bbc36466209903585b7de1e770"
+      }
+    },
+    "1k": {
+      "jpg": {
+        "size": 719208,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_arm_1k.jpg",
+        "md5": "9827ad42f724de4fc327b063878939d6"
+      },
+      "png": {
+        "size": 3784299,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/namaqualand_boulders_01/namaqualand_boulders_01_arm_1k.png",
+        "md5": "36f5ad9bfeb804957e78305c6713a85d"
+      },
+      "exr": {
+        "size": 1345937,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_arm_1k.exr",
+        "md5": "c32eb3ac11698f20d27d42841dfc2951"
+      }
+    }
+  },
+  "fbx": {
+    "8k": {
+      "fbx": {
+        "include": {
+          "textures/namaqualand_boulders_01_rough_8k.exr": {
+            "size": 14572485,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_rough_8k.exr",
+            "md5": "812a885ac543445e5eebe9dd9687d298"
+          },
+          "textures/namaqualand_boulders_01_diff_8k.jpg": {
+            "size": 28012199,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_diff_8k.jpg",
+            "md5": "69259c508c3ca47910d6a8bfb95d8af7"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_8k.exr": {
+            "size": 78727252,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_8k.exr",
+            "md5": "1ae6c19666e85402070cc8667f732853"
+          }
+        },
+        "size": 1324140,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/8k/namaqualand_boulders_01/namaqualand_boulders_01_8k.fbx",
+        "md5": "78e548bf0d8b854766f4e70cd9f1aee6"
+      }
+    },
+    "4k": {
+      "fbx": {
+        "include": {
+          "textures/namaqualand_boulders_01_nor_gl_4k.exr": {
+            "size": 28282215,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_4k.exr",
+            "md5": "38a18cf995b54dd5975c41c10dee28a9"
+          },
+          "textures/namaqualand_boulders_01_diff_4k.jpg": {
+            "size": 9190031,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_diff_4k.jpg",
+            "md5": "da39c44e39ad37480b4535add6096aeb"
+          },
+          "textures/namaqualand_boulders_01_rough_4k.exr": {
+            "size": 4980282,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_rough_4k.exr",
+            "md5": "cd8d247d0debc8f6a91ce473dafdf58e"
+          }
+        },
+        "size": 1324140,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/4k/namaqualand_boulders_01/namaqualand_boulders_01_4k.fbx",
+        "md5": "9f53c6979a4086e6188078c3310f96f9"
+      }
+    },
+    "2k": {
+      "fbx": {
+        "include": {
+          "textures/namaqualand_boulders_01_rough_2k.exr": {
+            "size": 1541027,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_rough_2k.exr",
+            "md5": "cf65d2c198373f7dacc6278013c1c2ce"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_2k.exr": {
+            "size": 8359392,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.exr",
+            "md5": "b9d1f114980c8c5696274638b1f41384"
+          },
+          "textures/namaqualand_boulders_01_diff_2k.jpg": {
+            "size": 2855649,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.jpg",
+            "md5": "97c35767a39c957e19bbbe75edf99627"
+          }
+        },
+        "size": 1324140,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/2k/namaqualand_boulders_01/namaqualand_boulders_01_2k.fbx",
+        "md5": "2845d69803b554f09ea8e0c13b114152"
+      }
+    },
+    "1k": {
+      "fbx": {
+        "include": {
+          "textures/namaqualand_boulders_01_diff_1k.jpg": {
+            "size": 830079,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_diff_1k.jpg",
+            "md5": "1ed791727bbb6f26f77246e5de17d901"
+          },
+          "textures/namaqualand_boulders_01_nor_gl_1k.exr": {
+            "size": 2330954,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_1k.exr",
+            "md5": "4bc3e016774cd698e360d435cd6481f7"
+          },
+          "textures/namaqualand_boulders_01_rough_1k.exr": {
+            "size": 449848,
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_rough_1k.exr",
+            "md5": "cacdcf7c7164d78b198289ad9aba5004"
+          }
+        },
+        "size": 1324140,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/namaqualand_boulders_01/namaqualand_boulders_01_1k.fbx",
+        "md5": "c06017020807f9881517c00a786769ee"
+      }
+    }
+  },
+  "AO": {
+    "8k": {
+      "jpg": {
+        "size": 30158846,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_ao_8k.jpg",
+        "md5": "b8711e38693ec4349e8298b74e4529cd"
+      },
+      "png": {
+        "size": 37822403,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/namaqualand_boulders_01/namaqualand_boulders_01_ao_8k.png",
+        "md5": "93bf6d73f519d8a11886920e853726a8"
+      },
+      "exr": {
+        "size": 29546691,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_ao_8k.exr",
+        "md5": "292d0a7022cfb8d589376dea3e08bc6f"
+      }
+    },
+    "4k": {
+      "jpg": {
+        "size": 8633406,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_ao_4k.jpg",
+        "md5": "1699a70fd38fdd921a06fa027b2a3156"
+      },
+      "png": {
+        "size": 20230469,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/namaqualand_boulders_01/namaqualand_boulders_01_ao_4k.png",
+        "md5": "4fd5faf52ceb80bc1a45c852d41d7576"
+      },
+      "exr": {
+        "size": 8568610,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_ao_4k.exr",
+        "md5": "93392f0f8d35f3a165f1180160f2f962"
+      }
+    },
+    "2k": {
+      "jpg": {
+        "size": 2479123,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_ao_2k.jpg",
+        "md5": "8f97c609f3511b6d286e3020c517bd59"
+      },
+      "png": {
+        "size": 6186727,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/namaqualand_boulders_01/namaqualand_boulders_01_ao_2k.png",
+        "md5": "c6b2c4a9b19b0c6431027ef9aee1657a"
+      },
+      "exr": {
+        "size": 2496219,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_ao_2k.exr",
+        "md5": "e6ec87543a8f51f80a84e898e5680f18"
+      }
+    },
+    "1k": {
+      "jpg": {
+        "size": 704246,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_ao_1k.jpg",
+        "md5": "8b4197f07a331265bea32b35509d9ab4"
+      },
+      "png": {
+        "size": 1708480,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/namaqualand_boulders_01/namaqualand_boulders_01_ao_1k.png",
+        "md5": "29be39941a4330f95d678a2110837e97"
+      },
+      "exr": {
+        "size": 722449,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_ao_1k.exr",
+        "md5": "edbecef06a85c5936069e94f6e3edb55"
+      }
+    }
+  },
+  "Displacement": {
+    "8k": {
+      "jpg": {
+        "size": 12844632,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_disp_8k.jpg",
+        "md5": "c61fdaf1a4d2c85d45783e08609fc1bb"
+      },
+      "png": {
+        "size": 62522867,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/namaqualand_boulders_01/namaqualand_boulders_01_disp_8k.png",
+        "md5": "63a408e053d42a848cf728a80dc4e616"
+      },
+      "exr": {
+        "size": 12474473,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_disp_8k.exr",
+        "md5": "07eb859fca9ac209720211d2dfd7b60f"
+      }
+    },
+    "4k": {
+      "jpg": {
+        "size": 4338508,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_disp_4k.jpg",
+        "md5": "113930985a64134438772e4f9e77c65f"
+      },
+      "png": {
+        "size": 20243164,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/namaqualand_boulders_01/namaqualand_boulders_01_disp_4k.png",
+        "md5": "5288b70b113e1870086ad3e98a2880bf"
+      },
+      "exr": {
+        "size": 4438320,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_disp_4k.exr",
+        "md5": "43394d7830a1bcda5758e27b820af26f"
+      }
+    },
+    "2k": {
+      "jpg": {
+        "size": 1509331,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_disp_2k.jpg",
+        "md5": "23ae759a7fb83b01191291d3153d3554"
+      },
+      "png": {
+        "size": 5846854,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/namaqualand_boulders_01/namaqualand_boulders_01_disp_2k.png",
+        "md5": "399abdc0a9a0b2d0b22d6ce8416b11ac"
+      },
+      "exr": {
+        "size": 1590612,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_disp_2k.exr",
+        "md5": "25dde141dff524a85415038b5e3fdeee"
+      }
+    },
+    "1k": {
+      "jpg": {
+        "size": 509691,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_disp_1k.jpg",
+        "md5": "83f0fb4307e767b691a0b0485efb18a7"
+      },
+      "png": {
+        "size": 1633610,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/namaqualand_boulders_01/namaqualand_boulders_01_disp_1k.png",
+        "md5": "c303c5b672177c4a6e62877095876c34"
+      },
+      "exr": {
+        "size": 555531,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_disp_1k.exr",
+        "md5": "9873a779fc3df515b9ab6ec1987a9761"
+      }
+    }
+  },
+  "Rough": {
+    "8k": {
+      "jpg": {
+        "size": 15433367,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/namaqualand_boulders_01/namaqualand_boulders_01_rough_8k.jpg",
+        "md5": "47dda3d531db60cc332aa14a69418c83"
+      },
+      "png": {
+        "size": 20701731,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/namaqualand_boulders_01/namaqualand_boulders_01_rough_8k.png",
+        "md5": "76a3ae8997f898fe44912f8f9ac2c714"
+      },
+      "exr": {
+        "size": 14572485,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/namaqualand_boulders_01/namaqualand_boulders_01_rough_8k.exr",
+        "md5": "812a885ac543445e5eebe9dd9687d298"
+      }
+    },
+    "4k": {
+      "jpg": {
+        "size": 5299595,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/namaqualand_boulders_01/namaqualand_boulders_01_rough_4k.jpg",
+        "md5": "59b5e78f5f940b04614fdd334519badb"
+      },
+      "png": {
+        "size": 14428179,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/namaqualand_boulders_01/namaqualand_boulders_01_rough_4k.png",
+        "md5": "01a266a7ab2202fb4fc453595c49c927"
+      },
+      "exr": {
+        "size": 4980282,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/namaqualand_boulders_01/namaqualand_boulders_01_rough_4k.exr",
+        "md5": "cd8d247d0debc8f6a91ce473dafdf58e"
+      }
+    },
+    "2k": {
+      "jpg": {
+        "size": 1582064,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_rough_2k.jpg",
+        "md5": "33a6619a38bd220ce77a8cb5d5b69198"
+      },
+      "png": {
+        "size": 5330652,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/namaqualand_boulders_01/namaqualand_boulders_01_rough_2k.png",
+        "md5": "2ea8fa763222bc0e363bda07fa8a3f3c"
+      },
+      "exr": {
+        "size": 1541027,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulders_01/namaqualand_boulders_01_rough_2k.exr",
+        "md5": "cf65d2c198373f7dacc6278013c1c2ce"
+      }
+    },
+    "1k": {
+      "jpg": {
+        "size": 440572,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulders_01/namaqualand_boulders_01_rough_1k.jpg",
+        "md5": "0f0e7ce7671b9625697925612bdcbd92"
+      },
+      "png": {
+        "size": 1565286,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/namaqualand_boulders_01/namaqualand_boulders_01_rough_1k.png",
+        "md5": "8bd4d0262f9e5c808b73996b4321dbf4"
+      },
+      "exr": {
+        "size": 449848,
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/namaqualand_boulders_01/namaqualand_boulders_01_rough_1k.exr",
+        "md5": "cacdcf7c7164d78b198289ad9aba5004"
+      }
+    }
+  }
+}

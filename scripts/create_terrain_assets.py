@@ -4,13 +4,26 @@
 Run: /Applications/Blender.app/Contents/MacOS/Blender --background --python scripts/create_terrain_assets.py
 """
 from pathlib import Path
+import argparse
 import bpy
 import bmesh
 import hashlib
 import json
 import math
 import random
+import sys
 from mathutils import Vector
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generate Cinderline basalt terrain assets")
+    parser.add_argument("--no-render", action="store_true",
+        help="Export and validate delivery assets without rebuilding the contact sheet PNG")
+    argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    return parser.parse_args(argv)
+
+
+ARGS = parse_args()
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "RawAssets/Terrain"
@@ -37,32 +50,51 @@ mat.node_tree.links.new(color.outputs["Color"], shader.inputs["Base Color"])
 # Positions, horizontal radii and heights define an authored family of faulted
 # outcrops. Seeds only add bounded fractures, stratification and rubble variation.
 SPECS = [
-    ("A", 74101, [(-19, 1, 28, 31, 93), (13, 8, 27, 34, 100), (26, -22, 18, 22, 49)]),
-    ("B", 74102, [(-14, 14, 32, 27, 100), (17, -11, 30, 25, 77), (-29, -19, 18, 20, 46)]),
-    ("C", 74103, [(-23, 4, 24, 39, 100), (22, -6, 22, 32, 88), (-10, -32, 18, 14, 42)]),
-    ("D", 74104, [(-4, -1, 35, 33, 100), (-30, 20, 20, 23, 64), (29, -20, 23, 22, 45)]),
+    # Split crown: a narrow central fissure remains readable from the game camera.
+    ("A", 74101, [(-18, 3, 19, 27, 92), (13, 7, 22, 24, 100),
+        (26, -22, 15, 17, 51), (-31, -18, 12, 15, 36)]),
+    # Descending fan: four independent plates create stepped depth without terraces.
+    ("B", 74102, [(-13, 15, 25, 21, 100), (17, -9, 22, 20, 73),
+        (-31, -17, 14, 17, 45), (30, 19, 12, 14, 34)]),
+    # Blade pair: thin, offset profiles expose a deep diagonal crack.
+    ("C", 74103, [(-23, 5, 17, 31, 100), (14, -4, 18, 26, 84),
+        (-4, -31, 14, 12, 42), (29, 22, 12, 15, 35)]),
+    # Broken crown with two lower shoulders and a detached rear plate.
+    ("D", 74104, [(-6, 0, 25, 27, 100), (-30, 19, 15, 18, 61),
+        (25, -19, 18, 18, 48), (31, 20, 11, 14, 33)]),
 ]
 
 
-def rock(vertices, faces, face_tints, rng, x, y, rx, ry, height, rubble=False):
-    count = 7 if rubble else 9
+def rock(vertices, faces, face_tints, rng, x, y, rx, ry, height):
+    count = rng.choice((8, 9, 10))
     phase = rng.uniform(-math.pi, math.pi)
-    outline = [rng.uniform(0.84, 1.13) for _ in range(count)]
-    levels = [(0, 1.04), (.19, 1.0), (.72, .84), (1, .60)] if rubble else [
-        (0, 1.04), (.08, 1.01), (.15, .91), (.35, .94), (.40, .83),
-        (.62, .87), (.67, .76), (.84, .79), (1, .65)]
+    outline = [rng.uniform(0.82, 1.16) for _ in range(count)]
+    # Six uneven rings describe long fault faces rather than stacked cylinders.
+    # The last transition pulls sharply inward to form a broken, sloped crown.
+    levels = [(0, 1.05), (.12, 1.0), (.35, .94), (.60, .85), (.80, .73), (.92, .49)]
     base = len(vertices)
-    # A tilted top, offset rings and alternating shelves break regular cylinders.
-    tilt_x, tilt_y = rng.uniform(-.11, .11), rng.uniform(-.11, .11)
-    drift_x, drift_y = rng.uniform(-rx*.12, rx*.12), rng.uniform(-ry*.12, ry*.12)
+    tilt_x, tilt_y = rng.uniform(-.18, .18), rng.uniform(-.18, .18)
+    drift_x, drift_y = rng.uniform(-rx*.18, rx*.18), rng.uniform(-ry*.18, ry*.18)
+    crown = [rng.uniform(-.13, .07) for _ in range(count)]
+    # A localized shelf on only part of the perimeter reads as a sheared ledge.
+    ledge_side = rng.randrange(count)
     for layer, (z_ratio, radius_ratio) in enumerate(levels):
         for side in range(count):
             angle = phase + side * math.tau / count
-            rr = outline[side] * radius_ratio * rng.uniform(.965, 1.035)
+            shelf_distance = min((side-ledge_side) % count, (ledge_side-side) % count)
+            shelf = (0.16 if shelf_distance == 0 else 0.08 if shelf_distance == 1 else 0)
+            shelf *= math.sin(math.pi * z_ratio) if layer in (2, 3, 4) else 0
+            rr = outline[side] * (radius_ratio+shelf) * rng.uniform(.95, 1.05)
             px = math.cos(angle) * rx * rr
             py = math.sin(angle) * ry * rr
-            z = 0 if layer == 0 else max(.3, height*z_ratio + (px*tilt_x + py*tilt_y)*z_ratio)
-            vertices.append((x+px+drift_x*z_ratio, y+py+drift_y*z_ratio, z))
+            fracture = crown[side] * height * (z_ratio ** 2.4)
+            z = 0 if layer == 0 else max(.3, height*z_ratio +
+                (px*tilt_x + py*tilt_y)*z_ratio + fracture)
+            # Ring drift follows the fault direction but wobbles enough to avoid
+            # vertically aligned, extruded-looking edges.
+            wobble = math.sin(side*2.31 + layer*1.73) * .025
+            vertices.append((x+px+drift_x*z_ratio+rx*wobble,
+                y+py+drift_y*z_ratio+ry*wobble, z))
     faces.append(tuple(base+i for i in reversed(range(count))))
     face_tints.append(rng.uniform(.72, .88))
     for layer in range(len(levels)-1):
@@ -70,14 +102,49 @@ def rock(vertices, faces, face_tints, rng, x, y, rx, ry, height, rubble=False):
             a = base+layer*count+side
             b = base+layer*count+(side+1)%count
             faces.append((a, b, b+count, a+count))
-            # Subtle intrinsic stratum colors, not a baked light direction.
-            face_tints.append(rng.uniform(.80, 1.06) * (.91 if layer in (1, 4, 6) else 1))
+            # Subtle intrinsic fault-face colors, not a baked light direction.
+            face_tints.append(rng.uniform(.78, 1.07) * (.93 if layer in (1, 4) else 1))
     top = base+(len(levels)-1)*count
     center = len(vertices)
-    vertices.append((x+drift_x, y+drift_y, height*rng.uniform(.98, 1.035)))
+    ridge_angle = phase + rng.randrange(count)*math.tau/count
+    ridge_offset = rng.uniform(.08, .24)
+    vertices.append((x+drift_x+math.cos(ridge_angle)*rx*ridge_offset,
+        y+drift_y+math.sin(ridge_angle)*ry*ridge_offset,
+        height*rng.uniform(.86, 1.02)))
     for side in range(count):
         faces.append((top+side, top+(side+1)%count, center))
-        face_tints.append(rng.uniform(.93, 1.12))
+        face_tints.append(rng.uniform(.86, 1.13))
+
+
+def scree(vertices, faces, face_tints, rng, x, y, rx, ry, height, slab=False):
+    """Add one low angular wedge; scree never inherits the main cliff profile."""
+    count = rng.choice((5, 6, 7))
+    phase = rng.uniform(-math.pi, math.pi)
+    base = len(vertices)
+    lean_x, lean_y = rng.uniform(-rx*.22, rx*.22), rng.uniform(-ry*.22, ry*.22)
+    top_scale = rng.uniform(.48, .72) if slab else rng.uniform(.32, .58)
+    for side in range(count):
+        angle = phase+side*math.tau/count
+        radius = rng.uniform(.83, 1.14)
+        vertices.append((x+math.cos(angle)*rx*radius,
+            y+math.sin(angle)*ry*radius, 0))
+    for side in range(count):
+        angle = phase+side*math.tau/count
+        top_z = height*(rng.uniform(.48, .66) if slab else rng.uniform(.60, .92))
+        vertices.append((x+lean_x+math.cos(angle)*rx*top_scale,
+            y+lean_y+math.sin(angle)*ry*top_scale, top_z))
+    faces.append(tuple(base+i for i in reversed(range(count))))
+    face_tints.append(rng.uniform(.70, .86))
+    for side in range(count):
+        faces.append((base+side, base+(side+1)%count,
+            base+count+(side+1)%count, base+count+side))
+        face_tints.append(rng.uniform(.76, 1.04))
+    top_center = len(vertices)
+    vertices.append((x+lean_x*1.2, y+lean_y*1.2,
+        height*rng.uniform(.58, .76) if slab else height*rng.uniform(.78, 1.0)))
+    for side in range(count):
+        faces.append((base+count+side, base+count+(side+1)%count, top_center))
+        face_tints.append(rng.uniform(.86, 1.08))
 
 
 def create_variant(letter, seed, masses):
@@ -85,12 +152,18 @@ def create_variant(letter, seed, masses):
     vertices, faces, tints = [], [], []
     for values in masses:
         rock(vertices, faces, tints, rng, *values)
-    # Low peripheral chips and slabs keep an irregular natural skirt. Every
-    # vertex is normalized inside the declared footprint after assembly.
-    for i in range(12):
-        angle = i*math.tau/12 + rng.uniform(-.11, .11)
-        x, y = math.cos(angle)*rng.uniform(36, 46), math.sin(angle)*rng.uniform(35, 46)
-        rock(vertices, faces, tints, rng, x, y, rng.uniform(6, 12), rng.uniform(6, 12), rng.uniform(7, 22), True)
+    # Irregular low wedges and fallen plates stay within the normalized blocked
+    # footprint. Deliberate angular gaps keep the main cluster cracks visible.
+    scree_count = rng.choice((15, 16, 17))
+    gap_angle = rng.uniform(-math.pi, math.pi)
+    for i in range(scree_count):
+        angle = i*math.tau/scree_count + rng.uniform(-.15, .15)
+        if abs(math.atan2(math.sin(angle-gap_angle), math.cos(angle-gap_angle))) < .22:
+            angle += .34
+        radius = rng.uniform(34, 47)
+        x, y = math.cos(angle)*radius, math.sin(angle)*rng.uniform(34, 47)
+        scree(vertices, faces, tints, rng, x, y, rng.uniform(4.5, 10.5),
+            rng.uniform(4.5, 10.0), rng.uniform(3.5, 13.0), slab=(i % 4 == 0))
     mesh = bpy.data.meshes.new("Basalt fractures "+letter)
     mesh.from_pydata(vertices, [], faces)
     mesh.update()
@@ -113,6 +186,8 @@ def create_variant(letter, seed, masses):
     bm.from_mesh(mesh)
     bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
     bmesh.ops.triangulate(bm, faces=list(bm.faces))
+    assert all(len(edge.link_faces) == 2 for edge in bm.edges), \
+        f"{obj.name} contains an open or non-manifold component"
     bm.to_mesh(mesh)
     bm.free()
     bpy.ops.object.select_all(action="DESELECT")
@@ -174,12 +249,17 @@ for original, record in zip(assets, records):
 manifest = {"generator": "scripts/create_terrain_assets.py", "blender_version": bpy.app.version_string,
     "original_geometry": True, "unit": "centimeter", "origin": "bottom center of bounds",
     "forward_axis": "+X", "up_axis": "+Z", "collision": "none; portable simulation owns obstacle rectangles",
-    "material_slots": ["Basalt"], "assets": records}
+    "geometry_pass": "fractured crowns, asymmetric fault ledges, cluster fissures, low scree",
+    "triangle_budget_per_asset": 2000, "material_slots": ["Basalt"], "assets": records}
 (OUT/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n")
 (EVIDENCE/"fbx-roundtrip-validation.json").write_text(json.dumps({"passed": True, "checks": roundtrip}, indent=2)+"\n")
 for i, obj in enumerate(assets):
     obj.location = ((i%2)*160, (i//2)*160, 0)
 bpy.ops.wm.save_as_mainfile(filepath=str(OUT/"CinderBasaltTerrain.blend"))
+
+if ARGS.no_render:
+    print("CINDER_TERRAIN_READY_NO_RENDER "+str(OUT), flush=True)
+    raise SystemExit(0)
 
 # Actual Blender contact sheet. Presentation objects never enter delivery FBXs.
 for obj in assets:
@@ -245,13 +325,12 @@ for name, position, energy, light_color, size in [
     scene.collection.objects.link(light)
     light.location = position
     light.rotation_euler = (-Vector(position)).to_track_quat("-Z", "Y").to_euler()
-scene.render.engine = "CYCLES"
-scene.cycles.samples = 40
-scene.cycles.use_denoising = True
-scene.cycles.device = "CPU"
+scene.render.engine = "BLENDER_EEVEE"
 scene.render.resolution_x = 1800
 scene.render.resolution_y = 1800
 scene.render.resolution_percentage = 100
+scene.render.threads_mode = "FIXED"
+scene.render.threads = 2
 scene.render.image_settings.file_format = "PNG"
 scene.render.filepath = str(EVIDENCE/"basalt-terrain-contact-sheet.png")
 scene.view_settings.view_transform = "AgX"

@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "stages": [
+    "materials",
+    "model_surface_finish",
+    "buildings_and_ore",
+    "units_and_motion",
+    "scenery"
+  ]
+}

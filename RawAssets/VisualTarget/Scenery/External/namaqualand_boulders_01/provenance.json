@@ -1,0 +1,68 @@
+{
+  "asset_id": "namaqualand_boulders_01",
+  "title": "Namaqualand Boulders 01",
+  "source_page": "https://polyhaven.com/a/namaqualand_boulders_01",
+  "api": "https://api.polyhaven.com/files/namaqualand_boulders_01",
+  "license": "CC0 1.0 Universal",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "authors": [
+    {
+      "name": "Greg Zaal",
+      "role": "Photography"
+    },
+    {
+      "name": "Jenelle van Heerden",
+      "role": "Modeling"
+    }
+  ],
+  "download_selection": "2K glTF with diffuse, OpenGL normal, and packed AO-roughness-metallic JPEG maps",
+  "files": [
+    {
+      "path": "namaqualand_boulders_01.bin",
+      "bytes": 927724,
+      "md5": "58ed8a29120ad0807320ce49a9d14c2a",
+      "sha256": "0c37e75570ec72a1e8b76fdfc1fa7d5ae62cc4ff1363f244fe06892d12618b78",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulders_01/namaqualand_boulders_01.bin"
+    },
+    {
+      "path": "namaqualand_boulders_01_2k.gltf",
+      "bytes": 4427,
+      "md5": "c44025a1e5ad690f097cd4db5167dae7",
+      "sha256": "d419fb3aaf5477c475eff7f25c40114d003222d465f30eafebefd3af4dd66168",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/2k/namaqualand_boulders_01/namaqualand_boulders_01_2k.gltf"
+    },
+    {
+      "path": "textures/namaqualand_boulders_01_arm_2k.jpg",
+      "bytes": 2568715,
+      "md5": "cbfae923e097de8f0f080bbb80adcae1",
+      "sha256": "681fe95cb8c454230c72fecc204f43e08ae3b6f37499faa67ad1b5540f6810b3",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_arm_2k.jpg",
+      "dimensions": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "path": "textures/namaqualand_boulders_01_diff_2k.jpg",
+      "bytes": 2855649,
+      "md5": "97c35767a39c957e19bbbe75edf99627",
+      "sha256": "50b0df89cd96e47f22c7723ef822f712c2cb3071ec114bd4fb7981c0be0b74be",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_diff_2k.jpg",
+      "dimensions": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "path": "textures/namaqualand_boulders_01_nor_gl_2k.jpg",
+      "bytes": 4153995,
+      "md5": "9e3097a5834701165c5bf29970f92086",
+      "sha256": "5e242a15447bb350ef1bb6ca7f62270078ba8ef3ad1b440432c9013dbc5a520d",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulders_01/namaqualand_boulders_01_nor_gl_2k.jpg",
+      "dimensions": [
+        2048,
+        2048
+      ]
+    }
+  ]
+}

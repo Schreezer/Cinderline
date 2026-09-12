@@ -1,0 +1,248 @@
+{
+  "assets": [
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Rock_A.SM_CinderScenery_Rock_A",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_Rock_A",
+      "simple_collisions": 0,
+      "source_sha256": "01c0957690e174806203e24f513f1b331875aa3610569327a64d66cf712259cc",
+      "triangles": 2599,
+      "triangles_lod0_after_group": 2599,
+      "triangles_lod0_before_group": 2599
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Rock_B.SM_CinderScenery_Rock_B",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_Rock_B",
+      "simple_collisions": 0,
+      "source_sha256": "1ad02fa960f55018fdf209e7ab591cfcbca7cc0b36821ff0dfe5c01f89dda3ee",
+      "triangles": 3099,
+      "triangles_lod0_after_group": 3099,
+      "triangles_lod0_before_group": 3099
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Rock_C.SM_CinderScenery_Rock_C",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_Rock_C",
+      "simple_collisions": 0,
+      "source_sha256": "6e615a3e8e917d760c6af2ad4f5bdfb05f3276e95e7b250e0d261f582b526481",
+      "triangles": 2200,
+      "triangles_lod0_after_group": 2200,
+      "triangles_lod0_before_group": 2200
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Rock_D.SM_CinderScenery_Rock_D",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_Rock_D",
+      "simple_collisions": 0,
+      "source_sha256": "2d58ee07ccf37dddacf2c69320ee5c63450e85f1915b137093aac5a177a6bebe",
+      "triangles": 3000,
+      "triangles_lod0_after_group": 3000,
+      "triangles_lod0_before_group": 3000
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Rock_E.SM_CinderScenery_Rock_E",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_Rock_E",
+      "simple_collisions": 0,
+      "source_sha256": "a91e5aadb272f1f8d4b99cb3cafd683f249e3f2b32541a0ba527fcda579a8b69",
+      "triangles": 2450,
+      "triangles_lod0_after_group": 2450,
+      "triangles_lod0_before_group": 2450
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Rock_F.SM_CinderScenery_Rock_F",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_Rock_F",
+      "simple_collisions": 0,
+      "source_sha256": "1f751a85afdaa23225371371fe1556b00fdb5dd477d6dcbc492fffc0dcd95204",
+      "triangles": 3299,
+      "triangles_lod0_after_group": 3299,
+      "triangles_lod0_before_group": 3299
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_CliffMass.SM_CinderScenery_CliffMass",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_CliffMass",
+      "simple_collisions": 0,
+      "source_sha256": "84c1ae2424e1c79034316c31e2e1a619c12ca0bdc9234b48096501fcbc2ca2e6",
+      "triangles": 56,
+      "triangles_lod0_after_group": 56,
+      "triangles_lod0_before_group": 56
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Pad.SM_CinderScenery_Pad",
+      "material": "/Game/Art/VisualTarget/Materials/MI_CinderSceneryMetal.MI_CinderSceneryMetal",
+      "name": "SM_CinderScenery_Pad",
+      "simple_collisions": 0,
+      "source_sha256": "5fafc07b3a3f008e38412c165dde6e57250740e333d189c32faa9823b92ee802",
+      "triangles": 84,
+      "triangles_lod0_after_group": 84,
+      "triangles_lod0_before_group": 84
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Road.SM_CinderScenery_Road",
+      "material": "/Game/Art/VisualTarget/Materials/MI_CinderSceneryMetal.MI_CinderSceneryMetal",
+      "name": "SM_CinderScenery_Road",
+      "simple_collisions": 0,
+      "source_sha256": "031cdbef197ab8486de5ca84253c22a9c767b82c8fa62e19f0d549b7462ce155",
+      "triangles": 36,
+      "triangles_lod0_after_group": 36,
+      "triangles_lod0_before_group": 36
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Pipe.SM_CinderScenery_Pipe",
+      "material": "/Game/Art/VisualTarget/Materials/MI_CinderSceneryMetal.MI_CinderSceneryMetal",
+      "name": "SM_CinderScenery_Pipe",
+      "simple_collisions": 0,
+      "source_sha256": "3dbcb851b60a5d13a932c702925eedf1c98145c6133b5dc254b81db24fb93e92",
+      "triangles": 156,
+      "triangles_lod0_after_group": 156,
+      "triangles_lod0_before_group": 156
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Crate.SM_CinderScenery_Crate",
+      "material": "/Game/Art/VisualTarget/Materials/MI_CinderSceneryMetal.MI_CinderSceneryMetal",
+      "name": "SM_CinderScenery_Crate",
+      "simple_collisions": 0,
+      "source_sha256": "0cc4dbd932d30436831fb6ed94040794a14265699c5db9d4e94330db83a07b2c",
+      "triangles": 220,
+      "triangles_lod0_after_group": 220,
+      "triangles_lod0_before_group": 220
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Scenery/SM_CinderScenery_Debris.SM_CinderScenery_Debris",
+      "material": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "name": "SM_CinderScenery_Debris",
+      "simple_collisions": 0,
+      "source_sha256": "84261630d4b7e01aaa968ff6c59314e839ec7c4e06f5db55cfcabc41ff7a6802",
+      "triangles": 619,
+      "triangles_lod0_after_group": 619,
+      "triangles_lod0_before_group": 619
+    }
+  ],
+  "destination": "/Game/Art/VisualTarget/Scenery",
+  "owner": "scripts/unreal_visual_target_scenery.py",
+  "photogrammetry": {
+    "license": "CC0-1.0",
+    "material": {
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "connections": [
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "PhotogrammetryDiffuse"
+        },
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "PhotogrammetryNormal"
+        },
+        {
+          "from": "Flat tangent normal",
+          "input": "A",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "PhotogrammetryNormal",
+          "input": "B",
+          "output": "RGB",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "NormalStrength",
+          "input": "Alpha",
+          "output": "",
+          "to": "Restrained normal detail"
+        },
+        {
+          "from": "Restrained normal detail",
+          "input": "VectorInput",
+          "output": "",
+          "to": "Normalized tangent normal"
+        },
+        {
+          "from": "Authored UV0",
+          "input": "UVs",
+          "output": "",
+          "to": "PhotogrammetryARM"
+        }
+      ],
+      "depth_test_enabled": true,
+      "graph_replacement": {
+        "before_count": 9,
+        "method": "snapshot of expressions, delete each through engine API",
+        "remaining_after_delete": 0
+      },
+      "nodes": 9,
+      "outputs": {
+        "AMBIENT_OCCLUSION": {
+          "node": "PhotogrammetryARM",
+          "output": "R"
+        },
+        "BASE_COLOR": {
+          "node": "PhotogrammetryDiffuse",
+          "output": "RGB"
+        },
+        "METALLIC": {
+          "node": "Nonmetal rock",
+          "output": ""
+        },
+        "NORMAL": {
+          "node": "Normalized tangent normal",
+          "output": ""
+        },
+        "ROUGHNESS": {
+          "node": "PhotogrammetryARM",
+          "output": "G"
+        }
+      },
+      "path": "/Game/Art/VisualTarget/Scenery/Materials/M_CinderSceneryPhotogrammetry.M_CinderSceneryPhotogrammetry",
+      "shader_errors": [],
+      "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+      "two_sided": false,
+      "version": "cinder-scenery-polyhaven-v1"
+    },
+    "source": "https://polyhaven.com/a/namaqualand_boulders_01",
+    "textures": [
+      {
+        "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "path": "/Game/Art/VisualTarget/Scenery/Textures/T_NamaqualandBoulders_Diffuse",
+        "role": "Color",
+        "sha256": "50b0df89cd96e47f22c7723ef822f712c2cb3071ec114bd4fb7981c0be0b74be",
+        "source": "RawAssets/VisualTarget/Scenery/External/namaqualand_boulders_01/textures/namaqualand_boulders_01_diff_2k.jpg"
+      },
+      {
+        "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "path": "/Game/Art/VisualTarget/Scenery/Textures/T_NamaqualandBoulders_Normal",
+        "role": "Normal",
+        "sha256": "5e242a15447bb350ef1bb6ca7f62270078ba8ef3ad1b440432c9013dbc5a520d",
+        "source": "RawAssets/VisualTarget/Scenery/External/namaqualand_boulders_01/textures/namaqualand_boulders_01_nor_gl_2k.jpg"
+      },
+      {
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "dimensions": [
+          2048,
+          2048
+        ],
+        "path": "/Game/Art/VisualTarget/Scenery/Textures/T_NamaqualandBoulders_ARM",
+        "role": "Masks",
+        "sha256": "681fe95cb8c454230c72fecc204f43e08ae3b6f37499faa67ad1b5540f6810b3",
+        "source": "RawAssets/VisualTarget/Scenery/External/namaqualand_boulders_01/textures/namaqualand_boulders_01_arm_2k.jpg"
+      }
+    ]
+  },
+  "success": true,
+  "utc": "2026-09-12T10:35:20.258938+00:00"
+}

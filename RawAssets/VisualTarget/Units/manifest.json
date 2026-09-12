@@ -1,0 +1,1015 @@
+{
+  "generator": "scripts/create_visual_target_units.py",
+  "blender_version": "5.2.1 LTS",
+  "reference": "1-Photo-1.jpg mobile RTS composition supplied by user",
+  "original_geometry": true,
+  "unit": "centimeter",
+  "forward_axis": "+X",
+  "up_axis": "+Z",
+  "fbx_coordinate_conversion": "post-import Unreal position = (source X, -source Y, source Z)",
+  "root_origin": "same bottom-centered (0,0,0) complete-model root for full models and every motion part",
+  "model_destination": "/Game/Art/VisualTarget/Models",
+  "motion_destination": "/Game/Art/VisualTarget/Motion",
+  "collision": "none",
+  "nanite": false,
+  "vertex_color_alpha": "baked ambient occlusion; 1.0 fully lit",
+  "material_slot_order": [
+    "HullDark",
+    "HullLight",
+    "Metal",
+    "TeamPanel",
+    "CoreGlow"
+  ],
+  "assets": [
+    {
+      "name": "SM_Drudge",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -16.0,
+        -9.9535,
+        0.0
+      ],
+      "bounds_max_cm": [
+        16.0,
+        9.9535,
+        25.0
+      ],
+      "dimensions_cm": [
+        32.0,
+        19.907,
+        25.0
+      ],
+      "triangles": 6072,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.0029366215448486084,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Drudge.fbx",
+      "sha256": "b4091f4ee276a820f0c62f6461fbd352bb123ca2abf9428f4e484eecc38e62a7"
+    },
+    {
+      "name": "SM_Drudge_Body",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "Body",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -16.0,
+        -8.82398,
+        10.85106
+      ],
+      "bounds_max_cm": [
+        12.41096,
+        8.82398,
+        25.0
+      ],
+      "dimensions_cm": [
+        28.41095,
+        17.64796,
+        14.14894
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "triangles": 872,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.019920253059450714,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_Body.fbx",
+      "sha256": "d90510819c2f00aabda88fec899aea7170bd631ea7f3f3db6d164aba1d7dc46f"
+    },
+    {
+      "name": "SM_Drudge_LegFL",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegFL",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -1.50073,
+        -9.9535,
+        0.0
+      ],
+      "bounds_max_cm": [
+        10.91585,
+        -3.78824,
+        17.07234
+      ],
+      "dimensions_cm": [
+        12.41658,
+        6.16526,
+        17.07234
+      ],
+      "joint_pivot_cm": [
+        1.88624,
+        -4.67572,
+        14.39791
+      ],
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegFL.fbx",
+      "sha256": "1a53c03399e25910c15d30ccdca30ac43633e67d99b83b0d381fa179d4145123"
+    },
+    {
+      "name": "SM_Drudge_LegFR",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegFR",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -1.50073,
+        3.78824,
+        0.0
+      ],
+      "bounds_max_cm": [
+        10.91585,
+        9.9535,
+        17.07234
+      ],
+      "dimensions_cm": [
+        12.41658,
+        6.16526,
+        17.07234
+      ],
+      "joint_pivot_cm": [
+        1.88624,
+        4.67572,
+        14.39791
+      ],
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegFR.fbx",
+      "sha256": "dcec3f0291810d1c8662f79543fdb67d67737ccd7a5f7c7886677b93aa929cd4"
+    },
+    {
+      "name": "SM_Drudge_LegRL",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegRL",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -12.76612,
+        -9.9535,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -4.97212,
+        -3.78976,
+        17.07234
+      ],
+      "dimensions_cm": [
+        7.79401,
+        6.16374,
+        17.07234
+      ],
+      "joint_pivot_cm": [
+        -5.61366,
+        -4.67572,
+        14.39791
+      ],
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegRL.fbx",
+      "sha256": "e1b225fdc459cc339955a6d00cab69b6e4e7d48623abf7d1fb7a2aac7ccaf9db"
+    },
+    {
+      "name": "SM_Drudge_LegRR",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "LegRR",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -12.76612,
+        3.78976,
+        0.0
+      ],
+      "bounds_max_cm": [
+        -4.97212,
+        9.9535,
+        17.07234
+      ],
+      "dimensions_cm": [
+        7.79401,
+        6.16374,
+        17.07234
+      ],
+      "joint_pivot_cm": [
+        -5.61366,
+        4.67572,
+        14.39791
+      ],
+      "triangles": 932,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegRR.fbx",
+      "sha256": "239c78bd28ca994b338ac21561b877203260285c304f125196c67771420f06c2"
+    },
+    {
+      "name": "SM_Drudge_Tools",
+      "unit": "Drudge",
+      "kind": "Worker",
+      "part": "Tools",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        4.5341,
+        -5.89637,
+        0.10638
+      ],
+      "bounds_max_cm": [
+        16.0,
+        5.89637,
+        18.68211
+      ],
+      "dimensions_cm": [
+        11.4659,
+        11.79273,
+        18.57573
+      ],
+      "joint_pivot_cm": [
+        6.71087,
+        -0.0,
+        17.01571
+      ],
+      "triangles": 1472,
+      "material_slots": [
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.0029366215448486084,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_Tools.fbx",
+      "sha256": "c1ffca33450325cf59237313e2ec4bf362c40de607c80e8205e51111b798a061"
+    },
+    {
+      "name": "SM_Ember",
+      "unit": "Ember",
+      "kind": "Striker",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -20.0,
+        -15.427,
+        0.0
+      ],
+      "bounds_max_cm": [
+        20.0,
+        15.427,
+        48.0
+      ],
+      "dimensions_cm": [
+        40.0,
+        30.854,
+        48.0
+      ],
+      "triangles": 6096,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Ember.fbx",
+      "sha256": "5b73291db36c6b5a463175136822076d1b36fe466e627a2076bbaf310be1a430"
+    },
+    {
+      "name": "SM_Ember_Body",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "Body",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -20.0,
+        -15.427,
+        19.41177
+      ],
+      "bounds_max_cm": [
+        7.71707,
+        15.427,
+        48.0
+      ],
+      "dimensions_cm": [
+        27.71707,
+        30.854,
+        28.58823
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "triangles": 2820,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_Body.fbx",
+      "sha256": "bf86ebb68783dfcf3284971c8cdcba68f2249e154e1254b35e42f4053f180eea"
+    },
+    {
+      "name": "SM_Ember_LegL",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "LegL",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -13.96325,
+        -11.20274,
+        0.0
+      ],
+      "bounds_max_cm": [
+        2.60754,
+        -4.57896,
+        22.99765
+      ],
+      "dimensions_cm": [
+        16.5708,
+        6.62378,
+        22.99765
+      ],
+      "joint_pivot_cm": [
+        -6.41142,
+        -7.38656,
+        20.70588
+      ],
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_LegL.fbx",
+      "sha256": "10bf05d6f7e496ed9afd2d6678f3e39ada3065a357074461cb14dc1e0d230a00"
+    },
+    {
+      "name": "SM_Ember_LegR",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "LegR",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -13.96325,
+        4.57896,
+        0.0
+      ],
+      "bounds_max_cm": [
+        2.60754,
+        11.20274,
+        22.99765
+      ],
+      "dimensions_cm": [
+        16.5708,
+        6.62378,
+        22.99765
+      ],
+      "joint_pivot_cm": [
+        -6.41142,
+        7.38656,
+        20.70588
+      ],
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_LegR.fbx",
+      "sha256": "10db83098f7c30370f7db5bd03325fa9d12bb1d5f9d1f127baffb792560a1bf8"
+    },
+    {
+      "name": "SM_Ember_Weapon",
+      "unit": "Ember",
+      "kind": "Striker",
+      "part": "Weapon",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -4.73701,
+        5.89194,
+        31.39361
+      ],
+      "bounds_max_cm": [
+        20.0,
+        12.56704,
+        38.25076
+      ],
+      "dimensions_cm": [
+        24.73701,
+        6.6751,
+        6.85715
+      ],
+      "joint_pivot_cm": [
+        0.37656,
+        8.63925,
+        33.88235
+      ],
+      "triangles": 980,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.010280047173083295,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_Weapon.fbx",
+      "sha256": "c2d168bcdd9e87b880b6d4274189844a94ec6d5ce7f8e2d43bba8938352b36b8"
+    },
+    {
+      "name": "SM_Needle",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -21.0,
+        -11.9035,
+        0.0
+      ],
+      "bounds_max_cm": [
+        21.0,
+        11.9035,
+        47.0
+      ],
+      "dimensions_cm": [
+        42.0,
+        23.807,
+        47.0
+      ],
+      "triangles": 6752,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Needle.fbx",
+      "sha256": "118c75277a9df4b93aacd2322e47f914eff310f442e60acd3760ec45d6e00fb2"
+    },
+    {
+      "name": "SM_Needle_Body",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "Body",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -21.0,
+        -11.9035,
+        19.00735
+      ],
+      "bounds_max_cm": [
+        6.44206,
+        11.9035,
+        47.0
+      ],
+      "dimensions_cm": [
+        27.44206,
+        23.807,
+        27.99265
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "triangles": 2820,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_Body.fbx",
+      "sha256": "7cd85bb7b8132e45f6f61c7cb4356d681f8decd1123166096b2ccc1b13aeee26"
+    },
+    {
+      "name": "SM_Needle_LegL",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "LegL",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -15.9891,
+        -8.05684,
+        0.0
+      ],
+      "bounds_max_cm": [
+        0.41729,
+        -2.37978,
+        20.88242
+      ],
+      "dimensions_cm": [
+        16.40638,
+        5.67705,
+        20.88242
+      ],
+      "joint_pivot_cm": [
+        -7.21718,
+        -5.69932,
+        19.04937
+      ],
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.013772927233871864,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_LegL.fbx",
+      "sha256": "bd4038075a4feab258cd745e8da91b5276085cf650b4dba5c5a4eb32b8232923"
+    },
+    {
+      "name": "SM_Needle_LegR",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "LegR",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -15.9891,
+        2.37978,
+        0.0
+      ],
+      "bounds_max_cm": [
+        0.41729,
+        8.05684,
+        20.88242
+      ],
+      "dimensions_cm": [
+        16.40638,
+        5.67705,
+        20.88242
+      ],
+      "joint_pivot_cm": [
+        -7.21718,
+        5.69932,
+        19.04937
+      ],
+      "triangles": 1148,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.013772928092326319,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_LegR.fbx",
+      "sha256": "6f16b64eac92a281140b925c4fb2fb7b7573d1ea75e18a3c6a418aaa4148c299"
+    },
+    {
+      "name": "SM_Needle_Weapon",
+      "unit": "Needle",
+      "kind": "Lancer",
+      "part": "Weapon",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -11.08488,
+        -3.47949,
+        33.19326
+      ],
+      "bounds_max_cm": [
+        21.0,
+        3.47948,
+        39.90754
+      ],
+      "dimensions_cm": [
+        32.08488,
+        6.95897,
+        6.71429
+      ],
+      "joint_pivot_cm": [
+        -3.95943,
+        -0.0,
+        36.36699
+      ],
+      "triangles": 1636,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.00881478709855401,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_Weapon.fbx",
+      "sha256": "f23d34c95c12b549fd7280dbf302b0a95b3ef45932c326540e3546dc9c1716bc"
+    },
+    {
+      "name": "SM_Skim",
+      "unit": "Skim",
+      "kind": "Scout",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -18.0,
+        -8.647,
+        0.0
+      ],
+      "bounds_max_cm": [
+        18.0,
+        8.647,
+        14.0
+      ],
+      "dimensions_cm": [
+        36.0,
+        17.294,
+        14.0
+      ],
+      "triangles": 3216,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.006393363018783723,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Skim.fbx",
+      "sha256": "8dc11f7a2ec3fb0b1e69e091d1829db12747f176a85b7747d1dd7c9b924d832a"
+    },
+    {
+      "name": "SM_Anvil",
+      "unit": "Anvil",
+      "kind": "Bastion",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -34.0,
+        -29.8455,
+        0.0
+      ],
+      "bounds_max_cm": [
+        34.0,
+        29.8455,
+        38.0
+      ],
+      "dimensions_cm": [
+        68.0,
+        59.691,
+        38.0
+      ],
+      "triangles": 7308,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.000613877978773169,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Anvil.fbx",
+      "sha256": "49843a4e20b4ae21a0849c25d279981809c8eb23a27d05409d26f14e97623425"
+    },
+    {
+      "name": "SM_Anvil_Body",
+      "unit": "Anvil",
+      "kind": "Bastion",
+      "part": "Body",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -34.0,
+        -29.8455,
+        0.0
+      ],
+      "bounds_max_cm": [
+        28.10018,
+        29.8455,
+        32.02452
+      ],
+      "dimensions_cm": [
+        62.10018,
+        59.691,
+        32.02452
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "triangles": 5452,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.000613877978773169,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Anvil_Body.fbx",
+      "sha256": "93f3cff5093a9d3fab70ea3a9cbb4d98d52c5a415cc2c13a96f702ff6602ab40"
+    },
+    {
+      "name": "SM_Anvil_Weapon",
+      "unit": "Anvil",
+      "kind": "Bastion",
+      "part": "Weapon",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -8.84464,
+        -13.07405,
+        23.21322
+      ],
+      "bounds_max_cm": [
+        34.0,
+        13.07405,
+        38.0
+      ],
+      "dimensions_cm": [
+        42.84464,
+        26.14811,
+        14.78678
+      ],
+      "joint_pivot_cm": [
+        7.00725,
+        -0.0,
+        30.74896
+      ],
+      "triangles": 1856,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.019937895338128273,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Anvil_Weapon.fbx",
+      "sha256": "4620004cc051ce604160625ffd0994c6af4a56a198386f63e1a9764547235419"
+    },
+    {
+      "name": "SM_Cinderthrow",
+      "unit": "Cinderthrow",
+      "kind": "Mortar",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -30.0,
+        -20.923,
+        0.0
+      ],
+      "bounds_max_cm": [
+        30.0,
+        20.923,
+        38.0
+      ],
+      "dimensions_cm": [
+        60.0,
+        41.846,
+        38.0
+      ],
+      "triangles": 7084,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.0005587044803848576,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Cinderthrow.fbx",
+      "sha256": "0004b82001f532d51bf2e6d883cd50d7a004a019f35c6b3a22047b88740b8703"
+    },
+    {
+      "name": "SM_Cinderthrow_Body",
+      "unit": "Cinderthrow",
+      "kind": "Mortar",
+      "part": "Body",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -30.0,
+        -20.923,
+        0.0
+      ],
+      "bounds_max_cm": [
+        24.96941,
+        20.923,
+        30.79344
+      ],
+      "dimensions_cm": [
+        54.96941,
+        41.846,
+        30.79344
+      ],
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "triangles": 5452,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.0005587044803848576,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Cinderthrow_Body.fbx",
+      "sha256": "4ad8d4db52e3b388303e1612e1f22a5ddd68611f795e99d88d3af5f1eae78bbd"
+    },
+    {
+      "name": "SM_Cinderthrow_Weapon",
+      "unit": "Cinderthrow",
+      "kind": "Mortar",
+      "part": "Weapon",
+      "asset_type": "motion",
+      "bounds_min_cm": [
+        -19.45866,
+        -9.97178,
+        21.41358
+      ],
+      "bounds_max_cm": [
+        30.0,
+        9.97178,
+        38.0
+      ],
+      "dimensions_cm": [
+        49.45866,
+        19.94356,
+        16.58642
+      ],
+      "joint_pivot_cm": [
+        -11.99535,
+        -0.0,
+        25.97186
+      ],
+      "triangles": 1632,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "minimum_triangle_area_cm2": 0.017731624069372218,
+      "unreal_degenerate_triangles": 0,
+      "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Cinderthrow_Weapon.fbx",
+      "sha256": "f50dceccf4fc7b4f6e424245008639510989684ed39b445088462ff3f6fa28d4"
+    },
+    {
+      "name": "SM_Mend",
+      "unit": "Mend",
+      "kind": "Mender",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -19.0,
+        -17.122,
+        0.0
+      ],
+      "bounds_max_cm": [
+        19.0,
+        17.122,
+        39.0
+      ],
+      "dimensions_cm": [
+        38.0,
+        34.244,
+        39.0
+      ],
+      "triangles": 3368,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.004182188218828312,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Mend.fbx",
+      "sha256": "d6f2c3d414deacdf5d825a2aff6cd594150526e5ef2b5a32ee9767de5cd20b51"
+    },
+    {
+      "name": "SM_Veil",
+      "unit": "Veil",
+      "kind": "Kite",
+      "asset_type": "model",
+      "bounds_min_cm": [
+        -24.8475,
+        -26.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        24.8475,
+        26.0,
+        18.0
+      ],
+      "dimensions_cm": [
+        49.695,
+        52.0,
+        18.0
+      ],
+      "triangles": 3352,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "minimum_triangle_area_cm2": 0.010663933413543235,
+      "unreal_degenerate_triangles": 0,
+      "lod_triangle_percentages": [
+        1.0,
+        0.52,
+        0.24
+      ],
+      "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Veil.fbx",
+      "sha256": "dc28ea362f571e31075b2b5a945f5722a97dcd1c42a53e56c4e8171ffedd9ff3"
+    }
+  ]
+}

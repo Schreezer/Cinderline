@@ -1,0 +1,54 @@
+{
+  "recordedAtUtc": "2026-09-12T11:04:49.404705+00:00",
+  "macBuild": "passed",
+  "iosSDK27Build": "passed",
+  "iosCookAndPackage": "passed",
+  "engineAutomation": {
+    "passed": 15,
+    "failed": 0,
+    "report": "automation.json"
+  },
+  "portableTests": {
+    "passed": 2,
+    "failed": 0,
+    "report": "portable-tests.txt"
+  },
+  "materialVersion": "cinematic-visual-target-materials-v1.6.1",
+  "materialReportSuccess": true,
+  "physicalDevice": {
+    "name": "AEON",
+    "model": "iPhone 17 Pro Max",
+    "os": "iOS 27.0",
+    "bundleId": "com.cinderline.game",
+    "installed": true,
+    "launched": true,
+    "observed": "Normal game menu renders at 2868x1320; process remains running after launch. Left for player testing.",
+    "gameplayAndTouchAcceptance": "pending player test",
+    "executableSha256": "a69b826891b51b5fe30b0bebb4da17a38dae25b2f45ec2628b30fb35221c0e63"
+  },
+  "runtime": {
+    "finalMacCaptures": [
+      "runtime/mac-base.png",
+      "runtime/mac-battle.png"
+    ],
+    "phoneMenu": "aeon/first-screen.png",
+    "earlierBattleRecording": "runtime/mac-battle-before-final-ground.mov",
+    "recordingScope": "Actual in-engine battle, before final anti-tiling/AO polish. Final recording attempt failed to overwrite existing file.",
+    "finalMacTiming": [
+      "[2026.09.12-11.01.56:343][210]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE result map=Frontier samples=180 warmup_frames=30 viewport_px=1440x900 window_seconds=12.171 mean_ms=67.617 median_ms=42.216 p95_ms=112.024 fps=14.79 foreground=0 background_frames=85 measurement=rendered_viewport_wall_clock gpu_timing=completed_engine_frames",
+      "[2026.09.12-11.01.56:343][210]LogCinderQuality: Display: CINDERLINE_FRAME_PROFILE_TIMING metric=gpu status=available samples=182 viewport_samples=180 unavailable_observations=0 mean_ms=16.492 median_ms=14.247 p95_ms=20.330 source=FRHIGPUFrameTimeHistory availability=fresh_positive_completed_gpu_frames"
+    ],
+    "timingLimit": "Mixed foreground/background states, including the intended 10 FPS background cap. Not a steady gameplay benchmark and not phone performance."
+  },
+  "priority": "AEON playtest, persistent public online service, focused HUD redesign, then authored Unreal Landscape",
+  "sourceHashes": {
+    "Config/DefaultEngine.ini": "8aa074063045f53917f1269edaa96e05fac21cf241f977c95052d3d24b8f518b",
+    "Config/DefaultDeviceProfiles.ini": "30489da9773bc4329e8bdff2340fff0b91424c81e0b8bbf5887bb01b43b8b749",
+    "Source/Cinderline/Private/Presentation/CinderBattlefield.cpp": "4197693266ebaf8b8812450cb7bd40c980bf644b7a043ccc1e161c5f86d29c30",
+    "Source/Cinderline/Private/Presentation/CinderCamera.cpp": "e75e2f0ca3e94e18f029c229f87ffa108f12e310249e29f3f7c5ab8491ba4bc1",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "b1b43806cf49b0ad600e696efe588a2c8a0cf1f67304a760de48bbb0bb6ff30f",
+    "Source/Cinderline/Private/Presentation/CinderScenery.cpp": "5b108b1e732d28374a8b16e0d6d0eb827f9f07ef6db97e5a128ad050e0c1d65f",
+    "Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp": "2c9df5f1b39e4f6eb0188937f2bf479ff277c46c336c7d1cd395a8972e2cce91",
+    "scripts/unreal_visual_target_materials.py": "45a75a3b78aa2d345e84521530ee24b136222d54a8611c595ed57f935c056315"
+  }
+}

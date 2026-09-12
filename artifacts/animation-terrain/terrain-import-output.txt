@@ -1,0 +1,318 @@
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Wait until we know the daemon has started.
+Parent received signal 30
+Daemon signalled successful start
+Forked complete (ret=0)
+LogInit: Display: Running engine for game: Cinderline
+LogCore: Display: Requested channels: 'cpu,gpu,frame,log,bookmark,screenshot,region'
+LogTrace: Display: Control listening on port 1985
+LogCsvProfiler: Display: Metadata set : platform="Mac"
+LogCsvProfiler: Display: Metadata set : config="Development"
+LogCsvProfiler: Display: Metadata set : buildversion="++UE5+Release-5.8-CL-56702186"
+LogCsvProfiler: Display: Metadata set : engineversion="5.8.2-56702186+++UE5+Release-5.8"
+LogCsvProfiler: Display: Metadata set : enginereleaseversion="5.8.2"
+LogCsvProfiler: Display: Metadata set : os="macOS 27.0 26A428"
+LogCsvProfiler: Display: Metadata set : cpu="Apple|Apple M1 Max"
+LogCsvProfiler: Display: Metadata set : pgoenabled="0"
+LogCsvProfiler: Display: Metadata set : pgoprofilingenabled="0"
+LogCsvProfiler: Display: Metadata set : ltoenabled="0"
+LogCsvProfiler: Display: Metadata set : asan="0"
+LogCsvProfiler: Display: Metadata set : mergedmodules="0"
+LogCsvProfiler: Display: Metadata set : compacttset="0"
+LogCsvProfiler: Display: Metadata set : commandline="" /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject /Engine/Maps/Entry -unattended -nop4 -nosplash -noshaderworker -stdout -ExecutePythonScript=/Users/chirag13/Documents/ChatGPT/starCraft/scripts/unreal_terrain_surface.py -abslog=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/animation-terrain/terrain-import-engine.log""
+LogCsvProfiler: Display: Metadata set : loginid="e153dc515844b7ef936fddb6789fe54e"
+LogCsvProfiler: Display: Metadata set : llm="0"
+LogCsvProfiler: Display: Metadata set : zenstreaming="0"
+Setting up bundled DotNet SDK
+/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll -Mode=ValidatePlatforms -OutputSDKs -AllPlatforms -project=/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -log=/Users/chirag13/Library/Logs/Unreal Engine/CinderlineEditor/AutoSDKInfo.txt -verbose -timestamps
+LogCsvProfiler: Display: Metadata set : systemresolution.resx="1280"
+LogCsvProfiler: Display: Metadata set : systemresolution.resy="720"
+LogAudio: Display: Pre-Initializing Audio Device Manager...
+LogConfig: Display: Loading Mac ini files took 0.04 seconds
+LogAudio: Display: AudioInfo: 'OPUS' Registered
+LogConfig: Display: Loading VulkanPC ini files took 0.04 seconds
+LogConfig: Display: Loading Unix ini files took 0.04 seconds
+LogConfig: Display: Loading IOS ini files took 0.04 seconds
+LogConfig: Display: Loading TVOS ini files took 0.04 seconds
+LogConfig: Display: Loading Linux ini files took 0.05 seconds
+LogConfig: Display: Loading LinuxArm64 ini files took 0.05 seconds
+LogConfig: Display: Loading Android ini files took 0.02 seconds
+LogConfig: Display: Loading Windows ini files took 0.02 seconds
+LogConfig: Display: Loading VisionOS ini files took 0.02 seconds
+LogAudio: Display: AudioInfo: 'OGG' Registered
+LogAudio: Display: AudioInfo: 'ADPCM' Registered
+LogAudio: Display: AudioInfo: 'PCM' Registered
+LogAudio: Display: AudioInfo: 'BINKA' Registered
+LogAudio: Display: AudioInfo: 'RADA' Registered
+LogAudio: Display: Audio Device Manager Pre-Initialized
+LogAssetRegistry: Display: FindShardedCacheFiles: 1 via .ref, 0 via migration fallback, 1 total
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PreLoad): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+LogAssetRegistry: Display: LoadCacheFiles: loading 1 cache files, memory-mapping=enabled
+Log file: /Users/chirag13/Library/Logs/Unreal Engine/CinderlineEditor/AutoSDKInfo.txt
+LogAssetRegistry: Display: Asset registry cache read as 118.6 MiB from ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/CachedAssetRegistry/CachedAssetRegistry_0_656D61655248A3890ED657BE21E91DC9.bin (memory-mapped=no, platform unsupported)
+##PlatformValidate: Win64 INVALID <UNKNOWN>
+##PlatformValidate: Mac VALID 26.1.1
+##PlatformValidate: IOS VALID 26.1.1
+##PlatformValidate: Android INVALID r27c
+##PlatformValidate: Linux INVALID <UNKNOWN>
+##PlatformValidate: LinuxArm64 INVALID <UNKNOWN>
+##PlatformValidate: TVOS VALID 26.1.1
+##PlatformValidate: VisionOS VALID 26.1.1
+Unable to find required SDK version 'MainVersion' for platform Win64. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform Linux. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform LinuxArm64. Check your SDK.json files
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 324b
+2026-09-12 01:11:21.141 UnrealEditor-Cmd[11828:3174341] [UE4] Shutdown handler: initialize.
+LogAsyncCompilation: Display: MemorySharingInfo: UsedMemory=481210MiB, MaxMemoryAvailable=36864MiB
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+[2026.09.11-19.41.21:658][  0]LogCsvProfiler: Display: Metadata set : systemresolution.resx="1600"
+[2026.09.11-19.41.21:658][  0]LogCsvProfiler: Display: Metadata set : systemresolution.resy="900"
+[2026.09.11-19.41.21:660][  0]LogHAL: Display: Platform has ~ 32 GB [34359738368 / 34359738368 / 32], which maps to Largest [LargestMinGB=32, LargerMinGB=12, DefaultMinGB=8, SmallerMinGB=6, SmallestMinGB=0)
+[2026.09.11-19.41.21:662][  0]LogVirtualTexturing: Display: Recreating virtual texture pools.
+[2026.09.11-19.41.21:662][  0]LogCsvProfiler: Display: Metadata set : extradevelopmentmemorymb="0"
+[2026.09.11-19.41.21:703][  0]LogObj: Display: Attempting to load config data for Default__DownlinkBandwidthManagerConfig before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+*** Recognized (0x69) family*** (30 cols X 22 rows)
+[2026.09.11-19.41.22:048][  0]LogObj: Display: Attempting to load config data for Default__SlateThemeManager before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+[2026.09.11-19.41.23:272][  0]LogMetal: Warning: To use SM6 on this system, please ensure you are running Mac OS 15. Falling back to SM5
+[2026.09.11-19.41.23:273][  0]LogMetal: Display:       Vendor ID: 4203
+[2026.09.11-19.41.23:273][  0]LogMetal: Display:       Device ID: 909194058
+[2026.09.11-19.41.23:273][  0]LogMetal: Display:       VRAM (MB): 24576
+[2026.09.11-19.41.23:310][  0]LogCsvProfiler: Display: Metadata set : verbatimrhiname="Metal"
+[2026.09.11-19.41.23:310][  0]LogCsvProfiler: Display: Metadata set : rhiname="Metal"
+[2026.09.11-19.41.23:310][  0]LogCsvProfiler: Display: Metadata set : rhifeaturelevel="SM5"
+[2026.09.11-19.41.23:310][  0]LogCsvProfiler: Display: Metadata set : shaderplatform="METAL_SM5"
+[2026.09.11-19.41.23:310][  0]LogCsvProfiler: Display: Metadata set : gpu="Apple M1 Max"
+[2026.09.11-19.41.23:310][  0]LogCsvProfiler: Display: Metadata set : gpudriver=""
+[2026.09.11-19.41.23:630][  0]LogTextureFormatASTC: Display: ASTCEnc version 5.0.1 library loaded
+[2026.09.11-19.41.23:630][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatASTC
+[2026.09.11-19.41.23:630][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatDXT
+[2026.09.11-19.41.23:630][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatETC2
+[2026.09.11-19.41.23:630][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatIntelISPCTexComp
+[2026.09.11-19.41.23:630][  0]LogTextureFormatOodle: Display: Oodle Texture TFO init; latest sdk version = 2.9.16
+[2026.09.11-19.41.23:630][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.16.dylib
+[2026.09.11-19.41.23:667][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatOodle
+[2026.09.11-19.41.23:667][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatUncompressed
+[2026.09.11-19.41.23:841][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'IOS'
+[2026.09.11-19.41.23:841][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'IOSClient'
+[2026.09.11-19.41.23:938][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'Mac'
+[2026.09.11-19.41.23:938][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacEditor'
+[2026.09.11-19.41.23:938][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacServer'
+[2026.09.11-19.41.23:938][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacClient'
+[2026.09.11-19.41.24:021][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'TVOS'
+[2026.09.11-19.41.24:021][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'TVOSClient'
+[2026.09.11-19.41.24:095][  0]LogTargetPlatformManager: Display: Failed to SetupSDK for platform 'Android'
+[2026.09.11-19.41.24:184][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'VisionOS'
+[2026.09.11-19.41.24:184][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'VisionOSClient'
+[2026.09.11-19.41.24:184][  0]LogTargetPlatformManager: Display: Building Assets For MacEditor
+[2026.09.11-19.41.24:852][  0]LogTemp: Display: /Applications/Xcode.app/Contents/Developer
+
+[2026.09.11-19.41.24:855][  0]LogHAL: Warning: FMacPlatformProcess::CreateProc: posix_spawn("/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id") failed (86, Bad CPU type in executable)
+[2026.09.11-19.41.24:855][  0]LogHAL: Warning: Failed to launch Tool. (/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)
+[2026.09.11-19.41.25:015][  0]LogDerivedDataCache: Display: ../../../Engine/DerivedDataCache/Compressed.ddp: Opened pak cache for reading. (2978 MiB)
+[2026.09.11-19.41.25:018][  0]LogZenServiceInstance: Display: Launching zen utility '/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/zen service status'.
+[2026.09.11-19.41.25:425][  0]LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+[2026.09.11-19.41.25:426][  0]LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.11-19.41.25:426][  0]LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.11-19.41.25:426][  0]LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+[2026.09.11-19.41.25:427][  0]LogZenServiceInstance: Display: Launching executable '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver', working dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install', data dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data', args '--port 8558 --data-dir "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data" --http asio --gc-cache-duration-seconds 1209600 --gc-interval-seconds 21600 --gc-low-diskspace-threshold 2147483648 --cache-bucket-limit-overwrites --quiet --restrict-content-types --allow-external-oidctoken-exe=false --plugins-config "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugins_v1.json" --security-config-path "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/security-config.json" --owner-pid 11828  --child-id Zen_11828_Startup --detach'
+[2026.09.11-19.41.25:597][  0]LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+[2026.09.11-19.41.25:599][  0]LogDerivedDataCache: Display: ZenLocal: Using ZenServer HTTP service at [::1] with namespace ue.ddc. Status: OK!.
+[2026.09.11-19.41.25:604][  0]LogDerivedDataCache: Display: /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/DerivedDataCache: Performance: Latency=0.04ms. RandomReadSpeed=447.34MBs, RandomWriteSpeed=403.71MBs. Assigned SpeedClass 'Local'
+[2026.09.11-19.41.25:607][  0]LogShaderCompilers: Display: Distributed shader compilation is disabled
+[2026.09.11-19.41.25:607][  0]LogShaderCompilers: Display: Using 1 local workers for shader compilation
+[2026.09.11-19.41.25:608][  0]LogShaderCompilers: Display: Compiling shader autogen file: ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/ShaderAutogen/METAL_SM5/AutogenShaderHeaders.ush
+[2026.09.11-19.41.25:608][  0]LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+[2026.09.11-19.41.27:167][  0]LogAssetRegistry: Display: AssetDataGatherer spent 0.000s loading caches from ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/CachedAssetRegistry.
+[2026.09.11-19.41.27:172][  0]LogEditorDomain: Display: EditorDomain is Disabled
+[2026.09.11-19.41.27:431][  0]LogDeviceProfileManager: Display: Deviceprofile LinuxArm64Editor not found.
+[2026.09.11-19.41.27:431][  0]LogDeviceProfileManager: Display: Deviceprofile LinuxArm64 not found.
+[2026.09.11-19.41.27:471][  0]LogCsvProfiler: Display: Metadata set : deviceprofile="MacEditor"
+[2026.09.11-19.41.27:476][  0]LogStreaming: Display: FlushAsyncLoading(1): 1 QueuedPackages, 0 AsyncPackages
+[2026.09.11-19.41.27:479][  0]LogTextureEncodingSettings: Display: Texture Encode Speed: FinalIfAvailable (editor).
+[2026.09.11-19.41.27:479][  0]LogTextureEncodingSettings: Display: Oodle Texture Encode Speed settings: Fast: RDO Off Lambda=0, Effort=Normal Final: RDO Off Lambda=0, Effort=Normal
+[2026.09.11-19.41.27:479][  0]LogTextureEncodingSettings: Display: Shared linear texture encoding: Disabled
+[2026.09.11-19.41.27:664][  0]LogMeshReduction: Display: HLOD mesh reduction module (r.ProxyLODMeshReductionModule) set to "ProxyLODMeshReduction" which doesn't exist.
+[2026.09.11-19.41.27:700][  0]LogMeshReduction: Display: Using QuadricMeshReduction for automatic static mesh reduction
+[2026.09.11-19.41.27:700][  0]LogMeshReduction: Display: Using SkeletalMeshReduction for automatic skeletal mesh reduction
+[2026.09.11-19.41.27:700][  0]LogMeshReduction: Display: No automatic mesh merging module available
+[2026.09.11-19.41.27:700][  0]LogMeshReduction: Display: No distributed automatic mesh merging module available
+[2026.09.11-19.41.28:008][  0]LogShaderCompilers: Display: Compiling shader autogen file: ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/ShaderAutogen/METAL_SM6/AutogenShaderHeaders.ush
+[2026.09.11-19.41.28:008][  0]LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+[2026.09.11-19.41.28:008][  0]LogVirtualization: Display: VirtualizationSystem name found in ini file: None
+[2026.09.11-19.41.28:008][  0]LogVirtualization: Display: FNullVirtualizationSystem mounted, virtualization will be disabled
+[2026.09.11-19.41.28:533][  0]LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize started...
+[2026.09.11-19.41.28:536][  0]LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize took 3.391 ms
+[2026.09.11-19.41.31:969][  0]LogUdpMessaging: Display: Unicast socket bound to '0.0.0.0:56142'.
+[2026.09.11-19.41.31:969][  0]LogUdpMessaging: Display: Added local interface '192.168.31.109' to multicast group '230.0.0.1:6666'
+[2026.09.11-19.41.31:969][  0]LogUdpMessaging: Display: Added local interface '127.0.0.1' to multicast group '230.0.0.1:6666'
+[2026.09.11-19.41.31:969][  0]LogUdpMessaging: Display: Using asynchronous task graph for message deserialization.
+[2026.09.11-19.41.32:780][  0]LogMetaSound: Display: MetaSound Page Target Initialized to 'Default'
+[2026.09.11-19.41.32:785][  0]LogAudio: Display: Registering Engine Module Parameter Interfaces...
+[2026.09.11-19.41.34:855][  0]LogHAL: Warning: FMacPlatformProcess::CreateProc: posix_spawn("/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id") failed (86, Bad CPU type in executable)
+[2026.09.11-19.41.34:855][  0]LogHAL: Warning: Failed to launch Tool. (/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)
+[2026.09.11-19.41.38:185][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.09.11-19.41.38:185][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.09.11-19.41.42:625][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.11.dylib
+[2026.09.11-19.41.42:687][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.12.dylib
+[2026.09.11-19.41.42:746][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.15.dylib
+[2026.09.11-19.41.42:864][  0]LogAnalytics: Display: [UEEditor.Rocket.Release] AnalyticsET::StartSession ( APIServer = https://datarouter.ol.epicgames.com/datarouter/api/v1/public/data. AppVersion = 5.8.2-56702186+++UE5+Release-5.8 )
+[2026.09.11-19.41.42:865][  0]LogAudio: Display: Initializing Audio Device Manager...
+[2026.09.11-19.41.42:865][  0]LogAudio: Display: Loading Default Audio Settings Objects...
+[2026.09.11-19.41.42:865][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
+[2026.09.11-19.41.42:867][  0]LogAudio: Display: Audio Device Manager Initialized
+[2026.09.11-19.41.42:867][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: bUseRenderScheduler set to true.
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2026.09.11-19.41.42:868][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
+[2026.09.11-19.41.42:868][  0]LogAudio: Display: AudioDevice MaxSources: 32
+[2026.09.11-19.41.42:868][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2026.09.11-19.41.42:868][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2026.09.11-19.41.42:868][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2026.09.11-19.41.42:868][  0]LogAudioMixerAudioUnit: Display: Bytes per submitted buffer: 8192
+[2026.09.11-19.41.42:914][  0]LogAudioMixerAudioUnit: Warning: Error querying Sample Rate: 2003332927
+[2026.09.11-19.41.42:941][  0]LogAudioMixer: Display: Initializing audio mixer using platform API: 'CoreAudio'
+[2026.09.11-19.41.42:942][  0]LogAudioMixer: Display: Using Audio Hardware Device Unknown
+[2026.09.11-19.41.42:943][  0]LogAudioMixer: Display: Initializing Sound Submixes...
+[2026.09.11-19.41.42:944][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2026.09.11-19.41.42:945][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2026.09.11-19.41.42:945][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048, InstanceID=1
+[2026.09.11-19.41.42:945][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal(), InstanceID=1
+[2026.09.11-19.41.42:974][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Untitled'.
+[2026.09.11-19.41.43:033][  0]LogCsvProfiler: Display: Metadata set : largeworldcoordinates="1"
+[2026.09.11-19.41.43:070][  0]LogSourceControl: Display: Uncontrolled Changelist persistency file loaded ../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/SourceControl/UncontrolledChangelists.json
+[2026.09.11-19.41.43:904][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.13.dylib
+[2026.09.11-19.41.44:294][  0]LogPython: Display: No pip-enabled plugins with python dependencies found, skipping
+[2026.09.11-19.41.44:806][  0]LogCsvProfiler: Display: Metadata set : raytracing="0"
+[2026.09.11-19.41.44:855][  0]LogHAL: Warning: FMacPlatformProcess::CreateProc: posix_spawn("/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id") failed (86, Bad CPU type in executable)
+[2026.09.11-19.41.44:855][  0]LogHAL: Warning: Failed to launch Tool. (/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)
+[2026.09.11-19.41.46:581][  0]LogCore: Display: InsightsEditor module auto-connecting to local trace server...
+[2026.09.11-19.41.46:681][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
+[2026.09.11-19.41.46:717][  0]LogAudio: Display: Audio Device unregistered from world 'Untitled'.
+[2026.09.11-19.41.46:725][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Entry'.
+[2026.09.11-19.41.46:931][  0]LogPlacementMode: Display: The Asset Registry is not yet fully loaded so some placeable classes might be missing.
+[2026.09.11-19.41.47:262][  0]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.41.47:262][  0]LogSlate: Display: Took 0.000281 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K) on Game thread.
+[2026.09.11-19.41.47:262][  0]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface 0 in Game thread.
+[2026.09.11-19.41.47:262][  0]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.41.47:276][  0]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4ef65e6f00
+[2026.09.11-19.41.49:993][  0]LogCsvProfiler: Display: Metadata set : streamingpoolsizemb="600"
+[2026.09.11-19.41.50:006][  0]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Italic.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.41.50:007][  0]LogSlate: Display: Took 0.000343 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Italic.ttf' (157K) on Game thread.
+[2026.09.11-19.41.50:007][  0]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Italic.ttf' subface 0 in Game thread.
+[2026.09.11-19.41.50:007][  0]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Italic.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.41.50:007][  0]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/DroidSansMono.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.41.50:007][  0]LogSlate: Display: Took 0.000238 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/DroidSansMono.ttf' (77K) on Game thread.
+[2026.09.11-19.41.50:007][  0]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/DroidSansMono.ttf' subface 0 in Game thread.
+[2026.09.11-19.41.50:007][  0]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/DroidSansMono.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.41.50:029][  0]LogStreaming: Display: FlushAsyncLoading(356): 1 QueuedPackages, 0 AsyncPackages
+[2026.09.11-19.41.50:063][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... started...
+[2026.09.11-19.41.50:101][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... took 37.801 ms
+[2026.09.11-19.41.50:101][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... started...
+[2026.09.11-19.41.50:128][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... took 26.471 ms (total: 64.272 ms)
+[2026.09.11-19.41.50:424][  1]LogAssetRegistry: Display: Starting OnFilesLoaded.Broadcast
+[2026.09.11-19.41.50:433][  1]LogPlacementMode: Display: The Asset Registry is done with its initial scan, the list of placeable classes has been updated.
+[2026.09.11-19.41.50:456][  1]LogAssetRegistry: Display: Completed OnFilesLoaded.Broadcast: 0.032s
+[2026.09.11-19.41.50:490][  1]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.41.50:490][  1]LogSlate: Display: Took 0.000249 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' (160K) on Game thread.
+[2026.09.11-19.41.50:490][  1]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface 0 in Game thread.
+[2026.09.11-19.41.50:490][  1]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.41.50:491][  1]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f0374d980
+[2026.09.11-19.41.50:784][  2]LogStreaming: Display: FlushAsyncLoading(362): 1 QueuedPackages, 0 AsyncPackages
+[2026.09.11-19.41.50:806][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4ee5ecfc00
+[2026.09.11-19.41.50:875][  2]LogInterchangeEngine: Display: Interchange start importing source [/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Terrain/FBX/SM_BasaltCliff_A.fbx]
+[2026.09.11-19.41.50:907][  2]LogStaticMesh: Display: Building static mesh SM_BasaltCliff_A (Required Memory Estimate: 1.217064 MB)...
+[2026.09.11-19.41.50:930][  2]LogInterchangeEngine: Display: Interchange import completed [/Users/chirag13/Docu...awAssets/Terrain/FBX/SM_BasaltCliff_A.fbx]
+[2026.09.11-19.41.50:949][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4ee5ecfc00
+[2026.09.11-19.41.51:126][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18581800
+[2026.09.11-19.41.51:145][  2]LogInterchangeEngine: Display: Interchange start importing source [/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Terrain/FBX/SM_BasaltCliff_B.fbx]
+[2026.09.11-19.41.51:161][  2]LogStaticMesh: Display: Building static mesh SM_BasaltCliff_B (Required Memory Estimate: 1.266731 MB)...
+[2026.09.11-19.41.51:171][  2]LogInterchangeEngine: Display: Interchange import completed [/Users/chirag13/Docu...awAssets/Terrain/FBX/SM_BasaltCliff_B.fbx]
+[2026.09.11-19.41.51:184][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18583a80
+[2026.09.11-19.41.51:206][  2]LogAssetRegistry: Display: Asset registry cache written as 118.6 MiB to ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/CachedAssetRegistry/CachedAssetRegistry_*.ref
+[2026.09.11-19.41.51:206][  2]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+[2026.09.11-19.41.51:221][  2]LogAssetRegistry: Display:   CachedAssetRegistry_0_656D61655248A3890ED657BE21E91DC9.bin: deleted (orphaned, unreferenced by any .ref)
+[2026.09.11-19.41.51:221][  2]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 2 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 1 orphans deleted, 0 orphans locked (kept)
+[2026.09.11-19.41.51:257][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18584f80
+[2026.09.11-19.41.51:275][  2]LogInterchangeEngine: Display: Interchange start importing source [/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Terrain/FBX/SM_BasaltCliff_C.fbx]
+[2026.09.11-19.41.51:291][  2]LogStaticMesh: Display: Building static mesh SM_BasaltCliff_C (Required Memory Estimate: 1.182611 MB)...
+[2026.09.11-19.41.51:301][  2]LogInterchangeEngine: Display: Interchange import completed [/Users/chirag13/Docu...awAssets/Terrain/FBX/SM_BasaltCliff_C.fbx]
+[2026.09.11-19.41.51:315][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18585b80
+[2026.09.11-19.41.51:365][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18586600
+[2026.09.11-19.41.51:384][  2]LogInterchangeEngine: Display: Interchange start importing source [/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Terrain/FBX/SM_BasaltCliff_D.fbx]
+[2026.09.11-19.41.51:399][  2]LogStaticMesh: Display: Building static mesh SM_BasaltCliff_D (Required Memory Estimate: 1.143631 MB)...
+[2026.09.11-19.41.51:409][  2]LogInterchangeEngine: Display: Interchange import completed [/Users/chirag13/Docu...awAssets/Terrain/FBX/SM_BasaltCliff_D.fbx]
+[2026.09.11-19.41.51:424][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18586000
+[2026.09.11-19.41.51:464][  2]LogUObjectGlobals: Warning: Failed to find object 'Object /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault'
+[2026.09.11-19.41.51:466][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18586000
+[2026.09.11-19.41.51:484][  2]LogInterchangeEngine: Display: Interchange start importing source [/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/VisualUpgrade/T_CinderTerrainLayersDefault.png]
+[2026.09.11-19.41.51:486][  2]LogTexture: Display: Building texture TwoD: /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault (TFO_AutoDXT, 4x4 x1x1x1) (Required Memory Estimate: 1.001792 MB), EncodeSpeed: Fast
+[2026.09.11-19.41.51:488][  2]LogInterchangeEngine: Display: Interchange import completed [/Users/chirag13/Docu...ediate/VisualUpgrade/T_CinderTerrainLayersDefault.png]
+[2026.09.11-19.41.51:504][  2]LogTexture: Display: Building texture TwoD: /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault (BGRA8, 4x4 x1x1x1) (Required Memory Estimate: 1.000542 MB), EncodeSpeed: Fast
+[2026.09.11-19.41.51:507][  2]LogTexture: Display: Building texture TwoD: /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault (BGRA8, 4x4 x1x1x1) (Required Memory Estimate: 1.000542 MB), EncodeSpeed: Fast
+[2026.09.11-19.41.51:508][  2]LogTexture: Display: Building texture TwoD: /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault (BGRA8, 4x4 x1x1x1) (Required Memory Estimate: 1.000542 MB), EncodeSpeed: Fast
+[2026.09.11-19.41.51:509][  2]LogTexture: Display: Building texture TwoD: /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault (BGRA8, 4x4 x1x1x1) (Required Memory Estimate: 1.000542 MB), EncodeSpeed: Fast
+[2026.09.11-19.41.51:511][  2]LogTexture: Display: Building texture TwoD: /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault (BGRA8, 4x4 x1x1x1) (Required Memory Estimate: 1.000542 MB), EncodeSpeed: Fast
+[2026.09.11-19.41.51:513][  2]LogTexture: Display: Building texture TwoD: /Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault (BGRA8, 4x4 x1x1x1) (Required Memory Estimate: 1.000542 MB), EncodeSpeed: Fast
+[2026.09.11-19.41.51:517][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18587f80
+[2026.09.11-19.41.51:557][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f1858a200
+[2026.09.11-19.41.51:587][  2]LogUObjectGlobals: Warning: Failed to find object 'Object /Game/Art/Materials/M_CinderGroundV3'
+[2026.09.11-19.41.51:807][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f18581b00
+[2026.09.11-19.41.54:855][  2]LogHAL: Warning: FMacPlatformProcess::CreateProc: posix_spawn("/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id") failed (86, Bad CPU type in executable)
+[2026.09.11-19.41.54:855][  2]LogHAL: Warning: Failed to launch Tool. (/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)
+[2026.09.11-19.42.00:348][  2]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f1858b880
+[2026.09.11-19.42.00:443][  2]LogSourceControl: Display: Uncontrolled Changelist persistency file saved ../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/SourceControl/UncontrolledChangelists.json
+[2026.09.11-19.42.00:448][  3]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0xb4f1858b880
+[2026.09.11-19.42.00:460][  3]LogContentValidation: Display: Starting to validate 6 assets (0 associated objects such as actors)
+[2026.09.11-19.42.00:637][  3]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Light.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.42.00:637][  3]LogSlate: Display: Took 0.000340 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Light.ttf' (167K) on Game thread.
+[2026.09.11-19.42.00:637][  3]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Light.ttf' subface 0 in Game thread.
+[2026.09.11-19.42.00:637][  3]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Light.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.42.00:720][  4]LogAnalytics: Display: [UEEditor.Rocket.Release] AnalyticsET::EndSession
+[2026.09.11-19.42.00:721][  4]LogAudio: Display: Beginning Audio Device Manager Shutdown (Module: AudioMixerCoreAudio)...
+[2026.09.11-19.42.00:721][  4]LogAudio: Display: Destroying 1 Remaining Audio Device(s)...
+[2026.09.11-19.42.00:721][  4]LogAudio: Display: Audio Device unregistered from world 'Entry'.
+[2026.09.11-19.42.00:721][  4]LogAudio: Display: Shutting down audio device while 1 references to it are still alive. For more information, compile with INSTRUMENT_AUDIODEVICE_HANDLES.
+[2026.09.11-19.42.00:729][  4]LogAudio: Display: Audio Device Manager Shutdown
+[2026.09.11-19.42.02:103][  4]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+[2026.09.11-19.42.02:104][  4]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+[2026.09.11-19.42.02:246][  4]LogShaderCompilers: Display: Exiting ShaderCompilingThread
+2026-09-12 01:12:03.846 UnrealEditor-Cmd[11828:3174207] [UE4] Shutdown handler: cleanup.
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Opening shared memory
+Starting the store
+Reading settings from '/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini'
+
+Unable to open settings file /Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini.
+
+Store settings (/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini):
+ - Store port: 1989
+ - Recorder port: 1981
+ - Thread count: 0
+ - Sponsored mode: 1
+ - Directory: '/Users/chirag13/UnrealEngine/UnrealTrace/Store/001'
+Watcher enabled on /Users/chirag13/UnrealEngine/UnrealTrace/Store/001
+Signalling parent 11855
+Terminating server, no sponsors or connections active.
+Received signal 15
+Daemon is exiting without errors.
+Listening cancelled, closing port...
+Listening cancelled, closing port...

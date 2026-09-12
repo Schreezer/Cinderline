@@ -1,0 +1,39 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "install",
+      "app",
+      "--device",
+      "00008150-00060CE12684401C",
+      "Saved/Packages/IOS/Cinderline.app",
+      "--json-output",
+      "artifacts/visual-target/aeon/install.json",
+      "--log-output",
+      "Saved/IOSDevice/visual-final-install.log"
+    ],
+    "commandType" : "devicectl.device.install.app",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "installedApplications" : [
+      {
+        "bundleID" : "com.cinderline.game",
+        "databaseSequenceNumber" : 2980,
+        "databaseUUID" : "C177D366-7EF9-47F4-B258-DB53D1DA3642",
+        "installationURL" : "file:///private/var/containers/Bundle/Application/B8A95B32-651D-4FDF-BD1F-8432DBB5BD91/Cinderline.app/",
+        "launchServicesIdentifier" : "unknown",
+        "options" : {
+
+        }
+      }
+    ]
+  }
+}

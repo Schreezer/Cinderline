@@ -1,0 +1,30 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "capture",
+      "screenshot",
+      "--device",
+      "00008150-00060CE12684401C",
+      "--destination",
+      "artifacts/visual-target/aeon/first-screen.png",
+      "--json-output",
+      "artifacts/visual-target/aeon/screenshot.json"
+    ],
+    "commandType" : "devicectl.device.capture.screenshot",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "destination" : "file:///Users/chirag13/Documents/ChatGPT/starCraft/artifacts/visual-target/aeon/first-screen.png",
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "height" : 1320,
+    "imageFormat" : "png",
+    "width" : 2868
+  }
+}

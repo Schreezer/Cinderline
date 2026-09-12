@@ -1,0 +1,44 @@
+{
+  "license": "CC0-1.0",
+  "mapping": "authored UV0 at 3.2 tiling",
+  "material": "/Game/Art/VisualTarget/Materials/M_CinderModelV3",
+  "owner": "scripts/unreal_visual_target_model_finish.py",
+  "parameters": {
+    "ModelFinishDesaturation": 1.0,
+    "ModelFinishNormalStrength": 0.24,
+    "ModelFinishRoughnessStrength": 0.22,
+    "ModelFinishWearStrength": 0.16
+  },
+  "preserved": [
+    "Tint",
+    "five material-slot instances",
+    "vertex AO alpha",
+    "GlowIntensity"
+  ],
+  "replaced_prior_finish_nodes": 0,
+  "source_asset": "https://polyhaven.com/a/blue_metal_plate",
+  "success": true,
+  "texture_samples": 3,
+  "textures": [
+    {
+      "path": "/Game/Art/VisualTarget/Textures/ModelFinish/T_VT_ModelFinish_Color.T_VT_ModelFinish_Color",
+      "role": "Color",
+      "sha256": "a0162bffce47d4a35613a12af22571b28c18412dc5805cbb69eac343554ef750",
+      "source": "blue_metal_plate_diff_1k.jpg"
+    },
+    {
+      "path": "/Game/Art/VisualTarget/Textures/ModelFinish/T_VT_ModelFinish_Normal.T_VT_ModelFinish_Normal",
+      "role": "Normal",
+      "sha256": "578d18a2f105b78b23b858e638588f39576ff1d0c7a27fea6b71e76385dc08ec",
+      "source": "blue_metal_plate_nor_dx_1k.jpg"
+    },
+    {
+      "path": "/Game/Art/VisualTarget/Textures/ModelFinish/T_VT_ModelFinish_Roughness.T_VT_ModelFinish_Roughness",
+      "role": "Roughness",
+      "sha256": "37168cf57144db28dd0743dab47fbebc09147fac919d5e2b5610b069c0b13a46",
+      "source": "blue_metal_plate_rough_1k.jpg"
+    }
+  ],
+  "utc": "2026-09-12T10:56:48.998759+00:00",
+  "version": "polyhaven-blue-metal-finish-v1"
+}

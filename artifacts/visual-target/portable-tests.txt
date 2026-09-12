@@ -1,0 +1,9 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/VisualTarget/portable-build
+    Start 1: simulation_rules
+1/2 Test #1: simulation_rules .................   Passed    1.81 sec
+    Start 2: network_protocol
+2/2 Test #2: network_protocol .................   Passed    0.54 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   2.35 sec

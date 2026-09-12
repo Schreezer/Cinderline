@@ -14,7 +14,7 @@
         -50.0,
         0.0
       ],
-      "triangles": 1128,
+      "triangles": 770,
       "uv_channels": 1
     },
     {
@@ -30,7 +30,7 @@
         -50.0,
         0.0
       ],
-      "triangles": 1128,
+      "triangles": 802,
       "uv_channels": 1
     },
     {
@@ -46,7 +46,7 @@
         -50.0,
         0.0
       ],
-      "triangles": 1128,
+      "triangles": 748,
       "uv_channels": 1
     },
     {
@@ -62,7 +62,7 @@
         -50.0,
         0.0
       ],
-      "triangles": 1128,
+      "triangles": 722,
       "uv_channels": 1
     }
   ]

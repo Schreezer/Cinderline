@@ -1,0 +1,304 @@
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Wait until we know the daemon has started.
+Parent received signal 30
+Daemon signalled successful start
+Forked complete (ret=0)
+LogInit: Display: Running engine for game: Cinderline
+LogCore: Display: Requested channels: 'cpu,gpu,frame,log,bookmark,screenshot,region'
+LogTrace: Display: Control listening on port 1985
+LogCsvProfiler: Display: Metadata set : platform="Mac"
+LogCsvProfiler: Display: Metadata set : config="Development"
+LogCsvProfiler: Display: Metadata set : buildversion="++UE5+Release-5.8-CL-56702186"
+LogCsvProfiler: Display: Metadata set : engineversion="5.8.2-56702186+++UE5+Release-5.8"
+LogCsvProfiler: Display: Metadata set : enginereleaseversion="5.8.2"
+LogCsvProfiler: Display: Metadata set : os="macOS 27.0 26A428"
+LogCsvProfiler: Display: Metadata set : cpu="Apple|Apple M1 Max"
+LogCsvProfiler: Display: Metadata set : pgoenabled="0"
+LogCsvProfiler: Display: Metadata set : pgoprofilingenabled="0"
+LogCsvProfiler: Display: Metadata set : ltoenabled="0"
+LogCsvProfiler: Display: Metadata set : asan="0"
+LogCsvProfiler: Display: Metadata set : mergedmodules="0"
+LogCsvProfiler: Display: Metadata set : compacttset="0"
+LogCsvProfiler: Display: Metadata set : commandline="" /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject /Game/Maps/Frontier -game -log -ExecCmds="t.MaxFPS 30,cinder.visualpreview,cinder.models" -noshaderworker -nosplash -stdout -windowed -ResX=2560 -ResY=1440""
+LogCsvProfiler: Display: Metadata set : loginid="e153dc515844b7ef936fddb6789fe54e"
+LogCsvProfiler: Display: Metadata set : llm="0"
+LogCsvProfiler: Display: Metadata set : zenstreaming="0"
+Setting up bundled DotNet SDK
+/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll -Mode=ValidatePlatforms -OutputSDKs -AllPlatforms -project=/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -log=/Users/chirag13/Library/Logs/Cinderline/AutoSDKInfo.txt -verbose -timestamps
+LogCsvProfiler: Display: Metadata set : systemresolution.resx="1280"
+LogCsvProfiler: Display: Metadata set : systemresolution.resy="720"
+Log file: /Users/chirag13/Library/Logs/Cinderline/AutoSDKInfo.txt
+LogAudio: Display: Pre-Initializing Audio Device Manager...
+LogConfig: Display: Loading VulkanPC ini files took 0.01 seconds
+LogConfig: Display: Loading LinuxArm64 ini files took 0.02 seconds
+LogConfig: Display: Loading IOS ini files took 0.01 seconds
+LogConfig: Display: Loading Mac ini files took 0.01 seconds
+LogConfig: Display: Loading Unix ini files took 0.02 seconds
+LogAudio: Display: AudioInfo: 'OPUS' Registered
+LogConfig: Display: Loading TVOS ini files took 0.02 seconds
+LogConfig: Display: Loading Linux ini files took 0.02 seconds
+LogConfig: Display: Loading Android ini files took 0.01 seconds
+LogAudio: Display: AudioInfo: 'OGG' Registered
+LogConfig: Display: Loading Windows ini files took 0.02 seconds
+LogConfig: Display: Loading VisionOS ini files took 0.02 seconds
+LogAudio: Display: AudioInfo: 'ADPCM' Registered
+LogAudio: Display: AudioInfo: 'PCM' Registered
+LogAudio: Display: AudioInfo: 'BINKA' Registered
+LogAudio: Display: AudioInfo: 'RADA' Registered
+LogAudio: Display: Audio Device Manager Pre-Initialized
+##PlatformValidate: Win64 INVALID <UNKNOWN>
+##PlatformValidate: Mac VALID 26.1.1
+##PlatformValidate: IOS VALID 26.1.1
+##PlatformValidate: Android INVALID r27c
+##PlatformValidate: Linux INVALID <UNKNOWN>
+##PlatformValidate: LinuxArm64 INVALID <UNKNOWN>
+##PlatformValidate: TVOS VALID 26.1.1
+##PlatformValidate: VisionOS VALID 26.1.1
+Unable to find required SDK version 'MainVersion' for platform Win64. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform Linux. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform LinuxArm64. Check your SDK.json files
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 324b
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+2026-09-12 01:20:47.075 UnrealEditor[15393:3188182] [UE4] Shutdown handler: initialize.
+LogAsyncCompilation: Display: MemorySharingInfo: UsedMemory=481395MiB, MaxMemoryAvailable=36864MiB
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+[2026.09.11-19.50.47:584][  0]LogCsvProfiler: Display: Metadata set : systemresolution.resx="2560"
+[2026.09.11-19.50.47:584][  0]LogCsvProfiler: Display: Metadata set : systemresolution.resy="1440"
+[2026.09.11-19.50.47:585][  0]LogHAL: Display: Platform has ~ 32 GB [34359738368 / 34359738368 / 32], which maps to Largest [LargestMinGB=32, LargerMinGB=12, DefaultMinGB=8, SmallerMinGB=6, SmallestMinGB=0)
+[2026.09.11-19.50.47:588][  0]LogCsvProfiler: Display: Metadata set : extradevelopmentmemorymb="0"
+[2026.09.11-19.50.47:626][  0]LogObj: Display: Attempting to load config data for Default__DownlinkBandwidthManagerConfig before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+*** Recognized (0x69) family*** (30 cols X 22 rows)
+[2026.09.11-19.50.47:966][  0]LogObj: Display: Attempting to load config data for Default__SlateThemeManager before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+[2026.09.11-19.50.49:059][  0]LogMetal: Warning: To use SM6 on this system, please ensure you are running Mac OS 15. Falling back to SM5
+[2026.09.11-19.50.49:061][  0]LogMetal: Display:       Vendor ID: 4203
+[2026.09.11-19.50.49:061][  0]LogMetal: Display:       Device ID: 909194058
+[2026.09.11-19.50.49:061][  0]LogMetal: Display:       VRAM (MB): 24576
+[2026.09.11-19.50.49:077][  0]LogCsvProfiler: Display: Metadata set : verbatimrhiname="Metal"
+[2026.09.11-19.50.49:077][  0]LogCsvProfiler: Display: Metadata set : rhiname="Metal"
+[2026.09.11-19.50.49:077][  0]LogCsvProfiler: Display: Metadata set : rhifeaturelevel="SM5"
+[2026.09.11-19.50.49:077][  0]LogCsvProfiler: Display: Metadata set : shaderplatform="METAL_SM5"
+[2026.09.11-19.50.49:077][  0]LogCsvProfiler: Display: Metadata set : gpu="Apple M1 Max"
+[2026.09.11-19.50.49:077][  0]LogCsvProfiler: Display: Metadata set : gpudriver=""
+[2026.09.11-19.50.49:367][  0]LogTextureFormatASTC: Display: ASTCEnc version 5.0.1 library loaded
+[2026.09.11-19.50.49:367][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatASTC
+[2026.09.11-19.50.49:367][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatDXT
+[2026.09.11-19.50.49:368][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatETC2
+[2026.09.11-19.50.49:368][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatIntelISPCTexComp
+[2026.09.11-19.50.49:368][  0]LogTextureFormatOodle: Display: Oodle Texture TFO init; latest sdk version = 2.9.16
+[2026.09.11-19.50.49:368][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.16.dylib
+[2026.09.11-19.50.49:402][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatOodle
+[2026.09.11-19.50.49:402][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatUncompressed
+[2026.09.11-19.50.49:541][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'Mac'
+[2026.09.11-19.50.49:541][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacEditor'
+[2026.09.11-19.50.49:541][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacServer'
+[2026.09.11-19.50.49:541][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacClient'
+[2026.09.11-19.50.49:541][  0]LogTargetPlatformManager: Display: Building Assets For MacEditor
+[2026.09.11-19.50.50:383][  0]LogDerivedDataCache: Display: ../../../Engine/DerivedDataCache/Compressed.ddp: Opened pak cache for reading. (2978 MiB)
+[2026.09.11-19.50.50:385][  0]LogZenServiceInstance: Display: Launching zen utility '/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/zen service status'.
+[2026.09.11-19.50.50:803][  0]LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+[2026.09.11-19.50.50:804][  0]LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.11-19.50.50:804][  0]LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.11-19.50.50:804][  0]LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+[2026.09.11-19.50.50:806][  0]LogZenServiceInstance: Display: Launching executable '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver', working dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install', data dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data', args '--port 8558 --data-dir "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data" --http asio --gc-cache-duration-seconds 1209600 --gc-interval-seconds 21600 --gc-low-diskspace-threshold 2147483648 --cache-bucket-limit-overwrites --quiet --restrict-content-types --allow-external-oidctoken-exe=false --plugins-config "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugins_v1.json" --security-config-path "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/security-config.json" --owner-pid 15393  --child-id Zen_15393_Startup --detach'
+[2026.09.11-19.50.50:971][  0]LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+[2026.09.11-19.50.50:978][  0]LogDerivedDataCache: Display: ZenLocal: Using ZenServer HTTP service at [::1] with namespace ue.ddc. Status: OK!.
+[2026.09.11-19.50.50:984][  0]LogDerivedDataCache: Display: /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/DerivedDataCache: Performance: Latency=0.04ms. RandomReadSpeed=410.08MBs, RandomWriteSpeed=404.04MBs. Assigned SpeedClass 'Local'
+[2026.09.11-19.50.50:987][  0]LogShaderCompilers: Display: Distributed shader compilation is disabled
+[2026.09.11-19.50.50:987][  0]LogShaderCompilers: Display: Using 1 local workers for shader compilation
+[2026.09.11-19.50.50:988][  0]LogShaderCompilers: Display: Compiling shader autogen file: ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/ShaderAutogen/METAL_SM5/AutogenShaderHeaders.ush
+[2026.09.11-19.50.50:988][  0]LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+[2026.09.11-19.50.52:749][  0]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0x4fbea134380
+[2026.09.11-19.50.53:115][  0]LogDeviceProfileManager: Display: Deviceprofile LinuxArm64Editor not found.
+[2026.09.11-19.50.53:115][  0]LogDeviceProfileManager: Display: Deviceprofile LinuxArm64 not found.
+[2026.09.11-19.50.53:155][  0]LogCsvProfiler: Display: Metadata set : deviceprofile="MacEditor"
+[2026.09.11-19.50.53:160][  0]LogStreaming: Display: FlushAsyncLoading(1): 1 QueuedPackages, 0 AsyncPackages
+[2026.09.11-19.50.53:166][  0]LogTextureEncodingSettings: Display: Texture Encode Speed: Final (cook).
+[2026.09.11-19.50.53:166][  0]LogTextureEncodingSettings: Display: Oodle Texture Encode Speed settings: Fast: RDO Off Lambda=0, Effort=Normal Final: RDO Off Lambda=0, Effort=Normal
+[2026.09.11-19.50.53:166][  0]LogTextureEncodingSettings: Display: Shared linear texture encoding: Disabled
+[2026.09.11-19.50.53:358][  0]LogMeshReduction: Display: HLOD mesh reduction module (r.ProxyLODMeshReductionModule) set to "ProxyLODMeshReduction" which doesn't exist.
+[2026.09.11-19.50.53:391][  0]LogMeshReduction: Display: Using QuadricMeshReduction for automatic static mesh reduction
+[2026.09.11-19.50.53:391][  0]LogMeshReduction: Display: Using SkeletalMeshReduction for automatic skeletal mesh reduction
+[2026.09.11-19.50.53:391][  0]LogMeshReduction: Display: No automatic mesh merging module available
+[2026.09.11-19.50.53:391][  0]LogMeshReduction: Display: No distributed automatic mesh merging module available
+[2026.09.11-19.50.53:692][  0]LogShaderCompilers: Display: Compiling shader autogen file: ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/ShaderAutogen/METAL_SM6/AutogenShaderHeaders.ush
+[2026.09.11-19.50.53:692][  0]LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+[2026.09.11-19.50.53:692][  0]LogVirtualization: Display: VirtualizationSystem name found in ini file: None
+[2026.09.11-19.50.53:692][  0]LogVirtualization: Display: FNullVirtualizationSystem mounted, virtualization will be disabled
+[2026.09.11-19.50.54:187][  0]LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize started...
+[2026.09.11-19.50.54:191][  0]LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize took 3.518 ms
+[2026.09.11-19.50.58:444][  0]LogMetaSound: Display: MetaSound Page Target Initialized to 'Default'
+[2026.09.11-19.50.58:449][  0]LogAudio: Display: Registering Engine Module Parameter Interfaces...
+[2026.09.11-19.51.02:926][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.09.11-19.51.02:926][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.09.11-19.51.03:960][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.12.dylib
+[2026.09.11-19.51.04:014][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.15.dylib
+[2026.09.11-19.51.04:103][  0]LogAudio: Display: Initializing Audio Device Manager...
+[2026.09.11-19.51.04:103][  0]LogAudio: Display: Loading Default Audio Settings Objects...
+[2026.09.11-19.51.04:104][  0]LogAudio: Display: No default SoundConcurrencyObject specified (or failed to load).
+[2026.09.11-19.51.04:106][  0]LogAudio: Display: Audio Device Manager Initialized
+[2026.09.11-19.51.04:106][  0]LogAudio: Display: Creating Audio Device:                 Id: 1, Scope: Shared, Realtime: True
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: bUseRenderScheduler set to true.
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: 	Number of buffers to queue:			  2
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2026.09.11-19.51.04:106][  0]LogAudioMixer: Display: 	Number of Async Source Workers:		  0
+[2026.09.11-19.51.04:106][  0]LogAudio: Display: AudioDevice MaxSources: 32
+[2026.09.11-19.51.04:106][  0]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2026.09.11-19.51.04:106][  0]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2026.09.11-19.51.04:106][  0]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2026.09.11-19.51.04:106][  0]LogAudioMixerAudioUnit: Display: Bytes per submitted buffer: 8192
+[2026.09.11-19.51.04:173][  0]LogAudioMixerAudioUnit: Warning: Error querying Sample Rate: 2003332927
+[2026.09.11-19.51.04:198][  0]LogAudioMixer: Display: Initializing audio mixer using platform API: 'CoreAudio'
+[2026.09.11-19.51.04:199][  0]LogAudioMixer: Display: Using Audio Hardware Device Unknown
+[2026.09.11-19.51.04:200][  0]LogAudioMixer: Display: Initializing Sound Submixes...
+[2026.09.11-19.51.04:202][  0]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2026.09.11-19.51.04:202][  0]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2026.09.11-19.51.04:202][  0]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048, InstanceID=1
+[2026.09.11-19.51.04:202][  0]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal(), InstanceID=1
+[2026.09.11-19.51.04:285][  0]LogCsvProfiler: Display: Metadata set : largeworldcoordinates="1"
+[2026.09.11-19.51.04:304][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Untitled'.
+[2026.09.11-19.51.04:306][  0]LogInit: Display: Game Engine Initialized.
+[2026.09.11-19.51.04:687][  0]LogPython: Display: No pip-enabled plugins with python dependencies found, skipping
+[2026.09.11-19.51.05:041][  0]LogCsvProfiler: Display: Metadata set : raytracing="0"
+[2026.09.11-19.51.05:267][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'ActorLayersWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:267][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AlertWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:267][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AlertHeaderWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:267][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'UObjectLabelWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'FolderCompatibilityWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DiskSizeWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetDataItemTypeWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetDataLabelWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetDataVirtualPathWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetNameWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:268][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'StaticMeshTrianglesWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:270][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'OutlinerUnsavedWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:270][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'OutlinerUnsavedHeaderConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:270][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'SocketWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:270][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'TypeInfoWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:270][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'VisibilityWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.11-19.51.05:272][  0]LogInit: Display: Starting Game.
+[2026.09.11-19.51.05:290][  0]LogAudio: Display: Audio Device unregistered from world 'Untitled'.
+[2026.09.11-19.51.05:298][  0]LogAudio: Display: Audio Device (ID: 1) registered with world 'Frontier'.
+[2026.09.11-19.51.05:312][  0]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=bypass effective_fps=0.00 engine_fps=0.00
+[2026.09.11-19.51.05:315][  0]LogEnhancedInput: Warning: UEnhancedInputLocalPlayerSubsystem for Local Player 'LocalPlayer_0' does not have a valid PlayerInput object. Failed to load user settings.
+[2026.09.11-19.51.05:317][  0]LogViewport: Display: Viewport MouseCaptureMode Changed, NoCapture -> CaptureDuringMouseDown
+[2026.09.11-19.51.05:415][  0]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.51.05:415][  0]LogSlate: Display: Took 0.000239 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K) on Game thread.
+[2026.09.11-19.51.05:415][  0]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface 0 in Game thread.
+[2026.09.11-19.51.05:415][  0]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.51.05:416][  0]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.51.05:416][  0]LogSlate: Display: Took 0.000270 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' (160K) on Game thread.
+[2026.09.11-19.51.05:416][  0]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface 0 in Game thread.
+[2026.09.11-19.51.05:416][  0]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.51.05:875][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PreLoad): 1 .ref files found, 1 referenced binaries
+[2026.09.11-19.51.05:875][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+[2026.09.11-19.51.05:876][  0]LogAssetRegistry: Display: FindShardedCacheFiles: 1 via .ref, 0 via migration fallback, 1 total
+[2026.09.11-19.51.05:876][  0]LogAssetRegistry: Display: LoadCacheFiles: loading 1 cache files, memory-mapping=enabled
+[2026.09.11-19.51.06:026][  0]LogAssetRegistry: Display: Asset registry cache read as 118.6 MiB from ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/CachedAssetRegistry/CachedAssetRegistry_0_F7A9C35CA14205D9943FE2A2B8B3DC26.bin (memory-mapped=no, platform unsupported)
+[2026.09.11-19.51.06:026][  0]LogAssetRegistry: Display: AssetDataGatherer spent 0.151s loading caches from ../../../../../../chirag13/Documents/ChatGPT/starCraft/Intermediate/CachedAssetRegistry.
+[2026.09.11-19.51.06:125][  0]LogAssetRegistry: Display: Starting OnFilesLoaded.Broadcast
+[2026.09.11-19.51.06:129][  0]LogAssetRegistry: Display: Completed OnFilesLoaded.Broadcast: 0.003s
+[2026.09.11-19.51.06:222][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
+[2026.09.11-19.51.06:222][  0]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=idle effective_fps=30.00 engine_fps=0.00
+[2026.09.11-19.51.06:261][  0]LogCsvProfiler: Display: Metadata set : streamingpoolsizemb="1000"
+[2026.09.11-19.51.06:266][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_A.SM_BasaltCliff_A being ready before playing
+[2026.09.11-19.51.06:266][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_B.SM_BasaltCliff_B being ready before playing
+[2026.09.11-19.51.06:266][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_C.SM_BasaltCliff_C being ready before playing
+[2026.09.11-19.51.06:266][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_D.SM_BasaltCliff_D being ready before playing
+[2026.09.11-19.51.06:267][  0]LogSlate: Display: Flushing composite font cache on Game thread. Clearing 1 entries in composite font map and 2 entries in font face map.
+[2026.09.11-19.51.06:327][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... started...
+[2026.09.11-19.51.06:369][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... took 42.048 ms
+[2026.09.11-19.51.06:370][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... started...
+[2026.09.11-19.51.06:395][  0]LogPython: Display: Running start-up script /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... took 25.453 ms (total: 67.501 ms)
+[2026.09.11-19.51.06:399][  0]LogCinderVisualPreview: Display: CINDERLINE_VISUAL_PREVIEW_FRAME viewport=2560x1440 distance=1917.3 focus=(949.6,2373.6) target_screen=(307,187)-(2150,1037); framing is a development camera setup
+[2026.09.11-19.51.06:404][  1]LogCinderVisualPreview: Display: CINDERLINE_VISUAL_PREVIEW scene=frontier_western_cliff live=0 staged=18 tick=3 obstacle=(1320,2400) enemy_palette_visible=1; ordinary terrain and rules, no save written
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=34 rendered_fallback_entities=0
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=2 fog=256_texture_plane fog_uploads=3 pads=6
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_TERRAIN_SURFACE material=layered_basalt mask=256_linear uploads=4; cached explored cliffs and observed mineral positions, no terrain collision changes
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=4 delta_calls=0 transforms=0 added=44 removed=0 full_rebuilds=0 unchanged_skips=191 static_skips=7; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Drudge: imported, instances=6, triangles=1720
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Ember: imported, instances=2, triangles=1404
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Needle: imported, instances=2, triangles=1624
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Skim: imported, instances=3, triangles=1180
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Anvil: imported, instances=1, triangles=2984
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Cinderthrow: imported, instances=1, triangles=3024
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Mend: imported, instances=1, triangles=2532
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Veil: imported, instances=2, triangles=1328
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Anchor: imported, instances=1, triangles=2304
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Siphon: imported, instances=1, triangles=1952
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Kiln: imported, instances=2, triangles=2348
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Crucible: imported, instances=0, triangles=2000
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Resonator: imported, instances=1, triangles=2512
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Ward: imported, instances=1, triangles=1796
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Ore: imported, instances=10, triangles=1108
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_RENDER_MODELS loaded=15/15 model_batches=29 rendered_model_entities=34 rendered_fallback_entities=0
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_RENDER_WORLD rock_kinds=4/4 rock_instances=2 fog=256_texture_plane fog_uploads=3 pads=6
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_TERRAIN_SURFACE material=layered_basalt mask=256_linear uploads=4; cached explored cliffs and observed mineral positions, no terrain collision changes
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display: CINDERLINE_INSTANCE_SUBMISSIONS passes=4 delta_calls=0 transforms=0 added=44 removed=0 full_rebuilds=0 unchanged_skips=191 static_skips=7; actor-lifetime accepted adapter submissions, not GPU timings
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Drudge: imported, instances=6, triangles=1720
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Ember: imported, instances=2, triangles=1404
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Needle: imported, instances=2, triangles=1624
+[2026.09.11-19.51.06:405][  1]LogCinderModels: Display:   SM_Skim: imported, instances=3, triangles=1180
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Anvil: imported, instances=1, triangles=2984
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Cinderthrow: imported, instances=1, triangles=3024
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Mend: imported, instances=1, triangles=2532
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Veil: imported, instances=2, triangles=1328
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Anchor: imported, instances=1, triangles=2304
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Siphon: imported, instances=1, triangles=1952
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Kiln: imported, instances=2, triangles=2348
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Crucible: imported, instances=0, triangles=2000
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Resonator: imported, instances=1, triangles=2512
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Ward: imported, instances=1, triangles=1796
+[2026.09.11-19.51.06:406][  1]LogCinderModels: Display:   SM_Ore: imported, instances=10, triangles=1108
+[2026.09.11-19.51.06:406][  1]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=gameplay effective_fps=30.00 engine_fps=30.00
+[2026.09.11-19.51.06:426][  2]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' with subface index 0 in Game thread.
+[2026.09.11-19.51.06:426][  2]LogSlate: Display: Took 0.000148 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K) on Game thread.
+[2026.09.11-19.51.06:426][  2]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface 0 in Game thread.
+[2026.09.11-19.51.06:426][  2]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.11-19.53.25:400][167]LogInit: Display: PreExit Game.
+[2026.09.11-19.53.25:405][167]LogAudio: Display: Beginning Audio Device Manager Shutdown (Module: AudioMixerCoreAudio)...
+[2026.09.11-19.53.25:405][167]LogAudio: Display: Destroying 1 Remaining Audio Device(s)...
+[2026.09.11-19.53.25:405][167]LogAudio: Display: Audio Device unregistered from world 'Frontier'.
+[2026.09.11-19.53.25:405][167]LogAudio: Display: Shutting down audio device while 1 references to it are still alive. For more information, compile with INSTRUMENT_AUDIODEVICE_HANDLES.
+[2026.09.11-19.53.25:410][167]LogAudio: Display: Audio Device Manager Shutdown
+[2026.09.11-19.53.25:506][167]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+[2026.09.11-19.53.25:506][167]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+[2026.09.11-19.53.25:629][167]LogShaderCompilers: Display: Exiting ShaderCompilingThread
+2026-09-12 01:23:25.912 UnrealEditor[15393:3187996] [UE4] Shutdown handler: cleanup.
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Opening shared memory
+Starting the store
+Reading settings from '/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini'
+
+Unable to open settings file /Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini.
+
+Store settings (/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini):
+ - Store port: 1989
+ - Recorder port: 1981
+ - Thread count: 0
+ - Sponsored mode: 1
+ - Directory: '/Users/chirag13/UnrealEngine/UnrealTrace/Store/001'
+Watcher enabled on /Users/chirag13/UnrealEngine/UnrealTrace/Store/001
+Signalling parent 15442
+Terminating server, no sponsors or connections active.
+Received signal 15
+Daemon is exiting without errors.
+Listening cancelled, closing port...
+Listening cancelled, closing port...

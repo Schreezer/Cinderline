@@ -1,0 +1,451 @@
+{
+  "utc": "2026-09-11T20:22:56.798710+00:00",
+  "scope": "Final source/config and animation/terrain delivery assets; existing unrelated local changes are retained. No commit or remote publication implied.",
+  "files": [
+    {
+      "path": "Cinderline.uproject",
+      "sha256": "13c2fba3db198106bb508e40099332f7e90d753f4ee85ae247179c03383b351e",
+      "bytes": 541
+    },
+    {
+      "path": "Config/DefaultDeviceProfiles.ini",
+      "sha256": "dba32cf1cf44209a65ed0d1232223dc99f7123bae0e092a4eb80698bab3a043a",
+      "bytes": 1406
+    },
+    {
+      "path": "Config/DefaultEngine.ini",
+      "sha256": "a1c4c4f288d67211c4fe64b2459fe0d937e03ff1828a21918c49f235d15255b3",
+      "bytes": 1161
+    },
+    {
+      "path": "Config/DefaultGame.ini",
+      "sha256": "6f2ed0465e31a3c650a12f386c25b89f44441fe2fc4e2d3e280e75643795ab4a",
+      "bytes": 526
+    },
+    {
+      "path": "Config/DefaultInput.ini",
+      "sha256": "18e7ba9c261a72c7781c93addeea705aa333f2e03706b36b509a47b2c64d21bc",
+      "bytes": 389
+    },
+    {
+      "path": "Content/Art/Environment/SM_BasaltCliff_A.uasset",
+      "sha256": "4d6a1c5b3641738c6de490f997bbb42dd2be85afb1f1167c3212833449ef7642",
+      "bytes": 164981
+    },
+    {
+      "path": "Content/Art/Environment/SM_BasaltCliff_B.uasset",
+      "sha256": "27a4326a4092d6f501b609fff603a71f003d13fa4986e1e1d256263e21b717ba",
+      "bytes": 166497
+    },
+    {
+      "path": "Content/Art/Environment/SM_BasaltCliff_C.uasset",
+      "sha256": "a423015196de8a71d44be764e2cc867643b8f39fbd9d1d481afdebaf47004b17",
+      "bytes": 164341
+    },
+    {
+      "path": "Content/Art/Environment/SM_BasaltCliff_D.uasset",
+      "sha256": "24ec382b7925deb4484f10a427c09ec4f692a512f9375e66ca72e2522cdfc71a",
+      "bytes": 163264
+    },
+    {
+      "path": "Content/Art/Materials/M_CinderGroundV3.uasset",
+      "sha256": "be008b16b13966986346c32b016c7a54520b0d0fb8db1a079f0eef6bf4ee3491",
+      "bytes": 34238
+    },
+    {
+      "path": "Content/Art/Motion/SM_Anvil_Body.uasset",
+      "sha256": "49352886f4370b9e0f87035e1618b2fc9fea79dd7b351246c93ac75fa8153714",
+      "bytes": 124823
+    },
+    {
+      "path": "Content/Art/Motion/SM_Anvil_Weapon.uasset",
+      "sha256": "610c8c60ed77207399ce90be791b93ebee3b5a5585cdbb0e28f29f0f37eeb70f",
+      "bytes": 23232
+    },
+    {
+      "path": "Content/Art/Motion/SM_Cinderthrow_Body.uasset",
+      "sha256": "ac9b85745316ac6e1a75d25f09585334a556446e95d6df758e585f7d731810e3",
+      "bytes": 121699
+    },
+    {
+      "path": "Content/Art/Motion/SM_Cinderthrow_Weapon.uasset",
+      "sha256": "447244bb43ba1dd6ddebc3753fb375439445fb7e8494c27a9904dd5cf5032fb2",
+      "bytes": 29828
+    },
+    {
+      "path": "Content/Art/Motion/SM_Drudge_Body.uasset",
+      "sha256": "596530d2f9838502b5111e335c94f45cfcc150188d9eac4eeb0af318c5f38ca5",
+      "bytes": 44987
+    },
+    {
+      "path": "Content/Art/Motion/SM_Drudge_LegFL.uasset",
+      "sha256": "a8d63496da9cd1dbf7fbfde0b9eee27bce01785b2e4c7df2cca357c4a13c3b11",
+      "bytes": 23724
+    },
+    {
+      "path": "Content/Art/Motion/SM_Drudge_LegFR.uasset",
+      "sha256": "e1be1fb1ff16e7b2087bc5624449f24fea595d848768908cde99d8fcdc185404",
+      "bytes": 23679
+    },
+    {
+      "path": "Content/Art/Motion/SM_Drudge_LegRL.uasset",
+      "sha256": "7ec7a197c4c45d3216501723a822ac7c30dfe126b98e70225875c3e0556d9b5d",
+      "bytes": 23670
+    },
+    {
+      "path": "Content/Art/Motion/SM_Drudge_LegRR.uasset",
+      "sha256": "d2d9e4f568ae024f299fc4bcd99a44b8d945dc63ecb7a18ccd34cac3cb812507",
+      "bytes": 23666
+    },
+    {
+      "path": "Content/Art/Motion/SM_Drudge_Tools.uasset",
+      "sha256": "f15358cfdef1e9c28b31b939b10610225c0dc8c4c57879b2b0c9a8d25b0cd2cc",
+      "bytes": 28948
+    },
+    {
+      "path": "Content/Art/Motion/SM_Ember_Body.uasset",
+      "sha256": "9c9fc28a0fb5e0ed538a3dc6f339d7d0fc9121dac936972e403bca859cc41b4f",
+      "bytes": 51467
+    },
+    {
+      "path": "Content/Art/Motion/SM_Ember_LegL.uasset",
+      "sha256": "e3b22095ac3ac07853d18b04a024defd1a9d7414b2bfe6507ea96e412f3b1753",
+      "bytes": 23691
+    },
+    {
+      "path": "Content/Art/Motion/SM_Ember_LegR.uasset",
+      "sha256": "2f2c2fb956893cdc5286c0f8079f35d764f59217da2b67aa8467095ce66faecf",
+      "bytes": 23599
+    },
+    {
+      "path": "Content/Art/Motion/SM_Ember_Weapon.uasset",
+      "sha256": "c30d9779a685f9daf378dc2638c7cbbbe244886dd7e8c25f353dc7c47791a961",
+      "bytes": 23032
+    },
+    {
+      "path": "Content/Art/Motion/SM_Needle_Body.uasset",
+      "sha256": "60c27b3554fd16191eee528624dfac95c950331aa5bb0e04c88f6ba5f6fa5e03",
+      "bytes": 46822
+    },
+    {
+      "path": "Content/Art/Motion/SM_Needle_LegL.uasset",
+      "sha256": "72b3024a920a5cc6541d3590d8993678fd5bfbeb3231e54ffcad7248b4e4566d",
+      "bytes": 23502
+    },
+    {
+      "path": "Content/Art/Motion/SM_Needle_LegR.uasset",
+      "sha256": "165259192aa362a6dae2e559b96949b20bdaba9de7dfefd7620eeaf868e65667",
+      "bytes": 23545
+    },
+    {
+      "path": "Content/Art/Motion/SM_Needle_Weapon.uasset",
+      "sha256": "c1811820647a046fb0be2d82750771a5f7c702bd01e35d79a27a38f114a0385f",
+      "bytes": 37730
+    },
+    {
+      "path": "Content/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.uasset",
+      "sha256": "3eba6c2c61ad1a841a66d9e6ccb35052f363381da8b22880198eea120568f658",
+      "bytes": 12129
+    },
+    {
+      "path": "RawAssets/Motion/Cinderline_Motion_Parts.blend",
+      "sha256": "d077d90c60b8ed83ecdc890527666832e19dca0894e67ce9f76c6f07c3f10fc9",
+      "bytes": 357798
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Anvil_Body.fbx",
+      "sha256": "4a48463f1db46fe89bf084bdb47b1c8bd98573878d80f16b415c5ef11a7ad468",
+      "bytes": 105884
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Anvil_Weapon.fbx",
+      "sha256": "3a30fff17fc0708232157fef1837e5d7f283b0e083cdc7a3a46095a6be9f0a5a",
+      "bytes": 22316
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Cinderthrow_Body.fbx",
+      "sha256": "6a62fa589eafa192b5c20a97dd15d5785a284cac5b28954100b0c31cae3c1cf4",
+      "bytes": 104780
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Cinderthrow_Weapon.fbx",
+      "sha256": "7e75bbc5400e3502b4f63e46c96df2247614642303697562bf9ef3682f1e775f",
+      "bytes": 28220
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Drudge_Body.fbx",
+      "sha256": "5b55bb0614e6899e93c1e98e85b54cc4cbb9e4dda4ec190f8a0ecfd7690cedcd",
+      "bytes": 41676
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Drudge_LegFL.fbx",
+      "sha256": "9ec146903ebf59822445c6a86a645891330806918834f7ce2bb4c7cca184f8a4",
+      "bytes": 22764
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Drudge_LegFR.fbx",
+      "sha256": "04918ab95afcc97f4c12b943e8aa9a26ed927d9f31b74f3840136216ed578d12",
+      "bytes": 22764
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Drudge_LegRL.fbx",
+      "sha256": "a10d4de9702ee2f6ca18d71f60fca4d2f6d836cc1987e8325c7adaec1196a8b7",
+      "bytes": 22732
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Drudge_LegRR.fbx",
+      "sha256": "6672a893ea569406baf5808f9b69ba8e87001f4897030999fe593dd49a02b9b4",
+      "bytes": 22732
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Drudge_Tools.fbx",
+      "sha256": "b1891a5146f4efeb7781a0126f10cd35c3684386a5ef3b5d6f0ccdf64f5b8e91",
+      "bytes": 26892
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Ember_Body.fbx",
+      "sha256": "ba6c6d89f8e713811195b26d8301b37bb63c50a52af3b47c18ef2a96d434bc4e",
+      "bytes": 47676
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Ember_LegL.fbx",
+      "sha256": "476ff3b3f26bef3cf29271426fa05a0867d815f02bd97f943ee7a897f15262c7",
+      "bytes": 22348
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Ember_LegR.fbx",
+      "sha256": "3d4d227b0b57536f306d28ac4ede3a35893ce266633166a09c107b6f1465e884",
+      "bytes": 22284
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Ember_Weapon.fbx",
+      "sha256": "b88f36471da45e2fc3571a13d0ca1adf6c8d1e24a7d2c37883dff64f8de54c04",
+      "bytes": 22412
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Needle_Body.fbx",
+      "sha256": "3112d740fbcc1caeb143ee83e5358449fa318c1588b22cb5e69281e882c71762",
+      "bytes": 43420
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Needle_LegL.fbx",
+      "sha256": "916996d2a619a58fe8069655bb33336ae75ffdafb903d767cc6570e8d079fb41",
+      "bytes": 22380
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Needle_LegR.fbx",
+      "sha256": "75d549fb78837905affa642e77a5dc283072c82038f26ffa6bef05e1565fa745",
+      "bytes": 22300
+    },
+    {
+      "path": "RawAssets/Motion/FBX/SM_Needle_Weapon.fbx",
+      "sha256": "3991c97181d09a840fea2832cd5b7660a0105e540b57aa07d254f076ba1f8bbe",
+      "bytes": 34476
+    },
+    {
+      "path": "RawAssets/Motion/manifest.json",
+      "sha256": "46a9b3273f94ba50572afb193e94e25a35f35008573b5191f75852359922cacc",
+      "bytes": 17683
+    },
+    {
+      "path": "RawAssets/Terrain/FBX/SM_BasaltCliff_A.fbx",
+      "sha256": "a4750fb217696620adbba353c6f722a552cbdb2e593048e6e7c67e09650256e2",
+      "bytes": 55420
+    },
+    {
+      "path": "RawAssets/Terrain/FBX/SM_BasaltCliff_B.fbx",
+      "sha256": "7a35e22b06c5820e5024622d034bc54b0af4c60bb05259d5ddca16b565163350",
+      "bytes": 56972
+    },
+    {
+      "path": "RawAssets/Terrain/FBX/SM_BasaltCliff_C.fbx",
+      "sha256": "9c9197860deaaab3054a8d5d80c669988701e5c986f4d299e5dcfd64803c40cb",
+      "bytes": 54284
+    },
+    {
+      "path": "RawAssets/Terrain/FBX/SM_BasaltCliff_D.fbx",
+      "sha256": "da5505ecddd6ea62656bcdf0d066b9d87878b79ee510e5cbf7e6284d28d36f5d",
+      "bytes": 53324
+    },
+    {
+      "path": "RawAssets/Terrain/manifest.json",
+      "sha256": "d917e77f29a5061c64137f62437b6b96d7862cbf9e2f95bbc028229a087b20e4",
+      "bytes": 3013
+    },
+    {
+      "path": "Source/Cinderline/Cinderline.Build.cs",
+      "sha256": "a23de5c262706d38895536d0770686f1139771fc03998c1a92d2cc0e2271f777",
+      "bytes": 483
+    },
+    {
+      "path": "Source/Cinderline/Private/Cinderline.cpp",
+      "sha256": "9f79e908dfed58ec0bc6f4ffbd690ff22d95f0fcdac4c3e79a702cd4e53d3931",
+      "bytes": 116
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderAudioSubsystem.cpp",
+      "sha256": "3eb6f8cb4bb1618a75b9cfc507054ba38258ba691070089e6b74f5f9f90e5605",
+      "bytes": 6040
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderBattlefield.cpp",
+      "sha256": "2fae913eb951a123b29bc59d2b18dbb70183b27d0099652e431887436466a931",
+      "bytes": 54547
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderCamera.cpp",
+      "sha256": "d0521c97980d37a512888de1f88d8e63db712dd6cafba885c9d2047f30da62cd",
+      "bytes": 8505
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderCombatPreview.cpp",
+      "sha256": "6291de88a56a18af0d76de079e839725db341b7766728f240c4409bc157f078e",
+      "bytes": 4912
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderEntityMotion.cpp",
+      "sha256": "d9204548ae5caf4f3f946ed52934436e4f23889b31791732c229d99ef76fcc8f",
+      "bytes": 8668
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderGameEngine.cpp",
+      "sha256": "71c60af24e5acd45633310a59a0a23d427e5abcc416829ad276d6690ac4ec33a",
+      "bytes": 4103
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderGameMode.cpp",
+      "sha256": "ecacbd187e2a36bb0a741c7ea66d72a6542e0c2e2715695a6fd67b092c7e5151",
+      "bytes": 617
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderHUD.cpp",
+      "sha256": "c82257df7587abefe52a0f4b3594240c4b33f3913007fce8b4821ebc485b7b9a",
+      "bytes": 56011
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderMotionPreview.cpp",
+      "sha256": "539a39f25f7f0039750cbdcdb07d68101781ada59452a59ce28a8a86e6bc3a76",
+      "bytes": 19351
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp",
+      "sha256": "523a3678431a9bd1161e909adebea9d038e22e2a7d64c6539c7137d4225009c6",
+      "bytes": 27352
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderQualityDiagnostics.cpp",
+      "sha256": "b87c79e381ac636b6ce48aa5cb12fa7ab2b24dae3cd02ba7d20094fb452bdbfa",
+      "bytes": 17107
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderTerrainSurface.cpp",
+      "sha256": "d943c2bbf371b03e7476e4482957142bb2ee26aef625f7b9bdbb4cd6e3accc0d",
+      "bytes": 2688
+    },
+    {
+      "path": "Source/Cinderline/Private/Presentation/CinderVisualPreview.cpp",
+      "sha256": "e206fcdabd7fb291ddd9f1f81b4cc78942eb01e7fdacad118f72a8dfc682fd3f",
+      "bytes": 8417
+    },
+    {
+      "path": "Source/Cinderline/Private/Sim/Simulation.cpp",
+      "sha256": "3ec257812e1a0c623ec4508b8013c8bf99c0d3686cf646f996e0bdff80f8a4ac",
+      "bytes": 70104
+    },
+    {
+      "path": "Source/Cinderline/Private/Sim/SimulationAI.cpp",
+      "sha256": "40dc77f65d73aced330225d3f40fd296e86a16001af513b6fee1e55feb1f472c",
+      "bytes": 39179
+    },
+    {
+      "path": "Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp",
+      "sha256": "6870b8b4fd6880c6d7ababc819cb29a1086e7573320f2ffa02704bf681f622fb",
+      "bytes": 96576
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderAudioSubsystem.h",
+      "sha256": "c9c12ed1621de728ff9799a19807fa3d8d4cd678a6c7599650812edf30e688f4",
+      "bytes": 1899
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderBattlefield.h",
+      "sha256": "37b48f0a57daec4a31f97dc33d8939e510a08acee34e77f5782993908cf1851a",
+      "bytes": 5209
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderCamera.h",
+      "sha256": "a74938e44a3ddeb768269d17aaf2869953db3417097e424e5cfb1c471e802945",
+      "bytes": 1333
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderEntityMotion.h",
+      "sha256": "cec476d69d7f25e2e652c9873640e767763e97d6b9a063f21b0b40e58034a72d",
+      "bytes": 2868
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderGameEngine.h",
+      "sha256": "95965ced0daa720cfb8fed86857f165d9738a65160cf42d3e9022324443bfa00",
+      "bytes": 936
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderGameMode.h",
+      "sha256": "7052c0e8f890213f57b310ab4686b7be8fadd1f07c4f6a3cfd14fa8e521c7a23",
+      "bytes": 282
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderHUD.h",
+      "sha256": "fa5f77d81fde051d905f489925a41f26783eb93c1e76f127d4d0ccb58b8dc3a9",
+      "bytes": 2600
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderPlayerController.h",
+      "sha256": "86fc39c77396f94e8531d6d251469bbd6930e2ef246ef8400e4d22de21323807",
+      "bytes": 3454
+    },
+    {
+      "path": "Source/Cinderline/Public/Presentation/CinderTerrainSurface.h",
+      "sha256": "0b6dbd01abcd6d38588233f691a49e597afd1fd10e9e9648b8ad83100d1ec98d",
+      "bytes": 548
+    },
+    {
+      "path": "Source/Cinderline/Public/Sim/Simulation.h",
+      "sha256": "39f87f29450cea76dfe7605903689543234b287ef0d5136ae81cd7aab91b865c",
+      "bytes": 6380
+    },
+    {
+      "path": "Source/Cinderline.Target.cs",
+      "sha256": "929625a7d87e5215b9cf34c6cac50b18e17d26683be6b0cc9ac699b2ef717f42",
+      "bytes": 379
+    },
+    {
+      "path": "Source/CinderlineEditor.Target.cs",
+      "sha256": "ae3ba7abeb575bc1df49eb153acd09fc3791ec77a485e87d3f7c9c0fca342710",
+      "bytes": 393
+    },
+    {
+      "path": "scripts/create_motion_assets.py",
+      "sha256": "7a8d6475b943e250603715e9956cfcd0394100b5bfe39089bd93531e1f88f1f5",
+      "bytes": 20632
+    },
+    {
+      "path": "scripts/create_terrain_assets.py",
+      "sha256": "ab095f791d2d9ba27f9deb220bce6b2c342d2f3d3a64e408f82d45d10466412a",
+      "bytes": 16967
+    },
+    {
+      "path": "scripts/unreal_bootstrap.py",
+      "sha256": "abe672c264b7677a24e9b1a2c846e8a841ccd7ad83fb45d0a5947d9855792574",
+      "bytes": 9156
+    },
+    {
+      "path": "scripts/unreal_motion_assets.py",
+      "sha256": "cbbbfdd0b9378615b9963e21d524a62d53156aceddb1425f1e203f6f67d31ea3",
+      "bytes": 17029
+    },
+    {
+      "path": "scripts/unreal_terrain_surface.py",
+      "sha256": "8817a8714cafc2ee517659de550ee4a0a611f708737c948b601dd07e21974e3d",
+      "bytes": 6828
+    }
+  ]
+}

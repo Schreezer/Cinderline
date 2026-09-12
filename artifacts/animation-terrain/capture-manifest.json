@@ -1,0 +1,29 @@
+{
+  "video": "animation-terrain-preview.mp4",
+  "source": "Actual Mac Unreal SF_METAL_SM5 window screenshots; original full frames, no image synthesis, crop or retouching. Recorded wall-clock intervals; encoded at 30 FPS using duplicate frames where necessary. The capture cadence is not a game-frame-rate measurement. Silent video.",
+  "clips": [
+    {
+      "directory": "walk-verified",
+      "frames": 100,
+      "duration_seconds": 5.312,
+      "first_frame": "frame-000.png",
+      "last_frame": "frame-099.png"
+    },
+    {
+      "directory": "work-delivery",
+      "frames": 110,
+      "duration_seconds": 5.92,
+      "first_frame": "frame-000.png",
+      "last_frame": "frame-109.png"
+    },
+    {
+      "directory": "weapons-delivery",
+      "frames": 110,
+      "duration_seconds": 5.953,
+      "first_frame": "frame-000.png",
+      "last_frame": "frame-109.png"
+    }
+  ],
+  "scope": "Walking clip predates only the mining-fixture deposit selection correction; runtime animation, terrain and imported assets are identical to the delivery build. Work and weapons clips use final delivery build.",
+  "excluded": "Earlier walk-frames, walk-live, work-live, weapons-live, walk-final, walk-accepted and work-verified are iteration evidence, not final complete framing acceptance."
+}

@@ -1,0 +1,41 @@
+Input #0, concat, from '/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/animation-terrain/preview.ffconcat':
+  Duration: N/A, start: 0.000000, bitrate: N/A
+  Stream #0:0: Video: mjpeg (Baseline), yuvj420p(pc, bt470bg/unknown/unknown), 1280x752 [SAR 72:72 DAR 80:47], 25 fps, 25 tbr, 25 tbn
+Stream mapping:
+  Stream #0:0 -> #0:0 (mjpeg (native) -> h264 (libx264))
+Press [q] to stop, [?] for help
+[swscaler @ 0x767f874000] deprecated pixel format used, make sure you did set range correctly
+[libx264 @ 0x767ec85180] using SAR=1/1
+[libx264 @ 0x767ec85180] using cpu capabilities: ARMv8 NEON DotProd
+[libx264 @ 0x767ec85180] profile High, level 3.2, 4:2:0, 8-bit
+[libx264 @ 0x767ec85180] 264 - core 165 r3222 b35605a - H.264/MPEG-4 AVC codec - Copyleft 2003-2025 - http://www.videolan.org/x264.html - options: cabac=1 ref=2 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=6 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=2 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=1 keyint=250 keyint_min=25 scenecut=40 intra_refresh=0 rc_lookahead=30 rc=crf mbtree=1 crf=19.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to '/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/animation-terrain/animation-terrain-preview.mp4':
+  Metadata:
+    encoder         : Lavf62.3.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(pc, bt470bg/unknown/unknown, progressive), 1280x752 [SAR 1:1 DAR 80:47], q=2-31, 30 fps, 15360 tbn
+    Metadata:
+      encoder         : Lavc62.11.100 libx264
+    Side data:
+      ICC Profile
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+frame=   94 fps=0.0 q=25.0 size=       0KiB time=00:00:03.06 bitrate=   0.1kbits/s dup=53 drop=0 speed=6.08x elapsed=0:00:00.50    frame=  194 fps=193 q=25.0 size=     256KiB time=00:00:06.40 bitrate= 327.7kbits/s dup=90 drop=0 speed=6.36x elapsed=0:00:01.00    frame=  311 fps=206 q=25.0 size=     512KiB time=00:00:10.30 bitrate= 407.3kbits/s dup=136 drop=0 speed=6.81x elapsed=0:00:01.51    frame=  421 fps=209 q=25.0 size=     768KiB time=00:00:13.96 bitrate= 450.5kbits/s dup=177 drop=0 speed=6.92x elapsed=0:00:02.01    [mp4 @ 0x767ec3c500] Starting second pass: moving the moov atom to the beginning of the file
+[out#0/mp4 @ 0x767f044180] video:1198KiB audio:0KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.910904%
+frame=  517 fps=218 q=-1.0 Lsize=    1209KiB time=00:00:17.16 bitrate= 577.1kbits/s dup=196 drop=0 speed=7.25x elapsed=0:00:02.36    
+[libx264 @ 0x767ec85180] frame I:3     Avg QP:13.70  size: 93872
+[libx264 @ 0x767ec85180] frame P:130   Avg QP:15.81  size:  5484
+[libx264 @ 0x767ec85180] frame B:384   Avg QP:18.05  size:   604
+[libx264 @ 0x767ec85180] consecutive B-frames:  1.0%  0.0%  0.0% 99.0%
+[libx264 @ 0x767ec85180] mb I  I16..4: 15.3% 70.8% 13.9%
+[libx264 @ 0x767ec85180] mb P  I16..4:  0.3%  1.9%  0.2%  P16..4: 15.5%  2.3%  1.7%  0.0%  0.0%    skip:78.1%
+[libx264 @ 0x767ec85180] mb B  I16..4:  0.1%  0.2%  0.0%  B16..8:  1.9%  0.4%  0.0%  direct: 2.6%  skip:94.8%  L0:50.0% L1:46.9% BI: 3.1%
+[libx264 @ 0x767ec85180] 8x8 transform intra:76.1% inter:76.2%
+[libx264 @ 0x767ec85180] coded y,uvDC,uvAC intra: 63.9% 48.6% 19.5% inter: 1.9% 4.1% 0.2%
+[libx264 @ 0x767ec85180] i16 v,h,dc,p: 46% 45%  7%  3%
+[libx264 @ 0x767ec85180] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 12% 13% 50%  4%  5%  3%  4%  3%  6%
+[libx264 @ 0x767ec85180] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 20% 26% 18%  5%  9%  5%  6%  4%  6%
+[libx264 @ 0x767ec85180] i8c dc,h,v,p: 57% 25% 14%  4%
+[libx264 @ 0x767ec85180] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 0x767ec85180] ref P L0: 52.8% 47.2%
+[libx264 @ 0x767ec85180] ref B L0: 76.3% 23.7%
+[libx264 @ 0x767ec85180] ref B L1: 94.7%  5.3%
+[libx264 @ 0x767ec85180] kb/s:569.34

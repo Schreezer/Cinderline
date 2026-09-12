@@ -67,7 +67,15 @@ The generator now uses a 0.006 bevel on those two caps and rejects geometry that
 
 ## Remaining work
 
-These are static assets. Wheels, legs, barrels and production mechanisms are merged into each mesh and do not animate independently. No damage meshes, authored collision hulls, LOD chain, baked texture atlas or skeletal rig is included. The shared simulation owns movement and collision rules. The five material sections support team coloring, but their runtime draw cost still needs profiling with large armies. Triangle counts stay below 5,000 for units and below 10,000 for buildings; that alone does not prove a mobile frame budget.
+The canonical full models remain static assets with merged parts. The additional motion pack below supplies independent legs, tools and weapons for five units. No damage meshes, authored collision hulls, LOD chain, baked texture atlas or skeletal rig is included. The shared simulation owns movement and collision rules. The five material sections support team coloring, but their runtime draw cost still needs profiling with large armies. Triangle counts stay below 5,000 for units and below 10,000 for buildings; that alone does not prove a mobile frame budget.
+
+## Articulated motion pack — 12 September 2026
+
+`scripts/create_motion_assets.py` partitions the existing original geometry into 18 meshes for Drudge, Ember, Needle, Anvil and Cinderthrow. `RawAssets/Motion/manifest.json` records source hashes, named material slots, bounds and joint pivots in post-import Unreal coordinates. Combined geometry remains exactly 10,756 triangles across these five units; splitting parts adds no triangles. The original full meshes remain the runtime fallback if any required part is missing.
+
+`scripts/unreal_motion_assets.py` imports into `/Game/Art/Motion`, validates all 18 meshes and writes `artifacts/motion-assets/unreal-import-results.json`. All imports passed exact triangle, material, centimeter-bound and collision checks. Unreal's legacy FBX conversion maps source `(X,Y,Z)` to `(X,-Y,Z)`; the manifest and left/right assignments account for this explicitly. `CINDER_REIMPORT_MOTION=1` authorizes refresh of previously imported parts when their sources change.
+
+The runtime uses shared per-team instanced meshes, with simulation-driven leg swing, tool hinges, cannon recoil and suspension. Scout, Mender and Kite use hover/bank poses on their full meshes. There are no additional per-unit actors or skeletal components. Movement poses follow actual position changes, work follows active mining/construction, and recoil follows the firing entity's cooldown. Pause and fog filtering apply before motion updates. See [ANIMATION_TERRAIN_PASS.md](ANIMATION_TERRAIN_PASS.md) for build, visual and performance evidence.
 
 To regenerate from the repository root:
 

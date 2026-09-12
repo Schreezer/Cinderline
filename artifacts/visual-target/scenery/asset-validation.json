@@ -1,0 +1,455 @@
+{
+  "passed": true,
+  "asset_count": 12,
+  "rock_variants": 6,
+  "rock_triangle_budget": [
+    1000,
+    4000
+  ],
+  "prop_triangle_cap": 1200,
+  "collision": "none",
+  "instances": "runtime ISM batches with distance culling",
+  "photogrammetry_source": {
+    "asset_id": "namaqualand_boulders_01",
+    "title": "Namaqualand Boulders 01",
+    "source_page": "https://polyhaven.com/a/namaqualand_boulders_01",
+    "license": "CC0 1.0 Universal",
+    "provenance": "RawAssets/VisualTarget/Scenery/External/namaqualand_boulders_01/provenance.json"
+  },
+  "checks": [
+    {
+      "name": "SM_CinderScenery_Rock_A",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Rock_A.fbx",
+      "sha256": "01c0957690e174806203e24f513f1b331875aa3610569327a64d66cf712259cc",
+      "triangles": 2599,
+      "minimum_triangle_area_cm2": 0.1193069652026103,
+      "bounds_min_cm": [
+        -32.80082,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        32.80082,
+        50.0,
+        50.45707
+      ],
+      "size_cm": [
+        65.6,
+        100.0,
+        50.46
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 7797,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_B",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Rock_B.fbx",
+      "sha256": "1ad02fa960f55018fdf209e7ab591cfcbca7cc0b36821ff0dfe5c01f89dda3ee",
+      "triangles": 3099,
+      "minimum_triangle_area_cm2": 0.17014807274026725,
+      "bounds_min_cm": [
+        -23.86982,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        23.86982,
+        50.0,
+        39.3208
+      ],
+      "size_cm": [
+        47.74,
+        100.0,
+        39.32
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 9297,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_C",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Rock_C.fbx",
+      "sha256": "6e615a3e8e917d760c6af2ad4f5bdfb05f3276e95e7b250e0d261f582b526481",
+      "triangles": 2200,
+      "minimum_triangle_area_cm2": 0.3484241090647571,
+      "bounds_min_cm": [
+        -40.86436,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        40.86438,
+        50.0,
+        49.9767
+      ],
+      "size_cm": [
+        81.73,
+        100.0,
+        49.98
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 6600,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_D",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Rock_D.fbx",
+      "sha256": "2d58ee07ccf37dddacf2c69320ee5c63450e85f1915b137093aac5a177a6bebe",
+      "triangles": 3000,
+      "minimum_triangle_area_cm2": 0.25276774161486565,
+      "bounds_min_cm": [
+        -25.04569,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        25.04569,
+        50.0,
+        34.08174
+      ],
+      "size_cm": [
+        50.09,
+        100.0,
+        34.08
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 9000,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_E",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Rock_E.fbx",
+      "sha256": "a91e5aadb272f1f8d4b99cb3cafd683f249e3f2b32541a0ba527fcda579a8b69",
+      "triangles": 2450,
+      "minimum_triangle_area_cm2": 0.21248866141490197,
+      "bounds_min_cm": [
+        -39.50726,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        39.50725,
+        50.0,
+        58.76001
+      ],
+      "size_cm": [
+        79.01,
+        100.0,
+        58.76
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 7350,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_F",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Rock_F.fbx",
+      "sha256": "1f751a85afdaa23225371371fe1556b00fdb5dd477d6dcbc492fffc0dcd95204",
+      "triangles": 3299,
+      "minimum_triangle_area_cm2": 0.22708863178722757,
+      "bounds_min_cm": [
+        -23.89125,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        23.89125,
+        50.0,
+        32.53082
+      ],
+      "size_cm": [
+        47.78,
+        100.0,
+        32.53
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 9897,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_CliffMass",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_CliffMass.fbx",
+      "sha256": "84c1ae2424e1c79034316c31e2e1a619c12ca0bdc9234b48096501fcbc2ca2e6",
+      "triangles": 56,
+      "minimum_triangle_area_cm2": 120.7165665553737,
+      "bounds_min_cm": [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        50.0,
+        50.0,
+        12.89025
+      ],
+      "size_cm": [
+        100.0,
+        100.0,
+        12.89
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 168,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Pad",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Pad.fbx",
+      "sha256": "5fafc07b3a3f008e38412c165dde6e57250740e333d189c32faa9823b92ee802",
+      "triangles": 84,
+      "minimum_triangle_area_cm2": 2.5567963554914948,
+      "bounds_min_cm": [
+        -47.29345,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        47.29345,
+        50.0,
+        7.12251
+      ],
+      "size_cm": [
+        94.59,
+        100.0,
+        7.12
+      ],
+      "material_slot": "Metal",
+      "uv0_source": "authored dominant-axis box projection",
+      "uv_channels": 1,
+      "uv0_loops": 252,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Road",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Road.fbx",
+      "sha256": "031cdbef197ab8486de5ca84253c22a9c767b82c8fa62e19f0d549b7462ce155",
+      "triangles": 36,
+      "minimum_triangle_area_cm2": 25.083859747583222,
+      "bounds_min_cm": [
+        -50.0,
+        -41.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        50.0,
+        41.0,
+        2.6
+      ],
+      "size_cm": [
+        100.0,
+        82.0,
+        2.6
+      ],
+      "material_slot": "Metal",
+      "uv0_source": "authored dominant-axis box projection",
+      "uv_channels": 1,
+      "uv0_loops": 108,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Pipe",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Pipe.fbx",
+      "sha256": "3dbcb851b60a5d13a932c702925eedf1c98145c6133b5dc254b81db24fb93e92",
+      "triangles": 156,
+      "minimum_triangle_area_cm2": 13.921628939148462,
+      "bounds_min_cm": [
+        -23.39827,
+        -24.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        23.39827,
+        24.0,
+        100.0
+      ],
+      "size_cm": [
+        46.8,
+        48.0,
+        100.0
+      ],
+      "material_slot": "Metal",
+      "uv0_source": "authored dominant-axis box projection",
+      "uv_channels": 1,
+      "uv0_loops": 468,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Crate",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Crate.fbx",
+      "sha256": "0cc4dbd932d30436831fb6ed94040794a14265699c5db9d4e94330db83a07b2c",
+      "triangles": 220,
+      "minimum_triangle_area_cm2": 0.3723837816071132,
+      "bounds_min_cm": [
+        -50.0,
+        -24.04371,
+        0.0
+      ],
+      "bounds_max_cm": [
+        50.0,
+        24.04371,
+        54.64481
+      ],
+      "size_cm": [
+        100.0,
+        48.09,
+        54.64
+      ],
+      "material_slot": "Metal",
+      "uv0_source": "authored dominant-axis box projection",
+      "uv_channels": 1,
+      "uv0_loops": 660,
+      "uv0_loop_coverage": 1.0
+    },
+    {
+      "name": "SM_CinderScenery_Debris",
+      "file": "RawAssets/VisualTarget/Scenery/FBX/SM_CinderScenery_Debris.fbx",
+      "sha256": "84261630d4b7e01aaa968ff6c59314e839ec7c4e06f5db55cfcabc41ff7a6802",
+      "triangles": 619,
+      "minimum_triangle_area_cm2": 0.9265302654082157,
+      "bounds_min_cm": [
+        -30.61856,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        30.61856,
+        50.0,
+        27.6619
+      ],
+      "size_cm": [
+        61.24,
+        100.0,
+        27.66
+      ],
+      "material_slot": "RockPhoto",
+      "uv0_source": "preserved Poly Haven photogrammetry atlas",
+      "uv_channels": 1,
+      "uv0_loops": 1857,
+      "uv0_loop_coverage": 1.0
+    }
+  ],
+  "fbx_roundtrip": [
+    {
+      "name": "SM_CinderScenery_Rock_A",
+      "triangles": 2599,
+      "uv_channels": 1,
+      "uv0_loops": 7797,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.1193069652026103,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_B",
+      "triangles": 3099,
+      "uv_channels": 1,
+      "uv0_loops": 9297,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.17014807274026725,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_C",
+      "triangles": 2200,
+      "uv_channels": 1,
+      "uv0_loops": 6600,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.3484241090647571,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_D",
+      "triangles": 3000,
+      "uv_channels": 1,
+      "uv0_loops": 9000,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.25276774161486565,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_E",
+      "triangles": 2450,
+      "uv_channels": 1,
+      "uv0_loops": 7350,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.21248866141490197,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Rock_F",
+      "triangles": 3299,
+      "uv_channels": 1,
+      "uv0_loops": 9897,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.22708863178722757,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_CliffMass",
+      "triangles": 56,
+      "uv_channels": 1,
+      "uv0_loops": 168,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 120.7165665553737,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Pad",
+      "triangles": 84,
+      "uv_channels": 1,
+      "uv0_loops": 252,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 2.5567963554914948,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Road",
+      "triangles": 36,
+      "uv_channels": 1,
+      "uv0_loops": 108,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 25.083859747583222,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Pipe",
+      "triangles": 156,
+      "uv_channels": 1,
+      "uv0_loops": 468,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 13.921628939148462,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Crate",
+      "triangles": 220,
+      "uv_channels": 1,
+      "uv0_loops": 660,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.3723837816071132,
+      "triangles_below_unreal_threshold": 0
+    },
+    {
+      "name": "SM_CinderScenery_Debris",
+      "triangles": 619,
+      "uv_channels": 1,
+      "uv0_loops": 1857,
+      "uv0_loop_coverage": 1.0,
+      "minimum_triangle_area_cm2": 0.9265302654082157,
+      "triangles_below_unreal_threshold": 0
+    }
+  ]
+}

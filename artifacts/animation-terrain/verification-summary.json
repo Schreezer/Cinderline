@@ -1,0 +1,18 @@
+{
+  "utc": "2026-09-11T20:26:54.021608+00:00",
+  "engine": "UE 5.8.2 Mac Development SF_METAL_SM5",
+  "build": "passed; MaxParallelActions=2",
+  "integration_report": "Saved/Automation/Integration/20260911T202446Z-27031/index.json",
+  "tests_succeeded": 4,
+  "tests_failed": 0,
+  "tests_with_warnings": 0,
+  "source_and_asset_hashes_verified": 89,
+  "motion_meshes_imported": 18,
+  "ground_material_shader_errors": [],
+  "ground_material_texture_samples": 6,
+  "runtime_capture_manifest": "capture-manifest.json",
+  "video": "animation-terrain-preview.mp4",
+  "video_duration_seconds": 17.233333,
+  "game_and_shader_workers_running_after_checks": false,
+  "commit_or_push": false
+}

@@ -1,0 +1,442 @@
+[
+  {
+    "file": "frame-000.png",
+    "time_ms": 1789158219576
+  },
+  {
+    "file": "frame-001.png",
+    "time_ms": 1789158219634
+  },
+  {
+    "file": "frame-002.png",
+    "time_ms": 1789158219693
+  },
+  {
+    "file": "frame-003.png",
+    "time_ms": 1789158219753
+  },
+  {
+    "file": "frame-004.png",
+    "time_ms": 1789158219809
+  },
+  {
+    "file": "frame-005.png",
+    "time_ms": 1789158219862
+  },
+  {
+    "file": "frame-006.png",
+    "time_ms": 1789158219918
+  },
+  {
+    "file": "frame-007.png",
+    "time_ms": 1789158219976
+  },
+  {
+    "file": "frame-008.png",
+    "time_ms": 1789158220034
+  },
+  {
+    "file": "frame-009.png",
+    "time_ms": 1789158220092
+  },
+  {
+    "file": "frame-010.png",
+    "time_ms": 1789158220151
+  },
+  {
+    "file": "frame-011.png",
+    "time_ms": 1789158220215
+  },
+  {
+    "file": "frame-012.png",
+    "time_ms": 1789158220270
+  },
+  {
+    "file": "frame-013.png",
+    "time_ms": 1789158220325
+  },
+  {
+    "file": "frame-014.png",
+    "time_ms": 1789158220377
+  },
+  {
+    "file": "frame-015.png",
+    "time_ms": 1789158220430
+  },
+  {
+    "file": "frame-016.png",
+    "time_ms": 1789158220481
+  },
+  {
+    "file": "frame-017.png",
+    "time_ms": 1789158220534
+  },
+  {
+    "file": "frame-018.png",
+    "time_ms": 1789158220586
+  },
+  {
+    "file": "frame-019.png",
+    "time_ms": 1789158220642
+  },
+  {
+    "file": "frame-020.png",
+    "time_ms": 1789158220693
+  },
+  {
+    "file": "frame-021.png",
+    "time_ms": 1789158220746
+  },
+  {
+    "file": "frame-022.png",
+    "time_ms": 1789158220798
+  },
+  {
+    "file": "frame-023.png",
+    "time_ms": 1789158220850
+  },
+  {
+    "file": "frame-024.png",
+    "time_ms": 1789158220903
+  },
+  {
+    "file": "frame-025.png",
+    "time_ms": 1789158220954
+  },
+  {
+    "file": "frame-026.png",
+    "time_ms": 1789158221009
+  },
+  {
+    "file": "frame-027.png",
+    "time_ms": 1789158221059
+  },
+  {
+    "file": "frame-028.png",
+    "time_ms": 1789158221110
+  },
+  {
+    "file": "frame-029.png",
+    "time_ms": 1789158221163
+  },
+  {
+    "file": "frame-030.png",
+    "time_ms": 1789158221214
+  },
+  {
+    "file": "frame-031.png",
+    "time_ms": 1789158221267
+  },
+  {
+    "file": "frame-032.png",
+    "time_ms": 1789158221321
+  },
+  {
+    "file": "frame-033.png",
+    "time_ms": 1789158221375
+  },
+  {
+    "file": "frame-034.png",
+    "time_ms": 1789158221426
+  },
+  {
+    "file": "frame-035.png",
+    "time_ms": 1789158221483
+  },
+  {
+    "file": "frame-036.png",
+    "time_ms": 1789158221536
+  },
+  {
+    "file": "frame-037.png",
+    "time_ms": 1789158221592
+  },
+  {
+    "file": "frame-038.png",
+    "time_ms": 1789158221644
+  },
+  {
+    "file": "frame-039.png",
+    "time_ms": 1789158221701
+  },
+  {
+    "file": "frame-040.png",
+    "time_ms": 1789158221759
+  },
+  {
+    "file": "frame-041.png",
+    "time_ms": 1789158221812
+  },
+  {
+    "file": "frame-042.png",
+    "time_ms": 1789158221868
+  },
+  {
+    "file": "frame-043.png",
+    "time_ms": 1789158221925
+  },
+  {
+    "file": "frame-044.png",
+    "time_ms": 1789158221976
+  },
+  {
+    "file": "frame-045.png",
+    "time_ms": 1789158222026
+  },
+  {
+    "file": "frame-046.png",
+    "time_ms": 1789158222080
+  },
+  {
+    "file": "frame-047.png",
+    "time_ms": 1789158222134
+  },
+  {
+    "file": "frame-048.png",
+    "time_ms": 1789158222185
+  },
+  {
+    "file": "frame-049.png",
+    "time_ms": 1789158222243
+  },
+  {
+    "file": "frame-050.png",
+    "time_ms": 1789158222301
+  },
+  {
+    "file": "frame-051.png",
+    "time_ms": 1789158222360
+  },
+  {
+    "file": "frame-052.png",
+    "time_ms": 1789158222417
+  },
+  {
+    "file": "frame-053.png",
+    "time_ms": 1789158222470
+  },
+  {
+    "file": "frame-054.png",
+    "time_ms": 1789158222526
+  },
+  {
+    "file": "frame-055.png",
+    "time_ms": 1789158222576
+  },
+  {
+    "file": "frame-056.png",
+    "time_ms": 1789158222626
+  },
+  {
+    "file": "frame-057.png",
+    "time_ms": 1789158222683
+  },
+  {
+    "file": "frame-058.png",
+    "time_ms": 1789158222737
+  },
+  {
+    "file": "frame-059.png",
+    "time_ms": 1789158222789
+  },
+  {
+    "file": "frame-060.png",
+    "time_ms": 1789158222842
+  },
+  {
+    "file": "frame-061.png",
+    "time_ms": 1789158222901
+  },
+  {
+    "file": "frame-062.png",
+    "time_ms": 1789158222955
+  },
+  {
+    "file": "frame-063.png",
+    "time_ms": 1789158223009
+  },
+  {
+    "file": "frame-064.png",
+    "time_ms": 1789158223062
+  },
+  {
+    "file": "frame-065.png",
+    "time_ms": 1789158223118
+  },
+  {
+    "file": "frame-066.png",
+    "time_ms": 1789158223178
+  },
+  {
+    "file": "frame-067.png",
+    "time_ms": 1789158223230
+  },
+  {
+    "file": "frame-068.png",
+    "time_ms": 1789158223282
+  },
+  {
+    "file": "frame-069.png",
+    "time_ms": 1789158223337
+  },
+  {
+    "file": "frame-070.png",
+    "time_ms": 1789158223386
+  },
+  {
+    "file": "frame-071.png",
+    "time_ms": 1789158223442
+  },
+  {
+    "file": "frame-072.png",
+    "time_ms": 1789158223494
+  },
+  {
+    "file": "frame-073.png",
+    "time_ms": 1789158223550
+  },
+  {
+    "file": "frame-074.png",
+    "time_ms": 1789158223603
+  },
+  {
+    "file": "frame-075.png",
+    "time_ms": 1789158223655
+  },
+  {
+    "file": "frame-076.png",
+    "time_ms": 1789158223704
+  },
+  {
+    "file": "frame-077.png",
+    "time_ms": 1789158223759
+  },
+  {
+    "file": "frame-078.png",
+    "time_ms": 1789158223811
+  },
+  {
+    "file": "frame-079.png",
+    "time_ms": 1789158223861
+  },
+  {
+    "file": "frame-080.png",
+    "time_ms": 1789158223914
+  },
+  {
+    "file": "frame-081.png",
+    "time_ms": 1789158223967
+  },
+  {
+    "file": "frame-082.png",
+    "time_ms": 1789158224025
+  },
+  {
+    "file": "frame-083.png",
+    "time_ms": 1789158224077
+  },
+  {
+    "file": "frame-084.png",
+    "time_ms": 1789158224128
+  },
+  {
+    "file": "frame-085.png",
+    "time_ms": 1789158224178
+  },
+  {
+    "file": "frame-086.png",
+    "time_ms": 1789158224228
+  },
+  {
+    "file": "frame-087.png",
+    "time_ms": 1789158224277
+  },
+  {
+    "file": "frame-088.png",
+    "time_ms": 1789158224329
+  },
+  {
+    "file": "frame-089.png",
+    "time_ms": 1789158224379
+  },
+  {
+    "file": "frame-090.png",
+    "time_ms": 1789158224429
+  },
+  {
+    "file": "frame-091.png",
+    "time_ms": 1789158224484
+  },
+  {
+    "file": "frame-092.png",
+    "time_ms": 1789158224538
+  },
+  {
+    "file": "frame-093.png",
+    "time_ms": 1789158224596
+  },
+  {
+    "file": "frame-094.png",
+    "time_ms": 1789158224651
+  },
+  {
+    "file": "frame-095.png",
+    "time_ms": 1789158224709
+  },
+  {
+    "file": "frame-096.png",
+    "time_ms": 1789158224760
+  },
+  {
+    "file": "frame-097.png",
+    "time_ms": 1789158224812
+  },
+  {
+    "file": "frame-098.png",
+    "time_ms": 1789158224863
+  },
+  {
+    "file": "frame-099.png",
+    "time_ms": 1789158224914
+  },
+  {
+    "file": "frame-100.png",
+    "time_ms": 1789158224968
+  },
+  {
+    "file": "frame-101.png",
+    "time_ms": 1789158225021
+  },
+  {
+    "file": "frame-102.png",
+    "time_ms": 1789158225076
+  },
+  {
+    "file": "frame-103.png",
+    "time_ms": 1789158225126
+  },
+  {
+    "file": "frame-104.png",
+    "time_ms": 1789158225177
+  },
+  {
+    "file": "frame-105.png",
+    "time_ms": 1789158225231
+  },
+  {
+    "file": "frame-106.png",
+    "time_ms": 1789158225284
+  },
+  {
+    "file": "frame-107.png",
+    "time_ms": 1789158225337
+  },
+  {
+    "file": "frame-108.png",
+    "time_ms": 1789158225387
+  },
+  {
+    "file": "frame-109.png",
+    "time_ms": 1789158225443
+  }
+]

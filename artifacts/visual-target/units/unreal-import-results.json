@@ -1,0 +1,900 @@
+{
+  "assets": [
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Drudge.SM_Drudge",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        16.0,
+        9.95350170135498,
+        25.0
+      ],
+      "bounds_min_cm": [
+        -16.0,
+        -9.953500747680664,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Drudge",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 6072,
+      "unit": "Drudge",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Drudge_Body.SM_Drudge_Body",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        12.410956382751465,
+        8.823982238769531,
+        25.0
+      ],
+      "bounds_min_cm": [
+        -16.0,
+        -8.823982238769531,
+        10.85106372833252
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Drudge_Body",
+      "nanite": false,
+      "part": "Body",
+      "simple_collisions": 0,
+      "triangles_lod0": 872,
+      "unit": "Drudge",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Drudge_LegFL.SM_Drudge_LegFL",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        10.915852546691895,
+        -3.7882394790649414,
+        17.07234001159668
+      ],
+      "bounds_min_cm": [
+        -1.5007328987121582,
+        -9.953498840332031,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        1.88624,
+        -4.67572,
+        14.39791
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Drudge_LegFL",
+      "nanite": false,
+      "part": "LegFL",
+      "simple_collisions": 0,
+      "triangles_lod0": 932,
+      "unit": "Drudge",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Drudge_LegFR.SM_Drudge_LegFR",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        10.915849685668945,
+        9.95350170135498,
+        17.07234001159668
+      ],
+      "bounds_min_cm": [
+        -1.5007343292236328,
+        3.788240432739258,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        1.88624,
+        4.67572,
+        14.39791
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Drudge_LegFR",
+      "nanite": false,
+      "part": "LegFR",
+      "simple_collisions": 0,
+      "triangles_lod0": 932,
+      "unit": "Drudge",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Drudge_LegRL.SM_Drudge_LegRL",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        -4.972113609313965,
+        -3.789762020111084,
+        17.07234001159668
+      ],
+      "bounds_min_cm": [
+        -12.766120910644531,
+        -9.953500747680664,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -5.61366,
+        -4.67572,
+        14.39791
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Drudge_LegRL",
+      "nanite": false,
+      "part": "LegRL",
+      "simple_collisions": 0,
+      "triangles_lod0": 932,
+      "unit": "Drudge",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Drudge_LegRR.SM_Drudge_LegRR",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        -4.972115993499756,
+        9.953498840332031,
+        17.07234001159668
+      ],
+      "bounds_min_cm": [
+        -12.766122817993164,
+        3.789759397506714,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -5.61366,
+        4.67572,
+        14.39791
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Drudge_LegRR",
+      "nanite": false,
+      "part": "LegRR",
+      "simple_collisions": 0,
+      "triangles_lod0": 932,
+      "unit": "Drudge",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Drudge_Tools.SM_Drudge_Tools",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        16.0,
+        5.896368980407715,
+        18.68210792541504
+      ],
+      "bounds_min_cm": [
+        4.5340962409973145,
+        -5.896364688873291,
+        0.10638298094272614
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        6.71087,
+        -0.0,
+        17.01571
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Drudge_Tools",
+      "nanite": false,
+      "part": "Tools",
+      "simple_collisions": 0,
+      "triangles_lod0": 1472,
+      "unit": "Drudge",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Ember.SM_Ember",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        19.999998092651367,
+        15.42699909210205,
+        48.0
+      ],
+      "bounds_min_cm": [
+        -20.000001907348633,
+        -15.427000999450684,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Ember",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 6096,
+      "unit": "Ember",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_Body.SM_Ember_Body",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        7.717073917388916,
+        15.42699909210205,
+        48.0
+      ],
+      "bounds_min_cm": [
+        -20.000001907348633,
+        -15.427000999450684,
+        19.411766052246094
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Ember_Body",
+      "nanite": false,
+      "part": "Body",
+      "simple_collisions": 0,
+      "triangles_lod0": 2820,
+      "unit": "Ember",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_LegL.SM_Ember_LegL",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        2.6075446605682373,
+        -4.578956604003906,
+        22.997648239135742
+      ],
+      "bounds_min_cm": [
+        -13.963253021240234,
+        -11.202739715576172,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -6.41142,
+        -7.38656,
+        20.70588
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Ember_LegL",
+      "nanite": false,
+      "part": "LegL",
+      "simple_collisions": 0,
+      "triangles_lod0": 1148,
+      "unit": "Ember",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_LegR.SM_Ember_LegR",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        2.6075422763824463,
+        11.202737808227539,
+        22.997648239135742
+      ],
+      "bounds_min_cm": [
+        -13.963254928588867,
+        4.57895565032959,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -6.41142,
+        7.38656,
+        20.70588
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Ember_LegR",
+      "nanite": false,
+      "part": "LegR",
+      "simple_collisions": 0,
+      "triangles_lod0": 1148,
+      "unit": "Ember",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_Weapon.SM_Ember_Weapon",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        19.999998092651367,
+        12.56704044342041,
+        38.25075912475586
+      ],
+      "bounds_min_cm": [
+        -4.737007141113281,
+        5.891943454742432,
+        31.393613815307617
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.37656,
+        8.63925,
+        33.88235
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Ember_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "simple_collisions": 0,
+      "triangles_lod0": 980,
+      "unit": "Ember",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Needle.SM_Needle",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        21.0,
+        11.903498649597168,
+        47.0
+      ],
+      "bounds_min_cm": [
+        -21.0,
+        -11.9035005569458,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Needle",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 6752,
+      "unit": "Needle",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_Body.SM_Needle_Body",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        6.442063808441162,
+        11.903498649597168,
+        47.0
+      ],
+      "bounds_min_cm": [
+        -21.0,
+        -11.9035005569458,
+        19.007352828979492
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Needle_Body",
+      "nanite": false,
+      "part": "Body",
+      "simple_collisions": 0,
+      "triangles_lod0": 2820,
+      "unit": "Needle",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_LegL.SM_Needle_LegL",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        0.4172877371311188,
+        -2.3797848224639893,
+        20.882417678833008
+      ],
+      "bounds_min_cm": [
+        -15.989094734191895,
+        -8.056838989257812,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -7.21718,
+        -5.69932,
+        19.04937
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Needle_LegL",
+      "nanite": false,
+      "part": "LegL",
+      "simple_collisions": 0,
+      "triangles_lod0": 1148,
+      "unit": "Needle",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_LegR.SM_Needle_LegR",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        0.4172861874103546,
+        8.056838035583496,
+        20.882417678833008
+      ],
+      "bounds_min_cm": [
+        -15.989096641540527,
+        2.3797831535339355,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -7.21718,
+        5.69932,
+        19.04937
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Needle_LegR",
+      "nanite": false,
+      "part": "LegR",
+      "simple_collisions": 0,
+      "triangles_lod0": 1148,
+      "unit": "Needle",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_Weapon.SM_Needle_Weapon",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        21.0,
+        3.479483127593994,
+        39.90754318237305
+      ],
+      "bounds_min_cm": [
+        -11.084883689880371,
+        -3.4794867038726807,
+        33.19325637817383
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -3.95943,
+        -0.0,
+        36.36699
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Needle_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "simple_collisions": 0,
+      "triangles_lod0": 1636,
+      "unit": "Needle",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Skim.SM_Skim",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        18.0,
+        8.64699935913086,
+        14.0
+      ],
+      "bounds_min_cm": [
+        -18.0,
+        -8.647003173828125,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Skim",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 3216,
+      "unit": "Skim",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Anvil.SM_Anvil",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        34.0,
+        29.845504760742188,
+        38.0
+      ],
+      "bounds_min_cm": [
+        -34.0,
+        -29.845504760742188,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Anvil",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 7308,
+      "unit": "Anvil",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Anvil_Body.SM_Anvil_Body",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        28.100187301635742,
+        29.845504760742188,
+        32.0245246887207
+      ],
+      "bounds_min_cm": [
+        -34.0,
+        -29.845504760742188,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Anvil_Body",
+      "nanite": false,
+      "part": "Body",
+      "simple_collisions": 0,
+      "triangles_lod0": 5452,
+      "unit": "Anvil",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Anvil_Weapon.SM_Anvil_Weapon",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        34.0,
+        13.074055671691895,
+        38.0
+      ],
+      "bounds_min_cm": [
+        -8.844642639160156,
+        -13.074054718017578,
+        23.213220596313477
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        7.00725,
+        -0.0,
+        30.74896
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "CoreGlow"
+      ],
+      "name": "SM_Anvil_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "simple_collisions": 0,
+      "triangles_lod0": 1856,
+      "unit": "Anvil",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Cinderthrow.SM_Cinderthrow",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        30.000001907348633,
+        20.923002243041992,
+        38.0
+      ],
+      "bounds_min_cm": [
+        -30.000003814697266,
+        -20.923004150390625,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Cinderthrow",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 7084,
+      "unit": "Cinderthrow",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Cinderthrow_Body.SM_Cinderthrow_Body",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        24.969417572021484,
+        20.923002243041992,
+        30.793441772460938
+      ],
+      "bounds_min_cm": [
+        -30.000003814697266,
+        -20.923004150390625,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Cinderthrow_Body",
+      "nanite": false,
+      "part": "Body",
+      "simple_collisions": 0,
+      "triangles_lod0": 5452,
+      "unit": "Cinderthrow",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Motion/SM_Cinderthrow_Weapon.SM_Cinderthrow_Weapon",
+      "asset_type": "motion",
+      "bounds_max_cm": [
+        30.000001907348633,
+        9.971778869628906,
+        38.0
+      ],
+      "bounds_min_cm": [
+        -19.45865821838379,
+        -9.971780776977539,
+        21.41358184814453
+      ],
+      "imported": true,
+      "joint_pivot_cm": [
+        -11.99535,
+        -0.0,
+        25.97186
+      ],
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel"
+      ],
+      "name": "SM_Cinderthrow_Weapon",
+      "nanite": false,
+      "part": "Weapon",
+      "simple_collisions": 0,
+      "triangles_lod0": 1632,
+      "unit": "Cinderthrow",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Mend.SM_Mend",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        19.000001907348633,
+        17.12200164794922,
+        39.0
+      ],
+      "bounds_min_cm": [
+        -19.000001907348633,
+        -17.12200164794922,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Mend",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 3368,
+      "unit": "Mend",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    },
+    {
+      "asset": "/Game/Art/VisualTarget/Models/SM_Veil.SM_Veil",
+      "asset_type": "model",
+      "bounds_max_cm": [
+        24.84749984741211,
+        25.999998092651367,
+        18.0
+      ],
+      "bounds_min_cm": [
+        -24.847501754760742,
+        -26.000001907348633,
+        0.0
+      ],
+      "imported": true,
+      "joint_pivot_cm": null,
+      "lod_count": 3,
+      "lods_created": true,
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "name": "SM_Veil",
+      "nanite": false,
+      "part": null,
+      "simple_collisions": 0,
+      "triangles_lod0": 3352,
+      "unit": "Veil",
+      "vertex_color_import": "replace from FBX Color alpha AO"
+    }
+  ],
+  "count": 26,
+  "destinations": [
+    "/Game/Art/VisualTarget/Models",
+    "/Game/Art/VisualTarget/Motion"
+  ],
+  "owner": "scripts/unreal_visual_target_units.py",
+  "success": true,
+  "utc": "2026-09-12T10:04:27.557307+00:00"
+}

@@ -33,3 +33,11 @@ Each file matched the byte count and MD5 published by Poly Haven. PNG headers in
 | `gravel_floor_04_ao_2k.png` | 7,812,901 | `51082bff9d1e94114dc79d91f53fcd3df63318c1d95bd7ced393244c0c3de5dd` |
 
 No files were resized, recolored, repacked, or generated. Acquisition and source validation are complete; this document does not claim Unreal import, rendered quality, or device performance.
+
+## Visual target revision — 12 September 2026
+
+The final `M_CinderGroundV4` uses a separate coarse ground source, [Dry Ground Rocks](https://polyhaven.com/a/dry_ground_rocks), with matched 2K PBR maps at the source's 400 cm scale. Fine Gravel Floor 04 remains in the dedicated packed-earth road material. Downloaded sources remain unchanged.
+
+Runtime review showed that fine gravel averaged into a smooth surface at the RTS camera. A first contrast revision still lost too much detail. The final material directly uses the coarse source's photographed color, with mild multiplicative terrain-mask tints. It removes the earlier clipping and broad basalt-cloud path, using six samples including the runtime mask. A second rotated albedo lookup is blended at 35 percent to reduce visible repetition; the primary projection retains 65 percent of color and all normal/roughness/AO detail.
+
+Additional CC0 ground, model-finish and photogrammetry sources are recorded in [VISUAL_TARGET_PASS.md](VISUAL_TARGET_PASS.md), with original metadata and hashes beside their source files.

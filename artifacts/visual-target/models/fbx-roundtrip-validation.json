@@ -1,0 +1,166 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "SM_Anchor",
+      "dimensions_cm": [
+        250.0,
+        250.0,
+        185.0
+      ],
+      "bottom_z_cm": 0.0,
+      "triangles": 19476,
+      "minimum_triangle_area_cm2": 0.00337454565018422,
+      "vertex_ao_alpha": {
+        "minimum": 0.2784,
+        "maximum": 1.0
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Kiln",
+      "dimensions_cm": [
+        180.0,
+        180.0,
+        120.0
+      ],
+      "bottom_z_cm": 0.0,
+      "triangles": 15388,
+      "minimum_triangle_area_cm2": 0.0004116533872365162,
+      "vertex_ao_alpha": {
+        "minimum": 0.2784,
+        "maximum": 1.0
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Siphon",
+      "dimensions_cm": [
+        152.0,
+        152.0,
+        112.0
+      ],
+      "bottom_z_cm": 0.0,
+      "triangles": 10276,
+      "minimum_triangle_area_cm2": 0.012933265238570416,
+      "vertex_ao_alpha": {
+        "minimum": 0.2784,
+        "maximum": 1.0
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Crucible",
+      "dimensions_cm": [
+        208.0,
+        208.0,
+        155.0
+      ],
+      "bottom_z_cm": 0.0,
+      "triangles": 14416,
+      "minimum_triangle_area_cm2": 0.0013037804843034444,
+      "vertex_ao_alpha": {
+        "minimum": 0.2784,
+        "maximum": 1.0
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Resonator",
+      "dimensions_cm": [
+        170.0,
+        170.0,
+        160.0
+      ],
+      "bottom_z_cm": 0.0,
+      "triangles": 12364,
+      "minimum_triangle_area_cm2": 0.016135577378109233,
+      "vertex_ao_alpha": {
+        "minimum": 0.2784,
+        "maximum": 1.0
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Ward",
+      "dimensions_cm": [
+        96.0,
+        83.17,
+        120.0
+      ],
+      "bottom_z_cm": 0.0,
+      "triangles": 10616,
+      "minimum_triangle_area_cm2": 0.008425243723010217,
+      "vertex_ao_alpha": {
+        "minimum": 0.2784,
+        "maximum": 1.0
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    },
+    {
+      "name": "SM_Ore",
+      "dimensions_cm": [
+        88.729,
+        90.0,
+        65.0
+      ],
+      "bottom_z_cm": 0.0,
+      "triangles": 4516,
+      "minimum_triangle_area_cm2": 0.013889700226223123,
+      "vertex_ao_alpha": {
+        "minimum": 0.2784,
+        "maximum": 1.0
+      },
+      "material_slots": [
+        "HullDark",
+        "HullLight",
+        "Metal",
+        "TeamPanel",
+        "CoreGlow"
+      ],
+      "passed": true
+    }
+  ]
+}

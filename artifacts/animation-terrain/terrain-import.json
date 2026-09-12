@@ -1,0 +1,451 @@
+{
+  "material": {
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "connections": [
+      {
+        "from": "Absolute world position",
+        "input": "",
+        "output": "",
+        "to": "World XY"
+      },
+      {
+        "from": "World XY",
+        "input": "A",
+        "output": "",
+        "to": "World centimeters to texture UV"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "GroundColor"
+      },
+      {
+        "from": "GroundColor",
+        "input": "",
+        "output": "RGB",
+        "to": "Desaturated mineral grain"
+      },
+      {
+        "from": "Desaturation",
+        "input": "Fraction",
+        "output": "",
+        "to": "Desaturated mineral grain"
+      },
+      {
+        "from": "Desaturated mineral grain",
+        "input": "A",
+        "output": "",
+        "to": "Cool basalt base"
+      },
+      {
+        "from": "BasaltTint",
+        "input": "B",
+        "output": "RGB",
+        "to": "Cool basalt base"
+      },
+      {
+        "from": "Macro Absolute world position",
+        "input": "",
+        "output": "",
+        "to": "Macro World XY"
+      },
+      {
+        "from": "Macro World XY",
+        "input": "A",
+        "output": "",
+        "to": "Macro World centimeters to texture UV"
+      },
+      {
+        "from": "Macro World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "BasaltMacroColor"
+      },
+      {
+        "from": "BasaltMacroColor",
+        "input": "",
+        "output": "RGB",
+        "to": "Broad fractures luminance"
+      },
+      {
+        "from": "Neutral macro color",
+        "input": "Fraction",
+        "output": "",
+        "to": "Broad fractures luminance"
+      },
+      {
+        "from": "Broad fractures luminance",
+        "input": "A",
+        "output": "",
+        "to": "Fracture variation gain"
+      },
+      {
+        "from": "Fracture variation gain",
+        "input": "A",
+        "output": "",
+        "to": "Fracture variation bias"
+      },
+      {
+        "from": "Fracture variation bias",
+        "input": "",
+        "output": "",
+        "to": "Bounded broad rock value"
+      },
+      {
+        "from": "Cool basalt base",
+        "input": "A",
+        "output": "",
+        "to": "Varied basalt bed"
+      },
+      {
+        "from": "Bounded broad rock value",
+        "input": "B",
+        "output": "",
+        "to": "Varied basalt bed"
+      },
+      {
+        "from": "Layers Absolute world position",
+        "input": "",
+        "output": "",
+        "to": "Layers World XY"
+      },
+      {
+        "from": "Layers World XY",
+        "input": "A",
+        "output": "",
+        "to": "Layers World centimeters to texture UV"
+      },
+      {
+        "from": "Layers World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "TerrainLayers"
+      },
+      {
+        "from": "Desaturated mineral grain",
+        "input": "A",
+        "output": "",
+        "to": "Windblown ash grain"
+      },
+      {
+        "from": "Windblown ash tint",
+        "input": "B",
+        "output": "RGB",
+        "to": "Windblown ash grain"
+      },
+      {
+        "from": "TerrainLayers",
+        "input": "A",
+        "output": "B",
+        "to": "Windblown ash blend weight"
+      },
+      {
+        "from": "Varied basalt bed",
+        "input": "A",
+        "output": "",
+        "to": "Windblown ash transition"
+      },
+      {
+        "from": "Windblown ash grain",
+        "input": "B",
+        "output": "",
+        "to": "Windblown ash transition"
+      },
+      {
+        "from": "Windblown ash blend weight",
+        "input": "Alpha",
+        "output": "",
+        "to": "Windblown ash transition"
+      },
+      {
+        "from": "Desaturated mineral grain",
+        "input": "A",
+        "output": "",
+        "to": "Exposed cliff stone grain"
+      },
+      {
+        "from": "Exposed cliff stone tint",
+        "input": "B",
+        "output": "RGB",
+        "to": "Exposed cliff stone grain"
+      },
+      {
+        "from": "TerrainLayers",
+        "input": "A",
+        "output": "R",
+        "to": "Exposed cliff stone blend weight"
+      },
+      {
+        "from": "Windblown ash transition",
+        "input": "A",
+        "output": "",
+        "to": "Exposed cliff stone transition"
+      },
+      {
+        "from": "Exposed cliff stone grain",
+        "input": "B",
+        "output": "",
+        "to": "Exposed cliff stone transition"
+      },
+      {
+        "from": "Exposed cliff stone blend weight",
+        "input": "Alpha",
+        "output": "",
+        "to": "Exposed cliff stone transition"
+      },
+      {
+        "from": "Desaturated mineral grain",
+        "input": "A",
+        "output": "",
+        "to": "Iron mineral staining grain"
+      },
+      {
+        "from": "Iron mineral staining tint",
+        "input": "B",
+        "output": "RGB",
+        "to": "Iron mineral staining grain"
+      },
+      {
+        "from": "TerrainLayers",
+        "input": "A",
+        "output": "G",
+        "to": "Iron mineral staining blend weight"
+      },
+      {
+        "from": "Exposed cliff stone transition",
+        "input": "A",
+        "output": "",
+        "to": "Iron mineral staining transition"
+      },
+      {
+        "from": "Iron mineral staining grain",
+        "input": "B",
+        "output": "",
+        "to": "Iron mineral staining transition"
+      },
+      {
+        "from": "Iron mineral staining blend weight",
+        "input": "Alpha",
+        "output": "",
+        "to": "Iron mineral staining transition"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "GroundNormal"
+      },
+      {
+        "from": "Flat tangent normal",
+        "input": "A",
+        "output": "",
+        "to": "Restrained normal detail"
+      },
+      {
+        "from": "GroundNormal",
+        "input": "B",
+        "output": "RGB",
+        "to": "Restrained normal detail"
+      },
+      {
+        "from": "NormalStrength",
+        "input": "Alpha",
+        "output": "",
+        "to": "Restrained normal detail"
+      },
+      {
+        "from": "Restrained normal detail",
+        "input": "VectorInput",
+        "output": "",
+        "to": "Normalized tangent normal"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "GroundRoughness"
+      },
+      {
+        "from": "GroundRoughness",
+        "input": "A",
+        "output": "R",
+        "to": "Ash roughness"
+      },
+      {
+        "from": "TerrainLayers",
+        "input": "Alpha",
+        "output": "B",
+        "to": "Ash roughness"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "GroundAO"
+      }
+    ],
+    "depth_test_enabled": true,
+    "graph_replacement": {
+      "before_count": 0,
+      "method": "snapshot of expressions, delete each through engine API",
+      "remaining_after_delete": 0
+    },
+    "nodes": 43,
+    "outputs": {
+      "AMBIENT_OCCLUSION": {
+        "node": "GroundAO",
+        "output": "R"
+      },
+      "BASE_COLOR": {
+        "node": "Iron mineral staining transition",
+        "output": ""
+      },
+      "METALLIC": {
+        "node": "Nonmetal stone",
+        "output": ""
+      },
+      "NORMAL": {
+        "node": "Normalized tangent normal",
+        "output": ""
+      },
+      "ROUGHNESS": {
+        "node": "Ash roughness",
+        "output": ""
+      }
+    },
+    "path": "/Game/Art/Materials/M_CinderGroundV3.M_CinderGroundV3",
+    "shader_errors": [],
+    "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+    "texture_samples": 6,
+    "two_sided": false,
+    "version": "layered-basalt-v3.0"
+  },
+  "owner": "scripts/unreal_terrain_surface.py",
+  "runtime_mask": {
+    "channels": {
+      "B": "map-seeded ash",
+      "G": "observed mineral positions",
+      "R": "explored cliff stone"
+    },
+    "collision_modified": false,
+    "size": [
+      256,
+      256
+    ],
+    "srgb": false,
+    "update": "on reset or newly observed features only",
+    "world_size_cm": 4800
+  },
+  "source_sha256": "8817a8714cafc2ee517659de550ee4a0a611f708737c948b601dd07e21974e3d",
+  "success": true,
+  "terrain": [
+    {
+      "dimensions_cm": [
+        99.99999618530273,
+        100.0,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        1.9073486328125e-06,
+        0.0,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_A.SM_BasaltCliff_A",
+      "sha256": "a4750fb217696620adbba353c6f722a552cbdb2e593048e6e7c67e09650256e2",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_A.fbx",
+      "triangles": 770
+    },
+    {
+      "dimensions_cm": [
+        99.99999618530273,
+        100.0,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        1.9073486328125e-06,
+        0.0,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_B.SM_BasaltCliff_B",
+      "sha256": "7a35e22b06c5820e5024622d034bc54b0af4c60bb05259d5ddca16b565163350",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_B.fbx",
+      "triangles": 802
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        100.00000381469727,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        0.0,
+        1.9073486328125e-06,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_C.SM_BasaltCliff_C",
+      "sha256": "9c9197860deaaab3054a8d5d80c669988701e5c986f4d299e5dcfd64803c40cb",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_C.fbx",
+      "triangles": 748
+    },
+    {
+      "dimensions_cm": [
+        100.00000381469727,
+        100.0,
+        100.0
+      ],
+      "material": "/Game/Art/Materials/M_CinderBasaltV2.M_CinderBasaltV2",
+      "origin_cm": [
+        1.9073486328125e-06,
+        0.0,
+        50.0
+      ],
+      "path": "/Game/Art/Environment/SM_BasaltCliff_D.SM_BasaltCliff_D",
+      "sha256": "da5505ecddd6ea62656bcdf0d066b9d87878b79ee510e5cbf7e6284d28d36f5d",
+      "slots": [
+        "Basalt"
+      ],
+      "source": "RawAssets/Terrain/FBX/SM_BasaltCliff_D.fbx",
+      "triangles": 722
+    }
+  ],
+  "textures": [
+    {
+      "compression": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+      "dimensions": [
+        4,
+        4
+      ],
+      "path": "/Game/Art/Textures/VisualUpgrade/T_CinderTerrainLayersDefault.T_CinderTerrainLayersDefault",
+      "role": "FogMask",
+      "settings": {
+        "address_x": "<TextureAddress.TA_CLAMP: 1>",
+        "address_y": "<TextureAddress.TA_CLAMP: 1>",
+        "compression_settings": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+        "filter": "<TextureFilter.TF_BILINEAR: 1>",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "4",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+        "never_stream": "True",
+        "srgb": "False",
+        "virtual_texture_streaming": "False"
+      },
+      "sha256": "0c28e0759411ab1656f2a2c13bb7de73f1bf506e4b64fdab56c53a7e792527eb",
+      "source": "Intermediate/VisualUpgrade/T_CinderTerrainLayersDefault.png",
+      "srgb": false
+    }
+  ],
+  "utc": "2026-09-11T19:41:50.784774+00:00"
+}

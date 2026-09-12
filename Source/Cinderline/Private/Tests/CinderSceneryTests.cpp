@@ -1,0 +1,185 @@
+#include "CoreMinimal.h"
+
+#if WITH_DEV_AUTOMATION_TESTS
+
+#include "Components/SceneComponent.h"
+#include "Engine/World.h"
+#include "GameFramework/Actor.h"
+#include "Misc/AutomationTest.h"
+#include "Presentation/CinderScenery.h"
+#include "Tests/AutomationCommon.h"
+
+namespace CinderSceneryTests
+{
+struct FSceneryFixture
+{
+    FTestWorldWrapper WorldOwner;
+    AActor* Owner = nullptr;
+    UCinderScenery* Scenery = nullptr;
+    cinder::Simulation Simulation;
+
+    bool Initialize(FAutomationTestBase& Test)
+    {
+        if (!WorldOwner.CreateTestWorld(EWorldType::Game))
+        {
+            WorldOwner.ForwardErrorMessages(&Test);
+            return false;
+        }
+        UWorld* World = WorldOwner.GetTestWorld();
+        if (!Test.TestNotNull(TEXT("Transient scenery world exists"), World)) return false;
+        Owner = World->SpawnActor<AActor>();
+        if (!Test.TestNotNull(TEXT("Transient scenery owner spawned"), Owner)) return false;
+        auto* Root = NewObject<USceneComponent>(Owner, TEXT("SceneryTestRoot"));
+        Owner->SetRootComponent(Root);
+        Root->RegisterComponent();
+        Scenery = NewObject<UCinderScenery>(Owner, TEXT("SceneryUnderTest"));
+        Scenery->RegisterComponent();
+        Test.TestFalse(TEXT("A registered component is not initialized before it owns its ISM batches"),
+            Scenery->IsInitialized());
+        Scenery->Initialize(Root);
+        Test.TestTrue(TEXT("Initialize creates every fixed scenery batch"), Scenery->IsInitialized());
+        Test.TestEqual(TEXT("Scenery uses one fixed component per authored mesh role"),
+            Scenery->Diagnostics().BatchCount, 12);
+        WorldOwner.ForwardErrorMessages(&Test);
+        return !Test.HasAnyErrors();
+    }
+};
+
+cinder::Entity KnownResource(cinder::Id Id, cinder::Vec2 Position)
+{
+    cinder::Entity Resource;
+    Resource.id = Id;
+    Resource.kind = cinder::Kind::Resource;
+    Resource.team = -1;
+    Resource.pos = Position;
+    Resource.hp = 1;
+    Resource.resource = 900;
+    return Resource;
+}
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderSceneryObservedStateTest,
+    "Cinderline.Presentation.SceneryObservedState",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderSceneryObservedStateTest::RunTest(const FString& Parameters)
+{
+    using namespace CinderSceneryTests;
+    using namespace cinder;
+    FSceneryFixture Fixture;
+    if (!Fixture.Initialize(*this)) return false;
+
+    Fixture.Simulation.debugSpawn(Kind::Scout, 0, Fixture.Simulation.obstacles().front().center);
+    std::vector<Entity> KnownResources;
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+    const FCinderSceneryDiagnostics Initial = Fixture.Scenery->Diagnostics();
+    TestTrue(TEXT("Initial friendly completed base receives foundation dressing"),
+        Initial.IndustrialInstances > 0);
+    TestEqual(TEXT("First observed state produces one scenery rebuild"), Initial.Rebuilds, uint64(1));
+
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+    TestEqual(TEXT("An identical observed state skips all instance rebuilding"),
+        Fixture.Scenery->Diagnostics().Rebuilds, Initial.Rebuilds);
+
+    const Vec2 FogBoundary{1349, 600};
+    TestTrue(TEXT("Boundary resource center occupies a currently visible fog cell"),
+        Fixture.Simulation.visible(0, FogBoundary));
+    bool bRejectedOffsetFootprint = false;
+    for (Id Id = 910000; Id < 910032 && !bRejectedOffsetFootprint; ++Id)
+    {
+        KnownResources = {KnownResource(Id, FogBoundary)};
+        Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+        bRejectedOffsetFootprint = Fixture.Scenery->Diagnostics().FogRejectedResourceInstances > 0;
+    }
+    TestTrue(TEXT("A visible resource center cannot expose a fragment whose full footprint enters hidden fog"),
+        bRejectedOffsetFootprint);
+    TestEqual(TEXT("Resource fog-boundary changes never upload static cliff batches"),
+        Fixture.Scenery->Diagnostics().TallRockBatchUploads, Initial.TallRockBatchUploads);
+    KnownResources.clear();
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+
+    const Vec2 HiddenPoint{4400, 4400};
+    TestFalse(TEXT("Remote test point starts outside local vision"), Fixture.Simulation.visible(0, HiddenPoint));
+    const uint64 BeforeHiddenEnemy = Fixture.Scenery->Diagnostics().Rebuilds;
+    Fixture.Simulation.debugSpawn(Kind::Headquarters, 1, HiddenPoint);
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+    const FCinderSceneryDiagnostics HiddenEnemy = Fixture.Scenery->Diagnostics();
+    TestEqual(TEXT("A hidden enemy building does not change the scenery hash"), HiddenEnemy.Rebuilds, BeforeHiddenEnemy);
+    TestEqual(TEXT("A hidden enemy building creates no industrial dressing"),
+        HiddenEnemy.IndustrialInstances, Initial.IndustrialInstances);
+
+    KnownResources.push_back(KnownResource(900001, HiddenPoint));
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+    const FCinderSceneryDiagnostics HiddenResource = Fixture.Scenery->Diagnostics();
+    TestEqual(TEXT("Remembering a currently hidden resource creates no visible resource debris"),
+        HiddenResource.DebrisInstances, Initial.DebrisInstances);
+    const uint64 HiddenResourceRebuilds = HiddenResource.Rebuilds;
+    const uint64 HiddenResourceRockUploads = HiddenResource.TallRockBatchUploads;
+    const uint64 HiddenResourceDebrisUploads = HiddenResource.DebrisBatchUploads;
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+    TestEqual(TEXT("Stable hidden resource memory is cached"),
+        Fixture.Scenery->Diagnostics().Rebuilds, HiddenResourceRebuilds);
+
+    Fixture.Simulation.debugSpawn(Kind::Scout, 0, HiddenPoint);
+    TestTrue(TEXT("A real friendly scout reveals the remembered resource point"),
+        Fixture.Simulation.visible(0, HiddenPoint));
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+    const FCinderSceneryDiagnostics RevealedResource = Fixture.Scenery->Diagnostics();
+    TestEqual(TEXT("A newly visible known resource receives its bounded three-piece cluster"),
+        RevealedResource.DebrisInstances, HiddenResource.DebrisInstances + 3);
+    TestEqual(TEXT("A resource visibility toggle leaves submitted cliff batches untouched"),
+        RevealedResource.TallRockBatchUploads, HiddenResourceRockUploads);
+    TestEqual(TEXT("A resource visibility toggle uploads only the changed debris batch once"),
+        RevealedResource.DebrisBatchUploads, HiddenResourceDebrisUploads + 1);
+
+    const uint64 BeforeReset = RevealedResource.Rebuilds;
+    Fixture.Scenery->Reset();
+    const FCinderSceneryDiagnostics Reset = Fixture.Scenery->Diagnostics();
+    TestTrue(TEXT("Reset retains the reusable initialized batch set"), Reset.bInitialized);
+    TestEqual(TEXT("Reset clears every submitted scenery instance"), Reset.TotalInstances, 0);
+    TestEqual(TEXT("Reset preserves actor-lifetime rebuild diagnostics"), Reset.Rebuilds, BeforeReset);
+    Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
+    TestEqual(TEXT("The first update after reset rebuilds the current observed state"),
+        Fixture.Scenery->Diagnostics().Rebuilds, BeforeReset + 1);
+    return !HasAnyErrors();
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderSceneryObstacleBoundsTest,
+    "Cinderline.Presentation.SceneryObstacleBounds",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderSceneryObstacleBoundsTest::RunTest(const FString& Parameters)
+{
+    using namespace CinderSceneryTests;
+    using namespace cinder;
+    FSceneryFixture Fixture;
+    if (!Fixture.Initialize(*this)) return false;
+
+    for (const Obstacle& Obstacle : Fixture.Simulation.obstacles())
+        Fixture.Simulation.debugSpawn(Kind::Scout, 0, Obstacle.center);
+    for (const Obstacle& Obstacle : Fixture.Simulation.obstacles())
+        TestTrue(TEXT("A friendly scout observation marks the obstacle center explored"),
+            Fixture.Simulation.explored(0, Obstacle.center));
+
+    Fixture.Scenery->Update(Fixture.Simulation, {});
+    const FCinderSceneryDiagnostics Diagnostics = Fixture.Scenery->Diagnostics();
+    TestTrue(TEXT("Observed obstacles produce broad cliff and authored outcrop instances"),
+        Diagnostics.TallRockInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()) * 4);
+    TestTrue(TEXT("Every observed obstacle receives at least two contiguous low cliff-mass segments"),
+        Diagnostics.CliffMassInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()) * 2);
+    TestTrue(TEXT("Irregular authored rock variants remain layered over the continuous mass"),
+        Diagnostics.RockVariantInstances >= Diagnostics.CliffMassInstances);
+    TestEqual(TEXT("Every tall scenery bound remains inside its authoritative obstacle rectangle"),
+        Diagnostics.OutOfBoundsTallInstances, 0);
+    TestTrue(TEXT("The fixed mobile instance caps remain active"),
+        Diagnostics.TallRockInstances <= 120 && Diagnostics.DebrisInstances <= 72
+        && Diagnostics.IndustrialInstances <= 80);
+
+    const uint64 BuiltAt = Diagnostics.Rebuilds;
+    Fixture.Scenery->Update(Fixture.Simulation, {});
+    TestEqual(TEXT("Observed obstacle geometry is cached after submission"),
+        Fixture.Scenery->Diagnostics().Rebuilds, BuiltAt);
+    return !HasAnyErrors();
+}
+
+#endif
