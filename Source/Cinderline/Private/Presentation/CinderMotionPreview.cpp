@@ -30,7 +30,7 @@ struct FMotionPatrol
 };
 TArray<FMotionPatrol> MotionPatrols;
 
-cinder::CommandResult Order(cinder::Simulation& Sim, cinder::Id Unit, cinder::CommandType Type,
+cinder::CommandResult CinderMotionPreviewOrder(cinder::Simulation& Sim, cinder::Id Unit, cinder::CommandType Type,
     cinder::Vec2 Point = {}, cinder::Id Target = 0, cinder::Kind Kind = cinder::Kind::Worker)
 {
     const cinder::Entity* Entity = Sim.find(Unit);
@@ -68,7 +68,7 @@ void StartPatrol(UWorld* World, ACinderBattlefield* Battle)
         {
             if (!CurrentBattle->Sim().find(Patrol.Unit)) continue;
             Patrol.bTowardEnd = !Patrol.bTowardEnd;
-            Order(CurrentBattle->Sim(), Patrol.Unit, cinder::CommandType::Move,
+            CinderMotionPreviewOrder(CurrentBattle->Sim(), Patrol.Unit, cinder::CommandType::Move,
                 Patrol.bTowardEnd ? Patrol.End : Patrol.Start);
         }
     }), 2.5f, true);
@@ -250,7 +250,7 @@ FAutoConsoleCommandWithWorldAndArgs MotionPreviewCommand(
         Sim.debugResources(0, 5000);
         std::vector<cinder::Id> Initial;
         for (const cinder::Entity& Entity : Sim.entities()) Initial.push_back(Entity.id);
-        for (cinder::Id Id : Initial) Order(Sim, Id, cinder::CommandType::Hold);
+        for (cinder::Id Id : Initial) CinderMotionPreviewOrder(Sim, Id, cinder::CommandType::Hold);
 
         TArray<cinder::Vec2> FramePoints, WalkPoints, WorkPoints, WeaponPoints;
         auto Spawn = [&](cinder::Kind Kind, int Team, float X, float Y)
@@ -265,7 +265,7 @@ FAutoConsoleCommandWithWorldAndArgs MotionPreviewCommand(
             const float X = 1280.0f + Index * 110.0f;
             const cinder::Id Id = Spawn(WalkKinds[Index], 0, X, 1550);
             const cinder::Vec2 Start{X, 1550}, End{X, 1770};
-            Order(Sim, Id, cinder::CommandType::Move, End);
+            CinderMotionPreviewOrder(Sim, Id, cinder::CommandType::Move, End);
             MotionPatrols.Add({Id, Start, End, true});
             WalkPoints.Add(Start); WalkPoints.Add(End);
             FramePoints.Add({X, 1770});
@@ -288,7 +288,7 @@ FAutoConsoleCommandWithWorldAndArgs MotionPreviewCommand(
             const float Reach = cinder::definition(cinder::Kind::Resource).radius
                 + cinder::definition(cinder::Kind::Worker).radius + 4;
             const cinder::Id Miner = Spawn(cinder::Kind::Worker, 0, MineralPoint.x - Reach, MineralPoint.y);
-            Order(Sim, Miner, cinder::CommandType::Gather, {}, Mineral);
+            CinderMotionPreviewOrder(Sim, Miner, cinder::CommandType::Gather, {}, Mineral);
             FramePoints.Add(MineralPoint);
             WorkPoints.Add(MineralPoint); WorkPoints.Add(Sim.find(Miner)->pos);
         }
@@ -301,7 +301,7 @@ FAutoConsoleCommandWithWorldAndArgs MotionPreviewCommand(
                 {
                     BuildSite = {X, Y};
                     Builder = Spawn(cinder::Kind::Worker, 0, X + 180, Y);
-                    if (!Order(Sim, Builder, cinder::CommandType::Build, BuildSite, 0, cinder::Kind::Foundry).accepted)
+                    if (!CinderMotionPreviewOrder(Sim, Builder, cinder::CommandType::Build, BuildSite, 0, cinder::Kind::Foundry).accepted)
                         Builder = 0;
                 }
         if (Builder)
@@ -310,11 +310,11 @@ FAutoConsoleCommandWithWorldAndArgs MotionPreviewCommand(
         }
 
         const cinder::Id Vision = Spawn(cinder::Kind::Scout, 0, 2320, 1650);
-        Order(Sim, Vision, cinder::CommandType::Move, {2520, 1990});
+        CinderMotionPreviewOrder(Sim, Vision, cinder::CommandType::Move, {2520, 1990});
         const cinder::Id Mender = Spawn(cinder::Kind::Mender, 0, 2220, 1880);
-        Order(Sim, Mender, cinder::CommandType::Move, {2460, 2080});
+        CinderMotionPreviewOrder(Sim, Mender, cinder::CommandType::Move, {2460, 2080});
         const cinder::Id Kite = Spawn(cinder::Kind::Kite, 0, 2320, 1980);
-        Order(Sim, Kite, cinder::CommandType::Move, {2570, 2180});
+        CinderMotionPreviewOrder(Sim, Kite, cinder::CommandType::Move, {2570, 2180});
         FramePoints.Add({2520, 1990}); FramePoints.Add({2570, 2180});
 
         const cinder::Id Anvil = Spawn(cinder::Kind::Bastion, 0, 2050, 1450);
@@ -324,8 +324,8 @@ FAutoConsoleCommandWithWorldAndArgs MotionPreviewCommand(
         WeaponPoints.Add({2050, 1450}); WeaponPoints.Add({2170, 1450});
         WeaponPoints.Add({2050, 1250}); WeaponPoints.Add({2150, 950});
         Sim.update(cinder::Simulation::Step); // Apply normal vision before issuing target-specific attacks.
-        Order(Sim, Anvil, cinder::CommandType::Attack, {}, AnvilTarget);
-        Order(Sim, Mortar, cinder::CommandType::Attack, {}, MortarTarget);
+        CinderMotionPreviewOrder(Sim, Anvil, cinder::CommandType::Attack, {}, AnvilTarget);
+        CinderMotionPreviewOrder(Sim, Mortar, cinder::CommandType::Attack, {}, MortarTarget);
 
         Battle->ResetFeedback();
         Battle->RenderState();
