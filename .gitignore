@@ -10,3 +10,5 @@ artifacts/*.app/
 artifacts/*.log
 __pycache__/
 *.pyc
+Server/node_modules/
+Server/.env

@@ -1,0 +1,17 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/multiplayer
+    Start 1: simulation_rules
+1/4 Test #1: simulation_rules .................   Passed   10.86 sec
+    Start 2: network_protocol
+2/4 Test #2: network_protocol .................   Passed    0.38 sec
+    Start 3: native_smoke
+3/4 Test #3: native_smoke .....................   Passed    0.33 sec
+    Start 4: native_render_stress
+4/4 Test #4: native_render_stress .............   Passed   17.54 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+native    =  17.54 sec*proc (1 test)
+render    =  17.54 sec*proc (1 test)
+
+Total Test time (real) =  29.12 sec

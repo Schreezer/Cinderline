@@ -1,0 +1,17 @@
+**
+!CMakeLists.txt
+!Source/
+!Source/Cinderline/
+!Source/Cinderline/Public/
+!Source/Cinderline/Public/Sim/
+!Source/Cinderline/Public/Sim/**
+!Source/Cinderline/Private/
+!Source/Cinderline/Private/Sim/
+!Source/Cinderline/Private/Sim/**
+!Server/
+!Server/Dockerfile
+!Server/MatchWorker.cpp
+!Server/package.json
+!Server/package-lock.json
+!Server/index.js
+!Server/server.js

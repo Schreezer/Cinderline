@@ -1,0 +1,17 @@
+{
+  "name": "cinderline-game-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": "./server.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ws": "8.21.3"
+  }
+}

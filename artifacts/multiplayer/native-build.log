@@ -1,0 +1,30 @@
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The OBJCXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting OBJCXX compiler ABI info
+-- Detecting OBJCXX compiler ABI info - done
+-- Check for working OBJCXX compiler: /usr/bin/c++ - skipped
+-- Configuring done (0.7s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/build/multiplayer
+[ 16%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[ 16%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[ 25%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 33%] Linking CXX static library libCinderlineSimulation.a
+[ 33%] Built target CinderlineSimulation
+[ 50%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 50%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 58%] Linking CXX executable CinderlineMatchWorker
+[ 58%] Built target CinderlineMatchWorker
+[ 66%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 75%] Linking CXX executable CinderlineTests
+[ 75%] Built target CinderlineTests
+[ 83%] Building OBJCXX object CMakeFiles/CinderlineNative.dir/Tools/Native/CinderlineApp.mm.o
+[ 91%] Linking CXX executable CinderlineNetworkTests
+[ 91%] Built target CinderlineNetworkTests
+[100%] Linking CXX executable CinderlineNative
+[100%] Built target CinderlineNative

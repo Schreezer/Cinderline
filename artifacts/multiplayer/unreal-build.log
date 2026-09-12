@@ -1,0 +1,54 @@
+Setting up bundled DotNet SDK
+/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CinderlineEditor Mac Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -MaxParallelActions=2
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Executing up to 2 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for CinderlineEditor (source file added)
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+UHT compiled-in object format Default
+Building CinderlineEditor...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from Cinderline unity file: CinderWorldIntegrationTests.cpp, CinderTutorialTests.cpp, CinderOnlineIntegrationTests.cpp, Network.cpp, SimulationAI.cpp, Simulation.cpp, CinderHUD.cpp, CinderCombatPreview.cpp, CinderTutorial.cpp, CinderHelpContent.cpp, CinderEntityMotion.cpp, CinderBattlefield.cpp, CinderPlayerController.cpp, CinderQualityDiagnostics.cpp, CinderGameEngine.cpp, CinderOnlinePanel.cpp, CinderTerrainSurface.cpp, CinderVisualPreview.cpp, CinderOnlineSubsystem.cpp, CinderMotionPreview.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 23 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 31.03 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/23] Compile [Apple] CinderCombatPreview.cpp
+[2/23] Compile [Apple] CinderBattlefield.cpp
+[3/23] Compile [Apple] CinderEntityMotion.cpp
+[4/23] Compile [Apple] CinderGameEngine.cpp
+[5/23] Compile [Apple] CinderHUD.cpp
+[6/23] Compile [Apple] CinderHelpContent.cpp
+[7/23] Compile [Apple] CinderOnlineIntegrationTests.cpp
+[8/23] Compile [Apple] CinderMotionPreview.cpp
+[9/23] Compile [Apple] CinderOnlineSubsystem.cpp
+[10/23] Compile [Apple] CinderOnlinePanel.cpp
+[11/23] Compile [Apple] CinderQualityDiagnostics.cpp
+[12/23] Compile [Apple] CinderPlayerController.cpp
+[13/23] Compile [Apple] CinderTerrainSurface.cpp
+[14/23] Compile [Apple] CinderTutorial.cpp
+[15/23] Compile [Apple] CinderTutorialTests.cpp
+[16/23] Compile [Apple] CinderVisualPreview.cpp
+[17/23] Compile [Apple] CinderWorldIntegrationTests.cpp
+[18/23] Compile [Apple] Module.Cinderline.cpp
+[19/23] Compile [Apple] Network.cpp
+[20/23] Compile [Apple] Simulation.cpp
+[21/23] Compile [Apple] SimulationAI.cpp
+[22/23] Link [Apple] libUnrealEditor-Cinderline.dylib
+[23/23] WriteMetadata CinderlineEditor.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 55.21 seconds
+Output binary: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealEditor
+Deploying CinderlineEditor Mac Development...
+Deploying now!
+
+Result: Succeeded
+Total execution time: 62.14 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 11.6kb

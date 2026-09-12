@@ -1,0 +1,69 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "7329950095426F1F6135F3AF5603FCF9",
+			"instanceName": "MacBook-Pro-10.local-60550",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.0 26A428",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.11-21.50.06",
+	"succeeded": 0,
+	"succeededWithWarnings": 1,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 4.911475658416748,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "Transport",
+			"fullTestPath": "Cinderline.Online.Transport",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"7329950095426F1F6135F3AF5603FCF9"
+			],
+			"duration": 4.911475658416748,
+			"dateTime": "2026.09.11-21.50.01",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogHAL: FMacPlatformProcess::CreateProc: posix_spawn(\"/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id\") failed (86, Bad CPU type in executable)",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-21.50.05"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogHAL: Failed to launch Tool. (/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-21.50.05"
+				}
+			],
+			"warnings": 2,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}
