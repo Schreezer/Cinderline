@@ -1,0 +1,9 @@
+[ 60%] Built target CinderlineSimulation
+[ 80%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[100%] Linking CXX executable CinderlineTests
+[100%] Built target CinderlineTests
+PASS paid commands, production and supply
+PASS bounded production queue
+AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0
+PASS AI observed production
+RESULT passed=3 failed=0

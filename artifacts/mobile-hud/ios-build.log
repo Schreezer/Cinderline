@@ -1,0 +1,8 @@
+Compiling with IOS SDK 27.0, minimum Target OS version 15.0
+[1/7] Compile [arm64] Module.ApplicationCore.cpp
+[2/7] Compile [arm64] Module.Launch.cpp
+[3/7] Compile [arm64] CinderHUD.cpp
+[4/7] Link [arm64] Cinderline
+Output binary: /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline
+Result: Succeeded
+Total execution time: 22.72 seconds

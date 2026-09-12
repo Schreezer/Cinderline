@@ -1,0 +1,58 @@
+{
+  "utc": "2026-09-11T18:16:22.403662+00:00",
+  "engine": "Unreal Engine 5.8.2 Mac Development SF_METAL_SM5",
+  "source_input_count": 132,
+  "source_manifest": "tested-source-sha256.txt",
+  "build": {
+    "passed": true,
+    "evidence": "build-results.txt"
+  },
+  "portable": {
+    "rule_groups": 26,
+    "ctests_passed": 3,
+    "native_render_frames": 3000,
+    "evidence": "portable-results.txt"
+  },
+  "sanitizers": {
+    "passed": true,
+    "types": [
+      "ASan",
+      "UBSan"
+    ],
+    "evidence": "sanitizer-results.txt"
+  },
+  "unreal_integration": {
+    "passed": 4,
+    "failed": 0,
+    "succeeded_with_warnings": 0,
+    "not_run": 0,
+    "in_process": 0,
+    "evidence": "integration-results.json",
+    "run": "20260911T181255Z-77425"
+  },
+  "restart": {
+    "old_match_discard_authorized": true,
+    "new_process_launched": true,
+    "live_log": "Saved/Logs/CinderlineTrackpadBuildPlay.log"
+  },
+  "rendered_check": {
+    "method": "Read-only CUA app screenshot",
+    "observed": "New match at 00:26, selected Drudge BUILDING / MINING PAUSED, two visible unfinished structures",
+    "new_match_left_intact": true
+  },
+  "pending": [
+    "Investigate unconfirmed hidden-area reveal reported while panning",
+    "Physical placement confirmation",
+    "Rendered desktop/compact build-menu and preview-label inspection",
+    "Later physical iOS controls pass"
+  ],
+  "limitations": [
+    "NullRHI gesture tests do not prove physical modifier routing, viewport targeting or camera movement.",
+    "Automated absolute pointer input has been unreliable in Unreal on this Mac.",
+    "No full skirmish or physical iOS test completed in this pass."
+  ],
+  "physical_option_drag": {
+    "confirmed_by_user": true,
+    "response": "Yes, camera moves"
+  }
+}

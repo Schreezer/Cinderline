@@ -1,0 +1,36 @@
+{
+  "verified_at_utc": "2026-09-11T19:00:28.840529+00:00",
+  "queue_limit": 20,
+  "visible_entries_per_page": {
+    "desktop": 6,
+    "compact": 8
+  },
+  "source_manifest": {
+    "path": "artifacts/production-queue/tested-source-sha256.txt",
+    "matched_files": 31,
+    "mismatches": 0
+  },
+  "portable_tests": {
+    "filter": "production",
+    "passed": 3,
+    "failed": 0,
+    "artifact": "artifacts/production-queue/portable-results.txt"
+  },
+  "mac_build": {
+    "result": "Succeeded",
+    "seconds": 34.93,
+    "max_parallel_actions": 2,
+    "artifact": "artifacts/production-queue/build-results.txt"
+  },
+  "unreal_integration": {
+    "passed": 4,
+    "warnings": 0,
+    "errors": 0,
+    "unfinished": 0,
+    "artifact": "artifacts/production-queue/integration-results.json"
+  },
+  "ui_review": "Source review of pagination, cancellation indices and desktop/compact geometry. Selecting a unit or unfinished site uses contextual actions.",
+  "remaining": [
+    "Physical queue paging/cancellation and visual acceptance; no live game was launched for this pass."
+  ]
+}

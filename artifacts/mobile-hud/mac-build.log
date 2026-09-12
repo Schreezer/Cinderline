@@ -1,0 +1,7 @@
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+[1/3] Compile [Apple] CinderMobileHUDPreview.cpp
+[2/3] Compile [Apple] CinderHUD.cpp
+[3/3] Link [Apple] libUnrealEditor-Cinderline.dylib
+Output binary: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealEditor
+Result: Succeeded
+Total execution time: 11.39 seconds

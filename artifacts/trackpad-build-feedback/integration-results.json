@@ -1,0 +1,165 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "E7A8635249409636A220F3ABCDF8EE69",
+			"instanceName": "MacBook-Pro-10.local-77434",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.0 26A428",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.11-18.13.37",
+	"succeeded": 4,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.28924775123596191,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "AIKnowledgeAndPersistence",
+			"fullTestPath": "Cinderline.Integration.AIKnowledgeAndPersistence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"E7A8635249409636A220F3ABCDF8EE69"
+			],
+			"duration": 0.14750275015830994,
+			"dateTime": "2026.09.11-18.13.37",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=6, first_seen_tick=616, retained_seen_tick=616, continuation_ticks=60; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-18.13.37"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CombatFeedback",
+			"fullTestPath": "Cinderline.Integration.CombatFeedback",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"E7A8635249409636A220F3ABCDF8EE69"
+			],
+			"duration": 0.030422914773225784,
+			"dateTime": "2026.09.11-18.13.37",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_COMBAT_FEEDBACK_PASS: weapon=4, impact=4, heal=4, death=1, hidden_weapon=1; development spawns, real combat actor ticks, exactly-once requests, pause/reset, temporary snapshot cursor, absent subsystem; no audible-output, viewport or physical-input proof.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-18.13.37"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EconomyAndProduction",
+			"fullTestPath": "Cinderline.Integration.EconomyAndProduction",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"E7A8635249409636A220F3ABCDF8EE69"
+			],
+			"duration": 0.098023995757102966,
+			"dateTime": "2026.09.11-18.13.37",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=252, produced=2, built=1, ore=342; paid commands, builder travel and pause/resume, actual actor ticks, selected-controller dispatch, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-18.13.37"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorldLifecycle",
+			"fullTestPath": "Cinderline.Integration.WorldLifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"E7A8635249409636A220F3ABCDF8EE69"
+			],
+			"duration": 0.01329808309674263,
+			"dateTime": "2026.09.11-18.13.37",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_GESTURES_PASS: ordinary mouse rectangle selection, nine desktop-pan mode/distance cases, plain placement drag/cancel/pause, Tier 2 Crucible rejection, touch drag/hold, pause and reset; real gesture methods with explicit pan intent and starting worker selection. NullRHI does not prove viewport targeting, camera movement, physical modifier routing, or internal TapWorld non-invocation when deprojection is unavailable.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-18.13.37"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-18.13.37"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.11-18.13.37"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

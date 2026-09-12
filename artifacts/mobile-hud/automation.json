@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Integration.CombatFeedback",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Integration.EconomyAndProduction",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Integration.WorldLifecycle",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.UI.MobileHUDLayout",
+    "state": "Success"
+  }
+]

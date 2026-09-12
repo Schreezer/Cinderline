@@ -1,0 +1,68 @@
+Start testing: Sep 11 23:35 IST
+----------------------------------------------------------
+1/1 Testing: simulation_rules
+1/1 Test: simulation_rules
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/build/sanitize/CinderlineTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/build/sanitize
+"simulation_rules" start time: Sep 11 23:35 IST
+Output:
+----------------------------------------------------------
+PASS reset and definitions
+PASS physical gathering and depletion
+PASS paid commands, production and supply
+CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
+PASS placement and construction
+WORKER_CONSTRUCTION travelled=350.000 cargo_preserved=6.000 finished_at=75.550 delivered_after=18
+PASS worker construction economy
+PASS worker construction interruptions
+PASS worker construction hazards
+PASS construction persistence and migration
+PASS research and prerequisites
+PASS ownership and fog
+GROUP_MOVE units=15 mean_destination_distance=92.819 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
+PASS obstacle paths and group movement
+PASS ground and air combat
+COVER_ATTACK order=1 damage=70.000
+COVER_ATTACK order=2 damage=70.000
+HOLD_TRAFFIC displacement=0.000
+SUPPORT_ORDER order=1 distance=168.959 healed=39.000
+SUPPORT_ORDER order=2 distance=174.234 healed=39.000
+PASS tactical orders and support
+PASS victory and defeat
+PASS save-load continuity and replay
+PASS bounded fixed-step update
+AI_EXPANSION depleted_ore=0.000 gathered=22488 alternate_built=1
+AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+PASS AI expansion and local defense
+AI_SCOUT_AND_ARMY scout=0 attack_move=1
+AI_SCOUT_AND_ARMY scout=1 attack_move=1
+AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
+AI_ECONOMY seconds=315.050 ore=4558 gathered=7408 produced=16 built=4 paid_command_cost=2850
+PASS AI paid economy
+AI_CONSTRUCTION travelling_preserved=1 orphan_resumed=1 all_busy_orphan_paused=1
+PASS AI construction assignments
+AI_WITNESSED_DEATH tick=96 previous_decision_tick=80 cleanup_tick=100
+AI_KNOWLEDGE hidden_death_retained=1 hidden_movement_ignored=1 mobile_expired=1 empty_site_cleared=1 visible_death_immediate=1
+PASS AI observation lifecycle
+AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0
+PASS AI observed production
+AI_OBJECTIVES original_destroyed=1 empty_start_avoided=1 relocated_hq_discovered=1 remembered_hq_targeted=1
+PASS AI scouting objectives
+AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1
+PASS AI knowledge persistence
+COMBAT_EVENTS weapon_profiles=5 splash_impacts=2 lethal_order=1 actual_heal=1 monotonic_ids=1
+PASS combat event semantics
+COMBAT_FOG hidden_source=1 no_late_revelation=1 current_visibility_required=1 hidden_segment_blocked=1 tiny_corner_clip_blocked=1
+PASS combat event visibility
+COMBAT_SAVE v4_continuity=1 legacy_effects_discarded=3 v3_knowledge_retained=1 malformed_events_atomic=1
+PASS combat event persistence
+RESULT passed=26 failed=0
+<end of output>
+Test time =  32.39 sec
+----------------------------------------------------------
+Test Passed.
+"simulation_rules" end time: Sep 11 23:35 IST
+"simulation_rules" time elapsed: 00:00:32
+----------------------------------------------------------
+
+End testing: Sep 11 23:35 IST

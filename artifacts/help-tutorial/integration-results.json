@@ -1,0 +1,241 @@
+{
+  "devices": [
+    {
+      "deviceName": "MacBook-Pro-10.local",
+      "instance": "51186680F94DC65BE2E5119CA126BCEC",
+      "instanceName": "MacBook-Pro-10.local-40965",
+      "platform": "MacEditor",
+      "oSVersion": "macOS 27.0 26A428",
+      "model": "Default",
+      "gPU": "Apple M1 Max",
+      "cPUModel": "Apple M1 Max",
+      "rAMInGB": 32,
+      "renderMode": "SM6",
+      "rHI": "",
+      "appInstanceLog": ""
+    }
+  ],
+  "reportCreatedOn": "2026.09.11-21.04.12",
+  "succeeded": 8,
+  "succeededWithWarnings": 0,
+  "failed": 0,
+  "notRun": 0,
+  "inProcess": 0,
+  "totalDuration": 0.3817588686943054,
+  "comparisonExported": false,
+  "comparisonExportDirectory": "",
+  "tests": [
+    {
+      "testDisplayName": "AIKnowledgeAndPersistence",
+      "fullTestPath": "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.17230653762817383,
+      "dateTime": "2026.09.11-21.04.11",
+      "entries": [
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=6, first_seen_tick=616, retained_seen_tick=616, continuation_ticks=60; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.11"
+        }
+      ],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "CombatFeedback",
+      "fullTestPath": "Cinderline.Integration.CombatFeedback",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.031141914427280426,
+      "dateTime": "2026.09.11-21.04.11",
+      "entries": [
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INTEGRATION_COMBAT_FEEDBACK_PASS: weapon=4, impact=4, heal=4, death=1, hidden_weapon=1; development spawns, real combat actor ticks, exactly-once requests, pause/reset, temporary snapshot cursor, absent subsystem; no audible-output, viewport or physical-input proof.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.11"
+        }
+      ],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "EconomyAndProduction",
+      "fullTestPath": "Cinderline.Integration.EconomyAndProduction",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.10107800364494324,
+      "dateTime": "2026.09.11-21.04.11",
+      "entries": [
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=252, produced=2, built=1, ore=342; paid commands, builder travel and pause/resume, actual actor ticks, selected-controller dispatch, temporary snapshot only.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.11"
+        }
+      ],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "WorldLifecycle",
+      "fullTestPath": "Cinderline.Integration.WorldLifecycle",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.02118687331676483,
+      "dateTime": "2026.09.11-21.04.11",
+      "entries": [
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INTEGRATION_GESTURES_PASS: ordinary mouse rectangle selection, nine desktop-pan mode/distance cases, plain placement drag/cancel/pause, Tier 2 Crucible rejection, touch drag/hold/placement/multi-touch, app background pause, player-pause preservation and reset; real gesture methods with explicit pan intent and starting worker selection. NullRHI does not prove viewport targeting, camera movement, physical modifier routing, or internal TapWorld non-invocation when deprojection is unavailable.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.11"
+        },
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.11"
+        },
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_IDLE_WORK_POLICY_PASS: production state classifier/cap helpers, 120/30/10 transitions, stricter/unlimited engine limits, automation scope bypass, one pause-transition flush of actual pending movement, frozen menu/pause/results upload counters, final combat death rendered on a short tick, and new-match render recovery. This does not measure native focus delivery, presented FPS, GPU load or thermal behavior.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.11"
+        },
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_HELP_TUTORIAL_LIFECYCLE_PASS: modal input isolation, explicit help resume, tutorial start/action tracking, rejected command, save/load routing, restart confirmation and normal-match restoration. No player save or completion preference was written.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.12"
+        },
+        {
+          "event": {
+            "type": "Info",
+            "message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.09.11-21.04.12"
+        }
+      ],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "CommandGates",
+      "fullTestPath": "Cinderline.Tutorial.CommandGates",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.008259959518909454,
+      "dateTime": "2026.09.11-21.04.12",
+      "entries": [],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "EarlyActionsAndContent",
+      "fullTestPath": "Cinderline.Tutorial.EarlyActionsAndContent",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.008030332624912262,
+      "dateTime": "2026.09.11-21.04.12",
+      "entries": [],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "EmberGate",
+      "fullTestPath": "Cinderline.Tutorial.EmberGate",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.008088622242212296,
+      "dateTime": "2026.09.11-21.04.12",
+      "entries": [],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    },
+    {
+      "testDisplayName": "EndToEnd",
+      "fullTestPath": "Cinderline.Tutorial.EndToEnd",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "51186680F94DC65BE2E5119CA126BCEC"
+      ],
+      "duration": 0.03166662156581879,
+      "dateTime": "2026.09.11-21.04.12",
+      "entries": [],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    }
+  ]
+}

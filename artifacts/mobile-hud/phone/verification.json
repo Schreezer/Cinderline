@@ -1,0 +1,1090 @@
+{
+  "evidence": "scripted renderer fixtures, not physical touch input",
+  "states": [
+    {
+      "state": "idle",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "buildmenu",
+          "argument": 0,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "workers",
+          "argument": 0,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "worker",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "focus",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            279.8,
+            216.3,
+            325.5
+          ]
+        },
+        {
+          "action": "buildmenu",
+          "argument": 0,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "stop",
+          "argument": 0,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "build",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "buildmenu",
+          "argument": 0,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "stop",
+          "argument": 0,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "closesheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        },
+        {
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            776.4,
+            167.4,
+            822.2,
+            213.2
+          ]
+        },
+        {
+          "action": "build",
+          "argument": 8,
+          "bounds": [
+            375.0,
+            219.4,
+            519.2,
+            265.2
+          ]
+        },
+        {
+          "action": "build",
+          "argument": 9,
+          "bounds": [
+            526.5,
+            219.4,
+            670.7,
+            265.2
+          ]
+        },
+        {
+          "action": "build",
+          "argument": 10,
+          "bounds": [
+            677.9,
+            219.4,
+            822.2,
+            265.2
+          ]
+        },
+        {
+          "action": "build",
+          "argument": 11,
+          "bounds": [
+            375.0,
+            271.4,
+            519.2,
+            317.2
+          ]
+        },
+        {
+          "action": "build",
+          "argument": 12,
+          "bounds": [
+            526.5,
+            271.4,
+            670.7,
+            317.2
+          ]
+        },
+        {
+          "action": "build",
+          "argument": 13,
+          "bounds": [
+            677.9,
+            271.4,
+            822.2,
+            317.2
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "placement",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "cancelplacement",
+          "argument": 0,
+          "bounds": [
+            594.4,
+            331.8,
+            827.4,
+            377.5
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "producer",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 1,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 3,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "closesheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        },
+        {
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            776.4,
+            219.4,
+            822.2,
+            265.2
+          ]
+        },
+        {
+          "action": "train",
+          "argument": 1,
+          "bounds": [
+            375.0,
+            271.4,
+            519.2,
+            317.2
+          ]
+        },
+        {
+          "action": "train",
+          "argument": 2,
+          "bounds": [
+            526.5,
+            271.4,
+            670.7,
+            317.2
+          ]
+        },
+        {
+          "action": "train",
+          "argument": 3,
+          "bounds": [
+            677.9,
+            271.4,
+            822.2,
+            317.2
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "queue",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 1,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 3,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "closesheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        },
+        {
+          "action": "cancelqueue",
+          "argument": 0,
+          "bounds": [
+            375.0,
+            266.2,
+            519.2,
+            312.0
+          ]
+        },
+        {
+          "action": "cancelqueue",
+          "argument": 1,
+          "bounds": [
+            526.5,
+            266.2,
+            670.7,
+            312.0
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "army",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "focus",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            279.8,
+            216.3,
+            325.5
+          ]
+        },
+        {
+          "action": "attack",
+          "argument": 0,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "stop",
+          "argument": 0,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "types",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "attack",
+          "argument": 0,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "stop",
+          "argument": 0,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "closesheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        },
+        {
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            776.4,
+            167.4,
+            822.2,
+            213.2
+          ]
+        },
+        {
+          "action": "kind",
+          "argument": 1,
+          "bounds": [
+            375.0,
+            219.4,
+            481.3,
+            265.2
+          ]
+        },
+        {
+          "action": "kind",
+          "argument": 2,
+          "bounds": [
+            488.6,
+            219.4,
+            594.9,
+            265.2
+          ]
+        },
+        {
+          "action": "kind",
+          "argument": 3,
+          "bounds": [
+            602.2,
+            219.4,
+            708.5,
+            265.2
+          ]
+        },
+        {
+          "action": "kind",
+          "argument": 4,
+          "bounds": [
+            715.8,
+            219.4,
+            822.2,
+            265.2
+          ]
+        },
+        {
+          "action": "kind",
+          "argument": 5,
+          "bounds": [
+            375.0,
+            271.4,
+            481.3,
+            317.2
+          ]
+        },
+        {
+          "action": "kind",
+          "argument": 6,
+          "bounds": [
+            488.6,
+            271.4,
+            594.9,
+            317.2
+          ]
+        },
+        {
+          "action": "kind",
+          "argument": 7,
+          "bounds": [
+            602.2,
+            271.4,
+            708.5,
+            317.2
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    },
+    {
+      "state": "training",
+      "buttons": [
+        {
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            717.1,
+            10.4,
+            762.9,
+            56.2
+          ]
+        },
+        {
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            769.1,
+            10.4,
+            827.4,
+            56.2
+          ]
+        },
+        {
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            16.6,
+            331.8,
+            79.0,
+            377.5
+          ]
+        },
+        {
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            85.3,
+            331.8,
+            151.8,
+            377.5
+          ]
+        },
+        {
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            158.1,
+            331.8,
+            216.3,
+            377.5
+          ]
+        },
+        {
+          "action": "buildmenu",
+          "argument": 0,
+          "bounds": [
+            594.4,
+            331.8,
+            677.6,
+            377.5
+          ]
+        },
+        {
+          "action": "workers",
+          "argument": 0,
+          "bounds": [
+            683.8,
+            331.8,
+            762.9,
+            377.5
+          ]
+        },
+        {
+          "action": "sheet",
+          "argument": 4,
+          "bounds": [
+            769.1,
+            331.8,
+            827.4,
+            377.5
+          ]
+        },
+        {
+          "action": "tutorialfocus",
+          "argument": 0,
+          "bounds": [
+            389.0,
+            67.6,
+            443.0,
+            113.4
+          ]
+        },
+        {
+          "action": "tutorialdetails",
+          "argument": 0,
+          "bounds": [
+            447.2,
+            67.6,
+            501.3,
+            113.4
+          ]
+        }
+      ],
+      "width": 844.0,
+      "height": 390.0,
+      "scale": 1.04,
+      "bottomCenterCaptured": false,
+      "checks": {
+        "allButtonsWithinViewport": true,
+        "minimum44UnitTargets": true,
+        "noOverlappingButtons": true,
+        "bottomCenterPassThrough": true
+      }
+    }
+  ]
+}

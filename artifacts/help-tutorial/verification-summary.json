@@ -1,0 +1,87 @@
+{
+  "recorded_utc": "2026-09-11T21:07:48.423549+00:00",
+  "build": "Mac Development succeeded, MaxParallelActions=2",
+  "automation_command": "./scripts/test-unreal.sh --tutorials",
+  "automation_report": "Saved/Automation/Integration/20260911T210349Z-40955/index.json",
+  "tests": [
+    {
+      "path": "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "path": "Cinderline.Integration.CombatFeedback",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "path": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "path": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "path": "Cinderline.Tutorial.CommandGates",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "path": "Cinderline.Tutorial.EarlyActionsAndContent",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "path": "Cinderline.Tutorial.EmberGate",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "path": "Cinderline.Tutorial.EndToEnd",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "source_hashes_verified": 40,
+  "visual_checks": [
+    "Desktop menu and all nine guide topics",
+    "Desktop/touch copy toggle and reference navigation",
+    "Desktop training camera objective and actual camera-input progression",
+    "Help closes to explicit pause; keyboard resume",
+    "Compact menu and readable topic buttons",
+    "Compact section 2 and 3 navigation via Tab, including reference Unlock",
+    "Compact live objective leaves camera center clear",
+    "Restart prompt, Escape cancellation, Enter confirmation and reset to step one",
+    "F1 no longer changes the battlefield to wireframe"
+  ],
+  "preview_frame_cap": 30,
+  "preview_framebuffers": [
+    [
+      2560,
+      1440
+    ],
+    [
+      1334,
+      750
+    ]
+  ],
+  "gpu_utilization_measured": false,
+  "game_closed_after_validation": true,
+  "limits": [
+    "No complete human tutorial playthrough",
+    "Physical pointer bridge unreliable; FIND/MORE taps require manual acceptance",
+    "No actual iOS build/device touch validation in this pass",
+    "Later dynamic cards, waypoint readability and completion preference relaunch still need human/device acceptance"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-09-12T08:25:19.190929+00:00",
+  "macBuild": "passed",
+  "iosSDK27Build": "passed",
+  "iosPackage": {
+    "sha256": "fde336c1a0e26bdbf5e27e0b77fec80b83274856945433d6f3bb6690552a0106",
+    "strictSignature": true,
+    "sdk": "27.0",
+    "phoneProfileCovered": true
+  },
+  "tests": [
+    {
+      "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "state": "Success"
+    },
+    {
+      "name": "Cinderline.Integration.CombatFeedback",
+      "state": "Success"
+    },
+    {
+      "name": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success"
+    },
+    {
+      "name": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success"
+    },
+    {
+      "name": "Cinderline.UI.MobileHUDLayout",
+      "state": "Success"
+    }
+  ],
+  "renderedLayoutChecks": {
+    "phonePreview": "844x390 Mac renderer, forced compact layout, 9 scripted states",
+    "nativeIOS": "2052x1536 Designed for iPad on Mac, 9 scripted states",
+    "safeAreaGeometryCases": "667x375,844x390,956x440,1024x768 plus doubled resolution/insets",
+    "allButtonsInsideViewport": true,
+    "minimum44LogicalUnitTargets": true,
+    "noOverlappingButtons": true,
+    "bottomCenterAcceptsWorldInput": true
+  },
+  "nativeKeyboardPauseResume": true,
+  "runtimeAssertionsOrFatals": 0,
+  "review": "Focused review passed after training-complete overlap fix",
+  "physicalGestureAcceptance": false,
+  "remaining": "Physical tap/drag/pinch, thumb comfort and longer gameplay on Aeon",
+  "testAppsClosed": true,
+  "sourceSha256": {
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "061a647d81aaf58cea836ebb23dcd1c9f7a0f4a59093229a275ebbec453aee18",
+    "Source/Cinderline/Public/Presentation/CinderHUD.h": "884bb676ebae98ca83003982a55075e515d6c4a4eb021239689467069cd43d63",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "b40ccc1f01e7913f1c609965fe219f65b324064636d0baf5512698408643de4d",
+    "Source/Cinderline/Public/Presentation/CinderMobileHUDLayout.h": "5153fc24f8c4e42c69eef7fa39edd07714048ab1341e968397244f50ff90a354",
+    "Source/Cinderline/Private/Presentation/CinderMobileHUDPreview.cpp": "89fe38b936c911107ed1fd0749315fa71e79b593b7a7f158223cb108411904e3",
+    "Source/Cinderline/Private/Tests/CinderMobileHUDLayoutTests.cpp": "da07ab1cea931d328381953cfdfde388778b6fd88524957131cde417565617f6"
+  }
+}
