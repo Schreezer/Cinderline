@@ -58,6 +58,7 @@ private:
     float SafeTopOffset = 0, SafeBottomOffset = 0;
     double NextSafeInsetRefreshTime = 0.0;
     int32 SafeInsetRefreshAttempts = 0;
+    FVector4 LastReportedSafeInsets = FVector4(-1, -1, -1, -1);
     int SelectedMap = 0;
     int SubgroupPage = 0;
     int CompactSheet = 0;

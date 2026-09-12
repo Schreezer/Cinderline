@@ -44,6 +44,10 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
         {TEXT("iPhone 667x375"), FVector2D(667.0f, 375.0f), FVector4(0.0f, 0.0f, 0.0f, 0.0f)},
         {TEXT("iPhone 844x390"), FVector2D(844.0f, 390.0f), FVector4(47.0f, 0.0f, 47.0f, 21.0f)},
         {TEXT("iPhone 956x440"), FVector2D(956.0f, 440.0f), FVector4(62.0f, 0.0f, 62.0f, 34.0f)},
+        {TEXT("Landscape island left"), FVector2D(956.0f, 440.0f), FVector4(62.0f, 0.0f, 21.0f, 21.0f)},
+        {TEXT("Landscape island right"), FVector2D(956.0f, 440.0f), FVector4(21.0f, 0.0f, 62.0f, 21.0f)},
+        {TEXT("AEON native pixels island left"), FVector2D(2868.0f, 1320.0f), FVector4(186.0f, 0.0f, 63.0f, 63.0f)},
+        {TEXT("AEON native pixels island right"), FVector2D(2868.0f, 1320.0f), FVector4(63.0f, 0.0f, 186.0f, 63.0f)},
         {TEXT("iPad 1024x768"), FVector2D(1024.0f, 768.0f), FVector4(0.0f, 0.0f, 0.0f, 20.0f)},
     };
 

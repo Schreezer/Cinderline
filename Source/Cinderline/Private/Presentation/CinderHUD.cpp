@@ -16,6 +16,10 @@
 #include "Rendering/SlateRenderer.h"
 #include "Fonts/FontMeasure.h"
 #include "GenericPlatform/GenericApplication.h"
+#if PLATFORM_IOS
+#include "IOS/IOSApplication.h"
+#include <dispatch/dispatch.h>
+#endif
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include <algorithm>
@@ -278,12 +282,19 @@ void ACinderHUD::DrawHUD()
         const FVector4 CachedInsets = Metrics.TitleSafePaddingSize;
         const bool bCachedSafeAreaEmpty = CachedInsets.X <= 0.5f && CachedInsets.Y <= 0.5f
             && CachedInsets.Z <= 0.5f && CachedInsets.W <= 0.5f;
-        // The initial Slate snapshot can precede UIWindow safe-area setup on iOS.
-        // Refresh briefly after launch; orientation changes update this same cache.
+        // Initial metrics can precede UIWindow safe-area setup. On iOS, rebuilding
+        // FDisplayMetrics alone rereads the stale native cache, so refresh that
+        // cache on UIKit's thread and let its callback update Slate next frame.
         const double Now = FPlatformTime::Seconds();
         if (bCachedSafeAreaEmpty && SafeInsetRefreshAttempts < 8 && Now >= NextSafeInsetRefreshTime)
         {
+#if PLATFORM_IOS
+            dispatch_async(dispatch_get_main_queue(), ^{
+                FIOSApplication::UpdateSafeZoneAfterRotation();
+            });
+#else
             FSlateApplication::Get().GetDisplayMetrics(Metrics);
+#endif
             ++SafeInsetRefreshAttempts;
             NextSafeInsetRefreshTime = Now + 0.25;
         }
@@ -291,6 +302,12 @@ void ACinderHUD::DrawHUD()
         const float ScaleY = Height / FMath::Max(1, Metrics.PrimaryDisplayHeight);
         const auto& Insets = Metrics.TitleSafePaddingSize;
         SafeInsets = FVector4(Insets.X * ScaleX, Insets.Y * ScaleY, Insets.Z * ScaleX, Insets.W * ScaleY);
+        if (SafeInsets != LastReportedSafeInsets)
+        {
+            UE_LOG(LogCinderHUD, Display, TEXT("CINDERLINE_SAFE_AREA viewport=%.0fx%.0f insets_px=(%.1f,%.1f,%.1f,%.1f) refresh_requests=%d"),
+                Width, Height, SafeInsets.X, SafeInsets.Y, SafeInsets.Z, SafeInsets.W, SafeInsetRefreshAttempts);
+            LastReportedSafeInsets = SafeInsets;
+        }
     }
     MobileLayout = FCinderMobileHUDLayout::Make(FVector2D(Width, Height), SafeInsets);
     UIScale = bCompactLayout ? MobileLayout.Scale : FMath::Max(0.45f, FMath::Min(Width / 1280.0f, Height / 720.0f));
