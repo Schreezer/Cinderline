@@ -1,0 +1,38 @@
+--- Saved/MetalFX/EngineSourceOriginal/Engine/Source/Runtime/Apple/MetalRHI/Private/MetalRHIContext.cpp	2026-09-13 01:39:47
++++ /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Apple/MetalRHI/Private/MetalRHIContext.cpp	2026-09-13 01:48:57
+@@ -55,6 +55,35 @@
+ 	Object->release();
+ }
+ 
++extern "C" bool CinderMetalRHIRunOnCurrentCommandBuffer(
++	FRHICommandListBase* RHICmdList,
++	FCinderMetalRHICommandBufferCallback Callback,
++	void* UserData)
++{
++	if (!RHICmdList || !Callback || !RHICmdList->IsBottomOfPipe())
++	{
++		return false;
++	}
++
++	FMetalRHICommandContext& Context = FMetalRHICommandContext::Get(*RHICmdList);
++	if (Context.IsInsideRenderPass())
++	{
++		return false;
++	}
++
++	// Metal permits only one active encoder per command buffer. RDG has already
++	// transitioned the declared resources. End UE's active encoder and preserve
++	// its fence so external untracked work and the next UE encoder synchronize.
++	if (Context.CurrentEncoder.IsAnyCommandEncoderActive())
++	{
++		Context.CurrentEncoderFence = Context.CurrentEncoder.EndEncoding();
++		Context.StateCache.ResetBindings();
++	}
++	MTL::Fence* Fence = Context.CurrentEncoderFence ? Context.CurrentEncoderFence->Get() : nullptr;
++	Callback(Context.GetCurrentCommandBuffer()->GetMTLCmdBuffer(), Fence, UserData);
++	return true;
++}
++
+ FMetalRHICommandContext::FMetalRHICommandContext(FMetalDevice& MetalDevice)
+ 	: Device(MetalDevice)
+ 	, CommandQueue(Device.GetCommandQueue(EMetalQueueType::Direct))

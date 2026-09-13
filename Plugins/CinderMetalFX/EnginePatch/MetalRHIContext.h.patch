@@ -1,0 +1,35 @@
+--- Saved/MetalFX/EngineSourceOriginal/Engine/Source/Runtime/Apple/MetalRHI/Public/MetalRHIContext.h	2026-09-13 01:39:47
++++ /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Apple/MetalRHI/Public/MetalRHIContext.h	2026-09-13 01:48:57
+@@ -14,6 +14,22 @@
+ #include "MetalBindlessDescriptors.h"
+ #include "RHICore.h"
+ 
++class FRHICommandListBase;
++
++/** Callback for external code encoded into MetalRHI's active graphics command buffer. */
++using FCinderMetalRHICommandBufferCallback = void (*)(MTL::CommandBuffer* CommandBuffer, MTL::Fence* Fence, void* UserData);
++
++/**
++ * Runs a callback on the active bottom-of-pipe Metal command buffer. The callback
++ * must finish every encoder it creates and must not commit the command buffer.
++ * Returns false without invoking the callback when the arguments or context are
++ * unsuitable for external encoding.
++ */
++extern "C" METALRHI_API bool CinderMetalRHIRunOnCurrentCommandBuffer(
++	FRHICommandListBase* RHICmdList,
++	FCinderMetalRHICommandBufferCallback Callback,
++	void* UserData);
++
+ #if PLATFORM_VISIONOS
+ namespace MetalRHIVisionOS
+ {
+@@ -43,6 +59,9 @@
+ /** The interface RHI command context. */
+ class FMetalRHICommandContext : public IRHICommandContext
+ {
++	friend bool CinderMetalRHIRunOnCurrentCommandBuffer(
++		FRHICommandListBase*, FCinderMetalRHICommandBufferCallback, void*);
++
+ public:
+ 	FMetalRHICommandContext(FMetalDevice& Device);
+ 	virtual ~FMetalRHICommandContext();

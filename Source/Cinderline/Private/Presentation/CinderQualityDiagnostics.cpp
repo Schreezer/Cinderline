@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformApplicationMisc.h"
+#include "HAL/PlatformMisc.h"
 #include "HAL/PlatformTime.h"
 #include "GPUProfiler.h"
 #include "RenderTimer.h"
@@ -17,6 +18,7 @@
 #include "Misc/CoreDelegates.h"
 #include "UnrealClient.h"
 #include "Widgets/SWindow.h"
+#include "TimerManager.h"
 #include "Presentation/CinderGameEngine.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogCinderQuality, Log, All);
@@ -65,11 +67,27 @@ void LogQuality(UWorld* World)
         ForegroundStatus(), RenderedViewport(World) != nullptr);
 
     const auto* CinderEngine = Cast<UCinderGameEngine>(GEngine);
+    const float DeviceTemperature = FPlatformMisc::GetDeviceTemperature();
+    const FString TemperatureReading = DeviceTemperature > 0.0f
+        ? FString::Printf(TEXT("%.2f"), DeviceTemperature) : TEXT("unavailable");
     UE_LOG(LogCinderQuality, Display,
         TEXT("CINDERLINE_QUALITY_FRAME_LIMIT engine=%s state=%d effective_fps=%.2f; limit is not measured cadence or GPU utilization"),
         GEngine ? *GEngine->GetClass()->GetName() : TEXT("none"),
         CinderEngine ? static_cast<int32>(CinderEngine->GetFramePacingState()) : -1,
         GEngine ? GEngine->GetMaxTickRate(static_cast<float>(FApp::GetDeltaTime())) : 0.0f);
+    UE_LOG(LogCinderQuality, Display,
+        TEXT("CINDERLINE_QUALITY_IOS_POLICY actual_thermal=%d raw_platform_thermal=%d device_temperature_c=%s effective_thermal=%d low_power=%d effective_low_power=%d requested_frame_pace=%d actual_frame_pace=%d quality=%d stable_seconds=%.1f source=%s world_rendering_disabled=%d"),
+        CinderEngine ? static_cast<int32>(CinderEngine->GetActualThermalPressure()) : -1,
+        static_cast<int32>(FPlatformMisc::GetDeviceThermalState()), *TemperatureReading,
+        CinderEngine ? static_cast<int32>(CinderEngine->GetEffectiveThermalPressure()) : -1,
+        CinderEngine && CinderEngine->IsInLowPowerMode(),
+        CinderEngine && CinderEngine->IsLowPowerPolicyActive(),
+        CinderEngine ? CinderEngine->GetRequestedFramePace() : 0,
+        CinderEngine ? CinderEngine->GetActualFramePace() : 0,
+        CinderEngine ? static_cast<int32>(CinderEngine->GetMobileQuality()) : -1,
+        CinderEngine ? CinderEngine->GetThermalStableSeconds() : 0.0,
+        CinderEngine && CinderEngine->IsUsingIOSPolicyOverride() ? TEXT("development_override") : TEXT("physical"),
+        Client && Client->bDisableWorldRendering);
 
     static const TCHAR* Names[] = {
         TEXT("EnableHighDPIAwareness"), TEXT("r.AntiAliasingMethod"),
@@ -83,8 +101,11 @@ void LogQuality(UWorld* World)
         TEXT("r.AmbientOcclusionMaxQuality"), TEXT("r.MaxAnisotropy"),
         TEXT("r.ShadowQuality"), TEXT("r.Shadow.MaxCSMResolution"), TEXT("r.Shadow.MaxResolution"),
         TEXT("r.Shadow.CSM.MaxCascades"), TEXT("r.Tonemapper.Sharpen"),
-        TEXT("r.VSync"), TEXT("t.MaxFPS"), TEXT("r.MotionBlurQuality"),
-        TEXT("r.DepthOfFieldQuality"), TEXT("r.SceneColorFringeQuality")
+        TEXT("r.VSync"), TEXT("rhi.SyncInterval"), TEXT("t.MaxFPS"), TEXT("r.MotionBlurQuality"),
+        TEXT("r.DepthOfFieldQuality"), TEXT("r.SceneColorFringeQuality"),
+        TEXT("r.TranslucencyLightingVolume"),
+        TEXT("r.CinderMetalFX.Enabled"), TEXT("r.CinderMetalFX.ScreenPercentage"),
+        TEXT("r.TemporalAA.Upsampling")
     };
     for (const TCHAR* Name : Names)
     {
@@ -93,6 +114,10 @@ void LogQuality(UWorld* World)
             Name, Variable ? *Variable->GetString() : TEXT("unavailable"),
             Variable ? GetConsoleVariableSetByName(Variable->GetFlags()) : TEXT("unavailable"));
     }
+#if PLATFORM_MAC || PLATFORM_IOS
+    // Native encode counters distinguish actual MetalFX work from a requested setting.
+    IConsoleManager::Get().ProcessUserConsoleInput(TEXT("r.CinderMetalFX.Status"), *GLog, World);
+#endif
 }
 
 struct FEngineTimingSamples
@@ -191,7 +216,9 @@ public:
 
 private:
     static constexpr int32 WarmupFrames = 30;
-    static constexpr double MaximumSeconds = 120.0;
+    // Allows a sustained ten-minute run at either the 15 or 30 FPS policy,
+    // with margin for warmup and short stalls.
+    static constexpr double MaximumSeconds = 720.0;
     // UE 5.8 retains 16 completed GPU frame timings. A bounded drain allows a
     // concurrently publishing RHI to make progress without an unbounded loop.
     static constexpr int32 GPUHistoryCapacity = 16;
@@ -326,17 +353,45 @@ private:
 };
 
 FQualityFrameSample FrameSample;
+TWeakObjectPtr<UWorld> GPUProfileWorld;
+FTimerHandle GPUProfileTimer;
+FAutoConsoleCommandWithWorldAndArgs GPUProfileCommand(
+    TEXT("cinder.gpuprofile"), TEXT("DEVELOPMENT: capture Unreal's GPU pass timing log after 1-60 seconds (default 10), allowing the scene to warm up. Requires a visible game viewport."),
+    FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
+    {
+        float Delay = 10.0f;
+        if (Args.Num() > 1 || (Args.Num() == 1 && !LexTryParseString(Delay, *Args[0]))
+            || !FMath::IsFinite(Delay) || Delay < 1.0f || Delay > 60.0f || !RenderedViewport(World))
+        {
+            UE_LOG(LogCinderQuality, Display, TEXT("CINDERLINE_GPU_PROFILE rejected; requires visible viewport and delay 1-60 seconds"));
+            return;
+        }
+        if (UWorld* Previous = GPUProfileWorld.Get()) Previous->GetTimerManager().ClearTimer(GPUProfileTimer);
+        GPUProfileWorld = World;
+        World->GetTimerManager().SetTimer(GPUProfileTimer, FTimerDelegate::CreateLambda([WeakWorld = TWeakObjectPtr<UWorld>(World)]
+        {
+            UWorld* Current = WeakWorld.Get();
+            if (!GEngine || !RenderedViewport(Current)) return;
+            UE_LOG(LogCinderQuality, Display, TEXT("CINDERLINE_GPU_PROFILE capture map=%s foreground=%s world_rendering_disabled=%d; whole frame including UI; single instrumented frame, not sustained utilization"),
+                *Current->GetMapName(), ForegroundStatus(), Current->GetGameViewport()->bDisableWorldRendering);
+            LogQuality(Current);
+            GEngine->Exec(Current, TEXT("profilegpu"));
+        }), Delay, false);
+        UE_LOG(LogCinderQuality, Display, TEXT("CINDERLINE_GPU_PROFILE scheduled delay_seconds=%.1f"), Delay);
+    }));
 FAutoConsoleCommandWithWorld QualityCommand(
     TEXT("cinder.quality"), TEXT("DEVELOPMENT: log viewport pixels, DPI state and effective rendering CVars without changing settings."),
     FConsoleCommandWithWorldDelegate::CreateStatic(&LogQuality));
 FAutoConsoleCommandWithWorldAndArgs ProfileCommand(
-    TEXT("cinder.profile"), TEXT("DEVELOPMENT: sample 120, 180 (default), 600 or 1200 rendered frames after 30 warmups; cinder.profile cancel stops. Reports viewport cadence and available asynchronous engine CPU/GPU timings."),
+    TEXT("cinder.profile"), TEXT("DEVELOPMENT: sample 120, 180 (default), 600, 1200, 9000 or 18000 rendered frames after 30 warmups; the two largest cover ten minutes at 15/30 FPS. cinder.profile cancel stops."),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
     {
         if (Args.Num() == 1 && Args[0].Equals(TEXT("cancel"), ESearchCase::IgnoreCase)) { FrameSample.Cancel(); return; }
-        if (Args.Num() > 1 || (Args.Num() == 1 && Args[0] != TEXT("120") && Args[0] != TEXT("180") && Args[0] != TEXT("600") && Args[0] != TEXT("1200")))
+        if (Args.Num() > 1 || (Args.Num() == 1 && Args[0] != TEXT("120") && Args[0] != TEXT("180")
+            && Args[0] != TEXT("600") && Args[0] != TEXT("1200")
+            && Args[0] != TEXT("9000") && Args[0] != TEXT("18000")))
         {
-            UE_LOG(LogCinderQuality, Display, TEXT("CINDERLINE_FRAME_PROFILE usage: cinder.profile [120|180|600|1200|cancel]"));
+            UE_LOG(LogCinderQuality, Display, TEXT("CINDERLINE_FRAME_PROFILE usage: cinder.profile [120|180|600|1200|9000|18000|cancel]"));
             return;
         }
         FrameSample.Start(World, Args.Num() == 1 ? FCString::Atoi(*Args[0]) : 180);

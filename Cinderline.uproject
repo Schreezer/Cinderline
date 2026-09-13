@@ -3,8 +3,12 @@
   "EngineAssociation": "5.8",
   "Category": "Games",
   "Description": "Cinderline — an original touch-first science-fiction RTS.",
-  "Modules": [{ "Name": "Cinderline", "Type": "Runtime", "LoadingPhase": "Default" }],
+  "Modules": [
+    { "Name": "Cinderline", "Type": "Runtime", "LoadingPhase": "Default" },
+    { "Name": "CinderlineEditor", "Type": "Editor", "LoadingPhase": "Default" }
+  ],
   "Plugins": [
+    { "Name": "CinderMetalFX", "Enabled": true, "PlatformAllowList": ["Mac", "IOS"] },
     { "Name": "PythonScriptPlugin", "Enabled": true, "TargetAllowList": ["Editor"] },
     { "Name": "EditorScriptingUtilities", "Enabled": true, "TargetAllowList": ["Editor"] },
     { "Name": "AndroidFileServer", "Enabled": false }
