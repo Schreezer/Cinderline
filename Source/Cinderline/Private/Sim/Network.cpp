@@ -1,4 +1,5 @@
 #include "Sim/Network.h"
+#include "Sim/SimulationRules.h"
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -17,20 +18,44 @@ constexpr std::size_t MaxEffects = 10000;
 constexpr float MaxNumber = 1000000000.0f;
 
 bool finite(Vec2 point) { return std::isfinite(point.x) && std::isfinite(point.y); }
-bool inWorld(Vec2 point) {
-    return finite(point) && point.x >= 0 && point.y >= 0 && point.x <= Simulation::WorldSize && point.y <= Simulation::WorldSize;
+bool inWorld(Vec2 point,float worldSize) {
+    return finite(point) && point.x >= 0 && point.y >= 0 && point.x <= worldSize && point.y <= worldSize;
 }
-bool validKind(Kind kind) {
-    const int value = static_cast<int>(kind);
-    return value >= static_cast<int>(Kind::Worker) && value <= static_cast<int>(Kind::Resource);
+bool validMatchLength(MatchLength length) {
+    const int value=static_cast<int>(length);
+    return value>=static_cast<int>(MatchLength::Short)&&value<static_cast<int>(MatchLength::Count);
 }
 bool validOrder(Order order) {
     const int value = static_cast<int>(order);
-    return value >= static_cast<int>(Order::Idle) && value <= static_cast<int>(Order::Construct);
+    return value >= static_cast<int>(Order::Idle) && value <= static_cast<int>(Order::Defend);
 }
 bool validCommandType(CommandType type) {
     const int value = static_cast<int>(type);
-    return value >= static_cast<int>(CommandType::Move) && value <= static_cast<int>(CommandType::ResumeConstruction);
+    return value >= static_cast<int>(CommandType::Move) && value <= static_cast<int>(CommandType::AutoRally);
+}
+bool automaticCommand(CommandType type) {
+    return type==CommandType::AutoBuild||type==CommandType::AutoTrain||type==CommandType::AutoResearch||type==CommandType::AutoRally;
+}
+bool validCommand(const Command& command) {
+    const float maximumWorld=matchLengthProfile(MatchLength::Long).worldSize;
+    if(!validCommandType(command.type)||!rules::validKind(command.kind)||!inWorld(command.point,maximumWorld)||
+       command.units.size()>MaxCommandUnits||command.queueIndex<0||command.queueIndex>Simulation::MaxQueue)return false;
+    if(automaticCommand(command.type)!=command.units.empty())return false;
+    switch(command.type) {
+        case CommandType::AutoBuild:
+            return !command.target&&command.queueIndex==0&&command.kind!=Kind::Resource&&definition(command.kind).building;
+        case CommandType::AutoTrain:
+            return command.queueIndex>=1&&command.kind!=Kind::Resource&&!definition(command.kind).building;
+        case CommandType::AutoResearch:
+            return command.queueIndex<=2;
+        case CommandType::AutoRally:
+            return command.queueIndex<=1&&(command.queueIndex==0||command.target)&&
+                   (command.kind==Kind::Resource||rules::productionKind(command.kind));
+        case CommandType::CancelQueue:
+            return command.units.size()==1&&command.queueIndex<Simulation::MaxQueue;
+        default:
+            return true;
+    }
 }
 bool validEffectType(EffectType type) {
     const int value = static_cast<int>(type);
@@ -91,36 +116,48 @@ bool validPlayer(const Player& player) {
 }
 bool validSnapshot(const Snapshot& snapshot,std::string& error) {
     auto fail=[&](const char* message){error=message;return false;};
-    if(snapshot.config.map<0||snapshot.config.map>2||!std::isfinite(snapshot.config.aiAggression)||snapshot.config.aiAggression<0.5f||snapshot.config.aiAggression>2.0f)
+    if(snapshot.config.map<0||snapshot.config.map>2||!validMatchLength(snapshot.config.matchLength)||!rules::validPlayerCount(snapshot.config.playerCount)||!std::isfinite(snapshot.config.aiAggression)||snapshot.config.aiAggression<0.5f||snapshot.config.aiAggression>2.0f)
         return fail("Invalid snapshot configuration.");
-    if(snapshot.winner < -1 || snapshot.winner > 1 || snapshot.lastEffectId==std::numeric_limits<std::uint64_t>::max() || !validPlayer(snapshot.player))return fail("Invalid snapshot match state.");
+    const float worldSize=matchLengthProfile(snapshot.config.matchLength).worldSize;
+    if(!inWorld(snapshot.player.armyRally,worldSize))return fail("Invalid snapshot match state.");
+    const std::uint8_t playerMask=rules::activePlayerMask(snapshot.config.playerCount);
+    if(snapshot.winner < -2 || snapshot.winner >= snapshot.config.playerCount || (snapshot.eliminatedMask&~playerMask)!=0 || snapshot.lastEffectId==std::numeric_limits<std::uint64_t>::max() || !validPlayer(snapshot.player))return fail("Invalid snapshot match state.");
+    if(!rules::validMatchOutcome(snapshot.config.playerCount,snapshot.winner,snapshot.eliminatedMask))return fail("Inconsistent snapshot elimination state.");
     if(snapshot.entities.size()>MaxEntities||snapshot.obstacles.size()>MaxObstacles||snapshot.effects.size()>MaxEffects)return fail("Snapshot collection is too large.");
     for(const auto& obstacle:snapshot.obstacles) {
-        if(!inWorld(obstacle.center)||!finite(obstacle.half)||obstacle.half.x<0||obstacle.half.y<0||obstacle.half.x>Simulation::WorldSize||obstacle.half.y>Simulation::WorldSize)
+        if(!inWorld(obstacle.center,worldSize)||!finite(obstacle.half)||obstacle.half.x<0||obstacle.half.y<0||obstacle.half.x>worldSize||obstacle.half.y>worldSize)
             return fail("Invalid snapshot obstacle.");
     }
     std::unordered_set<Id> ids;
     for(const auto& entity:snapshot.entities) {
-        if(!entity.id||!ids.insert(entity.id).second||!validKind(entity.kind)||!validOrder(entity.order)||!inWorld(entity.pos)||!inWorld(entity.goal)||!inWorld(entity.rally))
+        if(!entity.id||!ids.insert(entity.id).second||!rules::validKind(entity.kind)||!validOrder(entity.order)||!inWorld(entity.pos,worldSize)||!inWorld(entity.goal,worldSize)||!inWorld(entity.rally,worldSize))
             return fail("Invalid or duplicate snapshot entity.");
-        if((entity.kind==Kind::Resource&&entity.team!=-1)||(entity.kind!=Kind::Resource&&(entity.team<0||entity.team>1)))return fail("Invalid snapshot entity team.");
+        if((entity.kind==Kind::Resource&&entity.team!=-1)||(entity.kind!=Kind::Resource&&(entity.team<0||entity.team>=snapshot.config.playerCount)))return fail("Invalid snapshot entity team.");
+        if(entity.rallyOverride&&(entity.team!=0||!rules::productionKind(entity.kind)))return fail("Invalid or private snapshot rally override.");
+        if(entity.team==0&&rules::combatProductionKind(entity.kind)&&snapshot.player.armyRallySet&&!entity.rallyOverride&&
+           (entity.rally.x!=snapshot.player.armyRally.x||entity.rally.y!=snapshot.player.armyRally.y))return fail("Snapshot producer does not match its inherited rally.");
         const float values[]{entity.hp,entity.cooldown,entity.progress,entity.carried,entity.harvestTimer,entity.resource,entity.facing,entity.repath};
         for(float value:values)if(!std::isfinite(value)||std::fabs(value)>MaxNumber)return fail("Invalid snapshot entity value.");
         if(entity.hp<0||entity.cooldown<0||entity.progress<0||entity.progress>1||entity.carried<0||entity.harvestTimer<0||entity.resource<0||entity.repath<0)
             return fail("Invalid snapshot entity range.");
         if(entity.queue.size()>Simulation::MaxQueue||entity.path.size()>Simulation::FogSize*Simulation::FogSize+1||entity.pathIndex<0||entity.pathIndex>static_cast<int>(entity.path.size()))
             return fail("Invalid snapshot entity collection.");
-        for(const auto& item:entity.queue)if(!validKind(item.kind)||!std::isfinite(item.remaining)||!std::isfinite(item.total)||item.total<=0||item.remaining<0||item.remaining>item.total||item.cost<0||item.cost>static_cast<int>(MaxNumber))
-            return fail("Invalid snapshot queue item.");
-        for(Vec2 point:entity.path)if(!inWorld(point))return fail("Invalid snapshot path point.");
+        if(entity.team==0&&!entity.nextQueueId)return fail("Invalid snapshot queue sequence.");
+        Id lastQueueId=0;
+        for(const auto& item:entity.queue) {
+            if(!rules::validKind(item.kind)||!std::isfinite(item.remaining)||!std::isfinite(item.total)||item.total<=0||item.remaining<0||item.remaining>item.total||item.cost<0||item.cost>static_cast<int>(MaxNumber)||
+               !item.id||item.id<=lastQueueId||item.id>=entity.nextQueueId||item.assignmentCursor||!item.assignmentCandidates.empty())return fail("Invalid snapshot queue item.");
+            lastQueueId=item.id;
+        }
+        for(Vec2 point:entity.path)if(!inWorld(point,worldSize))return fail("Invalid snapshot path point.");
     }
     for(const auto& entity:snapshot.entities) {
         for(Id reference:{entity.target,entity.resourceTarget,entity.builderId})if(reference&&!ids.count(reference))return fail("Snapshot entity contains an unknown reference.");
     }
     std::unordered_set<std::uint64_t> effectIds;
     for(const auto& effect:snapshot.effects) {
-        if(!effect.id||effect.id>snapshot.lastEffectId||!effectIds.insert(effect.id).second||!validEffectType(effect.type)||!validKind(effect.sourceKind)||!validKind(effect.targetKind)||
-           effect.sourceKind==Kind::Resource||effect.targetKind==Kind::Resource||effect.team<0||effect.team>1||!inWorld(effect.from)||!inWorld(effect.to)||
+        if(!effect.id||effect.id>snapshot.lastEffectId||!effectIds.insert(effect.id).second||!validEffectType(effect.type)||!rules::validKind(effect.sourceKind)||!rules::validKind(effect.targetKind)||
+           effect.sourceKind==Kind::Resource||effect.targetKind==Kind::Resource||effect.team<0||effect.team>=snapshot.config.playerCount||!inWorld(effect.from,worldSize)||!inWorld(effect.to,worldSize)||
            !std::isfinite(effect.life)||!std::isfinite(effect.duration)||effect.life<=0||effect.duration<0.3f||effect.duration>10||effect.life>effect.duration||effect.fromVisibleMask>1||effect.toVisibleMask>1)
             return fail("Invalid or duplicate snapshot effect.");
         if((effect.type==EffectType::Impact||effect.type==EffectType::Death)&&
@@ -143,11 +180,11 @@ void writeEntity(Writer& writer,const Entity& entity) {
     writer.u32(entity.id);writer.u8(static_cast<std::uint8_t>(entity.kind));writer.i8(entity.team);
     writer.point(entity.pos);writer.point(entity.goal);writer.point(entity.rally);
     writer.real(entity.hp);writer.real(entity.cooldown);writer.real(entity.progress);writer.real(entity.carried);writer.real(entity.harvestTimer);writer.real(entity.resource);writer.real(entity.facing);
-    writer.u8(static_cast<std::uint8_t>(entity.order));writer.u32(entity.target);writer.u32(entity.resourceTarget);writer.u8(entity.returning?1:0);writer.u32(entity.builderId);writer.u8(entity.resumeGather?1:0);
+    writer.u8(static_cast<std::uint8_t>(entity.order));writer.u32(entity.target);writer.u32(entity.resourceTarget);writer.u8(entity.returning?1:0);writer.u32(entity.builderId);writer.u8(entity.resumeGather?1:0);writer.u8(entity.rallyOverride?1:0);
     writer.u8(static_cast<std::uint8_t>(entity.queue.size()));
-    for(const auto& item:entity.queue){writer.u8(static_cast<std::uint8_t>(item.kind));writer.real(item.remaining);writer.real(item.total);writer.i32(item.cost);writer.u8(item.research?1:0);}
+    for(const auto& item:entity.queue){writer.u8(static_cast<std::uint8_t>(item.kind));writer.real(item.remaining);writer.real(item.total);writer.i32(item.cost);writer.u8(item.research?1:0);writer.u32(item.id);}
     writer.u16(static_cast<std::uint16_t>(entity.path.size()));for(Vec2 point:entity.path)writer.point(point);
-    writer.i32(entity.pathIndex);writer.real(entity.repath);
+    writer.i32(entity.pathIndex);writer.real(entity.repath);writer.u8(entity.navigationExhausted?1:0);writer.u32(entity.nextQueueId);
 }
 bool readEntity(Reader& reader,Entity& entity) {
     std::uint8_t kind=0,order=0,flag=0,queueCount=0;int team=0;
@@ -155,11 +192,13 @@ bool readEntity(Reader& reader,Entity& entity) {
        !reader.real(entity.hp)||!reader.real(entity.cooldown)||!reader.real(entity.progress)||!reader.real(entity.carried)||!reader.real(entity.harvestTimer)||!reader.real(entity.resource)||!reader.real(entity.facing)||
        !reader.u8(order)||!reader.u32(entity.target)||!reader.u32(entity.resourceTarget)||!reader.u8(flag))return false;
     entity.kind=static_cast<Kind>(kind);entity.team=team;entity.order=static_cast<Order>(order);if(flag>1)return false;entity.returning=flag!=0;
-    if(!reader.u32(entity.builderId)||!reader.u8(flag)||flag>1||!reader.u8(queueCount))return false;entity.resumeGather=flag!=0;
-    for(std::uint8_t i=0;i<queueCount;++i){QueueItem item;std::uint8_t itemKind=0,research=0;if(!reader.u8(itemKind)||!reader.real(item.remaining)||!reader.real(item.total)||!reader.i32(item.cost)||!reader.u8(research)||research>1)return false;item.kind=static_cast<Kind>(itemKind);item.research=research!=0;entity.queue.push_back(item);}
+    if(!reader.u32(entity.builderId)||!reader.u8(flag)||flag>1)return false;entity.resumeGather=flag!=0;
+    if(!reader.u8(flag)||flag>1||!reader.u8(queueCount))return false;entity.rallyOverride=flag!=0;
+    for(std::uint8_t i=0;i<queueCount;++i){QueueItem item;std::uint8_t itemKind=0,research=0;if(!reader.u8(itemKind)||!reader.real(item.remaining)||!reader.real(item.total)||!reader.i32(item.cost)||!reader.u8(research)||research>1||!reader.u32(item.id))return false;item.kind=static_cast<Kind>(itemKind);item.research=research!=0;entity.queue.push_back(item);}
     std::uint16_t pathCount=0;if(!reader.u16(pathCount))return false;
     for(std::uint16_t i=0;i<pathCount;++i){Vec2 point;if(!reader.point(point))return false;entity.path.push_back(point);}
-    return reader.i32(entity.pathIndex)&&reader.real(entity.repath);
+    if(!reader.i32(entity.pathIndex)||!reader.real(entity.repath)||!reader.u8(flag)||flag>1||!reader.u32(entity.nextQueueId))return false;
+    entity.navigationExhausted=flag!=0;return true;
 }
 }
 
@@ -171,12 +210,15 @@ ViewMemory::ViewMemory() {
 }
 
 Snapshot snapshotFor(const Simulation& simulation,int viewer,ViewMemory* memory) {
-    Snapshot snapshot;if(viewer<0||viewer>1)return snapshot;
-    snapshot.config=simulation.config();snapshot.config.ai=false;snapshot.tick=simulation.tick();snapshot.winner=simulation.winner()<0?-1:(simulation.winner()==viewer?0:1);
+    Snapshot snapshot;const int playerCount=simulation.playerCount();if(viewer<0||viewer>=playerCount)return snapshot;
+    const auto normalizeTeam=[&](int team){return (team-viewer+playerCount)%playerCount;};
+    snapshot.config=simulation.config();snapshot.config.ai=false;snapshot.tick=simulation.tick();
+    snapshot.winner=simulation.winner()<0?simulation.winner():normalizeTeam(simulation.winner());
+    for(int team=0;team<playerCount;++team)if((simulation.eliminatedMask()&(1u<<team))!=0)snapshot.eliminatedMask|=static_cast<std::uint8_t>(1u<<normalizeTeam(team));
     snapshot.player=simulation.players()[viewer];snapshot.obstacles=simulation.obstacles();
     for(int cell=0;cell<Simulation::FogSize*Simulation::FogSize;++cell) {
         const int x=cell%Simulation::FogSize,y=cell/Simulation::FogSize;
-        const Vec2 point{(x+0.5f)*Simulation::WorldSize/Simulation::FogSize,(y+0.5f)*Simulation::WorldSize/Simulation::FogSize};
+        const Vec2 point{(x+0.5f)*simulation.worldSize()/Simulation::FogSize,(y+0.5f)*simulation.worldSize()/Simulation::FogSize};
         snapshot.fog[cell]=simulation.visible(viewer,point)?2:(simulation.explored(viewer,point)?1:0);
     }
     if(memory) {
@@ -206,12 +248,17 @@ Snapshot snapshotFor(const Simulation& simulation,int viewer,ViewMemory* memory)
     std::unordered_set<Id> includedIds;for(const Entity* entity:included){includedIds.insert(entity->id);handle(entity->id);}
     auto reference=[&](Id id){return id&&includedIds.count(id)?handle(id):Id{0};};
     for(const Entity* source:included) {
-        Entity entity=*source;entity.id=handle(source->id);entity.team=source->team<0?-1:(source->team==viewer?0:1);
+        const bool owned=source->team==viewer;
+        Entity entity=*source;entity.id=handle(source->id);entity.team=source->team<0?-1:normalizeTeam(source->team);
         entity.path.clear();entity.pathIndex=0;entity.repath=0;
+        entity.workTarget=0;entity.workPoint={};entity.workPointValid=false;
+        entity.navigationAnchor={};entity.stalledFor=0;entity.yieldFor=0;entity.navigationBestDistance=0;entity.pathGeometry=0;
+        entity.navigationFailures=0;entity.avoidanceSide=0;entity.navigationExhausted=owned&&source->navigationExhausted;
+        for(auto& item:entity.queue){item.assignmentCursor=0;item.assignmentCandidates.clear();}
         if(source->kind==Kind::Resource)entity.resource=memory?memory->resources_.at(source->id):source->resource;
         if(source->team>=0&&source->team!=viewer) {
             entity.goal=entity.pos;entity.rally=entity.pos;entity.cooldown=0;entity.carried=0;entity.harvestTimer=0;entity.resource=0;entity.facing=source->facing;
-            entity.order=Order::Idle;entity.target=0;entity.resourceTarget=0;entity.returning=false;entity.builderId=0;entity.resumeGather=false;entity.queue.clear();
+            entity.order=Order::Idle;entity.target=0;entity.resourceTarget=0;entity.returning=false;entity.builderId=0;entity.resumeGather=false;entity.rallyOverride=false;entity.queue.clear();entity.nextQueueId=1;
         } else {
             entity.target=reference(source->target);entity.resourceTarget=reference(source->resourceTarget);entity.builderId=reference(source->builderId);
         }
@@ -223,7 +270,7 @@ Snapshot snapshotFor(const Simulation& simulation,int viewer,ViewMemory* memory)
     for(const auto& source:simulation.effects()) {
         const bool fromVisible=simulation.effectVisible(source,viewer,true),toVisible=simulation.effectVisible(source,viewer,false);
         if(!fromVisible&&!toVisible)continue;
-        Effect effect=source;effect.team=source.team==viewer?0:1;effect.fromVisibleMask=fromVisible?1:0;effect.toVisibleMask=toVisible?1:0;
+        Effect effect=source;effect.team=normalizeTeam(source.team);effect.fromVisibleMask=fromVisible?1:0;effect.toVisibleMask=toVisible?1:0;
         if(effect.type==EffectType::Impact)effect.sourceKind=Kind::Worker;
         if(!fromVisible){effect.from=effect.to;effect.sourceKind=Kind::Worker;}
         if(!toVisible){effect.to=effect.from;effect.targetKind=Kind::Worker;}
@@ -242,9 +289,10 @@ Snapshot snapshotFor(const Simulation& simulation,int viewer,ViewMemory* memory)
 std::vector<std::uint8_t> encodeSnapshot(const Snapshot& snapshot) {
     std::string error;if(!validSnapshot(snapshot,error))return {};
     Writer writer;writer.bytes(SnapshotMagic,4);writer.u32(ProtocolVersion);
-    writer.i32(snapshot.config.map);writer.u32(snapshot.config.seed);writer.u8(snapshot.config.ai?1:0);writer.real(snapshot.config.aiAggression);
-    writer.u64(snapshot.tick);writer.u64(snapshot.lastEffectId);writer.i8(snapshot.winner);
-    writer.i32(snapshot.player.ore);writer.i32(snapshot.player.tier);writer.i32(snapshot.player.weapons);writer.i32(snapshot.player.armor);writeStats(writer,snapshot.player.stats);
+    writer.i32(snapshot.config.map);writer.u32(snapshot.config.seed);writer.u8(snapshot.config.ai?1:0);writer.real(snapshot.config.aiAggression);writer.u8(static_cast<std::uint8_t>(snapshot.config.matchLength));writer.u8(static_cast<std::uint8_t>(snapshot.config.playerCount));
+    writer.u64(snapshot.tick);writer.u64(snapshot.lastEffectId);writer.i8(snapshot.winner);writer.u8(snapshot.eliminatedMask);
+    writer.i32(snapshot.player.ore);writer.i32(snapshot.player.tier);writer.i32(snapshot.player.weapons);writer.i32(snapshot.player.armor);
+    writer.point(snapshot.player.armyRally);writer.u8(snapshot.player.armyRallySet?1:0);writeStats(writer,snapshot.player.stats);
     writer.u16(static_cast<std::uint16_t>(snapshot.obstacles.size()));for(const auto& obstacle:snapshot.obstacles){writer.point(obstacle.center);writer.point(obstacle.half);}
     writer.u32(static_cast<std::uint32_t>(snapshot.entities.size()));for(const auto& entity:snapshot.entities)writeEntity(writer,entity);
     writer.u32(static_cast<std::uint32_t>(snapshot.effects.size()));for(const auto& effect:snapshot.effects){writer.point(effect.from);writer.point(effect.to);writer.i8(effect.team);writer.real(effect.life);writer.real(effect.duration);writer.u64(effect.id);writer.u8(static_cast<std::uint8_t>(effect.type));writer.u8(static_cast<std::uint8_t>(effect.sourceKind));writer.u8(static_cast<std::uint8_t>(effect.targetKind));writer.u8(effect.fromVisibleMask);writer.u8(effect.toVisibleMask);}
@@ -258,8 +306,11 @@ bool decodeSnapshot(const void* data,std::size_t size,Snapshot& out,std::string&
     auto fail=[&](const char* message){error=message;return false;};if(!data||size>MaxMessageBytes)return fail(size>MaxMessageBytes?"Snapshot exceeds the maximum frame size.":"Snapshot data is missing.");
     Reader reader(data,size);Snapshot snapshot;std::uint32_t version=0;std::uint8_t flag=0;
     if(!reader.bytes(SnapshotMagic,4)||!reader.u32(version)||version!=ProtocolVersion)return fail("Invalid snapshot header.");
-    if(!reader.i32(snapshot.config.map)||!reader.u32(snapshot.config.seed)||!reader.u8(flag)||flag>1||!reader.real(snapshot.config.aiAggression)||!reader.u64(snapshot.tick)||!reader.u64(snapshot.lastEffectId)||!reader.i8(snapshot.winner))return fail("Truncated snapshot header.");snapshot.config.ai=flag!=0;
-    if(!reader.i32(snapshot.player.ore)||!reader.i32(snapshot.player.tier)||!reader.i32(snapshot.player.weapons)||!reader.i32(snapshot.player.armor)||!readStats(reader,snapshot.player.stats))return fail("Truncated snapshot player.");
+    std::uint8_t matchLength=0,playerCount=0;
+    if(!reader.i32(snapshot.config.map)||!reader.u32(snapshot.config.seed)||!reader.u8(flag)||flag>1||!reader.real(snapshot.config.aiAggression)||!reader.u8(matchLength)||matchLength>=static_cast<std::uint8_t>(MatchLength::Count)||!reader.u8(playerCount)||!rules::validPlayerCount(playerCount)||!reader.u64(snapshot.tick)||!reader.u64(snapshot.lastEffectId)||!reader.i8(snapshot.winner)||!reader.u8(snapshot.eliminatedMask))return fail("Truncated or invalid snapshot header.");snapshot.config.ai=flag!=0;snapshot.config.matchLength=static_cast<MatchLength>(matchLength);snapshot.config.playerCount=playerCount;
+    if(!reader.i32(snapshot.player.ore)||!reader.i32(snapshot.player.tier)||!reader.i32(snapshot.player.weapons)||!reader.i32(snapshot.player.armor)||
+       !reader.point(snapshot.player.armyRally)||!reader.u8(flag)||flag>1||!readStats(reader,snapshot.player.stats))return fail("Truncated snapshot player.");
+    snapshot.player.armyRallySet=flag!=0;
     std::uint16_t obstacleCount=0;if(!reader.u16(obstacleCount)||obstacleCount>MaxObstacles)return fail("Invalid snapshot obstacle count.");
     for(std::uint16_t i=0;i<obstacleCount;++i){Obstacle obstacle;if(!reader.point(obstacle.center)||!reader.point(obstacle.half))return fail("Truncated snapshot obstacle.");snapshot.obstacles.push_back(obstacle);}
     std::uint32_t entityCount=0;if(!reader.u32(entityCount)||entityCount>MaxEntities)return fail("Invalid snapshot entity count.");
@@ -273,7 +324,7 @@ bool decodeSnapshot(const void* data,std::size_t size,Snapshot& out,std::string&
 }
 
 std::vector<std::uint8_t> encodeCommand(const Command& command,std::uint32_t sequence) {
-    if(!sequence||!validCommandType(command.type)||!validKind(command.kind)||command.units.empty()||command.units.size()>MaxCommandUnits||!inWorld(command.point)||command.queueIndex<0||command.queueIndex>Simulation::MaxQueue)return {};
+    if(!sequence||!validCommand(command))return {};
     std::unordered_set<Id> ids;for(Id id:command.units)if(!id||!ids.insert(id).second)return {};
     Writer writer;writer.bytes(CommandMagic,4);writer.u32(ProtocolVersion);writer.u32(sequence);writer.u8(static_cast<std::uint8_t>(command.type));writer.u16(static_cast<std::uint16_t>(command.units.size()));for(Id id:command.units)writer.u32(id);writer.point(command.point);writer.u32(command.target);writer.u8(static_cast<std::uint8_t>(command.kind));writer.i32(command.queueIndex);return writer.finish();
 }
@@ -282,28 +333,28 @@ bool decodeCommand(const void* data,std::size_t size,Command& out,std::uint32_t&
     auto fail=[&](const char* message){error=message;return false;};if(!data||size>MaxMessageBytes)return fail(size>MaxMessageBytes?"Command exceeds the maximum frame size.":"Command data is missing.");
     Reader reader(data,size);Command command;std::uint32_t version=0,decodedSequence=0;std::uint8_t type=0,kind=0;std::uint16_t count=0;
     if(!reader.bytes(CommandMagic,4)||!reader.u32(version)||version!=ProtocolVersion)return fail("Invalid command header.");
-    if(!reader.u32(decodedSequence)||!decodedSequence||!reader.u8(type)||!reader.u16(count)||!count||count>MaxCommandUnits)return fail("Invalid command sequence or unit count.");
+    if(!reader.u32(decodedSequence)||!decodedSequence||!reader.u8(type)||!reader.u16(count)||count>MaxCommandUnits)return fail("Invalid command sequence or unit count.");
     std::unordered_set<Id> ids;for(std::uint16_t i=0;i<count;++i){Id id=0;if(!reader.u32(id)||!id||!ids.insert(id).second)return fail("Invalid or duplicate command unit.");command.units.push_back(id);}
     if(!reader.point(command.point)||!reader.u32(command.target)||!reader.u8(kind)||!reader.i32(command.queueIndex)||!reader.done())return fail("Truncated command or trailing data.");
     command.type=static_cast<CommandType>(type);command.kind=static_cast<Kind>(kind);command.team=0;
-    if(!validCommandType(command.type)||!validKind(command.kind)||!inWorld(command.point)||command.queueIndex<0||command.queueIndex>Simulation::MaxQueue)return fail("Invalid command value.");
+    if(!validCommand(command))return fail("Invalid command value.");
     out=std::move(command);sequence=decodedSequence;error.clear();return true;
 }
 
 bool translateCommand(const Simulation& simulation,int team,const ViewMemory& memory,Command& command,std::string& error) {
     auto fail=[&](const char* message){error=message;return false;};
-    if(team<0||team>1||!validCommandType(command.type)||!validKind(command.kind)||!inWorld(command.point)||command.units.empty()||command.units.size()>MaxCommandUnits||command.queueIndex<0||command.queueIndex>Simulation::MaxQueue)return fail("Invalid command.");
+    if(team<0||team>=simulation.playerCount()||!validCommand(command))return fail("Invalid command.");
     Command translated=command;translated.team=team;translated.units.clear();std::unordered_set<Id> ids;
     for(Id handle:command.units) {
         const auto found=memory.entities_.find(handle);if(found==memory.entities_.end()||!ids.insert(found->second).second)return fail("The selection contains an unknown or duplicate unit.");
         const Entity* entity=simulation.find(found->second);if(!entity||!entity->alive()||entity->team!=team||entity->kind==Kind::Resource)return fail("The selection contains unavailable or foreign units.");
         translated.units.push_back(entity->id);
     }
-    translated.target=0;
-    if(command.target) {
+    translated.target=command.type==CommandType::CancelQueue?command.target:0;
+    if(command.target&&command.type!=CommandType::CancelQueue) {
         const auto found=memory.entities_.find(command.target);if(found==memory.entities_.end())return fail("The command target is unknown.");translated.target=found->second;
     }
-    const Entity* target=translated.target?simulation.find(translated.target):nullptr;
+    const Entity* target=translated.target&&command.type!=CommandType::CancelQueue?simulation.find(translated.target):nullptr;
     if(command.type==CommandType::Attack&&(!target||!target->alive()||target->team<0||target->team==team||!simulation.visible(team,target->pos)))return fail("Choose a visible enemy.");
     if(command.type==CommandType::Gather&&(!target||!target->alive()||target->kind!=Kind::Resource||target->resource<=0||!simulation.explored(team,target->pos)))return fail("Choose an explored ore deposit.");
     if(command.type==CommandType::ResumeConstruction&&(!target||!target->alive()||target->team!=team||!definition(target->kind).building||target->progress>=1))return fail("Choose your unfinished structure.");

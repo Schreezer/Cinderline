@@ -114,6 +114,11 @@ std::vector<std::string> legacyCombatSave(std::vector<std::string> lines,int ver
   check(header.size()==2,"legacy fixture begins with the v4 effect header");
   const auto count=static_cast<std::size_t>(std::stoul(header.front()));
   lines.front()="CINDERLINE "+std::to_string(version);lines[layout.effects]=header.front();
+  if(version<10) {
+    auto config=saveFields(lines.at(1));check(config.size()==6,"legacy fixture starts from a v10 config row");config.pop_back();lines[1]=joinSaveFields(config);
+    auto timeline=saveFields(lines.at(2));check(timeline.size()==6,"legacy fixture starts from a v10 timeline row");timeline.pop_back();lines[2]=joinSaveFields(timeline);
+  }
+  if(version<9) {auto config=saveFields(lines.at(1));check(config.size()==5,"version nine fixture retains match length");config.pop_back();lines[1]=joinSaveFields(config);}
   for(std::size_t n=0;n<count;++n) {
     auto fields=saveFields(lines.at(layout.effects+1+n));
     check(fields.size()==13,"legacy fixture begins with a typed v4 event");
@@ -128,6 +133,8 @@ std::vector<std::string> legacyCombatSave(std::vector<std::string> lines,int ver
     const auto marker=std::find(lines.begin(),lines.end(),"AI_KNOWLEDGE 1");
     check(marker!=lines.end(),"legacy fixture identifies the knowledge section");lines.erase(marker,lines.end());
   }
+  const auto navigation=std::find(lines.begin(),lines.end(),"NAVIGATION 1");
+  if(navigation!=lines.end())lines.erase(navigation,lines.end());
   return lines;
 }
 
@@ -442,11 +449,11 @@ void workerConstructionHazards() {
     blocked.debugSpawn(Kind::Resource,-1,{trappedPosition.x+110*std::cos(angle),trappedPosition.y+110*std::sin(angle)});
   }
   check(blocked.canPlace(0,Kind::Foundry,blockedSite),"blocked-builder fixture still has a legal visible building footprint");
-  check(send(blocked,CommandType::Build,0,{trapped},blockedSite,0,Kind::Foundry).accepted,"legal foundation can be placed while its worker has no access");
-  const Id unreachable=first(blocked,0,Kind::Foundry);advance(blocked,definition(Kind::Foundry).buildTime+5);
-  check(blocked.find(unreachable)->progress==0&&!blocked.constructionActive(unreachable),"inaccessible worker cannot construct remotely even after the full build timer");
+  check(!send(blocked,CommandType::Build,0,{trapped},blockedSite,0,Kind::Foundry).accepted,"unreachable construction is rejected before a foundation is charged");
+  advance(blocked,definition(Kind::Foundry).buildTime+5);
+  check(ids(blocked,0,Kind::Foundry).empty(),"unreachable construction creates no remote foundation");
   check(distance(blocked.find(trapped)->pos,trappedPosition)<70,"blocked builder does not pass through solid deposits");
-  check(blocked.players()[0].ore==500-definition(Kind::Foundry).cost,"blocked construction does not charge repeatedly");
+  check(blocked.players()[0].ore==500,"blocked construction does not charge ore");
 }
 
 void researchAndPrerequisites() {
@@ -1210,7 +1217,7 @@ void aiKnowledgePersistence() {
   std::ifstream in(path);std::vector<std::string> lines;std::string line;
   while(std::getline(in,line))lines.push_back(line);in.close();
   const auto marker=std::find(lines.begin(),lines.end(),"AI_KNOWLEDGE 1");
-  check(marker!=lines.end()&&lines.front()=="CINDERLINE 4","current save retains the versioned AI knowledge section");
+  check(marker!=lines.end()&&lines.front()=="CINDERLINE 10","current save retains player count, match length, AI knowledge, and stable production identities");
   const auto start=static_cast<std::size_t>(marker-lines.begin());
   const auto count=static_cast<std::size_t>(std::stoul(lines[start+1]));
   check(count>0&&lines.size()>start+count+3,"knowledge save contains sightings and observation cells");
@@ -1231,6 +1238,7 @@ void aiKnowledgePersistence() {
   auto badCells=lines;badCells[start+2+count]="4095";reject(badCells,"incorrect observation-grid size is rejected");
   auto futureCell=lines;futureCell[start+3+count]=replaceField(futureCell[start+3+count],0,std::to_string(s.tick()+1000));reject(futureCell,"future observation-grid timestamps are rejected");
   auto truncated=lines;truncated.resize(start);reject(truncated,"current save without its required knowledge block is rejected");
+  auto futureVersion=lines;futureVersion.front()="CINDERLINE 11";reject(futureVersion,"unsupported save version eleven is rejected");
   for(int version:{1,2}) {
     const auto legacy=legacyCombatSave(lines,version);
     write(legacy);Simulation migrated;check(migrated.load(path),"pre-knowledge save version remains readable");
@@ -1374,7 +1382,7 @@ void combatEventPersistence() {
   for(int n=0;n<100;++n){s.update(Simulation::Step);loaded.update(Simulation::Step);check(s.stateHash()==loaded.stateHash(),"loaded combat continues with identical damage and typed event identities");}
   check(s.lastEffectId()>savedId,"post-load combat emits later identities instead of replaying the saved identity range");
   std::ifstream input(path);std::vector<std::string> lines;std::string line;while(std::getline(input,line))lines.push_back(line);input.close();
-  check(lines.front()=="CINDERLINE 4","typed effect persistence declares save version four");
+  check(lines.front()=="CINDERLINE 10","combat persistence declares save version ten");
   const auto layout=savedLayout(lines);const auto effectHeader=saveFields(lines[layout.effects]);
   const auto count=static_cast<std::size_t>(std::stoul(effectHeader[0]));check(count>=2,"saved event corruption fixture has distinct ordered events");
   auto write=[&](const std::vector<std::string>& content){std::ofstream out(path);for(const auto& value:content)out<<value<<'\n';};

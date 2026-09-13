@@ -16,17 +16,25 @@ namespace {
 constexpr double Pi=3.14159265358979323846;
 struct Color { CGFloat r,g,b,a; };
 const Color Navy{.026,.043,.074,1}, Panel{.041,.065,.099,.98}, Edge{.13,.22,.28,1},
- Ink{.83,.91,.93,1}, Muted{.40,.54,.61,1}, Cyan{.22,.91,.84,1}, Coral{1,.37,.29,1}, Amber{1,.77,.40,1};
+ Ink{.83,.91,.93,1}, Muted{.40,.54,.61,1}, Cyan{.22,.91,.84,1}, Teal{.04,.82,.72,1}, Coral{.96,.24,.17,1},
+ Violet{.64,.34,.96,1}, Gold{1,.68,.14,1}, Amber{1,.77,.40,1};
+Color teamColor(int team) {
+ switch(team){case 0:return Teal;case 1:return Coral;case 2:return Violet;case 3:return Gold;default:return Muted;}
+}
+Color teamArmor(int team) {
+ Color color=teamColor(team);return Color{.10+color.r*.28,.12+color.g*.28,.13+color.b*.28,1};
+}
+bool opponentTeam(const Simulation& sim,int team){return team>0&&team<sim.playerCount();}
 struct Camera {
- double x=1100,y=1100,zoom=.6;
+ double x=1100,y=1100,zoom=.6,worldSize=Simulation::WorldSize;
  NSPoint screen(Vec2 p,NSRect rect) const { return NSMakePoint(NSMidX(rect)+(p.x-x)*zoom,NSMidY(rect)+(p.y-y)*zoom*.72); }
  Vec2 world(NSPoint p,NSRect rect) const { return {(float)(x+(p.x-NSMidX(rect))/zoom),(float)(y+(p.y-NSMidY(rect))/(zoom*.72))}; }
- static double minimumZoom(NSRect rect) {return std::max({.18,rect.size.width/Simulation::WorldSize,rect.size.height/(Simulation::WorldSize*.72)});}
+ double minimumZoom(NSRect rect) const {return std::max({.18,rect.size.width/worldSize,rect.size.height/(worldSize*.72)});}
  void clamp(NSRect rect) {
   zoom=std::max(zoom,minimumZoom(rect));
-  const double halfWidth=std::min((double)Simulation::WorldSize/2,rect.size.width/(2*zoom));
-  const double halfHeight=std::min((double)Simulation::WorldSize/2,rect.size.height/(2*zoom*.72));
-  x=std::clamp(x,halfWidth,Simulation::WorldSize-halfWidth);y=std::clamp(y,halfHeight,Simulation::WorldSize-halfHeight);
+  const double halfWidth=std::min(worldSize/2,rect.size.width/(2*zoom));
+  const double halfHeight=std::min(worldSize/2,rect.size.height/(2*zoom*.72));
+  x=std::clamp(x,halfWidth,worldSize-halfWidth);y=std::clamp(y,halfHeight,worldSize-halfHeight);
  }
 };
 struct UIButton {
@@ -148,6 +156,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 - (NSPoint)eventPoint:(NSEvent*)event { return [self convertPoint:[event locationInWindow] fromView:nil]; }
 - (void)message:(std::string)s {if(criticalUntil>CACurrentMediaTime())return;toast=std::move(s);toastUntil=CACurrentMediaTime()+4; }
 - (void)home {
+ camera.worldSize=sim.worldSize();
  for(const auto&e:sim.entities())if(e.team==0&&e.kind==Kind::Headquarters&&e.alive()){camera.x=e.pos.x+180;camera.y=e.pos.y+80;selected.clear();selected.insert(e.id);break;}
  camera.clamp([self worldRect]);
 }
@@ -158,7 +167,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 }
 - (void)tick:(NSTimer*)unused {
  double now=CACurrentMediaTime(),dt=std::min(.1,now-lastFrame);lastFrame=now;fps=fps*.95+(dt>0?1/dt:60)*.05;
- if(!menu&&!paused&&!showHelp&&sim.winner()<0){
+ if(!menu&&!paused&&!showHelp&&sim.winner()==-1){
   sim.update((float)dt);
   const Entity* damaged=nullptr;
   for(const auto&e:sim.entities())if(e.team==0&&e.alive()&&definition(e.kind).building){
@@ -211,19 +220,19 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  if(selected.empty())return;
  Command cmd;cmd.point=world;
  if(hit&&hit->kind==Kind::Resource){cmd.type=CommandType::Gather;cmd.target=hit->id;}
- else if(hit&&hit->team==1){cmd.type=CommandType::Attack;cmd.target=hit->id;}
+ else if(hit&&opponentTeam(sim,hit->team)){cmd.type=CommandType::Attack;cmd.target=hit->id;}
  else cmd.type=CommandType::Move;
  [self send:cmd];
 }
 - (void)mouseDown:(NSEvent*)event {
  mouse=down=lastDrag=[self eventPoint:event];
  for(auto it=buttons.rbegin();it!=buttons.rend();++it)if(NSPointInRect(mouse,it->rect)){if(it->enabled)[self performAction:*it];else[self message:"Requirements not met or insufficient ore."];return;}
- if(menu||paused||showHelp||sim.winner()>=0)return;
+ if(menu||paused||showHelp||sim.winner()!=-1)return;
  if(NSPointInRect(mouse,[self minimapRect])){minimapDrag=YES;[self moveOnMinimap:mouse];return;}
  if(!NSPointInRect(mouse,[self worldRect]))return;
  if(spaceHeld){panning=YES;return;}dragging=YES;
 }
-- (void)moveOnMinimap:(NSPoint)p {NSRect r=[self minimapRect];camera.x=(p.x-r.origin.x)/r.size.width*Simulation::WorldSize;camera.y=(p.y-r.origin.y)/r.size.height*Simulation::WorldSize;camera.clamp([self worldRect]);}
+- (void)moveOnMinimap:(NSPoint)p {NSRect r=[self minimapRect];camera.x=(p.x-r.origin.x)/r.size.width*sim.worldSize();camera.y=(p.y-r.origin.y)/r.size.height*sim.worldSize();camera.clamp([self worldRect]);}
 - (void)mouseDragged:(NSEvent*)event {
  mouse=[self eventPoint:event];
  if(minimapDrag){[self moveOnMinimap:mouse];return;}
@@ -241,7 +250,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 - (void)rightMouseDown:(NSEvent*)event {if(menu||paused||showHelp)return;mouse=down=lastDrag=[self eventPoint:event];panning=YES;}
 - (void)rightMouseDragged:(NSEvent*)event {[self mouseDragged:event];}
 - (void)rightMouseUp:(NSEvent*)event {
- if(menu||paused||showHelp||sim.winner()>=0){panning=NO;return;}
+ if(menu||paused||showHelp||sim.winner()!=-1){panning=NO;return;}
  NSPoint p=[self eventPoint:event];panning=NO;if(hypot(p.x-down.x,p.y-down.y)<5){
   if(buildingMode||attackMode||rallyMode){buildingMode=NO;attackMode=NO;rallyMode=NO;return;}
   if(NSPointInRect(p,[self worldRect])){
@@ -249,7 +258,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
    bool workerSelected=false;for(Id id:selected){const Entity* unit=sim.find(id);if(unit&&unit->alive()&&unit->team==0&&unit->kind==Kind::Worker){workerSelected=true;break;}}
    if(target&&target->kind==Kind::Resource){cmd.type=CommandType::Gather;cmd.target=target->id;}
    else if(target&&target->team==0&&definition(target->kind).building&&target->progress<1&&workerSelected){cmd.type=CommandType::ResumeConstruction;cmd.target=target->id;}
-   else if(target&&target->team==1){cmd.type=CommandType::Attack;cmd.target=target->id;}else cmd.type=CommandType::Move;[self send:cmd];
+   else if(target&&opponentTeam(sim,target->team)){cmd.type=CommandType::Attack;cmd.target=target->id;}else cmd.type=CommandType::Move;[self send:cmd];
   }
  }
 }
@@ -259,7 +268,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 - (void)scrollWheel:(NSEvent*)event {
  if(menu||paused||showHelp)return;NSPoint p=[self eventPoint:event];if(!NSPointInRect(p,[self worldRect]))return;
  Vec2 before=camera.world(p,[self worldRect]);double delta=event.scrollingDeltaY*(event.hasPreciseScrollingDeltas?.008:.08);
- camera.zoom=std::clamp(camera.zoom*exp(delta),Camera::minimumZoom([self worldRect]),1.65);Vec2 after=camera.world(p,[self worldRect]);camera.x+=before.x-after.x;camera.y+=before.y-after.y;camera.clamp([self worldRect]);
+ camera.zoom=std::clamp(camera.zoom*exp(delta),camera.minimumZoom([self worldRect]),1.65);Vec2 after=camera.world(p,[self worldRect]);camera.x+=before.x-after.x;camera.y+=before.y-after.y;camera.clamp([self worldRect]);
 }
 - (void)keyDown:(NSEvent*)event {
  if(event.keyCode<128)keys[event.keyCode]=true;if(event.keyCode==49){spaceHeld=YES;return;}
@@ -305,7 +314,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   case Research:cmd.type=CommandType::Research;cmd.queueIndex=button.parameter;if(e)cmd.units={e->id};[self send:cmd];break;
   case Cancel:cmd.type=(e&&e->progress<1)?CommandType::CancelBuilding:CommandType::CancelQueue;cmd.queueIndex=0;if(e)cmd.units={e->id};[self send:cmd];break;
   case ResumeBuild:
-   if(menu||paused||showHelp||sim.winner()>=0||!e||e->team!=0||!definition(e->kind).building||e->progress>=1)break;
+   if(menu||paused||showHelp||sim.winner()!=-1||!e||e->team!=0||!definition(e->kind).building||e->progress>=1)break;
    cmd.type=CommandType::ResumeConstruction;cmd.target=e->id;cmd.point=e->pos;
    // The shared command chooses the nearest available Drudge from these candidates.
    for(const Entity& worker:sim.entities())if(worker.alive()&&worker.team==0&&worker.kind==Kind::Worker&&worker.order!=Order::Construct)cmd.units.push_back(worker.id);
@@ -332,8 +341,8 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 - (void)drawTerrain:(CGContextRef)c rect:(NSRect)world {
  box(c,world,Navy);CGContextSaveGState(c);CGContextClipToRect(c,NSRectToCGRect(world));
  Vec2 tl=camera.world(world.origin,world),br=camera.world(NSMakePoint(NSMaxX(world),NSMaxY(world)),world);
- const float cell=Simulation::WorldSize/Simulation::FogSize;
- int x0=std::max(0,(int)(tl.x/cell)-1),y0=std::max(0,(int)(tl.y/cell)-1),x1=std::min(63,(int)(br.x/cell)+1),y1=std::min(63,(int)(br.y/cell)+1);
+ const float cell=sim.worldSize()/Simulation::FogSize;
+ int x0=std::max(0,(int)(tl.x/cell)-1),y0=std::max(0,(int)(tl.y/cell)-1),x1=std::min(Simulation::FogSize-1,(int)(br.x/cell)+1),y1=std::min(Simulation::FogSize-1,(int)(br.y/cell)+1);
  for(int y=y0;y<=y1;y++)for(int x=x0;x<=x1;x++){
   Vec2 p{(x+.5f)*cell,(y+.5f)*cell};bool v=sim.visible(0,p),seen=sim.explored(0,p);float n=hash(x,y);
   Color col=v?Color{.069+n*.023,.102+n*.027,.119+n*.022,1}:(seen?Color{.039+n*.01,.058+n*.013,.075+n*.014,1}:Color{.021+n*.004,.030+n*.005,.047+n*.005,1});
@@ -356,7 +365,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   poly(c,{{p.x-w,p.y-h},{p.x-w*.6,p.y-h-z},{p.x+w*.65,p.y-h-z},{p.x+w,p.y+h*.6-z},{p.x-w*.7,p.y+h-z}},stone,Color{.30,.35,.36,.45});
   line(c,NSMakePoint(p.x-w*.5,p.y-h-z),NSMakePoint(p.x+w*.12,p.y+h*.2-z),Color{.08,.11,.13,.7},1.5);
  }
- NSPoint origin=camera.screen({0,0},world),far=camera.screen({Simulation::WorldSize,Simulation::WorldSize},world);
+ NSPoint origin=camera.screen({0,0},world),far=camera.screen({sim.worldSize(),sim.worldSize()},world);
  borderRect(c,NSMakeRect(origin.x,origin.y,far.x-origin.x,far.y-origin.y),Color{.18,.30,.35,.65},2);
  CGContextRestoreGState(c);
 }
@@ -365,7 +374,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  if(!ghost&&!seen&&e.team!=0&&e.kind!=Kind::Resource)return;
  if(!ghost&&e.kind==Kind::Resource&&!sim.explored(0,e.pos))return;
  if(!NSPointInRect(p,NSInsetRect(world,-140,-140)))return;
- double z=camera.zoom,rad=std::max(5.,def.radius*z);Color team=e.team==0?Cyan:Coral;
+ double z=camera.zoom,rad=std::max(5.,def.radius*z);Color team=teamColor(e.team);
  if(!seen&&e.kind==Kind::Resource)team=Muted;
  if(ghost){CGContextSaveGState(c);CGContextSetAlpha(c,.6);}
  bool sel=selected.count(e.id)&&!ghost;
@@ -378,7 +387,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   }
   if(sel||hypot(mouse.x-p.x,mouse.y-p.y)<rad*2)label(std::to_string((int)e.resource)+" ORE",NSMakeRect(p.x-45,p.y+rad*.7,90,18),9,Cyan,false,true,NSTextAlignmentCenter);
  }else if(def.building){
-  double w=rad*1.1,h=rad*.68,t=rad*.55;Color metal=e.team==0?Color{.15,.27,.29,1}:Color{.31,.19,.19,1};
+  double w=rad*1.1,h=rad*.68,t=rad*.55;Color metal=teamArmor(e.team);
   poly(c,{{p.x-w,p.y-h},{p.x+w,p.y-h},{p.x+w,p.y+h},{p.x-w,p.y+h}},Color{.075,.105,.12,1},Color{.25,.35,.37,1});
   poly(c,{{p.x-w*.86,p.y-h-t},{p.x+w*.86,p.y-h-t},{p.x+w,p.y-h*.1-t},{p.x+w*.86,p.y+h-t},{p.x-w*.86,p.y+h-t},{p.x-w,p.y-h*.1-t}},metal,Color{team.r*.6,team.g*.6,team.b*.6,1});
   poly(c,{{p.x-w*.86,p.y+h-t},{p.x+w*.86,p.y+h-t},{p.x+w*.86,p.y+h},{p.x-w*.86,p.y+h}},Color{metal.r*.5,metal.g*.5,metal.b*.5,1},Edge);
@@ -401,7 +410,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   if(e.progress<1){box(c,NSMakeRect(p.x-w,p.y+h+5,w*2,4),Navy);box(c,NSMakeRect(p.x-w,p.y+h+5,w*2*e.progress,4),Amber);}
  }else{
   CGContextSaveGState(c);CGContextTranslateCTM(c,p.x,p.y-(def.air?rad*.9:0));CGContextScaleCTM(c,1,.8);CGContextRotateCTM(c,e.facing+Pi/2);
-  double r=rad;Color armor=e.team==0?Color{.27,.40,.41,1}:Color{.46,.27,.25,1};
+  double r=rad;Color armor=teamArmor(e.team);
   if(e.kind==Kind::Worker){
    poly(c,{{-r*.65,r*.5},{-r*.65,-r*.4},{0,-r*.9},{r*.65,-r*.4},{r*.65,r*.5}},armor,team);
    line(c,NSMakePoint(-r*.72,-r*.1),NSMakePoint(-r*.95,-r*.85),Muted,3*z);line(c,NSMakePoint(r*.72,-r*.1),NSMakePoint(r*.95,-r*.85),Muted,3*z);
@@ -424,7 +433,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   }
   CGContextRestoreGState(c);
  }
- if(e.kind!=Kind::Resource&&!ghost&&(sel||e.hp<def.hp||e.team==1)){
+ if(e.kind!=Kind::Resource&&!ghost&&(sel||e.hp<def.hp||opponentTeam(sim,e.team))){
   double width=std::max(20.,rad*1.8),yy=p.y-rad*(def.building?1.65:1.6)-8;
   box(c,NSMakeRect(p.x-width/2,yy,width,3),Color{0,0,0,.8});box(c,NSMakeRect(p.x-width/2,yy,width*std::clamp(e.hp/def.hp,0.f,1.f),3),team);
  }
@@ -444,8 +453,8 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  auto effectHeight=[](Kind kind){const auto&d=definition(kind);return d.radius*(d.air?.95:d.building?.60:.30);};
  auto effectScreen=[&](EffectPoint p){NSPoint q=camera.screen({(float)p.x,(float)p.y},world);q.y-=p.z*camera.zoom;return q;};
  auto areaVisible=[&](EffectPoint p,double radius){
-  constexpr double cell=Simulation::WorldSize/Simulation::FogSize;
-  if(p.x-radius<0||p.y-radius<0||p.x+radius>=Simulation::WorldSize||p.y+radius>=Simulation::WorldSize)return false;
+  const double cell=sim.worldSize()/Simulation::FogSize;
+  if(p.x-radius<0||p.y-radius<0||p.x+radius>=sim.worldSize()||p.y+radius>=sim.worldSize())return false;
   int x0=(int)floor((p.x-radius)/cell),x1=(int)floor((p.x+radius)/cell),y0=(int)floor((p.y-radius)/cell),y1=(int)floor((p.y+radius)/cell);
   for(int y=y0;y<=y1;y++)for(int x=x0;x<=x1;x++)if(!sim.visible(0,{(float)((x+.5)*cell),(float)((y+.5)*cell)}))return false;
   return true;
@@ -457,7 +466,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
   if(fx.life<=0||fx.duration<=0)continue;
   bool sourceVisible=sim.effectVisible(fx,0,true),targetVisible=sim.effectVisible(fx,0,false);if(!sourceVisible&&!targetVisible)continue;
   double age=std::clamp(1.0-fx.life/fx.duration,0.0,1.0),fade=(1-age)*(1-age*.4),phase=(fx.id%31)*.37;
-  Color shot=fx.team==0?Cyan:Coral;EffectPoint from{fx.from.x,fx.from.y,effectHeight(fx.sourceKind)},to{fx.to.x,fx.to.y,effectHeight(fx.targetKind)};
+  Color shot=teamColor(fx.team);EffectPoint from{fx.from.x,fx.from.y,effectHeight(fx.sourceKind)},to{fx.to.x,fx.to.y,effectHeight(fx.targetKind)};
   auto point=[&](double t){return EffectPoint{from.x+(to.x-from.x)*t,from.y+(to.y-from.y)*t,from.z+(to.z-from.z)*t};};
   if(fx.type==EffectType::Weapon){
    bool heavy=fx.sourceKind==Kind::Bastion||fx.sourceKind==Kind::Turret;
@@ -511,10 +520,11 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 }
 
 - (void)drawMinimap:(CGContextRef)c {
- NSRect r=[self minimapRect];box(c,r,Navy);double scale=r.size.width/Simulation::WorldSize,cell=r.size.width/64;
- for(int y=0;y<64;y++)for(int x=0;x<64;x++){Vec2 p{(x+.5f)*75,(y+.5f)*75};if(sim.explored(0,p))box(c,NSMakeRect(r.origin.x+x*cell,r.origin.y+y*cell,cell+1,cell+1),sim.visible(0,p)?Color{.13,.20,.23,1}:Color{.06,.10,.13,1});}
+ NSRect r=[self minimapRect];box(c,r,Navy);double scale=r.size.width/sim.worldSize(),cell=r.size.width/Simulation::FogSize;
+ const float worldCell=sim.worldSize()/Simulation::FogSize;
+ for(int y=0;y<Simulation::FogSize;y++)for(int x=0;x<Simulation::FogSize;x++){Vec2 p{(x+.5f)*worldCell,(y+.5f)*worldCell};if(sim.explored(0,p))box(c,NSMakeRect(r.origin.x+x*cell,r.origin.y+y*cell,cell+1,cell+1),sim.visible(0,p)?Color{.13,.20,.23,1}:Color{.06,.10,.13,1});}
  for(const auto&o:sim.obstacles())if(sim.explored(0,o.center))box(c,NSMakeRect(r.origin.x+(o.center.x-o.half.x)*scale,r.origin.y+(o.center.y-o.half.y)*scale,o.half.x*2*scale,o.half.y*2*scale),Color{.23,.29,.29,1});
- for(const auto&e:sim.entities()){if(!e.alive()||(!sim.visible(0,e.pos)&&e.team!=0&&!(e.kind==Kind::Resource&&sim.explored(0,e.pos))))continue;double size=definition(e.kind).building?4:2;box(c,NSMakeRect(r.origin.x+e.pos.x*scale-size/2,r.origin.y+e.pos.y*scale-size/2,size,size),e.kind==Kind::Resource?Color{.37,.61,.77,1}:e.team==0?Cyan:Coral);}
+ for(const auto&e:sim.entities()){if(!e.alive()||(!sim.visible(0,e.pos)&&e.team!=0&&!(e.kind==Kind::Resource&&sim.explored(0,e.pos))))continue;double size=definition(e.kind).building?4:2;box(c,NSMakeRect(r.origin.x+e.pos.x*scale-size/2,r.origin.y+e.pos.y*scale-size/2,size,size),e.kind==Kind::Resource?Color{.37,.61,.77,1}:teamColor(e.team));}
  Vec2 a=camera.world([self worldRect].origin,[self worldRect]),b=camera.world(NSMakePoint(NSMaxX([self worldRect]),NSMaxY([self worldRect])),[self worldRect]);
  CGContextSaveGState(c);CGContextClipToRect(c,NSRectToCGRect(r));borderRect(c,NSMakeRect(r.origin.x+a.x*scale,r.origin.y+a.y*scale,(b.x-a.x)*scale,(b.y-a.y)*scale),Color{.87,.96,.96,.8});CGContextRestoreGState(c);borderRect(c,r,Edge);
  label("SECTOR "+std::string(mapChoice==0?"01 / RIFT":mapChoice==1?"02 / BASIN":"03 / REACH"),NSMakeRect(r.origin.x+5,r.origin.y+5,r.size.width-8,13),8,Ink,true,true);
@@ -594,7 +604,7 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  }
  if(!small&&rows<3)label("Cmd+1–9 assign groups · 1–9 recall / quick command",NSMakeRect(actionX,y+178,actionW,15),9,Muted,false,true);
  if(!menu){
-  std::string objective="OBJECTIVE   ELIMINATE ENEMY ANCHOR";label(objective,NSMakeRect(20,world.origin.y+15,430,18),10,Muted,true,true);
+  std::string objective="OBJECTIVE   ELIMINATE ALL ENEMY ANCHORS";label(objective,NSMakeRect(20,world.origin.y+15,430,18),10,Muted,true,true);
   if(toastUntil>CACurrentMediaTime()){
    bool critical=criticalUntil>CACurrentMediaTime();double tw=std::min(W-40.,820.);box(c,NSMakeRect((W-tw)/2,NSMaxY(world)-43,tw,30),critical?Color{.20,.06,.055,.98}:Color{.025,.05,.07,.95});line(c,NSMakePoint((W-tw)/2,NSMaxY(world)-43),NSMakePoint((W-tw)/2+3,NSMaxY(world)-13),critical?Coral:Cyan,3);
    label(toast,NSMakeRect((W-tw)/2+13,NSMaxY(world)-36,tw-23,20),11,Ink);
@@ -628,16 +638,16 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
 }
 - (void)drawOverlay:(CGContextRef)c {
  double W=self.bounds.size.width,H=self.bounds.size.height;box(c,self.bounds,Color{.009,.020,.034,.86});buttons.clear();
- bool result=sim.winner()>=0&&!menu&&!showHelp;double width=std::min(760.,W-48),height=std::min(H-40.,showHelp?520.:result?480.:355.);NSRect r=NSMakeRect((W-width)/2,(H-height)/2,width,height);
+ bool result=sim.winner()!=-1&&!menu&&!showHelp;double width=std::min(760.,W-48),height=std::min(H-40.,showHelp?520.:result?480.:355.);NSRect r=NSMakeRect((W-width)/2,(H-height)/2,width,height);
  box(c,r,Panel);borderRect(c,r,Edge);double x=r.origin.x+28,y=r.origin.y+23;
- label(showHelp?"FIELD MANUAL":result?(sim.winner()==0?"SECTOR SECURED":"COMMAND LOST"):"TACTICAL PAUSE",NSMakeRect(x,y,width-56,40),showHelp?25:32,result?(sim.winner()==0?Cyan:Coral):Ink,true);
+ label(showHelp?"FIELD MANUAL":result?(sim.winner()==0?"SECTOR SECURED":sim.winner()==-2?"SECTOR DRAWN":"COMMAND LOST"):"TACTICAL PAUSE",NSMakeRect(x,y,width-56,40),showHelp?25:32,result?(sim.winner()==0?Cyan:sim.winner()==-2?Gold:Coral):Ink,true);
  line(c,NSMakePoint(x,y+53),NSMakePoint(x+46,y+53),Cyan,3);
  if(showHelp){
   std::vector<std::pair<std::string,std::string>> help={{"SELECT","Click friendly units · drag a box · Shift adds · double click same type"},{"COMMAND","Click ground: move · enemy: attack · crystal: gather · A then click: attack-move"},{"CAMERA","Arrow keys / WASD · right or middle drag · Space drag · scroll to zoom"},{"ECONOMY","Drudges harvest ore. Siphons add supply. Kilns produce infantry."},{"TECHNOLOGY","Build a Resonator to advance tiers and improve weapons / armor."},{"SPECIALISTS","Needles pierce armor · Cinderthrows siege · Mends heal · Veils fly"},{"SHORTCUTS","F2 army · B base · X stop · V hold · R rally · Cmd+1–9 assigns groups"},{"SESSION","Esc/P pause · H manual · F5 save · F9 load · destroy enemy Anchor"}};
   double row=std::min(43.,(height-172)/help.size());for(size_t i=0;i<help.size();i++){double yy=y+73+i*row;label(help[i].first,NSMakeRect(x,yy,130,18),9,Cyan,true,true);label(help[i].second,NSMakeRect(x+133,yy,width-194,34),width<700?10:12,Ink);}
   [self drawButton:{NSMakeRect(x,NSMaxY(r)-64,180,38),"CLOSE MANUAL","",Resume,Kind::Worker,2} context:c accent:YES];
  }else if(result){
-  label(sim.winner()==0?"The rival command network is silent. The seam is yours.":"Your Anchor has fallen. Regroup and return to the fracture.",NSMakeRect(x,y+78,width-56,40),13,Muted);
+  label(sim.winner()==0?"The rival command network is silent. The seam is yours.":sim.winner()==-2?"Every command network fell. No faction controls the seam.":"Your Anchor has fallen. Regroup and return to the fracture.",NSMakeRect(x,y+78,width-56,40),13,Muted);
   const auto&s=sim.players()[0].stats;std::vector<std::pair<std::string,std::string>> stats={{"TIME",clockText(sim.time())},{"ORE GATHERED",std::to_string(s.gathered)},{"UNITS PRODUCED",std::to_string(s.produced)},{"ENEMIES ELIMINATED",std::to_string(s.killed)},{"UNITS LOST",std::to_string(s.lost)},{"STRUCTURES BUILT",std::to_string(s.built)}};
   double start=y+(height<430?111:140),cellW=(width-56)/3;for(size_t i=0;i<stats.size();i++){double xx=x+(i%3)*cellW,yy=start+(i/3)*(height<430?60:76);label(stats[i].first,NSMakeRect(xx,yy,cellW-12,15),9,Muted,true,true);label(stats[i].second,NSMakeRect(xx,yy+23,cellW-12,32),25,Ink,true,true);}
   [self drawButton:{NSMakeRect(x,NSMaxY(r)-74,210,46),"REMATCH","",Rematch} context:c accent:YES];[self drawButton:{NSMakeRect(x+225,NSMaxY(r)-74,170,46),"MAIN MENU","",QuitMenu} context:c accent:NO];
@@ -699,9 +709,9 @@ NSRect dragRect(NSPoint a,NSPoint b) { return NSMakeRect(std::min(a.x,b.x),std::
  fprintf(stdout,"PASS: %d offscreen frames, %.1f simulated seconds, no Cocoa drawing exception.\n",frames,sim.time());return YES;
 }
 - (void)drawRect:(NSRect)dirty {
- camera.clamp([self worldRect]);CGContextRef c=[[NSGraphicsContext currentContext] CGContext];CGContextSetShouldAntialias(c,true);buttons.clear();[self drawBattlefield:c rect:[self worldRect]];
+ camera.worldSize=sim.worldSize();camera.clamp([self worldRect]);CGContextRef c=[[NSGraphicsContext currentContext] CGContext];CGContextSetShouldAntialias(c,true);buttons.clear();[self drawBattlefield:c rect:[self worldRect]];
  if(menu){[self drawMenu:c];}else [self drawHUD:c];
- if(showHelp||paused||(!menu&&sim.winner()>=0))[self drawOverlay:c];
+ if(showHelp||paused||(!menu&&sim.winner()!=-1))[self drawOverlay:c];
 }
 @end
 

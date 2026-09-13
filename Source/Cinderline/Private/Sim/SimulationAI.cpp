@@ -1,4 +1,5 @@
 #include "Sim/Simulation.h"
+#include "Sim/AIDifficulty.h"
 
 #include <algorithm>
 #include <array>
@@ -22,6 +23,28 @@ bool isCombatUnit(Kind kind) {
            kind == Kind::Kite;
 }
 
+struct AITuning {
+    float developmentTimeScale = 1.0f;
+    int oneBaseWorkers = 12;
+    int multipleBaseWorkers = 18;
+    int armyPercent = 100;
+    float attackStartSeconds = 240.0f;
+    std::size_t attackGroupSize = 7;
+    std::uint64_t attackIntervalSlots = 12;
+};
+
+constexpr AITuning aiTuning(AIDifficulty difficulty) {
+    switch (difficulty) {
+        case AIDifficulty::VeryEasy: return {1.5f, 8, 12, 65, 420.0f, 4, 20};
+        case AIDifficulty::Easy: return {1.25f, 10, 15, 80, 320.0f, 5, 16};
+        case AIDifficulty::Normal: return {};
+        case AIDifficulty::Hard: return {0.8f, 14, 21, 120, 190.0f, 9, 9};
+        case AIDifficulty::Expert: return {0.65f, 16, 24, 145, 150.0f, 11, 6};
+        case AIDifficulty::Count: return {};
+    }
+    return {};
+}
+
 struct AISnapshot {
     Id id = 0;
     Kind kind = Kind::Worker;
@@ -41,9 +64,23 @@ struct AISnapshot {
 } // namespace
 
 void Simulation::updateAI() {
+    if (config_.playerCount != 2 || eliminated(1)) {
+        return;
+    }
     constexpr int team = 1;
     constexpr float pi = 3.14159265358979323846f;
     const float now = time();
+    const float mapScale = worldSize() / WorldSize;
+    const auto mapPoint = [&](Vec2 point) {
+        return Vec2{point.x * mapScale, point.y * mapScale};
+    };
+    const AITuning tuning = aiTuning(aiDifficultyFromAggression(config_.aiAggression));
+    const auto developmentTime = [&](float normalSeconds) {
+        return normalSeconds * tuning.developmentTimeScale;
+    };
+    const auto armyTarget = [&](int normalTarget) {
+        return (normalTarget * tuning.armyPercent + 50) / 100;
+    };
     updateAIKnowledge();
 
     std::vector<AISnapshot> own;
@@ -163,7 +200,8 @@ void Simulation::updateAI() {
     }
 
     const std::vector<Vec2>& retreatBases = operationalHeadquarters.empty() ? headquarters : operationalHeadquarters;
-    Vec2 home = retreatBases.empty() ? Vec2{4200.0f, 4200.0f} : retreatBases.front();
+    const Vec2 authoredHome = mapPoint({4200.0f, 4200.0f});
+    Vec2 home = retreatBases.empty() ? authoredHome : retreatBases.front();
     float bestSafety = -1.0f;
     for (Vec2 base : retreatBases) {
         float nearestVisibleEnemy = std::numeric_limits<float>::max();
@@ -172,8 +210,7 @@ void Simulation::updateAI() {
         }
         const bool safer = nearestVisibleEnemy > bestSafety;
         const bool equallySafeAndCloserToStart = nearestVisibleEnemy == bestSafety &&
-            distanceSquared(base, Vec2{4200.0f, 4200.0f}) <
-                distanceSquared(home, Vec2{4200.0f, 4200.0f});
+            distanceSquared(base, authoredHome) < distanceSquared(home, authoredHome);
         if (safer || equallySafeAndCloserToStart) {
             home = base;
             bestSafety = nearestVisibleEnemy;
@@ -282,7 +319,7 @@ void Simulation::updateAI() {
                 const Vec2 point{anchor.x + std::cos(angle) * radius,
                                  anchor.y + std::sin(angle) * radius};
                 if (point.x < 80.0f || point.y < 80.0f ||
-                    point.x > WorldSize - 80.0f || point.y > WorldSize - 80.0f ||
+                    point.x > worldSize() - 80.0f || point.y > worldSize() - 80.0f ||
                     !explored(team, point) || !canPlace(team, kind, point)) {
                     continue;
                 }
@@ -355,13 +392,15 @@ void Simulation::updateAI() {
         }
     }
 
-    static constexpr std::array<Vec2, 4> expansionSites{{
-        {2900.0f, 3800.0f}, {3800.0f, 2000.0f}, {1900.0f, 1000.0f}, {1000.0f, 2800.0f}}};
+    const std::array<Vec2, 4> expansionSites{{
+        mapPoint({2900.0f, 3800.0f}), mapPoint({3800.0f, 2000.0f}),
+        mapPoint({1900.0f, 1000.0f}), mapPoint({1000.0f, 2800.0f})}};
     // These are public map landmarks, not coordinates read from hidden actors.
     // Observation age makes a cleared start lose priority to unsearched sites.
-    static constexpr std::array<Vec2, 7> reconnaissanceSites{{
-        {600.0f, 600.0f}, {2900.0f, 3800.0f}, {3800.0f, 2000.0f},
-        {1900.0f, 1000.0f}, {1000.0f, 2800.0f}, {600.0f, 4200.0f}, {4200.0f, 600.0f}}};
+    const std::array<Vec2, 7> reconnaissanceSites{{
+        mapPoint({600.0f, 600.0f}), mapPoint({2900.0f, 3800.0f}), mapPoint({3800.0f, 2000.0f}),
+        mapPoint({1900.0f, 1000.0f}), mapPoint({1000.0f, 2800.0f}), mapPoint({600.0f, 4200.0f}),
+        mapPoint({4200.0f, 600.0f})}};
     auto reconnaissanceTarget = [&](Vec2 origin, bool preferUnseenStart) {
         Vec2 chosen = reconnaissanceSites.front();
         std::uint64_t oldest = std::numeric_limits<std::uint64_t>::max();
@@ -390,7 +429,7 @@ void Simulation::updateAI() {
         if (!found) {
             // Unusual development/custom states may own every landmark. Search
             // the oldest fog cell instead of falling back to the enemy start.
-            const float cellSize = WorldSize / FogSize;
+            const float cellSize = worldSize() / FogSize;
             for (int y = 0; y < FogSize; ++y) {
                 for (int x = 0; x < FogSize; ++x) {
                     const Vec2 site{(x + 0.5f) * cellSize, (y + 0.5f) * cellSize};
@@ -516,14 +555,14 @@ void Simulation::updateAI() {
 
     if (!hasFoundry) {
         wantedBuilding = Kind::Foundry;
-    } else if (!hasProcessor && now >= 30.0f) {
+    } else if (!hasProcessor && now >= developmentTime(30.0f)) {
         wantedBuilding = Kind::Processor;
-    } else if (needsTurret && now >= 100.0f) {
+    } else if (needsTurret && now >= developmentTime(100.0f)) {
         wantedBuilding = Kind::Turret;
         buildAnchor = exposedHeadquarters;
-    } else if (!hasLaboratory && now >= 210.0f) {
+    } else if (!hasLaboratory && now >= developmentTime(210.0f)) {
         wantedBuilding = Kind::Laboratory;
-    } else if (richExpansionDiscovered && now >= 400.0f) {
+    } else if (richExpansionDiscovered && now >= developmentTime(400.0f)) {
         buildAnchor = bestExpansion;
         wantedBuilding = Kind::Headquarters;
         wantsExpansion = true;
@@ -547,7 +586,7 @@ void Simulation::updateAI() {
     bool researchIssued = false;
     for (const AISnapshot& lab : own) {
         if (lab.kind != Kind::Laboratory || lab.progress < 1.0f || lab.queueSize != 0 ||
-            lab.queueHasResearch || now < 285.0f) {
+            lab.queueHasResearch || now < developmentTime(285.0f)) {
             continue;
         }
 
@@ -561,7 +600,7 @@ void Simulation::updateAI() {
         } else if (players_[team].armor < 1) {
             queueIndex = 2;
             researchKind = Kind::Lancer;
-        } else if (players_[team].tier < 3 && now >= 600.0f) {
+        } else if (players_[team].tier < 3 && now >= developmentTime(600.0f)) {
             queueIndex = 0;
         } else if (players_[team].weapons < 3) {
             queueIndex = 1;
@@ -586,13 +625,13 @@ void Simulation::updateAI() {
     int reserve = 0;
     if (!hasFoundry) {
         reserve = definition(Kind::Foundry).cost;
-    } else if (!hasProcessor && now >= 20.0f) {
+    } else if (!hasProcessor && now >= developmentTime(20.0f)) {
         reserve = definition(Kind::Processor).cost;
-    } else if (!hasLaboratory && now >= 190.0f) {
+    } else if (!hasLaboratory && now >= developmentTime(190.0f)) {
         reserve = definition(Kind::Laboratory).cost;
-    } else if (players_[team].tier < 2 && hasLaboratory && now >= 270.0f) {
+    } else if (players_[team].tier < 2 && hasLaboratory && now >= developmentTime(270.0f)) {
         reserve = 500 * players_[team].tier;
-    } else if (richExpansionDiscovered && now >= 370.0f) {
+    } else if (richExpansionDiscovered && now >= developmentTime(370.0f)) {
         reserve = definition(Kind::Headquarters).cost;
     } else if (!hasMotorPool && players_[team].tier >= 2) {
         reserve = definition(Kind::MotorPool).cost;
@@ -623,7 +662,7 @@ void Simulation::updateAI() {
         return accepted;
     };
 
-    const int desiredWorkers = hqCount >= 2 ? 18 : 12;
+    const int desiredWorkers = hqCount >= 2 ? tuning.multipleBaseWorkers : tuning.oneBaseWorkers;
     int queuedWorkers = 0;
     for (const AISnapshot& entity : own) {
         if (entity.kind == Kind::Headquarters) {
@@ -637,7 +676,9 @@ void Simulation::updateAI() {
         }
     }
 
-    const int desiredArmy = now < 240.0f ? 7 : (now < 400.0f ? 14 : (now < 800.0f ? 34 : 60));
+    const int desiredArmy = now < developmentTime(240.0f) ? armyTarget(7) :
+        (now < developmentTime(400.0f) ? armyTarget(14) :
+         (now < developmentTime(800.0f) ? armyTarget(34) : armyTarget(60)));
     int plannedArmy = static_cast<int>(combat.size());
     for (std::size_t i = 0; i < queuedUnits.size(); ++i) {
         if (isCombatUnit(static_cast<Kind>(i))) {
@@ -744,7 +785,7 @@ void Simulation::updateAI() {
     }
 
     Id reconnaissanceScoutId = 0;
-    if (now >= 350.0f && needsExpansionScouting && visibleEnemies.empty()) {
+    if (now >= developmentTime(350.0f) && needsExpansionScouting && visibleEnemies.empty()) {
         for (const AISnapshot& scout : own) {
             if (scout.kind == Kind::Scout && scout.progress >= 1.0f && scout.order == Order::Move &&
                 scout.hp / scout.maxHp >= 0.35f &&
@@ -804,7 +845,8 @@ void Simulation::updateAI() {
         const bool threatensBase = std::any_of(headquarters.begin(), headquarters.end(), [&](Vec2 hq) {
             return distanceSquared(hq, enemy.pos) <= 1200.0f * 1200.0f;
         });
-        if (threatensBase || (now >= 240.0f && healthyCombat.size() >= 7)) {
+        if (threatensBase ||
+            (now >= tuning.attackStartSeconds && healthyCombat.size() >= tuning.attackGroupSize)) {
             combatTargets.push_back(&enemy);
         }
     }
@@ -900,7 +942,8 @@ void Simulation::updateAI() {
                 issue(attack, "engaging a visible threat");
             }
         }
-    } else if (now >= 240.0f && ((tick_ / 40) % 12 == 0)) {
+    } else if (now >= tuning.attackStartSeconds &&
+               ((tick_ / 40) % tuning.attackIntervalSlots == 0)) {
         std::vector<Id> advancingUnits;
         for (Id id : healthyCombat) {
             if (id != reconnaissanceScoutId) {
@@ -912,7 +955,7 @@ void Simulation::updateAI() {
         attackMove.team = team;
         attackMove.units = advancingUnits;
         attackMove.point = strategicTarget;
-        if (advancingUnits.size() >= 7) {
+        if (advancingUnits.size() >= tuning.attackGroupSize) {
             issue(attackMove, objective);
         }
     }

@@ -9,6 +9,7 @@
 #include "GameFramework/Actor.h"
 #include "Materials/MaterialInterface.h"
 #include "Misc/AutomationTest.h"
+#include "Presentation/CinderTeamColors.h"
 #include "Presentation/CinderWorldEffects.h"
 #include "Sim/Network.h"
 #include "Tests/AutomationCommon.h"
@@ -87,11 +88,41 @@ struct FFixture
             if (Component) Count += Component->GetInstanceCount();
         return Count;
     }
+
+    int32 ComponentsWithTint(FLinearColor Expected) const
+    {
+        TArray<UInstancedStaticMeshComponent*> EffectComponents;
+        Owner->GetComponents<UInstancedStaticMeshComponent>(EffectComponents);
+        int32 Count = 0;
+        for (const UInstancedStaticMeshComponent* Component : EffectComponents)
+        {
+            FLinearColor Tint;
+            UMaterialInterface* Material = Component ? Component->GetMaterial(0) : nullptr;
+            if (Material && Material->GetVectorParameterValue(FMaterialParameterInfo(TEXT("Tint")), Tint)
+                && Tint.Equals(Expected, 0.001f)) ++Count;
+        }
+        return Count;
+    }
+
+    int32 InstancesWithTint(FLinearColor Expected) const
+    {
+        TArray<UInstancedStaticMeshComponent*> EffectComponents;
+        Owner->GetComponents<UInstancedStaticMeshComponent>(EffectComponents);
+        int32 Count = 0;
+        for (const UInstancedStaticMeshComponent* Component : EffectComponents)
+        {
+            FLinearColor Tint;
+            UMaterialInterface* Material = Component ? Component->GetMaterial(0) : nullptr;
+            if (Material && Material->GetVectorParameterValue(FMaterialParameterInfo(TEXT("Tint")), Tint)
+                && Tint.Equals(Expected, 0.001f)) Count += Component->GetInstanceCount();
+        }
+        return Count;
+    }
 };
 
 void StopStartingWorkers(cinder::Simulation& Simulation)
 {
-    for (int32 Team = 0; Team < 2; ++Team)
+    for (int32 Team = 0; Team < Simulation.playerCount(); ++Team)
     {
         cinder::Command Stop;
         Stop.type = cinder::CommandType::Stop;
@@ -122,12 +153,57 @@ bool FCinderWorldEffectsInitialization::RunTest(const FString& Parameters)
     using namespace CinderWorldEffectsTests;
     FFixture Fixture;
     if (!Fixture.Initialize(*this)) return false;
-    TestEqual(TEXT("Initialization creates the fixed effect batches"), Fixture.EffectComponentCount(), 9);
+    TestEqual(TEXT("Initialization creates only four team glow/beam pairs plus shared effects"),
+        Fixture.EffectComponentCount(), 13);
+    for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
+        TestEqual(*FString::Printf(TEXT("Team %d owns one distinct glow and one distinct beam material"), Team),
+            Fixture.ComponentsWithTint(CinderTeamColors::Accent(Team))
+                + Fixture.ComponentsWithTint(CinderTeamColors::Color(Team)), 2);
     const int32 BeforeSecondInitialize = Fixture.EffectComponentCount();
     Fixture.Effects->Initialize(Fixture.Owner->GetRootComponent(), nullptr, nullptr, nullptr, nullptr, nullptr);
     TestEqual(TEXT("Repeated initialization creates no components"),
         Fixture.EffectComponentCount(), BeforeSecondInitialize);
     TestEqual(TEXT("Initialized component starts without transient instances"), Fixture.TotalInstanceCount(), 0);
+    return !HasAnyErrors();
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderWorldEffectsFourTeamRouting,
+    "Cinderline.Presentation.WorldEffects.FourTeamRouting",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderWorldEffectsFourTeamRouting::RunTest(const FString& Parameters)
+{
+    using namespace CinderWorldEffectsTests;
+    using namespace cinder;
+    FFixture Fixture;
+    if (!Fixture.Initialize(*this)) return false;
+    Config FourPlayers;
+    FourPlayers.ai = false;
+    FourPlayers.playerCount = Simulation::MaxPlayers;
+    Simulation Sim;
+    Sim.reset(FourPlayers);
+    StopStartingWorkers(Sim);
+    for (int32 Team = 0; Team < Simulation::MaxPlayers; ++Team)
+    {
+        const Id Attacker = Sim.debugSpawn(Kind::Lancer, Team, {820.0f + Team * 32.0f, 820.0f});
+        const int32 TargetTeam = (Team + 1) % Simulation::MaxPlayers;
+        const Id Target = Sim.debugSpawn(Kind::Striker, TargetTeam, {820.0f + Team * 32.0f, 900.0f});
+        Command Attack;
+        Attack.type = CommandType::Attack;
+        Attack.team = Team;
+        Attack.units = {Attacker};
+        Attack.target = Target;
+        TestTrue(TEXT("Each faction accepts an ordinary visible attack command"), Sim.command(Attack).accepted);
+    }
+    Sim.update(Simulation::Step);
+    Fixture.Effects->Update(Sim, 0);
+    for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
+    {
+        TestTrue(*FString::Printf(TEXT("Team %d weapon uses its own beam batch"), Team),
+            Fixture.InstancesWithTint(CinderTeamColors::Color(Team)) > 0);
+        TestTrue(*FString::Printf(TEXT("Team %d muzzle uses its own glow batch"), Team),
+            Fixture.InstancesWithTint(CinderTeamColors::Accent(Team)) > 0);
+    }
     return !HasAnyErrors();
 }
 

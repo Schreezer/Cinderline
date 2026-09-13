@@ -8,6 +8,7 @@
 #include "GameFramework/WorldSettings.h"
 #include "GameFramework/PlayerInput.h"
 #include "HAL/FileManager.h"
+#include "Materials/MaterialInterface.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/CoreDelegates.h"
 #include "Misc/Guid.h"
@@ -15,10 +16,12 @@
 #include "Presentation/CinderBattlefield.h"
 #include "Presentation/CinderCamera.h"
 #include "Presentation/CinderHelpContent.h"
+#include "Presentation/CinderHUD.h"
 #include "Presentation/CinderGameEngine.h"
 #include "Presentation/CinderGameMode.h"
 #include "Presentation/CinderPlayerController.h"
 #include "Presentation/CinderTerrainSurface.h"
+#include "Presentation/CinderTeamColors.h"
 #include "Tests/AutomationCommon.h"
 #include <algorithm>
 #include <array>
@@ -138,7 +141,9 @@ struct FTemporarySnapshot
 
 bool HasPendingModes(const ACinderPlayerController& Controller)
 {
-    return Controller.IsBuildMode() || Controller.bBuildMenu || Controller.bAttackMove || Controller.bBoxSelect;
+    return Controller.IsBuildMode() || Controller.bBuildMenu || Controller.IsAttackMoveMode()
+        || Controller.IsMoveCommandMode() || Controller.IsDefendCommandMode()
+        || Controller.IsProductionRallyMode() || Controller.bBoxSelect;
 }
 
 void TryArmModes(ACinderPlayerController& Controller)
@@ -237,8 +242,8 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
 
     CinderTerrainSurface::FFeatures Terrain;
     const FColor EmptyTerrain = CinderTerrainSurface::Sample(Terrain, 1000, 1000);
-    TestTrue(TEXT("Terrain without observed inputs has no exposed stone or mineral stain"),
-        EmptyTerrain.R == 0 && EmptyTerrain.G == 0);
+    TestTrue(TEXT("Terrain without observed inputs has no exposed stone, mineral stain or service ground"),
+        EmptyTerrain.R == 0 && EmptyTerrain.G == 0 && EmptyTerrain.A == 0);
     Terrain.Minerals.Add({1000, 1000});
     const FColor MineralCenter = CinderTerrainSurface::Sample(Terrain, 1000, 1000);
     const FColor MineralFar = CinderTerrainSurface::Sample(Terrain, 1800, 1800);
@@ -263,25 +268,154 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     TestTrue(TEXT("Map seed changes the ash mask while identical inputs stay deterministic"),
         bMapChangesAsh && bSameInputDeterministic);
 
+    CinderTerrainSurface::FFeatures ServiceTerrain;
+    ServiceTerrain.ServicePads.Add({{1000, 1000}, {120, 80}});
+    const FColor PadCenter = CinderTerrainSurface::Sample(ServiceTerrain, 1000, 1000);
+    const FColor PadFeather = CinderTerrainSurface::Sample(ServiceTerrain, 1140, 1000);
+    const FColor PadOutside = CinderTerrainSurface::Sample(ServiceTerrain, 1180, 1000);
+    TestTrue(TEXT("Service pads occupy their footprint, feather at the edge and leave nearby terrain clear"),
+        PadCenter.A > 0 && PadFeather.A > 0 && PadFeather.A < PadCenter.A && PadOutside.A == 0);
+    TestTrue(TEXT("Adding a service pad changes only the service-ground channel"),
+        PadCenter.R == EmptyTerrain.R && PadCenter.G == EmptyTerrain.G && PadCenter.B == EmptyTerrain.B);
+    ServiceTerrain.Roads.Emplace(cinder::Vec2{1400, 1600}, cinder::Vec2{1900, 1600});
+    const FColor RoadCenter = CinderTerrainSurface::Sample(ServiceTerrain, 1650, 1600);
+    const FColor RoadFeather = CinderTerrainSurface::Sample(ServiceTerrain, 1650, 1640);
+    const FColor RoadOutside = CinderTerrainSurface::Sample(ServiceTerrain, 1650, 1670);
+    TestTrue(TEXT("Roads create a narrow service strip with a feathered shoulder"),
+        RoadCenter.A > 0 && RoadFeather.A > 0 && RoadFeather.A < RoadCenter.A && RoadOutside.A == 0);
+    TestEqual(TEXT("A service road ends locally instead of painting an infinite line"),
+        CinderTerrainSurface::Sample(ServiceTerrain, 1200, 1600).A, uint8(0));
+    TestEqual(TEXT("Pads and roads leave distant terrain without service ground"),
+        CinderTerrainSurface::Sample(ServiceTerrain, 3000, 3000).A, uint8(0));
+    TArray<uint8> ServicePixels, RepeatedServicePixels;
+    CinderTerrainSurface::BuildPixels(ServiceTerrain, ServicePixels);
+    CinderTerrainSurface::BuildPixels(ServiceTerrain, RepeatedServicePixels);
+    if (!TestEqual(TEXT("Service mask preserves the complete BGRA texture dimensions"), ServicePixels.Num(),
+        CinderTerrainSurface::TextureSize * CinderTerrainSurface::TextureSize * 4)) return false;
+    TestTrue(TEXT("Identical known pad and road inputs produce identical packed masks"),
+        ServicePixels == RepeatedServicePixels);
+    bool bContainsService = false, bContainsClearGround = false, bPacksServiceAlpha = true;
+    for (int32 Y = 0; Y < CinderTerrainSurface::TextureSize; ++Y)
+        for (int32 X = 0; X < CinderTerrainSurface::TextureSize; ++X)
+        {
+            const uint8 Alpha = ServicePixels[(Y * CinderTerrainSurface::TextureSize + X) * 4 + 3];
+            const FColor Expected = CinderTerrainSurface::Sample(ServiceTerrain,
+                (X + 0.5f) * ServiceTerrain.WorldSize / CinderTerrainSurface::TextureSize,
+                (Y + 0.5f) * ServiceTerrain.WorldSize / CinderTerrainSurface::TextureSize);
+            bContainsService |= Alpha > 0;
+            bContainsClearGround |= Alpha == 0;
+            bPacksServiceAlpha &= Alpha == Expected.A;
+        }
+    TestTrue(TEXT("Packed texture alpha preserves local service coverage rather than becoming opaque everywhere"),
+        bContainsService && bContainsClearGround && bPacksServiceAlpha);
+    for (float WorldSize : {3600.0f, 6000.0f})
+    {
+        CinderTerrainSurface::FFeatures EdgeTerrain;
+        EdgeTerrain.WorldSize = WorldSize;
+        EdgeTerrain.ServicePads.Add({{WorldSize - 100.0f, WorldSize - 100.0f}, {70.0f, 70.0f}});
+        TArray<uint8> EdgePixels;
+        CinderTerrainSurface::BuildPixels(EdgeTerrain, EdgePixels);
+        bool bActiveEdgePainted = false;
+        for (int32 Y = CinderTerrainSurface::TextureSize - 12; Y < CinderTerrainSurface::TextureSize; ++Y)
+            for (int32 X = CinderTerrainSurface::TextureSize - 12; X < CinderTerrainSurface::TextureSize; ++X)
+                bActiveEdgePainted |= EdgePixels[(Y * CinderTerrainSurface::TextureSize + X) * 4 + 3] > 0;
+        TestTrue(*FString::Printf(TEXT("The %.0f-unit terrain mask reaches its active far edge"), WorldSize),
+            bActiveEdgePainted);
+    }
+
     FGameFixture Fixture;
     if (!Fixture.Initialize(*this)) return false;
     ACinderBattlefield& Battle = *Fixture.Battle;
     ACinderPlayerController& Controller = *Fixture.Controller;
     TestTrue(TEXT("BeginPlay fixture has observed resource presentation state"), !Battle.ResourceMemory.empty());
+    auto BatchTint = [&](int32 BatchIndex, int32 MaterialSlot, FLinearColor& OutTint)
+    {
+        return Battle.Batches.IsValidIndex(BatchIndex) && Battle.Batches[BatchIndex].Mesh
+            && Battle.Batches[BatchIndex].Mesh->GetMaterial(MaterialSlot)
+            && Battle.Batches[BatchIndex].Mesh->GetMaterial(MaterialSlot)->GetVectorParameterValue(
+                FMaterialParameterInfo(TEXT("Tint")), OutTint);
+    };
+    for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
+    {
+        FLinearColor BodyTint, AccentTint;
+        const int32 BodyBatch = 5 + Team * 4;
+        const int32 AccentBatch = 5 + CinderTeamColors::Count * 4 + Team * 4;
+        TestTrue(*FString::Printf(TEXT("Team %d fallback body exposes its material tint"), Team),
+            BatchTint(BodyBatch, 0, BodyTint));
+        TestTrue(*FString::Printf(TEXT("Team %d fallback body uses its stable faction color"), Team),
+            BodyTint.Equals(CinderTeamColors::Color(Team), 0.001f));
+        TestTrue(*FString::Printf(TEXT("Team %d fallback accent exposes its material tint"), Team),
+            BatchTint(AccentBatch, 0, AccentTint));
+        TestTrue(*FString::Printf(TEXT("Team %d fallback accent uses its stable faction color"), Team),
+            AccentTint.Equals(CinderTeamColors::Accent(Team), 0.001f));
+        for (int32 Other = 0; Other < Team; ++Other)
+            TestFalse(TEXT("Each faction palette remains visually distinct"),
+                CinderTeamColors::Color(Team).Equals(CinderTeamColors::Color(Other), 0.001f));
+    }
+    TestEqual(TEXT("BeginPlay exposes one complete fog snapshot to presentation consumers"),
+        Battle.FogCells().Num(), Battle.FogDimension() * Battle.FogDimension());
+    const uint64 InitialFogRevision = Battle.FogRevision();
+    Battle.RenderState();
+    TestEqual(TEXT("Rendering unchanged fog retains its revision"), Battle.FogRevision(), InitialFogRevision);
+
+    TArray<uint8> RunFixture = {
+        0, 0, 1, 1,
+        2, 1, 1, 0,
+        2, 2, 2, 2,
+        9, 9, 9, 9
+    };
+    uint64 CachedRunRevision = MAX_uint64;
+    int32 CachedRunDimension = 0;
+    TArray<ACinderHUD::FMinimapFogRun> CachedRuns;
+    TestTrue(TEXT("First fog snapshot builds retained minimap runs"),
+        ACinderHUD::RefreshFogRuns(7, 4, RunFixture, CachedRunRevision, CachedRunDimension, CachedRuns));
+    TestEqual(TEXT("Retained minimap runs preserve row boundaries and state changes"), CachedRuns.Num(), 7);
+    TestTrue(TEXT("Retained minimap runs preserve exact first-row coverage"),
+        CachedRuns.Num() >= 2 && CachedRuns[0].Y == 0 && CachedRuns[0].StartX == 0
+        && CachedRuns[0].EndX == 2 && CachedRuns[0].State == 0
+        && CachedRuns[1].Y == 0 && CachedRuns[1].StartX == 2
+        && CachedRuns[1].EndX == 4 && CachedRuns[1].State == 1);
+    TestFalse(TEXT("Repeated HUD frames reuse runs for the same fog revision"),
+        ACinderHUD::RefreshFogRuns(7, 4, RunFixture, CachedRunRevision, CachedRunDimension, CachedRuns));
+    RunFixture[0] = 2;
+    TestTrue(TEXT("A new fog revision rebuilds retained minimap runs"),
+        ACinderHUD::RefreshFogRuns(8, 4, RunFixture, CachedRunRevision, CachedRunDimension, CachedRuns));
+    TArray<uint8> SmallerSnapshot = {0, 1, 1, 2};
+    TestTrue(TEXT("A fog dimension change rebuilds retained minimap runs even at the same revision"),
+        ACinderHUD::RefreshFogRuns(8, 2, SmallerSnapshot, CachedRunRevision, CachedRunDimension, CachedRuns));
+    TestEqual(TEXT("Dimension changes retain complete row coverage"), CachedRuns.Num(), 4);
+    TArray<uint8> InvalidSnapshot;
+    TestTrue(TEXT("An invalidated fog snapshot refreshes the retained cache"),
+        ACinderHUD::RefreshFogRuns(9, 4, InvalidSnapshot, CachedRunRevision, CachedRunDimension, CachedRuns));
+    bool bInvalidSnapshotIsPrivate = CachedRuns.Num() == 4;
+    for (const ACinderHUD::FMinimapFogRun& Run : CachedRuns)
+        bInvalidSnapshotIsPrivate &= Run.StartX == 0 && Run.EndX == 4 && Run.State == 0;
+    TestTrue(TEXT("Missing fog bytes render as fully unknown instead of leaking simulation state"),
+        bInvalidSnapshotIsPrivate);
+
     Battle.Sim().reset({0, 42, false, 1});
     Battle.ResetPresentation();
     TestTrue(TEXT("Direct simulation replacement clears prior resource memory and pose samples"),
         Battle.ResourceMemory.empty() && Battle.EntityMotion.CachedEntities() == 0);
+    TestTrue(TEXT("Presentation reset invalidates the shared fog snapshot exactly once"),
+        Battle.FogCells().IsEmpty() && Battle.FogRevision() == InitialFogRevision + 1);
+    Battle.ResetPresentation();
+    TestEqual(TEXT("Repeated invalidation of an empty fog snapshot retains its revision"),
+        Battle.FogRevision(), InitialFogRevision + 1);
+    Battle.RenderState();
+    TestTrue(TEXT("Rendering after reset publishes a fresh complete fog snapshot"),
+        Battle.FogCells().Num() == Battle.FogDimension() * Battle.FogDimension()
+        && Battle.FogRevision() == InitialFogRevision + 2);
     for (const Kind KindWithParts : {Kind::Worker, Kind::Striker, Kind::Lancer, Kind::Bastion, Kind::Mortar})
     {
         const int32 KindIndex = static_cast<int32>(KindWithParts);
         const bool bAvailable = Battle.MotionKindAvailable.IsValidIndex(KindIndex)
             && Battle.MotionKindAvailable[KindIndex] != 0;
         bool bAllParts = true, bAnyParts = false;
-        for (int32 Team = 0; Team < 2; ++Team)
+        for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
             for (const FCinderMotionAssetPart& Part : CinderMotionAssetParts(KindWithParts))
             {
-                const int32 Key = (KindIndex * 2 + Team) * static_cast<int32>(ECinderMotionPart::Count)
+                const int32 Key = (KindIndex * CinderTeamColors::Count + Team) * static_cast<int32>(ECinderMotionPart::Count)
                     + static_cast<int32>(Part.Part);
                 const bool bLoaded = Battle.MotionPartBatchIndices.IsValidIndex(Key)
                     && Battle.MotionPartBatchIndices[Key] != INDEX_NONE;
@@ -290,7 +424,7 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
         TestTrue(TEXT("A motion kind loads every required part or retains its complete static model"),
             bAvailable ? bAllParts : !bAnyParts);
         TestTrue(TEXT("Motion completeness fallback always retains a body batch"),
-            Battle.ModelBatchIndices[KindIndex * 2] != INDEX_NONE);
+            Battle.ModelBatchIndices[KindIndex * CinderTeamColors::Count] != INDEX_NONE);
     }
     const auto UploadStamp = [&]
     {
@@ -430,7 +564,7 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     TestTrue(TEXT("Controller resume permits advancement"), !Battle.IsPaused() && Battle.Sim().tick() > PausedTick);
     TestTrue(TEXT("Resume restores render submission on the next simulation step"), Battle.InstanceUploads.Passes > PausedUploads[0]);
     Controller.ExecuteAction(TEXT("attack"));
-    TestTrue(TEXT("Active match can arm attack targeting"), Controller.bAttackMove);
+    TestTrue(TEXT("Active match can arm attack targeting"), Controller.IsAttackMoveMode());
     Controller.ExecuteAction(TEXT("pause"));
     TestTrue(TEXT("Pause also cancels attack targeting in one action"), Battle.IsPaused() && !HasPendingModes(Controller));
     Controller.ExecuteAction(TEXT("resume"));
@@ -497,7 +631,7 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
             }
             else if (Mode == 2) Controller.ExecuteAction(TEXT("attack"));
             const bool BuildBefore = Controller.IsBuildMode(), MenuBefore = Controller.bBuildMenu;
-            const bool AttackBefore = Controller.bAttackMove, BoxBefore = Controller.bBoxSelect;
+            const bool AttackBefore = Controller.IsAttackMoveMode(), BoxBefore = Controller.bBoxSelect;
             const FString FeedbackBefore = Controller.Feedback();
             const float LastTapBefore = Controller.LastTapTime;
             const uint64 HashBefore = Battle.Sim().stateHash();
@@ -516,7 +650,8 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
                 !Controller.bPointerDown && !Controller.bDragging && !Controller.bPointerCameraPan);
             TestTrue(TEXT("Every pan release preserves the selected workers"), Controller.Selection() == GestureWorkers);
             TestTrue(TEXT("Pan preserves build, attack, menu and box modes"), Controller.IsBuildMode() == BuildBefore
-                && Controller.bBuildMenu == MenuBefore && Controller.bAttackMove == AttackBefore && Controller.bBoxSelect == BoxBefore);
+                && Controller.bBuildMenu == MenuBefore && Controller.IsAttackMoveMode() == AttackBefore
+                && Controller.bBoxSelect == BoxBefore);
             TestEqual(TEXT("Pan release does not change click feedback"), Controller.Feedback(), FeedbackBefore);
             TestEqual(TEXT("Pan release does not prime a later double tap"), Controller.LastTapTime, LastTapBefore);
             TestEqual(TEXT("Pan neither orders units nor creates a foundation"), static_cast<uint64>(Battle.Sim().stateHash()), HashBefore);
@@ -853,7 +988,8 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
             { FinalHQPosition.x + 420 * FMath::Cos(Angle), FinalHQPosition.y + 420 * FMath::Sin(Angle) }));
     }
     Battle.RenderState();
-    const int32 FinalHQBatch = Battle.ModelBatchIndices[static_cast<int32>(Kind::Headquarters) * 2];
+    const int32 FinalHQBatch = Battle.ModelBatchIndices[
+        static_cast<int32>(Kind::Headquarters) * CinderTeamColors::Count];
     if (!TestTrue(TEXT("Terminal-render fixture has the validated headquarters model batch"),
         FinalHQBatch != INDEX_NONE)) return false;
     UInstancedStaticMeshComponent* FinalHQComponent = Battle.Batches[FinalHQBatch].Mesh;
@@ -942,6 +1078,16 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
         Battle.Tutorial().IsActive() && !Sim.config().ai && Sim.config().seed == FCinderTutorial::Seed && !Battle.IsMenu());
     TestEqual(TEXT("Training preserves the normal starting ore"), Sim.players()[0].ore, 500);
     TestEqual(TEXT("Training preserves the normal five starting Drudges"), static_cast<int32>(EntitiesOfKind(Sim, Kind::Worker).size()), 5);
+    int32 EnemyFoundries = 0, HeldEnemyEmbers = 0;
+    for (const Entity& Entity : Sim.entities())
+    {
+        if (!Entity.alive() || Entity.team != 1) continue;
+        EnemyFoundries += Entity.kind == Kind::Foundry && Entity.progress >= 1.0f ? 1 : 0;
+        HeldEnemyEmbers += Entity.kind == Kind::Striker && Entity.order == Order::Hold ? 1 : 0;
+    }
+    TestTrue(TEXT("Training authors its finite opponent without enabling strategic AI"),
+        EnemyFoundries == 1 && HeldEnemyEmbers == 1 && Battle.Tutorial().OpponentOrdersIssued() == 0
+        && Battle.Tutorial().PracticeTarget() != 0 && !Sim.config().ai);
     TestTrue(TEXT("Automatic initial camera setup does not complete the first lesson"), Battle.Tutorial().Step() == ECinderTutorialStep::Camera);
     Controller.ZoomIn(); Controller.UpdateTutorial();
     TestTrue(TEXT("A real controller camera action advances the camera lesson"), Battle.Tutorial().Step() != ECinderTutorialStep::Camera);
@@ -1273,7 +1419,7 @@ bool FCinderAIKnowledgeAndPersistenceIntegration::RunTest(const FString& Paramet
         if (Battle.Sim().stateHash() != ExpectedHash) IdenticalContinuation = false;
     }
     TestTrue(TEXT("Loaded active opponent repeats every authoritative hash across six seconds of actor ticks"), IdenticalContinuation);
-    TestTrue(TEXT("AI persistence fixture finishes in an active match"), Battle.Sim().winner() < 0);
+    TestEqual(TEXT("AI persistence fixture finishes in an active match"), Battle.Sim().winner(), -1);
     if (!HasAnyErrors()) AddInfo(FString::Printf(TEXT("CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=%u, first_seen_tick=%llu, retained_seen_tick=%llu, continuation_ticks=%d; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only."),
         Worker, static_cast<unsigned long long>(Observed.lastSeenTick),
         static_cast<unsigned long long>(Remembered.lastSeenTick), static_cast<int32>(ContinuedHashes.size())));

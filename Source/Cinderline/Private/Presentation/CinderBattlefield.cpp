@@ -1,7 +1,10 @@
 #include "Presentation/CinderBattlefield.h"
 #include "Presentation/CinderAudioSubsystem.h"
+#include "Presentation/CinderCamera.h"
 #include "Presentation/CinderTerrainSurface.h"
+#include "Presentation/CinderLandscapeTerrain.h"
 #include "Presentation/CinderScenery.h"
+#include "Presentation/CinderTeamColors.h"
 #include "Presentation/CinderWorldEffects.h"
 #include "Presentation/CinderOnlineSubsystem.h"
 #include "Components/InstancedStaticMeshComponent.h"
@@ -33,9 +36,14 @@ DEFINE_LOG_CATEGORY_STATIC(LogCinderCombat, Log, All);
 namespace
 {
 constexpr int32 ModelCount = 15;
+constexpr int32 TeamCount = CinderTeamColors::Count;
 constexpr int32 FogTextureSize = 256;
 constexpr int32 FogPixelsPerCell = FogTextureSize / cinder::Simulation::FogSize;
+constexpr float BasicShapeSize = 100.0f;
+constexpr float WorldBorderWidth = 3000.0f;
+constexpr float WorldSurfaceZ = 2.5f;
 static_assert(FogPixelsPerCell == 4, "Fog edge guards assume four pixels per simulation cell");
+static_assert(TeamCount == cinder::Simulation::MaxPlayers, "The presentation palette must cover every simulation player");
 struct FFogTextureUpload
 {
     FUpdateTextureRegion2D Region{0, 0, 0, 0, FogTextureSize, FogTextureSize};
@@ -67,11 +75,13 @@ FAutoConsoleCommandWithWorld CombatStatusCommand(
 }
 
 ACinderBattlefield::ACinderBattlefield()
+    : Simulation(MakeUnique<cinder::Simulation>())
 {
     PrimaryActorTick.bCanEverTick = true;
     RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("BattlefieldRoot"));
     Scenery = CreateDefaultSubobject<UCinderScenery>(TEXT("Scenery"));
     WorldEffects = CreateDefaultSubobject<UCinderWorldEffects>(TEXT("WorldEffects"));
+    CanyonTerrain = CreateDefaultSubobject<UCinderLandscapeTerrain>(TEXT("CanyonTerrain"));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeAsset(TEXT("/Engine/BasicShapes/Cube.Cube"));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> CylinderAsset(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"));
     static ConstructorHelpers::FObjectFinder<UStaticMesh> ConeAsset(TEXT("/Engine/BasicShapes/Cone.Cone"));
@@ -142,8 +152,8 @@ bool ACinderBattlefield::ValidateModel(UStaticMesh* Mesh, cinder::Kind Kind, FSt
 void ACinderBattlefield::LoadModelBatches()
 {
     ModelBatchStart = Batches.Num();
-    ModelBatchIndices.Init(INDEX_NONE, ModelCount * 2);
-    MotionPartBatchIndices.Init(INDEX_NONE, ModelCount * 2 * static_cast<int32>(ECinderMotionPart::Count));
+    ModelBatchIndices.Init(INDEX_NONE, ModelCount * TeamCount);
+    MotionPartBatchIndices.Init(INDEX_NONE, ModelCount * TeamCount * static_cast<int32>(ECinderMotionPart::Count));
     MotionKindAvailable.Init(0, ModelCount);
     MotionMeshes.Reset();
     ModelFallbackReasons.Init(TEXT("asset missing"), ModelCount);
@@ -163,16 +173,23 @@ void ACinderBattlefield::LoadModelBatches()
         }
         ModelMaterials.Add(Material);
     }
-    // Share these six dynamic instances across every kind; only the team panels and cores change.
-    const FLinearColor PanelColors[] = { FLinearColor(0.04f, 0.82f, 0.72f), FLinearColor(0.96f, 0.24f, 0.17f), FLinearColor(0.85f, 0.35f, 0.08f) };
-    const FLinearColor CoreColors[] = { FLinearColor(0.50f, 1.0f, 0.88f), FLinearColor(1.0f, 0.62f, 0.20f), FLinearColor(1.0f, 0.58f, 0.12f) };
-    for (int32 Palette = 0; Palette < 3; ++Palette)
+    // Share one panel/core pair per faction plus a separate warm resource palette.
+    const int32 PaletteMaterialStart = ModelMaterials.Num();
+    for (int32 Team = 0; Team < TeamCount; ++Team)
     {
         auto* Panel = UMaterialInstanceDynamic::Create(ModelMaterials[3], this);
         auto* Core = UMaterialInstanceDynamic::Create(ModelMaterials[4], this);
-        Panel->SetVectorParameterValue(TEXT("Tint"), PanelColors[Palette]);
-        Core->SetVectorParameterValue(TEXT("Tint"), CoreColors[Palette]);
+        Panel->SetVectorParameterValue(TEXT("Tint"), CinderTeamColors::Color(Team));
+        Core->SetVectorParameterValue(TEXT("Tint"), CinderTeamColors::Accent(Team));
         ModelMaterials.Add(Panel); ModelMaterials.Add(Core);
+    }
+    const int32 ResourcePaletteStart = ModelMaterials.Num();
+    for (int32 Slot = 3; Slot <= 4; ++Slot)
+    {
+        auto* Material = UMaterialInstanceDynamic::Create(ModelMaterials[Slot], this);
+        Material->SetVectorParameterValue(TEXT("Tint"), Slot == 3
+            ? FLinearColor(0.85f, 0.35f, 0.08f) : FLinearColor(1.0f, 0.58f, 0.12f));
+        ModelMaterials.Add(Material);
     }
     // Warm rock faces keep ore recognizable at compact gameplay zoom.
     const int32 OreMaterialStart = ModelMaterials.Num();
@@ -198,31 +215,30 @@ void ACinderBattlefield::LoadModelBatches()
         ModelMeshes[Index] = Mesh;
         ModelFallbackReasons[Index].Empty();
         const bool Resource = Index == static_cast<int32>(cinder::Kind::Resource);
-        for (int32 Team = 0; Team < (Resource ? 1 : 2); ++Team)
+        for (int32 Team = 0; Team < (Resource ? 1 : TeamCount); ++Team)
         {
             const int32 BatchIndex = Batches.Num();
             FBatch& Batch = AddBatch(Mesh, FLinearColor::White, true);
             for (int32 Slot = 0; Slot < 3; ++Slot)
                 Batch.Mesh->SetMaterial(Slot, ModelMaterials[Resource && Slot < 2 ? OreMaterialStart + Slot : Slot]);
-            const int32 Palette = Resource ? 2 : Team;
-            Batch.Mesh->SetMaterial(3, ModelMaterials[5 + Palette * 2]);
-            Batch.Mesh->SetMaterial(4, ModelMaterials[6 + Palette * 2]);
-            ModelBatchIndices[Index * 2 + Team] = BatchIndex;
+            Batch.Mesh->SetMaterial(3, ModelMaterials[Resource ? ResourcePaletteStart : PaletteMaterialStart + Team * 2]);
+            Batch.Mesh->SetMaterial(4, ModelMaterials[Resource ? ResourcePaletteStart + 1 : PaletteMaterialStart + Team * 2 + 1]);
+            ModelBatchIndices[Index * TeamCount + Team] = BatchIndex;
         }
         ++Loaded;
     }
 
     auto MotionKey = [](int32 Kind, int32 Team, ECinderMotionPart Part)
     {
-        return (Kind * 2 + Team) * static_cast<int32>(ECinderMotionPart::Count) + static_cast<int32>(Part);
+        return (Kind * TeamCount + Team) * static_cast<int32>(ECinderMotionPart::Count) + static_cast<int32>(Part);
     };
     auto MaterialForName = [&](FName Name, int32 Team) -> UMaterialInterface*
     {
         if (Name == FName(ModelSlotNames[0])) return ModelMaterials[0];
         if (Name == FName(ModelSlotNames[1])) return ModelMaterials[1];
         if (Name == FName(ModelSlotNames[2])) return ModelMaterials[2];
-        if (Name == FName(ModelSlotNames[3])) return ModelMaterials[5 + Team * 2];
-        if (Name == FName(ModelSlotNames[4])) return ModelMaterials[6 + Team * 2];
+        if (Name == FName(ModelSlotNames[3])) return ModelMaterials[PaletteMaterialStart + Team * 2];
+        if (Name == FName(ModelSlotNames[4])) return ModelMaterials[PaletteMaterialStart + Team * 2 + 1];
         return nullptr;
     };
     auto ApplyMotionMaterials = [&](UInstancedStaticMeshComponent* Component, UStaticMesh* Mesh, int32 Team)
@@ -271,7 +287,7 @@ void ACinderBattlefield::LoadModelBatches()
         }
 
         for (UStaticMesh* Mesh : LoadedParts) MotionMeshes.Add(Mesh);
-        for (int32 Team = 0; Team < 2; ++Team)
+        for (int32 Team = 0; Team < TeamCount; ++Team)
         {
             for (int32 PartIndex = 0; PartIndex < Parts.Num(); ++PartIndex)
             {
@@ -280,7 +296,7 @@ void ACinderBattlefield::LoadModelBatches()
                 int32 BatchIndex = INDEX_NONE;
                 if (Part.Part == ECinderMotionPart::Body)
                 {
-                    BatchIndex = ModelBatchIndices[KindIndex * 2 + Team];
+                    BatchIndex = ModelBatchIndices[KindIndex * TeamCount + Team];
                     Batches[BatchIndex].Mesh->SetStaticMesh(Mesh);
                 }
                 else
@@ -338,8 +354,12 @@ void ACinderBattlefield::LogModelStatus() const
     {
         if (ModelMeshes.IsValidIndex(Index) && ModelMeshes[Index])
         {
-            const int32 First = ModelBatchIndices[Index * 2], Second = ModelBatchIndices[Index * 2 + 1];
-            const int32 Count = (First != INDEX_NONE ? Batches[First].Mesh->GetInstanceCount() : 0) + (Second != INDEX_NONE ? Batches[Second].Mesh->GetInstanceCount() : 0);
+            int32 Count = 0;
+            for (int32 Team = 0; Team < TeamCount; ++Team)
+            {
+                const int32 Batch = ModelBatchIndices[Index * TeamCount + Team];
+                if (Batch != INDEX_NONE) Count += Batches[Batch].Mesh->GetInstanceCount();
+            }
             UE_LOG(LogCinderModels, Display, TEXT("  %s: imported, instances=%d, triangles=%d"), ModelAssetNames[Index], Count, ModelMeshes[Index]->GetNumTriangles(0));
         }
         else UE_LOG(LogCinderModels, Display, TEXT("  %s: primitive fallback (%s)"), ModelAssetNames[Index], ModelFallbackReasons.IsValidIndex(Index) ? *ModelFallbackReasons[Index] : TEXT("not initialized"));
@@ -407,6 +427,47 @@ void ACinderBattlefield::InitializeEnvironment()
             Fog.Mesh->SetTranslucentSortPriority(10);
         }
     }
+
+    if (Plane)
+    {
+        bool bFogBorderMaterial = false;
+        auto* BorderBase = LoadObject<UMaterialInterface>(nullptr,
+            TEXT("/Game/Art/VisualTarget/Materials/M_VT_CoreSurface.M_VT_CoreSurface"), nullptr, LOAD_NoWarn);
+        const bool bCoreBorderMaterial = BorderBase != nullptr;
+        if (!BorderBase && FogBase)
+        {
+            BorderBase = FogBase;
+            bFogBorderMaterial = true;
+        }
+        if (BorderBase)
+        {
+            WorldBorderBatch = Batches.Num();
+            FBatch& Border = AddBatch(Plane, FLinearColor::Black, false, false);
+            Border.Mesh->ComponentTags.Add(TEXT("CinderMapBorder"));
+            auto* BorderMaterial = UMaterialInstanceDynamic::Create(BorderBase, this);
+            if (bFogBorderMaterial)
+            {
+                // M_CinderFogV2 is unlit and ships with an opaque default mask.
+                BorderMaterial->SetVectorParameterValue(TEXT("FogColor"), FLinearColor::Black);
+                BorderMaterial->SetVectorParameterValue(TEXT("FogExploredColor"), FLinearColor::Black);
+            }
+            else
+            {
+                BorderMaterial->SetVectorParameterValue(TEXT("Tint"), FLinearColor::Black);
+                if (bCoreBorderMaterial) BorderMaterial->SetScalarParameterValue(TEXT("GlowIntensity"), 0.0f);
+            }
+            Border.Mesh->SetMaterial(0, BorderMaterial);
+            Border.Mesh->bVisibleInReflectionCaptures = false;
+            Border.Mesh->bVisibleInRealTimeSkyCaptures = false;
+            Border.Mesh->bVisibleInReflections = false;
+            Border.Mesh->SetVisibleInRayTracing(false);
+            Border.Mesh->SetAffectDistanceFieldLighting(false);
+            Border.Mesh->SetAffectDynamicIndirectLighting(false);
+            Border.Mesh->SetReceivesDecals(false);
+
+            Border.Transforms.Reserve(4);
+        }
+    }
     InvalidateEnvironment();
 }
 
@@ -414,36 +475,70 @@ void ACinderBattlefield::InvalidateEnvironment()
 {
     bEnvironmentInvalid = true;
     bTerrainSurfaceInvalid = true;
-    LastFogCells.Reset();
+    if (!LastFogCells.IsEmpty())
+    {
+        LastFogCells.Reset();
+        ++FogSnapshotRevision;
+    }
     LastObstacleReveal.Reset();
 }
 
 void ACinderBattlefield::RefreshEnvironment()
 {
     // Static terrain is submitted only after reset/load or a newly explored obstacle.
-    uint32 GeometryHash = GetTypeHash(Simulation.config().map);
+    const float World = Simulation->worldSize();
+    uint32 GeometryHash = HashCombineFast(GetTypeHash(Simulation->config().map), GetTypeHash(World));
     TArray<uint8> Revealed;
-    Revealed.Reserve(static_cast<int32>(Simulation.obstacles().size()));
-    for (const auto& Obstacle : Simulation.obstacles())
+    Revealed.Reserve(static_cast<int32>(Simulation->obstacles().size()));
+    for (const auto& Obstacle : Simulation->obstacles())
     {
         GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.center.x));
         GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.center.y));
         GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.half.x));
         GeometryHash = HashCombineFast(GeometryHash, GetTypeHash(Obstacle.half.y));
-        Revealed.Add(Simulation.explored(0, Obstacle.center) ? 1 : 0);
+        Revealed.Add(Simulation->explored(0, Obstacle.center) ? 1 : 0);
     }
-    if (!bEnvironmentInvalid && GeometryHash == ObstacleGeometryHash && Revealed == LastObstacleReveal) return;
-    if (bEnvironmentInvalid)
+    if (!bEnvironmentInvalid && FMath::IsNearlyEqual(PresentedWorldSize, World)
+        && GeometryHash == ObstacleGeometryHash && Revealed == LastObstacleReveal) return;
+    if (bEnvironmentInvalid || !FMath::IsNearlyEqual(PresentedWorldSize, World))
     {
+        const float WorldSizeInverse = 1.0f / FMath::Max(1.0f, World);
+        if (FogMaterial)
+            FogMaterial->SetScalarParameterValue(TEXT("CinderWorldSizeInverse"), WorldSizeInverse);
+        if (GroundSurfaceMaterial)
+            GroundSurfaceMaterial->SetScalarParameterValue(TEXT("CinderWorldSizeInverse"), WorldSizeInverse);
+        const float HalfWorld = World * 0.5f;
         Batches[0].Transforms.Reset();
-        Batches[0].Transforms.Add(FTransform(FQuat::Identity, FVector(2400, 2400, -16), FVector(49, 49, 0.3f)));
+        Batches[0].Transforms.Add(FTransform(FQuat::Identity, FVector(HalfWorld, HalfWorld, -16),
+            FVector(World / BasicShapeSize, World / BasicShapeSize, 0.3f)));
         Batches[0].bDirty = true;
         if (FogPlaneBatch != INDEX_NONE)
         {
             FBatch& Fog = Batches[FogPlaneBatch];
             Fog.Transforms.Reset();
-            Fog.Transforms.Add(FTransform(FQuat::Identity, FVector(2400, 2400, 2.5f), FVector(48, 48, 1)));
+            Fog.Transforms.Add(FTransform(FQuat::Identity, FVector(HalfWorld, HalfWorld, WorldSurfaceZ),
+                FVector(World / BasicShapeSize, World / BasicShapeSize, 1)));
             Fog.bDirty = true;
+        }
+        if (WorldBorderBatch != INDEX_NONE)
+        {
+            constexpr float HalfBorder = WorldBorderWidth * 0.5f;
+            constexpr float BorderZ = WorldSurfaceZ + 0.1f;
+            const FVector VerticalScale(WorldBorderWidth / BasicShapeSize,
+                (World + 2.0f * WorldBorderWidth) / BasicShapeSize, 1.0f);
+            const FVector HorizontalScale(World / BasicShapeSize,
+                WorldBorderWidth / BasicShapeSize, 1.0f);
+            FBatch& Border = Batches[WorldBorderBatch];
+            Border.Transforms.Reset();
+            Border.Transforms.Add(FTransform(FQuat::Identity,
+                FVector(-HalfBorder, HalfWorld, BorderZ), VerticalScale));
+            Border.Transforms.Add(FTransform(FQuat::Identity,
+                FVector(World + HalfBorder, HalfWorld, BorderZ), VerticalScale));
+            Border.Transforms.Add(FTransform(FQuat::Identity,
+                FVector(HalfWorld, -HalfBorder, BorderZ), HorizontalScale));
+            Border.Transforms.Add(FTransform(FQuat::Identity,
+                FVector(HalfWorld, World + HalfBorder, BorderZ), HorizontalScale));
+            Border.bDirty = true;
         }
     }
     Batches[1].Transforms.Reset(); Batches[1].bDirty = true;
@@ -452,7 +547,7 @@ void ACinderBattlefield::RefreshEnvironment()
         Batches[Index].Transforms.Reset(); Batches[Index].bDirty = true;
     }
     int32 ObstacleIndex = 0;
-    for (const auto& Obstacle : Simulation.obstacles())
+    for (const auto& Obstacle : Simulation->obstacles())
     {
         const int32 Seed = ObstacleIndex++;
         if (!Revealed[Seed] || (Scenery && Scenery->IsInitialized())) continue;
@@ -482,6 +577,7 @@ void ACinderBattlefield::RefreshEnvironment()
     }
     LastObstacleReveal = MoveTemp(Revealed);
     ObstacleGeometryHash = GeometryHash;
+    PresentedWorldSize = World;
     bEnvironmentInvalid = false;
 }
 
@@ -489,11 +585,12 @@ void ACinderBattlefield::RefreshTerrainSurface()
 {
     if (!GroundSurfaceMaterial || !FApp::CanEverRender()) return;
     CinderTerrainSurface::FFeatures Features;
-    Features.Map = Simulation.config().map;
-    uint32 Hash = GetTypeHash(Features.Map);
-    for (const auto& Cliff : Simulation.obstacles())
+    Features.Map = Simulation->config().map;
+    Features.WorldSize = Simulation->worldSize();
+    uint32 Hash = HashCombineFast(GetTypeHash(Features.Map), GetTypeHash(Features.WorldSize));
+    for (const auto& Cliff : Simulation->obstacles())
     {
-        if (!Simulation.explored(0, Cliff.center)) continue;
+        if (!Simulation->explored(0, Cliff.center)) continue;
         Features.Cliffs.Add(Cliff);
         Hash = HashCombineFast(Hash, GetTypeHash(Cliff.center.x));
         Hash = HashCombineFast(Hash, GetTypeHash(Cliff.center.y));
@@ -507,7 +604,84 @@ void ACinderBattlefield::RefreshTerrainSurface()
         Hash = HashCombineFast(Hash, GetTypeHash(Ore.pos.x));
         Hash = HashCombineFast(Hash, GetTypeHash(Ore.pos.y));
     }
+    TArray<const cinder::Entity*> ServiceBuildings;
+    for (const auto& Entity : Simulation->entities())
+    {
+        if (Entity.team != 0 || !Entity.alive() || Entity.progress < 1
+            || !cinder::definition(Entity.kind).building || ServiceBuildings.Num() >= 24) continue;
+        ServiceBuildings.Add(&Entity);
+        Hash = HashCombineFast(Hash, GetTypeHash(Entity.id));
+        Hash = HashCombineFast(Hash, GetTypeHash(static_cast<int32>(Entity.kind)));
+        Hash = HashCombineFast(Hash, GetTypeHash(cinder::definition(Entity.kind).radius));
+        Hash = HashCombineFast(Hash, GetTypeHash(Entity.pos.x));
+        Hash = HashCombineFast(Hash, GetTypeHash(Entity.pos.y));
+    }
+    // Pads and connecting roads are derived from these known inputs. Stable
+    // scenery must return before any pair search, visibility walk or mask build.
+    Hash = HashCombineFast(Hash, GetTypeHash(Features.Cliffs.Num()));
+    Hash = HashCombineFast(Hash, GetTypeHash(Features.Minerals.Num()));
+    Hash = HashCombineFast(Hash, GetTypeHash(ServiceBuildings.Num()));
     if (!bTerrainSurfaceInvalid && GroundSurfaceTexture && Hash == TerrainSurfaceHash) return;
+    for (const cinder::Entity* Building : ServiceBuildings)
+    {
+        const float Radius = cinder::definition(Building->kind).radius * 1.20f;
+        Features.ServicePads.Add({Building->pos, {Radius, Radius}});
+    }
+    auto KnownRoadClearance = [&](cinder::Vec2 Point, cinder::Id Source)
+    {
+        constexpr float RoadRadius = 18;
+        if (Point.x < RoadRadius || Point.y < RoadRadius
+            || Point.x > Features.WorldSize - RoadRadius
+            || Point.y > Features.WorldSize - RoadRadius) return false;
+        for (const auto& Cliff : Features.Cliffs)
+        {
+            const float DX = FMath::Max(0.0f, FMath::Abs(Point.x - Cliff.center.x) - Cliff.half.x);
+            const float DY = FMath::Max(0.0f, FMath::Abs(Point.y - Cliff.center.y) - Cliff.half.y);
+            if (DX * DX + DY * DY < RoadRadius * RoadRadius) return false;
+        }
+        for (const auto& Mineral : Features.Minerals)
+        {
+            const float DX = Point.x - Mineral.x, DY = Point.y - Mineral.y;
+            const float Radius = RoadRadius + cinder::definition(cinder::Kind::Resource).radius;
+            if (DX * DX + DY * DY < Radius * Radius) return false;
+        }
+        for (const cinder::Entity* Building : ServiceBuildings)
+        {
+            if (Building->id == Source) continue;
+            const float DX = Point.x - Building->pos.x, DY = Point.y - Building->pos.y;
+            const float Radius = RoadRadius + cinder::definition(Building->kind).radius;
+            if (DX * DX + DY * DY < Radius * Radius) return false;
+        }
+        return true;
+    };
+    for (int32 Index = 1; Index < ServiceBuildings.Num(); ++Index)
+    {
+        const auto& To = *ServiceBuildings[Index];
+        const cinder::Entity* Closest = nullptr;
+        float ClosestDistance = 1050;
+        for (int32 Previous = 0; Previous < Index; ++Previous)
+        {
+            const auto& From = *ServiceBuildings[Previous];
+            const float DX = To.pos.x - From.pos.x, DY = To.pos.y - From.pos.y;
+            const float Distance = FMath::Sqrt(DX * DX + DY * DY);
+            if (Distance < 180 || Distance >= ClosestDistance) continue;
+            bool bClear = true;
+            const float Start = cinder::definition(From.kind).radius + 45;
+            const float End = Distance - cinder::definition(To.kind).radius - 45;
+            for (float Along = Start; bClear && Along < End; Along += 30)
+            {
+                const cinder::Vec2 Point{From.pos.x + DX * Along / Distance, From.pos.y + DY * Along / Distance};
+                // Only known, hashed geometry affects the surface. Consulting
+                // all simulation blockers could disclose an unseen structure.
+                bClear = Simulation->visible(0, Point) && KnownRoadClearance(Point, From.id);
+            }
+            if (bClear) { Closest = &From; ClosestDistance = Distance; }
+        }
+        if (Closest)
+        {
+            Features.Roads.Add({Closest->pos, To.pos});
+        }
+    }
     constexpr int32 Size = CinderTerrainSurface::TextureSize;
     auto Upload = MakeShared<FFogTextureUpload, ESPMode::ThreadSafe>();
     static_assert(Size == FogTextureSize, "shared upload region must match terrain dimensions");
@@ -537,13 +711,19 @@ void ACinderBattlefield::RefreshTerrainSurface()
 void ACinderBattlefield::UpdateFogTexture()
 {
     constexpr int32 Cells = cinder::Simulation::FogSize;
-    constexpr float CellSize = cinder::Simulation::WorldSize / Cells;
+    const float CellSize = Simulation->worldSize() / Cells;
     TArray<uint8> Current;
     Current.SetNumUninitialized(Cells * Cells);
     for (int32 Y = 0; Y < Cells; ++Y) for (int32 X = 0; X < Cells; ++X)
     {
         const cinder::Vec2 Point{(X + 0.5f) * CellSize, (Y + 0.5f) * CellSize};
-        Current[Y * Cells + X] = Simulation.visible(0, Point) ? 2 : Simulation.explored(0, Point) ? 1 : 0;
+        Current[Y * Cells + X] = Simulation->visible(0, Point) ? 2 : Simulation->explored(0, Point) ? 1 : 0;
+    }
+    const bool bFogChanged = Current != LastFogCells;
+    if (bFogChanged)
+    {
+        LastFogCells = Current;
+        ++FogSnapshotRevision;
     }
     if (FogPlaneBatch == INDEX_NONE)
     {
@@ -554,7 +734,7 @@ void ACinderBattlefield::UpdateFogTexture()
                     FVector((X + 0.5f) * CellSize, (Y + 0.5f) * CellSize, 1), FVector(CellSize / 100 + 0.001f, CellSize / 100 + 0.001f, 0.02f)));
         return;
     }
-    if (Current == LastFogCells || !FogTexture || !FogTexture->GetResource()) return;
+    if (FogTextureSubmittedRevision == FogSnapshotRevision || !FogTexture || !FogTexture->GetResource()) return;
     auto Upload = MakeShared<FFogTextureUpload, ESPMode::ThreadSafe>();
     Upload->Pixels.SetNumUninitialized(FogTextureSize * FogTextureSize * 4);
     for (int32 Y = 0; Y < FogTextureSize; ++Y) for (int32 X = 0; X < FogTextureSize; ++X)
@@ -587,8 +767,8 @@ void ACinderBattlefield::UpdateFogTexture()
     // destruction of its cleanup function still releases the region and pixel buffer.
     FogTexture->UpdateTextureRegions(0, 1, &Upload->Region, FogTextureSize * 4, 4, Upload->Pixels.GetData(),
         [Upload](uint8*, const FUpdateTextureRegion2D*) { (void)Upload; });
+    FogTextureSubmittedRevision = FogSnapshotRevision;
     ++FogTextureUploads;
-    LastFogCells = MoveTemp(Current);
 }
 
 void ACinderBattlefield::AddBuildingPad(const cinder::Entity& Entity)
@@ -610,7 +790,8 @@ void ACinderBattlefield::BeginPlay()
         BaseMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
     }
     AddBatch(Cube, FLinearColor(0.065f, 0.12f, 0.13f), false, false);
-    auto* GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/VisualTarget/Materials/M_CinderGroundV4.M_CinderGroundV4"), nullptr, LOAD_NoWarn);
+    auto* GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround"), nullptr, LOAD_NoWarn);
+    if (!GroundMaterial) GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/VisualTarget/Materials/M_CinderGroundV4.M_CinderGroundV4"), nullptr, LOAD_NoWarn);
     if (!GroundMaterial) GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/Materials/M_CinderGroundV3.M_CinderGroundV3"), nullptr, LOAD_NoWarn);
     if (GroundMaterial)
     {
@@ -625,16 +806,18 @@ void ACinderBattlefield::BeginPlay()
     AddBatch(Cone, FLinearColor(1.0f, 0.52f, 0.12f), true);
     AddBatch(Cube, FLinearColor(0.012f, 0.022f, 0.035f));
     AddBatch(Cube, FLinearColor(0.034f, 0.067f, 0.080f));
-    for (int Team = 0; Team < 2; ++Team)
+    for (int32 Team = 0; Team < TeamCount; ++Team)
     {
-        const FLinearColor Color = Team == 0 ? FLinearColor(0.04f, 0.82f, 0.72f) : FLinearColor(0.96f, 0.24f, 0.17f);
-        for (UStaticMesh* Shape : { Cube.Get(), Cylinder.Get(), Cone.Get(), Sphere.Get() }) AddBatch(Shape, Color, true);
-    }
-    for (int Team = 0; Team < 2; ++Team)
         for (UStaticMesh* Shape : { Cube.Get(), Cylinder.Get(), Cone.Get(), Sphere.Get() })
-            AddBatch(Shape, Team == 0 ? FLinearColor(0.68f, 1.0f, 0.92f) : FLinearColor(1.0f, 0.68f, 0.28f), true);
+            AddBatch(Shape, CinderTeamColors::Color(Team), true);
+    }
+    for (int32 Team = 0; Team < TeamCount; ++Team)
+        for (UStaticMesh* Shape : { Cube.Get(), Cylinder.Get(), Cone.Get(), Sphere.Get() })
+            AddBatch(Shape, CinderTeamColors::Accent(Team), true);
     LoadModelBatches();
     InitializeEnvironment();
+    if (GroundSurfaceMaterial && FogTexture) GroundSurfaceMaterial->SetTextureParameterValue(TEXT("FogMask"), FogTexture);
+    CanyonTerrain->Initialize();
     Scenery->Initialize(RootComponent, GroundSurfaceMaterial);
     WorldEffects->Initialize(RootComponent, Sphere, Cylinder, Cone, Plane, BaseMaterial);
 
@@ -662,18 +845,22 @@ void ACinderBattlefield::BeginPlay()
     }
     SkyComponent->SetIntensity(1.10f);
     SkyComponent->SetLightColor(FLinearColor(0.70f, 0.83f, 1.0f));
-    Simulation.reset();
+    Simulation->reset();
     ResetFeedback();
     RenderState();
 }
 
-void ACinderBattlefield::StartMatch(int MapIndex)
+void ACinderBattlefield::StartMatch(int MapIndex, cinder::AIDifficulty Difficulty,
+    cinder::MatchLength Length)
 {
     if (bOnlineMatch) return;
     SetActorTickEnabled(true);
     CurrentMap = FMath::Clamp(MapIndex, 0, 2);
-    cinder::Config Config; Config.map = CurrentMap;
-    Simulation.reset(Config);
+    cinder::Config Config;
+    Config.map = CurrentMap;
+    Config.aiAggression = cinder::aiDifficultyAggression(Difficulty);
+    Config.matchLength = Length;
+    Simulation->reset(Config);
     ResetPresentation();
     bMenu = false; bPaused = false;
     RenderState();
@@ -684,24 +871,17 @@ void ACinderBattlefield::StartTutorial()
     if (bOnlineMatch) return;
     SetActorTickEnabled(true);
     CurrentMap = 0;
-    cinder::Config Config;
-    Config.map = CurrentMap; Config.seed = FCinderTutorial::Seed; Config.ai = false;
-    Simulation.reset(Config);
+    FCinderTutorial InitializedTraining;
+    if (!InitializedTraining.InitializeScenario(*Simulation)) return;
     ResetPresentation();
-    // A stationary opponent gives the last lesson a real target with ordinary
-    // health and combat rules. It cannot leave its position to raid the learner.
-    const cinder::Id Target = Simulation.debugSpawn(cinder::Kind::Worker, 1, FCinderTutorial::CombatPoint());
-    cinder::Command Hold;
-    Hold.type = cinder::CommandType::Hold; Hold.team = 1; Hold.units = {Target};
-    Simulation.command(Hold);
-    Training.Start(Simulation, Target);
+    Training = InitializedTraining;
     bMenu = false; bPaused = false;
     RenderState();
 }
 
 bool ACinderBattlefield::StartOnlineMatch(const cinder::net::Snapshot& Snapshot)
 {
-    if (!Simulation.applySnapshot(Snapshot)) return false;
+    if (!Simulation->applySnapshot(Snapshot)) return false;
     SetActorTickEnabled(true);
     CurrentMap = Snapshot.config.map;
     ResetPresentation();
@@ -710,7 +890,7 @@ bool ACinderBattlefield::StartOnlineMatch(const cinder::net::Snapshot& Snapshot)
     OnlineSnapshotAt = FPlatformTime::Seconds(); OnlineSnapshotInterval = 0.1f;
     PreviousOnlinePositions.Reset();
     // The server includes only remembered neutral resources, safe on reconnect.
-    for (const auto& Entity : Simulation.entities())
+    for (const auto& Entity : Simulation->entities())
         if (Entity.kind == cinder::Kind::Resource) ResourceMemory.push_back(Entity);
     RenderState();
     return true;
@@ -718,7 +898,7 @@ bool ACinderBattlefield::StartOnlineMatch(const cinder::net::Snapshot& Snapshot)
 
 cinder::CommandResult ACinderBattlefield::SubmitCommand(const cinder::Command& Command)
 {
-    if (!bOnlineMatch) return Simulation.command(Command);
+    if (!bOnlineMatch) return Simulation->command(Command);
     auto* Online = GetGameInstance() ? GetGameInstance()->GetSubsystem<UCinderOnlineSubsystem>() : nullptr;
     const bool bSent = Online && Online->SendCommand(Command);
     return {bSent, bSent ? "Order sent. Waiting for the server." : "Connection unavailable. Wait for the match to reconnect."};
@@ -728,7 +908,7 @@ cinder::Vec2 ACinderBattlefield::RenderPosition(const cinder::Entity& Entity) co
 {
     if (!bOnlineMatch || cinder::definition(Entity.kind).building || Entity.kind == cinder::Kind::Resource) return Entity.pos;
     const cinder::Vec2* Previous = PreviousOnlinePositions.Find(Entity.id);
-    if (!Previous || (Entity.team != 0 && !Simulation.visible(0, *Previous))) return Entity.pos;
+    if (!Previous || (Entity.team != 0 && !Simulation->visible(0, *Previous))) return Entity.pos;
     const float Alpha = FMath::Clamp(static_cast<float>((FPlatformTime::Seconds() - OnlineSnapshotAt) / OnlineSnapshotInterval), 0.0f, 1.0f);
     return {FMath::Lerp(Previous->x, Entity.pos.x, Alpha), FMath::Lerp(Previous->y, Entity.pos.y, Alpha)};
 }
@@ -742,7 +922,7 @@ void ACinderBattlefield::ReturnToMenu()
     PreviousOnlinePositions.Reset();
     // Keep the completed match counters available for diagnostics while skipping stale effects.
     ResetFeedback(false);
-    WorldEffects->Reset(Simulation.lastEffectId());
+    WorldEffects->Reset(Simulation->lastEffectId());
 }
 
 bool ACinderBattlefield::HasWorldEffects() const
@@ -769,21 +949,21 @@ void ACinderBattlefield::ResetPresentation()
     InvalidateEnvironment();
     ResourceMemory.clear();
     Scenery->Reset();
-    WorldEffects->Reset(Simulation.lastEffectId());
+    WorldEffects->Reset(Simulation->lastEffectId());
     ResetFeedback();
 }
 
 void ACinderBattlefield::ResetFeedback(bool bClearCombatCounters)
 {
-    AudioStatsSnapshot = Simulation.players()[0].stats;
+    AudioStatsSnapshot = Simulation->players()[0].stats;
     EntityMotion.Reset();
     if (bClearCombatCounters) CombatFeedback = FCinderCombatFeedbackStats{};
-    CombatFeedback.ProcessedHighWater = Simulation.lastEffectId();
+    CombatFeedback.ProcessedHighWater = Simulation->lastEffectId();
 }
 
 void ACinderBattlefield::UpdateCombatFeedback()
 {
-    const uint64 LastEffectId = Simulation.lastEffectId();
+    const uint64 LastEffectId = Simulation->lastEffectId();
     if (LastEffectId < CombatFeedback.ProcessedHighWater)
     {
         // Public Sim() permits development fixtures to replace a match directly.
@@ -811,14 +991,14 @@ void ACinderBattlefield::UpdateCombatFeedback()
 
     bool bDeath = false, bWeapon = false, bImpact = false;
     uint64 AudibleEvents = 0;
-    for (const cinder::Effect& Effect : Simulation.effects())
+    for (const cinder::Effect& Effect : Simulation->effects())
     {
         if (Effect.id <= PreviousHighWater || Effect.id > LastEffectId) continue;
         ++CombatFeedback.ConsumedEvents;
         // Healing has its own visual treatment, but there is no suitable healing audio asset.
         if (Effect.type == cinder::EffectType::Heal) continue;
         const bool bSource = Effect.type == cinder::EffectType::Weapon;
-        if (!Simulation.effectVisible(Effect, 0, bSource))
+        if (!Simulation->effectVisible(Effect, 0, bSource))
         {
             ++CombatFeedback.HiddenEvents;
             continue;
@@ -883,7 +1063,7 @@ void ACinderBattlefield::LogCombatStatus() const
 
 void ACinderBattlefield::UpdateCompletionAudio()
 {
-    const auto& Stats = Simulation.players()[0].stats;
+    const auto& Stats = Simulation->players()[0].stats;
     if (Stats.produced > AudioStatsSnapshot.produced)
         UCinderAudioSubsystem::Play(this, ECinderCue::Unit_Ready);
     if (Stats.built > AudioStatsSnapshot.built)
@@ -902,27 +1082,27 @@ void ACinderBattlefield::Tick(float DeltaSeconds)
         {
             const auto& Snapshot = *Online->LatestSnapshot();
             TMap<cinder::Id, cinder::Vec2> OldPositions;
-            for (const auto& Entity : Simulation.entities()) OldPositions.Add(Entity.id, RenderPosition(Entity));
-            const uint64 PreviousTick = Simulation.tick();
-            if (Simulation.applySnapshot(Snapshot))
+            for (const auto& Entity : Simulation->entities()) OldPositions.Add(Entity.id, RenderPosition(Entity));
+            const uint64 PreviousTick = Simulation->tick();
+            if (Simulation->applySnapshot(Snapshot))
             {
                 PreviousOnlinePositions = MoveTemp(OldPositions);
                 OnlineSnapshotInterval = FMath::Clamp(static_cast<float>(Snapshot.tick > PreviousTick ? Snapshot.tick - PreviousTick : 2) * cinder::Simulation::Step, 0.05f, 0.25f);
                 OnlineSnapshotAt = FPlatformTime::Seconds();
                 OnlineSnapshotSerial = Online->SnapshotSerial(); bNewSnapshot = true;
                 ResourceMemory.clear();
-                for (const auto& Entity : Simulation.entities())
+                for (const auto& Entity : Simulation->entities())
                     if (Entity.kind == cinder::Kind::Resource) ResourceMemory.push_back(Entity);
                 if (bPaused)
                 {
                     // Reading menus does not pause authority or accumulate old combat cues.
-                    AudioStatsSnapshot = Simulation.players()[0].stats;
+                    AudioStatsSnapshot = Simulation->players()[0].stats;
                     ResetFeedback(false);
                 }
                 else { UpdateCompletionAudio(); UpdateCombatFeedback(); }
             }
         }
-        if (bPaused && Simulation.winner() < 0) return;
+        if (bPaused && Simulation->winner() == -1) return;
         RenderTimer += DeltaSeconds;
         const bool bInterpolating = FPlatformTime::Seconds() - OnlineSnapshotAt < OnlineSnapshotInterval;
         if (bNewSnapshot || (bInterpolating && RenderTimer >= cinder::Simulation::Step))
@@ -931,13 +1111,14 @@ void ACinderBattlefield::Tick(float DeltaSeconds)
     }
     // Start/load explicitly populate the scene. Frozen matches need neither new
     // simulation poses nor repeated fog scans and instance comparisons.
-    if (bMenu || bPaused || Simulation.winner() >= 0) return;
-    Simulation.update(FMath::Min(DeltaSeconds, 0.2f));
+    if (bMenu || bPaused || Simulation->winner() != -1) return;
+    Simulation->update(FMath::Min(DeltaSeconds, 0.2f));
+    if (Training.IsActive()) Training.TickOpponent(*Simulation);
     UpdateCompletionAudio();
     UpdateCombatFeedback();
     RenderTimer += DeltaSeconds;
     // Always submit the terminal state before subsequent ticks become idle.
-    if (RenderTimer >= cinder::Simulation::Step || Simulation.winner() >= 0)
+    if (RenderTimer >= cinder::Simulation::Step || Simulation->winner() != -1)
     { RenderTimer = 0; RenderState(); }
 }
 
@@ -948,11 +1129,12 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
     const cinder::Vec2 RenderPoint = RenderPosition(AuthoritativeEntity);
     const Definition& Def = definition(Entity.kind);
     const bool Resource = Entity.kind == Kind::Resource;
+    if (!Resource && (!CinderTeamColors::IsValid(Entity.team) || Entity.team >= Simulation->playerCount())) return;
     if (Resource)
     {
-        if (!Simulation.explored(0, RenderPoint) || Entity.resource <= 0) return;
+        if (!Simulation->explored(0, RenderPoint) || Entity.resource <= 0) return;
     }
-    else if (Entity.team != 0 && !Simulation.visible(0, RenderPoint)) return;
+    else if (Entity.team != 0 && !Simulation->visible(0, RenderPoint)) return;
     FCinderEntityPose Pose;
     if (!Resource && !Def.building)
     {
@@ -961,18 +1143,18 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
         Observation.Order = Entity.order; Observation.Facing = Entity.facing;
         Observation.Cooldown = Entity.cooldown; Observation.HarvestTimer = Entity.harvestTimer;
         Observation.bReturning = Entity.returning;
-        Observation.bConstructionActive = Entity.order == Order::Construct && Simulation.constructionActive(Entity.target);
-        Observation.Tick = bOnlineMatch ? OnlinePoseSerial : Simulation.tick();
-        Observation.Time = bOnlineMatch ? Simulation.time() - OnlineSnapshotInterval + FMath::Clamp(static_cast<float>(FPlatformTime::Seconds() - OnlineSnapshotAt), 0.0f, OnlineSnapshotInterval) : Simulation.time();
+        Observation.bConstructionActive = Entity.order == Order::Construct && Simulation->constructionActive(Entity.target);
+        Observation.Tick = bOnlineMatch ? OnlinePoseSerial : Simulation->tick();
+        Observation.Time = bOnlineMatch ? Simulation->time() - OnlineSnapshotInterval + FMath::Clamp(static_cast<float>(FPlatformTime::Seconds() - OnlineSnapshotAt), 0.0f, OnlineSnapshotInterval) : Simulation->time();
         Pose = EntityMotion.Observe(Observation);
     }
     // Cosmetic transforms follow simulation time; they cannot move the authoritative XY root.
     const bool bGroundHover = Entity.kind == Kind::Scout || Entity.kind == Kind::Mender;
     const float Elevation = (Def.air ? 125.0f : bGroundHover ? 8.0f : 0.0f) + Pose.BodyZ;
-    if (Def.building && Simulation.visible(0, RenderPoint)) AddBuildingPad(Entity);
+    if (Def.building && Simulation->visible(0, RenderPoint)) AddBuildingPad(Entity);
     const float BuildScale = Def.building ? FMath::Max(0.08f, Entity.progress) : 1;
     const FQuat Facing = FRotator(0, FMath::RadiansToDegrees(Entity.facing), 0).Quaternion();
-    const int32 ModelKey = static_cast<int32>(Entity.kind) * 2 + (Resource ? 0 : Entity.team);
+    const int32 ModelKey = static_cast<int32>(Entity.kind) * TeamCount + (Resource ? 0 : Entity.team);
     if (ModelBatchIndices.IsValidIndex(ModelKey) && ModelBatchIndices[ModelKey] != INDEX_NONE)
     {
         const int32 KindIndex = static_cast<int32>(Entity.kind);
@@ -1013,7 +1195,7 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
         if (Def.building) { Offset.X *= 0.5; Offset.Y *= 0.5; Scale.X *= 0.5; Scale.Y *= 0.5; }
         Offset.Z *= BuildScale; Scale.Z *= BuildScale;
         const FVector Position(RenderPoint.x, RenderPoint.y, Elevation);
-        Batches[5 + Entity.team * 4 + Shape + (Accent ? 8 : 0)].Transforms.Add(FTransform(PosedFacing * Rotation.Quaternion(), Position + PosedFacing.RotateVector(Offset), Scale));
+        Batches[5 + Entity.team * 4 + Shape + (Accent ? TeamCount * 4 : 0)].Transforms.Add(FTransform(PosedFacing * Rotation.Quaternion(), Position + PosedFacing.RotateVector(Offset), Scale));
     };
     switch (Entity.kind)
     {
@@ -1088,16 +1270,31 @@ void ACinderBattlefield::RenderState()
     LastModelEntities = LastFallbackEntities = 0;
     for (FBatch& Batch : Batches) if (Batch.bDynamic) Batch.Transforms.Reset();
     if (Batches.IsEmpty()) return;
+    if (!IsValid(CameraRig))
+    {
+        if (UWorld* World = GetWorld())
+        {
+            if (APlayerController* Controller = World->GetFirstPlayerController())
+                CameraRig = Cast<ACinderCamera>(Controller->GetPawn());
+            if (!CameraRig)
+            {
+                TActorIterator<ACinderCamera> It(World);
+                if (It) CameraRig = *It;
+            }
+        }
+    }
+    if (CameraRig) CameraRig->SetWorldSize(Simulation->worldSize());
     RefreshEnvironment();
     RefreshTerrainSurface();
     UpdateFogTexture();
+    Batches[0].Mesh->SetVisibility(!CanyonTerrain->Update(*Simulation, FogTexture, GroundSurfaceTexture));
     EntityMotion.BeginFrame();
-    for (const auto& Entity : Simulation.entities())
+    for (const auto& Entity : Simulation->entities())
     {
         if (Entity.kind == cinder::Kind::Resource)
         {
             // Cache only observed resource state: unseen harvesting must not leak through visuals.
-            if (Simulation.visible(0, Entity.pos))
+            if (Simulation->visible(0, Entity.pos))
             {
                 const auto It = std::find_if(ResourceMemory.begin(), ResourceMemory.end(), [&](const cinder::Entity& E) { return E.id == Entity.id; });
                 if (It == ResourceMemory.end()) ResourceMemory.push_back(Entity); else *It = Entity;
@@ -1107,8 +1304,8 @@ void ACinderBattlefield::RenderState()
     }
     for (const auto& Resource : ResourceMemory) AddEntity(Resource);
     EntityMotion.EndFrame();
-    Scenery->Update(Simulation, ResourceMemory);
-    WorldEffects->Update(Simulation, 0);
+    Scenery->Update(*Simulation, ResourceMemory);
+    WorldEffects->Update(*Simulation, 0);
     FlushBatches();
 }
 
@@ -1201,20 +1398,26 @@ bool ACinderBattlefield::SaveMatch() const
     const FString Directory = FPaths::ProjectSavedDir() / TEXT("Matches");
     IFileManager::Get().MakeDirectory(*Directory, true);
     const FString Filename = IFileManager::Get().ConvertToAbsolutePathForExternalAppForWrite(*(Directory / TEXT("skirmish.cinder")));
-    return Simulation.save(TCHAR_TO_UTF8(*Filename));
+    return Simulation->save(TCHAR_TO_UTF8(*Filename));
 }
 
 bool ACinderBattlefield::LoadMatch()
 {
     if (bOnlineMatch) return false;
     const FString Filename = IFileManager::Get().ConvertToAbsolutePathForExternalAppForRead(*(FPaths::ProjectSavedDir() / TEXT("Matches/skirmish.cinder")));
+    return LoadMatchFrom(Filename);
+}
+
+bool ACinderBattlefield::LoadMatchFrom(const FString& Filename)
+{
+    if (bOnlineMatch) return false;
     // A completed online view is still a replica. Load offline state separately,
     // so a failed load preserves the current view and success restores local rules.
     cinder::Simulation Loaded;
     if (!Loaded.load(TCHAR_TO_UTF8(*Filename))) return false;
-    Simulation = MoveTemp(Loaded);
+    *Simulation = MoveTemp(Loaded);
     SetActorTickEnabled(true);
     ResetPresentation();
-    CurrentMap = Simulation.config().map;
+    CurrentMap = Simulation->config().map;
     bMenu = false; bPaused = false; RenderState(); return true;
 }

@@ -4,7 +4,7 @@
 #include <unordered_map>
 
 namespace cinder::net {
-constexpr std::uint32_t ProtocolVersion = 1;
+constexpr std::uint32_t ProtocolVersion = 7;
 constexpr std::size_t MaxMessageBytes = 1024 * 1024;
 constexpr std::size_t MaxCommandUnits = 256;
 struct Snapshot;
@@ -26,6 +26,7 @@ struct Snapshot {
     Config config;
     std::uint64_t tick = 0, lastEffectId = 0;
     int winner = -1;
+    std::uint8_t eliminatedMask = 0;
     Player player;
     std::vector<Entity> entities;
     std::vector<Obstacle> obstacles;

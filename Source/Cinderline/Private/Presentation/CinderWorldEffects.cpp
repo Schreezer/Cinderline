@@ -1,4 +1,5 @@
 #include "Presentation/CinderWorldEffects.h"
+#include "Presentation/CinderTeamColors.h"
 
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
@@ -40,10 +41,11 @@ FTransform BeamTransform(FVector Start, FVector End, float Width)
 
 bool AreaVisible(const cinder::Simulation& Simulation, int32 Team, cinder::Vec2 Point, float Radius)
 {
-    constexpr float Cell = cinder::Simulation::WorldSize / cinder::Simulation::FogSize;
+    const float WorldSize = Simulation.worldSize();
+    const float Cell = WorldSize / cinder::Simulation::FogSize;
     if (Point.x - Radius < 0 || Point.y - Radius < 0
-        || Point.x + Radius >= cinder::Simulation::WorldSize
-        || Point.y + Radius >= cinder::Simulation::WorldSize) return false;
+        || Point.x + Radius >= WorldSize
+        || Point.y + Radius >= WorldSize) return false;
     const int32 MinX = FMath::FloorToInt((Point.x - Radius) / Cell);
     const int32 MaxX = FMath::FloorToInt((Point.x + Radius) / Cell);
     const int32 MinY = FMath::FloorToInt((Point.y - Radius) / Cell);
@@ -113,13 +115,13 @@ void UCinderWorldEffects::Initialize(USceneComponent* AttachRoot, UStaticMesh* S
     Materials.Reserve(static_cast<int32>(EBatch::Count));
     Pending.SetNum(static_cast<int32>(EBatch::Count));
     Submitted.SetNum(static_cast<int32>(EBatch::Count));
-    CreateBatch(AttachRoot, Sphere, Emissive, FLinearColor(0.18f, 1.0f, 0.76f), 5.0f, 1.0f);
-    CreateBatch(AttachRoot, Sphere, Emissive, FLinearColor(1.0f, 0.16f, 0.055f), 5.0f, 1.0f);
+    for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
+        CreateBatch(AttachRoot, Sphere, Emissive, CinderTeamColors::Accent(Team), 5.0f, 1.0f);
     CreateBatch(AttachRoot, Sphere, Emissive, FLinearColor(1.0f, 0.48f, 0.08f), 7.0f, 1.0f);
     CreateBatch(AttachRoot, Cone, Emissive, FLinearColor(1.0f, 0.55f, 0.10f), 6.0f, 1.0f);
     CreateBatch(AttachRoot, Sphere, Emissive, FLinearColor(0.25f, 1.0f, 0.50f), 4.5f, 1.0f);
-    CreateBatch(AttachRoot, Cylinder, Emissive, FLinearColor(0.10f, 1.0f, 0.76f), 5.5f, 1.0f);
-    CreateBatch(AttachRoot, Cylinder, Emissive, FLinearColor(1.0f, 0.12f, 0.035f), 5.5f, 1.0f);
+    for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
+        CreateBatch(AttachRoot, Cylinder, Emissive, CinderTeamColors::Color(Team), 5.5f, 1.0f);
     CreateBatch(AttachRoot, Cylinder, Emissive, FLinearColor(0.20f, 1.0f, 0.45f), 4.0f, 1.0f);
     CreateBatch(AttachRoot, Plane, Dust, FLinearColor(0.38f, 0.25f, 0.16f), 0.0f, 0.42f);
     bInitialized = Components.Num() == static_cast<int32>(EBatch::Count);
@@ -148,7 +150,8 @@ bool UCinderWorldEffects::Add(EBatch Batch, const FTransform& Transform)
 
 void UCinderWorldEffects::Update(const cinder::Simulation& Simulation, int32 ViewerTeam)
 {
-    if (!bInitialized || ViewerTeam < 0 || ViewerTeam > 1) return;
+    if (!bInitialized || ViewerTeam < 0 || ViewerTeam >= Simulation.playerCount()
+        || ViewerTeam >= cinder::Simulation::MaxPlayers) return;
     const uint64 LatestEffectId = Simulation.lastEffectId();
     if (LatestEffectId < LastSimulationEffectId)
     {
@@ -182,6 +185,7 @@ void UCinderWorldEffects::Update(const cinder::Simulation& Simulation, int32 Vie
     {
         const cinder::Effect& Effect = *It;
         if (Effect.id <= SuppressedThroughId || Effect.life <= 0 || Effect.duration <= 0) continue;
+        if (Effect.team < 0 || Effect.team >= Simulation.playerCount()) continue;
         const bool SourceVisible = Simulation.effectVisible(Effect, ViewerTeam, true);
         const bool TargetVisible = Simulation.effectVisible(Effect, ViewerTeam, false);
         const bool LinkVisible = Simulation.effectLinkVisible(Effect, ViewerTeam);
@@ -194,8 +198,8 @@ void UCinderWorldEffects::Update(const cinder::Simulation& Simulation, int32 Vie
         const float Fade = FMath::Square(1.0f - Age);
         const FVector From = EffectPoint(Effect.from, Effect.sourceKind);
         const FVector To = EffectPoint(Effect.to, Effect.targetKind);
-        const EBatch TeamGlow = Effect.team == 0 ? EBatch::FriendlyGlow : EBatch::EnemyGlow;
-        const EBatch TeamBeam = Effect.team == 0 ? EBatch::FriendlyBeam : EBatch::EnemyBeam;
+        const EBatch TeamGlow = static_cast<EBatch>(static_cast<uint8>(EBatch::TeamGlow0) + Effect.team);
+        const EBatch TeamBeam = static_cast<EBatch>(static_cast<uint8>(EBatch::TeamBeam0) + Effect.team);
 
         switch (Effect.type)
         {
@@ -296,9 +300,10 @@ void UCinderWorldEffects::Update(const cinder::Simulation& Simulation, int32 Vie
     for (const cinder::Entity& Entity : Simulation.entities())
     {
         if (!Entity.alive() || Entity.kind == cinder::Kind::Resource) continue;
+        if (Entity.team < 0 || Entity.team >= Simulation.playerCount()) continue;
         if (Entity.team != ViewerTeam && !Simulation.visible(ViewerTeam, Entity.pos)) continue;
         const cinder::Definition& Definition = cinder::definition(Entity.kind);
-        const EBatch TeamGlow = Entity.team == 0 ? EBatch::FriendlyGlow : EBatch::EnemyGlow;
+        const EBatch TeamGlow = static_cast<EBatch>(static_cast<uint8>(EBatch::TeamGlow0) + Entity.team);
         if (Definition.air && AreaVisible(Simulation, ViewerTeam, Entity.pos, 18.0f))
         {
             const FVector Forward(FMath::Cos(Entity.facing), FMath::Sin(Entity.facing), 0);

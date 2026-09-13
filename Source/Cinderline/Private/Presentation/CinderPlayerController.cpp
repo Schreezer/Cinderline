@@ -29,6 +29,10 @@ FString TutorialPreferencesPath()
 {
     return FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("Config/Training.ini"));
 }
+FString SkirmishPreferencesPath()
+{
+    return FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("Config/Skirmish.ini"));
+}
 float TouchScale(const APlayerController* Controller)
 {
     int W = 0, H = 0; Controller->GetViewportSize(W, H);
@@ -39,6 +43,53 @@ float MouseScale(const APlayerController* Controller)
     const UWorld* World = Controller->GetWorld();
     const UGameViewportClient* Viewport = World ? World->GetGameViewport() : nullptr;
     return Viewport ? FMath::Max(1.0f, Viewport->GetDPIScale()) : 1.0f;
+}
+
+FString TutorialFocusFeedback(ECinderTutorialStep Step, const cinder::Entity* Entity, bool bTouch)
+{
+    switch (Step)
+    {
+    case ECinderTutorialStep::Camera:
+        return TEXT("Base shown. Pan or zoom to continue.");
+    case ECinderTutorialStep::SelectWorker:
+        return TEXT("Drudge selected. Give it an ore order.");
+    case ECinderTutorialStep::GatherOre:
+        return bTouch ? TEXT("Drudge selected. Tap an explored ore deposit.")
+            : TEXT("Drudge selected. Secondary-click an explored ore deposit.");
+    case ECinderTutorialStep::TrainWorker:
+        return TEXT("Open TRAIN and queue a Drudge. Your Anchor will receive the order.");
+    case ECinderTutorialStep::BuildKiln:
+        return Entity && Entity->kind == cinder::Kind::Foundry
+            ? TEXT("Kiln site selected. Keep a Drudge assigned.")
+            : TEXT("Open BUILD to place the Kiln. A Drudge will be assigned.");
+    case ECinderTutorialStep::TrainEmbers:
+        return TEXT("Open TRAIN and queue three Embers.");
+    case ECinderTutorialStep::BuildSiphon:
+        return Entity && Entity->kind == cinder::Kind::Processor
+            ? TEXT("Siphon site selected. Keep a Drudge assigned.")
+            : TEXT("Open BUILD to place the Siphon. A Drudge will be assigned.");
+    case ECinderTutorialStep::Scout:
+        return Entity ? TEXT("Skim selected. Send it toward the scout marker.")
+            : TEXT("Open TRAIN and queue a Skim.");
+    case ECinderTutorialStep::AttackMove:
+        return Entity ? TEXT("Ember selected. Use ATTACK toward the combat marker.")
+            : TEXT("Combat target shown. Train a replacement Ember.");
+    case ECinderTutorialStep::BuildResonator:
+        return Entity && Entity->kind == cinder::Kind::Laboratory
+            ? TEXT("Resonator site selected. Keep a Drudge assigned.")
+            : TEXT("Open BUILD to place the Resonator. A Drudge will be assigned.");
+    case ECinderTutorialStep::ResearchWeapons:
+        return TEXT("Open RESEARCH and queue WEAPONS.");
+    case ECinderTutorialStep::Reinforce:
+        return TEXT("Kiln selected. Set its rally, then open TRAIN for six Embers.");
+    case ECinderTutorialStep::Defend:
+        return TEXT("Defense marker shown. Open ARMY, choose ALL, then use ATTACK here.");
+    case ECinderTutorialStep::DestroyAnchor:
+        return TEXT("Enemy Anchor shown. Attack it with your army.");
+    case ECinderTutorialStep::Complete:
+        return TEXT("Your base is shown.");
+    }
+    return TEXT("Objective shown.");
 }
 }
 
@@ -55,8 +106,18 @@ void ACinderPlayerController::BeginPlay()
     FCoreDelegates::ApplicationHasEnteredForegroundDelegate.AddUObject(this, &ACinderPlayerController::ApplicationHasEnteredForeground);
     Rig = Cast<ACinderCamera>(GetPawn());
     if (TActorIterator<ACinderBattlefield> It(GetWorld()); It) Battle = *It;
-    if (GConfig && !FApp::IsUnattended() && !GIsAutomationTesting)
-        GConfig->GetBool(TEXT("Training"), TEXT("Completed"), bTutorialCompleted, TutorialPreferencesPath());
+    // Only an interactive local game controller may arm the first-run offer.
+    // Tests and previews can opt in explicitly through LoadTutorialPreference.
+    bTutorialOfferResolved = true;
+    const bool bEligibleForOffer = GConfig && !FApp::IsUnattended() && !GIsAutomationTesting
+        && IsLocalController() && GetNetMode() != NM_DedicatedServer
+        && GetWorld() && GetWorld()->IsGameWorld();
+    if (bEligibleForOffer)
+    {
+        LoadTutorialPreference(TutorialPreferencesPath());
+        LoadDifficultyPreference(SkirmishPreferencesPath());
+        LoadMatchLengthPreference(SkirmishPreferencesPath());
+    }
 }
 
 void ACinderPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -74,8 +135,81 @@ UCinderOnlineSubsystem* ACinderPlayerController::Online() const
     return GetGameInstance() ? GetGameInstance()->GetSubsystem<UCinderOnlineSubsystem>() : nullptr;
 }
 
+void ACinderPlayerController::LoadTutorialPreference(const FString& Filename)
+{
+    FConfigFile Settings;
+    Settings.Read(Filename);
+    bool bCompleted = false;
+    bool bOfferResolved = false;
+    Settings.GetBool(TEXT("Training"), TEXT("Completed"), bCompleted);
+    Settings.GetBool(TEXT("Training"), TEXT("OfferResolved"), bOfferResolved);
+    bTutorialCompleted = bCompleted;
+    // Completed is the legacy migration marker: players who already finished
+    // training should never receive the new first-run invitation.
+    bTutorialOfferResolved = bCompleted || bOfferResolved;
+}
+
+void ACinderPlayerController::SaveTutorialPreference(const FString& Filename) const
+{
+    IFileManager::Get().MakeDirectory(*FPaths::GetPath(Filename), true);
+    FConfigFile Settings;
+    Settings.Read(Filename);
+    Settings.SetBool(TEXT("Training"), TEXT("Completed"), bTutorialCompleted);
+    Settings.SetBool(TEXT("Training"), TEXT("OfferResolved"), bTutorialOfferResolved);
+    Settings.Write(Filename);
+}
+
+void ACinderPlayerController::LoadDifficultyPreference(const FString& Filename)
+{
+    FConfigFile Settings;
+    Settings.Read(Filename);
+    int32 Stored = static_cast<int32>(cinder::AIDifficulty::Normal);
+    if (Settings.GetInt(TEXT("Skirmish"), TEXT("AIDifficulty"), Stored))
+        MenuDifficulty = Stored >= 0
+            ? cinder::aiDifficultyAt(static_cast<std::size_t>(Stored))
+            : cinder::AIDifficulty::Normal;
+}
+
+void ACinderPlayerController::SaveDifficultyPreference(const FString& Filename) const
+{
+    IFileManager::Get().MakeDirectory(*FPaths::GetPath(Filename), true);
+    FConfigFile Settings;
+    Settings.Read(Filename);
+    const FString Stored = FString::FromInt(static_cast<int32>(MenuDifficulty));
+    Settings.SetString(TEXT("Skirmish"), TEXT("AIDifficulty"), *Stored);
+    Settings.Write(Filename);
+}
+
+void ACinderPlayerController::LoadMatchLengthPreference(const FString& Filename)
+{
+    MenuMatchLength = cinder::MatchLength::Standard;
+    FConfigFile Settings;
+    Settings.Read(Filename);
+    FString Stored;
+    if (!Settings.GetString(TEXT("Skirmish"), TEXT("MatchLength"), Stored)) return;
+    Stored.TrimStartAndEndInline();
+    // Exact enum tokens keep malformed or overflowing values from becoming Short.
+    for (int32 Index = 0; Index < static_cast<int32>(cinder::MatchLength::Count); ++Index)
+        if (Stored == FString::FromInt(Index))
+        {
+            MenuMatchLength = cinder::matchLengthAt(Index);
+            return;
+        }
+}
+
+void ACinderPlayerController::SaveMatchLengthPreference(const FString& Filename) const
+{
+    IFileManager::Get().MakeDirectory(*FPaths::GetPath(Filename), true);
+    FConfigFile Settings;
+    Settings.Read(Filename);
+    const FString Stored = FString::FromInt(static_cast<int32>(MenuMatchLength));
+    Settings.SetString(TEXT("Skirmish"), TEXT("MatchLength"), *Stored);
+    Settings.Write(Filename);
+}
+
 void ACinderPlayerController::OpenOnlinePanel()
 {
+    if (IsTutorialOfferPending()) return;
     if (OnlinePanel || !Online() || !GetWorld() || !GetWorld()->GetGameViewport()) return;
     if (bOnlineLeavePending || bTutorialRestartPending) return;
     if (Battle && !Battle->IsMenu() && !Battle->IsOnlineMatch()) return;
@@ -104,6 +238,9 @@ void ACinderPlayerController::CloseOnlinePanel()
 
 void ACinderPlayerController::PollOnlineState()
 {
+    // Keep the first-run decision visible. Starting a server snapshot here
+    // would hide the menu while the modal continues to block every action.
+    if (IsTutorialOfferPending()) return;
     auto* Session = Online();
     if (!Session || !Battle) return;
     if (Session->HasMatch() && Session->LatestSnapshot() && !Battle->IsOnlineMatch())
@@ -112,6 +249,7 @@ void ACinderPlayerController::PollOnlineState()
         {
             CloseOnlinePanel(); bHelpOpen = bTutorialRestartPending = bOnlineLeavePending = false;
             ResetInteraction(true); OnlineFeedbackSerial = Session->FeedbackSerial();
+            bOnlineEliminationObserved = false;
             Home();
             Notify(TEXT("Online match started. Menus do not pause the game."));
         }
@@ -121,6 +259,13 @@ void ACinderPlayerController::PollOnlineState()
         OnlineFeedbackSerial = Session->FeedbackSerial();
         Notify(Session->OrderFeedback());
         if (!Battle->IsPaused()) UCinderAudioSubsystem::Play(this, Session->LastOrderAccepted() ? ECinderCue::Order_Ack : ECinderCue::Order_Invalid);
+    }
+    if (Battle->IsOnlineMatch() && Session->IsEliminated() && !bOnlineEliminationObserved)
+    {
+        bOnlineEliminationObserved = true;
+        bOnlineLeavePending = bOnlineSurrenderPending = false;
+        ResetInteraction(true);
+        Notify(TEXT("You are eliminated. The remaining players can finish the match; you can leave at any time."));
     }
 }
 
@@ -140,6 +285,8 @@ void ACinderPlayerController::SetupInputComponent()
     InputComponent->BindKey(EKeys::Tab, IE_Pressed, this, &ACinderPlayerController::HelpSectionShortcut);
     InputComponent->BindKey(EKeys::O, IE_Pressed, this, &ACinderPlayerController::OpenOnlinePanel);
     InputComponent->BindKey(EKeys::A, IE_Pressed, this, &ACinderPlayerController::AttackMode);
+    InputComponent->BindKey(EKeys::M, IE_Pressed, this, &ACinderPlayerController::MoveMode);
+    InputComponent->BindKey(EKeys::D, IE_Pressed, this, &ACinderPlayerController::DefendMode);
     InputComponent->BindKey(EKeys::S, IE_Pressed, this, &ACinderPlayerController::Stop);
     InputComponent->BindKey(EKeys::H, IE_Pressed, this, &ACinderPlayerController::Hold);
     InputComponent->BindKey(EKeys::B, IE_Pressed, this, &ACinderPlayerController::ToggleBuild);
@@ -148,6 +295,9 @@ void ACinderPlayerController::SetupInputComponent()
     InputComponent->BindKey(EKeys::Down, IE_Pressed, this, &ACinderPlayerController::ArrowDown);
     InputComponent->BindKey(EKeys::Left, IE_Pressed, this, &ACinderPlayerController::ArrowLeft);
     InputComponent->BindKey(EKeys::Right, IE_Pressed, this, &ACinderPlayerController::ArrowRight);
+    InputComponent->BindKey(EKeys::One, IE_Pressed, this, &ACinderPlayerController::SquadOne);
+    InputComponent->BindKey(EKeys::Two, IE_Pressed, this, &ACinderPlayerController::SquadTwo);
+    InputComponent->BindKey(EKeys::Three, IE_Pressed, this, &ACinderPlayerController::SquadThree);
     InputComponent->BindTouch(IE_Pressed, this, &ACinderPlayerController::TouchPressed);
     InputComponent->BindTouch(IE_Released, this, &ACinderPlayerController::TouchReleased);
 }
@@ -174,6 +324,23 @@ void ACinderPlayerController::PanScreen(FVector2D Previous, FVector2D Current)
     }
 }
 
+bool ACinderPlayerController::ProjectTutorialTarget(cinder::Id Id, cinder::Vec2 Point, FVector2D& Out) const
+{
+    if (!Battle || !Battle->Tutorial().IsActive()) return false;
+    float Z = 0;
+    if (Id)
+    {
+        const cinder::Entity* Entity = Battle->Sim().find(Id);
+        if (!Entity || !Entity->alive() || (Entity->team != 0 && !Battle->Sim().visible(0, Entity->pos))) return false;
+        Point = Battle->RenderPosition(*Entity);
+        Z = cinder::definition(Entity->kind).air ? 125 : 25;
+    }
+    if (!ProjectWorldLocationToScreen(FVector(Point.x, Point.y, Z), Out)) return false;
+    if (!Id) return true;
+    const cinder::Entity* Pick = PickEntityAtScreen(Out);
+    return Pick && Pick->id == Id;
+}
+
 void ACinderPlayerController::PlayerTick(float DeltaSeconds)
 {
     Super::PlayerTick(DeltaSeconds);
@@ -184,7 +351,7 @@ void ACinderPlayerController::PlayerTick(float DeltaSeconds)
     if (!Battle || !Rig) return;
     FeedbackLife -= DeltaSeconds;
     if (FeedbackLife <= 0) FeedbackText.Empty();
-    Selected.erase(std::remove_if(Selected.begin(), Selected.end(), [&](cinder::Id Id) { const auto* E = Battle->Sim().find(Id); return !E || !E->alive(); }), Selected.end());
+    PruneArmyControlState();
     UpdateTutorial();
 
     float X1 = 0, Y1 = 0, X2 = 0, Y2 = 0;
@@ -196,6 +363,7 @@ void ACinderPlayerController::PlayerTick(float DeltaSeconds)
         // Focus loss may suppress release callbacks; cancel rather than issuing a stale order.
         bPointerDown = false; bDragging = false; bPointerTouch = false; bLongPress = false;
         bPointerCameraPan = bPointerPlacement = false;
+        ClearPointerTapIntent();
     }
     if (Down1 && Down2)
     {
@@ -208,7 +376,7 @@ void ACinderPlayerController::PlayerTick(float DeltaSeconds)
             if (FMath::Abs(PreviousPinch - Pinch) > 1) Battle->Tutorial().CameraInput();
         }
         PreviousCentroid = Centroid; PreviousPinch = Pinch;
-        bTwoDown = true; bMultiTouch = true;
+        bTwoDown = true; bMultiTouch = true; ClearPointerTapIntent();
     }
     else
     {
@@ -273,10 +441,28 @@ void ACinderPlayerController::NudgeArrow(int Direction)
     ArrowPanCredit[Direction] = NudgeSeconds;
 }
 
+void ACinderPlayerController::SquadShortcut(int32 Index)
+{
+    const bool bAssign = IsInputKeyDown(EKeys::LeftControl) || IsInputKeyDown(EKeys::RightControl)
+        || IsInputKeyDown(EKeys::LeftCommand) || IsInputKeyDown(EKeys::RightCommand);
+    if (bAssign) AssignSquad(Index); else RecallSquad(Index);
+}
+
+void ACinderPlayerController::SquadOne() { SquadShortcut(0); }
+void ACinderPlayerController::SquadTwo() { SquadShortcut(1); }
+void ACinderPlayerController::SquadThree() { SquadShortcut(2); }
+
+void ACinderPlayerController::ClearPointerTapIntent()
+{
+    PointerSelectionTarget = PointerContextTarget = 0;
+    bPointerWorldTapLatched = false;
+}
+
 void ACinderPlayerController::PointerPressed(FVector2D Position, bool Touch, bool CameraPan)
 {
     UE_LOG(LogCinderInput, Verbose, TEXT("Press at %.1f,%.1f touch=%d"), Position.X, Position.Y, Touch);
     bPointerDown = true; bPointerTouch = Touch;
+    ClearPointerTapIntent();
     PointerStart = PointerLast = Position; PointerHeld = 0; bDragging = false; bLongPress = false;
     auto* HUD = Cast<ACinderHUD>(GetHUD());
     bPointerUI = OnlinePanel.IsValid() || bOnlineLeavePending || bHelpOpen || bTutorialRestartPending || (HUD && HUD->ContainsUI(Position));
@@ -285,6 +471,13 @@ void ACinderPlayerController::PointerPressed(FVector2D Position, bool Touch, boo
     bPointerCameraPan = !Touch && CameraPan && !bPointerUI && IsGameplayActive();
     bPointerPlacement = !bPointerCameraPan && !bPointerUI && bBuildMode && IsGameplayActive();
     bGestureSelect = !bPointerCameraPan && (!Touch || bBoxSelect);
+    if (!bPointerCameraPan && !bPointerUI && !bBuildMode && !HasDestinationMode() && IsGameplayActive())
+    {
+        const cinder::Entity* Hit = PickEntityAtScreen(Position);
+        bPointerWorldTapLatched = true;
+        if (Hit && IsOwnedSelectable(Hit->id)) PointerSelectionTarget = Hit->id;
+        else PointerContextTarget = Hit ? Hit->id : 0;
+    }
     GroundPoint(Position, Placement);
 }
 
@@ -300,6 +493,7 @@ void ACinderPlayerController::PointerMoved(FVector2D Position, float DeltaSecond
     }
     const float Threshold = bPointerTouch ? 10.0f * TouchScale(this) : 7.0f * MouseScale(this);
     if (FVector2D::Distance(Position, PointerStart) > Threshold) bDragging = true;
+    if (bDragging) ClearPointerTapIntent();
     if (bDragging && !bGestureSelect && !bPointerUI && IsGameplayActive()) PanScreen(PointerLast, Position);
     PointerLast = Position;
     GroundPoint(Position, Placement);
@@ -308,8 +502,14 @@ void ACinderPlayerController::PointerMoved(FVector2D Position, float DeltaSecond
 void ACinderPlayerController::PointerReleased(FVector2D Position)
 {
     UE_LOG(LogCinderInput, Verbose, TEXT("Release at %.1f,%.1f down=%d ui=%d dragging=%d multi=%d"), Position.X, Position.Y, bPointerDown, bPointerUI, bDragging, bMultiTouch);
-    if (!bPointerDown) return;
+    if (!bPointerDown) { ClearPointerTapIntent(); return; }
     PointerLast = Position;
+    const float DragThreshold = bPointerTouch ? 10.0f * TouchScale(this) : 7.0f * MouseScale(this);
+    if (FVector2D::Distance(Position, PointerStart) > DragThreshold)
+    {
+        bDragging = true;
+        ClearPointerTapIntent();
+    }
     if (bPointerCameraPan || (bPointerPlacement && (bDragging || !bBuildMode)) || (bLongPress && !bDragging))
     {
         // Consume even a click below the drag threshold, without changing modes.
@@ -317,6 +517,7 @@ void ACinderPlayerController::PointerReleased(FVector2D Position)
         // arms box selection without issuing the terrain command underneath it.
         bPointerDown = bDragging = bPointerTouch = bLongPress = false;
         bPointerCameraPan = bPointerPlacement = false;
+        ClearPointerTapIntent();
         return;
     }
     if (!bMultiTouch)
@@ -334,6 +535,7 @@ void ACinderPlayerController::PointerReleased(FVector2D Position)
     }
     bPointerDown = false; bDragging = false; bPointerTouch = false; bLongPress = false;
     bPointerCameraPan = bPointerPlacement = false;
+    ClearPointerTapIntent();
 }
 
 void ACinderPlayerController::MousePressed()
@@ -346,7 +548,7 @@ void ACinderPlayerController::MouseReleased()
 {
     float X, Y;
     if (GetMousePosition(X, Y)) PointerReleased(FVector2D(X, Y));
-    else { bPointerDown = false; bDragging = false; bLongPress = false; bPointerCameraPan = bPointerPlacement = false; }
+    else { bPointerDown = false; bDragging = false; bLongPress = false; bPointerCameraPan = bPointerPlacement = false; ClearPointerTapIntent(); }
 }
 void ACinderPlayerController::MouseContext()
 {
@@ -372,7 +574,8 @@ void ACinderPlayerController::TouchPressed(ETouchIndex::Type Finger, FVector Loc
     }
     else
     {
-        bMultiTouch = true; bLongPress = false; bGestureSelect = false;
+        ClearDestinationModes();
+        bMultiTouch = true; bLongPress = false; bGestureSelect = false; ClearPointerTapIntent();
         if (const auto* HUD = Cast<ACinderHUD>(GetHUD()); HUD && HUD->ContainsUI(Position)) bPointerUI = true;
     }
 }
@@ -390,6 +593,80 @@ void ACinderPlayerController::ApplicationWillEnterBackground()
 void ACinderPlayerController::ApplicationHasEnteredForeground()
 {
     ResetInteraction(false);
+    if (auto* Session = Online()) Session->RecoverConnection();
+}
+
+cinder::Id ACinderPlayerController::PickProjectedEntity(FVector2D Point,
+    const std::vector<FProjectedPickCandidate>& Candidates)
+{
+    cinder::Id Picked = 0;
+    float BestDistance = TNumericLimits<float>::Max();
+    for (const FProjectedPickCandidate& Candidate : Candidates)
+    {
+        if (!Candidate.Id || Candidate.Radius <= 0) continue;
+        const float Distance = FVector2D::Distance(Point, Candidate.Center);
+        if (Distance >= Candidate.Radius) continue;
+        if (Distance < BestDistance || (FMath::IsNearlyEqual(Distance, BestDistance) && Candidate.Id < Picked))
+        {
+            Picked = Candidate.Id;
+            BestDistance = Distance;
+        }
+    }
+    return Picked;
+}
+
+const cinder::Entity* ACinderPlayerController::PickEntityAtScreen(FVector2D Point) const
+{
+    if (!Battle) return nullptr;
+    std::vector<FProjectedPickCandidate> Candidates;
+    Candidates.reserve(Battle->Sim().entities().size());
+    const float PointerRadius = bPointerTouch ? 22.0f * TouchScale(this) : 24.0f * MouseScale(this);
+    for (const cinder::Entity& Entity : Battle->Sim().entities())
+    {
+        if (!Entity.alive() || (Entity.team != 0 && !Battle->Sim().visible(0, Entity.pos))) continue;
+        const cinder::Vec2 RenderPoint = Battle->RenderPosition(Entity);
+        const float Z = cinder::definition(Entity.kind).air ? 125.0f : 25.0f;
+        FVector2D Center;
+        if (!ProjectWorldLocationToScreen(FVector(RenderPoint.x, RenderPoint.y, Z), Center)) continue;
+        float HitRadius = PointerRadius;
+        const float Radius = cinder::definition(Entity.kind).radius;
+        FVector2D EdgeX, EdgeY;
+        if (ProjectWorldLocationToScreen(FVector(RenderPoint.x + Radius, RenderPoint.y, Z), EdgeX)
+            && ProjectWorldLocationToScreen(FVector(RenderPoint.x, RenderPoint.y + Radius, Z), EdgeY))
+            HitRadius = FMath::Max(HitRadius, static_cast<float>(FMath::Max(
+                FVector2D::Distance(Center, EdgeX), FVector2D::Distance(Center, EdgeY))));
+        Candidates.push_back({Entity.id, Center, HitRadius});
+    }
+    return Battle->Sim().find(PickProjectedEntity(Point, Candidates));
+}
+
+bool ACinderPlayerController::IsOwnedSelectable(cinder::Id Id) const
+{
+    if (!Battle) return false;
+    const cinder::Entity* Entity = Battle->Sim().find(Id);
+    return Entity && Entity->alive() && Entity->team == 0 && Entity->kind != cinder::Kind::Resource;
+}
+
+void ACinderPlayerController::PruneArmyControlState()
+{
+    if (Battle && (Battle->Sim().winner() != -1 || Battle->Sim().eliminated(0)))
+        ClearDestinationModes();
+    auto Prune = [this](std::vector<cinder::Id>& Ids, bool bCombatOnly)
+    {
+        Ids.erase(std::remove_if(Ids.begin(), Ids.end(), [this, bCombatOnly](cinder::Id Id)
+        {
+            if (!IsOwnedSelectable(Id)) return true;
+            const cinder::Entity* Entity = Battle->Sim().find(Id);
+            return bCombatOnly && (cinder::definition(Entity->kind).building || Entity->kind == cinder::Kind::Worker);
+        }), Ids.end());
+        std::vector<cinder::Id> Unique;
+        Unique.reserve(Ids.size());
+        for (cinder::Id Id : Ids)
+            if (std::find(Unique.begin(), Unique.end(), Id) == Unique.end()) Unique.push_back(Id);
+        Ids = std::move(Unique);
+    };
+    Prune(Selected, false);
+    for (std::vector<cinder::Id>& Group : Squads) Prune(Group, true);
 }
 
 void ACinderPlayerController::SelectRectangle()
@@ -405,13 +682,33 @@ void ACinderPlayerController::SelectRectangle()
         if (ProjectWorldLocationToScreen(FVector(RenderPoint.x, RenderPoint.y, cinder::definition(E.kind).air ? 125 : 25), Screen) && Bounds.IsInside(Screen)) Selected.push_back(E.id);
     }
     bBoxSelect = false;
+    ClearDestinationModes();
     if (!Selected.empty()) UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
     Notify(FString::Printf(TEXT("%d units selected"), static_cast<int>(Selected.size())));
+}
+
+bool ACinderPlayerController::SelectOwnedEntity(cinder::Id Id)
+{
+    if (!IsGameplayActive() || !IsOwnedSelectable(Id)) return false;
+    ResetInteraction(false);
+    Selected = {Id};
+    return true;
+}
+
+void ACinderPlayerController::SelectOwnedKind(cinder::Kind Kind)
+{
+    if (!IsGameplayActive()) return;
+    ResetInteraction(false);
+    Selected.clear();
+    for (const cinder::Entity& Entity : Battle->Sim().entities())
+        if (Entity.alive() && Entity.team == 0 && Entity.kind == Kind && Entity.kind != cinder::Kind::Resource)
+            Selected.push_back(Entity.id);
 }
 
 void ACinderPlayerController::SelectKind(cinder::Kind Kind)
 {
     if (!IsGameplayActive()) return;
+    ResetInteraction(false);
     Selected.clear();
     int W, H; GetViewportSize(W, H);
     for (const auto& E : Battle->Sim().entities())
@@ -422,117 +719,255 @@ void ACinderPlayerController::SelectKind(cinder::Kind Kind)
         if (ProjectWorldLocationToScreen(FVector(RenderPoint.x, RenderPoint.y, cinder::definition(E.kind).air ? 125 : 25), Screen) && Screen.X >= 0 && Screen.Y >= 0 && Screen.X <= W && Screen.Y <= H) Selected.push_back(E.id);
     }
 }
+
 void ACinderPlayerController::SelectArmy()
 {
     if (!IsGameplayActive()) return;
+    ResetInteraction(false);
     Selected.clear();
     for (const auto& E : Battle->Sim().entities())
         if (E.team == 0 && E.alive() && !cinder::definition(E.kind).building && E.kind != cinder::Kind::Worker) Selected.push_back(E.id);
     Notify(FString::Printf(TEXT("Army selected: %d"), static_cast<int>(Selected.size())));
 }
 
+bool ACinderPlayerController::AssignSquad(int32 Index)
+{
+    if (!IsGameplayActive() || Index < 0 || Index >= SquadCount) return false;
+    PruneArmyControlState();
+    std::vector<cinder::Id> Members;
+    for (cinder::Id Id : Selected)
+    {
+        const cinder::Entity* Entity = Battle->Sim().find(Id);
+        if (Entity && Entity->alive() && Entity->team == 0 && !cinder::definition(Entity->kind).building
+            && Entity->kind != cinder::Kind::Worker && Entity->kind != cinder::Kind::Resource)
+            Members.push_back(Id);
+    }
+    if (Members.empty())
+    {
+        Notify(TEXT("Select combat units before assigning a squad."));
+        return false;
+    }
+    for (std::vector<cinder::Id>& Group : Squads)
+        Group.erase(std::remove_if(Group.begin(), Group.end(), [&Members](cinder::Id Id)
+        {
+            return std::find(Members.begin(), Members.end(), Id) != Members.end();
+        }), Group.end());
+    Squads[Index] = std::move(Members);
+    Notify(FString::Printf(TEXT("Squad %c assigned: %d"), TCHAR('A' + Index), static_cast<int32>(Squads[Index].size())));
+    return true;
+}
+
+bool ACinderPlayerController::RecallSquad(int32 Index)
+{
+    if (!IsGameplayActive() || Index < 0 || Index >= SquadCount) return false;
+    PruneArmyControlState();
+    if (Squads[Index].empty())
+    {
+        Notify(FString::Printf(TEXT("Squad %c is empty."), TCHAR('A' + Index)));
+        return false;
+    }
+    ResetInteraction(false);
+    Selected = Squads[Index];
+    Notify(FString::Printf(TEXT("Squad %c selected: %d"), TCHAR('A' + Index), static_cast<int32>(Selected.size())));
+    return true;
+}
+
+const std::vector<cinder::Id>& ACinderPlayerController::Squad(int32 Index) const
+{
+    static const std::vector<cinder::Id> Empty;
+    return Index >= 0 && Index < SquadCount ? Squads[Index] : Empty;
+}
+
 void ACinderPlayerController::TapWorld(FVector2D Position, bool ForceCommand)
 {
     if (!IsGameplayActive()) return;
-    cinder::Vec2 Ground;
-    if (!GroundPoint(Position, Ground)) return;
-    if (Ground.x < 0 || Ground.y < 0 || Ground.x > cinder::Simulation::WorldSize || Ground.y > cinder::Simulation::WorldSize) return;
+    cinder::Vec2 Ground{};
+    const bool bGroundValid = GroundPoint(Position, Ground);
+    const cinder::Entity* Hit = PickEntityAtScreen(Position);
+    HandleWorldTap(Hit ? Hit->id : 0, bGroundValid ? &Ground : nullptr, ForceCommand);
+}
+
+bool ACinderPlayerController::SelectTappedEntity(cinder::Id Id)
+{
+    if (!IsGameplayActive() || !IsOwnedSelectable(Id)) return false;
+    const cinder::Kind Kind = Battle->Sim().find(Id)->kind;
+    const float Now = GetWorld()->GetTimeSeconds();
+    const bool bDoubleTap = Id == LastTapEntity && Now - LastTapTime < 0.33f;
+    ResetInteraction(false);
+    if (bDoubleTap) SelectKind(Kind);
+    if (!bDoubleTap || Selected.empty()) Selected = {Id};
+    LastTapEntity = Id; LastTapTime = Now;
+    UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
+    return true;
+}
+
+void ACinderPlayerController::HandleWorldTap(cinder::Id HitId, const cinder::Vec2* GroundTarget, bool ForceCommand)
+{
+    if (!IsGameplayActive()) return;
+    if (!ForceCommand && !bBuildMode && !HasDestinationMode()
+        && (bPointerWorldTapLatched || PointerSelectionTarget))
+    {
+        // Preserve both directions of tap intent: a moving friendly cannot
+        // turn selection into movement, or an empty-ground order into selection.
+        if (PointerSelectionTarget)
+        {
+            if (!SelectTappedEntity(PointerSelectionTarget)) Notify(TEXT("That unit is no longer available."));
+            return;
+        }
+        const cinder::Entity* InitialHit = Battle->Sim().find(PointerContextTarget);
+        if (PointerContextTarget && (!InitialHit || !InitialHit->alive()
+            || (InitialHit->kind == cinder::Kind::Resource
+                ? !Battle->Sim().explored(0, InitialHit->pos)
+                : !Battle->Sim().visible(0, InitialHit->pos))))
+        {
+            Notify(TEXT("That target is no longer available."));
+            return;
+        }
+        HitId = PointerContextTarget;
+    }
+    cinder::Vec2 Ground = GroundTarget ? *GroundTarget : cinder::Vec2{};
+    const bool bGroundValid = GroundTarget && FMath::IsFinite(Ground.x) && FMath::IsFinite(Ground.y)
+        && Ground.x >= 0 && Ground.y >= 0
+        && Ground.x <= Battle->Sim().worldSize() && Ground.y <= Battle->Sim().worldSize();
+    const cinder::Entity* Hit = Battle->Sim().find(HitId);
+    if (Hit && (!Hit->alive() || (Hit->team != 0
+        && (Hit->kind == cinder::Kind::Resource ? !Battle->Sim().explored(0, Hit->pos) : !Battle->Sim().visible(0, Hit->pos))))) Hit = nullptr;
+    const bool bEnemyHit = Hit && Hit->team > 0 && Hit->team < Battle->Sim().playerCount();
+    auto InvalidPoint = [this]
+    {
+        Notify(TEXT("Choose a point inside the battlefield."));
+        UCinderAudioSubsystem::Play(this, ECinderCue::Order_Invalid);
+    };
     if (bBuildMode)
     {
-        cinder::Command Cmd; Cmd.type = cinder::CommandType::Build; Cmd.kind = PendingBuilding; Cmd.point = Ground;
-        Cmd.team = 0; Cmd.units = Selected;
-        const auto Result = Battle->SubmitCommand(Cmd);
-        if (Result.accepted && !Battle->IsOnlineMatch()) Battle->Tutorial().AcceptedCommand(Battle->Sim(), Cmd);
-        Notify(UTF8_TO_TCHAR(Result.message.c_str()));
-        if (!Battle->IsOnlineMatch() || !Result.accepted) UCinderAudioSubsystem::Play(this, Result.accepted ? ECinderCue::Order_Ack : ECinderCue::Order_Invalid);
-        if (Result.accepted) { bBuildMode = false; bBuildMenu = false; }
+        if (!bGroundValid) { InvalidPoint(); return; }
+        cinder::Command Cmd; Cmd.type = bAutomaticBuild ? cinder::CommandType::AutoBuild : cinder::CommandType::Build;
+        Cmd.kind = PendingBuilding; Cmd.point = Ground;
+        if (Issue(Cmd)) { bBuildMode = false; bBuildMenu = false; bAutomaticBuild = false; }
         return;
     }
-    const cinder::Entity* Hit = nullptr;
-    float Best = TNumericLimits<float>::Max();
-    const float PointerRadius = bPointerTouch ? 22.0f * TouchScale(this) : 24.0f * MouseScale(this);
-    for (const auto& E : Battle->Sim().entities())
+    if (IsProductionRallyMode())
     {
-        if (!E.alive() || (E.team != 0 && !Battle->Sim().visible(0, E.pos))) continue;
-        const auto RenderPoint = Battle->RenderPosition(E);
-        FVector2D Screen;
-        const float Z = cinder::definition(E.kind).air ? 125 : 25;
-        if (ProjectWorldLocationToScreen(FVector(RenderPoint.x, RenderPoint.y, Z), Screen))
-        {
-            const float D = FVector2D::Distance(Screen, Position);
-            FVector2D EdgeX, EdgeY;
-            float HitRadius = PointerRadius;
-            const float Radius = cinder::definition(E.kind).radius;
-            if (ProjectWorldLocationToScreen(FVector(RenderPoint.x + Radius, RenderPoint.y, Z), EdgeX) && ProjectWorldLocationToScreen(FVector(RenderPoint.x, RenderPoint.y + Radius, Z), EdgeY))
-                HitRadius = FMath::Max(HitRadius, static_cast<float>(FMath::Max(FVector2D::Distance(Screen, EdgeX), FVector2D::Distance(Screen, EdgeY))));
-            if (D < HitRadius && D < Best) { Hit = &E; Best = D; }
-        }
+        if (bGroundValid) IssueDestination(Ground);
+        else InvalidPoint();
+        return;
     }
     const bool bSelectedDrudge = std::any_of(Selected.begin(), Selected.end(), [&](cinder::Id Id)
     {
         const auto* Worker = Battle->Sim().find(Id);
         return Worker && Worker->alive() && Worker->team == 0 && Worker->kind == cinder::Kind::Worker;
     });
-    if (Hit && Hit->team == 0 && cinder::definition(Hit->kind).building && Hit->progress < 1 && bSelectedDrudge && !bAttackMove && (ForceCommand || bPointerTouch))
+    const bool bExplicitDestination = HasUnitDestinationMode();
+    if (Hit && Hit->team == 0 && cinder::definition(Hit->kind).building && Hit->progress < 1
+        && bSelectedDrudge && !bExplicitDestination && ForceCommand)
     {
         cinder::Command Cmd; Cmd.type = cinder::CommandType::ResumeConstruction; Cmd.target = Hit->id;
         Issue(Cmd); bBuildMenu = false;
         return;
     }
-    if (Hit && Hit->team == 0 && Hit->kind != cinder::Kind::Resource && !ForceCommand && !bAttackMove)
+    if (Hit && Hit->team == 0 && Hit->kind != cinder::Kind::Resource && !ForceCommand && !bExplicitDestination)
     {
-        const float Now = GetWorld()->GetTimeSeconds();
-        if (Hit->kind == LastTapKind && Now - LastTapTime < 0.33f) SelectKind(Hit->kind);
-        else Selected = { Hit->id };
-        LastTapKind = Hit->kind; LastTapTime = Now;
-        bBuildMenu = false;
-        UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
+        SelectTappedEntity(Hit->id);
         return;
     }
-    if (Selected.empty()) return;
-    cinder::Command Cmd; Cmd.point = Ground;
-    Cmd.type = bAttackMove ? cinder::CommandType::AttackMove : cinder::CommandType::Move;
+    if (Selected.empty())
+    {
+        if (bExplicitDestination) Notify(TEXT("Select a unit before choosing its destination."));
+        return;
+    }
+    if (!bGroundValid)
+    {
+        // Targeted orders use the authoritative entity point. A projected unit
+        // near the world edge must remain selectable and targetable even when
+        // the screen ray lands beyond the ground plane's playable bounds.
+        if (Hit && (bExplicitDestination || Hit->kind == cinder::Kind::Resource || bEnemyHit)) Ground = Hit->pos;
+        else { if (bExplicitDestination || ForceCommand) InvalidPoint(); return; }
+    }
+    if (bExplicitDestination)
+    {
+        IssueDestination(Ground);
+        return;
+    }
+    cinder::Command Cmd; Cmd.point = Ground; Cmd.type = cinder::CommandType::Move;
     if (Hit && Hit->kind == cinder::Kind::Resource) { Cmd.type = cinder::CommandType::Gather; Cmd.target = Hit->id; }
-    else if (Hit && Hit->team == 1) { Cmd.type = cinder::CommandType::Attack; Cmd.target = Hit->id; }
-    else if (const auto* First = Battle->Sim().find(Selected.front()); First && cinder::definition(First->kind).building) Cmd.type = cinder::CommandType::Rally;
-    Issue(Cmd); bAttackMove = false;
+    else if (bEnemyHit) { Cmd.type = cinder::CommandType::Attack; Cmd.target = Hit->id; }
+    else if (const auto* First = Battle->Sim().find(Selected.front()); First && cinder::definition(First->kind).building)
+    {
+        if (!ForceCommand) { ExecuteAction(TEXT("deselect")); return; }
+        Cmd.type = cinder::CommandType::Rally;
+    }
+    Issue(Cmd);
 }
 
-void ACinderPlayerController::Issue(cinder::Command Command)
+bool ACinderPlayerController::Issue(cinder::Command Command)
 {
-    if (!IsGameplayActive()) return;
+    if (!IsGameplayActive()) return false;
     Command.team = 0;
-    if (Command.units.empty()) Command.units = Selected;
+    const bool bAutomatic = Command.type == cinder::CommandType::AutoBuild
+        || Command.type == cinder::CommandType::AutoTrain || Command.type == cinder::CommandType::AutoResearch
+        || Command.type == cinder::CommandType::AutoRally;
+    if (Command.units.empty() && !bAutomatic) Command.units = Selected;
     const auto Result = Battle->SubmitCommand(Command);
+    if (Result.accepted) { LastTapEntity = 0; LastTapTime = -1; }
     if (Result.accepted && !Battle->IsOnlineMatch()) Battle->Tutorial().AcceptedCommand(Battle->Sim(), Command);
     Notify(UTF8_TO_TCHAR(Result.message.c_str()));
     if (!Battle->IsOnlineMatch() || !Result.accepted) UCinderAudioSubsystem::Play(this, Result.accepted ? ECinderCue::Order_Ack : ECinderCue::Order_Invalid);
+    return Result.accepted;
+}
+
+bool ACinderPlayerController::IssueDestination(cinder::Vec2 Point)
+{
+    cinder::Command Command;
+    Command.point = Point;
+    switch (DestinationMode)
+    {
+    case EDestinationMode::ProductionRally:
+        Command.type = cinder::CommandType::AutoRally;
+        Command.target = RallyProducer;
+        Command.kind = cinder::Kind::Resource;
+        break;
+    case EDestinationMode::Defend: Command.type = cinder::CommandType::Defend; break;
+    case EDestinationMode::AttackMove: Command.type = cinder::CommandType::AttackMove; break;
+    case EDestinationMode::Move: Command.type = cinder::CommandType::Move; break;
+    default: return false;
+    }
+    if (!Issue(Command)) return false;
+    ClearDestinationModes();
+    return true;
 }
 bool ACinderPlayerController::IsGameplayActive() const
 {
     return Battle && !OnlinePanel && !bOnlineLeavePending && !bHelpOpen && !bTutorialRestartPending &&
-        !Battle->IsMenu() && !Battle->IsPaused() && Battle->Sim().winner() < 0 &&
+        !Battle->IsMenu() && !Battle->IsPaused() && Battle->Sim().winner() == -1 && !Battle->Sim().eliminated(0) &&
         (!Battle->IsOnlineMatch() || (Online() && Online()->CanSendOrders()));
 }
 void ACinderPlayerController::ResetInteraction(bool bClearSelection)
 {
-    bBuildMode = bBuildMenu = bAttackMove = bBoxSelect = false;
+    bBuildMode = bBuildMenu = bBoxSelect = false;
+    bAutomaticBuild = false;
+    ClearDestinationModes();
     bPointerDown = bDragging = bGestureSelect = bPointerTouch = bLongPress = false;
     bPointerUI = bMultiTouch = bTwoDown = bMousePan = false;
     bPointerCameraPan = bPointerPlacement = false;
     PointerStart = PointerLast = PreviousCentroid = PreviousMouse = FVector2D::ZeroVector;
     PointerHeld = PreviousPinch = 0;
     LastTapTime = -1;
-    LastTapKind = cinder::Kind::Resource;
+    LastTapEntity = 0;
+    ClearPointerTapIntent();
     PendingBuilding = cinder::Kind::Foundry;
     Placement = {};
     for (float& Credit : ArrowPanCredit) Credit = 0;
     FeedbackText.Empty(); FeedbackLife = 0;
-    if (bClearSelection) Selected.clear();
+    if (bClearSelection)
+    {
+        Selected.clear();
+        for (std::vector<cinder::Id>& Group : Squads) Group.clear();
+    }
 }
 void ACinderPlayerController::Notify(const FString& Message) { FeedbackText = Message; FeedbackLife = 3.5f; }
 void ACinderPlayerController::Home()
 {
+    if (IsTutorialOfferPending()) return;
     if (!Rig || !Battle || OnlinePanel || bOnlineLeavePending || bHelpOpen || bTutorialRestartPending) return;
     if (IsGameplayActive()) Battle->Tutorial().CameraInput();
     for (const auto& E : Battle->Sim().entities()) if (E.team == 0 && E.kind == cinder::Kind::Headquarters && E.alive()) { Rig->Focus(FVector(E.pos.x, E.pos.y, 0)); return; }
@@ -547,40 +982,176 @@ void ACinderPlayerController::FocusSelection()
 }
 void ACinderPlayerController::Escape()
 {
+    if (IsTutorialOfferPending()) { ExecuteAction(TEXT("onboardskip")); return; }
     if (bOnlineLeavePending) { ExecuteAction(TEXT("onlinecancel")); return; }
     if (bHelpOpen) { ExecuteAction(TEXT("helpclose")); return; }
     if (bTutorialRestartPending) { ExecuteAction(TEXT("tutorialcancel")); return; }
-    if (bBuildMode || bBuildMenu || bAttackMove || bBoxSelect) { ResetInteraction(false); return; }
+    if (bBuildMode || bBuildMenu || HasDestinationMode() || bBoxSelect)
+    { ResetInteraction(false); return; }
     if (auto* HUD = Cast<ACinderHUD>(GetHUD()); HUD && HUD->CloseCompactSheet()) return;
     if (Battle && !Battle->IsMenu()) { ResetInteraction(false); Battle->SetPaused(!Battle->IsPaused()); }
 }
 void ACinderPlayerController::Confirm()
 {
+    if (IsTutorialOfferPending()) { ExecuteAction(TEXT("onboardlearn")); return; }
     if (bOnlineLeavePending) { ExecuteAction(TEXT("onlineconfirm")); return; }
     if (bHelpOpen) { ExecuteAction(TEXT("helpclose")); return; }
     if (bTutorialRestartPending) { ExecuteAction(TEXT("tutorialconfirm")); return; }
     if (!Battle) return;
-    if (Battle->IsMenu() || Battle->Sim().winner() >= 0 || Battle->IsPaused()) UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
+    if (Battle->IsMenu() || Battle->Sim().winner() != -1 || Battle->IsPaused()) UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
     if (Battle->IsMenu())
     {
         const auto* HUD = Cast<ACinderHUD>(GetHUD());
         ExecuteAction(TEXT("start"), HUD ? HUD->MenuMap() : 0);
     }
-    else if (Battle->Sim().winner() >= 0)
+    else if (Battle->Sim().winner() != -1 || Battle->Sim().eliminated(0))
         ExecuteAction(Battle->IsOnlineMatch() ? TEXT("onlineleave") : Battle->Tutorial().IsActive() ? TEXT("tutorialrestart") : TEXT("start"), Battle->MapIndex());
     else if (Battle->IsPaused()) ExecuteAction(TEXT("resume"));
 }
-void ACinderPlayerController::AttackMode() { if (IsGameplayActive()) { bAttackMove = !bAttackMove; bBuildMode = false; } }
-void ACinderPlayerController::Stop() { cinder::Command C; C.type = cinder::CommandType::Stop; Issue(C); }
-void ACinderPlayerController::Hold() { cinder::Command C; C.type = cinder::CommandType::Hold; Issue(C); }
-void ACinderPlayerController::ToggleBuild() { if (IsGameplayActive()) { bBuildMenu = !bBuildMenu; bBuildMode = false; } }
+void ACinderPlayerController::ClearDestinationModes()
+{
+    DestinationMode = EDestinationMode::None;
+    RallyProducer = 0;
+}
+
+void ACinderPlayerController::ToggleDestinationMode(EDestinationMode Mode)
+{
+    DestinationMode = DestinationMode == Mode ? EDestinationMode::None : Mode;
+    RallyProducer = 0;
+    bBuildMode = bBuildMenu = false;
+}
+
+cinder::CommandResult ACinderPlayerController::BuildPlacementStatus(const cinder::Vec2* Site) const
+{
+    if (!Battle) return {false, "No active match."};
+    if (!bAutomaticBuild) return Battle->Sim().buildStatus(0, PendingBuilding, Selected, Site);
+    const auto Plan = Battle->Sim().autoBuildStatus(0, PendingBuilding, Site);
+    return {Plan.accepted, Plan.message};
+}
+
+void ACinderPlayerController::BeginGlobalBuild(cinder::Kind Kind)
+{
+    if (!IsGameplayActive()) return;
+    const auto Plan = Battle->Sim().autoBuildStatus(0, Kind);
+    if (!Plan.accepted)
+    {
+        Notify(UTF8_TO_TCHAR(Plan.message.c_str()));
+        UCinderAudioSubsystem::Play(this, ECinderCue::Order_Invalid);
+        return;
+    }
+    ClearDestinationModes();
+    PendingBuilding = Kind; bBuildMode = bAutomaticBuild = true; bBuildMenu = false;
+    Notify(TEXT("Place on clear, visible ground. A reachable idle Drudge or miner will be assigned."));
+}
+
+void ACinderPlayerController::QueueTraining(cinder::Kind Kind, int Quantity, cinder::Id Producer)
+{
+    cinder::Command Command; Command.type = cinder::CommandType::AutoTrain;
+    Command.kind = Kind; Command.queueIndex = Quantity; Command.target = Producer;
+    Issue(Command);
+}
+
+void ACinderPlayerController::QueueResearch(int Upgrade, cinder::Id Producer)
+{
+    cinder::Command Command; Command.type = cinder::CommandType::AutoResearch;
+    Command.queueIndex = Upgrade; Command.target = Producer;
+    Issue(Command);
+}
+
+void ACinderPlayerController::CancelProduction(cinder::Id Producer, cinder::Id Job)
+{
+    if (!Producer || !Job) return;
+    cinder::Command Command; Command.type = cinder::CommandType::CancelQueue;
+    Command.units = {Producer}; Command.target = Job;
+    Issue(Command);
+}
+
+void ACinderPlayerController::CancelConstruction(cinder::Id Site)
+{
+    if (!Site) return;
+    cinder::Command Command; Command.type = cinder::CommandType::CancelBuilding;
+    Command.units = {Site}; Issue(Command);
+}
+
+void ACinderPlayerController::BeginProductionRally(cinder::Id Producer)
+{
+    if (!IsGameplayActive()) return;
+    const auto Status = Battle->Sim().autoRallyStatus(0, cinder::Kind::Resource, Producer);
+    if (!Status.accepted) { Notify(UTF8_TO_TCHAR(Status.message.c_str())); return; }
+    ClearDestinationModes();
+    bBuildMode = bBuildMenu = bAutomaticBuild = false;
+    DestinationMode = EDestinationMode::ProductionRally;
+    RallyProducer = Producer;
+    Notify(Producer ? TEXT("Tap terrain or the minimap to set this facility's rally.")
+        : TEXT("Place an army rally flag for future combat units, including new facilities. Existing orders continue."));
+}
+
+void ACinderPlayerController::UseDefaultProductionRally(cinder::Id Producer)
+{
+    if (!IsGameplayActive() || !Producer) return;
+    const auto Status = Battle->Sim().autoRallyStatus(0, cinder::Kind::Resource, Producer, true);
+    if (!Status.accepted) { Notify(UTF8_TO_TCHAR(Status.message.c_str())); return; }
+    cinder::Command Command;
+    Command.type = cinder::CommandType::AutoRally; Command.kind = cinder::Kind::Resource;
+    Command.target = Producer; Command.queueIndex = 1;
+    if (Issue(Command)) ClearDestinationModes();
+}
+
+void ACinderPlayerController::FocusArmyRally()
+{
+    if (!IsGameplayActive()) return;
+    const auto& Player = Battle->Sim().players()[0];
+    if (!Player.armyRallySet) { Notify(TEXT("Set an army rally flag first.")); return; }
+    if (Rig)
+    {
+        Rig->Focus(FVector(Player.armyRally.x, Player.armyRally.y, 0));
+        Battle->Tutorial().CameraInput();
+    }
+}
+
+void ACinderPlayerController::FocusProduction(cinder::Id Producer)
+{
+    if (!IsGameplayActive() || !Battle) return;
+    const auto* Entity = Battle->Sim().find(Producer);
+    if (!Entity || !cinder::definition(Entity->kind).building || !SelectOwnedEntity(Producer)) return;
+    FocusSelection();
+}
+
+void ACinderPlayerController::AttackMode()
+{
+    if (!IsGameplayActive()) return;
+    ToggleDestinationMode(EDestinationMode::AttackMove);
+}
+
+void ACinderPlayerController::MoveMode()
+{
+    if (!IsGameplayActive()) return;
+    ToggleDestinationMode(EDestinationMode::Move);
+}
+
+void ACinderPlayerController::DefendMode()
+{
+    if (!IsGameplayActive()) return;
+    ToggleDestinationMode(EDestinationMode::Defend);
+}
+void ACinderPlayerController::Stop() { cinder::Command C; C.type = cinder::CommandType::Stop; if (Issue(C)) ClearDestinationModes(); }
+void ACinderPlayerController::Hold() { cinder::Command C; C.type = cinder::CommandType::Hold; if (Issue(C)) ClearDestinationModes(); }
+void ACinderPlayerController::ToggleBuild()
+{
+    if (!IsGameplayActive()) return;
+    bBuildMenu = !bBuildMenu;
+    bBuildMode = false;
+    ClearDestinationModes();
+}
 void ACinderPlayerController::ZoomIn()
 {
+    if (IsTutorialOfferPending()) return;
     if (Rig && !OnlinePanel && !bOnlineLeavePending && !bHelpOpen && !bTutorialRestartPending)
     { Rig->Zoom(-180); if (IsGameplayActive()) Battle->Tutorial().CameraInput(); }
 }
 void ACinderPlayerController::ZoomOut()
 {
+    if (IsTutorialOfferPending()) return;
     if (Rig && !OnlinePanel && !bOnlineLeavePending && !bHelpOpen && !bTutorialRestartPending)
     { Rig->Zoom(180); if (IsGameplayActive()) Battle->Tutorial().CameraInput(); }
 }
@@ -596,12 +1167,14 @@ void ACinderPlayerController::OpenHelp(int32 Page)
 
 void ACinderPlayerController::ToggleHelp()
 {
+    if (IsTutorialOfferPending()) return;
     if (OnlinePanel || bOnlineLeavePending || bTutorialRestartPending) return;
     if (bHelpOpen) ExecuteAction(TEXT("helpclose")); else OpenHelp(CurrentHelpPage);
 }
 
 void ACinderPlayerController::TutorialShortcut()
 {
+    if (IsTutorialOfferPending()) return;
     if (OnlinePanel || bOnlineLeavePending || bTutorialRestartPending) return;
     if (bHelpOpen) ExecuteAction(TEXT("helpinput"), bHelpTouch ? 0 : 1);
     else if (Battle && Battle->IsMenu()) BeginTutorial();
@@ -629,12 +1202,22 @@ void ACinderPlayerController::BeginTutorial()
         Rig->Zoom(1500 - Rig->Distance());
         Rig->Focus(FVector(600, 600, 0), true);
     }
-    Notify(TEXT("Training started. No attacking AI. Your saved skirmish is kept."));
+    Notify(TEXT("Guided battle started. Follow each objective to defeat the opposing Anchor. Your saved skirmish is kept."));
+}
+
+void ACinderPlayerController::ResolveTutorialOffer(bool bBeginTutorial)
+{
+    if (!IsTutorialOfferPending()) return;
+    bTutorialOfferResolved = true;
+    if (GConfig && !FApp::IsUnattended() && !GIsAutomationTesting && GetWorld() && GetWorld()->IsGameWorld())
+        SaveTutorialPreference(TutorialPreferencesPath());
+    if (bBeginTutorial) BeginTutorial();
 }
 
 void ACinderPlayerController::UpdateTutorial()
 {
-    if (!IsGameplayActive() || !Battle->Tutorial().IsActive()) return;
+    if (!Battle || Battle->IsMenu() || Battle->IsPaused() || Battle->IsOnlineMatch()
+        || !Battle->Tutorial().IsActive()) return;
     const ECinderTutorialStep Previous = Battle->Tutorial().Step();
     Battle->Tutorial().Observe(Battle->Sim(), Selected);
     if (Previous != Battle->Tutorial().Step())
@@ -646,14 +1229,10 @@ void ACinderPlayerController::UpdateTutorial()
     if (Battle->Tutorial().IsComplete() && !bTutorialCompleted)
     {
         bTutorialCompleted = true;
+        bTutorialOfferResolved = true;
         // Automation must never change the player's completion preference.
         if (GConfig && !FApp::IsUnattended() && !GIsAutomationTesting && GetWorld() && GetWorld()->IsGameWorld())
-        {
-            const FString Filename = TutorialPreferencesPath();
-            IFileManager::Get().MakeDirectory(*FPaths::GetPath(Filename), true);
-            GConfig->SetBool(TEXT("Training"), TEXT("Completed"), true, Filename);
-            GConfig->Flush(false, Filename);
-        }
+            SaveTutorialPreference(TutorialPreferencesPath());
     }
 }
 
@@ -661,6 +1240,12 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
 {
     UE_LOG(LogCinderInput, Verbose, TEXT("Action %s argument=%d"), *Action, Argument);
     if (!Battle) return;
+    if (IsTutorialOfferPending())
+    {
+        if (Action == TEXT("onboardlearn")) ResolveTutorialOffer(true);
+        else if (Action == TEXT("onboardskip")) ResolveTutorialOffer(false);
+        return;
+    }
     if (Action == TEXT("onlinecancel")) { bOnlineLeavePending = bOnlineSurrenderPending = false; ResetInteraction(false); return; }
     if (Action == TEXT("onlineconfirm"))
     {
@@ -673,7 +1258,7 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
                 const bool bSent = Online() && Online()->Surrender();
                 if (bSent) Battle->SetPaused(false);
                 ResetInteraction(false);
-                Notify(bSent ? TEXT("Surrender sent. Waiting for the server's result.") : TEXT("Reconnect to surrender, or choose Leave to exit the match."));
+                Notify(bSent ? TEXT("Surrender sent. Waiting for the server to confirm your elimination.") : TEXT("Reconnect to surrender, or choose Leave to exit the match."));
             }
             else
             {
@@ -684,11 +1269,40 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
         return;
     }
     if (bOnlineLeavePending) return;
+    if (Action == TEXT("difficulty"))
+    {
+        if (!Battle->IsMenu() || Battle->IsOnlineMatch()) return;
+        MenuDifficulty = Argument >= 0
+            ? cinder::aiDifficultyAt(static_cast<std::size_t>(Argument))
+            : cinder::AIDifficulty::Normal;
+        if (!FApp::IsUnattended() && !GIsAutomationTesting)
+            SaveDifficultyPreference(SkirmishPreferencesPath());
+        return;
+    }
+    if (Action == TEXT("matchlength"))
+    {
+        if (!Battle->IsMenu() || Battle->IsOnlineMatch()) return;
+        MenuMatchLength = cinder::matchLengthAt(Argument);
+        if (!FApp::IsUnattended() && !GIsAutomationTesting)
+            SaveMatchLengthPreference(SkirmishPreferencesPath());
+        return;
+    }
     if (Action == TEXT("online") || Action == TEXT("connection")) { OpenOnlinePanel(); return; }
     if (Action == TEXT("onlineleave") || Action == TEXT("onlinesurrender"))
     {
-        if (!Battle->IsOnlineMatch()) return;
-        if (Battle->Sim().winner() >= 0)
+        if (!Battle->IsOnlineMatch())
+        {
+            // A session may have started before its first snapshot reaches the
+            // battlefield. It must remain possible to cancel that session.
+            if (Action == TEXT("onlineleave"))
+                if (auto* Session = Online(); Session && Session->CanLeaveSession())
+                {
+                    Session->Leave(); CloseOnlinePanel(); ResetInteraction(false);
+                    Notify(TEXT("Leaving the online session."));
+                }
+            return;
+        }
+        if (Battle->Sim().winner() != -1 || (Online() && Online()->IsEliminated()))
         {
             if (Online()) Online()->Leave();
             CloseOnlinePanel(); Battle->ReturnToMenu(); ResetInteraction(true);
@@ -750,11 +1364,39 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
         if (Battle->Tutorial().IsActive()) OpenHelp(Battle->Tutorial().Text(Battle->Sim(), bHelpTouch).HelpPage);
         return;
     }
+    if (Action == TEXT("tutorialclearmode"))
+    {
+        if (IsGameplayActive() && Battle->Tutorial().IsActive())
+        {
+            ClearDestinationModes();
+            bBuildMode = bAutomaticBuild = bBuildMenu = false;
+        }
+        return;
+    }
     if (Action == TEXT("tutorialfocus"))
     {
+        if (IsGameplayActive() && Battle->Tutorial().IsActive())
+        {
+            const auto Primary = Battle->Tutorial().PrimaryAction(Battle->Sim());
+            const FName Panel = Primary == ECinderTutorialPrimaryAction::OpenBuild ? FName(TEXT("build"))
+                : Primary == ECinderTutorialPrimaryAction::OpenTrain ? FName(TEXT("train"))
+                : Primary == ECinderTutorialPrimaryAction::OpenResearch ? FName(TEXT("research")) : NAME_None;
+            if (!Panel.IsNone())
+            {
+                if (auto* HUD = Cast<ACinderHUD>(GetHUD())) HUD->OpenGlobalPanel(Panel);
+                Notify(TutorialFocusFeedback(Battle->Tutorial().Step(), nullptr, bHelpTouch));
+                return;
+            }
+        }
         cinder::Vec2 Point;
-        if (IsGameplayActive() && Rig && Battle->Tutorial().FocusPoint(Battle->Sim(), Point))
-        { Rig->Focus(FVector(Point.x, Point.y, 0)); Battle->Tutorial().CameraInput(); }
+        cinder::Id EntityId = 0;
+        if (IsGameplayActive() && Rig && Battle->Tutorial().FocusPoint(Battle->Sim(), Point, &EntityId))
+        {
+            const cinder::Entity* Focused = nullptr;
+            if (EntityId && SelectOwnedEntity(EntityId)) Focused = Battle->Sim().find(EntityId);
+            Rig->Focus(FVector(Point.x, Point.y, 0));
+            Notify(TutorialFocusFeedback(Battle->Tutorial().Step(), Focused, bHelpTouch));
+        }
         return;
     }
     if (Action == TEXT("tutorialend"))
@@ -762,13 +1404,31 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
         if (Battle->Tutorial().IsActive()) { Battle->ReturnToMenu(); ResetInteraction(true); }
         return;
     }
-    if (Action == TEXT("start")) { Battle->StartMatch(Argument); ResetInteraction(true); Home(); Notify(TEXT("Select a Drudge, then tap amber ore. Build a Kiln to raise your army.")); }
+    if (Action == TEXT("start"))
+    {
+        const cinder::AIDifficulty Difficulty = Battle->IsMenu()
+            ? MenuDifficulty : Battle->MatchDifficulty();
+        const cinder::MatchLength Length = Battle->IsMenu()
+            ? MenuMatchLength : Battle->Sim().config().matchLength;
+        Battle->StartMatch(Argument, Difficulty, Length);
+        ResetInteraction(true); Home();
+        Notify(TEXT("Select a Drudge, then tap amber ore. Build a Kiln to raise your army."));
+    }
     else if (Action == TEXT("menu")) { Battle->ReturnToMenu(); ResetInteraction(true); }
     else if (Action == TEXT("pause")) { ResetInteraction(false); Battle->SetPaused(true); }
     else if (Action == TEXT("resume")) { ResetInteraction(false); Battle->SetPaused(false); }
     else if (Action == TEXT("home")) Home();
     else if (Action == TEXT("focus")) FocusSelection();
+    else if (Action == TEXT("rallyfocus")) FocusArmyRally();
     else if (Action == TEXT("army")) SelectArmy();
+    else if (Action == TEXT("deselect") && IsGameplayActive())
+    {
+        ResetInteraction(false);
+        Selected.clear();
+        Notify(TEXT("Selection cleared. Existing orders continue."));
+    }
+    else if (Action == TEXT("squadassign")) AssignSquad(Argument);
+    else if (Action == TEXT("squad")) RecallSquad(Argument);
     else if (Action == TEXT("workers") && IsGameplayActive())
     {
         ResetInteraction(false);
@@ -778,6 +1438,8 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
     }
     else if (Action == TEXT("box") && IsGameplayActive()) { bBoxSelect = !bBoxSelect; Notify(TEXT("Drag across units to select. Two fingers pan and zoom.")); }
     else if (Action == TEXT("attack")) AttackMode();
+    else if (Action == TEXT("move")) MoveMode();
+    else if (Action == TEXT("defend")) DefendMode();
     else if (Action == TEXT("stop")) Stop();
     else if (Action == TEXT("hold")) Hold();
     else if (Action == TEXT("buildmenu")) ToggleBuild();
@@ -799,14 +1461,15 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
             UCinderAudioSubsystem::Play(this, ECinderCue::Order_Invalid);
             return;
         }
-        PendingBuilding = Kind; bBuildMode = true; bAttackMove = false;
+        PendingBuilding = Kind; bBuildMode = true; bAutomaticBuild = false; ClearDestinationModes();
 #if PLATFORM_IOS || PLATFORM_ANDROID
         Notify(TEXT("Tap a clear, explored site near your Drudge. Cancel to exit placement."));
 #else
         Notify(TEXT("Click a clear, explored site near your Drudge. Secondary click cancels."));
 #endif
     }
-    else if (Action == TEXT("cancelplacement")) { bBuildMode = false; bBuildMenu = false; }
+    else if (Action == TEXT("cancelplacement")) { bBuildMode = false; bBuildMenu = false; bAutomaticBuild = false; }
+    else if (Action == TEXT("cancelrally")) ClearDestinationModes();
     else if (Action == TEXT("train")) { cinder::Command C; C.type = cinder::CommandType::Train; C.kind = static_cast<cinder::Kind>(Argument); Issue(C); }
     else if (Action == TEXT("research")) { cinder::Command C; C.type = cinder::CommandType::Research; C.queueIndex = Argument; Issue(C); }
     else if (Action == TEXT("cancelqueue")) { cinder::Command C; C.type = cinder::CommandType::CancelQueue; C.queueIndex = Argument; Issue(C); }
@@ -824,7 +1487,7 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
             const float Distance = FMath::Square(Worker.pos.x - Site->pos.x) + FMath::Square(Worker.pos.y - Site->pos.y);
             if (Distance < Nearest || (Distance == Nearest && Worker.id < Builder)) { Builder = Worker.id; Nearest = Distance; }
         }
-        if (!Builder) { Notify(TEXT("No available Drudge. Select a builder and tap this site to reassign it.")); return; }
+        if (!Builder) { Notify(TEXT("No available Drudge. Free a builder, then choose Assign Drudge again.")); return; }
         cinder::Command C; C.type = cinder::CommandType::ResumeConstruction; C.target = Site->id; C.units = { Builder }; Issue(C);
     }
     else if (Action == TEXT("save"))
@@ -840,6 +1503,7 @@ void ACinderPlayerController::ExecuteAction(const FString& Action, int Argument)
     else if (Action == TEXT("minimap"))
     {
         const int X = Argument % 10000, Y = Argument / 10000;
-        if (Rig) { Rig->Focus(FVector(X, Y, 0)); if (IsGameplayActive()) Battle->Tutorial().CameraInput(); }
+        if (HasDestinationMode()) IssueDestination({static_cast<float>(X), static_cast<float>(Y)});
+        else if (Rig) { Rig->Focus(FVector(X, Y, 0)); if (IsGameplayActive()) Battle->Tutorial().CameraInput(); }
     }
 }

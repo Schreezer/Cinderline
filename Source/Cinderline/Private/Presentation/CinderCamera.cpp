@@ -6,7 +6,10 @@
 
 namespace
 {
-constexpr double EdgeInset = 8;
+constexpr double ZoomFitInset = 8;
+constexpr double BorderViewFraction = 0.15;
+constexpr double MinimumBorderMargin = 72;
+constexpr double MaximumBorderMargin = 360;
 constexpr float MinimumZoom = 650;
 constexpr float MaximumZoom = 3200;
 }
@@ -97,17 +100,22 @@ float ACinderCamera::MaximumDistance(const FGroundFootprint& Footprint) const
 {
     if (!Footprint.bValid) return MinimumZoom;
     const FVector2D Span = Footprint.Max - Footprint.Min;
-    const double Available = cinder::Simulation::WorldSize - EdgeInset * 2;
+    const double Available = ActiveWorldSize - ZoomFitInset * 2;
     // An unusually tall viewport may need a zoom cap below the usual minimum.
     return static_cast<float>(FMath::Max(1.0, FMath::Min(static_cast<double>(MaximumZoom), Available / FMath::Max(Span.X, Span.Y))));
 }
 
 FVector ACinderCamera::BoundPosition(FVector Position, float Distance, const FGroundFootprint& Footprint) const
 {
-    constexpr double World = cinder::Simulation::WorldSize;
+    const double World = ActiveWorldSize;
     if (!Footprint.bValid) return FVector(World * 0.5, World * 0.5, 0);
-    const FVector2D Low = FVector2D(EdgeInset) - Footprint.Min * Distance;
-    const FVector2D High = FVector2D(World - EdgeInset) - Footprint.Max * Distance;
+    // Reveal a finite black rim at the edge. Scale it with the view so close
+    // zooms cannot drift far into empty space, and cap it for distant views.
+    const FVector2D Span = (Footprint.Max - Footprint.Min) * Distance;
+    const double BorderMargin = FMath::Clamp(FMath::Min(Span.X, Span.Y) * BorderViewFraction,
+        MinimumBorderMargin, MaximumBorderMargin);
+    const FVector2D Low = FVector2D(-BorderMargin) - Footprint.Min * Distance;
+    const FVector2D High = FVector2D(World + BorderMargin) - Footprint.Max * Distance;
     auto ClampAxis = [](double Value, double Min, double Max) { return Min <= Max ? FMath::Clamp(Value, Min, Max) : (Min + Max) * 0.5; };
     return FVector(ClampAxis(Position.X, Low.X, High.X), ClampAxis(Position.Y, Low.Y, High.Y), 0);
 }
@@ -129,11 +137,11 @@ void ACinderCamera::UpdateTargetBounds(const FGroundFootprint& Footprint)
     TargetDistance = FMath::Clamp(TargetDistance, MinDistance, MaxDistance);
     if (bKeepFocusVisible && Footprint.bValid)
     {
-        // Near a diagonal map corner, a contained view cannot always include a focus at full zoom.
+        // Near a diagonal map corner, the bounded view may need a closer zoom to frame a focus.
         if (!ContainsFocus(BoundPosition(FocusAnchor, TargetDistance, Footprint), TargetDistance, Footprint))
         {
             float Low = MinDistance, High = TargetDistance;
-            // Exact map corners can remain outside a contained rotated view even at minimum zoom.
+            // Exact corners can still lie outside the inner focus region of a rotated view.
             const bool bFitsAtMinimum = ContainsFocus(BoundPosition(FocusAnchor, Low, Footprint), Low, Footprint);
             for (int I = 0; bFitsAtMinimum && I < 18; ++I)
             {
@@ -156,7 +164,7 @@ void ACinderCamera::Pan(FVector Delta)
 }
 void ACinderCamera::Focus(FVector Position, bool bInstant)
 {
-    FocusAnchor = FVector(FMath::Clamp(Position.X, 0.0, static_cast<double>(cinder::Simulation::WorldSize)), FMath::Clamp(Position.Y, 0.0, static_cast<double>(cinder::Simulation::WorldSize)), 0);
+    FocusAnchor = FVector(FMath::Clamp(Position.X, 0.0, static_cast<double>(ActiveWorldSize)), FMath::Clamp(Position.Y, 0.0, static_cast<double>(ActiveWorldSize)), 0);
     bKeepFocusVisible = true;
     UpdateTargetBounds(GroundFootprint());
     if (bInstant) { SetActorLocation(TargetPosition); Boom->TargetArmLength = TargetDistance; }
@@ -165,4 +173,18 @@ void ACinderCamera::Zoom(float Amount)
 {
     TargetDistance += Amount;
     UpdateTargetBounds(GroundFootprint());
+}
+
+void ACinderCamera::SetWorldSize(float InWorldSize)
+{
+    const float Sanitized = FMath::IsFinite(InWorldSize) && InWorldSize > 1.0f
+        ? InWorldSize : cinder::Simulation::WorldSize;
+    if (FMath::IsNearlyEqual(ActiveWorldSize, Sanitized)) return;
+    ActiveWorldSize = Sanitized;
+    FocusAnchor.X = FMath::Clamp(FocusAnchor.X, 0.0, static_cast<double>(ActiveWorldSize));
+    FocusAnchor.Y = FMath::Clamp(FocusAnchor.Y, 0.0, static_cast<double>(ActiveWorldSize));
+    const FGroundFootprint Footprint = GroundFootprint();
+    UpdateTargetBounds(Footprint);
+    Boom->TargetArmLength = FMath::Min(Boom->TargetArmLength, MaximumDistance(Footprint));
+    SetActorLocation(BoundPosition(GetActorLocation(), Boom->TargetArmLength, Footprint));
 }

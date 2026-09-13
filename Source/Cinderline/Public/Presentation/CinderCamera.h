@@ -16,8 +16,13 @@ public:
     void Pan(FVector Delta);
     void Focus(FVector Position, bool bInstant = false);
     void Zoom(float Amount);
+    /** Update playable bounds after a reset, load, tutorial, or network snapshot. */
+    void SetWorldSize(float InWorldSize);
     float Distance() const { return TargetDistance; }
 private:
+#if WITH_DEV_AUTOMATION_TESTS
+    friend class FCinderCameraBoundaryTest;
+#endif
     struct FGroundFootprint
     {
         FVector Forward, Right, Up;
@@ -36,4 +41,5 @@ private:
     FVector FocusAnchor = FVector(700, 700, 0);
     bool bKeepFocusVisible = true;
     float TargetDistance = 1650;
+    float ActiveWorldSize = 4800.0f;
 };

@@ -4,7 +4,12 @@
 #include "Presentation/CinderAudioSubsystem.h"
 #include "Presentation/CinderHelpContent.h"
 #include "Presentation/CinderOnlineSubsystem.h"
+#include "Presentation/CinderTeamColors.h"
+#include "Presentation/CinderUnitInfo.h"
+#include "Sim/AIDifficulty.h"
+#include "Sim/MatchLength.h"
 #include "Presentation/CinderTutorial.h"
+#include "Presentation/CinderCamera.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
 #include "CanvasItem.h"
@@ -16,8 +21,11 @@
 #include "Rendering/SlateRenderer.h"
 #include "Fonts/FontMeasure.h"
 #include "GenericPlatform/GenericApplication.h"
+#include "Misc/App.h"
+#include "Misc/ScopeExit.h"
 #if PLATFORM_IOS
-#include "IOS/IOSApplication.h"
+#include "IOS/IOSAppDelegate.h"
+#include "Async/Async.h"
 #include <dispatch/dispatch.h>
 #endif
 #include "Misc/CommandLine.h"
@@ -35,18 +43,70 @@ const FLinearColor White(0.88f, 0.94f, 0.97f);
 const FLinearColor Muted(0.38f, 0.50f, 0.55f);
 const FLinearColor Mint(0.10f, 0.90f, 0.74f);
 const FLinearColor Amber(1.0f, 0.64f, 0.24f);
+constexpr int32 SheetNone = 0;
+constexpr int32 SheetContext = 1;
+constexpr int32 SheetTypes = 2;
+constexpr int32 SheetQueue = 3;
+constexpr int32 SheetOrders = 4;
+constexpr int32 SheetArmy = 5;
+constexpr int32 SheetInfo = 6;
+constexpr int32 SheetGlobalBuild = 7;
+constexpr int32 SheetGlobalTrain = 8;
+constexpr int32 SheetGlobalResearch = 9;
 #if PLATFORM_MAC
 const TCHAR* DesktopControlHint = TEXT("Option+drag pan / Drag select / Scroll zoom");
 #else
 const TCHAR* DesktopControlHint = TEXT("Alt+drag pan / Drag select / Scroll zoom");
 #endif
 FString Name(cinder::Kind Kind) { return UTF8_TO_TCHAR(cinder::definition(Kind).name); }
+FString CardName(cinder::Kind Kind) { return Kind == cinder::Kind::Mortar ? TEXT("Cinder") : Name(Kind); }
 FString ClockString(float Seconds) { return FString::Printf(TEXT("%02d:%02d"), static_cast<int>(Seconds) / 60, static_cast<int>(Seconds) % 60); }
+FString RosterOrder(const cinder::Entity& Entity)
+{
+    using cinder::Order;
+    switch (Entity.order)
+    {
+    case Order::Idle: return TEXT("IDLE");
+    case Order::Move: return TEXT("MOVE");
+    case Order::Attack: return TEXT("ATTACK");
+    case Order::AttackMove: return TEXT("ATTACK MOVE");
+    case Order::Gather: return Entity.returning ? TEXT("RETURN ORE") : TEXT("GATHER");
+    case Order::Hold: return TEXT("HOLD");
+    case Order::Construct: return TEXT("BUILD");
+    case Order::Defend:
+    {
+        const float DX = Entity.pos.x - Entity.goal.x;
+        const float DY = Entity.pos.y - Entity.goal.y;
+        return DX * DX + DY * DY > 25.0f ? TEXT("TO DEFEND") : TEXT("DEFEND");
+    }
+    }
+    return TEXT("IDLE");
+}
 FString ConstructionStatus(const cinder::Simulation& Sim, const cinder::Entity& Site)
 {
-    const TCHAR* State = Sim.constructionActive(Site.id) ? TEXT("BUILDING") : Sim.constructionWorker(Site.id) ? TEXT("EN ROUTE") : TEXT("PAUSED");
+    const auto* Worker = Sim.find(Sim.constructionWorker(Site.id));
+    const TCHAR* State = Sim.constructionActive(Site.id) ? TEXT("BUILDING")
+        : Worker && Worker->navigationExhausted ? TEXT("ROUTE FAILED") : Worker ? TEXT("EN ROUTE") : TEXT("PAUSED");
     return FString::Printf(TEXT("%s %d%%"), State, static_cast<int>(Site.progress * 100));
 }
+}
+
+ACinderHUD::ACinderHUD()
+{
+    UnitPortraitAssets.SetNum(15);
+    const auto SetPortrait = [this](cinder::Kind Kind, const TCHAR* Path)
+    {
+        UnitPortraitAssets[static_cast<int32>(Kind)] = TSoftObjectPtr<UTexture2D>(FSoftObjectPath(Path));
+    };
+    SetPortrait(cinder::Kind::Worker, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Drudge.T_CinderPortrait_Drudge"));
+    SetPortrait(cinder::Kind::Striker, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Ember.T_CinderPortrait_Ember"));
+    SetPortrait(cinder::Kind::Lancer, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Needle.T_CinderPortrait_Needle"));
+    SetPortrait(cinder::Kind::Scout, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Skim.T_CinderPortrait_Skim"));
+    SetPortrait(cinder::Kind::Bastion, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Anvil.T_CinderPortrait_Anvil"));
+    SetPortrait(cinder::Kind::Mortar, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Cinderthrow.T_CinderPortrait_Cinderthrow"));
+    SetPortrait(cinder::Kind::Mender, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Mend.T_CinderPortrait_Mend"));
+    SetPortrait(cinder::Kind::Kite, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Veil.T_CinderPortrait_Veil"));
+    SetPortrait(cinder::Kind::Turret, TEXT("/Game/Art/UI/Units/T_CinderPortrait_Ward.T_CinderPortrait_Ward"));
 }
 
 void ACinderHUD::BeginPlay()
@@ -67,6 +127,9 @@ void ACinderHUD::BeginPlay()
     };
     InterfaceFont = MakeFont(TEXT("Regular"));
     HeadingFont = MakeFont(TEXT("Bold"));
+    UnitPortraits.SetNum(UnitPortraitAssets.Num());
+    for (int32 Index = 0; Index < UnitPortraitAssets.Num(); ++Index)
+        if (!UnitPortraitAssets[Index].IsNull()) UnitPortraits[Index] = UnitPortraitAssets[Index].LoadSynchronous();
 }
 
 void ACinderHUD::Panel(float X, float Y, float W, float H, FLinearColor Color) { DrawRect(Color, X, Y, W, H); }
@@ -154,34 +217,160 @@ void ACinderHUD::SingleLineLabel(const FString& Text, float X, float Y, float Ma
 }
 void ACinderHUD::Button(const FString& Text, const FString& Action, int Arg, float X, float Y, float W, bool Active)
 {
-    const float H = 44 * UIScale;
+    const float S = UIScale, H = 44 * S;
     float MouseX = -1, MouseY = -1;
     if (PlayerOwner) PlayerOwner->GetMousePosition(MouseX, MouseY);
-    const bool Hover = MouseX >= X && MouseY >= Y && MouseX < X + W && MouseY < Y + H;
+    const bool Hover = FBox2D(FVector2D(X,Y), FVector2D(X+W,Y+H)).IsInside(FVector2D(MouseX,MouseY));
     const bool Primary = Action == TEXT("start");
-    const bool Warning = Action == TEXT("pause") || Action.StartsWith(TEXT("cancel"));
+    const bool Warning = Action.StartsWith(TEXT("cancel"));
     const FLinearColor Accent = Warning ? Amber : Mint;
-    Panel(X, Y, W, H, Primary ? Mint : Active ? FLinearColor(0.018f, 0.11f, 0.105f) : Hover ? FLinearColor(0.026f, 0.055f, 0.072f) : PanelInk);
-    if (!Primary)
+    const float FaceY = Y + 3 * S, FaceH = H - 6 * S;
+    Surface(X, FaceY, W, FaceH, Primary ? Mint : Active ? Accent.CopyWithNewOpacity(0.48f)
+        : FLinearColor(0.20f, 0.30f, 0.36f, Hover ? 0.58f : 0.28f), 6 * S);
+    if (!Primary) Surface(X + S, FaceY + S, W - 2*S, FaceH - 2*S,
+        Active ? FLinearColor(0.015f,0.065f,0.073f,0.98f) : FLinearColor(0.012f,0.023f,0.036f,0.95f), 5*S);
+    const float FontScale = 0.72f;
+    const float TW = MeasureLabel(Text, FontScale).X;
+    const float Fit = TW > 0 ? FMath::Min(1.0f, (W-16*S)/TW) : 1;
+    const bool bBuild = Action == TEXT("build") || Action == TEXT("globalbuild");
+    Label(Text, X + 8*S, Y + (bBuild ? 7 : 14)*S, Primary ? Ink : Active ? Accent : White, FontScale * Fit);
+    FButton B; B.Bounds=FBox2D(FVector2D(X,Y),FVector2D(X+W,Y+H)); B.Action=Action; B.Argument=Arg; Buttons.Add(B);
+}
+
+void ACinderHUD::ActionButton(const FString& Text, const FString& Action, int Arg, float X, float Y, float W, bool Active)
+{
+    const float S = UIScale, H = 44*S;
+    float MX=-1,MY=-1; if(PlayerOwner) PlayerOwner->GetMousePosition(MX,MY);
+    const FBox2D Hit(FVector2D(X,Y), FVector2D(X+W,Y+H));
+    const bool Hover=Hit.IsInside(FVector2D(MX,MY));
+    const bool Warning=Action.StartsWith(TEXT("cancel"));
+    const FLinearColor Accent=Warning ? Amber : Mint;
+    Surface(X+2*S,Y+2*S,W-4*S,H-4*S,Active ? Accent.CopyWithNewOpacity(0.55f)
+        : FLinearColor(0.21f,0.31f,0.36f,Hover ? 0.5f : 0.24f),8*S);
+    Surface(X+3*S,Y+3*S,W-6*S,H-6*S,Active ? FLinearColor(0.012f,0.066f,0.077f,0.96f)
+        : FLinearColor(0.008f,0.016f,0.028f,0.91f),7*S);
+    const FLinearColor Color=Active ? Accent : White;
+    const bool Glyph=ActionGlyph(Action,Arg,X+(W-19*S)*0.5f,Y+6*S,19*S,Color);
+    const float FontScale=0.55f;
+    const float TW=MeasureLabel(Text,FontScale).X;
+    const float Fit=TW>0 ? FMath::Min(1.0f,(W-6*S)/TW) : 1;
+    Label(Text,X+(W-TW*Fit)*0.5f,Y+(Glyph ? 28 : 17)*S,Color,FontScale*Fit);
+    if(Active) Surface(X+W*0.36f,Y+40*S,W*0.28f,2*S,Accent,S);
+    FButton B; B.Bounds=Hit; B.Action=Action; B.Argument=Arg; Buttons.Add(B);
+}
+
+void ACinderHUD::HealthBar(float Health, float Maximum, float X, float Y, float W, FLinearColor Color)
+{
+    Panel(X, Y, W, 3 * UIScale, FLinearColor(0.002f, 0.008f, 0.013f, 0.92f));
+    if (Maximum > 0)
+        Panel(X, Y, W * FMath::Clamp(Health / Maximum, 0.0f, 1.0f), 3 * UIScale, Color);
+}
+
+void ACinderHUD::UnitGlyph(cinder::Kind Kind, float X, float Y, float Size, FLinearColor Color)
+{
+    const float L = X, R = X + Size, T = Y, B = Y + Size;
+    switch (Kind)
     {
-        // Broad value bands read at phone scale and give the flat tile an inset face.
-        Panel(X + UIScale, Y + UIScale, W - 2 * UIScale, 8 * UIScale, FLinearColor(0.035f, 0.070f, 0.082f, Hover ? 0.82f : 0.54f));
-        Panel(X + UIScale, Y + H - 7 * UIScale, W - 2 * UIScale, 6 * UIScale, FLinearColor(0.002f, 0.008f, 0.013f, 0.64f));
-        Panel(X + W - UIScale, Y + UIScale, UIScale, H - 2 * UIScale, FLinearColor(0.002f, 0.008f, 0.013f, 0.88f));
+    case cinder::Kind::Striker:
+        DrawLine(L, B, X + Size * 0.5f, T, Color, 2 * UIScale);
+        DrawLine(X + Size * 0.5f, T, R, B, Color, 2 * UIScale);
+        DrawLine(L + Size * 0.22f, B - Size * 0.28f, R - Size * 0.22f, B - Size * 0.28f, Color, 2 * UIScale);
+        break;
+    case cinder::Kind::Lancer:
+        DrawLine(X + Size * 0.5f, T, X + Size * 0.5f, B, Color, 2 * UIScale);
+        DrawLine(L + Size * 0.18f, T + Size * 0.35f, X + Size * 0.5f, T, Color, 2 * UIScale);
+        DrawLine(R - Size * 0.18f, T + Size * 0.35f, X + Size * 0.5f, T, Color, 2 * UIScale);
+        break;
+    case cinder::Kind::Scout:
+        DrawLine(L, Y + Size * 0.5f, R, T, Color, 2 * UIScale);
+        DrawLine(R, T, R - Size * 0.25f, B, Color, 2 * UIScale);
+        DrawLine(R - Size * 0.25f, B, L, Y + Size * 0.5f, Color, 2 * UIScale);
+        break;
+    case cinder::Kind::Bastion:
+        Panel(L, T, Size, Size, Color.CopyWithNewOpacity(0.22f));
+        DrawLine(L, T, R, T, Color, 2 * UIScale); DrawLine(R, T, R, B, Color, 2 * UIScale);
+        DrawLine(R, B, L, B, Color, 2 * UIScale); DrawLine(L, B, L, T, Color, 2 * UIScale);
+        break;
+    case cinder::Kind::Mortar:
+        Panel(L, Y + Size * 0.58f, Size, Size * 0.34f, Color.CopyWithNewOpacity(0.30f));
+        DrawLine(X + Size * 0.20f, Y + Size * 0.62f, R, T, Color, 3 * UIScale);
+        break;
+    case cinder::Kind::Mender:
+        Panel(X + Size * 0.38f, T, Size * 0.24f, Size, Color);
+        Panel(L, Y + Size * 0.38f, Size, Size * 0.24f, Color);
+        break;
+    case cinder::Kind::Kite:
+        DrawLine(L, Y + Size * 0.5f, X + Size * 0.5f, T, Color, 2 * UIScale);
+        DrawLine(X + Size * 0.5f, T, R, Y + Size * 0.5f, Color, 2 * UIScale);
+        DrawLine(R, Y + Size * 0.5f, X + Size * 0.5f, B, Color, 2 * UIScale);
+        DrawLine(X + Size * 0.5f, B, L, Y + Size * 0.5f, Color, 2 * UIScale);
+        break;
+    default:
+        Panel(L + Size * 0.18f, T + Size * 0.18f, Size * 0.64f, Size * 0.64f, Color.CopyWithNewOpacity(0.35f));
+        DrawLine(L, Y + Size * 0.5f, R, Y + Size * 0.5f, Color, 2 * UIScale);
+        break;
     }
-    const FLinearColor Edge = Active || Primary ? Accent : FLinearColor(0.075f, 0.16f, 0.18f);
+}
+
+void ACinderHUD::DrawUnitPortrait(cinder::Kind Kind, float X, float Y, float W, float H, bool Active)
+{
+    const int32 Index = static_cast<int32>(Kind);
+    UTexture2D* Texture = UnitPortraits.IsValidIndex(Index) ? UnitPortraits[Index].Get() : nullptr;
+    Panel(X, Y, W, H, Active ? FLinearColor(0.018f, 0.11f, 0.105f) : FLinearColor(0.018f, 0.035f, 0.043f));
+    if (Texture)
+    {
+        DrawTexture(Texture, X, Y, W, H, 0, 0, 1, 1, FLinearColor::White, BLEND_Translucent);
+        Panel(X, Y + H * 0.68f, W, H * 0.32f, FLinearColor(0.002f, 0.008f, 0.013f, 0.60f));
+    }
+    else
+    {
+        const float GlyphSize = FMath::Min(W, H) * 0.52f;
+        UnitGlyph(Kind, X + (W - GlyphSize) * 0.5f, Y + (H - GlyphSize) * 0.44f,
+            GlyphSize, Active ? Mint : White);
+    }
+    const FLinearColor Edge = Active ? Mint : FLinearColor(0.075f, 0.16f, 0.18f);
     Panel(X, Y, W, UIScale, Edge);
+    Panel(X, Y + H - UIScale, W, UIScale, Edge);
+    Panel(X, Y, UIScale, H, Edge);
+    Panel(X + W - UIScale, Y, UIScale, H, Edge);
+}
+
+void ACinderHUD::EntityButton(const cinder::Entity& Entity, float X, float Y, float W, bool Active, int32 SquadMask)
+{
+    const float S=UIScale,H=64*S;
+    Surface(X,Y,W,H,Active ? FLinearColor(0.015f,0.075f,0.085f,0.97f) : PanelInk,6*S);
+    DrawUnitPortrait(Entity.kind,X+3*S,Y+3*S,W-6*S,38*S,Active);
+    Surface(X+W-29*S,Y+5*S,25*S,12*S,Ink,3*S);
+    SingleLineLabel(FString::Printf(TEXT("#%u"),Entity.id),X+W-27*S,Y+6*S,22*S,White,0.47f);
+    SingleLineLabel(Name(Entity.kind),X+6*S,Y+42*S,W-12*S,Active ? Mint : White,0.58f);
+    if(SquadMask) SingleLineLabel(FString::Printf(TEXT("%c"),TCHAR('A'+FMath::CountTrailingZeros(static_cast<uint32>(SquadMask)))),X+6*S,Y+6*S,18*S,Amber,0.50f);
+    HealthBar(Entity.hp,cinder::definition(Entity.kind).hp,X+5*S,Y+H-6*S,W-10*S,Mint);
+    FButton Entry; Entry.Bounds=FBox2D(FVector2D(X,Y),FVector2D(X+W,Y+H));
+    Entry.Action=TEXT("armyunit"); Entry.EntityId=Entity.id; Buttons.Add(Entry);
+}
+
+void ACinderHUD::DifficultyButton(const FString& Text, int Arg, float X, float Y, float W, float H, bool Active, const FString& Action)
+{
+    float MouseX = -1, MouseY = -1;
+    if (PlayerOwner) PlayerOwner->GetMousePosition(MouseX, MouseY);
+    const float HitHeight = FMath::Max(H, 44 * UIScale);
+    const float HitY = Y - (HitHeight - H) * 0.5f;
+    const bool Hover = MouseX >= X && MouseY >= HitY && MouseX < X + W && MouseY < HitY + HitHeight;
+    const FLinearColor Face = Active ? FLinearColor(0.018f, 0.11f, 0.105f)
+        : Hover ? FLinearColor(0.026f, 0.055f, 0.072f) : PanelInk;
+    Panel(X, Y, W, H, Face);
+    Panel(X, Y, Active ? 3 * UIScale : UIScale, H, Active ? Mint : FLinearColor(0.075f, 0.16f, 0.18f));
+    Panel(X, Y, W, UIScale, Active ? Mint : FLinearColor(0.075f, 0.16f, 0.18f));
     Panel(X, Y + H - UIScale, W, UIScale, FLinearColor(0.018f, 0.055f, 0.065f));
-    const float Bracket = FMath::Min(9 * UIScale, W * 0.22f);
-    Panel(X, Y, Bracket, 2 * UIScale, Edge);
-    Panel(X, Y, 2 * UIScale, 9 * UIScale, Edge);
-    Panel(X + W - Bracket, Y + H - 2 * UIScale, Bracket, 2 * UIScale, Warning ? Amber : FLinearColor(0.07f, 0.25f, 0.25f));
-    Panel(X + W - 2 * UIScale, Y + H - 9 * UIScale, 2 * UIScale, 9 * UIScale, Warning ? Amber : FLinearColor(0.07f, 0.25f, 0.25f));
-    if (Active && !Primary) Panel(X, Y, 3 * UIScale, H, Accent);
-    const float TextWidth = MeasureLabel(Text, 0.80f).X;
-    const float Fit = TextWidth > 0 ? FMath::Min(1.0f, (W - 20 * UIScale) / TextWidth) : 1;
-    Label(Text, X + 12 * UIScale, Y + (Action == TEXT("build") ? 6 : 12) * UIScale, Primary ? Ink : Active ? Accent : White, 0.80f * Fit);
-    FButton B; B.Bounds = FBox2D(FVector2D(X, Y), FVector2D(X + W, Y + H)); B.Action = Action; B.Argument = Arg; Buttons.Add(B);
+    const float TextWidth = MeasureLabel(Text, 0.68f).X;
+    const float Fit = TextWidth > 0 ? FMath::Min(1.0f, (W - 12 * UIScale) / TextWidth) : 1.0f;
+    Label(Text, X + 7 * UIScale, Y + (H / UIScale - 11) * 0.5f * UIScale,
+        Active ? Mint : White, 0.68f * Fit);
+    FButton ButtonEntry;
+    ButtonEntry.Bounds = FBox2D(FVector2D(X, HitY), FVector2D(X + W, HitY + HitHeight));
+    ButtonEntry.Action = Action;
+    ButtonEntry.Argument = Arg;
+    Buttons.Add(ButtonEntry);
 }
 
 bool ACinderHUD::ContainsUI(FVector2D Point) const
@@ -210,35 +399,184 @@ bool ACinderHUD::HandleTap(FVector2D Point)
         if (B.Action == TEXT("map")) SelectedMap = B.Argument;
         else if (B.Action == TEXT("groupsnext")) ++SubgroupPage;
         else if (B.Action == TEXT("queuepage")) QueuePage = FMath::Max(0, QueuePage + B.Argument);
+        else if (B.Action == TEXT("rosterpage")) ArmyRosterPage = FMath::Max(0, ArmyRosterPage + B.Argument);
+        else if (B.Action == TEXT("armytab")) { ArmyPanelTab = FMath::Clamp(B.Argument, 0, 3); ArmyRosterPage = 0; ProductionJobsPage = 0; }
+        else if (B.Action == TEXT("deselect"))
+        {
+            PC->ExecuteAction(TEXT("deselect"));
+            CompactSheet = SheetNone;
+            PinnedProducerId = 0;
+            bTutorialDetails = false;
+        }
+        else if (B.Action == TEXT("jobpage")) ProductionJobsPage = FMath::Max(0, ProductionJobsPage + B.Argument);
+        else if (B.Action == TEXT("globalcatalog"))
+        {
+            if (PC->IsBuildMode()) PC->ExecuteAction(TEXT("cancelplacement"));
+            if (PC->IsProductionRallyMode()) PC->ExecuteAction(TEXT("cancelrally"));
+            CompactSheet = CompactSheet == B.Argument ? SheetNone : B.Argument;
+            PC->bBuildMenu = false;
+            bTutorialDetails = false;
+            PinnedProducerId = B.EntityId;
+            bTutorialTrainKindChosen = bTutorialTrainQuantityChosen = false;
+        }
+        else if (B.Action == TEXT("trainkind")) { GlobalTrainKind = B.Argument; bTutorialTrainKindChosen = true; bTutorialTrainQuantityChosen = false; }
+        else if (B.Action == TEXT("trainqty")) { GlobalTrainQuantity = FMath::Clamp(B.Argument, 1, 20); bTutorialTrainQuantityChosen = true; }
+        else if (B.Action == TEXT("trainqtydelta")) { GlobalTrainQuantity = FMath::Clamp(GlobalTrainQuantity + B.Argument, 1, 20); bTutorialTrainQuantityChosen = true; }
+        else if (B.Action == TEXT("tutorialshow")) FocusTutorialTarget();
+        else if (B.Action == TEXT("globalbuild"))
+        {
+            PC->BeginGlobalBuild(static_cast<cinder::Kind>(B.Argument));
+            if (PC->IsBuildMode()) CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("globaltrain"))
+            PC->QueueTraining(static_cast<cinder::Kind>(GlobalTrainKind), GlobalTrainQuantity, PinnedProducerId);
+        else if (B.Action == TEXT("globalresearch")) PC->QueueResearch(B.Argument, PinnedProducerId);
+        else if (B.Action == TEXT("cancelproduction")) PC->CancelProduction(B.EntityId, B.JobId);
+        else if (B.Action == TEXT("cancelconstruction")) PC->CancelConstruction(B.EntityId);
+        else if (B.Action == TEXT("productionrally"))
+        {
+            PC->BeginProductionRally(B.EntityId);
+            if (PC->IsProductionRallyMode()) CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("rallydefault")) PC->UseDefaultProductionRally(B.EntityId);
+        else if (B.Action == TEXT("rallyfocus"))
+        {
+            PC->FocusArmyRally();
+            CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("producerjobs"))
+        {
+            CompactSheet = SheetArmy;
+            ArmyPanelTab = 2;
+            ProductionJobsPage = 0;
+            PinnedProducerId = B.EntityId;
+            PC->bBuildMenu = false;
+            bTutorialDetails = false;
+        }
+        else if (B.Action == TEXT("productionfocus"))
+        {
+            PC->FocusProduction(B.EntityId);
+            CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("cancelrally")) PC->ExecuteAction(TEXT("cancelrally"));
+        else if (B.Action == TEXT("army"))
+        {
+            if (PC->IsBuildMode()) PC->ExecuteAction(TEXT("cancelplacement"));
+            if (PC->IsProductionRallyMode()) PC->ExecuteAction(TEXT("cancelrally"));
+            CompactSheet = CompactSheet == SheetArmy ? SheetNone : SheetArmy;
+            PC->bBuildMenu = false;
+            bTutorialDetails = false;
+            PinnedProducerId = 0;
+        }
+        else if (B.Action == TEXT("info"))
+        {
+            if (PC->IsBuildMode()) PC->ExecuteAction(TEXT("cancelplacement"));
+            const bool bOpening = CompactSheet != SheetInfo;
+            CompactSheet = CompactSheet == SheetInfo ? SheetNone : SheetInfo;
+            if (bOpening) InfoPage = 0;
+            PC->bBuildMenu = false;
+            bTutorialDetails = false;
+        }
+        else if (B.Action == TEXT("infotab")) InfoPage = FMath::Clamp(B.Argument, 0, 2);
+        else if (B.Action == TEXT("orders"))
+        {
+            CompactSheet = CompactSheet == SheetOrders ? SheetNone : SheetOrders;
+            PC->bBuildMenu = false;
+            bTutorialDetails = false;
+        }
+        else if (B.Action == TEXT("armyall"))
+        {
+            PC->SelectArmy();
+            PC->ExecuteAction(TEXT("focus"));
+            CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("armytype"))
+        {
+            PC->SelectOwnedKind(static_cast<cinder::Kind>(B.Argument));
+            PC->ExecuteAction(TEXT("focus"));
+            CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("armyunit"))
+        {
+            if (PC->SelectOwnedEntity(B.EntityId)) PC->ExecuteAction(TEXT("focus"));
+            CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("squad"))
+        {
+            PC->ExecuteAction(B.Action, B.Argument);
+            PC->ExecuteAction(TEXT("focus"));
+            CompactSheet = SheetNone;
+        }
+        else if (B.Action == TEXT("squadassign")) PC->ExecuteAction(B.Action, B.Argument);
         else if (B.Action == TEXT("helpsection")) CompactHelpSection = FMath::Max(0, B.Argument);
         else if (B.Action == TEXT("tutorialdetails")) { bTutorialDetails = !bTutorialDetails; CompactSheet = 0; PC->bBuildMenu = false; }
         else if (B.Action == TEXT("sheet")) { CompactSheet = CompactSheet == B.Argument ? 0 : B.Argument; PC->bBuildMenu = false; bTutorialDetails = false; }
-        else if (B.Action == TEXT("closesheet")) { CompactSheet = 0; PC->bBuildMenu = false; }
+        else if (B.Action == TEXT("closesheet")) { CompactSheet = 0; PinnedProducerId = 0; PC->bBuildMenu = false; }
         else
         {
             if (B.Action == TEXT("tutorialfocus") || B.Action == TEXT("buildmenu")) bTutorialDetails = false;
             if (B.Action == TEXT("buildmenu") || B.Action == TEXT("kind") || B.Action == TEXT("box")
-                || B.Action == TEXT("attack") || B.Action == TEXT("stop") || B.Action == TEXT("hold")
-                || B.Action == TEXT("focus") || B.Action == TEXT("workers") || B.Action == TEXT("cancelbuilding")) CompactSheet = 0;
+                || B.Action == TEXT("move") || B.Action == TEXT("attack") || B.Action == TEXT("defend")
+                || B.Action == TEXT("stop") || B.Action == TEXT("hold")
+                || B.Action == TEXT("focus") || B.Action == TEXT("tutorialfocus")
+                || B.Action == TEXT("workers") || B.Action == TEXT("cancelbuilding")) CompactSheet = 0;
             PC->ExecuteAction(B.Action, B.Argument);
         }
         return true;
     }
     if (Minimap.bIsValid && Minimap.IsInside(Point) && PC->Battlefield() && !PC->Battlefield()->IsMenu() && !PC->Battlefield()->IsPaused())
     {
-        const int X = FMath::Clamp(static_cast<int>((Point.X - Minimap.Min.X) / Minimap.GetSize().X * cinder::Simulation::WorldSize), 0, 4800);
-        const int Y = FMath::Clamp(static_cast<int>((Point.Y - Minimap.Min.Y) / Minimap.GetSize().Y * cinder::Simulation::WorldSize), 0, 4800);
+        const float World = PC->Battlefield()->Sim().worldSize();
+        const int X = FMath::Clamp(static_cast<int>((Point.X - Minimap.Min.X) / Minimap.GetSize().X * World), 0, static_cast<int>(World));
+        const int Y = FMath::Clamp(static_cast<int>((Point.Y - Minimap.Min.Y) / Minimap.GetSize().Y * World), 0, static_cast<int>(World));
         PC->ExecuteAction(TEXT("minimap"), Y * 10000 + X);
         return true;
     }
     return ContainsUI(Point);
 }
 
+#if UE_BUILD_DEVELOPMENT
+bool ACinderHUD::TapPreviewAction(const FString& Action, TOptional<int32> Argument, TOptional<cinder::Id> Entity)
+{
+    if (!FApp::IsUnattended()) return false;
+    for (int32 Index = Buttons.Num() - 1; Index >= 0; --Index)
+    {
+        const FButton& Entry = Buttons[Index];
+        if (Entry.Action != Action || (Argument.IsSet() && Entry.Argument != Argument.GetValue())
+            || (Entity.IsSet() && Entry.EntityId != Entity.GetValue())) continue;
+        return HandleTap((Entry.Bounds.Min + Entry.Bounds.Max) * 0.5f);
+    }
+    return false;
+}
+#endif
+
 bool ACinderHUD::CloseCompactSheet()
 {
     const bool bWasOpen = CompactSheet != 0;
     CompactSheet = 0;
+    PinnedProducerId = 0;
     return bWasOpen;
+}
+
+void ACinderHUD::OpenGlobalPanel(FName Panel, cinder::Id Producer)
+{
+    int32 Sheet = SheetNone;
+    if (Panel == TEXT("build")) Sheet = SheetGlobalBuild;
+    else if (Panel == TEXT("train")) Sheet = SheetGlobalTrain;
+    else if (Panel == TEXT("research")) Sheet = SheetGlobalResearch;
+    else if (Panel == TEXT("army") || Panel == TEXT("jobs")) Sheet = SheetArmy;
+    if (Sheet == SheetNone) return;
+    if (auto* PC = Cast<ACinderPlayerController>(PlayerOwner))
+    {
+        if (PC->IsBuildMode()) PC->ExecuteAction(TEXT("cancelplacement"));
+        if (PC->IsProductionRallyMode()) PC->ExecuteAction(TEXT("cancelrally"));
+        PC->bBuildMenu = false;
+    }
+    CompactSheet = Sheet;
+    bTutorialDetails = false;
+    bTutorialTrainKindChosen = bTutorialTrainQuantityChosen = false;
+    PinnedProducerId = Producer;
+    if (Panel == TEXT("jobs")) ArmyPanelTab = 2;
 }
 
 void ACinderHUD::NextHelpSection()
@@ -262,6 +600,27 @@ void ACinderHUD::DrawHUD()
     Super::DrawHUD();
     Buttons.Reset(); UIRegions.Reset(); Minimap.Init();
     if (!Canvas) return;
+    auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
+    auto* Battle = PC ? PC->Battlefield() : nullptr;
+    const bool bMenu = Battle && Battle->IsMenu();
+    // The viewport may already have inset the entire canvas. Only the menu
+    // opts out: its artwork is full bleed and its controls handle their own inset.
+    // UE's PopSafeZoneTransform only pops when left/top padding is nonzero.
+    bool bRestoreCanvasSafeZone = false;
+#if PLATFORM_IOS
+    if (bMenu && Canvas->Canvas && FSlateApplication::IsInitialized())
+    {
+        FDisplayMetrics Metrics;
+        FSlateApplication::Get().GetCachedDisplayMetrics(Metrics);
+        bRestoreCanvasSafeZone = Metrics.TitleSafePaddingSize.X > 0.5f
+            || Metrics.TitleSafePaddingSize.Y > 0.5f;
+    }
+#endif
+    if (bRestoreCanvasSafeZone) Canvas->PopSafeZoneTransform();
+    ON_SCOPE_EXIT
+    {
+        if (bRestoreCanvasSafeZone) Canvas->ApplySafeZoneTransform();
+    };
     Width = Canvas->SizeX; Height = Canvas->SizeY;
 #if PLATFORM_IOS || PLATFORM_ANDROID
     bCompactLayout = true;
@@ -279,53 +638,91 @@ void ACinderHUD::DrawHUD()
     {
         FDisplayMetrics Metrics;
         FSlateApplication::Get().GetCachedDisplayMetrics(Metrics);
-        const FVector4 CachedInsets = Metrics.TitleSafePaddingSize;
-        const bool bCachedSafeAreaEmpty = CachedInsets.X <= 0.5f && CachedInsets.Y <= 0.5f
-            && CachedInsets.Z <= 0.5f && CachedInsets.W <= 0.5f;
-        // Initial metrics can precede UIWindow safe-area setup. On iOS, rebuilding
-        // FDisplayMetrics alone rereads the stale native cache, so refresh that
-        // cache on UIKit's thread and let its callback update Slate next frame.
-        const double Now = FPlatformTime::Seconds();
-        if (bCachedSafeAreaEmpty && SafeInsetRefreshAttempts < 8 && Now >= NextSafeInsetRefreshTime)
-        {
-#if PLATFORM_IOS
-            dispatch_async(dispatch_get_main_queue(), ^{
-                FIOSApplication::UpdateSafeZoneAfterRotation();
-            });
-#else
-            FSlateApplication::Get().GetDisplayMetrics(Metrics);
-#endif
-            ++SafeInsetRefreshAttempts;
-            NextSafeInsetRefreshTime = Now + 0.25;
-        }
         const float ScaleX = Width / FMath::Max(1, Metrics.PrimaryDisplayWidth);
         const float ScaleY = Height / FMath::Max(1, Metrics.PrimaryDisplayHeight);
         const auto& Insets = Metrics.TitleSafePaddingSize;
         SafeInsets = FVector4(Insets.X * ScaleX, Insets.Y * ScaleY, Insets.Z * ScaleX, Insets.W * ScaleY);
-        if (SafeInsets != LastReportedSafeInsets)
+    }
+#if PLATFORM_IOS
+    if (bMenu)
+    {
+        // Read UIKit without changing Unreal's global display metrics or the
+        // gameplay canvas. Poll only while the menu is open to follow rotation.
+        const double Now = FPlatformTime::Seconds();
+        if (!bMenuInsetQueryPending && Now >= NextMenuInsetRefreshTime)
         {
-            UE_LOG(LogCinderHUD, Display, TEXT("CINDERLINE_SAFE_AREA viewport=%.0fx%.0f insets_px=(%.1f,%.1f,%.1f,%.1f) refresh_requests=%d"),
-                Width, Height, SafeInsets.X, SafeInsets.Y, SafeInsets.Z, SafeInsets.W, SafeInsetRefreshAttempts);
-            LastReportedSafeInsets = SafeInsets;
+            bMenuInsetQueryPending = true;
+            NextMenuInsetRefreshTime = Now + 0.5;
+            const TWeakObjectPtr<ACinderHUD> WeakHUD(this);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIWindow* Window = [[IOSAppDelegate GetDelegate] window];
+                const CGSize Size = Window.bounds.size;
+                const UIEdgeInsets Insets = Window.safeAreaInsets;
+                const FVector4 Fractions = Size.width > 0 && Size.height > 0
+                    ? FVector4(Insets.left / Size.width, Insets.top / Size.height,
+                        Insets.right / Size.width, Insets.bottom / Size.height)
+                    : FVector4(0, 0, 0, 0);
+                AsyncTask(ENamedThreads::GameThread, [WeakHUD, Fractions]
+                {
+                    if (ACinderHUD* HUD = WeakHUD.Get())
+                    {
+                        HUD->MenuInsetFractions = Fractions;
+                        HUD->bMenuInsetQueryPending = false;
+                    }
+                });
+            });
+        }
+        SafeInsets = FVector4(MenuInsetFractions.X * Width, MenuInsetFractions.Y * Height,
+            MenuInsetFractions.Z * Width, MenuInsetFractions.W * Height);
+        if (SafeInsets != LastReportedMenuInsets)
+        {
+            UE_LOG(LogCinderHUD, Display, TEXT("CINDERLINE_MENU_SAFE_AREA canvas=%.0fx%.0f insets_px=(%.1f,%.1f,%.1f,%.1f) background=full_bleed"),
+                Width, Height, SafeInsets.X, SafeInsets.Y, SafeInsets.Z, SafeInsets.W);
+            LastReportedMenuInsets = SafeInsets;
         }
     }
-    MobileLayout = FCinderMobileHUDLayout::Make(FVector2D(Width, Height), SafeInsets);
-    UIScale = bCompactLayout ? MobileLayout.Scale : FMath::Max(0.45f, FMath::Min(Width / 1280.0f, Height / 720.0f));
+#endif
+#if UE_BUILD_DEVELOPMENT
+    if (bMenu && FApp::IsUnattended())
+    {
+        float MockLeft = 0.0f, MockRight = 0.0f, MockBottom = 0.0f;
+        const bool bMocked = FParse::Value(FCommandLine::Get(), TEXT("CinderMatchLengthSafeLeft="), MockLeft)
+            | FParse::Value(FCommandLine::Get(), TEXT("CinderMatchLengthSafeRight="), MockRight)
+            | FParse::Value(FCommandLine::Get(), TEXT("CinderMatchLengthSafeBottom="), MockBottom);
+        if (bMocked)
+        {
+            SafeInsets.X = FMath::Clamp(MockLeft, 0.0f, Width * 0.35f);
+            SafeInsets.Z = FMath::Clamp(MockRight, 0.0f, Width * 0.35f);
+            SafeInsets.W = FMath::Clamp(MockBottom, 0.0f, Height * 0.25f);
+            UE_LOG(LogCinderHUD, Display,
+                TEXT("CINDERLINE_MATCH_LENGTH_SAFE_AREA left=%.1f right=%.1f bottom=%.1f menu=1 unattended=1"),
+                SafeInsets.X, SafeInsets.Z, SafeInsets.W);
+        }
+    }
+#endif
+    MobileLayout = FCinderMobileHUDLayout::Make(FVector2D(Width, Height), SafeInsets, !bCompactLayout && !bMenu);
+    UIScale = bMenu && !bCompactLayout ? FMath::Max(0.45f, FMath::Min(Width / 1280.0f, Height / 720.0f)) : MobileLayout.Scale;
+    const bool bNarrowPalette = MobileLayout.Drawer.GetSize().X < 400 * UIScale;
+    if (!bMenu && bNarrowPalette && (CompactSheet == SheetGlobalTrain || CompactSheet == SheetArmy || CompactSheet == SheetInfo))
+        MobileLayout.Drawer.Max.Y = FMath::Min(MobileLayout.Drawer.Min.Y + (CompactSheet==SheetGlobalTrain ? 216 : CompactSheet==SheetArmy ? 224 : 248) * UIScale,
+            MobileLayout.Commands.Min.Y - 8 * UIScale);
     Margin = bCompactLayout ? FMath::Max(MobileLayout.Left, Width - MobileLayout.Right) : FMath::Max(24 * UIScale, Width * 0.035f);
     if (bCompactLayout)
     {
         SafeTopOffset = MobileLayout.Top - 10 * UIScale;
         SafeBottomOffset = Height - MobileLayout.Bottom - 12 * UIScale;
     }
-    auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
-    auto* Battle = PC ? PC->Battlefield() : nullptr;
     if (!Battle) { Label(TEXT("Preparing battlefield..."), Margin, Margin, White); return; }
     if (Battle->IsMenu())
     {
         QueuePage = 0; QueueProducerId = 0; CompactSheet = 0; CompactSelectionId = 0;
+        ArmyRosterPage = 0; ProductionJobsPage = 0; ArmyPanelTab = 0; InfoPage = 0;
+        GlobalTrainKind = static_cast<int32>(cinder::Kind::Striker); GlobalTrainQuantity = 1;
+        PinnedProducerId = 0;
         TutorialCardStep = -1; bTutorialDetails = false;
         DrawMenu(Battle);
-        if (PC->IsHelpOpen()) DrawHelp(PC, Battle);
+        if (PC->IsTutorialOfferPending()) DrawTutorialOffer(PC);
+        else if (PC->IsHelpOpen()) DrawHelp(PC, Battle);
         return;
     }
     const auto* Selected = PC->Selection().empty() ? nullptr : Battle->Sim().find(PC->Selection().front());
@@ -334,9 +731,9 @@ void ACinderHUD::DrawHUD()
     const uint32 ProducerId = Selected && cinder::definition(Selected->kind).building ? Selected->id : 0;
     if (QueueProducerId != ProducerId) { QueueProducerId = ProducerId; QueuePage = 0; }
     DrawWorldIndicators(PC, Battle);
-    DrawTutorialWaypoint(PC, Battle);
-    if (bCompactLayout) DrawCompactMatch(PC, Battle); else DrawMatch(PC, Battle);
-    if (Battle->Tutorial().IsActive() && !Battle->IsPaused() && Battle->Sim().winner() < 0) DrawTutorialCard(Battle);
+    DrawCompactMatch(PC, Battle);
+    if (Battle->Tutorial().IsActive() && !Battle->IsPaused() && Battle->Sim().winner() == -1 && !PC->IsHelpOpen())
+        DrawTutorialCard(Battle);
     if (PC->IsHelpOpen()) DrawHelp(PC, Battle);
 }
 
@@ -373,27 +770,47 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
         // Keep the menu inside the asymmetric safe area. The Dynamic Island
         // swaps sides between the two landscape orientations.
         const float X = MobileLayout.Left, W = MobileLayout.Right - MobileLayout.Left;
-        Label(TEXT("THE CAIRN ASSEMBLY"), X, 19 * UIScale + SafeTopOffset, Mint, 0.65f);
-        Label(TEXT("CINDERLINE"), X - UIScale, 45 * UIScale + SafeTopOffset, White, 2.35f);
-        Label(TEXT("Build your foothold. Command the frontier."), X, 88 * UIScale + SafeTopOffset, White, 0.78f);
+        const float SecondaryY = FMath::Min(319 * UIScale + SafeTopOffset, MobileLayout.Bottom - 44 * UIScale);
+        const float SkirmishY = SecondaryY - 51 * UIScale;
+        const float LengthY = SkirmishY - 51 * UIScale;
+        const float DifficultyY = LengthY - 62 * UIScale;
+        const float MapY = DifficultyY - 62 * UIScale;
+        Label(TEXT("CINDERLINE"), X - UIScale, MapY - 54 * UIScale, White, 2.0f);
+        SingleLineLabel(MapDescriptions[SelectedMap], X, MapY - 18 * UIScale, W, Muted, 0.66f);
         const float MapW = (W - 16 * UIScale) / 3;
         for (int I = 0; I < 3; ++I)
-            Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), 112 * UIScale + SafeTopOffset, MapW, SelectedMap == I);
-        SingleLineLabel(MapDescriptions[SelectedMap], X, 162 * UIScale + SafeTopOffset, W, Muted, 0.70f);
-        const float OnlineY = FMath::Min(297 * UIScale + SafeTopOffset, Height - SafeBottomOffset - 78 * UIScale);
-        const float TrainingY = OnlineY - 51 * UIScale;
-        const float SkirmishY = TrainingY - 52 * UIScale;
+            Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), MapY, MapW, SelectedMap == I);
+        const cinder::AIDifficulty Difficulty = PC ? PC->SelectedAIDifficulty() : cinder::AIDifficulty::Normal;
+        SingleLineLabel(FString::Printf(TEXT("AI DIFFICULTY / %s"),
+            UTF8_TO_TCHAR(cinder::aiDifficultyDescription(Difficulty))),
+            X, DifficultyY - 14 * UIScale, W, White, 0.62f);
+        const float DifficultyGap = 4 * UIScale;
+        const float DifficultyW = (W - DifficultyGap * 4) / 5;
+        const TCHAR* CompactDifficultyNames[] = {
+            TEXT("VERY EASY"), TEXT("EASY"), TEXT("NORMAL"), TEXT("HARD"), TEXT("EXPERT")
+        };
+        for (int I = 0; I < static_cast<int>(cinder::kAIDifficultyCount); ++I)
+            DifficultyButton(CompactDifficultyNames[I], I, X + I * (DifficultyW + DifficultyGap),
+                DifficultyY, DifficultyW, 44 * UIScale,
+                Difficulty == cinder::aiDifficultyAt(static_cast<std::size_t>(I)));
+        const cinder::MatchLength Length = PC ? PC->SelectedMatchLength() : cinder::MatchLength::Standard;
+        SingleLineLabel(FString::Printf(TEXT("SOLO LENGTH / %s"), UTF8_TO_TCHAR(cinder::matchLengthDescription(Length))),
+            X, LengthY - 14 * UIScale, W, White, 0.62f);
+        const float LengthW = (W - 8 * UIScale) / 3;
+        for (int I = 0; I < static_cast<int>(cinder::MatchLength::Count); ++I)
+            DifficultyButton(UTF8_TO_TCHAR(cinder::matchLengthName(cinder::matchLengthAt(I))), I,
+                X + I * (LengthW + 4 * UIScale), LengthY, LengthW, 44 * UIScale,
+                Length == cinder::matchLengthAt(I), TEXT("matchlength"));
         Button(TEXT("START SKIRMISH"), TEXT("start"), SelectedMap, X, SkirmishY, W * 0.55f - 5 * UIScale, true);
         Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + W * 0.55f + 5 * UIScale, SkirmishY, W * 0.45f - 5 * UIScale);
-        Button(PC && PC->HasCompletedTutorial() ? TEXT("REPLAY TRAINING") : TEXT("GUIDED TRAINING"), TEXT("tutorial"), 0,
-            X, TrainingY, W * 0.55f - 5 * UIScale, true);
-        Button(TEXT("FIELD GUIDE"), TEXT("help"), 0, X + W * 0.55f + 5 * UIScale, TrainingY, W * 0.45f - 5 * UIScale);
-        Button(TEXT("ONLINE 1V1"), TEXT("online"), 0, X, OnlineY, W, true);
-#if PLATFORM_IOS || PLATFORM_ANDROID
-        SingleLineLabel(TEXT("Drag to pan / Hold + drag to select / Pinch to zoom"), X, Height - SafeBottomOffset - 20 * UIScale, W, Muted, 0.70f);
-#else
-        SingleLineLabel(DesktopControlHint, X, Height - 20 * UIScale, W, Muted, 0.70f);
-#endif
+        const float SecondaryGap = 5 * UIScale;
+        const float SecondaryW = (W - 2 * SecondaryGap) / 3;
+        Button(PC && PC->HasCompletedTutorial() ? TEXT("REPLAY TRAINING") : TEXT("GUIDED TRAINING"),
+            TEXT("tutorial"), 0, X, SecondaryY, SecondaryW, true);
+        Button(TEXT("FIELD GUIDE"), TEXT("help"), 0,
+            X + SecondaryW + SecondaryGap, SecondaryY, SecondaryW);
+        Button(TEXT("MULTIPLAYER"), TEXT("online"), 0,
+            X + 2 * (SecondaryW + SecondaryGap), SecondaryY, SecondaryW, true);
         return;
     }
     const auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
@@ -401,23 +818,76 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
     Label(TEXT("THE CAIRN ASSEMBLY"), X, 83 * UIScale, Mint, 0.78f);
     Label(TEXT("CINDERLINE"), X - 4 * UIScale, 122 * UIScale, White, 3.65f);
     Label(TEXT("Build your foothold."), X, 219 * UIScale, White, 1.17f);
-    Label(TEXT("Command the frontier."), X, 250 * UIScale, White, 1.17f);
-    Label(TEXT("A tactical war for the world's last resources."), X, 296 * UIScale, Muted, 0.84f);
-    Panel(X, 350 * UIScale, W, UIScale, FLinearColor(0.10f, 0.17f, 0.19f, 0.8f));
-    Label(TEXT("DEPLOYMENT SECTOR"), X, 371 * UIScale, Muted, 0.68f);
+    Panel(X, 254 * UIScale, W, UIScale, FLinearColor(0.10f, 0.17f, 0.19f, 0.8f));
+    Label(TEXT("DEPLOYMENT SECTOR"), X, 269 * UIScale, Muted, 0.68f);
     const float MapW = (W - 16 * UIScale) / 3;
     for (int I = 0; I < 3; ++I)
-        Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), 401 * UIScale, MapW, SelectedMap == I);
-    Label(MapDescriptions[SelectedMap], X, 461 * UIScale, Muted, 0.78f);
-    Button(TEXT("START SKIRMISH   [ENTER]"), TEXT("start"), SelectedMap, X, 510 * UIScale, 302 * UIScale, true);
-    Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + 314 * UIScale, 510 * UIScale, 226 * UIScale);
-    Button(PC && PC->HasCompletedTutorial() ? TEXT("REPLAY TRAINING  [T]") : TEXT("GUIDED TRAINING  [T]"), TEXT("tutorial"), 0, X, 566 * UIScale, 302 * UIScale, true);
-    Button(TEXT("FIELD GUIDE  [F1]"), TEXT("help"), 0, X + 314 * UIScale, 566 * UIScale, 226 * UIScale);
-    Button(TEXT("ONLINE 1V1"), TEXT("online"), 0, X, 622 * UIScale, W, true);
-    Label(TEXT("SOLO SKIRMISH"), X, Height - 35 * UIScale, Mint, 0.70f);
-    SingleLineLabel(FString(DesktopControlHint) + TEXT(" / Right-click command"), 317 * UIScale, Height - 35 * UIScale,
+        Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), 292 * UIScale, MapW, SelectedMap == I);
+    Label(MapDescriptions[SelectedMap], X, 342 * UIScale, Muted, 0.72f);
+    Label(TEXT("AI DIFFICULTY"), X, 364 * UIScale, Muted, 0.62f);
+    const cinder::AIDifficulty Difficulty = PC ? PC->SelectedAIDifficulty() : cinder::AIDifficulty::Normal;
+    const float DifficultyGap = 6 * UIScale;
+    const float DifficultyW = (W - DifficultyGap * 4) / 5;
+    for (int I = 0; I < static_cast<int>(cinder::kAIDifficultyCount); ++I)
+        DifficultyButton(UTF8_TO_TCHAR(cinder::aiDifficultyName(cinder::aiDifficultyAt(static_cast<std::size_t>(I)))),
+            I, X + I * (DifficultyW + DifficultyGap), 384 * UIScale, DifficultyW, 28 * UIScale,
+            Difficulty == cinder::aiDifficultyAt(static_cast<std::size_t>(I)));
+    SingleLineLabel(UTF8_TO_TCHAR(cinder::aiDifficultyDescription(Difficulty)),
+        X, 424 * UIScale, W, White, 0.65f);
+    const cinder::MatchLength Length = PC ? PC->SelectedMatchLength() : cinder::MatchLength::Standard;
+    Label(TEXT("SOLO LENGTH"), X, 446 * UIScale, Muted, 0.62f);
+    const float LengthW = (W - 12 * UIScale) / 3;
+    for (int I = 0; I < static_cast<int>(cinder::MatchLength::Count); ++I)
+        DifficultyButton(UTF8_TO_TCHAR(cinder::matchLengthName(cinder::matchLengthAt(I))), I,
+            X + I * (LengthW + 6 * UIScale), 466 * UIScale, LengthW, 28 * UIScale,
+            Length == cinder::matchLengthAt(I), TEXT("matchlength"));
+    SingleLineLabel(UTF8_TO_TCHAR(cinder::matchLengthDescription(Length)), X, 506 * UIScale, W, White, 0.65f);
+    Button(TEXT("START SKIRMISH   [ENTER]"), TEXT("start"), SelectedMap, X, 534 * UIScale, 302 * UIScale, true);
+    Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + 314 * UIScale, 534 * UIScale, 226 * UIScale);
+    Button(PC && PC->HasCompletedTutorial() ? TEXT("REPLAY TRAINING  [T]") : TEXT("GUIDED TRAINING  [T]"), TEXT("tutorial"), 0, X, 590 * UIScale, 302 * UIScale, true);
+    Button(TEXT("FIELD GUIDE  [F1]"), TEXT("help"), 0, X + 314 * UIScale, 590 * UIScale, 226 * UIScale);
+    Button(TEXT("MULTIPLAYER"), TEXT("online"), 0, X, 646 * UIScale, W, true);
+    Label(TEXT("SOLO SKIRMISH"), X, Height - 16 * UIScale, Mint, 0.70f);
+    SingleLineLabel(FString(DesktopControlHint) + TEXT(" / Right-click command"), 317 * UIScale, Height - 16 * UIScale,
         Width - 317 * UIScale - X, Muted, 0.70f);
 
+}
+
+void ACinderHUD::DrawTutorialOffer(ACinderPlayerController* PC)
+{
+    if (!PC || !PC->IsTutorialOfferPending()) return;
+    Buttons.Reset();
+    UIRegions.Reset();
+    Minimap.Init();
+    Panel(0, 0, Width, Height, FLinearColor(0.002f, 0.008f, 0.014f, 0.78f));
+    UIRegions.Add(FBox2D(FVector2D::ZeroVector, FVector2D(Width, Height)));
+
+    const float S = UIScale;
+    const float SafeLeft = bCompactLayout ? MobileLayout.Left : Margin;
+    const float SafeRight = bCompactLayout ? MobileLayout.Right : Width - Margin;
+    const float SafeTop = bCompactLayout ? MobileLayout.Top : Margin;
+    const float SafeBottom = bCompactLayout ? MobileLayout.Bottom : Height - Margin;
+    const float W = FMath::Min((bCompactLayout ? 590.0f : 560.0f) * S, SafeRight - SafeLeft);
+    const float H = FMath::Min((bCompactLayout ? 248.0f : 270.0f) * S, SafeBottom - SafeTop - 12 * S);
+    const float X = FMath::Clamp((Width - W) * 0.5f, SafeLeft, SafeRight - W);
+    const float Y = FMath::Clamp((Height - H) * 0.5f, SafeTop + 6 * S, SafeBottom - H - 6 * S);
+
+    Panel(X, Y, W, H, FLinearColor(0.004f, 0.018f, 0.026f, 0.98f));
+    Panel(X, Y, 5 * S, H, Mint);
+    Label(TEXT("YOUR FIRST COMMAND"), X + 24 * S, Y + 18 * S, Mint, 0.66f);
+    Label(TEXT("LEARN THE FRONTIER"), X + 24 * S, Y + 40 * S, White, bCompactLayout ? 1.22f : 1.42f);
+    WrappedLabel(TEXT("Play a guided example battle that teaches mining, construction, research, reinforcement, and defense."),
+        X + 24 * S, Y + 78 * S, W - 48 * S, White, bCompactLayout ? 0.68f : 0.76f);
+    WrappedLabel(TEXT("The opponent waits while you learn, then sends one small raid when your army is ready. We guide you through defense and on to victory."),
+        X + 24 * S, Y + 124 * S, W - 48 * S, Muted, bCompactLayout ? 0.66f : 0.72f);
+
+    const float Gap = 8 * S;
+    const float ButtonW = (W - 48 * S - Gap) * 0.5f;
+    const float ButtonY = Y + H - 62 * S;
+    Button(TEXT("GET GUIDED TUTORIAL"), TEXT("onboardlearn"), 0,
+        X + 24 * S, ButtonY, ButtonW, true);
+    Button(TEXT("SKIP FOR NOW"), TEXT("onboardskip"), 0,
+        X + 24 * S + ButtonW + Gap, ButtonY, ButtonW);
 }
 
 void ACinderHUD::DrawHelp(ACinderPlayerController* PC, ACinderBattlefield* Battle)
@@ -564,189 +1034,296 @@ void ACinderHUD::DrawHelp(ACinderPlayerController* PC, ACinderBattlefield* Battl
     }
 }
 
-void ACinderHUD::DrawTutorialWaypoint(ACinderPlayerController* PC, ACinderBattlefield* Battle)
+FCinderTutorialGuide ACinderHUD::CurrentTutorialGuide() const
 {
-    const FCinderTutorial& Tutorial = Battle->Tutorial();
-    if (!Tutorial.IsActive() || Tutorial.IsComplete() || Battle->IsPaused()) return;
-    cinder::Vec2 Point;
-    FString Caption;
-    if (Tutorial.Step() == ECinderTutorialStep::Scout)
-    {
-        Point = FCinderTutorial::ScoutPoint();
-        Caption = TEXT("SCOUT POINT");
-    }
-    else if (Tutorial.Step() == ECinderTutorialStep::AttackMove)
-    {
-        Point = FCinderTutorial::CombatPoint();
-        Caption = TEXT("ATTACK HERE");
-    }
-    else return;
-
-    FVector2D Screen;
-    if (!PC->ProjectWorldLocationToScreen(FVector(Point.x, Point.y, 26), Screen)) return;
-    const float R = 12 * UIScale;
-    DrawLine(Screen.X, Screen.Y - R, Screen.X + R, Screen.Y, Amber, 3 * UIScale);
-    DrawLine(Screen.X + R, Screen.Y, Screen.X, Screen.Y + R, Amber, 3 * UIScale);
-    DrawLine(Screen.X, Screen.Y + R, Screen.X - R, Screen.Y, Amber, 3 * UIScale);
-    DrawLine(Screen.X - R, Screen.Y, Screen.X, Screen.Y - R, Amber, 3 * UIScale);
-    const float LabelW = FMath::Min(126 * UIScale, static_cast<float>(MeasureLabel(Caption, 0.70f).X) + 16 * UIScale);
-    const float LabelX = FMath::Clamp(static_cast<float>(Screen.X) - LabelW * 0.5f, Margin, Width - Margin - LabelW);
-    const float LabelY = FMath::Clamp(static_cast<float>(Screen.Y) + 18 * UIScale, 62 * UIScale + SafeTopOffset, Height - 210 * UIScale);
-    Panel(LabelX, LabelY, LabelW, 24 * UIScale, Ink);
-    SingleLineLabel(Caption, LabelX + 8 * UIScale, LabelY + 4 * UIScale, LabelW - 16 * UIScale, Amber, 0.70f);
+    const auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
+    const auto* Battle = PC ? PC->Battlefield() : nullptr;
+    if (!Battle || !Battle->Tutorial().IsActive()) return {};
+    FCinderTutorialContext Context;
+    Context.Selection = PC->Selection();
+    Context.bCompact = bCompactLayout || PLATFORM_IOS || PLATFORM_ANDROID;
+    Context.Catalog = PC->bBuildMenu ? SheetContext : CompactSheet;
+    Context.TrainKind = static_cast<cinder::Kind>(GlobalTrainKind);
+    Context.TrainQuantity = GlobalTrainQuantity;
+    Context.bTrainKindChosen = bTutorialTrainKindChosen;
+    Context.bTrainQuantityChosen = bTutorialTrainQuantityChosen;
+    Context.bBuildMode = PC->IsBuildMode();
+    Context.BuildingKind = PC->BuildingKind();
+    Context.bAttackMove = PC->IsAttackMoveMode();
+    Context.bMoveCommand = PC->IsMoveCommandMode();
+    Context.bDefendCommand = PC->IsDefendCommandMode();
+    Context.bProductionRally = PC->IsProductionRallyMode();
+    Context.PinnedProducer = PC->IsProductionRallyMode() ? PC->ProductionRallyProducer() : PinnedProducerId;
+    Context.ArmyTab = ArmyPanelTab;
+    return Battle->Tutorial().Guide(Battle->Sim(), Context, bCompactLayout || PLATFORM_IOS || PLATFORM_ANDROID);
 }
 
-void ACinderHUD::DrawTutorialCard(ACinderBattlefield* Battle)
+bool ACinderHUD::FocusTutorialTarget()
 {
-    const FCinderTutorial& Tutorial = Battle->Tutorial();
-    if (!Tutorial.IsActive()) return;
-    const FCinderTutorialText Text = Tutorial.Text(Battle->Sim(), PLATFORM_IOS || PLATFORM_ANDROID);
+    auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
+    auto* Battle = PC ? PC->Battlefield() : nullptr;
+    auto* Rig = PC ? Cast<ACinderCamera>(PC->GetPawn()) : nullptr;
+    if (!Battle || !Rig || Battle->IsPaused() || PC->IsHelpOpen() || Battle->Sim().winner() != -1) return false;
+    const auto Guide = CurrentTutorialGuide();
+    if (Guide.Target != ECinderTutorialGuideTarget::Entity && Guide.Target != ECinderTutorialGuideTarget::Ground) return false;
+    cinder::Vec2 Point = Guide.Point;
+    if (Guide.Entity)
+    {
+        const auto* Entity = Battle->Sim().find(Guide.Entity);
+        if (!Entity || !Entity->alive()) return false;
+        Point = Battle->RenderPosition(*Entity);
+    }
+    // Finding a target must not perform the selection or issue an order for the player.
+    // A closer view keeps a target near the map edge out from under the HUD.
+    if (Rig->Distance() > 900) Rig->Zoom(900 - Rig->Distance());
+    Rig->Focus(FVector(Point.x, Point.y, 0));
+    UE_LOG(LogCinderHUD, Verbose, TEXT("CINDERLINE_TUTORIAL_FOCUS point=(%.1f,%.1f) distance=%.1f"),
+        Point.x, Point.y, Rig->Distance());
+    return true;
+}
+
+void ACinderHUD::DrawTutorialPointer(FVector2D Center, const FBox2D& Bounds, bool bWorld)
+{
     const float S = UIScale;
-    const bool bComplete = Tutorial.IsComplete();
-    const int32 Step = static_cast<int32>(Tutorial.Step());
+    const float Pulse = 0.76f + 0.24f * FMath::Sin(GetWorld()->GetRealTimeSeconds() * 3.0f);
+    const FLinearColor Color = Amber.CopyWithNewOpacity(Pulse);
+    if (bWorld)
+    {
+        const float R = 21 * S;
+        for (int32 Segment = 0; Segment < 24; ++Segment)
+        {
+            const float A = Segment * 2 * PI / 24;
+            const float B = (Segment + 1) * 2 * PI / 24;
+            DrawLine(Center.X + FMath::Cos(A) * R, Center.Y + FMath::Sin(A) * R,
+                Center.X + FMath::Cos(B) * R, Center.Y + FMath::Sin(B) * R, Color, 2 * S);
+        }
+    }
+    else
+    {
+        const FVector2D Lo = Bounds.Min - FVector2D(2 * S), Hi = Bounds.Max + FVector2D(2 * S);
+        DrawLine(Lo.X, Lo.Y, Hi.X, Lo.Y, Color, 2 * S);
+        DrawLine(Hi.X, Lo.Y, Hi.X, Hi.Y, Color, 2 * S);
+        DrawLine(Hi.X, Hi.Y, Lo.X, Hi.Y, Color, 2 * S);
+        DrawLine(Lo.X, Hi.Y, Lo.X, Lo.Y, Color, 2 * S);
+    }
+    // Point into the side rail from the open battlefield, away from the
+    // resource chips directly above it. The arrow never takes input.
+    if (!bWorld && Bounds.Max.X <= MobileLayout.GlobalActions.Max.X + S
+        && Bounds.Min.Y >= MobileLayout.GlobalActions.Min.Y - S
+        && Bounds.Max.Y <= MobileLayout.GlobalActions.Max.Y + S)
+    {
+        const float TipX = Bounds.Max.X + 5*S;
+        DrawLine(TipX+22*S,Center.Y,TipX,Center.Y,Ink,6*S);
+        DrawLine(TipX+22*S,Center.Y,TipX,Center.Y,Color,3*S);
+        DrawLine(TipX+8*S,Center.Y-7*S,TipX,Center.Y,Color,3*S);
+        DrawLine(TipX+8*S,Center.Y+7*S,TipX,Center.Y,Color,3*S);
+        return;
+    }
+    // A short arrow points at the real hit target. It never takes input.
+    const float TipY = bWorld ? Center.Y - 24 * S : Bounds.Min.Y + 4 * S;
+    const float TailY = TipY - (bWorld ? 24 : 15) * S;
+    DrawLine(Center.X, TailY, Center.X, TipY, Ink, 6 * S);
+    DrawLine(Center.X, TailY, Center.X, TipY, Color, 3 * S);
+    DrawLine(Center.X - 7 * S, TipY - 8 * S, Center.X, TipY, Color, 3 * S);
+    DrawLine(Center.X + 7 * S, TipY - 8 * S, Center.X, TipY, Color, 3 * S);
+}
+
+void ACinderHUD::DrawTutorialCard(ACinderBattlefield* Battle, bool bForceShow)
+{
+    auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
+    if (!PC || !Battle->Tutorial().IsActive()) return;
+    const int32 Step = static_cast<int32>(Battle->Tutorial().Step());
     if (TutorialCardStep != Step)
     {
         TutorialCardStep = Step;
-        bTutorialDetails = false;
+        bTutorialTrainKindChosen = bTutorialTrainQuantityChosen = false;
     }
-    const float W = bCompactLayout ? FMath::Min(480 * S, FMath::Max(280 * S, Width - 2 * Margin - 108 * S)) : 408 * S;
-    const float X = bCompactLayout ? Margin : Width - Margin - W - 62 * S;
-    const float Pad = 14 * S;
-    const float BodyScale = bCompactLayout ? 0.70f : 0.80f;
-    const float BodyWidth = W - 2 * Pad;
-    const bool bShowBody = !bCompactLayout || bComplete || bTutorialDetails;
-    const bool bShowHint = !Text.Hint.IsEmpty();
-    const float BodyHeight = bShowBody ? WrappedHeight(Text.Body, BodyWidth, BodyScale) : 0;
-    const float HintHeight = bShowHint ? WrappedHeight(Text.Hint, BodyWidth, bCompactLayout ? 0.70f : 0.72f) : 0;
-    const float ProgressHeight = WrappedHeight(Text.Progress, BodyWidth, bCompactLayout ? 0.66f : 0.68f);
-    if (bCompactLayout && !bComplete)
+    const FCinderTutorialGuide Guide = CurrentTutorialGuide();
+    if (Guide.Instruction.IsEmpty()) return;
+    const float S = UIScale;
+    const bool bWorld = Guide.Target == ECinderTutorialGuideTarget::Entity || Guide.Target == ECinderTutorialGuideTarget::Ground;
+    TutorialCardBounds.Init(); TutorialTargetBounds.Init();
+    bTutorialTargetVisible = bTutorialNeedsShow = bTutorialTargetClear = false;
+    TutorialPointer = FVector2D::ZeroVector;
+    if (Guide.Target == ECinderTutorialGuideTarget::Button)
     {
-        const float HeaderHeight = 48 * S;
-        const float TextGaps = (bShowBody && bShowHint ? 2 * S : 0) + 4 * S;
-        const float H = bTutorialDetails ? HeaderHeight + BodyHeight + HintHeight + TextGaps + ProgressHeight + 6 * S : HeaderHeight;
-        const float Y = 65 * S + SafeTopOffset;
-        Panel(X, Y, W, H, FLinearColor(0.004f, 0.018f, 0.026f, 0.97f));
-        Panel(X, Y, 4 * S, H, Amber);
-        UIRegions.Add(FBox2D(FVector2D(X, Y), FVector2D(X + W, Y + H)));
-
-        const float ActionW = 52 * S;
-        const float ActionGap = 4 * S;
-        const float ActionsW = bTutorialDetails ? ActionW * 3 + ActionGap * 2 : ActionW * 2 + ActionGap;
-        const float ActionsX = X + W - Pad - ActionsW;
-        SingleLineLabel(FString::Printf(TEXT("%d/%d  %s"), Step + 1, FCinderTutorial::StepCount, *Text.Title),
-            X + Pad, Y + 6 * S, ActionsX - X - Pad - 7 * S, Amber, 0.78f);
-        SingleLineLabel(Text.Hint, X + Pad, Y + 26 * S, ActionsX - X - Pad - 7 * S, White, 0.70f);
-        Button(TEXT("FIND"), TEXT("tutorialfocus"), 0, ActionsX, Y, ActionW);
-        if (bTutorialDetails) Button(TEXT("HELP"), TEXT("tutorialhelp"), 0, ActionsX + ActionW + ActionGap, Y, ActionW);
-        Button(bTutorialDetails ? TEXT("LESS") : TEXT("MORE"), TEXT("tutorialdetails"), 0,
-            ActionsX + (ActionW + ActionGap) * (bTutorialDetails ? 2 : 1), Y, ActionW, bTutorialDetails);
-        if (!bTutorialDetails) return;
-
-        float TextY = Y + HeaderHeight;
-        if (bShowBody)
+        for (const auto& Entry : Buttons)
         {
-            TextY += WrappedLabel(Text.Body, X + Pad, TextY, BodyWidth, White, BodyScale);
-            if (bShowHint) TextY += 2 * S;
+            if (Entry.Action != Guide.ButtonAction || Entry.Argument != Guide.ButtonArgument || Entry.EntityId != Guide.ButtonEntity) continue;
+            TutorialTargetBounds = Entry.Bounds;
+            TutorialPointer = Entry.Bounds.GetCenter();
+            bTutorialTargetVisible = bTutorialTargetClear = true;
+            break;
         }
-        if (bShowHint) TextY += WrappedLabel(Text.Hint, X + Pad, TextY, BodyWidth, White, 0.70f);
-        TextY += 4 * S;
-        WrappedLabel(Text.Progress, X + Pad, TextY, BodyWidth, Muted, 0.66f);
+    }
+    else if (bWorld)
+    {
+        const bool bProjected = PC->ProjectTutorialTarget(Guide.Entity, Guide.Point, TutorialPointer);
+        const FBox2D View(FVector2D(Margin + 26 * S, 84 * S + SafeTopOffset),
+            FVector2D(Width - Margin - 26 * S, Height - 74 * S - SafeBottomOffset));
+        bTutorialTargetVisible = bProjected && View.IsInside(TutorialPointer);
+        bTutorialTargetClear = bTutorialTargetVisible && !ContainsUI(TutorialPointer);
+        bTutorialNeedsShow = bForceShow || !bTutorialTargetClear;
+        TutorialTargetBounds = FBox2D(TutorialPointer - FVector2D(24 * S), TutorialPointer + FVector2D(24 * S));
+    }
+    const bool bInlineCancel = Guide.ButtonAction == TEXT("tutorialclearmode") && !bTutorialTargetVisible;
+    const bool bInlineAction = bTutorialNeedsShow || bInlineCancel;
+    const FString Instruction = bTutorialNeedsShow
+        ? (bCompactLayout ? TEXT("Tap SHOW to find the highlighted target.") : TEXT("Click SHOW to find the highlighted target.")) : Guide.Instruction;
+    const FString Explanation = Guide.Explanation;
+    const float Pad = 10 * S;
+    const float Top = 65 * S + SafeTopOffset;
+    const bool bSheet = CompactSheet != SheetNone || PC->bBuildMenu;
+    const float Right = bCompactLayout ? MobileLayout.Right : Width - Margin;
+    const float Left = MobileLayout.Drawer.Min.X;
+    TArray<FBox2D> Candidates;
+    const auto AddCandidate = [&](float X, float W, float Y)
+    {
+        if (W < 192 * S || X < Left || X + W > Right + 1) return;
+        const float TextW = W - 2 * Pad;
+        const float H = 24 * S + WrappedHeight(Instruction, TextW, 0.82f)
+            + (Explanation.IsEmpty() ? 0 : 4 * S + WrappedHeight(Explanation, TextW, 0.67f))
+            + 10 * S + (bInlineAction ? 48 * S : 0);
+        if (Y + H > Height - 66 * S - SafeBottomOffset) return;
+        Candidates.Add(FBox2D(FVector2D(X, Y), FVector2D(X + W, Y + H)));
+    };
+    if (bSheet)
+        AddCandidate(MobileLayout.Drawer.Max.X + 8 * S, Right - MobileLayout.Drawer.Max.X - 8 * S, FMath::Max(Top,static_cast<float>(MobileLayout.Navigation.Max.Y)+8*S));
+    const float NormalW = FMath::Min(300 * S, Right - Left);
+    AddCandidate(Left, NormalW, Top);
+    AddCandidate(Right - NormalW, NormalW, Top);
+    AddCandidate(Right - 220 * S, 220 * S, Top + 112 * S);
+    const auto OverlapArea = [](const FBox2D& A, const FBox2D& B)
+    {
+        return FMath::Max(0.0, FMath::Min(A.Max.X, B.Max.X) - FMath::Max(A.Min.X, B.Min.X))
+            * FMath::Max(0.0, FMath::Min(A.Max.Y, B.Max.Y) - FMath::Max(A.Min.Y, B.Min.Y));
+    };
+    double BestScore = TNumericLimits<double>::Max();
+    for (const auto& Candidate : Candidates)
+    {
+        double Score = 0;
+        for (const auto& Region : UIRegions) Score += OverlapArea(Candidate, Region);
+        for (const auto& Entry : Buttons) Score += OverlapArea(Candidate, Entry.Bounds);
+        if (bTutorialTargetVisible) Score += 20 * OverlapArea(Candidate, TutorialTargetBounds.ExpandBy(12 * S));
+        if (Score < BestScore) { BestScore = Score; TutorialCardBounds = Candidate; }
+    }
+    if (!TutorialCardBounds.bIsValid) return;
+    // Card placement is part of hit testing. If every available position
+    // would cover the next world click, expose camera recovery instead.
+    if (bWorld && !bInlineAction && TutorialCardBounds.Intersect(TutorialTargetBounds))
+    {
+        DrawTutorialCard(Battle, true);
         return;
     }
-
-    const float HeaderHeight = bCompactLayout ? 32 * S : 57 * S;
-    const float TextGaps = (bShowBody && bShowHint ? 2 * S : 0) + 4 * S;
-    const float H = HeaderHeight + BodyHeight + HintHeight + TextGaps + ProgressHeight + 6 * S + 44 * S;
-    const float CompactBottom = MobileLayout.Commands.Min.Y - 58 * S;
-    const float Y = bCompactLayout ? CompactBottom - H : 78 * S;
-    Panel(X, Y, W, H, FLinearColor(0.004f, 0.018f, 0.026f, 0.97f));
-    Panel(X, Y, 4 * S, H, bComplete ? Mint : Amber);
-    UIRegions.Add(FBox2D(FVector2D(X, Y), FVector2D(X + W, Y + H)));
-
-    if (bCompactLayout)
+    const float X = TutorialCardBounds.Min.X, Y = TutorialCardBounds.Min.Y;
+    const float W = TutorialCardBounds.GetSize().X, H = TutorialCardBounds.GetSize().Y;
+    Surface(X, Y, W, H, Ink, 8*S);
+    Surface(X, Y+8*S, 2*S, H-16*S, Guide.bWaiting ? Mint : Amber, S);
+    Label(FString::Printf(TEXT("TRAINING %d/%d   %d/%d"), Step + 1, FCinderTutorial::StepCount,
+        Guide.ActionIndex, Guide.ActionCount), X + Pad, Y + 6 * S, Guide.bWaiting ? Mint : Amber, 0.58f);
+    float TextY = Y + 24 * S;
+    TextY += WrappedLabel(Instruction, X + Pad, TextY, W - 2 * Pad, White, 0.82f);
+    if (!Explanation.IsEmpty()) WrappedLabel(Explanation, X + Pad, TextY + 4 * S, W - 2 * Pad, Muted, 0.67f);
+    UIRegions.Add(TutorialCardBounds);
+    if (bInlineAction)
     {
-        if (bComplete) Label(TEXT("TRAINING COMPLETE"), X + Pad, Y + 10 * S, Mint, 0.68f);
-        else
+        Button(bInlineCancel ? TEXT("CANCEL ORDER") : TEXT("SHOW"), bInlineCancel ? TEXT("tutorialclearmode") : TEXT("tutorialshow"), 0,
+            X + Pad, Y + H - 48 * S, bInlineCancel ? W - 2 * Pad : 72 * S, true);
+        TutorialTargetBounds = Buttons.Last().Bounds;
+        TutorialPointer = TutorialTargetBounds.GetCenter();
+        bTutorialTargetVisible = true;
+        bTutorialTargetClear = true;
+        DrawTutorialPointer(TutorialPointer, TutorialTargetBounds, false);
+    }
+    else if (bTutorialTargetVisible && bTutorialTargetClear)
+    {
+        if (bWorld && TutorialCardBounds.IsInside(TutorialPointer)) bTutorialTargetClear = false;
+        else DrawTutorialPointer(TutorialPointer, TutorialTargetBounds, bWorld);
+    }
+}
+
+#if UE_BUILD_DEVELOPMENT
+void ACinderHUD::LogTutorialGuidance() const
+{
+    const auto Guide = CurrentTutorialGuide();
+    UE_LOG(LogCinderHUD, Display, TEXT("CINDERLINE_TUTORIAL_GUIDE target=%d action=%s argument=%d entity=%u step=%d micro=%d/%d waiting=%d pointer=(%.1f,%.1f) card=(%.1f,%.1f,%.1f,%.1f) target_bounds=(%.1f,%.1f,%.1f,%.1f) target_visible=%d needs_show=%d target_clear=%d"),
+        static_cast<int32>(Guide.Target), Guide.ButtonAction.IsEmpty() ? TEXT("none") : *Guide.ButtonAction,
+        Guide.ButtonArgument, Guide.Entity ? Guide.Entity : Guide.ButtonEntity, TutorialCardStep,
+        Guide.ActionIndex, Guide.ActionCount, Guide.bWaiting, TutorialPointer.X, TutorialPointer.Y,
+        TutorialCardBounds.Min.X, TutorialCardBounds.Min.Y, TutorialCardBounds.Max.X, TutorialCardBounds.Max.Y,
+        TutorialTargetBounds.Min.X, TutorialTargetBounds.Min.Y, TutorialTargetBounds.Max.X, TutorialTargetBounds.Max.Y,
+        bTutorialTargetVisible, bTutorialNeedsShow, bTutorialTargetClear);
+    UE_LOG(LogCinderHUD, Display, TEXT("CINDERLINE_TUTORIAL_INSTRUCTION text=%s"), *Guide.Instruction);
+}
+#endif
+
+bool ACinderHUD::RefreshFogRuns(uint64 SourceRevision, int32 SourceDimension,
+    const TArray<uint8>& SourceCells, uint64& CachedRevision, int32& CachedDimension,
+    TArray<FMinimapFogRun>& CachedRuns)
+{
+    if (CachedRevision == SourceRevision && CachedDimension == SourceDimension) return false;
+    CachedRevision = SourceRevision;
+    CachedDimension = SourceDimension;
+    CachedRuns.Reset();
+    if (SourceDimension <= 0) return true;
+
+    const bool bValidSnapshot = static_cast<int64>(SourceCells.Num())
+        == static_cast<int64>(SourceDimension) * SourceDimension;
+    auto StateAt = [&](int32 X, int32 Y)
+    {
+        if (!bValidSnapshot) return uint8(0);
+        return FMath::Min<uint8>(SourceCells[Y * SourceDimension + X], uint8(2));
+    };
+    CachedRuns.Reserve(SourceDimension * 2);
+    for (int32 Y = 0; Y < SourceDimension; ++Y)
+    {
+        int32 RunStart = 0;
+        uint8 RunState = StateAt(0, Y);
+        for (int32 X = 1; X <= SourceDimension; ++X)
         {
-            Label(FString::Printf(TEXT("STEP %d / %d"), Step + 1, FCinderTutorial::StepCount), X + Pad, Y + 10 * S, Amber, 0.68f);
-            SingleLineLabel(Text.Title, X + Pad + 92 * S, Y + 9 * S, BodyWidth - 92 * S, White, 0.90f);
+            const uint8 State = X < SourceDimension ? StateAt(X, Y) : uint8(255);
+            if (State == RunState) continue;
+            CachedRuns.Add(FMinimapFogRun{Y, RunStart, X, RunState});
+            RunStart = X;
+            RunState = State;
         }
     }
-    else if (bComplete)
-        Label(TEXT("TRAINING COMPLETE"), X + Pad, Y + 12 * S, Mint, 0.72f);
-    else
-        Label(FString::Printf(TEXT("STEP %d / %d"), Step + 1, FCinderTutorial::StepCount), X + Pad, Y + 12 * S, Amber, 0.72f);
-    if (!bCompactLayout) SingleLineLabel(Text.Title, X + Pad, Y + 32 * S, BodyWidth, White, 1.15f);
-
-    float TextY = Y + HeaderHeight;
-    if (bShowBody)
-    {
-        TextY += WrappedLabel(Text.Body, X + Pad, TextY, BodyWidth, White, BodyScale);
-        if (bShowHint) TextY += 2 * S;
-    }
-    if (bShowHint) TextY += WrappedLabel(Text.Hint, X + Pad, TextY, BodyWidth, bCompactLayout ? White : Muted, bCompactLayout ? 0.70f : 0.72f);
-    TextY += 4 * S;
-    WrappedLabel(Text.Progress, X + Pad, TextY, BodyWidth, bComplete ? Mint : Muted, bCompactLayout ? 0.66f : 0.68f);
-
-    const float ButtonY = Y + H - 44 * S;
-    if (bComplete)
-    {
-        const float ActionW = (W - 2 * Pad - 7 * S) * 0.5f;
-        Panel(X + Pad, ButtonY, ActionW, 44 * S, FLinearColor(0.018f, 0.11f, 0.105f));
-        Panel(X + Pad, ButtonY, 3 * S, 44 * S, Mint);
-        Label(TEXT("PRACTICE ON"), X + Pad + 12 * S, ButtonY + 12 * S, Mint, 0.80f);
-        Button(TEXT("END TRAINING"), TEXT("tutorialend"), 0, X + Pad + ActionW + 7 * S, ButtonY, ActionW);
-    }
-    else
-    {
-        const int32 Columns = bCompactLayout ? 3 : 2;
-        const float ActionW = (W - 2 * Pad - (Columns - 1) * 7 * S) / Columns;
-        Button(TEXT("FIND"), TEXT("tutorialfocus"), 0, X + Pad, ButtonY, ActionW);
-        Button(TEXT("HELP"), TEXT("tutorialhelp"), 0, X + Pad + ActionW + 7 * S, ButtonY, ActionW);
-        if (bCompactLayout)
-            Button(bTutorialDetails ? TEXT("LESS") : TEXT("MORE"), TEXT("tutorialdetails"), 0,
-                X + Pad + (ActionW + 7 * S) * 2, ButtonY, ActionW, bTutorialDetails);
-    }
+    return true;
 }
 
 void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Battle)
 {
-    const float Size = (bCompactLayout ? 92 : 155) * UIScale;
-    const FVector2D Origin(bCompactLayout ? Width - Margin - Size : Margin, bCompactLayout ? 76 * UIScale + SafeTopOffset : Height - Size - 30 * UIScale);
+    const float Size = MobileLayout.Minimap.GetSize().X;
+    const FVector2D Origin = MobileLayout.Minimap.Min;
     Minimap = FBox2D(Origin, Origin + FVector2D(Size));
     UIRegions.Add(Minimap);
-    Panel(Origin.X - 5 * UIScale, Origin.Y - 5 * UIScale, Size + 10 * UIScale, Size + 10 * UIScale, Ink);
-    Panel(Origin.X - 3, Origin.Y - 3, Size + 6, Size + 6, Muted);
-    const float Cell = Size / cinder::Simulation::FogSize;
+    Surface(Origin.X - 4 * UIScale, Origin.Y - 4 * UIScale, Size + 8 * UIScale, Size + 8 * UIScale, Ink, 7 * UIScale);
+    Panel(Origin.X - UIScale, Origin.Y - UIScale, Size + 2 * UIScale, Size + 2 * UIScale, FLinearColor(0.12f,0.25f,0.30f,0.75f));
+    if (MinimapFogSource.Get() != Battle)
+    {
+        MinimapFogSource = Battle;
+        MinimapFogRevision = MAX_uint64;
+        MinimapFogDimension = 0;
+    }
+    RefreshFogRuns(Battle->FogRevision(), Battle->FogDimension(), Battle->FogCells(),
+        MinimapFogRevision, MinimapFogDimension, MinimapFogRuns);
+    const float Cell = Size / FMath::Max(1, MinimapFogDimension);
     const float CellExtent = Cell + 0.3f;
     const FLinearColor FogColors[] = {
         FLinearColor(0.014f, 0.025f, 0.04f),
         FLinearColor(0.065f, 0.12f, 0.14f),
         FLinearColor(0.11f, 0.25f, 0.25f)
     };
-    auto FogState = [&](int X, int Y)
+    for (const FMinimapFogRun& Run : MinimapFogRuns)
     {
-        const cinder::Vec2 P{ (X + 0.5f) * 75, (Y + 0.5f) * 75 };
-        return Battle->Sim().visible(0, P) ? 2 : Battle->Sim().explored(0, P) ? 1 : 0;
-    };
-    for (int Y = 0; Y < cinder::Simulation::FogSize; ++Y)
-    {
-        int RunStart = 0, RunState = FogState(0, Y);
-        for (int X = 1; X <= cinder::Simulation::FogSize; ++X)
-        {
-            const int State = X < cinder::Simulation::FogSize ? FogState(X, Y) : -1;
-            if (State == RunState) continue;
-            // Opaque equal-color cells have the same union as one row run.
-            // Keep the original last-cell edge and row order at color boundaries.
-            const float Left = Origin.X + RunStart * Cell;
-            const float LastCellLeft = Origin.X + (X - 1) * Cell;
-            const float Right = LastCellLeft + CellExtent;
-            Panel(Left, Origin.Y + Y * Cell, Right - Left, CellExtent, FogColors[RunState]);
-            RunStart = X;
-            RunState = State;
-        }
+        // Opaque equal-color cells have the same union as one row run.
+        // Keep the original last-cell edge and row order at color boundaries.
+        const float Left = Origin.X + Run.StartX * Cell;
+        const float LastCellLeft = Origin.X + (Run.EndX - 1) * Cell;
+        const float Right = LastCellLeft + CellExtent;
+        Panel(Left, Origin.Y + Run.Y * Cell, Right - Left, CellExtent, FogColors[Run.State]);
     }
-    const float K = Size / cinder::Simulation::WorldSize;
+    const float K = Size / Battle->Sim().worldSize();
     for (const auto& E : Battle->KnownResources())
     {
         if (E.resource <= 0) continue;
@@ -760,7 +1337,16 @@ void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Ba
         const bool Resource = E.kind == cinder::Kind::Resource;
         if (Resource && E.resource <= 0) continue;
         const float Dot = (cinder::definition(E.kind).building ? 4.0f : 2.0f) * UIScale;
-        Panel(Origin.X + E.pos.x * K - Dot * 0.5f, Origin.Y + E.pos.y * K - Dot * 0.5f, Dot, Dot, Resource ? Amber : E.team == 0 ? Mint : FLinearColor(1.0f, 0.29f, 0.21f));
+        Panel(Origin.X + E.pos.x * K - Dot * 0.5f, Origin.Y + E.pos.y * K - Dot * 0.5f, Dot, Dot, Resource ? Amber : CinderTeamColors::Accent(E.team));
+    }
+    const auto& Player = Battle->Sim().players()[0];
+    if (Player.armyRallySet)
+    {
+        const float FlagX = Origin.X + Player.armyRally.x * K;
+        const float FlagY = Origin.Y + Player.armyRally.y * K;
+        DrawLine(FlagX, FlagY, FlagX, FlagY - 7 * UIScale, Ink, 3 * UIScale);
+        DrawLine(FlagX, FlagY, FlagX, FlagY - 7 * UIScale, Mint, UIScale);
+        Panel(FlagX, FlagY - 7 * UIScale, 5 * UIScale, 3 * UIScale, Mint);
     }
     cinder::Vec2 Corners[4];
     const FVector2D Screens[4] = { FVector2D(0, 0), FVector2D(Width, 0), FVector2D(Width, Height), FVector2D(0, Height) };
@@ -771,14 +1357,7 @@ void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Ba
         const auto A = Corners[I], B = Corners[(I + 1) % 4];
         DrawLine(Origin.X + FMath::Clamp(A.x * K, 0.0f, Size), Origin.Y + FMath::Clamp(A.y * K, 0.0f, Size), Origin.X + FMath::Clamp(B.x * K, 0.0f, Size), Origin.Y + FMath::Clamp(B.y * K, 0.0f, Size), White, UIScale);
     }
-    const float MapBracket = 11 * UIScale;
-    Panel(Origin.X - 3 * UIScale, Origin.Y - 3 * UIScale, MapBracket, 2 * UIScale, Mint);
-    Panel(Origin.X - 3 * UIScale, Origin.Y - 3 * UIScale, 2 * UIScale, MapBracket, Mint);
-    Panel(Origin.X + Size + 3 * UIScale - MapBracket, Origin.Y - 3 * UIScale, MapBracket, 2 * UIScale, Amber);
-    Panel(Origin.X + Size + UIScale, Origin.Y - 3 * UIScale, 2 * UIScale, MapBracket, Amber);
-    Panel(Origin.X - 3 * UIScale, Origin.Y + Size + UIScale, MapBracket, 2 * UIScale, FLinearColor(0.06f, 0.34f, 0.31f));
-    Panel(Origin.X - 3 * UIScale, Origin.Y + Size + 3 * UIScale - MapBracket, 2 * UIScale, MapBracket, FLinearColor(0.06f, 0.34f, 0.31f));
-    if (!bCompactLayout) Label(TEXT("SECTOR MAP"), Origin.X, Origin.Y - 23 * UIScale, Muted, 0.7f);
+
 }
 
 void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlefield* Battle)
@@ -789,6 +1368,35 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
         FVector2D SA, SB;
         if (PC->ProjectWorldLocationToScreen(A, SA) && PC->ProjectWorldLocationToScreen(B, SB)) DrawLine(SA.X, SA.Y, SB.X, SB.Y, C, Thickness * UIScale);
     };
+    const auto DrawRallyFlag = [&](cinder::Vec2 Point, FLinearColor Color, const FString& Text)
+    {
+        FVector2D P;
+        if (!PC->ProjectWorldLocationToScreen(FVector(Point.x, Point.y, 10), P)) return;
+        if (P.X < 0 || P.X > Width || P.Y < 0 || P.Y > Height) return;
+        const float S = UIScale;
+        DrawLine(P.X, P.Y, P.X, P.Y - 28 * S, Ink, 4 * S);
+        DrawLine(P.X, P.Y, P.X, P.Y - 28 * S, Color, 2 * S);
+        Panel(P.X, P.Y - 28 * S, 15 * S, 10 * S, Ink);
+        Panel(P.X + S, P.Y - 27 * S, 13 * S, 8 * S, Color);
+        DrawLine(P.X - 5 * S, P.Y, P.X + 5 * S, P.Y, Color, 2 * S);
+        if (!Text.IsEmpty())
+        {
+            Surface(P.X + 19 * S, P.Y - 28 * S, 83 * S, 19 * S, Ink.CopyWithNewOpacity(0.88f), 4 * S);
+            SingleLineLabel(Text, P.X + 23 * S, P.Y - 24 * S, 75 * S, Color, 0.48f);
+        }
+    };
+    const auto& Player = Sim.players()[0];
+    if (Player.armyRallySet)
+        DrawRallyFlag(Player.armyRally, Mint,
+            PC->IsProductionRallyMode() || (CompactSheet == SheetArmy && ArmyPanelTab == 3)
+                ? TEXT("ARMY RALLY") : TEXT(""));
+    if (!PC->Selection().empty())
+    {
+        const auto* Producer = Sim.find(PC->Selection().front());
+        if (Producer && Producer->alive() && Producer->team == 0
+            && cinder::definition(Producer->kind).building && Producer->rallyOverride)
+            DrawRallyFlag(Producer->rally, Amber, TEXT("LOCAL RALLY"));
+    }
     for (const auto& E : Sim.entities())
     {
         if (!E.alive() || E.kind == cinder::Kind::Resource || (E.team != 0 && !Sim.visible(0, E.pos))) continue;
@@ -826,10 +1434,39 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
             {
                 const float BarW = (D.building ? 58 : 34) * UIScale;
                 Panel(P.X - BarW / 2, P.Y, BarW, 4 * UIScale, Ink);
-                Panel(P.X - BarW / 2, P.Y, BarW * FMath::Clamp(E.hp / D.hp, 0.0f, 1.0f), 4 * UIScale, E.team == 0 ? Mint : Amber);
+                Panel(P.X - BarW / 2, P.Y, BarW * FMath::Clamp(E.hp / D.hp, 0.0f, 1.0f), 4 * UIScale, CinderTeamColors::Accent(E.team));
                 if (E.progress < 1) Panel(P.X - BarW / 2, P.Y + 6 * UIScale, BarW * E.progress, 3 * UIScale, Amber);
                 if (E.team == 0 && D.building && E.progress < 1)
                     Label(ConstructionStatus(Sim, E), P.X - BarW / 2, P.Y - 19 * UIScale, Amber, 0.62f);
+            }
+        }
+    }
+    // One primary-selection range guide is enough for positioning decisions.
+    // Friendly range never exposes hidden actors; segments also stay inside
+    // currently visible, authored world space.
+    if (!PC->Selection().empty())
+    {
+        const cinder::Entity* Primary = Sim.find(PC->Selection().front());
+        if (Primary && Primary->alive() && Primary->team == 0)
+        {
+            const float Range = CinderUnitInfo::Range(Primary->kind);
+            if (Range > 0)
+            {
+                const cinder::Vec2 Center = Battle->RenderPosition(*Primary);
+                constexpr int32 Segments = 48;
+                for (int32 Index = 0; Index < Segments; ++Index)
+                {
+                    const float A = Index * UE_TWO_PI / Segments;
+                    const float B = (Index + 1) * UE_TWO_PI / Segments;
+                    const cinder::Vec2 From{Center.x + FMath::Cos(A) * Range, Center.y + FMath::Sin(A) * Range};
+                    const cinder::Vec2 To{Center.x + FMath::Cos(B) * Range, Center.y + FMath::Sin(B) * Range};
+                    const bool bInWorld = From.x >= 0 && From.y >= 0 && To.x >= 0 && To.y >= 0
+                        && From.x <= Sim.worldSize() && From.y <= Sim.worldSize()
+                        && To.x <= Sim.worldSize() && To.y <= Sim.worldSize();
+                    const cinder::Vec2 Mid{(From.x + To.x) * 0.5f, (From.y + To.y) * 0.5f};
+                    if (!bInWorld || !Sim.visible(0, From) || !Sim.visible(0, Mid) || !Sim.visible(0, To)) continue;
+                    WorldLine(FVector(From.x, From.y, 6), FVector(To.x, To.y, 6), Mint.CopyWithNewOpacity(0.34f), 1);
+                }
             }
         }
     }
@@ -838,11 +1475,11 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
         // Local effect geometry must not spill into a hidden fog cell. Link geometry
         // uses the simulation's recorded-endpoint and complete-segment visibility gate.
         const float EffectScale = bCompactLayout ? 0.72f : 1.0f;
-        const float FogCell = cinder::Simulation::WorldSize / cinder::Simulation::FogSize;
+        const float FogCell = Sim.worldSize() / cinder::Simulation::FogSize;
         auto EffectAreaVisible = [&](FVector Center, float Radius)
         {
             if (Center.X - Radius < 0 || Center.Y - Radius < 0 ||
-                Center.X + Radius >= cinder::Simulation::WorldSize || Center.Y + Radius >= cinder::Simulation::WorldSize) return false;
+                Center.X + Radius >= Sim.worldSize() || Center.Y + Radius >= Sim.worldSize()) return false;
             const int MinX = FMath::FloorToInt((Center.X - Radius) / FogCell), MaxX = FMath::FloorToInt((Center.X + Radius) / FogCell);
             const int MinY = FMath::FloorToInt((Center.Y - Radius) / FogCell), MaxY = FMath::FloorToInt((Center.Y + Radius) / FogCell);
             for (int Y = MinY; Y <= MaxY; ++Y) for (int X = MinX; X <= MaxX; ++X)
@@ -883,7 +1520,7 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
             const float Age = FMath::Clamp(1.0f - FX.life / FX.duration, 0.0f, 1.0f);
             const float Fade = (1.0f - Age) * (1.0f - Age * 0.4f);
             const float Phase = static_cast<float>(FX.id % 31) * 0.37f;
-            const FLinearColor Shot = FX.team == 0 ? Mint : Amber;
+            const FLinearColor Shot = CinderTeamColors::Accent(FX.team);
             const FVector From(FX.from.x, FX.from.y, EffectHeight(FX.sourceKind));
             const FVector To(FX.to.x, FX.to.y, EffectHeight(FX.targetKind));
             const auto PointOnLink = [&](float Fraction) { return FMath::Lerp(From, To, Fraction); };
@@ -987,8 +1624,13 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
     }
     if (PC->IsBuildMode())
     {
-        const auto P = PC->PlacementPoint(); const float R = cinder::definition(PC->BuildingKind()).radius;
-        const auto Status = Sim.buildStatus(0, PC->BuildingKind(), PC->Selection(), &P);
+        auto P = PC->PlacementPoint();
+        const auto Guide = CurrentTutorialGuide();
+        const bool bSuggestedSite = Battle->Tutorial().IsActive() && !PC->IsPlacementGestureActive()
+            && Guide.Target == ECinderTutorialGuideTarget::Ground;
+        if (bSuggestedSite) P = Guide.Point;
+        const float R = cinder::definition(PC->BuildingKind()).radius;
+        const auto Status = PC->BuildPlacementStatus(&P);
         const bool Valid = Status.accepted;
         const FLinearColor Color = Valid ? Mint : FLinearColor(1, 0.24f, 0.18f);
         for (int I = 0; I < 32; ++I)
@@ -996,6 +1638,9 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
             const float A = I * UE_TWO_PI / 32, B = (I + 1) * UE_TWO_PI / 32;
             WorldLine(FVector(P.x + FMath::Cos(A) * R, P.y + FMath::Sin(A) * R, 8), FVector(P.x + FMath::Cos(B) * R, P.y + FMath::Sin(B) * R, 8), Color, 3);
         }
+        // The tutorial owns the suggested-site instruction. A stale menu tap
+        // must not display an unrelated red placement error beneath it.
+        if (bSuggestedSite) return;
         FVector2D Screen(Margin, Height * 0.5f);
         FVector2D Projected;
         if (PC->ProjectWorldLocationToScreen(FVector(P.x, P.y, 10), Projected)) Screen = Projected;
@@ -1031,14 +1676,14 @@ void ACinderHUD::DrawProductionQueue(const cinder::Entity* Producer, float X, fl
     const float PanelH = (bCompactLayout ? 62 + Rows * 51 : 164) * S;
     Panel(X - 5 * S, Y - 6 * S, W + 10 * S, PanelH, Ink);
     UIRegions.Add(FBox2D(FVector2D(X - 5 * S, Y - 6 * S), FVector2D(X + W + 5 * S, Y - 6 * S + PanelH)));
-    SingleLineLabel(FString::Printf(TEXT("QUEUE %d / %d"), Count, cinder::Simulation::MaxQueue), X + 5 * S, Y + 3 * S, W - 111 * S, Amber, 0.80f);
+    SingleLineLabel(FString::Printf(TEXT("QUEUE %d / %d"), Count, cinder::Simulation::MaxQueue), X + 5 * S, Y + 3 * S, W - 219 * S, Amber, 0.80f);
 #if PLATFORM_IOS || PLATFORM_ANDROID
     const TCHAR* CancelHint = TEXT("TAP TO CANCEL");
 #else
     const TCHAR* CancelHint = TEXT("CLICK TO CANCEL");
 #endif
     const FString Range = Count ? FString::Printf(TEXT("%d-%d / %s"), Start + 1, End, CancelHint) : TEXT("NO PRODUCTION QUEUED");
-    SingleLineLabel(Range, X + 5 * S, Y + 25 * S, W - 111 * S, Muted, 0.70f);
+    SingleLineLabel(Range, X + 5 * S, Y + 25 * S, W - 219 * S, Muted, 0.70f);
     if (QueuePage > 0) Button(TEXT("<"), TEXT("queuepage"), -1, X + W - 98 * S, Y, 44 * S);
     if (QueuePage + 1 < Pages) Button(TEXT(">"), TEXT("queuepage"), 1, X + W - 44 * S, Y, 44 * S);
     const float CellW = (W - (Columns - 1) * 7 * S) / Columns;
@@ -1048,17 +1693,25 @@ void ACinderHUD::DrawProductionQueue(const cinder::Entity* Producer, float X, fl
         const int Cell = I - Start;
         const float BX = X + (Cell % Columns) * (CellW + 7 * S), BY = Y + (52 + (Cell / Columns) * 51) * S;
         const FString QName = Q.research ? TEXT("Research") : Name(Q.kind);
-        Button(FString::Printf(TEXT("%d %s %ds x"), I + 1, *QName, FMath::CeilToInt(Q.remaining)), TEXT("cancelqueue"), I, BX, BY, CellW);
+        Button(TEXT(""),TEXT("cancelproduction"),0,BX,BY,CellW);
+        SingleLineLabel(QName,BX+8*S,BY+7*S,CellW-32*S,White,0.64f);
+        SingleLineLabel(FString::Printf(TEXT("%d / %ds"),I+1,FMath::CeilToInt(Q.remaining)),BX+8*S,BY+25*S,CellW-32*S,Muted,0.53f);
+        ActionGlyph(TEXT("cancelproduction"),0,BX+CellW-23*S,BY+14*S,16*S,Amber);
+        Buttons.Last().EntityId = Producer->id;
+        Buttons.Last().JobId = Q.id;
         Panel(BX, BY + 41 * S, CellW * FMath::Clamp(1 - Q.remaining / FMath::Max(Q.total, 0.01f), 0.0f, 1.0f), 2 * S, Mint);
     }
+
+    Button(TEXT("VIEW JOBS"), TEXT("producerjobs"), 0, X + W - 206 * S, Y, 98 * S);
+    Buttons.Last().EntityId = Producer ? Producer->id : 0;
 }
 
 bool ACinderHUD::GetOnlineNotice(ACinderPlayerController* PC, ACinderBattlefield* Battle, FString& Heading, FString& Detail) const
 {
     if (!PC || !Battle || !Battle->IsOnlineMatch()) return false;
-    if (Battle->IsPaused() || Battle->Sim().winner() >= 0 || PC->IsHelpOpen() || PC->IsOnlineLeavePending()) return false;
+    if (Battle->IsPaused() || Battle->Sim().winner() != -1 || PC->IsHelpOpen() || PC->IsOnlineLeavePending()) return false;
     const UCinderOnlineSubsystem* Online = PC->Online();
-    if (!Online || Online->State() == ECinderOnlineState::Finished) return false;
+    if (!Online || Online->State() == ECinderOnlineState::Finished || Online->IsEliminated()) return false;
 
     FString Status = Online->StatusText().TrimStartAndEnd();
     if (!Online->CanSendOrders())
@@ -1072,13 +1725,22 @@ bool ACinderHUD::GetOnlineNotice(ACinderPlayerController* PC, ACinderBattlefield
     }
 
     const int32 LocalSeat = Online->LocalSeat();
-    const int32 OtherSeat = LocalSeat == 0 ? 1 : LocalSeat == 1 ? 0 : INDEX_NONE;
-    if (Online->State() == ECinderOnlineState::Playing && OtherSeat != INDEX_NONE && !Online->SeatConnected(OtherSeat))
+    if (Online->State() == ECinderOnlineState::Playing && LocalSeat >= 0)
     {
-        Heading = TEXT("OPPONENT DISCONNECTED");
-        Detail = Status.IsEmpty() ? TEXT("The match continues while the other player reconnects.") : Status;
-        Detail += TEXT("  Open Menu > Connection.");
-        return true;
+        TArray<FString> Disconnected;
+        for (int32 Seat = 0; Seat < Online->PlayerCount(); ++Seat)
+        {
+            const int32 Relative = (Seat - LocalSeat + Online->PlayerCount()) % Online->PlayerCount();
+            if (Seat == LocalSeat || Battle->Sim().eliminated(Relative) || Online->SeatConnected(Seat)) continue;
+            Disconnected.Add(Online->SeatName(Seat).IsEmpty()
+                ? FString::Printf(TEXT("Player %d"), Seat + 1) : Online->SeatName(Seat));
+        }
+        if (!Disconnected.IsEmpty())
+        {
+            Heading = Disconnected.Num() == 1 ? TEXT("OPPONENT DISCONNECTED") : TEXT("OPPONENTS DISCONNECTED");
+            Detail = FString::Join(Disconnected, TEXT(", ")) + TEXT(" · Reconnect window active. Menu > Connection.");
+            return true;
+        }
     }
     return false;
 }
@@ -1091,6 +1753,623 @@ void ACinderHUD::DrawOnlineNotice(const FString& Heading, const FString& Detail,
     Panel(X, Y, 4 * S, H, Amber);
     SingleLineLabel(Heading, X + 13 * S, Y + 6 * S, W - 25 * S, Amber, bCompact ? 0.66f : 0.76f);
     SingleLineLabel(Detail, X + 13 * S, Y + (bCompact ? 26 : 29) * S, W - 25 * S, White, bCompact ? 0.60f : 0.68f);
+}
+
+void ACinderHUD::DrawUnitRibbon(ACinderPlayerController* PC, ACinderBattlefield* Battle)
+{
+    if (!PC || !Battle || !MobileLayout.Portraits.bIsValid) return;
+    struct FUnitSummary
+    {
+        cinder::Kind Kind = cinder::Kind::Worker;
+        int32 Count = 0;
+        float Health = 0;
+        float Maximum = 0;
+        int32 SquadMask = 0;
+    };
+    const cinder::Kind Kinds[] = { cinder::Kind::Worker, cinder::Kind::Striker, cinder::Kind::Lancer,
+        cinder::Kind::Scout, cinder::Kind::Bastion, cinder::Kind::Mortar, cinder::Kind::Mender, cinder::Kind::Kite };
+    TArray<FUnitSummary> Summaries;
+    const auto& Sim = Battle->Sim();
+    std::map<cinder::Id, int32> SquadMasks;
+    for (int32 Squad = 0; Squad < ACinderPlayerController::SquadCount; ++Squad)
+        for (cinder::Id Id : PC->Squad(Squad)) SquadMasks[Id] |= 1 << Squad;
+    for (cinder::Kind Kind : Kinds)
+    {
+        FUnitSummary Summary; Summary.Kind = Kind;
+        for (const cinder::Entity& Entity : Sim.entities())
+        {
+            if (!Entity.alive() || Entity.team != 0 || Entity.kind != Kind) continue;
+            ++Summary.Count;
+            Summary.Health += Entity.hp;
+            Summary.Maximum += cinder::definition(Kind).hp;
+            const auto Squad = SquadMasks.find(Entity.id);
+            if (Squad != SquadMasks.end()) Summary.SquadMask |= Squad->second;
+        }
+        if (Summary.Count > 0) Summaries.Add(Summary);
+    }
+
+    const FBox2D Bounds = MobileLayout.Portraits;
+    const float S = UIScale, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
+    if (Summaries.IsEmpty()) return;
+
+    const float Gap = 3 * S;
+    const int32 Capacity = FMath::Max(1, FMath::FloorToInt((W + Gap) / (44 * S + Gap)));
+    const int32 Visible = FMath::Min(Capacity, Summaries.Num());
+    const float CardW = FMath::Min(58 * S, (W - Gap * (Visible - 1)) / Visible);
+    const float UsedW = Visible * CardW + (Visible - 1) * Gap;
+    const FBox2D UsedBounds(Bounds.Min, FVector2D(Bounds.Min.X + UsedW, Bounds.Max.Y));
+    Panel(UsedBounds.Min.X, UsedBounds.Min.Y, UsedW, H, FLinearColor(0.004f, 0.018f, 0.026f, 0.95f));
+    Panel(UsedBounds.Min.X, UsedBounds.Min.Y, UsedW, S, FLinearColor(0.07f, 0.31f, 0.30f));
+    UIRegions.Add(UsedBounds);
+    for (int32 Index = 0; Index < Visible; ++Index)
+    {
+        const FUnitSummary& Summary = Summaries[Index];
+        const float X = Bounds.Min.X + Index * (CardW + Gap);
+        if(Summaries.Num()>Visible && Index==Visible-1)
+        {
+            ActionButton(FString::Printf(TEXT("+%d types"),Summaries.Num()-Visible+1),TEXT("army"),0,X,Bounds.Min.Y,CardW);
+            continue;
+        }
+        const bool bSelected = !PC->Selection().empty()
+            && std::all_of(PC->Selection().begin(), PC->Selection().end(), [&](cinder::Id Id)
+            {
+                const cinder::Entity* Entity = Sim.find(Id);
+                return Entity && Entity->alive() && Entity->team == 0 && Entity->kind == Summary.Kind;
+            });
+        DrawUnitPortrait(Summary.Kind, X, Bounds.Min.Y, CardW, H, bSelected);
+        Panel(X + CardW - 20 * S, Bounds.Min.Y + 3 * S, 17 * S, 15 * S,
+            FLinearColor(0.002f, 0.008f, 0.013f, 0.86f));
+        SingleLineLabel(FString::Printf(TEXT("%d"), Summary.Count), X + CardW - 18 * S,
+            Bounds.Min.Y + 4 * S, 14 * S, White, 0.54f);
+        FString SquadText;
+        for (int32 Squad = 0; Squad < ACinderPlayerController::SquadCount; ++Squad)
+            if ((Summary.SquadMask & (1 << Squad)) != 0) SquadText.AppendChar(TCHAR('A' + Squad));
+        if (!SquadText.IsEmpty())
+        {
+            Panel(X + 3 * S, Bounds.Min.Y + 3 * S, (7 + SquadText.Len() * 7) * S, 15 * S,
+                FLinearColor(0.002f, 0.008f, 0.013f, 0.86f));
+            SingleLineLabel(SquadText, X + 6 * S, Bounds.Min.Y + 4 * S,
+                (SquadText.Len() * 7 + 1) * S, Amber, 0.50f);
+        }
+        SingleLineLabel(CardName(Summary.Kind), X + 4 * S, Bounds.Max.Y - 17 * S,
+            CardW - 8 * S, bSelected ? Mint : White, 0.48f);
+        HealthBar(Summary.Health, Summary.Maximum, X + 3 * S, Bounds.Max.Y - 4 * S,
+            CardW - 6 * S, Summary.Health / FMath::Max(1.0f, Summary.Maximum) < 0.35f ? Amber : Mint);
+        FButton Entry;
+        Entry.Bounds = FBox2D(FVector2D(X, Bounds.Min.Y), FVector2D(X + CardW, Bounds.Max.Y));
+        Entry.Action = TEXT("armytype");
+        Entry.Argument = static_cast<int32>(Summary.Kind);
+        Buttons.Add(Entry);
+    }
+}
+
+void ACinderHUD::DrawSelectionIdentity(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact)
+{
+    if (!PC || !Battle || PC->Selection().empty()) return;
+    const auto& Sim = Battle->Sim();
+    const cinder::Entity* First = nullptr;
+    float Health = 0, Maximum = 0;
+    int32 Count = 0;
+    FString SharedOrder;
+    bool bSharedOrder = true;
+    std::map<cinder::Kind, int32> Types;
+    for (cinder::Id Id : PC->Selection())
+    {
+        const cinder::Entity* Entity = Sim.find(Id);
+        if (!Entity || !Entity->alive() || Entity->team != 0) continue;
+        const FString Order = RosterOrder(*Entity);
+        if (!First) { First = Entity; SharedOrder = Order; }
+        else if (SharedOrder != Order) bSharedOrder = false;
+        Health += Entity->hp;
+        Maximum += cinder::definition(Entity->kind).hp;
+        ++Types[Entity->kind];
+        ++Count;
+    }
+    if (!First || Count <= 0) return;
+
+    const float S = UIScale;
+    const FBox2D Bounds = bCompact
+        ? MobileLayout.Identity
+        : FBox2D(FVector2D(Margin + 180 * S, Height - 181 * S), FVector2D(Margin + 490 * S, Height - 137 * S));
+    const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
+    Surface(X,Y,W,H,FLinearColor(0.007f,0.018f,0.030f,0.92f),8*S);
+    DrawUnitPortrait(First->kind,X+4*S,Y+4*S,36*S,H-8*S,true);
+    const float InfoW=44*S;
+    const FString Title=Count==1 ? Name(First->kind) : Types.size()==1
+        ? FString::Printf(TEXT("%s ×%d"),*Name(First->kind),Count) : FString::Printf(TEXT("%d units selected"),Count);
+    SingleLineLabel(Title,X+47*S,Y+6*S,W-InfoW-54*S,White,0.73f);
+    const FString Detail=FString::Printf(TEXT("%s   %.0f/%.0f"),bSharedOrder ? *SharedOrder : TEXT("MIXED"),Health,Maximum);
+    SingleLineLabel(Detail,X+47*S,Y+23*S,W-InfoW-54*S,Muted,0.52f);
+    HealthBar(Health,Maximum,X+47*S,Y+H-5*S,W-InfoW-54*S,Mint);
+    FButton Focus;
+    Focus.Bounds = FBox2D(Bounds.Min, FVector2D(X + W - InfoW, Bounds.Max.Y));
+    Focus.Action = TEXT("focus");
+    Buttons.Add(Focus);
+    ActionButton(TEXT("Info"), TEXT("info"), 0, X + W - InfoW, Y, InfoW, CompactSheet == SheetInfo);
+
+    if (!bCompact) return;
+    const float Gap = 5 * S;
+    const float SquadW = 52 * S;
+    float SquadX = Bounds.Max.X + Gap;
+    for (int32 Index = 0; Index < ACinderPlayerController::SquadCount; ++Index)
+    {
+        const int32 Size = static_cast<int32>(PC->Squad(Index).size());
+        if (Size <= 0) continue;
+        if (SquadX + SquadW > MobileLayout.Commands.Min.X) break;
+        const bool bSelected = PC->Selection().size() == PC->Squad(Index).size()
+            && std::all_of(PC->Squad(Index).begin(), PC->Squad(Index).end(), [&](cinder::Id Id)
+            {
+                return std::find(PC->Selection().begin(), PC->Selection().end(), Id) != PC->Selection().end();
+            });
+        Button(FString::Printf(TEXT("%c %d"), TCHAR('A' + Index), Size), TEXT("squad"), Index,
+            SquadX, Y, SquadW, bSelected);
+        SquadX += SquadW + Gap;
+    }
+}
+
+void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact)
+{
+    if (!PC || !Battle) return;
+    const auto& Sim = Battle->Sim();
+    std::vector<const cinder::Entity*> Army;
+    std::map<cinder::Kind, int32> Counts;
+    std::map<cinder::Kind, float> HealthByKind, MaximumByKind;
+    for (const cinder::Entity& Entity : Sim.entities())
+    {
+        const auto& Definition = cinder::definition(Entity.kind);
+        if (!Entity.alive() || Entity.team != 0 || Definition.building
+            || Entity.kind == cinder::Kind::Worker || Entity.kind == cinder::Kind::Resource) continue;
+        Army.push_back(&Entity);
+        ++Counts[Entity.kind];
+        HealthByKind[Entity.kind] += Entity.hp;
+        MaximumByKind[Entity.kind] += Definition.hp;
+    }
+    std::sort(Army.begin(), Army.end(), [](const cinder::Entity* A, const cinder::Entity* B)
+    {
+        if (A->kind != B->kind) return static_cast<int32>(A->kind) < static_cast<int32>(B->kind);
+        return A->id < B->id;
+    });
+
+    const float S = UIScale;
+    const FBox2D Bounds = bCompact
+        ? MobileLayout.Drawer
+        : FBox2D(FVector2D(Margin, Height - 400 * S), FVector2D(Margin + 520 * S, Height - 204 * S));
+    const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
+    Surface(X,Y,W,H,FLinearColor(0.009f,0.020f,0.032f,0.96f),10*S);
+    Surface(X,Y+12*S,2*S,H-24*S,Mint.CopyWithNewOpacity(0.55f),S);
+    UIRegions.Add(Bounds);
+
+    Button(TEXT("ROSTER"), TEXT("armytab"), 0, X + W - 310 * S, Y, 60 * S, ArmyPanelTab == 0);
+    Button(TEXT("SQUADS"), TEXT("armytab"), 1, X + W - 246 * S, Y, 60 * S, ArmyPanelTab == 1);
+    Button(TEXT("JOBS"), TEXT("armytab"), 2, X + W - 182 * S, Y, 48 * S, ArmyPanelTab == 2);
+    Button(TEXT("RALLY"), TEXT("armytab"), 3, X + W - 130 * S, Y, 78 * S, ArmyPanelTab == 3);
+    Button(TEXT("X"), TEXT("closesheet"), 0, X + W - 44 * S, Y, 44 * S);
+    if (W > 390 * S) SingleLineLabel(TEXT("Army"),X+10*S,Y+15*S,W-322*S,White,0.7f);
+    if (ArmyPanelTab == 3)
+    {
+        const auto& Player = Sim.players()[0];
+        Button(Player.armyRallySet ? TEXT("MOVE FLAG") : TEXT("SET FLAG"), TEXT("productionrally"), 0,
+            X + 14 * S, Y + 48 * S, 116 * S, true);
+        if (Player.armyRallySet)
+            Button(TEXT("FIND FLAG"), TEXT("rallyfocus"), 0, X + 138 * S, Y + 48 * S, 116 * S);
+        SingleLineLabel(Player.armyRallySet ? TEXT("New troops gather at your army flag.")
+                : TEXT("Choose where new troops should gather."),
+            X + 14 * S, Y + 108 * S, W - 28 * S, White, 0.66f);
+        SingleLineLabel(TEXT("New facilities inherit it; local rallies stay."),
+            X + 14 * S, Y + 132 * S, W - 28 * S, Muted, 0.59f);
+        SingleLineLabel(TEXT("Drudges mine ore. Existing orders continue."),
+            X + 14 * S, Y + 156 * S, W - 28 * S, Muted, 0.59f);
+        return;
+    }
+    if (ArmyPanelTab == 1)
+    {
+
+        const float Gap = 6 * S;
+        const float ColumnW = (W - 28 * S - Gap * 2) / 3;
+        for (int32 Index = 0; Index < ACinderPlayerController::SquadCount; ++Index)
+        {
+            const float ColumnX = X + 14 * S + Index * (ColumnW + Gap);
+            const int32 Size = static_cast<int32>(PC->Squad(Index).size());
+            const bool bSelected = Size > 0 && PC->Selection().size() == PC->Squad(Index).size()
+                && std::all_of(PC->Squad(Index).begin(), PC->Squad(Index).end(), [&](cinder::Id Id)
+                {
+                    return std::find(PC->Selection().begin(), PC->Selection().end(), Id) != PC->Selection().end();
+                });
+            SingleLineLabel(FString::Printf(TEXT("SQUAD %c  /  %d"), TCHAR('A' + Index), Size),
+                ColumnX, Y + 53 * S, ColumnW, Size > 0 ? Mint : Muted, 0.66f);
+            if (Size > 0)
+                Button(TEXT("RECALL"), TEXT("squad"), Index, ColumnX, Y + 72 * S, ColumnW, bSelected);
+            else
+            {
+                Panel(ColumnX, Y + 72 * S, ColumnW, 44 * S, PanelInk);
+                SingleLineLabel(TEXT("EMPTY"), ColumnX + 12 * S, Y + 85 * S, ColumnW - 24 * S, Muted, 0.70f);
+            }
+            Button(TEXT("ASSIGN SELECTED"), TEXT("squadassign"), Index,
+                ColumnX, Y + 120 * S, ColumnW);
+        }
+        return;
+    }
+    if (ArmyPanelTab == 2)
+    {
+        struct FProductionJob
+        {
+            const cinder::Entity* Producer = nullptr;
+            const cinder::QueueItem* Item = nullptr;
+            int32 QueuePosition = 0;
+        };
+        TArray<FProductionJob> Jobs;
+        for (const cinder::Entity& Producer : Sim.entities())
+        {
+            if (!Producer.alive() || Producer.team != 0 || !cinder::definition(Producer.kind).building) continue;
+            if (PinnedProducerId && Producer.id != PinnedProducerId) continue;
+            if (Producer.progress < 1) Jobs.Add({&Producer, nullptr, 0});
+            for (int32 QueueIndex = 0; QueueIndex < static_cast<int32>(Producer.queue.size()); ++QueueIndex)
+                Jobs.Add({&Producer, &Producer.queue[QueueIndex], QueueIndex + 1});
+        }
+        Jobs.Sort([](const FProductionJob& A, const FProductionJob& B)
+        {
+            if (A.Producer->id != B.Producer->id) return A.Producer->id < B.Producer->id;
+            return A.QueuePosition < B.QueuePosition;
+        });
+        const int32 PageSize = 2;
+        const int32 Pages = FMath::Max(1, FMath::DivideAndRoundUp(Jobs.Num(), PageSize));
+        ProductionJobsPage = FMath::Clamp(ProductionJobsPage, 0, Pages - 1);
+        const cinder::Entity* PinnedProducer = PinnedProducerId ? Sim.find(PinnedProducerId) : nullptr;
+        const auto Rally = Sim.autoRallyStatus(0, cinder::Kind::Resource, PinnedProducerId);
+        Button(PinnedProducer ? TEXT("RALLY THIS") : TEXT("ARMY FLAG"), TEXT("productionrally"), 0,
+            X + 14 * S, Y + 48 * S, 104 * S, Rally.accepted);
+        Buttons.Last().EntityId = PinnedProducerId;
+        const bool bCanUseDefault = PinnedProducer && PinnedProducer->rallyOverride
+            && Sim.autoRallyStatus(0, cinder::Kind::Resource, PinnedProducerId, true).accepted;
+        if (bCanUseDefault)
+        {
+            Button(PinnedProducer->kind == cinder::Kind::Headquarters ? TEXT("AUTO MINE") : TEXT("USE DEFAULT"),
+                TEXT("rallydefault"), 0, X + 122 * S, Y + 48 * S, 104 * S);
+            Buttons.Last().EntityId = PinnedProducerId;
+        }
+        else SingleLineLabel(Rally.accepted ? PinnedProducer ? TEXT("This facility")
+                        : TEXT("Future troops")
+                    : UTF8_TO_TCHAR(Rally.message.c_str()),
+                X + 126 * S, Y + 62 * S, W - 240 * S, Rally.accepted ? Muted : Amber, 0.55f);
+        if (ProductionJobsPage > 0) Button(TEXT("<"), TEXT("jobpage"), -1, X + W - 96 * S, Y + 48 * S, 44 * S);
+        if (ProductionJobsPage + 1 < Pages) Button(TEXT(">"), TEXT("jobpage"), 1, X + W - 48 * S, Y + 48 * S, 44 * S);
+        const int32 Start = ProductionJobsPage * PageSize;
+        for (int32 Index = Start; Index < FMath::Min(Start + PageSize, Jobs.Num()); ++Index)
+        {
+            const FProductionJob& Job = Jobs[Index];
+            const float RowY = Y + (96 + (Index - Start) * 47) * S;
+            const float RowW = W - 28 * S;
+            Panel(X + 14 * S, RowY, RowW, 44 * S, PanelInk);
+            FString Description;
+            FString AssignmentDetail;
+            float Progress = Job.Producer->progress;
+            if (!Job.Item)
+            {
+                const cinder::Id Worker = Sim.constructionWorker(Job.Producer->id);
+                Description = FString::Printf(TEXT("%s #%u / %s"),
+                    *Name(Job.Producer->kind).ToUpper(), Job.Producer->id,
+                    Worker ? *FString::Printf(TEXT("DRUDGE #%u"), Worker) : TEXT("NO DRUDGE"));
+                AssignmentDetail = Worker ? ConstructionStatus(Sim, *Job.Producer) : TEXT("PAUSED / VIEW TO ASSIGN A DRUDGE");
+            }
+            else
+            {
+                FString JobName;
+                if (!Job.Item->research) JobName = Name(Job.Item->kind).ToUpper();
+                else if (Job.Item->kind == cinder::Kind::Worker) JobName = TEXT("TECH TIER");
+                else if (Job.Item->kind == cinder::Kind::Striker) JobName = TEXT("WEAPONS");
+                else JobName = TEXT("ARMOR");
+                Description = FString::Printf(TEXT("%s #%u / %s / Q%d / %.0fs"),
+                    *Name(Job.Producer->kind).ToUpper(), Job.Producer->id,
+                    *JobName, Job.QueuePosition, Job.Item->remaining);
+                Progress = 1.0f - Job.Item->remaining / FMath::Max(0.01f, Job.Item->total);
+            }
+            SingleLineLabel(Description, X + 22 * S, RowY + 7 * S, RowW - 126 * S, White, 0.58f);
+            if (!AssignmentDetail.IsEmpty())
+                SingleLineLabel(AssignmentDetail, X + 22 * S, RowY + 21 * S, RowW - 126 * S, Muted, 0.52f);
+            HealthBar(Progress, 1.0f, X + 22 * S, RowY + 34 * S, RowW - 126 * S, Mint);
+            Button(TEXT("VIEW"), TEXT("productionfocus"), 0, X + W - 108 * S, RowY, 60 * S);
+            Buttons.Last().EntityId = Job.Producer->id;
+            Button(TEXT("X"), Job.Item ? TEXT("cancelproduction") : TEXT("cancelconstruction"), 0,
+                X + W - 44 * S, RowY, 44 * S);
+            Buttons.Last().EntityId = Job.Producer->id;
+            Buttons.Last().JobId = Job.Item ? Job.Item->id : 0;
+        }
+        if (Jobs.IsEmpty())
+            SingleLineLabel(TEXT("NO PRODUCTION QUEUED"), X + 14 * S, Y + 113 * S, W - 28 * S, Muted, 0.68f);
+        return;
+    }
+
+    const bool Narrow=W<400*S;
+    const int32 PageSize=Narrow ? 2 : 4;
+    const int32 Pages = FMath::Max(1, FMath::DivideAndRoundUp(static_cast<int32>(Army.size()), PageSize));
+    ArmyRosterPage = FMath::Clamp(ArmyRosterPage, 0, Pages - 1);
+    const cinder::Kind Kinds[] = { cinder::Kind::Striker, cinder::Kind::Lancer, cinder::Kind::Scout,
+        cinder::Kind::Bastion, cinder::Kind::Mortar, cinder::Kind::Mender, cinder::Kind::Kite };
+    const float Gap = 4 * S;
+    const int32 Columns=Narrow ? 4 : 8;
+    const float CellW=(W-28*S-Gap*(Columns-1))/Columns;
+    const bool bAllSelected = !Army.empty() && PC->Selection().size() == Army.size()
+        && std::all_of(Army.begin(), Army.end(), [&](const cinder::Entity* Entity)
+        {
+            return std::find(PC->Selection().begin(), PC->Selection().end(), Entity->id) != PC->Selection().end();
+        });
+    if (!Army.empty())
+        Button(TEXT("ALL"), TEXT("armyall"), 0,
+            X + 14 * S, Y + 48 * S, CellW, bAllSelected);
+    else
+    {
+        Panel(X + 14 * S, Y + 48 * S, CellW, 44 * S, PanelInk);
+        SingleLineLabel(TEXT("ALL 0"), X + 19 * S, Y + 61 * S, CellW - 10 * S, Muted, 0.58f);
+    }
+    for (int32 Index = 0; Index < 7; ++Index)
+    {
+        const auto Found = Counts.find(Kinds[Index]);
+        const int32 Count = Found == Counts.end() ? 0 : Found->second;
+        const bool bKindSelected = !PC->Selection().empty()
+            && std::all_of(PC->Selection().begin(), PC->Selection().end(), [&](cinder::Id Id)
+            {
+                const cinder::Entity* Entity = Sim.find(Id);
+                return Entity && Entity->alive() && Entity->team == 0 && Entity->kind == Kinds[Index];
+            });
+        const float CellX=X+14*S+((Index+1)%Columns)*(CellW+Gap);
+        const float CellY=Y+(48+((Index+1)/Columns)*48)*S;
+        if (Count > 0)
+        {
+            DrawUnitPortrait(Kinds[Index], CellX, CellY, CellW, 44 * S, bKindSelected);
+            Panel(CellX + CellW - 18 * S, CellY + 3 * S, 15 * S, 14 * S,
+                FLinearColor(0.002f, 0.008f, 0.013f, 0.86f));
+            SingleLineLabel(FString::Printf(TEXT("%d"), Count), CellX + CellW - 16 * S,
+                CellY + 4 * S, 12 * S, White, 0.50f);
+            SingleLineLabel(CardName(Kinds[Index]), CellX + 3 * S, CellY + 26 * S,
+                CellW - 6 * S, bKindSelected ? Mint : White, 0.44f);
+            HealthBar(HealthByKind[Kinds[Index]], MaximumByKind[Kinds[Index]],
+                CellX + 3 * S, CellY + 40 * S, CellW - 6 * S, Mint);
+            FButton TypeEntry;
+            TypeEntry.Bounds = FBox2D(FVector2D(CellX, CellY), FVector2D(CellX + CellW, CellY + 44 * S));
+            TypeEntry.Action = TEXT("armytype");
+            TypeEntry.Argument = static_cast<int32>(Kinds[Index]);
+            Buttons.Add(TypeEntry);
+        }
+        else
+        {
+            Panel(CellX, CellY, CellW, 44 * S, PanelInk);
+            UnitGlyph(Kinds[Index], CellX + (CellW - 18 * S) * 0.5f, CellY + 6 * S, 18 * S, Muted);
+            SingleLineLabel(CardName(Kinds[Index]), CellX + 3 * S, CellY + 27 * S,
+                CellW - 6 * S, Muted, 0.42f);
+        }
+    }
+    const int32 Start = ArmyRosterPage * PageSize;
+    const float RowY = Y + H - 64 * S;
+    const float UnitW=(W-124*S-Gap*(PageSize-1))/PageSize;
+    if(ArmyRosterPage>0) Button(TEXT("<"),TEXT("rosterpage"),-1,X+8*S,RowY+10*S,44*S);
+    if(ArmyRosterPage+1<Pages) Button(TEXT(">"),TEXT("rosterpage"),1,X+W-52*S,RowY+10*S,44*S);
+    for (int32 Index = Start; Index < FMath::Min(Start + PageSize, static_cast<int32>(Army.size())); ++Index)
+    {
+        const bool bSelected = std::find(PC->Selection().begin(), PC->Selection().end(), Army[Index]->id) != PC->Selection().end();
+        int32 SquadMask = 0;
+        for (int32 Squad = 0; Squad < ACinderPlayerController::SquadCount; ++Squad)
+            if (std::find(PC->Squad(Squad).begin(), PC->Squad(Squad).end(), Army[Index]->id) != PC->Squad(Squad).end())
+                SquadMask |= 1 << Squad;
+        EntityButton(*Army[Index], X + 62 * S + (Index - Start) * (UnitW + Gap), RowY, UnitW, bSelected, SquadMask);
+    }
+    if (Army.empty()) SingleLineLabel(TEXT("NO COMBAT UNITS YET"), X + 14 * S, RowY + 14 * S, W - 28 * S, Muted, 0.68f);
+}
+
+void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact)
+{
+    if (!PC || !Battle) return;
+    const auto& Sim = Battle->Sim();
+    const float S = UIScale;
+    const FBox2D Bounds = bCompact
+        ? MobileLayout.Drawer
+        : FBox2D(FVector2D(Margin, Height - 400 * S), FVector2D(Margin + 520 * S, Height - 204 * S));
+    const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
+    Surface(X,Y,W,H,FLinearColor(0.009f,0.020f,0.032f,0.96f),10*S);
+    Surface(X,Y+12*S,2*S,H-24*S,Mint.CopyWithNewOpacity(0.55f),S);
+    UIRegions.Add(Bounds);
+    const cinder::Entity* PinnedProducer = PinnedProducerId ? Sim.find(PinnedProducerId) : nullptr;
+    if (!PinnedProducer || !PinnedProducer->alive() || PinnedProducer->team != 0
+        || !cinder::definition(PinnedProducer->kind).building)
+    {
+        PinnedProducer = nullptr;
+        PinnedProducerId = 0;
+    }
+    const float HeaderLabelWidth = W - (PinnedProducer ? 166 : 68) * S;
+    if (PinnedProducer)
+    {
+        Button(TEXT("JOBS"), TEXT("producerjobs"), 0, X + W - 146 * S, Y, 48 * S);
+        Buttons.Last().EntityId = PinnedProducer->id;
+        const auto Rally = Sim.autoRallyStatus(0, cinder::Kind::Resource, PinnedProducer->id);
+        Button(TEXT("RALLY"), TEXT("productionrally"), 0, X + W - 94 * S, Y, 46 * S, Rally.accepted);
+        Buttons.Last().EntityId = PinnedProducer->id;
+    }
+    Button(TEXT("X"), TEXT("closesheet"), 0, X + W - 44 * S, Y, 44 * S);
+
+    if (CompactSheet == SheetGlobalBuild)
+    {
+        SingleLineLabel(TEXT("BUILD / AUTO DRUDGE"), X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, 0.74f);
+        const cinder::Kind Buildings[] = { cinder::Kind::Headquarters, cinder::Kind::Processor,
+            cinder::Kind::Foundry, cinder::Kind::MotorPool, cinder::Kind::Laboratory, cinder::Kind::Turret };
+        const float Gap = 6 * S;
+        const float CellW = (W - 28 * S - Gap * 2) / 3;
+        for (int32 Index = 0; Index < UE_ARRAY_COUNT(Buildings); ++Index)
+        {
+            const cinder::Kind Kind = Buildings[Index];
+            const auto Plan = Sim.autoBuildStatus(0, Kind);
+            const float CellX = X + 14 * S + (Index % 3) * (CellW + Gap);
+            const float CellY = Y + (49 + (Index / 3) * 49) * S;
+            Button(Name(Kind).ToUpper(), TEXT("globalbuild"), static_cast<int32>(Kind),
+                CellX, CellY, CellW, PC->IsGlobalBuildMode() && PC->BuildingKind() == Kind);
+            const FString BuildState = Plan.accepted ? TEXT("") : TEXT(" / Locked");
+            SingleLineLabel(FString::Printf(TEXT("%d ore%s"), cinder::definition(Kind).cost, *BuildState),
+                CellX + 10 * S, CellY + 27 * S, CellW - 20 * S, Plan.accepted ? Mint : Amber, 0.53f);
+        }
+        SingleLineLabel(TEXT("Choose a structure, then place it."),
+            X + 14 * S, Y + H - 24 * S, W - 28 * S, Muted, 0.55f);
+        return;
+    }
+
+    if (CompactSheet == SheetGlobalTrain)
+    {
+        GlobalTrainKind = FMath::Clamp(GlobalTrainKind,
+            static_cast<int32>(cinder::Kind::Worker), static_cast<int32>(cinder::Kind::Kite));
+        GlobalTrainQuantity = FMath::Clamp(GlobalTrainQuantity, 1, 20);
+        const cinder::Kind SelectedKind = static_cast<cinder::Kind>(GlobalTrainKind);
+        const bool bAwaitingTutorialChoice = Battle->Tutorial().IsActive() && !bTutorialTrainKindChosen;
+        const auto Plan = Sim.autoTrainStatus(0, SelectedKind, GlobalTrainQuantity, PinnedProducerId);
+        const FString Allocation = PinnedProducer
+            ? FString::Printf(TEXT("PINNED %s"), *Name(PinnedProducer->kind).ToUpper()) : TEXT("AUTO ASSIGN");
+        SingleLineLabel(FString::Printf(TEXT("TRAIN / %s / x%d"), *Allocation, GlobalTrainQuantity),
+            X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, 0.74f);
+        const float Gap = 4*S;
+        const bool Narrow=W<400*S;
+        const int32 Columns=Narrow ? 4 : 8;
+        const float CellW=(W-28*S-Gap*(Columns-1))/Columns;
+        for (int32 Index = 0; Index < 8; ++Index)
+        {
+            const cinder::Kind Kind = static_cast<cinder::Kind>(Index);
+            const float CellX=X+14*S+(Index%Columns)*(CellW+Gap), CellY=Y+((Narrow ? 44 : 48)+(Index/Columns)*48)*S;
+            const bool bSelected = !bAwaitingTutorialChoice && Kind == SelectedKind;
+            DrawUnitPortrait(Kind, CellX, CellY, CellW, 44 * S, bSelected);
+            SingleLineLabel(CardName(Kind), CellX + 3 * S, CellY + 27 * S,
+                CellW - 6 * S, bSelected ? Mint : White, 0.43f);
+            FButton Entry;
+            Entry.Bounds = FBox2D(FVector2D(CellX, CellY), FVector2D(CellX + CellW, CellY + 44 * S));
+            Entry.Action = TEXT("trainkind"); Entry.Argument = Index; Buttons.Add(Entry);
+        }
+        const float ControlY=Y+(Narrow ? 142 : 99)*S;
+        const int32 QuickValues[] = {1, 3, 6};
+        float ControlX = X + 14 * S;
+        for (int32 Quantity : QuickValues)
+        {
+            Button(FString::FromInt(Quantity), TEXT("trainqty"), Quantity, ControlX, ControlY, 44 * S,
+                GlobalTrainQuantity == Quantity);
+            ControlX += 48 * S;
+        }
+        Button(TEXT("-"), TEXT("trainqtydelta"), -1, ControlX, ControlY, 44 * S); ControlX += 48 * S;
+        Button(TEXT("+"), TEXT("trainqtydelta"), 1, ControlX, ControlY, 44 * S); ControlX += 48 * S;
+        const float QueueW=X+W-14*S-ControlX;
+        Button(FString::Printf(TEXT("QUEUE x%d"), GlobalTrainQuantity), TEXT("globaltrain"), 0,
+            ControlX, ControlY, QueueW, !bAwaitingTutorialChoice && Plan.accepted);
+        float Completion = 0;
+        for (const cinder::ProductionAssignment& Assignment : Plan.assignments)
+            Completion = FMath::Max(Completion, Assignment.completionSeconds);
+        const FString Status = bAwaitingTutorialChoice ? TEXT("CHOOSE A UNIT TO TRAIN") : Plan.accepted
+            ? FString::Printf(TEXT("%d ORE / %d SUPPLY / %d PRODUCERS / FINISH %.0fs"),
+                Plan.totalCost, Plan.totalSupply, static_cast<int32>(Plan.assignments.size()), Completion)
+            : UTF8_TO_TCHAR(Plan.message.c_str());
+        SingleLineLabel(Status, X + 14 * S, Y + (Narrow ? 198*S : H-24*S), W - 28 * S,
+            bAwaitingTutorialChoice ? Muted : Plan.accepted ? Mint : Amber, 0.56f);
+        return;
+    }
+
+    if (CompactSheet == SheetGlobalResearch)
+    {
+        const FString Allocation = PinnedProducer
+            ? FString::Printf(TEXT("PINNED %s"), *Name(PinnedProducer->kind).ToUpper()) : TEXT("AUTO FACILITY");
+        SingleLineLabel(FString::Printf(TEXT("RESEARCH / %s"), *Allocation),
+            X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, 0.74f);
+        const TCHAR* Names[] = {TEXT("TECH TIER"), TEXT("WEAPONS"), TEXT("ARMOR")};
+        const float Gap = 7 * S;
+        const float CellW = (W - 28 * S - Gap * 2) / 3;
+        for (int32 Upgrade = 0; Upgrade < 3; ++Upgrade)
+        {
+            const auto Plan = Sim.autoResearchStatus(0, Upgrade, PinnedProducerId);
+            const float CellX = X + 14 * S + Upgrade * (CellW + Gap);
+            Button(Names[Upgrade], TEXT("globalresearch"), Upgrade, CellX, Y + 57 * S, CellW);
+            FString Status=UTF8_TO_TCHAR(Plan.message.c_str());
+            if(Plan.accepted) Status=FString::Printf(TEXT("%d ore / Ready"),Plan.totalCost);
+            else if(Status.Contains(TEXT("already queued"))) Status=TEXT("Already queued");
+            else if(Status.Contains(TEXT("maximum"))) Status=TEXT("Max level");
+            else if(Status.Contains(TEXT("technology tier"))) Status=TEXT("Requires next tier");
+            else if(Status.Contains(TEXT("queue space"))) Status=TEXT("Queues full");
+            else if(Status.Contains(TEXT("Resonator"))) Status=TEXT("Needs a ready Resonator");
+            else if(Status.Contains(TEXT("Insufficient ore"))) Status=FString::Printf(TEXT("Need %d ore"),Plan.totalCost);
+            WrappedLabel(Status,CellX+8*S,Y+107*S,CellW-16*S,Plan.accepted ? Mint : Amber,0.54f);
+        }
+        SingleLineLabel(TEXT("Assigned to the next available Resonator."),
+            X + 14 * S, Y + H - 24 * S, W - 28 * S, Muted, 0.55f);
+    }
+}
+
+void ACinderHUD::DrawInfoDrawer(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact)
+{
+    if (!PC || !Battle || PC->Selection().empty()) return;
+    const auto& Sim = Battle->Sim();
+    const cinder::Entity* Entity = Sim.find(PC->Selection().front());
+    if (!Entity || !Entity->alive() || Entity->team != 0) return;
+    const FCinderUnitDetails Details = CinderUnitInfo::Describe(Sim, *Entity);
+    const float S = UIScale;
+    const FBox2D Bounds = bCompact
+        ? MobileLayout.Drawer
+        : FBox2D(FVector2D(Margin, Height - 400 * S), FVector2D(Margin + 520 * S, Height - 204 * S));
+    const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
+    Surface(X,Y,W,H,FLinearColor(0.009f,0.020f,0.032f,0.96f),10*S);
+    UIRegions.Add(Bounds);
+    UnitGlyph(Entity->kind, X + 14 * S, Y + 12 * S, 24 * S, Mint);
+    SingleLineLabel(Details.Name.ToUpper(), X + 48 * S, Y + 8 * S, W - 184 * S, White, 0.88f);
+    SingleLineLabel(Details.Role, X + 48 * S, Y + 27 * S, W - 184 * S, Muted, 0.60f);
+    const bool bCombatPageAvailable = Details.bArmed || Details.bHealer;
+    const int32 NextPage = InfoPage == 0 ? 1 : InfoPage == 1 && bCombatPageAvailable ? 2 : 0;
+    const FString NextPageLabel = InfoPage == 0 ? TEXT("GUIDE")
+        : InfoPage == 1 && bCombatPageAvailable ? TEXT("COMBAT") : TEXT("STATS");
+    Button(NextPageLabel, TEXT("infotab"), NextPage,
+        X + W - 122 * S, Y, 72 * S, InfoPage != 0);
+    Button(TEXT("X"), TEXT("closesheet"), 0, X + W - 44 * S, Y, 44 * S);
+    if (InfoPage == 1)
+    {
+        float TextY = Y + 56 * S;
+        Label(TEXT("PURPOSE"), X + 14 * S, TextY, Amber, 0.62f);
+        TextY += 18 * S;
+        TextY += WrappedLabel(Details.Purpose, X + 14 * S, TextY, W - 28 * S, White, 0.68f);
+        TextY += 7 * S;
+        Label(TEXT("CAPABILITIES / UNLOCKS"), X + 14 * S, TextY, Amber, 0.62f);
+        TextY += 18 * S;
+        WrappedLabel(Details.Capabilities, X + 14 * S, TextY, W - 28 * S, White, 0.64f);
+        return;
+    }
+    if (InfoPage == 2 && bCombatPageAvailable)
+    {
+        float TextY = Y + 56 * S;
+        Label(Details.bHealer ? TEXT("HEALING EFFECT") : TEXT("COMBAT EFFECT"), X + 14 * S, TextY, Amber, 0.62f);
+        TextY += 19 * S;
+        TextY += WrappedLabel(Details.DamageNote, X + 14 * S, TextY, W - 28 * S, White, 0.68f);
+        TextY += 8 * S;
+        Label(TEXT("REFERENCE"), X + 14 * S, TextY, Amber, 0.62f);
+        TextY += 18 * S;
+        const FString Reference = Details.bHealer
+            ? FString::Printf(TEXT("HEAL %.0f    INTERVAL %.2fs    CENTER RANGE %.0f"),
+                Details.HealAmount, Details.HealInterval, Details.Range)
+            : FString::Printf(TEXT("DAMAGE %.0f / HIT    COOLDOWN %.2fs    BASE RANGE %.0f + TARGET RADIUS"),
+                Details.Damage, Details.Cooldown, Details.Range);
+        WrappedLabel(Reference, X + 14 * S, TextY, W - 28 * S, Muted, 0.64f);
+        return;
+    }
+    HealthBar(Details.Health, Details.MaxHealth, X + 14 * S, Y + 53 * S, W - 28 * S, Mint);
+    SingleLineLabel(FString::Printf(TEXT("HEALTH %.0f / %.0f    ORDER %s"), Details.Health, Details.MaxHealth, *Details.OrderText.ToUpper()),
+        X + 14 * S, Y + 61 * S, W - 28 * S, White, 0.67f);
+    const bool bUnarmedBuilding = Details.bBuilding && !Details.bArmed && !Details.bHealer;
+    const FString BuildingStatus = Entity->progress < 1
+        ? FString::Printf(TEXT("BUILDING %.0f%%"), Entity->progress * 100)
+        : !Entity->queue.empty() ? FString::Printf(TEXT("QUEUE %d"), static_cast<int32>(Entity->queue.size()))
+        : FString(TEXT("READY"));
+    FString Attack;
+    if (Details.bHealer)
+        Attack = FString::Printf(TEXT("HEAL %.0f / %.2fs    RANGE %.0f    ARMOR %.0f"), Details.HealAmount, Details.HealInterval, Details.Range, Details.Armor);
+    else if (Details.bArmed)
+        Attack = FString::Printf(TEXT("DAMAGE %.0f    BASE RANGE %.0f    ARMOR %.0f"), Details.Damage, Details.Range, Details.Armor);
+    else if (bUnarmedBuilding)
+        Attack = FString::Printf(TEXT("ARMOR %.0f    VISION %.0f    %s"), Details.Armor, Details.Vision, *BuildingStatus);
+    else
+        Attack = FString::Printf(TEXT("ARMOR %.0f    SPEED %.0f    VISION %.0f"), Details.Armor, Details.Speed, Details.Vision);
+    SingleLineLabel(Attack, X + 14 * S, Y + 82 * S, W - 28 * S, Amber, 0.64f);
+    if (!bUnarmedBuilding)
+        SingleLineLabel(FString::Printf(TEXT("SPEED %.0f    VISION %.0f    COOLDOWN %.2fs"), Details.Speed, Details.Vision, Details.Cooldown),
+            X + 14 * S, Y + 102 * S, W - 28 * S, Muted, 0.62f);
+    WrappedLabel(Details.Purpose, X + 14 * S, Y + (bUnarmedBuilding ? 107 : 125) * S, W - 28 * S, White, 0.66f);
+    if (bCombatPageAvailable)
+        SingleLineLabel(TEXT("GUIDE > COMBAT FOR FULL EFFECTS"),
+            X + 14 * S, Y + H - 23 * S, W - 28 * S, Muted, 0.56f);
 }
 
 void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefield* Battle)
@@ -1108,81 +2387,138 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
     const bool bBuilding = First && cinder::definition(First->kind).building;
     const bool bSite = bBuilding && First->progress < 1;
     const bool bWorker = First && First->kind == cinder::Kind::Worker;
-    if (CompactSheet == 3 && (!bBuilding || bSite)) CompactSheet = 0;
+    const bool bProductionBuilding = First && (First->kind == cinder::Kind::Laboratory
+        || std::any_of(cinder::definitions().begin(), cinder::definitions().end(), [&](const auto& Definition)
+        {
+            return !Definition.building && Definition.kind != cinder::Kind::Resource
+                && Definition.producer == First->kind;
+        }));
+    const bool bCombatSelection = std::any_of(PC->Selection().begin(), PC->Selection().end(), [&](cinder::Id Id)
+    {
+        const cinder::Entity* Entity = Sim.find(Id);
+        return Entity && Entity->alive() && Entity->team == 0
+            && !cinder::definition(Entity->kind).building && Entity->kind != cinder::Kind::Worker
+            && Entity->kind != cinder::Kind::Resource;
+    });
+    if (CompactSheet == SheetQueue && (!bBuilding || bSite)) CompactSheet = SheetNone;
     const bool bSheetVisible = !PC->IsBuildMode() && (PC->bBuildMenu || CompactSheet != 0);
 
-    // Resources share a slim top rail; tap targets retain their full 44-unit height.
-    Panel(L.Left, Top, InnerW, 44 * S, Ink);
-    Panel(L.Left, Top, InnerW, S, FLinearColor(0.07f, 0.31f, 0.30f));
-    Panel(L.Left, Top + 32 * S, InnerW, 12 * S, FLinearColor(0.002f, 0.009f, 0.014f, 0.72f));
-    Panel(L.Left, Top, 76 * S, 2 * S, Amber);
-    Panel(L.Left + 99 * S, Top + 11 * S, S, 22 * S, FLinearColor(0.07f, 0.25f, 0.25f));
-    Panel(L.Left + 214 * S, Top + 11 * S, S, 22 * S, FLinearColor(0.07f, 0.25f, 0.25f));
-    Panel(L.Right - 184 * S, Top + 11 * S, S, 22 * S, FLinearColor(0.07f, 0.25f, 0.25f));
-    UIRegions.Add(FBox2D(FVector2D(L.Left, Top), FVector2D(L.Right, Top + 44 * S)));
-    Label(FString::Printf(TEXT("ORE %d"), Player.ore), L.Left + 10 * S, Top + 13 * S, Amber, 0.86f);
-    Label(FString::Printf(TEXT("CREW %d/%d"), Sim.supply(0), Sim.capacity(0)), L.Left + 109 * S, Top + 13 * S, White, 0.77f);
-    Label(FString::Printf(TEXT("T%d W%d A%d"), Player.tier, Player.weapons, Player.armor), L.Left + 224 * S, Top + 13 * S, Mint, 0.72f);
-    const FString Time = bOnline ? Online && Online->PingMilliseconds() >= 0
-        ? FString::Printf(TEXT("%.0f MS"), Online->PingMilliseconds()) : TEXT("ONLINE") : ClockString(Sim.time());
-    SingleLineLabel(Time, L.Right - 171 * S, Top + 14 * S, 58 * S, Muted, 0.72f);
-    Button(TEXT("?"), TEXT("help"), 0, L.Right - 106 * S, Top, 44 * S);
-    Button(TEXT("MENU"), TEXT("pause"), 0, L.Right - 56 * S, Top, 56 * S);
-    if (!bSheetVisible && !PC->IsBuildMode()) DrawMinimap(PC, Battle);
-
-    // Only the corner islands consume input. The gap and the space above them
-    // are real battlefield: no transparent full-width blocker remains.
-    UIRegions.Add(L.Navigation);
-    Button(TEXT("ARMY"), TEXT("army"), 0, L.Left, DockY, 60 * S);
-    Button(TEXT("SELECT"), TEXT("box"), 0, L.Left + 66 * S, DockY, 64 * S, PC->bBoxSelect);
-    Button(TEXT("HOME"), TEXT("home"), 0, L.Left + 136 * S, DockY, 56 * S);
-
-    if (First && !bSheetVisible && !PC->IsBuildMode())
+    // Separate resource chips leave the middle of the screen transparent.
+    const auto Chip = [&](const FString& Glyph, const FString& Value, float X, float W, FLinearColor Color)
     {
-        FString Summary = PC->Selection().size() > 1
-            ? FString::Printf(TEXT("%d UNITS / FOCUS"), static_cast<int>(PC->Selection().size()))
-            : FString::Printf(TEXT("%s / HP %d"), *Name(First->kind), static_cast<int>(First->hp));
-        if (bSite) Summary = Name(First->kind) + TEXT(" / ") + ConstructionStatus(Sim, *First);
-        else if (First->order == cinder::Order::Construct)
-            Summary = Sim.constructionActive(First->target) ? TEXT("DRUDGE / BUILDING") : TEXT("DRUDGE / TO SITE");
-        Button(Summary, TEXT("focus"), 0, L.Left, DockY - 50 * S, 192 * S);
+        Surface(X, Top+6*S, W, 30*S, FLinearColor(0.006f,0.015f,0.026f,0.88f), 7*S);
+        ActionGlyph(Glyph,0,X+9*S,Top+13*S,16*S,Color);
+        SingleLineLabel(Value,X+32*S,Top+13*S,W-39*S,Color,0.80f);
+        UIRegions.Add(FBox2D(FVector2D(X,Top+6*S),FVector2D(X+W,Top+36*S)));
+    };
+    Chip(TEXT("ore"),FString::FromInt(Player.ore),L.Left,94*S,Amber);
+    Chip(TEXT("crew"),FString::Printf(TEXT("%d/%d"),Sim.supply(0),Sim.capacity(0)),L.Left+100*S,90*S,White);
+    Chip(TEXT("tech"),FString::Printf(TEXT("T%d  W%d  A%d"),Player.tier,Player.weapons,Player.armor),L.Left+196*S,118*S,Mint);
+    const FString Time = bOnline && Online && Online->PlayerCount() == 4
+        ? FString::Printf(TEXT("%d/4 IN"), Online->RemainingPlayers())
+        : bOnline ? Online && Online->PingMilliseconds() >= 0
+        ? FString::Printf(TEXT("%.0f ms"),Online->PingMilliseconds()) : TEXT("Online") : ClockString(Sim.time());
+    Chip(TEXT("clock"),Time,L.Left+320*S,84*S,Muted);
+    ActionButton(TEXT("Help"),TEXT("help"),0,L.Right-92*S,Top,44*S);
+    ActionButton(TEXT("Menu"),TEXT("pause"),0,L.Right-44*S,Top,44*S);
+
+    const float RailY=L.GlobalActions.Min.Y;
+    ActionButton(TEXT("Build"),TEXT("globalcatalog"),SheetGlobalBuild,L.Left,RailY,48*S,
+        CompactSheet==SheetGlobalBuild || PC->IsGlobalBuildMode());
+    ActionButton(TEXT("Train"),TEXT("globalcatalog"),SheetGlobalTrain,L.Left,RailY+48*S,48*S,CompactSheet==SheetGlobalTrain);
+    ActionButton(TEXT("Research"),TEXT("globalcatalog"),SheetGlobalResearch,L.Left,RailY+96*S,48*S,CompactSheet==SheetGlobalResearch);
+    ActionButton(TEXT("Army"),TEXT("army"),0,L.Left,RailY+144*S,48*S,CompactSheet==SheetArmy);
+    if (!PC->Selection().empty())
+        ActionButton(TEXT("Deselect"),TEXT("deselect"),0,L.Navigation.Min.X,L.Navigation.Min.Y,44*S);
+    ActionButton(TEXT("Select"),TEXT("box"),0,L.Navigation.Min.X+48*S,L.Navigation.Min.Y,44*S,PC->bBoxSelect);
+    ActionButton(TEXT("Home"),TEXT("home"),0,L.Navigation.Min.X+96*S,L.Navigation.Min.Y,44*S);
+    if (!bCompactLayout)
+    {
+        ActionButton(TEXT("Zoom in"),TEXT("zoom+"),0,L.Navigation.Min.X+48*S,L.Navigation.Min.Y+48*S,44*S);
+        ActionButton(TEXT("Zoom out"),TEXT("zoom-"),0,L.Navigation.Min.X+96*S,L.Navigation.Min.Y+48*S,44*S);
     }
+    if (!bSheetVisible && !PC->IsBuildMode()) DrawMinimap(PC,Battle);
 
-    if (PC->IsBuildMode())
+    if (PC->IsBuildMode() || PC->IsProductionRallyMode())
+        ActionButton(PC->IsBuildMode() ? TEXT("Cancel build") : TEXT("Cancel rally"),
+            PC->IsBuildMode() ? TEXT("cancelplacement") : TEXT("cancelrally"),0,L.Right-96*S,DockY,96*S,true);
+    else if (bSheetVisible)
     {
-        // Cancel sits under the command thumb, leaving the placement target clear.
-        Button(TEXT("CANCEL PLACEMENT"), TEXT("cancelplacement"), 0, L.Commands.Min.X, DockY, 224 * S, true);
+        // The palette already exposes its actions. Only keep its dismissal at the thumb.
+        ActionButton(TEXT("Close"),TEXT("closesheet"),0,L.Right-48*S,DockY,48*S,true);
     }
     else
     {
-        UIRegions.Add(L.Commands);
-        const float X = L.Commands.Min.X;
-        Button(bBuilding ? bSite ? TEXT("SITE") : First->kind == cinder::Kind::Laboratory ? TEXT("TECH") : TEXT("TRAIN")
-                         : !First || bWorker ? TEXT("BUILD") : TEXT("ATTACK"),
-            bBuilding ? TEXT("sheet") : !First || bWorker ? TEXT("buildmenu") : TEXT("attack"),
-            bBuilding ? 1 : 0, X, DockY, 80 * S,
-            bBuilding ? CompactSheet == 1 && !PC->bBuildMenu : !First || bWorker ? PC->bBuildMenu : PC->bAttackMove);
-        if (bBuilding && !bSite)
-            Button(FString::Printf(TEXT("QUEUE %d"), static_cast<int>(First->queue.size())), TEXT("sheet"), 3, X + 86 * S, DockY, 76 * S, CompactSheet == 3);
-        else if (First) Button(TEXT("STOP"), TEXT("stop"), 0, X + 86 * S, DockY, 76 * S);
-        else Button(TEXT("DRUDGES"), TEXT("workers"), 0, X + 86 * S, DockY, 76 * S);
-        Button(bSheetVisible ? TEXT("CLOSE") : TEXT("MORE"), bSheetVisible ? TEXT("closesheet") : TEXT("sheet"), 4,
-            X + 168 * S, DockY, 56 * S, bSheetVisible);
+        const float W=49*S, Gap=4*S, X=L.Commands.Min.X;
+        if (bCombatSelection)
+        {
+            ActionButton(TEXT("Move"),TEXT("move"),0,X,DockY,W,PC->IsMoveCommandMode());
+            ActionButton(TEXT("Attack"),TEXT("attack"),0,X+W+Gap,DockY,W,PC->IsAttackMoveMode());
+            ActionButton(TEXT("Defend"),TEXT("defend"),0,X+2*(W+Gap),DockY,W,PC->IsDefendCommandMode());
+            ActionButton(TEXT("Orders"),TEXT("orders"),0,X+3*(W+Gap),DockY,W);
+        }
+        else if(bWorker)
+        {
+            ActionButton(TEXT("Move"),TEXT("move"),0,X,DockY,W,PC->IsMoveCommandMode());
+            ActionButton(TEXT("Build here"),TEXT("buildmenu"),0,X+W+Gap,DockY,W,PC->bBuildMenu);
+            ActionButton(TEXT("Stop"),TEXT("stop"),0,X+2*(W+Gap),DockY,W);
+            ActionButton(TEXT("Orders"),TEXT("orders"),0,X+3*(W+Gap),DockY,W);
+        }
+        else if(bBuilding)
+        {
+            if(bSite)
+                ActionButton(TEXT("Site"),TEXT("sheet"),SheetContext,X,DockY,W);
+            else if(First->kind==cinder::Kind::Laboratory)
+                ActionButton(TEXT("Tech"),TEXT("sheet"),SheetContext,X,DockY,W);
+            else if(bProductionBuilding)
+            {
+                ActionButton(TEXT("Train here"),TEXT("globalcatalog"),SheetGlobalTrain,X,DockY,W);
+                Buttons.Last().EntityId=First->id;
+            }
+            else ActionButton(TEXT("Info"),TEXT("info"),0,X,DockY,W);
+            ActionButton(TEXT("Focus"),TEXT("focus"),0,X+W+Gap,DockY,W);
+            if(bProductionBuilding && !bSite)
+            {
+                ActionButton(bCompactLayout ? TEXT("Queue") : TEXT("Jobs"),bCompactLayout ? TEXT("sheet") : TEXT("producerjobs"),
+                    bCompactLayout ? SheetQueue : 0,X+2*(W+Gap),DockY,W);
+                if(!bCompactLayout) Buttons.Last().EntityId=First->id;
+            }
+            else ActionButton(TEXT("Workers"),TEXT("workers"),0,X+2*(W+Gap),DockY,W);
+            ActionButton(TEXT("Orders"),TEXT("orders"),0,X+3*(W+Gap),DockY,W);
+        }
+        else
+        {
+            // No selected unit means no selection-specific orders to crowd the battlefield.
+            ActionButton(TEXT("Workers"),TEXT("workers"),0,L.Right-48*S,DockY,48*S);
+        }
     }
 
-    if (!PC->IsBuildMode() && !PC->bBuildMenu && CompactSheet == 3 && bBuilding && !bSite)
+    if (!PC->IsBuildMode() && !bSheetVisible)
     {
-        const float SheetW = FMath::Min(InnerW - 10 * S, 430 * S);
-        const float X = L.Right - SheetW - 5 * S;
+        DrawUnitRibbon(PC, Battle);
+        DrawSelectionIdentity(PC, Battle, true);
+    }
+
+    if (!PC->IsBuildMode() && CompactSheet == SheetArmy)
+        DrawArmyDrawer(PC, Battle, true);
+    else if (!PC->IsBuildMode() && CompactSheet == SheetInfo)
+        DrawInfoDrawer(PC, Battle, true);
+    else if (!PC->IsBuildMode() && (CompactSheet == SheetGlobalBuild
+        || CompactSheet == SheetGlobalTrain || CompactSheet == SheetGlobalResearch))
+        DrawGlobalCatalog(PC, Battle, true);
+    else if (!PC->IsBuildMode() && !PC->bBuildMenu && CompactSheet == SheetQueue && bBuilding && !bSite)
+    {
+        const float SheetW = L.Drawer.GetSize().X - 10*S;
+        const float X = L.Drawer.Min.X + 5*S;
         const int Count = static_cast<int>(First->queue.size());
         const int Pages = FMath::Max(1, FMath::DivideAndRoundUp(Count, 6));
         QueuePage = FMath::Clamp(QueuePage, 0, Pages - 1);
         const int Rows = FMath::Max(1, FMath::DivideAndRoundUp(FMath::Min(6, Count - QueuePage * 6), 3));
-        DrawProductionQueue(First, X, DockY - (64 + Rows * 51) * S, SheetW, 3);
+        DrawProductionQueue(First, X, L.Drawer.Min.Y + 6*S, SheetW, 3);
     }
     else if (!PC->IsBuildMode() && (PC->bBuildMenu || CompactSheet != 0))
     {
-        struct FOption { FString Text, Action; int Arg; };
+        struct FOption { FString Text, Action; int Arg; cinder::Id EntityId = 0; };
         TArray<FOption> Options;
         FString Title;
         if (PC->bBuildMenu)
@@ -1191,24 +2527,28 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
             for (auto K : { cinder::Kind::Headquarters, cinder::Kind::Processor, cinder::Kind::Foundry, cinder::Kind::MotorPool, cinder::Kind::Laboratory, cinder::Kind::Turret })
                 Options.Add({ FString::Printf(TEXT("%s / %d"), *Name(K), cinder::definition(K).cost), TEXT("build"), static_cast<int>(K) });
         }
-        else if (CompactSheet == 2)
+        else if (CompactSheet == SheetTypes)
         {
             Title = TEXT("SELECT AN ARMY SUBGROUP");
             std::map<cinder::Kind, int> Counts;
             for (auto Id : PC->Selection()) if (const auto* E = Sim.find(Id)) ++Counts[E->kind];
             for (const auto& Entry : Counts) Options.Add({ FString::Printf(TEXT("%s x%d"), *Name(Entry.first), Entry.second), TEXT("kind"), static_cast<int>(Entry.first) });
         }
-        else if (CompactSheet == 4)
+        else if (CompactSheet == SheetOrders)
         {
-            Title = TEXT("MORE COMMANDS");
+            Title = TEXT("ORDERS / CURRENT SELECTION");
             if (First)
             {
                 Options.Add({ TEXT("FOCUS SELECTION"), TEXT("focus"), 0 });
-                if (!bBuilding) Options.Add({ TEXT("HOLD POSITION"), TEXT("hold"), 0 });
-                if (PC->Selection().size() > 1) Options.Add({ TEXT("UNIT TYPES"), TEXT("sheet"), 2 });
+                if (!bBuilding)
+                {
+                    Options.Add({ TEXT("STOP"), TEXT("stop"), 0 });
+                    Options.Add({ TEXT("HOLD POSITION"), TEXT("hold"), 0 });
+                }
+                if (PC->Selection().size() > 1) Options.Add({ TEXT("SELECT BY TYPE"), TEXT("sheet"), SheetTypes });
             }
             Options.Add({ TEXT("SELECT DRUDGES"), TEXT("workers"), 0 });
-            Options.Add({ TEXT("BUILD STRUCTURE"), TEXT("buildmenu"), 0 });
+            Options.Add({ TEXT("OPEN BUILD"), TEXT("globalcatalog"), SheetGlobalBuild });
         }
         else
         {
@@ -1221,14 +2561,19 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
             }
             else if (First && cinder::definition(First->kind).building)
             {
-                for (const auto& D : cinder::definitions())
-                    if (!D.building && D.kind != cinder::Kind::Resource && D.producer == First->kind)
-                        Options.Add({ FString::Printf(TEXT("%s / %d"), *Name(D.kind), D.cost), TEXT("train"), static_cast<int>(D.kind) });
                 if (First->kind == cinder::Kind::Laboratory)
                 {
-                    Options.Add({ TEXT("TECH TIER"), TEXT("research"), 0 });
-                    Options.Add({ TEXT("WEAPONS"), TEXT("research"), 1 });
-                    Options.Add({ TEXT("ARMOR"), TEXT("research"), 2 });
+                    Options.Add({TEXT("TRAIN MEND"), TEXT("globalcatalog"), SheetGlobalTrain, First->id});
+                    Options.Add({TEXT("RESEARCH"), TEXT("globalcatalog"), SheetGlobalResearch, First->id});
+                    Options.Add({TEXT("VIEW JOBS"), TEXT("producerjobs"), 0, First->id});
+                    Options.Add({TEXT("RALLY THIS"), TEXT("productionrally"), 0, First->id});
+                }
+                else
+                {
+                    for (const auto& D : cinder::definitions())
+                        if (!D.building && D.kind != cinder::Kind::Resource && D.producer == First->kind)
+                            Options.Add({ FString::Printf(TEXT("%s / %d"), *Name(D.kind), D.cost),
+                                TEXT("train"), static_cast<int>(D.kind) });
                 }
             }
             else
@@ -1241,10 +2586,10 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
         }
         const int Columns = Options.Num() > 6 ? 4 : 3;
         const int Rows = FMath::Max(1, FMath::DivideAndRoundUp(Options.Num(), Columns));
-        const float SheetW = FMath::Min(InnerW - 10 * S, 430 * S);
+        const float SheetW = L.Drawer.GetSize().X - 10*S;
         const float SheetH = (52 + Rows * 50) * S;
-        const float X = L.Right - SheetW - 5 * S, Y = DockY - SheetH - 8 * S;
-        Panel(X - 5 * S, Y, SheetW + 10 * S, SheetH, Ink);
+        const float X = L.Drawer.Min.X + 5*S, Y = L.Drawer.Min.Y;
+        Surface(X - 5*S,Y,SheetW+10*S,SheetH,Ink,10*S);
         UIRegions.Add(FBox2D(FVector2D(X - 5 * S, Y), FVector2D(X + SheetW + 5 * S, Y + SheetH)));
         SingleLineLabel(Title, X + 8 * S, Y + 16 * S, SheetW - 70 * S, Amber, 0.74f);
         Button(TEXT("X"), TEXT("closesheet"), 0, X + SheetW - 44 * S, Y + 2 * S, 44 * S);
@@ -1253,6 +2598,7 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
         {
             const float BX = X + (I % Columns) * (CellW + 7 * S), BY = Y + (52 + (I / Columns) * 50) * S;
             Button(Options[I].Text, Options[I].Action, Options[I].Arg, BX, BY, CellW);
+            Buttons.Last().EntityId = Options[I].EntityId;
             if (Options[I].Action == TEXT("build"))
             {
                 const auto Kind = static_cast<cinder::Kind>(Options[I].Arg);
@@ -1263,201 +2609,79 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
         }
         if (Options.IsEmpty()) Label(TEXT("Select a unit or a production structure first."), X + 5 * S, Y + 56 * S, White, 0.78f);
     }
-    if (!bOnlineNotice && !PC->Feedback().IsEmpty())
+    const bool bTutorialCardVisible = Battle->Tutorial().IsActive()
+        && !Battle->IsPaused() && Sim.winner() == -1;
+    if (!bOnlineNotice && !bTutorialCardVisible && !PC->Feedback().IsEmpty())
     {
-        if (bSheetVisible) SingleLineLabel(PC->Feedback(), Margin, 62 * S + SafeTopOffset, InnerW, Amber, 0.70f);
-        else WrappedLabel(PC->Feedback(), Margin, 72 * S + SafeTopOffset, InnerW - 108 * S, Amber, 0.70f);
-    }
-    else if (!bOnlineNotice && !Battle->Tutorial().IsActive() && Sim.time() < 15 && CompactSheet == 0 && !PC->bBuildMenu && !PC->IsBuildMode())
-    {
-#if PLATFORM_IOS || PLATFORM_ANDROID
-        WrappedLabel(TEXT("Tap to select or command. Drag to pan. Hold + drag to select an army."), Margin, 72 * S + SafeTopOffset, InnerW - 108 * S, White, 0.76f);
-#else
-        if (!First) SingleLineLabel(DesktopControlHint, Margin, 72 * S, InnerW - 108 * S, White, 0.70f);
-        else WrappedLabel(TEXT("Select a Drudge. Build a Kiln. Train an army."), Margin, 72 * S, InnerW - 108 * S, White, 0.76f);
-#endif
+        const float FeedbackX=bSheetVisible ? L.Drawer.Max.X+8*S : L.Drawer.Min.X;
+        const float FeedbackY=bSheetVisible ? L.Navigation.Max.Y+8*S : L.Top+48*S;
+        const float MaxW=FMath::Min(320*S,L.Right-FeedbackX);
+        if(MaxW>=130*S)
+        {
+            const float FW=FMath::Min(MaxW,static_cast<float>(MeasureLabel(PC->Feedback(),0.64f).X)+20*S);
+            const float FH=WrappedHeight(PC->Feedback(),FW-20*S,0.64f)+16*S;
+            Surface(FeedbackX,FeedbackY,FW,FH,FLinearColor(0.007f,0.016f,0.027f,0.96f),7*S);
+            Surface(FeedbackX,FeedbackY+8*S,2*S,FH-16*S,Amber,S);
+            WrappedLabel(PC->Feedback(),FeedbackX+10*S,FeedbackY+8*S,FW-20*S,White,0.64f);
+        }
     }
     if (PC->bDebug && !bOnlineNotice && !bSheetVisible && !PC->IsBuildMode())
         Label(FString::Printf(TEXT("%.2f ms sim / %d entities / %.0f fps"), Sim.lastStepMilliseconds(), static_cast<int>(Sim.entities().size()), 1.0f / FMath::Max(GetWorld()->GetDeltaSeconds(), 0.001f)), Margin, 134 * S + SafeTopOffset, Mint, 0.72f);
-    if (bOnlineNotice) DrawOnlineNotice(OnlineHeading, OnlineDetail, Margin, 62 * S + SafeTopOffset, InnerW, true);
+    if (bOnlineNotice) DrawOnlineNotice(OnlineHeading, OnlineDetail, L.Drawer.Min.X, L.Top+48*S, FMath::Min(420*S,InnerW-170*S), true);
     DrawOverlay(PC, Battle);
 }
 
 void ACinderHUD::DrawMatch(ACinderPlayerController* PC, ACinderBattlefield* Battle)
 {
-    const auto& Sim = Battle->Sim(); const auto& Player = Sim.players()[0];
-    const bool bOnline = Battle->IsOnlineMatch();
-    const UCinderOnlineSubsystem* Online = bOnline ? PC->Online() : nullptr;
-    FString OnlineHeading, OnlineDetail;
-    const bool bOnlineNotice = GetOnlineNotice(PC, Battle, OnlineHeading, OnlineDetail);
-    const float Top = 18 * UIScale, Bottom = Height - 126 * UIScale;
-    Panel(Margin - 8 * UIScale, Top - 6 * UIScale, 520 * UIScale, 47 * UIScale, Ink);
-    Panel(Margin - 8 * UIScale, Top - 6 * UIScale, 520 * UIScale, UIScale, FLinearColor(0.07f, 0.31f, 0.30f));
-    Panel(Margin - 8 * UIScale, Top + 29 * UIScale, 520 * UIScale, 12 * UIScale, FLinearColor(0.002f, 0.009f, 0.014f, 0.72f));
-    Panel(Margin - 8 * UIScale, Top - 6 * UIScale, 96 * UIScale, 2 * UIScale, Amber);
-    Panel(Margin + 140 * UIScale, Top + 3 * UIScale, UIScale, 25 * UIScale, FLinearColor(0.07f, 0.25f, 0.25f));
-    Panel(Margin + 285 * UIScale, Top + 3 * UIScale, UIScale, 25 * UIScale, FLinearColor(0.07f, 0.25f, 0.25f));
-    Panel(Margin + 425 * UIScale, Top + 3 * UIScale, UIScale, 25 * UIScale, FLinearColor(0.07f, 0.25f, 0.25f));
-    UIRegions.Add(FBox2D(FVector2D(Margin - 8 * UIScale, Top - 6 * UIScale), FVector2D(Margin + 512 * UIScale, Top + 41 * UIScale)));
-    Label(FString::Printf(TEXT("ORE  %d"), Player.ore), Margin + 5 * UIScale, Top + 7 * UIScale, Amber, 1.05f);
-    Label(FString::Printf(TEXT("CREW  %d / %d"), Sim.supply(0), Sim.capacity(0)), Margin + 155 * UIScale, Top + 9 * UIScale, White, 0.85f);
-    Label(FString::Printf(TEXT("T%d  W%d  A%d"), Player.tier, Player.weapons, Player.armor), Margin + 300 * UIScale, Top + 9 * UIScale, Mint, 0.85f);
-    Label(ClockString(Sim.time()), Margin + 436 * UIScale, Top + 9 * UIScale, Muted, 0.85f);
-    if (bOnline)
-    {
-        const FString Network = Online && Online->PingMilliseconds() >= 0
-            ? FString::Printf(TEXT("ONLINE  |  %.0f MS"), Online->PingMilliseconds()) : TEXT("ONLINE  |  -- MS");
-        SingleLineLabel(Network, Width - Margin - 390 * UIScale, Top + 9 * UIScale, 168 * UIScale, Mint, 0.78f);
-    }
-    Button(TEXT("HELP  [F1]"), TEXT("help"), 0, Width - Margin - 210 * UIScale, Top - 5 * UIScale, 112 * UIScale);
-    Button(bOnline ? TEXT("MENU") : TEXT("PAUSE"), TEXT("pause"), 0, Width - Margin - 90 * UIScale, Top - 5 * UIScale, 90 * UIScale);
-    Button(TEXT("+"), TEXT("zoom+"), 0, Width - Margin - 50 * UIScale, Top + 68 * UIScale, 50 * UIScale);
-    Button(TEXT("-"), TEXT("zoom-"), 0, Width - Margin - 50 * UIScale, Top + 119 * UIScale, 50 * UIScale);
-    if (!bOnlineNotice && !Battle->Tutorial().IsActive() && Sim.time() < 180)
-    {
-        const FString Hint = Player.stats.built == 0 ? TEXT("OPENING  Build a Kiln, train Ember infantry, and scout beyond your perimeter.") : Player.stats.produced < 4 ? TEXT("REINFORCE  Select your production structure to queue units. Tap terrain to set its rally.") : TEXT("SCOUT  The red Anchor is your objective. Keep harvesting and expand before your ore runs out.");
-        Label(Hint, Margin, Top + 54 * UIScale, White, 0.76f);
-    }
-    Panel(0, Height - 196 * UIScale, Width, 196 * UIScale, Ink);
-    Panel(0, Height - 196 * UIScale, Width, UIScale, FLinearColor(0.07f, 0.31f, 0.30f));
-    Panel(0, Height - 196 * UIScale, 116 * UIScale, 2 * UIScale, Amber);
-    UIRegions.Add(FBox2D(FVector2D(0, Height - 196 * UIScale), FVector2D(Width, Height)));
-    DrawMinimap(PC, Battle);
-    const float SX = Margin + 180 * UIScale;
-    const float CommandsX = Width - Margin - 488 * UIScale;
-    const float ButtonW = 114 * UIScale, Gap = 124 * UIScale;
-    Button(TEXT("ARMY"), TEXT("army"), 0, CommandsX, Bottom, ButtonW);
-    Button(TEXT("SELECT BOX"), TEXT("box"), 0, CommandsX + Gap, Bottom, ButtonW, PC->bBoxSelect);
-    Button(TEXT("HOME"), TEXT("home"), 0, CommandsX + Gap * 2, Bottom, ButtonW);
-    Button(TEXT("FOCUS"), TEXT("focus"), 0, CommandsX + Gap * 3, Bottom, ButtonW);
-    Button(TEXT("ATTACK MOVE"), TEXT("attack"), 0, CommandsX, Bottom + 53 * UIScale, ButtonW, PC->bAttackMove);
-    Button(TEXT("STOP"), TEXT("stop"), 0, CommandsX + Gap, Bottom + 53 * UIScale, ButtonW);
-    Button(TEXT("HOLD"), TEXT("hold"), 0, CommandsX + Gap * 2, Bottom + 53 * UIScale, ButtonW);
-    Button(PC->IsBuildMode() ? TEXT("CANCEL") : TEXT("BUILD"), PC->IsBuildMode() ? TEXT("cancelplacement") : TEXT("buildmenu"), 0, CommandsX + Gap * 3, Bottom + 53 * UIScale, ButtonW, PC->bBuildMenu);
-
-    const cinder::Entity* First = PC->Selection().empty() ? nullptr : Sim.find(PC->Selection().front());
-    if (!First)
-    {
-        Label(TEXT("YOUR FRONTIER"), SX, Height - 174 * UIScale, Mint, 0.88f);
-#if PLATFORM_IOS || PLATFORM_ANDROID
-        Label(TEXT("Tap a unit or structure."), SX, Height - 140 * UIScale, White, 0.78f);
-        Label(TEXT("Hold, then drag to select."), SX, Height - 115 * UIScale, Muted, 0.78f);
-        Label(TEXT("Two fingers pan and zoom."), SX, Height - 90 * UIScale, Muted, 0.78f);
-#else
-        SingleLineLabel(TEXT("Click a unit. Drag to select."), SX, Height - 140 * UIScale, 240 * UIScale, White, 0.78f);
-#if PLATFORM_MAC
-        SingleLineLabel(TEXT("Option+drag to pan."), SX, Height - 115 * UIScale, 240 * UIScale, Muted, 0.78f);
-#else
-        SingleLineLabel(TEXT("Alt+drag to pan."), SX, Height - 115 * UIScale, 240 * UIScale, Muted, 0.78f);
-#endif
-        SingleLineLabel(TEXT("Scroll to zoom."), SX, Height - 90 * UIScale, 240 * UIScale, Muted, 0.78f);
-#endif
-    }
-    else
-    {
-        const auto& Def = cinder::definition(First->kind);
-        Label(PC->Selection().size() == 1 ? Name(First->kind).ToUpper() : FString::Printf(TEXT("%d UNITS SELECTED"), static_cast<int>(PC->Selection().size())), SX, Height - 174 * UIScale, Mint, 0.92f);
-        FString Detail = FString::Printf(TEXT("HP %d / %d"), static_cast<int>(First->hp), static_cast<int>(Def.hp));
-        if (Def.building && First->progress < 1) Detail = ConstructionStatus(Sim, *First);
-        else if (First->order == cinder::Order::Construct) Detail = Sim.constructionActive(First->target) ? TEXT("BUILDING / MINING PAUSED") : TEXT("TO SITE / MINING PAUSED");
-        SingleLineLabel(Detail, SX, Height - 144 * UIScale, 240 * UIScale, White, 0.78f);
-        std::map<cinder::Kind, int> Counts;
-        for (auto Id : PC->Selection()) if (const auto* E = Sim.find(Id)) ++Counts[E->kind];
-        const int Pages = FMath::Max(1, (static_cast<int>(Counts.size()) + 1) / 2);
-        SubgroupPage %= Pages;
-        if (Pages > 1) Button(TEXT("NEXT TYPES >"), TEXT("groupsnext"), 0, SX + 132 * UIScale, Height - 157 * UIScale, 108 * UIScale);
-        int Row = 0;
-        int EntryIndex = 0;
-        for (const auto& Entry : Counts)
-        {
-            if (EntryIndex++ < SubgroupPage * 2) continue;
-            if (Row >= 2) break;
-            Button(FString::Printf(TEXT("%s x%d"), *Name(Entry.first), Entry.second), TEXT("kind"), static_cast<int>(Entry.first), SX, Height - (112 - Row * 47) * UIScale, 240 * UIScale);
-            ++Row;
-        }
-        int ActionIndex = 0;
-        const float ContextY = Height - 185 * UIScale;
-        if (First->progress < 1)
-        {
-            if (!Sim.constructionWorker(First->id)) Button(TEXT("ASSIGN DRUDGE"), TEXT("resumeconstruction"), 0, CommandsX, ContextY, 238 * UIScale);
-            else Label(Sim.constructionActive(First->id) ? TEXT("DRUDGE CONSTRUCTING") : TEXT("DRUDGE EN ROUTE"), CommandsX, ContextY + 12 * UIScale, Amber, 0.80f);
-            Button(TEXT("CANCEL BUILDING"), TEXT("cancelbuilding"), 0, CommandsX + 2 * Gap, ContextY, 238 * UIScale);
-        }
-        else if (Def.building && !PC->bBuildMenu)
-        {
-            for (const auto& Unit : cinder::definitions())
-            {
-                if (Unit.building || Unit.kind == cinder::Kind::Resource || Unit.producer != First->kind) continue;
-                Button(FString::Printf(TEXT("%s  %d"), *Name(Unit.kind), Unit.cost), TEXT("train"), static_cast<int>(Unit.kind), CommandsX + ActionIndex * Gap, ContextY, ButtonW);
-                if (++ActionIndex >= 4) break;
-            }
-            if (First->kind == cinder::Kind::Laboratory)
-            {
-                Button(TEXT("TECH TIER"), TEXT("research"), 0, CommandsX + Gap, ContextY, ButtonW);
-                Button(TEXT("WEAPONS"), TEXT("research"), 1, CommandsX + Gap * 2, ContextY, ButtonW);
-                Button(TEXT("ARMOR"), TEXT("research"), 2, CommandsX + Gap * 3, ContextY, ButtonW);
-            }
-            if (!First->queue.empty())
-            {
-                DrawProductionQueue(First, CommandsX, Height - 355 * UIScale, 488 * UIScale, 3);
-            }
-        }
-    }
-    if (PC->bBuildMenu)
-    {
-        const cinder::Kind Buildings[] = { cinder::Kind::Headquarters, cinder::Kind::Processor, cinder::Kind::Foundry, cinder::Kind::MotorPool, cinder::Kind::Laboratory, cinder::Kind::Turret };
-        const float X = CommandsX, Y = Height - 297 * UIScale, W = 156 * UIScale;
-        Panel(X - 8 * UIScale, Y - 34 * UIScale, 504 * UIScale, 145 * UIScale, Ink);
-        UIRegions.Add(FBox2D(FVector2D(X - 8 * UIScale, Y - 34 * UIScale), FVector2D(X + 496 * UIScale, Y + 111 * UIScale)));
-        SingleLineLabel(TEXT("CONSTRUCTION / SELECT LOCKED ITEM FOR REQUIREMENTS"), X, Y - 26 * UIScale, 496 * UIScale, Amber, 0.70f);
-        for (int I = 0; I < 6; ++I)
-        {
-            const auto& Definition = cinder::definition(Buildings[I]);
-            const auto Status = Sim.buildStatus(0, Buildings[I], PC->Selection());
-            const float BX = X + (I % 3) * (W + 10 * UIScale), BY = Y + (I / 3) * 52 * UIScale;
-            Button(FString::Printf(TEXT("%s  %d"), *Name(Buildings[I]), Definition.cost), TEXT("build"), static_cast<int>(Buildings[I]), BX, BY, W, PC->IsBuildMode() && PC->BuildingKind() == Buildings[I]);
-            SingleLineLabel(FString::Printf(TEXT("T%d / %s"), Definition.tier, Status.accepted ? TEXT("READY") : TEXT("LOCKED")),
-                BX + 12 * UIScale, BY + 27 * UIScale, W - 24 * UIScale, Status.accepted ? Mint : Amber, 0.70f);
-        }
-    }
-    if (!bOnlineNotice && !PC->Feedback().IsEmpty())
-    {
-        if (PC->bBuildMenu) SingleLineLabel(PC->Feedback(), Margin, Height - 357 * UIScale, Width - 2 * Margin, Amber, 0.80f);
-        else
-        {
-            const bool bQueueVisible = First && cinder::definition(First->kind).building && First->progress >= 1 && !First->queue.empty();
-            SingleLineLabel(PC->Feedback(), Margin + 180 * UIScale, Height - (bQueueVisible ? 386 : 226) * UIScale, Width - 2 * Margin - 180 * UIScale, Amber, 0.85f);
-        }
-    }
-    if (PC->bDebug && !bOnlineNotice)
-    {
-        Label(FString::Printf(TEXT("SIM %.3f ms  |  %d entities  |  tick %llu  |  %.1f fps"), Sim.lastStepMilliseconds(), static_cast<int>(Sim.entities().size()), static_cast<unsigned long long>(Sim.tick()), 1.0f / FMath::Max(GetWorld()->GetDeltaSeconds(), 0.001f)), Margin, Top + 92 * UIScale, Mint, 0.8f);
-        Label(UTF8_TO_TCHAR(Sim.aiStatus().c_str()), Margin, Top + 120 * UIScale, Muted, 0.8f);
-    }
-    if (bOnlineNotice)
-        DrawOnlineNotice(OnlineHeading, OnlineDetail, Margin, Top + 54 * UIScale,
-            FMath::Min(660 * UIScale, Width - 2 * Margin), false);
-    DrawOverlay(PC, Battle);
+    DrawCompactMatch(PC, Battle);
 }
 
 void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Battle)
 {
     const auto& Sim = Battle->Sim(); const auto& Player = Sim.players()[0];
     const bool bOnline = Battle->IsOnlineMatch();
-    if (Battle->IsPaused() || Sim.winner() >= 0)
+    const bool bEliminated = bOnline && Sim.eliminated(0);
+    const bool bShowResult = Sim.winner() != -1 || bEliminated;
+    if (Battle->IsPaused() || bShowResult)
     {
         Panel(0, 0, Width, Height, FLinearColor(0.015f, 0.03f, 0.04f, 0.89f));
         Buttons.Reset(); UIRegions.Reset(); Minimap.Init();
         UIRegions.Add(FBox2D(FVector2D::ZeroVector, FVector2D(Width, Height)));
         const float X = Width * 0.5f - 270 * UIScale, Y = bCompactLayout ? 28 * UIScale + SafeTopOffset : Height * 0.2f;
         const bool bTraining = Battle->Tutorial().IsActive();
-        const FString Heading = Sim.winner() >= 0
-            ? bOnline ? Sim.winner() == 0 ? TEXT("YOU WIN") : TEXT("DEFEAT") : Sim.winner() == 0 ? TEXT("FRONTIER SECURED") : TEXT("ANCHOR LOST")
+        const FString Heading = Sim.winner() == -2 ? TEXT("DRAW")
+            : bEliminated && Sim.winner() == -1 ? TEXT("ELIMINATED")
+            : Sim.winner() != -1
+            ? bOnline ? Sim.winner() == 0 ? TEXT("YOU WIN") : TEXT("DEFEAT")
+                : bTraining ? Sim.winner() == 0 ? TEXT("TUTORIAL VICTORY") : TEXT("TUTORIAL DEFEAT")
+                : Sim.winner() == 0 ? TEXT("FRONTIER SECURED") : TEXT("ANCHOR LOST")
             : bOnline ? TEXT("ONLINE MATCH CONTINUES") : bTraining ? TEXT("TRAINING PAUSED") : TEXT("SKIRMISH PAUSED");
-        Label(Heading, X, Y, Sim.winner() == 1 ? Amber : Mint, 1.65f);
-        if (Sim.winner() >= 0)
+        Label(Heading, X, Y, Sim.winner() > 0 || bEliminated ? Amber : Mint, 1.65f);
+        if (bShowResult)
         {
             const auto& S = Player.stats;
+            if (bOnline)
+            {
+                const auto* Online = PC->Online();
+                FString Outcome;
+                if (Sim.winner() == -1)
+                    Outcome = FString::Printf(TEXT("%d commanders remain. The match continues; you can leave."),
+                        Online ? Online->RemainingPlayers() : 0);
+                else if (Sim.winner() == -2) Outcome = TEXT("No Anchors remain. The match ended in a draw.");
+                else if (Sim.winner() == 0) Outcome = TEXT("Your Anchor is the last one standing.");
+                else
+                {
+                    const int32 Seat = Online ? (Online->LocalSeat() + Sim.winner()) % Online->PlayerCount() : 0;
+                    const FString WinnerName = Online ? Online->SeatName(Seat) : FString();
+                    Outcome = FString::Printf(TEXT("%s won the match."), WinnerName.IsEmpty() ? TEXT("An opponent") : *WinnerName);
+                }
+                SingleLineLabel(Outcome, X, Y + 40 * UIScale, 480 * UIScale, Muted, 0.70f);
+            }
+            if (bTraining && Sim.winner() == 0)
+                Label(Battle->Tutorial().IsComplete()
+                        ? TEXT("GUIDED TUTORIAL COMPLETE")
+                        : TEXT("VICTORY REACHED / REPLAY TO FINISH THE LESSONS"),
+                    X, Y + 40 * UIScale, Mint, 0.72f);
             Label(FString::Printf(TEXT("%s    Ore collected %d    Damage %.0f"), *ClockString(Sim.time()), S.gathered, S.damage), X, Y + 62 * UIScale, White, 0.9f);
             Label(FString::Printf(TEXT("Produced %d    Lost %d    Destroyed %d"), S.produced, S.lost, S.killed), X, Y + 96 * UIScale, White, 0.9f);
             Label(FString::Printf(TEXT("Structures %d    Razed %d    Expansions %d"), S.built, S.buildingsDestroyed, S.expansions), X, Y + 130 * UIScale, White, 0.9f);
@@ -1468,7 +2692,7 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
             }
             else
             {
-                Button(bTraining ? TEXT("RESTART TRAINING") : bCompactLayout ? TEXT("REMATCH") : TEXT("REMATCH  [ENTER]"),
+                Button(bTraining ? TEXT("REPLAY TUTORIAL") : bCompactLayout ? TEXT("REMATCH") : TEXT("REMATCH  [ENTER]"),
                     bTraining ? TEXT("tutorialrestart") : TEXT("start"), Battle->MapIndex(), X, Y + 224 * UIScale, 230 * UIScale, true);
                 Button(TEXT("MAIN MENU"), TEXT("menu"), 0, X + 250 * UIScale, Y + 224 * UIScale, 230 * UIScale);
             }
@@ -1512,7 +2736,7 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
         Panel(X, Y, W, H, PanelInk);
         Panel(X, Y, 4 * S, H, Amber);
         Label(PC->IsOnlineSurrenderPending() ? TEXT("SURRENDER MATCH?") : TEXT("LEAVE MATCH?"), X + 24 * S, Y + 22 * S, White, 1.35f);
-        WrappedLabel(PC->IsOnlineSurrenderPending() ? TEXT("Concede this match and see the final result.") : TEXT("Leaving forfeits this game."), X + 24 * S, Y + 62 * S, W - 48 * S, White, 0.80f);
+        WrappedLabel(PC->IsOnlineSurrenderPending() ? TEXT("Your forces are eliminated. Any remaining opponents keep fighting.") : TEXT("Leaving forfeits this game."), X + 24 * S, Y + 62 * S, W - 48 * S, White, 0.80f);
         const float ButtonW = (W - 55 * S) * 0.5f;
         Button(PC->IsOnlineSurrenderPending() ? TEXT("SURRENDER") : TEXT("LEAVE AND FORFEIT"), TEXT("onlineconfirm"), 0, X + 24 * S, Y + H - 66 * S, ButtonW, true);
         Button(TEXT("CANCEL"), TEXT("onlinecancel"), 0, X + 31 * S + ButtonW, Y + H - 66 * S, ButtonW);
@@ -1531,7 +2755,7 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
         Panel(X, Y, W, H, PanelInk);
         Panel(X, Y, 4 * S, H, Amber);
         Label(TEXT("RESTART TRAINING?"), X + 24 * S, Y + 22 * S, White, 1.35f);
-        WrappedLabel(TEXT("This restarts the practice mission from step one. Your saved skirmish is kept."),
+        WrappedLabel(TEXT("This restarts the guided battle from step one. Your saved skirmish is kept."),
             X + 24 * S, Y + 62 * S, W - 48 * S, White, 0.80f);
         const float ButtonW = (W - 55 * S) * 0.5f;
         Button(bCompactLayout ? TEXT("RESTART") : TEXT("RESTART  [ENTER]"), TEXT("tutorialconfirm"), 0,

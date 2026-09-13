@@ -3,6 +3,8 @@
 #include "GameFramework/Actor.h"
 #include "Presentation/CinderEntityMotion.h"
 #include "Presentation/CinderTutorial.h"
+#include "Sim/AIDifficulty.h"
+#include "Sim/MatchLength.h"
 #include "Sim/Simulation.h"
 #include "Sim/Network.h"
 #include "CinderBattlefield.generated.h"
@@ -15,6 +17,8 @@ class UTexture2D;
 class UTextureCube;
 class UCinderScenery;
 class UCinderWorldEffects;
+class UCinderLandscapeTerrain;
+class ACinderCamera;
 
 /** Adapter requests are counted even in automation worlds without an audio subsystem. */
 struct FCinderCombatFeedbackStats
@@ -38,10 +42,11 @@ public:
     ACinderBattlefield();
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaSeconds) override;
-    cinder::Simulation& Sim() { return Simulation; }
-    const cinder::Simulation& Sim() const { return Simulation; }
+    cinder::Simulation& Sim() { return *Simulation; }
+    const cinder::Simulation& Sim() const { return *Simulation; }
     const std::vector<cinder::Entity>& KnownResources() const { return ResourceMemory; }
-    void StartMatch(int MapIndex);
+    void StartMatch(int MapIndex, cinder::AIDifficulty Difficulty = cinder::AIDifficulty::Normal,
+        cinder::MatchLength Length = cinder::MatchLength::Standard);
     void StartTutorial();
     bool StartOnlineMatch(const cinder::net::Snapshot& Snapshot);
     bool IsOnlineMatch() const { return bOnlineMatch; }
@@ -54,6 +59,11 @@ public:
     bool IsPaused() const { return bPaused; }
     void SetPaused(bool Value);
     int MapIndex() const { return CurrentMap; }
+    cinder::AIDifficulty MatchDifficulty() const
+    {
+        return cinder::aiDifficultyFromAggression(Simulation->config().aiAggression);
+    }
+    cinder::MatchLength MatchLength() const { return Simulation->config().matchLength; }
     void RenderState();
     bool SaveMatch() const;
     bool LoadMatch();
@@ -67,9 +77,16 @@ public:
     void UpdateCombatFeedback();
     void LogCombatStatus() const;
     bool HasWorldEffects() const;
+    /** Latest local-player fog snapshot, shared by world fog and HUD consumers. */
+    const TArray<uint8>& FogCells() const { return LastFogCells; }
+    int32 FogDimension() const { return cinder::Simulation::FogSize; }
+    uint64 FogRevision() const { return FogSnapshotRevision; }
 
 private:
     friend class FCinderWorldLifecycleIntegration;
+    friend class FCinderDifficultyIntegration;
+    friend class FCinderArmyControlIntegration;
+    friend class FCinderCameraBoundaryTest;
     struct FBatch
     {
         UInstancedStaticMeshComponent* Mesh = nullptr;
@@ -101,7 +118,8 @@ private:
     void AddEntity(const cinder::Entity& Entity);
     void FlushBatches();
     void UpdateCompletionAudio();
-    cinder::Simulation Simulation;
+    bool LoadMatchFrom(const FString& Filename);
+    TUniquePtr<cinder::Simulation> Simulation;
     FCinderTutorial Training;
     cinder::Stats AudioStatsSnapshot;
     FCinderCombatFeedbackStats CombatFeedback;
@@ -125,12 +143,16 @@ private:
     int32 ModelBatchStart = 0;
     int32 ModelBatchCount = 0;
     int32 FogPlaneBatch = INDEX_NONE;
+    int32 WorldBorderBatch = INDEX_NONE;
     int32 PadBatch = INDEX_NONE;
     TArray<int32> RockBatchIndices;
     TArray<uint8> LastFogCells;
+    uint64 FogSnapshotRevision = 0;
     TArray<uint8> LastObstacleReveal;
     uint32 ObstacleGeometryHash = 0;
+    float PresentedWorldSize = 0.0f;
     uint64 FogTextureUploads = 0;
+    uint64 FogTextureSubmittedRevision = 0;
     uint32 TerrainSurfaceHash = 0;
     uint64 TerrainSurfaceUploads = 0;
     bool bTerrainSurfaceInvalid = true;
@@ -143,6 +165,8 @@ private:
     UPROPERTY() TArray<TObjectPtr<UMaterialInterface>> ModelMaterials;
     UPROPERTY() TObjectPtr<UCinderScenery> Scenery;
     UPROPERTY() TObjectPtr<UCinderWorldEffects> WorldEffects;
+    UPROPERTY() TObjectPtr<UCinderLandscapeTerrain> CanyonTerrain;
+    UPROPERTY(Transient) TObjectPtr<ACinderCamera> CameraRig;
     UPROPERTY() TObjectPtr<UStaticMesh> Cube;
     UPROPERTY() TObjectPtr<UStaticMesh> Cylinder;
     UPROPERTY() TObjectPtr<UStaticMesh> Cone;

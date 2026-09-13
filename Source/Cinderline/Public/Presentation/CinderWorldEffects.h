@@ -45,13 +45,17 @@ public:
 private:
     enum class EBatch : uint8
     {
-        FriendlyGlow,
-        EnemyGlow,
+        TeamGlow0,
+        TeamGlow1,
+        TeamGlow2,
+        TeamGlow3,
         WarmGlow,
         WarmShard,
         HealGlow,
-        FriendlyBeam,
-        EnemyBeam,
+        TeamBeam0,
+        TeamBeam1,
+        TeamBeam2,
+        TeamBeam3,
         HealBeam,
         Dust,
         Count
