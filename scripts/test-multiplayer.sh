@@ -4,25 +4,45 @@ set -euo pipefail
 project_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 project_file="$project_dir/Cinderline.uproject"
 build_dir="${CINDERLINE_MULTIPLAYER_BUILD_DIR:-$project_dir/build/multiplayer}"
-engine_root="${UE_ROOT:-/Users/Shared/Epic Games/UE_5.8}"
-engine_root="${engine_root%/}"
-if [[ "$(basename -- "$engine_root")" == Engine ]]; then engine_root="$(dirname -- "$engine_root")"; fi
+# shellcheck source=lib/unreal-engine.sh
+source "$project_dir/scripts/lib/unreal-engine.sh"
 
 build=true
-case "${1:-}" in
-  '') ;;
-  --no-build) build=false ;;
-  -h|--help)
-    printf '%s\n' \
-      'Usage: ./scripts/test-multiplayer.sh [--no-build]' \
-      'Builds the native match worker and CinderlineEditor, starts an owned loopback server,' \
-      'then runs only Cinderline.Online.Transport through UnrealEditor-Cmd with NullRHI.' \
-      '--no-build uses existing native and Unreal binaries.' \
-      'UE_ROOT and CINDERLINE_MULTIPLAYER_BUILD_DIR may select compatible installations.'
-    exit 0
-    ;;
-  *) printf '%s\n' 'Use --no-build, --help, or no argument.' >&2; exit 2 ;;
-esac
+allow_idevice_warning=false
+for argument in "$@"; do
+  case "$argument" in
+    --no-build) build=false ;;
+    --allow-idevice-id-warning) allow_idevice_warning=true ;;
+    -h|--help)
+      printf '%s\n' \
+        'Usage: ./scripts/test-multiplayer.sh [--no-build] [--allow-idevice-id-warning]' \
+        'Builds the native match worker and CinderlineEditor, starts an owned loopback server,' \
+        'then runs exactly the two-player and four-player transport tests through UnrealEditor with NullRHI.' \
+        'Expected tests and filter: scripts/lib/unreal_suites.json (multiplayer).' \
+        '--no-build uses existing native and Unreal binaries.' \
+        '--allow-idevice-id-warning permits only the documented idevice_id Bad CPU host-warning pair.' \
+        'UE_ROOT overrides the shared verified prepared-engine default.' \
+        'CINDERLINE_MULTIPLAYER_BUILD_DIR selects worker output; CINDERLINE_BUILD_JOBS is 1 or 2 (default 2).' \
+        'CINDERLINE_TEST_PYTHON selects Python 3 for shared report validation.'
+      exit 0
+      ;;
+    *) printf 'Unknown option: %s. Use --no-build, --allow-idevice-id-warning, or --help.\n' "$argument" >&2; exit 2 ;;
+  esac
+done
+validation_python="${CINDERLINE_TEST_PYTHON:-python3}"
+if ! command -v "$validation_python" >/dev/null; then
+  printf '%s\n' 'Python 3 is required. Set CINDERLINE_TEST_PYTHON if needed.' >&2; exit 2
+fi
+validator="$project_dir/scripts/validate-unreal-report.py"
+manifest="$project_dir/scripts/lib/unreal_suites.json"
+test_filter="$("$validation_python" "$validator" --manifest "$manifest" --suite multiplayer --print-filter)"
+cinder_find_engine "$project_dir"
+cinder_require_engine_tool "$command_editor"
+if [[ "$build" == true ]]; then cinder_require_engine_tool "$build_script"; fi
+build_jobs="${CINDERLINE_BUILD_JOBS:-2}"
+if [[ "$build_jobs" != 1 && "$build_jobs" != 2 ]]; then
+  printf '%s\n' 'CINDERLINE_BUILD_JOBS must be 1 or 2 for bounded multiplayer builds.' >&2; exit 2
+fi
 
 if pgrep -f '[U]nrealEditor.*Cinderline\.uproject' >/dev/null; then
   printf '%s\n' 'Close the running Cinderline editor/runtime before launching multiplayer automation.' >&2
@@ -39,34 +59,14 @@ if [[ ! "$node_major" =~ ^[0-9]+$ ]] || (( node_major < 22 )); then
   exit 2
 fi
 
-case "$(uname -s)" in
-  Darwin)
-    platform=Mac
-    editor="$engine_root/Engine/Binaries/Mac/UnrealEditor-Cmd"
-    [[ -x "$editor" ]] || editor="$engine_root/Engine/Binaries/Mac/UnrealEditor-Cmd.app/Contents/MacOS/UnrealEditor-Cmd"
-    build_script="$engine_root/Engine/Build/BatchFiles/Mac/Build.sh"
-    ;;
-  Linux)
-    platform=Linux
-    editor="$engine_root/Engine/Binaries/Linux/UnrealEditor-Cmd"
-    [[ -x "$editor" ]] || editor="$engine_root/Engine/Binaries/Linux/UnrealEditor"
-    build_script="$engine_root/Engine/Build/BatchFiles/Linux/Build.sh"
-    ;;
-  *) printf '%s\n' 'This runner supports macOS and Linux.' >&2; exit 2 ;;
-esac
-if [[ ! -x "$editor" || ! -x "$build_script" ]]; then
-  printf 'A compatible Unreal installation was not found under %s. Set UE_ROOT.\n' "$engine_root" >&2
-  exit 2
-fi
-
 if [[ ! -d "$project_dir/Server/node_modules/ws" ]]; then
   npm --prefix "$project_dir/Server" install --ignore-scripts --no-audit --no-fund
 fi
 
 if [[ "$build" == true ]]; then
-  cmake -S "$project_dir" -B "$build_dir" -DCMAKE_BUILD_TYPE=Release -DCINDERLINE_BUILD_NATIVE=OFF
-  cmake --build "$build_dir" --target CinderlineMatchWorker --parallel 2
-  "$build_script" CinderlineEditor "$platform" Development "$project_file" -WaitMutex -MaxParallelActions=2
+  cmake -S "$project_dir" -B "$build_dir" -DCMAKE_BUILD_TYPE=Release -DCINDERLINE_BUILD_NATIVE=OFF -DCINDERLINE_BUILD_SERVER=ON
+  cmake --build "$build_dir" --target CinderlineMatchWorker --parallel "$build_jobs"
+  UE_ROOT="$engine_root" "$project_dir/scripts/unreal.sh" build "-MaxParallelActions=$build_jobs"
 fi
 
 worker=""
@@ -126,9 +126,9 @@ fi
 endpoint="ws://127.0.0.1:$port/play"
 printf 'Running Unreal multiplayer transport automation against %s\n' "$endpoint"
 if CINDERLINE_TEST_PUBLIC=0 CINDERLINE_TEST_SERVER="$endpoint" \
-  "$editor" "$project_file" /Engine/Maps/Entry -unattended -nop4 -nosplash -NullRHI -nosound \
+  "$command_editor" "$project_file" /Engine/Maps/Entry -unattended -nop4 -nosplash -NullRHI -nosound \
     -stdout -FullStdOutLogOutput \
-    '-ExecCmds=Automation RunTests Cinderline.Online.Transport; Quit' \
+    "-ExecCmds=Automation RunTests $test_filter; Quit" \
     "-ReportExportPath=$report_dir" "-abslog=$report_dir/UnrealEditor.log" \
     > "$report_dir/stdout.log" 2>&1; then
   if [[ ! -s "$report_dir/index.json" ]]; then
@@ -141,42 +141,8 @@ else
   exit "$result"
 fi
 
-node --input-type=module - "$report_dir/index.json" <<'NODE'
-import { readFileSync } from "node:fs";
-
-const reportPath = process.argv[2];
-let report;
-try {
-  report = JSON.parse(readFileSync(reportPath, "utf8").replace(/^\uFEFF/, ""));
-} catch (error) {
-  throw new Error(`Cannot read Unreal automation report ${reportPath}: ${error.message}`);
-}
-const fail = message => {
-  throw new Error(`Unreal multiplayer verification failed: ${message}. Report: ${reportPath}`);
-};
-if (!report || typeof report !== "object" || Array.isArray(report)) fail("report root is not an object");
-const expectedPath = "Cinderline.Online.Transport";
-const expectedCounts = {
-  succeeded: 1,
-  succeededWithWarnings: 0,
-  failed: 0,
-  notRun: 0,
-  inProcess: 0,
-};
-for (const [field, expected] of Object.entries(expectedCounts)) {
-  if (!Number.isInteger(report[field]) || report[field] !== expected)
-    fail(`${field}=${JSON.stringify(report[field])}, expected ${expected}`);
-}
-if (!Array.isArray(report.tests) || report.tests.length !== 1)
-  fail("report must contain exactly one test");
-const test = report.tests[0];
-if (!test || test.fullTestPath !== expectedPath) fail(`unexpected test path ${JSON.stringify(test?.fullTestPath)}`);
-if (test.state !== "Success") fail(`${expectedPath} ended in state ${JSON.stringify(test.state)}`);
-for (const field of ["errors", "warnings"]) {
-  if (!Number.isInteger(test[field]) || test[field] !== 0)
-    fail(`${expectedPath} has nonzero or missing ${field}`);
-}
-console.log(`Verified ${expectedPath}: success with no errors or warnings.`);
-NODE
+validation_args=(--manifest "$manifest" --suite multiplayer)
+if [[ "$allow_idevice_warning" == true ]]; then validation_args+=(--allow-idevice-id-warning); fi
+"$validation_python" "$validator" "${validation_args[@]}" "$report_dir/index.json"
 
 printf 'Unreal multiplayer automation passed. Report: %s/index.json\n' "$report_dir"

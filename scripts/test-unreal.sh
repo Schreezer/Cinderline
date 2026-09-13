@@ -3,135 +3,75 @@ set -euo pipefail
 
 project_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 project_file="$project_dir/Cinderline.uproject"
-engine_root="${UE_ROOT:-/Users/Shared/Epic Games/UE_5.8}"
-engine_root="${engine_root%/}"
-if [[ "$(basename -- "$engine_root")" == Engine ]]; then engine_root="$(dirname -- "$engine_root")"; fi
+# shellcheck source=lib/unreal-engine.sh
+source "$project_dir/scripts/lib/unreal-engine.sh"
 
-if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
-  printf '%s\n' \
-    'Build first with: ./scripts/unreal.sh build' \
-    'Close the Cinderline editor/runtime, then run: ./scripts/test-unreal.sh' \
-    'Add --tutorials to include guided-practice and help-content tests.' \
-    'UE_ROOT may select another compatible UE 5.8 installation.' \
-    'Runs transient-world integration tests through UnrealEditor-Cmd with NullRHI.' \
-    'Reports go to a new Saved/Automation/Integration directory. Player saves are untouched.'
-  exit 0
-fi
-test_filter=Cinderline.Integration
-include_tutorials=false
-if [[ $# -eq 1 && "$1" == --tutorials ]]; then
-  test_filter=Cinderline.Integration+Cinderline.Tutorial
-  include_tutorials=true
-elif [[ $# -ne 0 ]]; then
-  printf '%s\n' 'Use --tutorials, --help, or set UE_ROOT. No other arguments are supported.' >&2
-  exit 2
-fi
+suite_mode=integration
+allow_idevice_warning=false
+for argument in "$@"; do
+  case "$argument" in
+    --tutorials|--all)
+      if [[ "$suite_mode" != integration ]]; then
+        printf '%s\n' 'Choose one of --tutorials or --all.' >&2; exit 2
+      fi
+      suite_mode="$argument"
+      ;;
+    --allow-idevice-id-warning) allow_idevice_warning=true ;;
+    --help|-h)
+      printf '%s\n' \
+        'Build first with: ./scripts/unreal.sh build' \
+        'Close the Cinderline editor/runtime, then run: ./scripts/test-unreal.sh' \
+        'Default: all Integration tests. --tutorials adds Tutorial tests.' \
+        '--all runs every local suite in scripts/lib/unreal_suites.json; transport and LAN discovery require separate setup.' \
+        '--allow-idevice-id-warning permits only the documented idevice_id Bad CPU host-warning pair.' \
+        'UE_ROOT overrides the shared verified prepared-engine default; it also accepts an Engine subdirectory.' \
+        'CINDERLINE_TEST_PYTHON selects Python 3 for manifest/report validation.' \
+        'Reports go to a fresh Saved/Automation/Integration directory. Player saves are untouched.'
+      exit 0
+      ;;
+    *) printf 'Unknown option: %s. Use --tutorials, --all, --allow-idevice-id-warning, or --help.\n' "$argument" >&2; exit 2 ;;
+  esac
+done
 
-if pgrep -f '[U]nrealEditor.*Cinderline\.uproject' >/dev/null; then
-  printf '%s\n' 'Close the running Cinderline editor/runtime before launching integration automation.' >&2
-  exit 2
-fi
-
-case "$(uname -s)" in
-  Darwin) editor="$engine_root/Engine/Binaries/Mac/UnrealEditor-Cmd" ;;
-  Linux)
-    editor="$engine_root/Engine/Binaries/Linux/UnrealEditor-Cmd"
-    [[ -x "$editor" ]] || editor="$engine_root/Engine/Binaries/Linux/UnrealEditor"
-    ;;
-  *) printf '%s\n' 'This runner supports macOS and Linux. Use UnrealEditor-Cmd directly on Windows.' >&2; exit 2 ;;
-esac
-if [[ ! -x "$editor" ]]; then
-  printf 'UnrealEditor-Cmd not found at %s. Set UE_ROOT to the engine installation.\n' "$editor" >&2
-  exit 2
-fi
 validation_python="${CINDERLINE_TEST_PYTHON:-python3}"
 if ! command -v "$validation_python" >/dev/null; then
-  printf '%s\n' 'Python 3 is required to verify Unreal automation results. Set CINDERLINE_TEST_PYTHON if needed.' >&2
-  exit 2
+  printf '%s\n' 'Python 3 is required. Set CINDERLINE_TEST_PYTHON if needed.' >&2; exit 2
+fi
+validator="$project_dir/scripts/validate-unreal-report.py"
+manifest="$project_dir/scripts/lib/unreal_suites.json"
+suite_args=(--suite integration)
+case "$suite_mode" in
+  --tutorials) suite_args+=(--suite tutorials) ;;
+  --all) suite_args=(--suite local-all) ;;
+esac
+# Filters and exact expected paths live together in the shared manifest.
+test_filter="$("$validation_python" "$validator" --manifest "$manifest" "${suite_args[@]}" --print-filter)"
+cinder_find_engine "$project_dir"
+cinder_require_engine_tool "$command_editor"
+
+if pgrep -f '[U]nrealEditor.*Cinderline\.uproject' >/dev/null; then
+  printf '%s\n' 'Close the running Cinderline editor/runtime before launching integration automation.' >&2; exit 2
 fi
 
 run_name="$(date -u '+%Y%m%dT%H%M%SZ')-$$"
 report_dir="$project_dir/Saved/Automation/Integration/$run_name"
 mkdir -p "$report_dir"
-printf 'Running Cinderline integration automation. Report directory: %s\n' "$report_dir"
-# This is Automation's queued Quit. UE 5.8 waits for completion/report generation;
-# it is not an immediate engine Quit command. Validate JSON even after exit zero.
-if "$editor" "$project_file" /Engine/Maps/Entry -unattended -nop4 -nosplash -NullRHI -nosound \
+printf 'Running Unreal automation with %s. Report directory: %s\n' "$engine_root" "$report_dir"
+# Automation's queued Quit waits for completion/report generation in UE 5.8.
+if "$command_editor" "$project_file" /Engine/Maps/Entry -unattended -nop4 -nosplash -NullRHI -nosound \
   -stdout -FullStdOutLogOutput \
   "-ExecCmds=Automation RunTests $test_filter; Quit" \
   "-ReportExportPath=$report_dir" "-abslog=$report_dir/UnrealEditor.log" \
   > "$report_dir/stdout.log" 2>&1; then
   if [[ ! -s "$report_dir/index.json" ]]; then
-    printf 'Editor exited without an automation report. Inspect %s\n' "$report_dir/stdout.log" >&2
-    exit 1
+    printf 'Editor exited without an automation report. Inspect %s\n' "$report_dir/stdout.log" >&2; exit 1
   fi
 else
   result=$?
-  printf 'Unreal integration automation failed with status %s. Inspect %s\n' "$result" "$report_dir/stdout.log" >&2
+  printf 'Unreal automation failed with status %s. Inspect %s\n' "$result" "$report_dir/stdout.log" >&2
   exit "$result"
 fi
-"$validation_python" - "$report_dir/index.json" "$include_tutorials" <<'PY'
-import json
-import sys
-from pathlib import Path
-
-report_path = Path(sys.argv[1])
-try:
-    with report_path.open(encoding="utf-8-sig") as report_file:
-        report = json.load(report_file)
-except (OSError, ValueError) as error:
-    raise SystemExit(f"Cannot read Unreal automation report {report_path}: {error}")
-
-def fail(message):
-    raise SystemExit(f"Unreal integration verification failed: {message}. Report: {report_path}")
-
-# UE 5.8 FAutomatedTestPassResults / FAutomatedTestResult export these keys
-# through FJsonObjectConverter using lower-initial case and enum name strings.
-if not isinstance(report, dict):
-    fail("report root is not an object")
-expected_paths = {
-    "Cinderline.Integration.WorldLifecycle",
-    "Cinderline.Integration.EconomyAndProduction",
-    "Cinderline.Integration.AIKnowledgeAndPersistence",
-    "Cinderline.Integration.CombatFeedback",
-}
-if sys.argv[2] == "true":
-    expected_paths.update({
-        "Cinderline.Tutorial.CommandGates",
-        "Cinderline.Tutorial.EmberGate",
-        "Cinderline.Tutorial.EarlyActionsAndContent",
-        "Cinderline.Tutorial.EndToEnd",
-    })
-required_counts = {
-    "succeeded": len(expected_paths),
-    "succeededWithWarnings": 0,
-    "failed": 0,
-    "notRun": 0,
-    "inProcess": 0,
-}
-for field, expected_count in required_counts.items():
-    actual = report.get(field)
-    if type(actual) is not int or actual != expected_count:
-        fail(f"{field}={actual!r}, expected {expected_count}")
-
-tests = report.get("tests")
-if not isinstance(tests, list) or len(tests) != len(expected_paths):
-    fail(f"report must contain exactly the {len(expected_paths)} expected tests")
-seen = set()
-for test in tests:
-    if not isinstance(test, dict):
-        fail("test entry is not an object")
-    path = test.get("fullTestPath")
-    if not isinstance(path, str) or path not in expected_paths or path in seen:
-        fail(f"missing, unexpected, or duplicate test path {path!r}")
-    seen.add(path)
-    if test.get("state") != "Success":
-        fail(f"{path} did not finish successfully")
-    for field in ("errors", "warnings"):
-        if type(test.get(field)) is not int or test[field] != 0:
-            fail(f"{path} has nonzero or missing {field}")
-if seen != expected_paths:
-    fail("one or more expected test paths are missing")
-print(f"Verified all expected Unreal tests: {len(expected_paths)} succeeded, no errors, warnings, or unfinished tests.")
-PY
-printf 'Unreal integration automation passed. Report: %s/index.json\n' "$report_dir"
+validation_args=(--manifest "$manifest" "${suite_args[@]}")
+if [[ "$allow_idevice_warning" == true ]]; then validation_args+=(--allow-idevice-id-warning); fi
+"$validation_python" "$validator" "${validation_args[@]}" "$report_dir/index.json"
+printf 'Unreal automation passed. Report: %s/index.json\n' "$report_dir"

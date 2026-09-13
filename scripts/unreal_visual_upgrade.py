@@ -210,12 +210,17 @@ class Graph:
         require(LIB.connect_material_property(node, output, prop), "cannot connect material " + property_name)
         self.outputs.append((node, output, property_name, prop))
 
-    def world_uv(self, tile_cm, prefix=""):
+    def world_uv(self, tile_cm=None, prefix=""):
+        dynamic_world_size = tile_cm is None
+        tile_cm = 4800.0 if dynamic_world_size else tile_cm
         world = self.node(prefix + "Absolute world position", "WorldPosition")
         xy = self.node(prefix + "World XY", "ComponentMask", r=True, g=True, b=False, a=False)
         self.link(world, xy, "Input")
-        scale = self.node(prefix + "World centimeters to texture UV", "Multiply", const_b=1.0 / tile_cm)
+        scale = self.node(prefix + "World centimeters to texture UV", "Multiply",
+                          const_b=0.0 if dynamic_world_size else 1.0 / tile_cm)
         self.link(xy, scale, "A")
+        if dynamic_world_size:
+            self.link(self.scalar("CinderWorldSizeInverse", 1.0 / tile_cm), scale, "B")
         return scale
 
     def uv0(self, tiling):
@@ -387,7 +392,7 @@ def model_material(textures):
 
 def fog_material(mask):
     graph = Graph("M_CinderFogV2", fog=True)
-    sample = graph.sample("FogMask", mask, graph.world_uv(4800.0), "LINEAR_COLOR")
+    sample = graph.sample("FogMask", mask, graph.world_uv(), "LINEAR_COLOR")
     graph.output(sample, "OPACITY", "R")
     color = graph.node("Unknown and explored fog colors", "LinearInterpolate")
     graph.link(graph.color("FogColor", (0.010, 0.017, 0.027)), color, "A", "RGB")
@@ -396,7 +401,7 @@ def fog_material(mask):
     graph.output(color, "EMISSIVE_COLOR")
     result = graph.finish()
     result["runtime_contract"] = {"FogMask": "256x256 PF_B8G8R8A8, sRGB=false, clamp, bilinear, no mips",
-                                  "R": "opacity", "G": "explored factor", "uv": "absolute world XY / 4800",
+                                  "R": "opacity", "G": "explored factor", "uv": "absolute world XY * CinderWorldSizeInverse",
                                   "strict_fog": "CPU mask keeps hidden cells opaque; feather only inside visible cells",
                                   "component_cast_shadow": "must be false in runtime adapter"}
     return result

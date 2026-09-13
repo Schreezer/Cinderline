@@ -526,7 +526,7 @@ def _terrain_material(helper, textures):
                varied_base, "B", "RGB")
 
     layers = graph.sample("TerrainLayers", mask,
-                          graph.world_uv(4800.0, "Layers "), "LINEAR_COLOR")
+                          graph.world_uv(prefix="Layers "), "LINEAR_COLOR")
 
     def tint_layer(label, current, tint_name, tint, channel, strength_name, strength):
         tinted = graph.node(label + " photographed detail", "Multiply")
@@ -602,7 +602,7 @@ def _terrain_material(helper, textures):
             "secondary_frequency_ratio": 1.61803399,
             "secondary_uv_offset": [0.173, 0.619],
             "normal_roughness_ao_alignment": "primary projection"},
-        "terrain_mask": "planar absolute world XY / 4800 cm",
+        "terrain_mask": "planar absolute world XY * CinderWorldSizeInverse",
         "world_aligned_triplanar_samples": 0}
     validation["albedo_response"] = {
         "source": "Poly Haven dry_ground_rocks 2K diffuse",

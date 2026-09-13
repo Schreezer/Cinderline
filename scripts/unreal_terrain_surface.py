@@ -77,7 +77,7 @@ def build_terrain_surface():
         graph.link(base, bedrock, "A")
         graph.link(variation, bedrock, "B")
 
-        layers = graph.sample("TerrainLayers", mask, graph.world_uv(4800.0, "Layers "), "LINEAR_COLOR")
+        layers = graph.sample("TerrainLayers", mask, graph.world_uv(prefix="Layers "), "LINEAR_COLOR")
         def tint_layer(label, current, tint, channel, strength):
             tinted = graph.node(label + " grain", "Multiply")
             graph.link(neutral, tinted, "A")
@@ -106,7 +106,7 @@ def build_terrain_surface():
         report["runtime_mask"] = {"size": [256, 256], "srgb": False,
                                   "channels": {"R": "explored cliff stone", "G": "observed mineral positions", "B": "map-seeded ash"},
                                   "update": "on reset or newly observed features only",
-                                  "world_size_cm": 4800, "collision_modified": False}
+                                  "world_size_parameter": "CinderWorldSizeInverse", "collision_modified": False}
         report["success"] = True
     except Exception as error:
         report["error"] = str(error)

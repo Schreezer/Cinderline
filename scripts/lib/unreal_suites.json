@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "local_exclusions": {
+    "Cinderline.Online.Transport": "Requires a running match server and CINDERLINE_TEST_SERVER; LAN and public TLS variants require explicit environment setup.",
+    "Cinderline.Online.FourPlayerTransport": "Requires a running four-seat match server and CINDERLINE_TEST_SERVER; LAN and public TLS variants require explicit environment setup.",
+    "Cinderline.Online.LANDiscoveryTransport": "Requires CINDERLINE_TEST_LAN_SERVICE, CINDERLINE_TEST_LAN_PORT, and a live Apple Bonjour advertisement; no environment means this test skips its assertions."
+  },
+  "suites": {
+    "integration": {
+      "filter": "Cinderline.Integration",
+      "expected_paths": [
+        "Cinderline.Integration.AIKnowledgeAndPersistence",
+        "Cinderline.Integration.ArmyControl",
+        "Cinderline.Integration.CombatFeedback",
+        "Cinderline.Integration.EconomyAndProduction",
+        "Cinderline.Integration.FirstRunTutorialOffer",
+        "Cinderline.Integration.OnlineEndpointPolicy",
+        "Cinderline.Integration.OnlineRecovery",
+        "Cinderline.Integration.ProductionControls",
+        "Cinderline.Integration.SoloAIDifficulty",
+        "Cinderline.Integration.WorldLifecycle",
+        "Cinderline.Integration.WorldTapSelection"
+      ]
+    },
+    "tutorials": {
+      "filter": "Cinderline.Tutorial",
+      "expected_paths": [
+        "Cinderline.Tutorial.CommandGates",
+        "Cinderline.Tutorial.EarlyActionsAndContent",
+        "Cinderline.Tutorial.EmberGate",
+        "Cinderline.Tutorial.EndToEnd",
+        "Cinderline.Tutorial.Guidance.ArmySequence",
+        "Cinderline.Tutorial.Guidance.EconomySequence",
+        "Cinderline.Tutorial.Guidance.InterruptedOrders",
+        "Cinderline.Tutorial.Guidance.Introduction",
+        "Cinderline.Tutorial.Guidance.RemainingBatch",
+        "Cinderline.Tutorial.LateCancellationRecovery",
+        "Cinderline.Tutorial.WaitsForLearner"
+      ]
+    },
+    "local-all": {
+      "filter": "Cinderline.Integration+Cinderline.Tutorial+Cinderline.Presentation+Cinderline.UI+Cinderline.Online.LANDiscoveryValues",
+      "expected_paths": [
+        "Cinderline.Integration.AIKnowledgeAndPersistence",
+        "Cinderline.Integration.ArmyControl",
+        "Cinderline.Integration.CombatFeedback",
+        "Cinderline.Integration.EconomyAndProduction",
+        "Cinderline.Integration.FirstRunTutorialOffer",
+        "Cinderline.Integration.OnlineEndpointPolicy",
+        "Cinderline.Integration.OnlineRecovery",
+        "Cinderline.Integration.ProductionControls",
+        "Cinderline.Integration.SoloAIDifficulty",
+        "Cinderline.Integration.WorldLifecycle",
+        "Cinderline.Integration.WorldTapSelection",
+        "Cinderline.Online.LANDiscoveryValues",
+        "Cinderline.Presentation.CameraBoundary",
+        "Cinderline.Presentation.IOSPerformancePolicy",
+        "Cinderline.Presentation.LandscapeHeightGeometry",
+        "Cinderline.Presentation.MetalFXResolutionOwnership",
+        "Cinderline.Presentation.SceneryGroundRoadFallback",
+        "Cinderline.Presentation.SceneryObstacleBounds",
+        "Cinderline.Presentation.SceneryObservedState",
+        "Cinderline.Presentation.UnitInfo",
+        "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+        "Cinderline.Presentation.WorldEffects.FourTeamRouting",
+        "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+        "Cinderline.Presentation.WorldEffects.Initialization",
+        "Cinderline.Presentation.WorldEffects.InstanceBudget",
+        "Cinderline.Tutorial.CommandGates",
+        "Cinderline.Tutorial.EarlyActionsAndContent",
+        "Cinderline.Tutorial.EmberGate",
+        "Cinderline.Tutorial.EndToEnd",
+        "Cinderline.Tutorial.Guidance.ArmySequence",
+        "Cinderline.Tutorial.Guidance.EconomySequence",
+        "Cinderline.Tutorial.Guidance.InterruptedOrders",
+        "Cinderline.Tutorial.Guidance.Introduction",
+        "Cinderline.Tutorial.Guidance.RemainingBatch",
+        "Cinderline.Tutorial.LateCancellationRecovery",
+        "Cinderline.Tutorial.WaitsForLearner",
+        "Cinderline.UI.MobileHUDLayout"
+      ]
+    },
+    "multiplayer": {
+      "filter": "Cinderline.Online.Transport+Cinderline.Online.FourPlayerTransport",
+      "expected_paths": [
+        "Cinderline.Online.FourPlayerTransport",
+        "Cinderline.Online.Transport"
+      ]
+    }
+  }
+}

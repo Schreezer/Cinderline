@@ -10,43 +10,15 @@ ios_app_archiver="$project_root/scripts/archive-ios-app.py"
 ue_root_is_explicit=false
 [[ -n "${UE_ROOT:-}" ]] && ue_root_is_explicit=true
 using_prepared_ios_engine=false
+using_prepared_metalfx_engine=false
 action="${1:-help}"
 shift || true
 
-find_engine() {
-  if [[ -n "${UE_ROOT:-}" ]]; then
-    engine_root="${UE_ROOT%/}"
-    [[ "$(basename "$engine_root")" == Engine ]] && engine_root="$(dirname "$engine_root")"
-  else
-    engine_root=""
-    local candidate
-    for candidate in /Users/Shared/Epic\ Games/UE_5.* /Users/Shared/UnrealEngine/UE_5.* "$HOME"/UnrealEngine/UE_5.* /opt/unreal-engine /opt/UnrealEngine; do
-      if [[ -d "$candidate/Engine/Build/BatchFiles" ]]; then engine_root="$candidate"; fi
-    done
-  fi
-  if [[ -z "$engine_root" || ! -d "$engine_root/Engine/Build/BatchFiles" ]]; then
-    printf '%s\n' 'Unreal Engine is not available yet. Once installed, set UE_ROOT to its installation directory.' >&2
-    printf '%s\n' 'Example: UE_ROOT="/Users/Shared/Epic Games/UE_5.8" ./scripts/unreal.sh build' >&2
-    exit 2
-  fi
-  engine_root="$(cd "$engine_root" && pwd -P)"
-  case "$(uname -s)" in
-    Darwin)
-      platform=Mac
-      build_script="$engine_root/Engine/Build/BatchFiles/Mac/Build.sh"
-      editor="$engine_root/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor"
-      command_editor="$engine_root/Engine/Binaries/Mac/UnrealEditor-Cmd.app/Contents/MacOS/UnrealEditor-Cmd"
-      [[ -x "$command_editor" ]] || command_editor="$editor"
-      ;;
-    Linux)
-      platform=Linux
-      build_script="$engine_root/Engine/Build/BatchFiles/Linux/Build.sh"
-      editor="$engine_root/Engine/Binaries/Linux/UnrealEditor"
-      command_editor="$editor"
-      ;;
-    *) printf '%s\n' 'Use UnrealBuildTool / UnrealEditor directly on Windows; this helper supports macOS and Linux.' >&2; exit 2 ;;
-  esac
-}
+# shellcheck source=lib/unreal-engine.sh
+source "$project_root/scripts/lib/unreal-engine.sh"
+
+find_engine() { cinder_find_engine "$project_root"; }
+prepared_engine_source() { cinder_prepared_engine_source "$1"; }
 
 ios_scene_lifecycle_enabled() {
   awk '
@@ -72,8 +44,8 @@ ios_scene_lifecycle_enabled() {
 
 prepared_ios_engine_error() {
   printf '%s\n' \
-    'Cinderline enables the iOS scene lifecycle, which requires rebuilt ApplicationCore and Launch modules.' \
-    'The stock precompiled engine does not contain the matching scene-lifecycle objects.' \
+    'Cinderline requires rebuilt ApplicationCore and Launch lifecycle modules plus the Core iOS tracing repair.' \
+    'The stock precompiled engine does not contain these target-specific fixes.' \
     'Prepare the isolated engine, then retry:' \
     '  ./scripts/prepare-ios27-engine.py' \
     '  ./scripts/prepare-ios27-engine.py --check' >&2
@@ -81,10 +53,14 @@ prepared_ios_engine_error() {
 }
 
 validate_prepared_ios_engine() {
-  if [[ ! -x "$ios_engine_preparer" || ! -f "$prepared_ios_engine/.cinderline-ios27-engine.json" ]]; then
+  local destination="${1:-$prepared_ios_engine}"
+  local manifest="$destination/.cinderline-ios27-engine.json"
+  if [[ ! -x "$ios_engine_preparer" || ! -f "$manifest" ]]; then
     prepared_ios_engine_error
   fi
-  if ! "$ios_engine_preparer" --check; then
+  local source
+  source="$(prepared_engine_source "$manifest")"
+  if ! "$ios_engine_preparer" --engine "$source" --destination "$destination" --check; then
     printf '%s\n' 'The prepared iOS engine failed verification; repair or recreate it before building.' >&2
     exit 2
   fi
@@ -104,8 +80,8 @@ find_physical_ios_engine() {
       exit 2
       ;;
   esac
-  if [[ "$engine_root" == "$prepared_ios_engine" ]]; then
-    validate_prepared_ios_engine
+  if [[ -f "$engine_root/.cinderline-ios27-engine.json" ]]; then
+    validate_prepared_ios_engine "$engine_root"
     using_prepared_ios_engine=true
   elif ios_scene_lifecycle_enabled && [[ -f "$engine_root/Engine/Build/InstalledBuild.txt" ]]; then
     printf '%s\n' \
@@ -115,7 +91,23 @@ find_physical_ios_engine() {
   fi
 }
 
-build() { "$build_script" CinderlineEditor "$platform" Development "$project_file" -WaitMutex "$@"; }
+build() {
+  # Bash 3.2 treats an empty array expansion as unbound with set -u. Keep
+  # one nonempty argv array, and fold explicit parallel flags into one value.
+  local parallel_arg=-MaxParallelActions=2
+  local build_arg
+  for build_arg in "$@"; do
+    if [[ "$build_arg" == -MaxParallelActions=* ]]; then parallel_arg="$build_arg"; fi
+  done
+  local build_args=(CinderlineEditor "$platform" Development "$project_file" -WaitMutex "$parallel_arg")
+  if [[ "$using_prepared_metalfx_engine" == true ]]; then
+    build_args+=(-ForceRulesCompile -SkipRulesCompile)
+  fi
+  for build_arg in "$@"; do
+    if [[ "$build_arg" != -MaxParallelActions=* ]]; then build_args+=("$build_arg"); fi
+  done
+  "$build_script" "${build_args[@]}"
+}
 bootstrap() {
   mkdir -p "$project_root/Saved/Logs"
   "$command_editor" "$project_file" /Engine/Maps/Entry -unattended -nop4 -nosplash \
@@ -137,18 +129,31 @@ require_ios_payload() {
 }
 
 prepare_mobile_uat_args() {
-  mobile_uat_args=("$@")
+  mobile_uat_args=()
   local argument has_ubt_args=false has_additional_cooker_options=false
   for argument in "$@"; do
     case "$argument" in
-      -[Uu][Bb][Tt][Aa][Rr][Gg][Ss]=*) has_ubt_args=true ;;
+      -[Uu][Bb][Tt][Aa][Rr][Gg][Ss]=*)
+        has_ubt_args=true
+        if [[ "$using_prepared_ios_engine" == true || "$using_prepared_metalfx_engine" == true ]]; then
+          local normalized_ubt_args
+          normalized_ubt_args="$(printf '%s' "${argument#*=}" | tr '[:upper:]' '[:lower:]')"
+          if [[ " $normalized_ubt_args " != *" -forcerulescompile "* ]]; then
+            argument="$argument -ForceRulesCompile"
+          fi
+          if [[ " $normalized_ubt_args " != *" -skiprulescompile "* ]]; then
+            argument="$argument -SkipRulesCompile"
+          fi
+        fi
+        ;;
       -[Aa][Dd][Dd][Ii][Tt][Ii][Oo][Nn][Aa][Ll][Cc][Oo][Oo][Kk][Ee][Rr][Oo][Pp][Tt][Ii][Oo][Nn][Ss]=*)
         has_additional_cooker_options=true
         ;;
     esac
+    mobile_uat_args+=("$argument")
   done
   if [[ "$has_ubt_args" == false ]]; then
-    if [[ "$using_prepared_ios_engine" == true ]]; then
+    if [[ "$using_prepared_ios_engine" == true || "$using_prepared_metalfx_engine" == true ]]; then
       mobile_uat_args+=("-ubtargs=-MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile")
     else
       mobile_uat_args+=("-ubtargs=-MaxParallelActions=2")
