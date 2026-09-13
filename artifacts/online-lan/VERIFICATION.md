@@ -1,0 +1,21 @@
+# Online and LAN verification
+
+Result: **passed** on 2026-09-13 at 14:55:43 UTC.
+
+The machine-readable record is [`verification.json`](verification.json). It binds the final lanes to the SHA-256 values of the protocol 6 worker, server, LAN advertiser, Unreal client, and test sources. The final Mac build used the isolated engine at `/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27`; [`mac-build-final.log`](mac-build-final.log) records the successful 30.07 second incremental build.
+
+## Results
+
+- Node authoritative server tests: 16/16 passed, with no failures, skips, cancellations, or todos. Evidence: [`backend/server-tests.log`](backend/server-tests.log).
+- Node LAN and Bonjour tests after the final UTF-8 label fix: 6/6 passed, with no failures, skips, cancellations, or todos. Evidence: [`../../Saved/OnlineLAN/runs/20260913T145459Z-68920/node-lan-tests.log`](../../Saved/OnlineLAN/runs/20260913T145459Z-68920/node-lan-tests.log).
+- Real protocol 6 socket scenario: create, join, ready, start, private fog snapshots, opaque seat handles, command authority, reconnect idempotence, and canonical forfeit all passed. One client connected through loopback and the other through the Mac's nonloopback `192.168.31.109` interface. The measured worker cadence was 19.33 Hz against the configured 20 Hz. Evidence: [`../../Saved/OnlineLAN/runs/20260913T144007Z-64399/lan-scenario.json`](../../Saved/OnlineLAN/runs/20260913T144007Z-64399/lan-scenario.json).
+- Unreal loopback Online group: 3/3 test instances reached `Success` with zero errors. Two warnings came from Unreal's bundled Intel-only `idevice_id` utility on this ARM Mac; the validator allowed only those exact host-tool warnings. The discovery test in this group had no live-service environment and is not counted as Bonjour proof. Evidence: [`../../Saved/OnlineLAN/runs/20260913T144007Z-64399/UnrealReport-loopback/index.json`](../../Saved/OnlineLAN/runs/20260913T144007Z-64399/UnrealReport-loopback/index.json).
+- Rebuilt Unreal recovery and endpoint policy: 2/2 passed with zero errors and warnings using the isolated engine. This rerun verifies the case-sensitive `/play` correction found during runtime validation. Evidence: [`../../Saved/OnlineLAN/runs/20260913T-recovery-final/UnrealReport/index.json`](../../Saved/OnlineLAN/runs/20260913T-recovery-final/UnrealReport/index.json).
+- Unreal LAN transport: `Cinderline.Online.Transport` passed 1/1 with zero errors and warnings using `-CinderOnlineTestLAN` and `ws://192.168.31.109:49271/play`. Evidence: [`../../Saved/OnlineLAN/runs/20260913T145459Z-68920/UnrealReport-lan/index.json`](../../Saved/OnlineLAN/runs/20260913T145459Z-68920/UnrealReport-lan/index.json).
+- Live Bonjour: `Cinderline.Online.LANDiscoveryTransport` passed 1/1 with zero errors and warnings. It resolved the exact advertised service `Cinderline LAN QA 20260913T145459Z-68920` on port 49271, then verified that `Stop()` ended discovery and cleared the visible service list. Evidence: [`../../Saved/OnlineLAN/runs/20260913T145459Z-68920/UnrealReport-bonjour/index.json`](../../Saved/OnlineLAN/runs/20260913T145459Z-68920/UnrealReport-bonjour/index.json).
+- The live server bound `0.0.0.0`, advertised the private IPv4 URL, published Bonjour, and exited with code 0 after SIGTERM without forced termination. Its log contains `Cinderline game server stopped after SIGTERM.` Evidence: [`../../Saved/OnlineLAN/runs/20260913T145459Z-68920/server.log`](../../Saved/OnlineLAN/runs/20260913T145459Z-68920/server.log).
+- `Online.ini`, `Training.ini`, `Skirmish.ini`, and the offline skirmish save matched their exact pre-run bytes after cleanup. The runner changed none of them in the final pass.
+
+The evidence uses two clients on one Mac, with one routed through the machine's real private LAN address. It verifies the nonloopback listener, client policy, protocol, and Bonjour path on this host. It does not prove a second physical device, router isolation, firewall behavior on another machine, or an internet deployment.
+
+Passing work was reused by source hash instead of repeating CPU-heavy phases. The preserved loopback report used the stock UE 5.8 command binary; the rebuilt recovery, private-IP transport, and live Bonjour lanes used the isolated engine named above.

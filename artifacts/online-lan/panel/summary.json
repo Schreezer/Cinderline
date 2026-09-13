@@ -1,0 +1,127 @@
+{
+  "status": "passed",
+  "caseCount": 5,
+  "pngCount": 10,
+  "cases": [
+    {
+      "mode": "internet",
+      "viewport": [
+        956,
+        440
+      ],
+      "panel": [
+        956.0,
+        440.0
+      ],
+      "labels": 28,
+      "visibleButtons": 8,
+      "buttonsInitiallyOnscreen": 6,
+      "minimumTouchHeightPixels": 51.6,
+      "scrollRange": 292.8,
+      "includesSlateUI": true,
+      "case": "internet-phone",
+      "capture": "internet-phone.png",
+      "scrolledCapture": "internet-phone-scrolled.png",
+      "runtime": "internet-phone-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+    },
+    {
+      "mode": "internet",
+      "viewport": [
+        667,
+        375
+      ],
+      "panel": [
+        667.0,
+        375.0
+      ],
+      "labels": 28,
+      "visibleButtons": 8,
+      "buttonsInitiallyOnscreen": 6,
+      "minimumTouchHeightPixels": 44.0,
+      "scrollRange": 296.0,
+      "includesSlateUI": true,
+      "case": "internet-small",
+      "capture": "internet-small.png",
+      "scrolledCapture": "internet-small-scrolled.png",
+      "runtime": "internet-small-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+    },
+    {
+      "mode": "lan",
+      "viewport": [
+        956,
+        440
+      ],
+      "panel": [
+        956.0,
+        440.0
+      ],
+      "labels": 28,
+      "visibleButtons": 9,
+      "buttonsInitiallyOnscreen": 6,
+      "minimumTouchHeightPixels": 51.6,
+      "scrollRange": 396.3,
+      "includesSlateUI": true,
+      "case": "lan-phone",
+      "capture": "lan-phone.png",
+      "scrolledCapture": "lan-phone-scrolled.png",
+      "runtime": "lan-phone-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+    },
+    {
+      "mode": "lan",
+      "viewport": [
+        667,
+        375
+      ],
+      "panel": [
+        667.0,
+        375.0
+      ],
+      "labels": 28,
+      "visibleButtons": 9,
+      "buttonsInitiallyOnscreen": 6,
+      "minimumTouchHeightPixels": 44.0,
+      "scrollRange": 400.0,
+      "includesSlateUI": true,
+      "case": "lan-small",
+      "capture": "lan-small.png",
+      "scrolledCapture": "lan-small-scrolled.png",
+      "runtime": "lan-small-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+    },
+    {
+      "mode": "internet",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "panel": [
+        1920.0,
+        1080.0
+      ],
+      "labels": 28,
+      "visibleButtons": 8,
+      "buttonsInitiallyOnscreen": 8,
+      "minimumTouchHeightPixels": 66.0,
+      "scrollRange": 0.0,
+      "includesSlateUI": true,
+      "case": "internet-desktop",
+      "capture": "internet-desktop.png",
+      "scrolledCapture": "internet-desktop-scrolled.png",
+      "runtime": "internet-desktop-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+    }
+  ],
+  "allRequiredLabelsObserved": true,
+  "allActionTargetsAtLeast44Pixels": true,
+  "topAndSecondPositionCaptured": true,
+  "protectedPlayerState": true,
+  "scope": "Mac Unreal renderer and real Slate multiplayer panel; no physical device or remote service deployment"
+}

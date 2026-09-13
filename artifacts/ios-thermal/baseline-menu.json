@@ -1,0 +1,20 @@
+{
+  "scope": "Original menu only, AEON; Metal HUD encoder tracking requested but reported unavailable (0 ms). Standard GPU time includes command-buffer gaps; not GPU utilization percentage. DeviceHub mirroring active; no physical thermal state sampled.",
+  "source": "Saved/IOSThermal/menu-metrics-console.log",
+  "warmupRowsSkipped": 10,
+  "capturedRows": 117,
+  "frames": 6366,
+  "intervalMs": {
+    "mean": 16.811396481306947,
+    "p95": 16.67,
+    "min": 12.5,
+    "max": 50.0
+  },
+  "gpuCommandBufferMs": {
+    "mean": 17.719890040841975,
+    "p95": 25.22,
+    "min": 3.83,
+    "max": 38.86
+  },
+  "fps": 59.4834582071708
+}

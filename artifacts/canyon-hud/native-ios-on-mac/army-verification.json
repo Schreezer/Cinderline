@@ -1,0 +1,305 @@
+{
+  "case": "army",
+  "family": "hud",
+  "state": "army",
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "viewport": [
+    2052,
+    1536
+  ],
+  "hudScale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1808.0,
+        20.0,
+        1896.0,
+        108.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        20.0,
+        2020.0,
+        108.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        1424.0,
+        152.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        164.0,
+        1424.0,
+        292.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        304.0,
+        1424.0,
+        416.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        1572.0,
+        1424.0,
+        1678.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        1686.0,
+        1424.0,
+        1792.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        1800.0,
+        1424.0,
+        1906.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        1914.0,
+        1424.0,
+        2020.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytab",
+      "argument": 1,
+      "bounds": [
+        788.0,
+        932.0,
+        932.0,
+        1020.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        944.0,
+        932.0,
+        1032.0,
+        1020.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "rosterpage",
+      "argument": 1,
+      "bounds": [
+        692.0,
+        932.0,
+        780.0,
+        1020.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "armyall",
+      "argument": 0,
+      "bounds": [
+        60.0,
+        1028.0,
+        171.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "armytype",
+      "argument": 1,
+      "bounds": [
+        179.0,
+        1028.0,
+        290.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "armytype",
+      "argument": 2,
+      "bounds": [
+        298.0,
+        1028.0,
+        409.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "armytype",
+      "argument": 3,
+      "bounds": [
+        417.0,
+        1028.0,
+        528.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "armytype",
+      "argument": 4,
+      "bounds": [
+        536.0,
+        1028.0,
+        647.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "armytype",
+      "argument": 5,
+      "bounds": [
+        655.0,
+        1028.0,
+        766.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 18,
+      "action": "armytype",
+      "argument": 6,
+      "bounds": [
+        774.0,
+        1028.0,
+        885.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 19,
+      "action": "armytype",
+      "argument": 7,
+      "bounds": [
+        893.0,
+        1028.0,
+        1004.0,
+        1116.0
+      ]
+    },
+    {
+      "index": 20,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        60.0,
+        1184.0,
+        290.0,
+        1312.0
+      ]
+    },
+    {
+      "index": 21,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        298.0,
+        1184.0,
+        528.0,
+        1312.0
+      ]
+    },
+    {
+      "index": 22,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        536.0,
+        1184.0,
+        766.0,
+        1312.0
+      ]
+    },
+    {
+      "index": 23,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        774.0,
+        1184.0,
+        1004.0,
+        1312.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "requiredHUDEntriesPresent": true,
+  "shaderPath": {
+    "rhiFeatureLevel": "ES3_1",
+    "shaderPlatform": "METAL_ES3_1_IOS",
+    "mobileHDR": true,
+    "stereoShaderPlatformConfirmed": true
+  },
+  "capture": "army.png",
+  "captureSha256": "5ed4a44f66a006cbb14b128094b3323653e65bdffa9901994898ea8708880082",
+  "ownedPid": 80121,
+  "launchNonceVerified": true,
+  "runningExecutableHashVerified": true,
+  "sourceExecutableSha256": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+  "wrappedExecutableSha256": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+  "equalExecutableSha256": true,
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "newCrashReports": [],
+  "protectedPlayerStateUnchanged": true,
+  "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+}

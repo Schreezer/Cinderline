@@ -1,0 +1,305 @@
+{
+  "success": true,
+  "checkedAt": "2026-09-13T07:59:40.816340+00:00",
+  "scope": "Authored canyon Landscape and portrait HUD; existing level gameplay, fog, navigation, tutorials and MetalFX retained.",
+  "automation": {
+    "passed": 26,
+    "report": "artifacts/canyon-hud/automation.json"
+  },
+  "terrain": {
+    "maps": 3,
+    "verticesPerAxis": 127,
+    "componentsPerMap": 4,
+    "activeMapTriangles": 31752,
+    "forcedLOD": 0,
+    "collision": false,
+    "navigation": false,
+    "unknownHeightFlattened": true,
+    "mobileDynamicMaterialsVerified": true,
+    "modularMeshes": 8,
+    "meshLODs": 3
+  },
+  "portraits": 9,
+  "macCaptures": [
+    {
+      "case": "army-ipad",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/army-ipad.png",
+      "sha256": "0dc6e016ac3e9e82fb4a2de3c82e6b902b2893d3b9a3196a784537cdf0c53cb4"
+    },
+    {
+      "case": "army-phone",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/army-phone.png",
+      "sha256": "826e10b080de467673430c23b0676a299e98c4fcea3c0a73eb5e52a047ab54dc"
+    },
+    {
+      "case": "army-small",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/army-small.png",
+      "sha256": "de1780203aa4b67adc3fbdbe32c90f5ea2923f8e99e4aed2187b6d4f667cc0da"
+    },
+    {
+      "case": "ribbon-phone",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/ribbon-phone.png",
+      "sha256": "732b3e6d181883eed4131fba74bb0471940578d31f6079325a904c8efd21b635"
+    },
+    {
+      "case": "ribbon-small",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/ribbon-small.png",
+      "sha256": "7ffc8f36d4ca22df3cebd48e48aa33625a8ad54f73c6b8b6a90461b3b9e96c8f"
+    },
+    {
+      "case": "squads-phone",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/squads-phone.png",
+      "sha256": "b962c0fdbe19d889770b559b6874d5a98dd7db35e0f06e149697ea2b9e774abd"
+    },
+    {
+      "case": "squads-small",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/squads-small.png",
+      "sha256": "672d44f305133950bee22e22a536a6d369af62a95559d172699a6ea10054ef7d"
+    },
+    {
+      "case": "unit-info-phone",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/unit-info-phone.png",
+      "sha256": "bbaf8037f2e98454c12d0788ab4a5409c6f5c632e0ca985cfdb0c0a0e775ec00"
+    },
+    {
+      "case": "worker-phone",
+      "lane": "mac",
+      "capture": "artifacts/canyon-hud/mac/worker-phone.png",
+      "sha256": "0d8de8824539f1a77854c96169e1eb9ed88d2e09fb9d2a02506ddfa827a15c2d"
+    },
+    {
+      "case": "fog",
+      "lane": "canyon",
+      "capture": "artifacts/canyon-hud/canyon/fog.png",
+      "sha256": "2d94140eb85e40d2ca7b6407eea7c308a059398de1f639552346dbd377e2f68d"
+    },
+    {
+      "case": "map0",
+      "lane": "canyon",
+      "capture": "artifacts/canyon-hud/canyon/map0.png",
+      "sha256": "4ee20d3d5d42d9ce22b1547aab36fa65289a775b15cbbefadadb59100842caf6"
+    },
+    {
+      "case": "map1",
+      "lane": "canyon",
+      "capture": "artifacts/canyon-hud/canyon/map1.png",
+      "sha256": "2443e61b8063e12a04d2695424fb55fd0b7aaf148f69c778b019b7d60ed2c51b"
+    },
+    {
+      "case": "map2",
+      "lane": "canyon",
+      "capture": "artifacts/canyon-hud/canyon/map2.png",
+      "sha256": "c6e391f00066ae9a9bdb183afe1470fe8a681a9edc861f3ece50bf3439405b58"
+    },
+    {
+      "case": "kiln-details-small",
+      "lane": "tutorial",
+      "capture": "artifacts/canyon-hud/tutorial/kiln-details-small.png",
+      "sha256": "70bb7b0b79f8dfa79c300ca7cb18d44f22baf514ed4b23b2c2438436c991ca96"
+    },
+    {
+      "case": "kiln-focus-phone",
+      "lane": "tutorial",
+      "capture": "artifacts/canyon-hud/tutorial/kiln-focus-phone.png",
+      "sha256": "2ca58dfc3fc4f797f68c980f552e8d865d8d174d84e1a66b118575747b8c5644"
+    }
+  ],
+  "nativeIOSOnMac": {
+    "cases": 4,
+    "exactExecutable": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+    "viewport": [
+      2052,
+      1536
+    ],
+    "report": "artifacts/canyon-hud/native-ios-on-mac/summary.json",
+    "visuallyInspected": true,
+    "noNewCrashReports": true,
+    "protectedPlayerStateUnchanged": true
+  },
+  "performance": {
+    "lane": "Short matched Mac Unreal army fixture, not physical iPhone",
+    "viewport": [
+      956,
+      440
+    ],
+    "sceneFraction": 0.8,
+    "warmupFrames": 30,
+    "samplesEach": 120,
+    "baseline": {
+      "source": "FRHIGPUFrameTimeHistory completed frames",
+      "samples": 120,
+      "meanMs": 8.576,
+      "medianMs": 8.207,
+      "p95Ms": 11.748,
+      "disjointEvents": 0
+    },
+    "candidate": {
+      "source": "FRHIGPUFrameTimeHistory completed frames",
+      "samples": 120,
+      "meanMs": 9.706,
+      "medianMs": 9.321,
+      "p95Ms": 14.997,
+      "disjointEvents": 0
+    },
+    "meanDeltaMs": 1.13,
+    "thermalAcceptance": "pending physical sustained session"
+  },
+  "package": {
+    "checkedAt": "2026-09-13T07:51:57.362516+00:00",
+    "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "executableSha256": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+    "machoPlatform": "IOS",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "strictCodesignVerified": true,
+    "developmentProfile": true,
+    "phoneRegistered": true,
+    "profileUnexpired": true,
+    "orientations": [
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "bundleBytes": 494693239,
+    "ioStoreContainers": [
+      "cookeddata/cinderline/content/paks/global.utoc",
+      "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+    ]
+  },
+  "physicalDevice": {
+    "installedThisPass": false,
+    "launchedThisPass": false,
+    "lastRecordedInstalledExecutable": "594f5a626d1e875152355c243cdd25a38511394a78165df8b2742934eee96b0c"
+  },
+  "sourceAndAssetSHA256": {
+    "Cinderline.uproject": "5f97d0026cb7b0dad4d085481f42c6e44814a3a6bc5f91164216db631a6616f9",
+    "Config/DefaultDeviceProfiles.ini": "4dbd087e049faa13b7ffc039180611b851184c2d16e1ae320def2cebda125007",
+    "Config/DefaultEngine.ini": "41da59d07b9c33c3339a4c20650bd1c232f18ac7394380315ff893a636cf0b95",
+    "Config/DefaultGame.ini": "70436feec4cde67273378fa5473e7a4e117480f725557ab1ad96d0c4495c2279",
+    "Config/DefaultInput.ini": "45c0cd66d9351dc830305468e9a9ed469e700bb6b289bfff314bbac4c4610e76",
+    "Config/IOS/IOSEngine.ini": "d74d93cb87bf7f89e09197e97d671c149ff147945df5d3ad49c2246607279f6b",
+    "Config/UserEngine.ini": "bbecae28d034a50b2bca99b1bc743a31e8a75a8fa8384139b75c142eaf0c64bb",
+    "Content/Art/Canyon/Materials/M_CinderCanyonGround.uasset": "103d02b3d6232b35f894d374cee632419d9c6fc6b6cf9054694f9e383ba895ba",
+    "Content/Art/Canyon/Materials/M_CinderCanyonRock.uasset": "3587b1658ea54046888e3e421a75be40b24b8a03a503a6e7da3d56a2bec5710d",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_CliffMass.uasset": "bdd50f7786b481648127f4a7ac4ab46e3320173d96fbcc5f3240d55e68bf9d30",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_Debris.uasset": "1ec83a3b42200b4f8dc3f032b7bdd1b565ae281538a774b347373542623aa372",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_Rock_A.uasset": "1d42edc17f7231a86c05949d480bf107168677695ec493f9456e3795a7cb5438",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_Rock_B.uasset": "a3dbdd976c2f1463e7156459496645f83571d4c2564e323dbfd32988e5666b08",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_Rock_C.uasset": "626493d09ba0aba8e8bc9992988fe5072923ed55abcbd12a75ef67a72addd9cf",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_Rock_D.uasset": "bee078516024639b8ccfaee1699f6f949aaf6c390f2990409255ec0dd9b664ec",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_Rock_E.uasset": "c92bbee66ca83f81400be334bc276b4e2a5b2e5d57d523973469014f6adbdd3d",
+    "Content/Art/Canyon/Meshes/SM_CinderCanyon_Rock_F.uasset": "26e7f83975d85a692eea2a829aeb682ffac6b8355c83be11b59cac9a3dd740ab",
+    "Content/Art/Canyon/Textures/T_CinderCanyonLayersDefault.uasset": "96e0a8a6518ddc568c7fdd9135a29ed0a3bac2860fb1e3a96690c5c5916144b2",
+    "Content/Art/UI/Units/T_CinderPortrait_Anvil.uasset": "ce500f35a4a649cd6a466552d5d8a57f30b28f0efc63ef15a6998c9d6ed9d159",
+    "Content/Art/UI/Units/T_CinderPortrait_Cinderthrow.uasset": "ee633fc4e32126a1218a18572755af2b77f5cf8ea8007078df855ba6ee218927",
+    "Content/Art/UI/Units/T_CinderPortrait_Drudge.uasset": "f9eb3d5736092001b7a0a1fc78fd7c76fe5161d504d848f8b9db6ee955b1a607",
+    "Content/Art/UI/Units/T_CinderPortrait_Ember.uasset": "39de9f41874b2af882c899e6f2982f7b33688093fc0f99df666838649d25c8e3",
+    "Content/Art/UI/Units/T_CinderPortrait_Mend.uasset": "1ae9c672c3bceb7902dff122410a7e6a91690173ad7787322fc78a82822af781",
+    "Content/Art/UI/Units/T_CinderPortrait_Needle.uasset": "15f8dd671abdc243e700eab1ffe12163e7a14f2e6040650baccfe540cb5eef39",
+    "Content/Art/UI/Units/T_CinderPortrait_Skim.uasset": "4f4d26142d03e8831268fbfaa873f6129926438cdd8b7288a0fe80d394780bb6",
+    "Content/Art/UI/Units/T_CinderPortrait_Veil.uasset": "02452d993d4955d3c21d61a6dc509b24c67601e72e560a5c95796514248917ac",
+    "Content/Art/UI/Units/T_CinderPortrait_Ward.uasset": "76ef1841810bdee4b6e40e151fe4461b075fc002dd84e41b7be1db4b71b067aa",
+    "Content/Maps/Frontier.umap": "2934a1b412727937e46838c0174c504472f6950945ff6aac77c087dd97817865",
+    "Plugins/CinderMetalFX/CinderMetalFX.uplugin": "37667cf4757a5af03a98ed8a906d564cce2677504e6c60a3b90d065056d86abe",
+    "Plugins/CinderMetalFX/Source/CinderMetalFX/CinderMetalFX.Build.cs": "edebeb27cd14d57f2eb82e71fd94359926a59ccd76106273e6360bc37dce14a5",
+    "Plugins/CinderMetalFX/Source/CinderMetalFX/Private/CinderMetalFXModule.mm": "8f1781c0052235e32592ab3dcbc98c2b51ddd3cf6ce12b3d19c0947885bd81db",
+    "Plugins/CinderMetalFX/Source/CinderMetalFX/Public/CinderMetalFX.h": "43b8c70d20613d1f935956686d27f4d5ea02ff49fa2782ece0a1bea2ac96515d",
+    "Source/Cinderline/Cinderline.Build.cs": "862090f31dafc086dd76b1af3f6ece6a755e4d24a35ae03e16a9ddd0f9bc9d30",
+    "Source/Cinderline/Private/Cinderline.cpp": "9f79e908dfed58ec0bc6f4ffbd690ff22d95f0fcdac4c3e79a702cd4e53d3931",
+    "Source/Cinderline/Private/Presentation/CinderArtPreview.cpp": "fbaaf3cba36f36e952ee31ae9ee4d4a776525607e4a498668ff1ce80e318befe",
+    "Source/Cinderline/Private/Presentation/CinderAudioSubsystem.cpp": "3eb6f8cb4bb1618a75b9cfc507054ba38258ba691070089e6b74f5f9f90e5605",
+    "Source/Cinderline/Private/Presentation/CinderBattlefield.cpp": "333f0278a701695d84d5150060ff94b2d1f10d84db6ffa8ed3d8d4d094c5d148",
+    "Source/Cinderline/Private/Presentation/CinderCamera.cpp": "05bc5b6dac7c03d7da660c2850f768cfeddf4545ff69a626067dce8d6c4c849f",
+    "Source/Cinderline/Private/Presentation/CinderCameraPreview.cpp": "4392b774ef010e2af6137e33e12fede5fce70f4c64313878b27779046c0dc9ab",
+    "Source/Cinderline/Private/Presentation/CinderCanyonPreview.cpp": "66cc75e180cf65ae7753e532f3758425b620c08ef9d17a11839a96333c6b773a",
+    "Source/Cinderline/Private/Presentation/CinderCombatPreview.cpp": "6291de88a56a18af0d76de079e839725db341b7766728f240c4409bc157f078e",
+    "Source/Cinderline/Private/Presentation/CinderCommandPreview.cpp": "bfc5c02a822eef827cbaac2e082c457ae92521b548690ed84556b62112364122",
+    "Source/Cinderline/Private/Presentation/CinderDifficultyPreview.cpp": "3d55113cee7adcb214dae8bb678862558df6038e615520f15659fe52e4f88a91",
+    "Source/Cinderline/Private/Presentation/CinderEntityMotion.cpp": "d9204548ae5caf4f3f946ed52934436e4f23889b31791732c229d99ef76fcc8f",
+    "Source/Cinderline/Private/Presentation/CinderGameEngine.cpp": "86dc2cc88dd7f26e052374ce3e3ef9b75e3183b75a67277e4296243ef93ea011",
+    "Source/Cinderline/Private/Presentation/CinderGameMode.cpp": "ecacbd187e2a36bb0a741c7ea66d72a6542e0c2e2715695a6fd67b092c7e5151",
+    "Source/Cinderline/Private/Presentation/CinderGuidedPreview.cpp": "4d588830e5bba0d2091b2f5a6b6a83a4228a39511fdb2d509201557792b4ff4d",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "d2e74142b7bb98620a76fabe20c5ce7722ea2a5da2cd5c9647aab994e1e24e51",
+    "Source/Cinderline/Private/Presentation/CinderHelpContent.cpp": "abb63e483fede6a788c2d9bb2ab03ab788664bcc38f779b919a5fbfb98e7ee6e",
+    "Source/Cinderline/Private/Presentation/CinderIOSPerformancePolicy.cpp": "76d9ac8c147eb42386e3cba97158058378b16942807ea22c44ed81734dee1d9f",
+    "Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp": "b1101ed6632d536d3b1fce22bad1c2204809294a5bfb626b9831d6aaeb2290f8",
+    "Source/Cinderline/Private/Presentation/CinderMetalFXPreview.cpp": "e90861c46de2ad8ccae9d376074b0fd18a752a8407ebe4ce721eecaf5bb75dfb",
+    "Source/Cinderline/Private/Presentation/CinderMobileHUDPreview.cpp": "89fe38b936c911107ed1fd0749315fa71e79b593b7a7f158223cb108411904e3",
+    "Source/Cinderline/Private/Presentation/CinderMotionPreview.cpp": "a4f36702f9e7095ea4d8dfe3dec8e01d302145993b0c25454b9a22def4658548",
+    "Source/Cinderline/Private/Presentation/CinderOnlinePanel.cpp": "6bfc75201cc9d728f4f20cb8ed900c04cefdcb622d3ed5b5830066fc6d390134",
+    "Source/Cinderline/Private/Presentation/CinderOnlineSubsystem.cpp": "59a9b80cd93df594524972a23ade7b882087c9482279cda6c4079694cef609d8",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "bc8035c0981f2536ea9d68cc71099a8d3f31fe2c8fd9bb506140fe87700b2c36",
+    "Source/Cinderline/Private/Presentation/CinderQualityDiagnostics.cpp": "1fc48e901b467a92c201d50a9726c6eb8cef44ffc9724eb8d568d45f9ace31d3",
+    "Source/Cinderline/Private/Presentation/CinderScenery.cpp": "6d9adf4c663fa3815d385afb663d618941540632cc4cbf47ad8a641192c475c4",
+    "Source/Cinderline/Private/Presentation/CinderTerrainSurface.cpp": "4abb4c7346236438711c7c49d2a4f9eb586d9e4105f58d17f22e8fc221c2d594",
+    "Source/Cinderline/Private/Presentation/CinderTutorial.cpp": "2e3e4d57310930c1487189fcd6b35454f4d3def727ce791b25166c4cab260696",
+    "Source/Cinderline/Private/Presentation/CinderUnitInfo.cpp": "23790d5d2c5b938c61177ea4083769d354959614a403110b5b73c9fc67127dfe",
+    "Source/Cinderline/Private/Presentation/CinderVisualPreview.cpp": "e206fcdabd7fb291ddd9f1f81b4cc78942eb01e7fdacad118f72a8dfc682fd3f",
+    "Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp": "2c9df5f1b39e4f6eb0188937f2bf479ff277c46c336c7d1cd395a8972e2cce91",
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "84e85262077ecd5a209c8ba19da9edc7af81fc9cb1c77452e4c6509fd78de65b",
+    "Source/Cinderline/Private/Sim/Network.cpp": "669e63b69c45190a23aba0914bbaf0d7b78736f43061c65736a8c34be65a8a0c",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "9f1dd97171063afd40bee119127a580f6430cab7ca113d0c599903034a978328",
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "69a5c2bc94e8c508ec573bc86989eb851beab5e4b4c9f11a1299c051f4a0cb63",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "3eb6b8edb67437eec00a872030643e0fa9c34abaf8ad8c6728d2004fa857be25",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "4250d20701e19776069c2069bc54b8f5f9a78bce3a7636bdc3eb9bc9d5f77314",
+    "Source/Cinderline/Private/Tests/CinderArmyControlTests.cpp": "6a2f8fd6c1c3313fef2f181f1bcbf6e22d41841f50abb5fe055f525cf0cb9986",
+    "Source/Cinderline/Private/Tests/CinderCameraBoundaryTests.cpp": "f0f866a1d7a73953d21525f0f80bf53bd2daabb8c30b23e301dfa22fa3de5f36",
+    "Source/Cinderline/Private/Tests/CinderDifficultyTests.cpp": "6aa8ac055f9b3c82eccca62989f5efe98d13f2e001818a66cc46c61eeb7cfc73",
+    "Source/Cinderline/Private/Tests/CinderGuidedTestDriver.h": "d8c634cce0f09d4d434a879012177651467f8d4bce75b019aa9f0d9b3a753c4e",
+    "Source/Cinderline/Private/Tests/CinderIOSPerformancePolicyTests.cpp": "3b8a220e177b269b67440af0da281179554cad629bb65333a7a82aa5658e4157",
+    "Source/Cinderline/Private/Tests/CinderLandscapeTerrainTests.cpp": "79a6dd33cb3f85f655304ed198a3f48d096369255c03a8ecee283ba80b56f7e6",
+    "Source/Cinderline/Private/Tests/CinderMetalFXResolutionTests.cpp": "65fec142468f013b692a7cfca8b3847c84c9b6bd0eaf6f430c5b8a099a3d5e64",
+    "Source/Cinderline/Private/Tests/CinderMobileHUDLayoutTests.cpp": "79ff984fd955d99a9b472250c1cc84df4a68406fd1311a8f6e0c4665b62401d4",
+    "Source/Cinderline/Private/Tests/CinderOnboardingTests.cpp": "94d9a712b8246f6c05b3bef9a1682374177a051e0889fe259596be727855b1ba",
+    "Source/Cinderline/Private/Tests/CinderOnlineIntegrationTests.cpp": "e0c65bc7c5ce36c7d6cdd7eb49ca659e71208636deb44b7bd1ac59f0980ab47d",
+    "Source/Cinderline/Private/Tests/CinderSceneryTests.cpp": "34936d18d6449686f611294cd47b7d95f8dd0f22d28c74f3eeb8ba0b3491c3c7",
+    "Source/Cinderline/Private/Tests/CinderTutorialTests.cpp": "177c64238d36746d4a43ace3b4ce906680bb542a1ceed8ab1d4a7521ed3fb1fc",
+    "Source/Cinderline/Private/Tests/CinderUnitInfoTests.cpp": "7685ea2aa8e57a10502fae4b468a9971eaf7d0d37f54a17c16606d1caa342b37",
+    "Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp": "2d6ad7d6b1ad2b0fe999959fa6315fcd2a6c53cd1e6c0ddc8119632ac8eeb416",
+    "Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp": "78e33f51dea8ce076288ea686e7edccc3f9940a15dcc28935476370972b17aaf",
+    "Source/Cinderline/Public/Presentation/CinderAudioSubsystem.h": "c9c12ed1621de728ff9799a19807fa3d8d4cd678a6c7599650812edf30e688f4",
+    "Source/Cinderline/Public/Presentation/CinderBattlefield.h": "14ee6d7cd20ee1f683eb294b4ef149e2fc255f7857c9d670979c3dfdbd46bcdb",
+    "Source/Cinderline/Public/Presentation/CinderCamera.h": "9ffaa9191dad9e41b2d8c212d356dbcf6aa2abd1fd7d2a8d139487acdada33d7",
+    "Source/Cinderline/Public/Presentation/CinderEntityMotion.h": "cec476d69d7f25e2e652c9873640e767763e97d6b9a063f21b0b40e58034a72d",
+    "Source/Cinderline/Public/Presentation/CinderGameEngine.h": "f1e4f3918fd8111fef08aa496713acb3060e5c18cf316a624d2d842a788fb229",
+    "Source/Cinderline/Public/Presentation/CinderGameMode.h": "7052c0e8f890213f57b310ab4686b7be8fadd1f07c4f6a3cfd14fa8e521c7a23",
+    "Source/Cinderline/Public/Presentation/CinderHUD.h": "ba91121642cea1ed6070ad7b8685567ee30a54cf270946f2338b451e8d341880",
+    "Source/Cinderline/Public/Presentation/CinderHelpContent.h": "898978b1815ea1a31717f84b4d090dd401cc4bf2e5034faece3e72fdd615cb36",
+    "Source/Cinderline/Public/Presentation/CinderIOSPerformancePolicy.h": "b75a9e309a3b1575a72447def30c511ee14f38c126bd20cd864e309451f7e300",
+    "Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h": "d430524fcfdead2fee36b99393c18888502292ad4fb15c674276e1123cad516e",
+    "Source/Cinderline/Public/Presentation/CinderMetalFXResolution.h": "c505ae869874c392ae7bdfea6a1cb14e64ff1667dd8a2d5c8b74000fd340c3ca",
+    "Source/Cinderline/Public/Presentation/CinderMobileHUDLayout.h": "7781cabb0cccfdc8c15f88c0c6fc9ab67cab38ebd40e7a9262e5a14ac63b33c3",
+    "Source/Cinderline/Public/Presentation/CinderOnlinePanel.h": "8963bab99b4366db31a42b612185a45e5c808ed2c8abaa908ff380976357cf5d",
+    "Source/Cinderline/Public/Presentation/CinderOnlineSubsystem.h": "9fdfedbc9322e529382d1a0a6df0ffc878fadca38d8125839d0ad0b249877656",
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h": "98f4eed3d220bb7249435226bc6788eecf785918d36de5a47ec837637ee9c0d0",
+    "Source/Cinderline/Public/Presentation/CinderScenery.h": "cc4777c4db6982b889e8c37f698a09a3b3a6e7c2ae66a56b1d74021c4dba49ef",
+    "Source/Cinderline/Public/Presentation/CinderTerrainSurface.h": "3106cd5db94916ce54f78fab24d6dc68564c2846eb885657688f4e4d13c7cd03",
+    "Source/Cinderline/Public/Presentation/CinderTutorial.h": "fee66ea4435ee2b7e42e23c7eb1cd88da32564c26811c5c64a3d880a35796850",
+    "Source/Cinderline/Public/Presentation/CinderUnitInfo.h": "96a5ea6f99b25b7d7c7414b683dd60e22d18bfc60f5f66cbd05c296a6a9c5358",
+    "Source/Cinderline/Public/Presentation/CinderWorldEffects.h": "04087c7017feba9b856077d72ada8ba3ffa1096d31b6391a8321abfaaaebb97b",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1",
+    "Source/Cinderline/Public/Sim/Navigation.h": "c1531f3006611568d80f952c3bd5d26a2af0fd066166deed0e010ea4b7488fe0",
+    "Source/Cinderline/Public/Sim/Network.h": "e62cc7d7ef5e82e01344e9855039e26ddccf47125d7e7efad997eca7bf1e428a",
+    "Source/Cinderline/Public/Sim/Simulation.h": "11a20671f29b29f34f7c8fd9da745c51fafa2816109f8026c7c98ed87422ccb0",
+    "Source/Cinderline.Target.cs": "929625a7d87e5215b9cf34c6cac50b18e17d26683be6b0cc9ac699b2ef717f42",
+    "Source/CinderlineEditor/CinderlineEditor.Build.cs": "c03b6afe5ff07e4eaa290f1e0db287f16a94e010896108495cc5589d419bb3b8",
+    "Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp": "1af916451d64279a5d886692079f094564ccc0e43b4fa44318bc6793f23782a7",
+    "Source/CinderlineEditor/Private/CinderlineEditorModule.cpp": "4502bc653bf5e9facf26205a8f0ea25af852717fab0788503b2e47c2c9644538",
+    "Source/CinderlineEditor/Public/CinderLandscapeAuthoringLibrary.h": "dd62b2f20b04c7c337920014b71afcc365821b1427f841209a8c854280b09af9",
+    "Source/CinderlineEditor.Target.cs": "a8c1d889409a84430295b106b696015af25479d71b81042ae03e522fb761f4c0",
+    "scripts/create_canyon_assets.py": "3242b946593dec452d5502b8d0307f558c2a056386e5267abe2310819a727456",
+    "scripts/create_unit_portraits.py": "bbcad91de9b74a6ac1ea333067d99e7b51571d502595232f2eed63faabbd4198",
+    "scripts/unreal_canyon_assets.py": "45162ea6dcd3dbdfea7677e7d2361fde257d2eb07aa8ac66cd2b2b99fbe42551",
+    "scripts/unreal_canyon_import.py": "0a88bbcb7b245cff1e16546e993bb51867206ada290987c2845cc8531dc4ba8f",
+    "scripts/unreal_canyon_surface.py": "0ccae6d3a3b99e63e3680d3cd2dad9cea599e9cc38e096e564eeb4f92ff19010",
+    "scripts/unreal_unit_portraits.py": "dda3ad252906d1f954df56257b3c937ff69e1f8702603b6e34f853df13f9a3de"
+  }
+}

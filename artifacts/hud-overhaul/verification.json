@@ -1,0 +1,701 @@
+{
+  "verifiedAtUTC": "2026-09-13T11:39:56.833174+00:00",
+  "scope": "Working-tree Mac Unreal HUD overhaul. Headless automation and deterministic rendered phone/tablet/desktop layouts; no iOS package/install or physical touch/performance test.",
+  "gitHead": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "sourceSha256": {
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "7c12d3cf5a93b93fc7cfeca8712dbbe5dad1fff552f8d5686e3e546541c10d7b",
+    "Source/Cinderline/Private/Presentation/CinderHUDStyle.cpp": "73bd7dc8c71215f10e98534a26d39dca72eb5a60fca83e841657a369ba91f340",
+    "Source/Cinderline/Public/Presentation/CinderHUD.h": "d1a941b1a0f20556993ca7508dba3f3c2110492effe088326e98d31d8710cbd5",
+    "Source/Cinderline/Public/Presentation/CinderMobileHUDLayout.h": "dc424ddb68fd7ba5f0ce0a1867edcc42de8081bb6dd625d1d73cb1949667f3f3",
+    "Source/Cinderline/Private/Tests/CinderMobileHUDLayoutTests.cpp": "6d99d234600c154d3305ef611cb73e5b9541fb5c62870acc3951eeddfc087788"
+  },
+  "build": {
+    "result": "Succeeded",
+    "log": "Saved/HUDOverhaul/build-polish.log",
+    "sha256": "63e6baf50f9ae552c2cc91d83a278e28d872cff0dca0efa90b166854737dcd94",
+    "maxParallelActions": 2
+  },
+  "automation": {
+    "passed": 32,
+    "failed": 0,
+    "report": "automation/results.json",
+    "sha256": "08f7117e4dcc1a26f74229ecad607af8a7d24ada614f19fb026546d7b78aa7b0"
+  },
+  "renderedVerification": {
+    "mainCases": 25,
+    "tutorialCases": 15,
+    "frameRateCap": 30,
+    "cases": [
+      {
+        "case": "army-ipad",
+        "lane": "mac",
+        "viewport": [
+          1024.0,
+          768.0
+        ],
+        "capture": "mac/army-ipad.png",
+        "captureSha256": "4fb7b367e090fdf5a3799104038549c32d49574c76a1ed834c49e70317170dd3",
+        "receiptSha256": "732cfe9eefc31d7bf5bac7ea5d4feaf49c206d36d8ad584058dd63eb72048883",
+        "runtime": "mac/army-ipad-runtime.txt",
+        "runtimeSha256": "5fde85a99405e59ca7ca26dd0754abeee47d6b6312574811ef1d8528a7e50df7",
+        "buttons": 26,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "army-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/army-phone.png",
+        "captureSha256": "06f22ac94474fb5434e6f4c6d7351c07bc675540bb7fcbf152b55b274b13f1fa",
+        "receiptSha256": "0167be793e43229f040003a14f8723d37351900416e34f9ccdb06761ef10f23a",
+        "runtime": "mac/army-phone-runtime.txt",
+        "runtimeSha256": "9875c88807a3ba78f6912bb2ad5528a2f4463cf8577febb8b0d2e377a46ec45d",
+        "buttons": 26,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "army-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/army-small.png",
+        "captureSha256": "d43d6b70f93179917b76b00515f858be7b8579b054472294b8a54e7635c93eb3",
+        "receiptSha256": "7972142fbef8648ebff263dda435f2f2d176a1af902a038d4d29ea662988ed47",
+        "runtime": "mac/army-small-runtime.txt",
+        "runtimeSha256": "f972fdfa6415a81d3eb417b6a20be53654b3c1c8574006a438e53a8a69df9119",
+        "buttons": 24,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "building-guide-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/building-guide-small.png",
+        "captureSha256": "8b200d3cfd19ff8f96b771e0a989d030b2eb3276e811d08725fd261dedebfbf6",
+        "receiptSha256": "ff48824ccf8e4c5428176b66455a57c1cf312b9d411e3d81a3a53ca295442871",
+        "runtime": "mac/building-guide-small-runtime.txt",
+        "runtimeSha256": "c8dea42f09314c0cfb66710b47b73eb22541c245bb0df0d9c0be6265fe98e1e6",
+        "buttons": 11,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "defend-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/defend-phone.png",
+        "captureSha256": "be91485175eef21dae0d9079111cba4f23fb88b3b530ea9d7f7fef8acbc6edbc",
+        "receiptSha256": "e0fa8c8f022385957c4df83d465e72bcc20a308cca890870d1ac5fbdf18c6eb3",
+        "runtime": "mac/defend-phone-runtime.txt",
+        "runtimeSha256": "000fa37c5464f7f99cca674735083f5623016ef1bc964f3f24ca8d22a1f50c07",
+        "buttons": 22,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-build-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/global-build-phone.png",
+        "captureSha256": "ec43f15869984c7185ed1998f4098208ff897ef903d5a340bd37570197171df6",
+        "receiptSha256": "2c5145dc3db576185bd17713a3dec769706839c0fa1bfa3d3feec17464af4fa9",
+        "runtime": "mac/global-build-phone-runtime.txt",
+        "runtimeSha256": "be27361a3a191b65e9d44b07dacc45418a2276d22ff4952a8ce89d3263813f90",
+        "buttons": 16,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-jobs-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/global-jobs-phone.png",
+        "captureSha256": "1b6c0afd51ebd6ec1ec3cdb8e06b24808424311ccf5610c518388671db5f878b",
+        "receiptSha256": "075e6a56abc4e6986f9c1599583e3b316e2f97e991b1a414036ad41d5f67f0e3",
+        "runtime": "mac/global-jobs-phone-runtime.txt",
+        "runtimeSha256": "3040aed1da1c346facc414157e9ffb88516db9b092319df7fba8eafaa6468fa9",
+        "buttons": 19,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-jobs-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/global-jobs-small.png",
+        "captureSha256": "d178286586e4a977075df26d802472517be8ff2895a307407de480d71f3c5917",
+        "receiptSha256": "2d53916e3e1f9e8fb4efdfdf1a39ecd29cdea288c0e17df199ab2ae8bf3203d2",
+        "runtime": "mac/global-jobs-small-runtime.txt",
+        "runtimeSha256": "22b6927c3a20a40aa1c856db65fb425560e3dbf4e8f517a8b12ba1a0295b5c36",
+        "buttons": 19,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-pinned-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/global-pinned-phone.png",
+        "captureSha256": "44ac5f1508a0dd7ddae28ad0897a76084ce4491469ea4af6484d1c28dbcc602f",
+        "receiptSha256": "6de9dcf9d248724dbe4517ee845ebc18f7828c50214c11dd5418ebf77c03d1ec",
+        "runtime": "mac/global-pinned-phone-runtime.txt",
+        "runtimeSha256": "0f4c6843b24961574fdf9d00f22445ca4b566584efa64ade2e86092e97714595",
+        "buttons": 26,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-rally-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/global-rally-phone.png",
+        "captureSha256": "6598c23c5c0be87eea1e1e589fc4d3f4800967da5650f7232863f325fe676ad4",
+        "receiptSha256": "b23b8291d010fc23f9322d2bc66e2d5698e958e05f2627dd529241b42d61d2cf",
+        "runtime": "mac/global-rally-phone-runtime.txt",
+        "runtimeSha256": "759bdabac40dda4cd61dd2ff5e60760ff822a3975d06825569e40cdd72bf2904",
+        "buttons": 13,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-research-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/global-research-phone.png",
+        "captureSha256": "b284850a6d40bbc433eed362e2570b6630cf2c9f884b75dc4361bd585a45671b",
+        "receiptSha256": "467811240b6306b95cd19cf90924c9cf8c00cf2038baf1c4f8c521cccffdeba8",
+        "runtime": "mac/global-research-phone-runtime.txt",
+        "runtimeSha256": "bdadbc5ac5b5e1fd8ee715c368c0a0b7ce2377610d9cbc91a8ab6e13be3b6db1",
+        "buttons": 13,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-train-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/global-train-phone.png",
+        "captureSha256": "275469698bff2c65c5e5a1fd44d328d540e2d8ea218acca7f07df18ea9fd5ed7",
+        "receiptSha256": "f4fb798ab60a55aaa1dd70ccaff3c970a76d9bbc156bdcae46b310d730cc7241",
+        "runtime": "mac/global-train-phone-runtime.txt",
+        "runtimeSha256": "aba608380733c548d8f468c3585104ae85e823b0fbc606d4248309e500af3552",
+        "buttons": 24,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "global-train-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/global-train-small.png",
+        "captureSha256": "ce3eed23f9199244a382491cc88cf800c18ca7a0601162dcbf5ca15ef90e984e",
+        "receiptSha256": "0bafea80d086c59e63df471256468a4ff8759845e73f4cf342f8c9b3ac6f4323",
+        "runtime": "mac/global-train-small-runtime.txt",
+        "runtimeSha256": "f371b4ae42b82834795350036fd12c97ec606a93db65c82aa0252be26f48f1db",
+        "buttons": 24,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "idle-desktop",
+        "lane": "mac",
+        "viewport": [
+          1920.0,
+          1080.0
+        ],
+        "capture": "mac/idle-desktop.png",
+        "captureSha256": "284d39dea6e6d13913db05081f349ba166cc518d823fb2596047f918fdd6def2",
+        "receiptSha256": "94578a38ee015513489d1d7618814b107d063664ce95bd0007a6b5745ae9c769",
+        "runtime": "mac/idle-desktop-runtime.txt",
+        "runtimeSha256": "40886386a945fe05696815db60718375373601526e8a6d7ddc9882d21c2da377",
+        "buttons": 19,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "idle-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/idle-phone.png",
+        "captureSha256": "f5e93f2aae157977f6c63f2bb3b8317d1eb317a64bac48d8ba881c847e7c59be",
+        "receiptSha256": "4d983c9f2f6c5a7a8f10b61b648ea35b5a65b7a277f76f2ccf308968cecde685",
+        "runtime": "mac/idle-phone-runtime.txt",
+        "runtimeSha256": "ebd8d5139f2aecbb35bdf86f2788a8723a7fd6ddab670de03cec5da5099a3583",
+        "buttons": 17,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "idle-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/idle-small.png",
+        "captureSha256": "3534330c89fc6f965b2b321b6864a8b84ae25162cb824470b6d0cc073a77ef5e",
+        "receiptSha256": "814b2c712aff865cb5ccb81ce32c61141dfd21a055c1214602fefb98094f9540",
+        "runtime": "mac/idle-small-runtime.txt",
+        "runtimeSha256": "2bfa3bab085010621dbb486b7cc3f4f39ced1e7b575e07bc5ef5d99ad37b6a8b",
+        "buttons": 15,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "orders-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/orders-small.png",
+        "captureSha256": "e18463fa5a58cfff41529d9e18be21bbe5ea4df3c03f1e7fba581939509133c8",
+        "receiptSha256": "7a37c6c99fcd2d68a47e6d985af38de49b8bf31f49f46582db172c6d5b1b6758",
+        "runtime": "mac/orders-small-runtime.txt",
+        "runtimeSha256": "6bb6830ab5baa9193769d19113976cbe7693602cd5ff5f0c6c69b505c234ab76",
+        "buttons": 15,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "queue-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/queue-phone.png",
+        "captureSha256": "d260847abed0a51a8bfff084c486c2771ba1197a642380c2cdd647a7ddd54cd1",
+        "receiptSha256": "0d2bead75a2db07c7afa480e7e348266356a5aa92a49208e6d54901bbdee209a",
+        "runtime": "mac/queue-phone-runtime.txt",
+        "runtimeSha256": "209b2125b0d9085815a5b7f306eecad57c643f2a02b14d9e2a16d6851eb3c772",
+        "buttons": 17,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "roster-page-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/roster-page-small.png",
+        "captureSha256": "f74c02e1d297c5fc1fa20476873d1f87ea9caec1ca5506a0d847b4e67ceb150a",
+        "receiptSha256": "286797c9d286f789d34508d7a89ea39c90c94785d5c271742f97a5acfdbec3ea",
+        "runtime": "mac/roster-page-small-runtime.txt",
+        "runtimeSha256": "1e9b5714fb554a0c59c56b5f008a02791e9a3c0cb52d16fd8e793d60a026c5bb",
+        "buttons": 25,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "squads-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/squads-phone.png",
+        "captureSha256": "32490b874069aa99f2d802a993afc4f6a1e564a6385e31936617f4c534208a87",
+        "receiptSha256": "c9ffb6068dfcff0cf14fde7cb84753690607074fc2d33bdf8d14f90d9e5b282b",
+        "runtime": "mac/squads-phone-runtime.txt",
+        "runtimeSha256": "b92fe3fa7d002771e9d4a6a9c1c88534ecf163f804defc70b4cb60e1ce324efc",
+        "buttons": 19,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "squads-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/squads-small.png",
+        "captureSha256": "562e5e15342c36f040c42ed59fe726986cf4d04eff0456ffac4534f35e83bd38",
+        "receiptSha256": "4ff2c4f1e1817b439012cf6239ea3435f8d6b19b6d851532a71574c53f87c85f",
+        "runtime": "mac/squads-small-runtime.txt",
+        "runtimeSha256": "fe1493cc3c8e2c5941b1ef5a3801f3c7c9008f1e79786a493176b7c9aee58373",
+        "buttons": 19,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "unit-combat-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/unit-combat-small.png",
+        "captureSha256": "cd4f90fa3924bb0e7fa445ecc8497ae119bce5ab81d5d91081ec69d1cbd44621",
+        "receiptSha256": "6a7e9f7a0eef8d6e33943022c237ac2b68a37b79af388ac12a575a3e8c6d451b",
+        "runtime": "mac/unit-combat-small-runtime.txt",
+        "runtimeSha256": "f3e4670b2420f44be12ee12d5fc9ba0f8708a624d3d189eb48c1e7f76d6620a5",
+        "buttons": 11,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "unit-info-small",
+        "lane": "mac",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "mac/unit-info-small.png",
+        "captureSha256": "adf932b3bd0e09cfde1fd00f86e2a1a5799c32ce52c1f5c3c0ace1099006d5c8",
+        "receiptSha256": "f37e49839ef6be41ae0af19d3b5567b57709ba038597d357a2a56f811c5b240c",
+        "runtime": "mac/unit-info-small-runtime.txt",
+        "runtimeSha256": "16b06e4e90cb70d43534a9839d06a957a89c7714719bafce02a9ced82db96c1e",
+        "buttons": 11,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "unit-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/unit-phone.png",
+        "captureSha256": "51c82c30feb6f8199793d2fd62edc9785d1a5bf7d9da3d0f354974a011c00264",
+        "receiptSha256": "63b7416fd595882891ba79b96fd2e2718618e289ca4e6fec37f6a110cd9bc665",
+        "runtime": "mac/unit-phone-runtime.txt",
+        "runtimeSha256": "50df6e2c0e1ef5d23ddb702d38f8e873fea983f5eb1c5dc7fd1d5ef5e5def529",
+        "buttons": 22,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "worker-phone",
+        "lane": "mac",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "mac/worker-phone.png",
+        "captureSha256": "cf8218307c5eed4c7459b3cc3ae47bcfa9a8158649a0720f63c828daf742bca6",
+        "receiptSha256": "91645fc1f948abedc9025e48aa7f451fa7e2a7d374d18e56fd7499320f18401d",
+        "runtime": "mac/worker-phone-runtime.txt",
+        "runtimeSha256": "34163d9b9e461bf772fcea6bfe1b39d05b6f5168257f012909ff81e0bdc9b916",
+        "buttons": 22,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "build-choice-small",
+        "lane": "tutorial",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "tutorial/build-choice-small.png",
+        "captureSha256": "1e5d6579a1206268ddcdaf4350d1dc25d8a5839b1cf75b09e3f026bfb38b2944",
+        "receiptSha256": "19416090ae799df207feb8e6c3d6d1f52319c84b25fcdcde18c5b4168604723f",
+        "runtime": "tutorial/build-choice-small-runtime.txt",
+        "runtimeSha256": "c44d52209336a90c2346f614045be3461251b6611017b679f653f0d92f00e1b4",
+        "buttons": 16,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "build-open-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/build-open-phone.png",
+        "captureSha256": "09bbeb71f1af3f89363c9715130744796ce1913920e162113e54e7b8e8842074",
+        "receiptSha256": "7ce4a736bd73543508c5ace526d33b070e3b89c06c65e02da878e43208d5064b",
+        "runtime": "tutorial/build-open-phone-runtime.txt",
+        "runtimeSha256": "8f9678f80e869eef7da061bdf01272388c845fc8679759324267320e0c9cbdcf",
+        "buttons": 10,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "build-placement-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/build-placement-phone.png",
+        "captureSha256": "301c3f28a06038d083ba3640cc4c4ef8ebd353fa26f13086f9d7ecea50cef5b8",
+        "receiptSha256": "77be9c82818f7a2e8daacde79452fd7c1e99fcab8f7a29cdee8510a8cab3ee2f",
+        "runtime": "tutorial/build-placement-phone-runtime.txt",
+        "runtimeSha256": "4a90dad2693ba446ae4ad23215b7844956ad43eebdbd3f671f724f29053a8114",
+        "buttons": 9,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "build-wait-small",
+        "lane": "tutorial",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "tutorial/build-wait-small.png",
+        "captureSha256": "b3bfc2fb3b08f0d74b609552cbd7dafe95d40b6c9df2625964fb5dea8d7b8afc",
+        "receiptSha256": "90d8d4972d14851bd95b8aba5580932cf672661325be79eda078c2f87c216173",
+        "runtime": "tutorial/build-wait-small-runtime.txt",
+        "runtimeSha256": "cc9fc1fb3d7ef1ba80a5f2cee292db9646f00a639991352bcf751a1cc2b6471e",
+        "buttons": 10,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "mining-pointer-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/mining-pointer-phone.png",
+        "captureSha256": "f95bd16edd7a54bdc4f58d810ce76934f4721918a67866c785da27181b456113",
+        "receiptSha256": "e2c4f380e9d1606dc93979aada915e0756548b64440b71ad4b1923cb5e984f10",
+        "runtime": "tutorial/mining-pointer-phone-runtime.txt",
+        "runtimeSha256": "7fdc412b660a502f936cd10bcece059ae95f7033f4358dddeb7a08087eac2090",
+        "buttons": 15,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "offscreen-recovery-small",
+        "lane": "tutorial",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "tutorial/offscreen-recovery-small.png",
+        "captureSha256": "f188d212b6d5cedcf89c8c51f5e6791021b168d37b2e9a422d7660c48aee9214",
+        "receiptSha256": "b9d8a97c419da508f0192aee6b110fd29e114433d40aa0a1ed1fc8a99b1ab417",
+        "runtime": "tutorial/offscreen-recovery-small-runtime.txt",
+        "runtimeSha256": "fee0aab0669cd3333a55f8d92218d1bb519b0853752725868b2331e6423e0ff8",
+        "buttons": 10,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "rally-chain-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/rally-chain-phone.png",
+        "captureSha256": "5bc769b84b4df3551f8210614570035a6c7364abb1613d7285de92ab340a1f1d",
+        "receiptSha256": "601dc80104df28ebf7451c2472e062423877e7ba5f9c61f996949da6573630fc",
+        "runtime": "tutorial/rally-chain-phone-runtime.txt",
+        "runtimeSha256": "b4244c37769f659e685c0a73dd86a2c36f9e42ce629f80eeca366676318805c8",
+        "buttons": 14,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "research-button-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/research-button-phone.png",
+        "captureSha256": "e9a6a439b4357860cb807a1cf4fbb59198a1dab73bdc92182b24d28f35636bca",
+        "receiptSha256": "345d7bbae885a0f2b3885368f088584ae986ab10a453c691d39af871c53d64a2",
+        "runtime": "tutorial/research-button-phone-runtime.txt",
+        "runtimeSha256": "07dcc355f786914c9e43c655c4e79da1a6c53cebb697c255e6205ac1af80fcbf",
+        "buttons": 13,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "scout-chain-desktop",
+        "lane": "tutorial",
+        "viewport": [
+          1920.0,
+          1080.0
+        ],
+        "capture": "tutorial/scout-chain-desktop.png",
+        "captureSha256": "17c35e76f43547d8eb7d1eefc82cc3a51731c9ad91f562f59dd478678effd57e",
+        "receiptSha256": "bf6294c8ebdd5cb76f82226119c723e42cef57e36b7e2ffe65dae6cb6a350ade",
+        "runtime": "tutorial/scout-chain-desktop-runtime.txt",
+        "runtimeSha256": "3871015096de475ae965b63138499cd61b5fcae050949058a20beb9e2e74e573",
+        "buttons": 19,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "train-open-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/train-open-phone.png",
+        "captureSha256": "a36c5c0b8ee7f5f6bb380e21c5e599fc1226006bc2edd6efb56a0c7880301c76",
+        "receiptSha256": "f246c9a6664bfd89434d5c1a844ae66ebf08074dd0b47acf51a0c2809fdfc5e8",
+        "runtime": "tutorial/train-open-phone-runtime.txt",
+        "runtimeSha256": "d56c355280b7fd0942764dce049c07a90d0bc6b332229abf2c4d46d03215441a",
+        "buttons": 10,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "train-portrait-small",
+        "lane": "tutorial",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "tutorial/train-portrait-small.png",
+        "captureSha256": "bf4aa34ded6d631409d5c9b3305a4978d512d8822d81988064d73a2df59d0136",
+        "receiptSha256": "5f76672f68913f63cde169d2d07d1d37fa0069f23769127563b0d554b2445454",
+        "runtime": "tutorial/train-portrait-small-runtime.txt",
+        "runtimeSha256": "ae222bf4e5c5a3428379413aa5a2edcb70acdd5f0b4da7b2fe41c09034c7b9d8",
+        "buttons": 24,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "train-quantity-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/train-quantity-phone.png",
+        "captureSha256": "1251e685b8c5e9f19acccdecda45ea3fec4e4da35608032191152f6c5924fa17",
+        "receiptSha256": "f6b5fc2415a97494c62f9882df0ff34aad8b755ded6570bd4a75c7618cbffeb2",
+        "runtime": "tutorial/train-quantity-phone-runtime.txt",
+        "runtimeSha256": "bf6365473e145f55acc0e32f77d2437739586e7cd7c18a0b43485391573f6a0b",
+        "buttons": 24,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "train-queue-small",
+        "lane": "tutorial",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "tutorial/train-queue-small.png",
+        "captureSha256": "cde1286ca65e5a031624fc55f3ec230dcd338342b4193c3842a5e969b3ba5b03",
+        "receiptSha256": "053cebeeba61aa18c3dd9a7a3bbcef30aa900c5f9e2e4a0adc0037fad9a7b02f",
+        "runtime": "tutorial/train-queue-small-runtime.txt",
+        "runtimeSha256": "0c8b4ac6fada95db0cad13d32fa344f3a4aaf401522859ceef2b05152fe8aca4",
+        "buttons": 24,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "train-wait-phone",
+        "lane": "tutorial",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "capture": "tutorial/train-wait-phone.png",
+        "captureSha256": "0bd80b4661ce072e55571a7069ffbade52af9650e4cc1d6868cfb9274cc5f02e",
+        "receiptSha256": "05247775117cd88e576c7f3d68f4a8e2618998cd9e1d858d52122d33df0fd7e9",
+        "runtime": "tutorial/train-wait-phone-runtime.txt",
+        "runtimeSha256": "eb688007445dbeb19c4fd7819839ff4b5c4870dde6e3f7c73b787ec1aea01926",
+        "buttons": 10,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      },
+      {
+        "case": "worker-pointer-small",
+        "lane": "tutorial",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "capture": "tutorial/worker-pointer-small.png",
+        "captureSha256": "bbc5f57c96b2fd59ec0af8bb97993256c4f9f6b401325a038bdb9b6509c805e6",
+        "receiptSha256": "aa3f9c56d565498fc686bfaf7f6d65fb53dc84c657bb0798ee69708eeac060a7",
+        "runtime": "tutorial/worker-pointer-small-runtime.txt",
+        "runtimeSha256": "e60642a77041136734b733b623013d7f43bf4a4de73d09bcd8d0635999666e5e",
+        "buttons": 10,
+        "layoutChecksPassed": true,
+        "visualReview": "passed"
+      }
+    ]
+  },
+  "protectedPlayerState": [
+    {
+      "path": "automation/protected-player-state.json",
+      "sha256": "6bdbef60869ac9466d914ce214ff6f149773b5d063d2e0a6efff96aeed342779",
+      "unchanged": true
+    },
+    {
+      "path": "mac/protected-player-state.json",
+      "sha256": "6bdbef60869ac9466d914ce214ff6f149773b5d063d2e0a6efff96aeed342779",
+      "unchanged": true
+    },
+    {
+      "path": "tutorial/protected-player-state.json",
+      "sha256": "6bdbef60869ac9466d914ce214ff6f149773b5d063d2e0a6efff96aeed342779",
+      "unchanged": true
+    }
+  ],
+  "geometryComparison": {
+    "path": "geometry-comparison.json",
+    "sha256": "fca7384946849b48ad404745f745044f9a3b470958f26cc6b66122f6675334af",
+    "meaning": "Union of input-blocking UI rectangles; not rendered-pixel area or device performance."
+  },
+  "sourceReview": {
+    "path": "source-review.md",
+    "sha256": "9020ead98883a6a763fc80b5c7e525f17316fc1a9f1286bbc9af9813f9f99bbc"
+  },
+  "iOSPackageBuilt": false,
+  "installedOnAEON": false,
+  "physicalTouchTested": false,
+  "devicePerformanceMeasured": false
+}

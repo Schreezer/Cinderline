@@ -1,0 +1,6 @@
+{"status": "failed", "tests": 40, "report": "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/four-player/unreal-all-verification.json"}
+Traceback (most recent call last):
+  File "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/FourPlayer/verify.py", line 40, in <module>
+    assert code==0 and tests and not failures, json.dumps(failures)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [{"testDisplayName": "EarlyActionsAndContent", "fullTestPath": "Cinderline.Tutorial.EarlyActionsAndContent", "tags": [], "state": "Fail", "deviceInstance": ["1E0752E5BF45364D61981FAAF16ECC5F"], "duration": 0.12565666437149048, "dateTime": "2026.09.13-16.03.09", "entries": [{"event": {"type": "Error", "message": "Expected 'Regular guide pages stay within three sections' to be true.", "context": "", "artifact": "00000000000000000000000000000000"}, "filename": "Unknown", "lineNumber": 0, "timestamp": "2026.09.13-16.03.09"}], "warnings": 0, "errors": 1, "artifacts": []}]

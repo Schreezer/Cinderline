@@ -1,0 +1,489 @@
+{
+  "success": true,
+  "textures": [
+    {
+      "path": "/Game/Art/Canyon/Textures/T_CinderCanyonLayersDefault.T_CinderCanyonLayersDefault",
+      "source": "Intermediate/Canyon/T_CinderCanyonLayersDefault.png",
+      "sha256": "6fa466e21df6bf014ed03517399a711777f572b1f0be6a561b947790cda9f634",
+      "role": "FogMask",
+      "dimensions": [
+        4,
+        4
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+      "settings": {
+        "compression_settings": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+        "srgb": "False",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "4",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+        "never_stream": "True",
+        "virtual_texture_streaming": "False",
+        "address_x": "<TextureAddress.TA_CLAMP: 1>",
+        "address_y": "<TextureAddress.TA_CLAMP: 1>",
+        "filter": "<TextureFilter.TF_BILINEAR: 1>"
+      }
+    }
+  ],
+  "source_sha256": "0ccae6d3a3b99e63e3680d3cd2dad9cea599e9cc38e096e564eeb4f92ff19010",
+  "material": {
+    "path": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround",
+    "version": "canyon-ground-v1",
+    "nodes": 60,
+    "graph_replacement": {
+      "method": "snapshot of expressions, delete each through engine API",
+      "before_count": 60,
+      "remaining_after_delete": 0
+    },
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+    "two_sided": false,
+    "depth_test_enabled": true,
+    "connections": [
+      {
+        "from": "Absolute world position",
+        "output": "",
+        "to": "World XY",
+        "input": ""
+      },
+      {
+        "from": "World XY",
+        "output": "",
+        "to": "World centimeters to texture UV",
+        "input": "A"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "GroundColor",
+        "input": "UVs"
+      },
+      {
+        "from": "GroundColor",
+        "output": "RGB",
+        "to": "Neutral sand grain",
+        "input": ""
+      },
+      {
+        "from": "Desaturation",
+        "output": "",
+        "to": "Neutral sand grain",
+        "input": "Fraction"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Warm sediment",
+        "input": "A"
+      },
+      {
+        "from": "SandTint",
+        "output": "RGB",
+        "to": "Warm sediment",
+        "input": "B"
+      },
+      {
+        "from": "Macro Absolute world position",
+        "output": "",
+        "to": "Macro World XY",
+        "input": ""
+      },
+      {
+        "from": "Macro World XY",
+        "output": "",
+        "to": "Macro World centimeters to texture UV",
+        "input": "A"
+      },
+      {
+        "from": "Macro World centimeters to texture UV",
+        "output": "",
+        "to": "MacroGrain",
+        "input": "UVs"
+      },
+      {
+        "from": "MacroGrain",
+        "output": "RGB",
+        "to": "Broad ground variation",
+        "input": ""
+      },
+      {
+        "from": "Macro neutral",
+        "output": "",
+        "to": "Broad ground variation",
+        "input": "Fraction"
+      },
+      {
+        "from": "Broad ground variation",
+        "output": "",
+        "to": "Restrained macro gain",
+        "input": "A"
+      },
+      {
+        "from": "Restrained macro gain",
+        "output": "",
+        "to": "Macro minimum",
+        "input": "A"
+      },
+      {
+        "from": "Warm sediment",
+        "output": "",
+        "to": "Varied sand",
+        "input": "A"
+      },
+      {
+        "from": "Macro minimum",
+        "output": "",
+        "to": "Varied sand",
+        "input": "B"
+      },
+      {
+        "from": "Map Absolute world position",
+        "output": "",
+        "to": "Map World XY",
+        "input": ""
+      },
+      {
+        "from": "Map World XY",
+        "output": "",
+        "to": "Map World centimeters to texture UV",
+        "input": "A"
+      },
+      {
+        "from": "Map World centimeters to texture UV",
+        "output": "",
+        "to": "TerrainLayers",
+        "input": "UVs"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Windblown dust grain",
+        "input": "A"
+      },
+      {
+        "from": "Windblown dust tint",
+        "output": "RGB",
+        "to": "Windblown dust grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "B",
+        "to": "Windblown dust weight",
+        "input": "A"
+      },
+      {
+        "from": "Varied sand",
+        "output": "",
+        "to": "Windblown dust blend",
+        "input": "A"
+      },
+      {
+        "from": "Windblown dust grain",
+        "output": "",
+        "to": "Windblown dust blend",
+        "input": "B"
+      },
+      {
+        "from": "Windblown dust weight",
+        "output": "",
+        "to": "Windblown dust blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Exposed sandstone grain",
+        "input": "A"
+      },
+      {
+        "from": "Exposed sandstone tint",
+        "output": "RGB",
+        "to": "Exposed sandstone grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Exposed sandstone weight",
+        "input": "A"
+      },
+      {
+        "from": "Windblown dust blend",
+        "output": "",
+        "to": "Exposed sandstone blend",
+        "input": "A"
+      },
+      {
+        "from": "Exposed sandstone grain",
+        "output": "",
+        "to": "Exposed sandstone blend",
+        "input": "B"
+      },
+      {
+        "from": "Exposed sandstone weight",
+        "output": "",
+        "to": "Exposed sandstone blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Mineral staining grain",
+        "input": "A"
+      },
+      {
+        "from": "Mineral staining tint",
+        "output": "RGB",
+        "to": "Mineral staining grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "G",
+        "to": "Mineral staining weight",
+        "input": "A"
+      },
+      {
+        "from": "Exposed sandstone blend",
+        "output": "",
+        "to": "Mineral staining blend",
+        "input": "A"
+      },
+      {
+        "from": "Mineral staining grain",
+        "output": "",
+        "to": "Mineral staining blend",
+        "input": "B"
+      },
+      {
+        "from": "Mineral staining weight",
+        "output": "",
+        "to": "Mineral staining blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Packed service ground grain",
+        "input": "A"
+      },
+      {
+        "from": "Packed service ground tint",
+        "output": "RGB",
+        "to": "Packed service ground grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "A",
+        "to": "Packed service ground weight",
+        "input": "A"
+      },
+      {
+        "from": "Mineral staining blend",
+        "output": "",
+        "to": "Packed service ground blend",
+        "input": "A"
+      },
+      {
+        "from": "Packed service ground grain",
+        "output": "",
+        "to": "Packed service ground blend",
+        "input": "B"
+      },
+      {
+        "from": "Packed service ground weight",
+        "output": "",
+        "to": "Packed service ground blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Map World centimeters to texture UV",
+        "output": "",
+        "to": "FogMask",
+        "input": "UVs"
+      },
+      {
+        "from": "FogMask",
+        "output": "R",
+        "to": "Known visible fraction",
+        "input": ""
+      },
+      {
+        "from": "Packed service ground blend",
+        "output": "",
+        "to": "Fog gated diffuse",
+        "input": "A"
+      },
+      {
+        "from": "Known visible fraction",
+        "output": "",
+        "to": "Fog gated diffuse",
+        "input": "B"
+      },
+      {
+        "from": "UnknownFog",
+        "output": "RGB",
+        "to": "Unknown and explored fog",
+        "input": "A"
+      },
+      {
+        "from": "ExploredFog",
+        "output": "RGB",
+        "to": "Unknown and explored fog",
+        "input": "B"
+      },
+      {
+        "from": "FogMask",
+        "output": "G",
+        "to": "Unknown and explored fog",
+        "input": "Alpha"
+      },
+      {
+        "from": "Unknown and explored fog",
+        "output": "",
+        "to": "Fog independent of lighting",
+        "input": "A"
+      },
+      {
+        "from": "FogMask",
+        "output": "R",
+        "to": "Fog independent of lighting",
+        "input": "B"
+      },
+      {
+        "from": "Map World centimeters to texture UV",
+        "output": "",
+        "to": "HeightFog",
+        "input": "UVs"
+      },
+      {
+        "from": "HeightFog",
+        "output": "G",
+        "to": "Unexplored height fraction",
+        "input": ""
+      },
+      {
+        "from": "Original terrain position",
+        "output": "",
+        "to": "Terrain height above baseline",
+        "input": ""
+      },
+      {
+        "from": "Terrain height above baseline",
+        "output": "",
+        "to": "Baseline at minus one",
+        "input": "A"
+      },
+      {
+        "from": "Baseline at minus one",
+        "output": "",
+        "to": "Unknown relief",
+        "input": "A"
+      },
+      {
+        "from": "Unexplored height fraction",
+        "output": "",
+        "to": "Unknown relief",
+        "input": "B"
+      },
+      {
+        "from": "Unknown relief",
+        "output": "",
+        "to": "Flatten unknown vertices",
+        "input": "A"
+      },
+      {
+        "from": "Downward offset",
+        "output": "RGB",
+        "to": "Flatten unknown vertices",
+        "input": "B"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "GroundNormal",
+        "input": "UVs"
+      },
+      {
+        "from": "Flat tangent normal",
+        "output": "",
+        "to": "Restrained normal detail",
+        "input": "A"
+      },
+      {
+        "from": "GroundNormal",
+        "output": "RGB",
+        "to": "Restrained normal detail",
+        "input": "B"
+      },
+      {
+        "from": "NormalStrength",
+        "output": "",
+        "to": "Restrained normal detail",
+        "input": "Alpha"
+      },
+      {
+        "from": "Restrained normal detail",
+        "output": "",
+        "to": "Normalized tangent normal",
+        "input": "VectorInput"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "GroundRoughness",
+        "input": "UVs"
+      },
+      {
+        "from": "GroundRoughness",
+        "output": "R",
+        "to": "Dry ground roughness",
+        "input": "A"
+      }
+    ],
+    "outputs": {
+      "BASE_COLOR": {
+        "node": "Fog gated diffuse",
+        "output": ""
+      },
+      "EMISSIVE_COLOR": {
+        "node": "Fog independent of lighting",
+        "output": ""
+      },
+      "WORLD_POSITION_OFFSET": {
+        "node": "Flatten unknown vertices",
+        "output": ""
+      },
+      "NORMAL": {
+        "node": "Normalized tangent normal",
+        "output": ""
+      },
+      "ROUGHNESS": {
+        "node": "Dry ground roughness",
+        "output": ""
+      },
+      "METALLIC": {
+        "node": "No metallic or specular reflection",
+        "output": ""
+      },
+      "SPECULAR": {
+        "node": "No metallic or specular reflection",
+        "output": ""
+      }
+    },
+    "shader_errors": []
+  },
+  "texture_samples": {
+    "pixel": 6,
+    "vertex": 1
+  },
+  "channels": {
+    "R": "known stone",
+    "G": "observed minerals",
+    "B": "macro dust",
+    "A": "level service pads and roads"
+  }
+}

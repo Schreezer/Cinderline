@@ -1,0 +1,13 @@
+{
+  "unchanged": true,
+  "before": {
+    "Matches/skirmish.cinder": null,
+    "Config/Training.ini": null,
+    "Config/Skirmish.ini": null
+  },
+  "after": {
+    "Matches/skirmish.cinder": null,
+    "Config/Training.ini": null,
+    "Config/Skirmish.ini": null
+  }
+}

@@ -1,0 +1,190 @@
+Start testing: Sep 13 17:52 IST
+----------------------------------------------------------
+1/6 Testing: simulation_rules
+1/6 Test: simulation_rules
+Command: "/tmp/cinderline-rally-build/CinderlineTests"
+Directory: /tmp/cinderline-rally-build
+"simulation_rules" start time: Sep 13 17:52 IST
+Output:
+----------------------------------------------------------
+PASS reset and definitions
+PASS physical gathering and depletion
+PASS paid commands, production and supply
+CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
+PASS placement and construction
+PASS bounded production queue
+WORKER_CONSTRUCTION travelled=350.000 cargo_preserved=6.000 finished_at=75.550 delivered_after=18
+PASS worker construction economy
+PASS worker construction interruptions
+PASS worker construction hazards
+PASS construction persistence and migration
+PASS research and prerequisites
+PASS ownership and fog
+GROUP_MOVE units=15 mean_destination_distance=89.559 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
+PASS obstacle paths and group movement
+PASS ground and air combat
+COVER_ATTACK order=1 damage=70.000
+COVER_ATTACK order=2 damage=70.000
+HOLD_TRAFFIC displacement=0.000
+SUPPORT_ORDER order=1 distance=168.959 healed=39.000
+SUPPORT_ORDER order=2 distance=174.248 healed=39.000
+PASS tactical orders and support
+PASS victory and defeat
+PASS save-load continuity and replay
+PASS bounded fixed-step update
+AI_EXPANSION depleted_ore=0.000 gathered=21357 alternate_built=1
+AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+PASS AI expansion and local defense
+AI_SCOUT_AND_ARMY scout=0 attack_move=1
+AI_SCOUT_AND_ARMY scout=1 attack_move=1
+AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
+AI_ECONOMY seconds=318.050 ore=6849 gathered=9699 produced=16 built=4 paid_command_cost=2850
+PASS AI paid economy
+AI_CONSTRUCTION travelling_preserved=1 orphan_resumed=1 all_busy_orphan_paused=1
+PASS AI construction assignments
+AI_WITNESSED_DEATH tick=96 previous_decision_tick=80 cleanup_tick=100
+AI_KNOWLEDGE hidden_death_retained=1 hidden_movement_ignored=1 mobile_expired=1 empty_site_cleared=1 visible_death_immediate=1
+PASS AI observation lifecycle
+AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0
+PASS AI observed production
+AI_OBJECTIVES original_destroyed=1 empty_start_avoided=1 relocated_hq_discovered=1 remembered_hq_targeted=1
+PASS AI scouting objectives
+AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1
+PASS AI knowledge persistence
+COMBAT_EVENTS weapon_profiles=5 splash_impacts=2 lethal_order=1 actual_heal=1 monotonic_ids=1
+PASS combat event semantics
+COMBAT_FOG hidden_source=1 no_late_revelation=1 current_visibility_required=1 hidden_segment_blocked=1 tiny_corner_clip_blocked=1
+PASS combat event visibility
+COMBAT_SAVE v4_continuity=1 legacy_effects_discarded=3 v3_knowledge_retained=1 malformed_events_atomic=1
+PASS combat event persistence
+RESULT passed=27 failed=0
+<end of output>
+Test time =  92.95 sec
+----------------------------------------------------------
+Test Passed.
+"simulation_rules" end time: Sep 13 17:54 IST
+"simulation_rules" time elapsed: 00:01:32
+----------------------------------------------------------
+
+2/6 Testing: navigation_regressions
+2/6 Test: navigation_regressions
+Command: "/tmp/cinderline-rally-build/CinderlineNavigationTests"
+Directory: /tmp/cinderline-rally-build
+"navigation_regressions" start time: Sep 13 17:54 IST
+Output:
+----------------------------------------------------------
+PASS narrow turning gap
+PASS blocked work-site sides
+PASS reachable alternatives
+PASS inaccessible build status
+PASS busy mining corridor
+PASS foundation route invalidation
+PASS Hold and enemy collision
+PASS work-slot exhaustion semantics
+IMPOSSIBLE_ROUTE simulation_seconds=140.000 searches=1 expanded=46 failures=1 budget_deferrals=0 max_step_ms=36.878
+PASS impossible order persistence
+PASS navigation save validation and v4 migration
+RESULT passed=10 failed=0
+<end of output>
+Test time =   2.66 sec
+----------------------------------------------------------
+Test Passed.
+"navigation_regressions" end time: Sep 13 17:54 IST
+"navigation_regressions" time elapsed: 00:00:02
+----------------------------------------------------------
+
+3/6 Testing: network_protocol
+3/6 Test: network_protocol
+Command: "/tmp/cinderline-rally-build/CinderlineNetworkTests"
+Directory: /tmp/cinderline-rally-build
+"network_protocol" start time: Sep 13 17:54 IST
+Output:
+----------------------------------------------------------
+PASS view privacy and handles
+PASS resource memory
+PASS effect privacy
+PASS bounded codecs
+PASS replica guards
+RESULT passed=5 failed=0
+<end of output>
+Test time =   1.70 sec
+----------------------------------------------------------
+Test Passed.
+"network_protocol" end time: Sep 13 17:54 IST
+"network_protocol" time elapsed: 00:00:01
+----------------------------------------------------------
+
+4/6 Testing: defense_regressions
+4/6 Test: defense_regressions
+Command: "/tmp/cinderline-rally-build/CinderlineDefenseTests"
+Directory: /tmp/cinderline-rally-build
+"defense_regressions" start time: Sep 13 17:54 IST
+Output:
+----------------------------------------------------------
+DEFENSE_REGRESSIONS arrival=1 no_chase=1 ranged_fire=1 mend=1 traffic=1 override=1 persistence=1 network=1
+<end of output>
+Test time =   1.03 sec
+----------------------------------------------------------
+Test Passed.
+"defense_regressions" end time: Sep 13 17:54 IST
+"defense_regressions" time elapsed: 00:00:01
+----------------------------------------------------------
+
+5/6 Testing: ai_difficulty_regressions
+5/6 Test: ai_difficulty_regressions
+Command: "/tmp/cinderline-rally-build/CinderlineAIDifficultyTests"
+Directory: /tmp/cinderline-rally-build
+"ai_difficulty_regressions" start time: Sep 13 17:54 IST
+Output:
+----------------------------------------------------------
+PASS preset contract
+PASS deterministic seeded behavior
+PASS Normal preset and default aggression
+PASS worker target differentiation
+EVIDENCE first_attack_seconds Very Easy=440.8 Easy=321.9 Normal=241.95 Hard=198.9 Expert=157.9
+PASS attack cadence differentiation
+PASS unchanged simulation rules and ai=false
+PASS persistence, network, and replay
+<end of output>
+Test time =  66.39 sec
+----------------------------------------------------------
+Test Passed.
+"ai_difficulty_regressions" end time: Sep 13 17:55 IST
+"ai_difficulty_regressions" time elapsed: 00:01:06
+----------------------------------------------------------
+
+6/6 Testing: production_allocation_regressions
+6/6 Test: production_allocation_regressions
+Command: "/tmp/cinderline-rally-build/CinderlineProductionAllocationTests"
+Directory: /tmp/cinderline-rally-build
+"production_allocation_regressions" start time: Sep 13 17:55 IST
+Output:
+----------------------------------------------------------
+PASS remaining-time allocation and atomic gates
+PASS worker choice and producer gates
+PASS stable cancellation and research
+PASS persistent army rally and overrides
+PASS fresh worker mining assignment
+PASS deferred worker assignment persistence
+PASS replay and persistence
+RESULT passed=7 failed=0
+<end of output>
+Test time =   6.13 sec
+----------------------------------------------------------
+Test Passed.
+"production_allocation_regressions" end time: Sep 13 17:55 IST
+"production_allocation_regressions" time elapsed: 00:00:06
+----------------------------------------------------------
+
+End testing: Sep 13 17:55 IST
+
+ai =  66.39 sec*proc
+
+defense =   1.03 sec*proc
+
+navigation =   2.66 sec*proc
+
+network =   6.13 sec*proc
+
+production =   6.13 sec*proc
+

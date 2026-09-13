@@ -1,0 +1,277 @@
+{
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "sheet": 0,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "38:Ember,39:Ember,40:Ember,41:Needle,42:Needle,43:Skim,44:Anvil,45:Anvil,46:Cinderthrow,47:Mend,48:Veil,49:Ember,50:Needle,51:Skim",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        10.0,
+        603.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        56.0,
+        64.0,
+        100.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        16.0,
+        104.0,
+        64.0,
+        148.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        16.0,
+        152.0,
+        64.0,
+        196.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        200.0,
+        64.0,
+        244.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "deselect",
+      "argument": 0,
+      "bounds": [
+        511.0,
+        56.0,
+        555.0,
+        100.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        56.0,
+        603.0,
+        100.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        56.0,
+        651.0,
+        100.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        443.0,
+        319.0,
+        492.0,
+        363.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        496.0,
+        319.0,
+        545.0,
+        363.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        549.0,
+        319.0,
+        598.0,
+        363.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "orders",
+      "argument": 0,
+      "bounds": [
+        602.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "armytype",
+      "argument": 0,
+      "bounds": [
+        112.0,
+        319.0,
+        163.0,
+        363.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "armytype",
+      "argument": 1,
+      "bounds": [
+        166.0,
+        319.0,
+        217.0,
+        363.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "armytype",
+      "argument": 2,
+      "bounds": [
+        220.0,
+        319.0,
+        271.0,
+        363.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "armytype",
+      "argument": 3,
+      "bounds": [
+        274.0,
+        319.0,
+        325.0,
+        363.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "armytype",
+      "argument": 4,
+      "bounds": [
+        328.0,
+        319.0,
+        379.0,
+        363.0
+      ]
+    },
+    {
+      "index": 18,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        382.0,
+        319.0,
+        433.0,
+        363.0
+      ]
+    },
+    {
+      "index": 19,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        427.0,
+        269.0,
+        607.0,
+        313.0
+      ]
+    },
+    {
+      "index": 20,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        269.0,
+        651.0,
+        313.0
+      ]
+    }
+  ],
+  "selection": 14,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "rally": null,
+  "observedMaxFPS": 30,
+  "case": "selected-units-small",
+  "state": "ribbon",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "capture": "selected-units-small.png",
+  "captureSha256": "02da1164fd6941a834ec54afe2b4c2457af6c2c7ad3706192b7ae9db7fd5a8ea",
+  "captureDimensions": [
+    667,
+    375
+  ],
+  "ownedPid": 4031,
+  "launchToken": "ArmyRallyControl-9e816d1574a14e11b0470e76dd21b978",
+  "startedAtNs": 1789303084137215000,
+  "captureModifiedAtNs": 1789303099909767678,
+  "freshCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "minimumCompactHitSize": 44,
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS, or device performance measurement."
+}

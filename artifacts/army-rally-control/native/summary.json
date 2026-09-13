@@ -1,0 +1,42 @@
+{
+  "baseline_sha": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "build": {
+    "command": "cmake --build /tmp/cinderline-rally-build -j1",
+    "exit_code": 0
+  },
+  "ctest": {
+    "command": "ctest --test-dir /tmp/cinderline-rally-build --output-on-failure -j1",
+    "exit_code": 0,
+    "passed": 6,
+    "failed": 0,
+    "elapsed_seconds": 170.87
+  },
+  "post_validator_focused": {
+    "scope": "Network and Production Allocation after the final snapshot rally invariant validator",
+    "build_command": "cmake --build /tmp/cinderline-rally-build --target CinderlineNetworkTests CinderlineProductionAllocationTests -j1",
+    "build_exit_code": 0,
+    "network": {
+      "passed": 5,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "production_allocation": {
+      "passed": 7,
+      "failed": 0,
+      "exit_code": 0
+    }
+  },
+  "node": {
+    "command": "CINDERLINE_MATCH_WORKER=/tmp/cinderline-rally-build/CinderlineMatchWorker npm test --prefix Server",
+    "exit_code": 0,
+    "passed": 7,
+    "failed": 0,
+    "elapsed_seconds": 10.305
+  },
+  "notes": [
+    "Portable build used AppleClang with one build job.",
+    "The full six-suite CTest run predates only the final snapshot rally invariant validator; its affected Network and Production Allocation suites were rebuilt and rerun afterward.",
+    "No Unreal build or app launch was started by this worker.",
+    "The worktree contained pre-existing shared changes; baseline_sha is not a claim that the artifact tested a clean checkout."
+  ]
+}

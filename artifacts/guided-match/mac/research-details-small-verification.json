@@ -1,0 +1,146 @@
+{
+  "case": "research-details-small",
+  "state": "research-details",
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "observed": {
+    "offer": 0,
+    "menu": 0,
+    "step": 10,
+    "complete": 0,
+    "preferenceCompleted": 0,
+    "winner": -1,
+    "opponentOrders": 0,
+    "tick": 6620
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        545.0,
+        10.0,
+        589.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        319.0,
+        76.0,
+        363.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        82.0,
+        319.0,
+        146.0,
+        363.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        152.0,
+        319.0,
+        208.0,
+        363.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "buildmenu",
+      "argument": 0,
+      "bounds": [
+        427.0,
+        319.0,
+        507.0,
+        363.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        513.0,
+        319.0,
+        589.0,
+        363.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "sheet",
+      "argument": 4,
+      "bounds": [
+        595.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "tutorialfocus",
+      "argument": 0,
+      "bounds": [
+        318.0,
+        65.0,
+        370.0,
+        109.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "tutorialhelp",
+      "argument": 0,
+      "bounds": [
+        374.0,
+        65.0,
+        426.0,
+        109.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "tutorialdetails",
+      "argument": 0,
+      "bounds": [
+        430.0,
+        65.0,
+        482.0,
+        109.0
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "research-details-small.png",
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

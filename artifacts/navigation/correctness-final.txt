@@ -1,0 +1,15 @@
+NAVIGATION CORRECTNESS, RELEASE
+Command: /tmp/cinderline-navigation-release/CinderlineNavigationTests
+
+PASS narrow turning gap
+PASS blocked work-site sides
+PASS reachable alternatives
+PASS inaccessible build status
+PASS busy mining corridor
+PASS foundation route invalidation
+PASS Hold and enemy collision
+PASS work-slot exhaustion semantics
+IMPOSSIBLE_ROUTE simulation_seconds=140.000 searches=1 expanded=46 failures=1 budget_deferrals=0 max_step_ms=2.775
+PASS impossible order persistence
+PASS navigation save validation and v4 migration
+RESULT passed=10 failed=0

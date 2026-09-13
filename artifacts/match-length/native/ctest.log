@@ -1,0 +1,27 @@
+Test project /tmp/cinderline-match-length-build
+    Start 1: simulation_rules
+    Start 5: ai_difficulty_regressions
+1/7 Test #5: ai_difficulty_regressions ...........   Passed    4.28 sec
+    Start 6: production_allocation_regressions
+2/7 Test #6: production_allocation_regressions ...   Passed    0.40 sec
+    Start 2: navigation_regressions
+3/7 Test #2: navigation_regressions ..............   Passed    0.16 sec
+    Start 4: defense_regressions
+4/7 Test #4: defense_regressions .................   Passed    0.10 sec
+    Start 3: network_protocol
+5/7 Test #3: network_protocol ....................   Passed    0.10 sec
+    Start 7: match_length_regressions
+6/7 Test #1: simulation_rules ....................   Passed    6.50 sec
+7/7 Test #7: match_length_regressions ............   Passed    3.53 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Label Time Summary:
+ai              =   4.28 sec*proc (1 test)
+defense         =   0.10 sec*proc (1 test)
+match-length    =   3.53 sec*proc (1 test)
+navigation      =   3.69 sec*proc (2 tests)
+network         =   0.40 sec*proc (1 test)
+production      =   0.40 sec*proc (1 test)
+
+Total Test time (real) =   8.57 sec

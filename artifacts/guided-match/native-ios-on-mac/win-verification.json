@@ -1,0 +1,51 @@
+{
+  "pid": 21504,
+  "elapsedSeconds": 5.127854108810425,
+  "newCrashReports": [],
+  "executableSha256": "9b61b72e9c09abcd34effa487bac42dfe050f9c1e75c065686fb8da0c068cf2c",
+  "state": "win",
+  "captured": true,
+  "fatalRuntimeError": false,
+  "scope": "Exact signed iOS binary on Mac, default iPad aspect; actual menu action and ordinary-command tutorial pilot. No physical touch, AEON installation, or thermal acceptance.",
+  "observed": {
+    "offer": 0,
+    "menu": 0,
+    "step": 14,
+    "complete": 1,
+    "preferenceCompleted": 1,
+    "winner": 0,
+    "opponentOrders": 6,
+    "tick": 13916
+  },
+  "viewport": [
+    2052.0,
+    1536.0
+  ],
+  "scale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "tutorialrestart",
+      "argument": 0,
+      "bounds": [
+        486.0,
+        504.0,
+        946.0,
+        592.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "menu",
+      "argument": 0,
+      "bounds": [
+        986.0,
+        504.0,
+        1446.0,
+        592.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true
+}

@@ -1,0 +1,247 @@
+{
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "sheet": 5,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "33:Kiln",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        11.7,
+        880.9,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        65.7,
+        75.1,
+        117.3
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        18.8,
+        122.0,
+        75.1,
+        173.7
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        18.8,
+        178.3,
+        75.1,
+        230.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        234.7,
+        75.1,
+        286.3
+      ]
+    },
+    {
+      "index": 6,
+      "action": "deselect",
+      "argument": 0,
+      "bounds": [
+        773.0,
+        65.7,
+        824.6,
+        117.3
+      ]
+    },
+    {
+      "index": 7,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        65.7,
+        880.9,
+        117.3
+      ]
+    },
+    {
+      "index": 8,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        65.7,
+        937.2,
+        117.3
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        880.9,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 10,
+      "action": "armytab",
+      "argument": 0,
+      "bounds": [
+        208.9,
+        65.7,
+        279.3,
+        117.3
+      ]
+    },
+    {
+      "index": 11,
+      "action": "armytab",
+      "argument": 1,
+      "bounds": [
+        283.9,
+        65.7,
+        354.3,
+        117.3
+      ]
+    },
+    {
+      "index": 12,
+      "action": "armytab",
+      "argument": 2,
+      "bounds": [
+        359.0,
+        65.7,
+        415.4,
+        117.3
+      ]
+    },
+    {
+      "index": 13,
+      "action": "armytab",
+      "argument": 3,
+      "bounds": [
+        420.1,
+        65.7,
+        511.6,
+        117.3
+      ]
+    },
+    {
+      "index": 14,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        521.0,
+        65.7,
+        572.6,
+        117.3
+      ]
+    },
+    {
+      "index": 15,
+      "action": "productionrally",
+      "argument": 0,
+      "bounds": [
+        100.9,
+        122.0,
+        222.9,
+        173.7
+      ]
+    },
+    {
+      "index": 16,
+      "action": "rallydefault",
+      "argument": 0,
+      "bounds": [
+        227.6,
+        122.0,
+        349.7,
+        173.7
+      ]
+    }
+  ],
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "rally": {
+    "armySet": true,
+    "armyPoint": [
+      1450.0,
+      1400.0
+    ],
+    "producer": 33,
+    "producerOverride": true,
+    "producerPoint": [
+      1780.0,
+      1420.0
+    ],
+    "rallyModeArmed": false,
+    "markerVisible": true
+  },
+  "observedMaxFPS": 30,
+  "case": "rally-override-phone",
+  "state": "rally-override",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "capture": "rally-override-phone.png",
+  "captureSha256": "6a58a9ee88d7c21cb1ea496928e4a416d43b50f0a345d2da905ff83075924bd7",
+  "captureDimensions": [
+    956,
+    440
+  ],
+  "ownedPid": 3521,
+  "launchToken": "ArmyRallyControl-aeec4fab07f84536a0bd4945e6469d3f",
+  "startedAtNs": 1789303046915416000,
+  "captureModifiedAtNs": 1789303064177468654,
+  "freshCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "minimumCompactHitSize": 44,
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS, or device performance measurement."
+}

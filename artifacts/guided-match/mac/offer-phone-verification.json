@@ -1,0 +1,47 @@
+{
+  "case": "offer-phone",
+  "state": "offer",
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "observed": {
+    "offer": 1,
+    "menu": 1,
+    "step": 0,
+    "complete": 0,
+    "preferenceCompleted": 0,
+    "winner": -1,
+    "opponentOrders": 0,
+    "tick": 0
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "onboardlearn",
+      "argument": 0,
+      "bounds": [
+        160.0,
+        292.7,
+        473.3,
+        344.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "onboardskip",
+      "argument": 0,
+      "bounds": [
+        482.7,
+        292.7,
+        796.0,
+        344.4
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "offer-phone.png",
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

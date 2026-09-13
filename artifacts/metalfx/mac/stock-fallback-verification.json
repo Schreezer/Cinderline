@@ -1,0 +1,83 @@
+{
+  "case": "stock-fallback",
+  "editor": "/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+  "engineLibraryOverride": "/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac",
+  "pluginBinary": "/Users/chirag13/Documents/ChatGPT/starCraft/Plugins/CinderMetalFX/Binaries/Mac/libUnrealEditor-CinderMetalFX.dylib",
+  "pluginBinarySha256": "828f3c84d1cc5ebf2b99a399a6673e90a026dcebb236e3b3d63872b0c7c239f6",
+  "mode": "on",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "renderTarget": [
+    1920,
+    1080
+  ],
+  "nativeScreenPercentage": 100.0,
+  "warmupFrames": 30,
+  "sampleFrames": 120,
+  "gpuTiming": {
+    "source": "FRHIGPUFrameTimeHistory completed frames",
+    "samples": 120,
+    "meanMs": 12.185,
+    "medianMs": 11.999,
+    "p95Ms": 14.462,
+    "disjointEvents": 0
+  },
+  "nativeStatus": {
+    "start": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 0,
+      "bridgeAvailable": 0,
+      "interfaceActive": 0,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 0,
+      "encodedFrames": 0,
+      "scalerCreations": 0,
+      "validationProbes": 0,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "engine_bridge_unavailable"
+    },
+    "finish": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 0,
+      "bridgeAvailable": 0,
+      "interfaceActive": 0,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 0,
+      "encodedFrames": 0,
+      "scalerCreations": 0,
+      "validationProbes": 0,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "engine_bridge_unavailable"
+    }
+  },
+  "expectedFallback": "engine_bridge_unavailable",
+  "elapsedSeconds": 8.772,
+  "capture": "stock-fallback.png",
+  "captureSha256": "04aa8ffc167e320774cd396bb8b1ff354cad9a08c5efa71469e1bbed405ad180",
+  "ownedPid": 30384,
+  "scope": "Stock UE 5.8 editor loading the project-built MetalFX plugin; validates native-resolution fallback only, with no physical device or AEON interaction"
+}

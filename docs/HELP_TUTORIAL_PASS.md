@@ -2,6 +2,8 @@
 
 Started 12 September 2026 at the player's request.
 
+Superseding note, 13 September 2026: the original nine-objective practice mission below is now historical. The current first-run experience is the implemented 14-objective guided match in [GUIDED_MATCH_PASS.md](GUIDED_MATCH_PASS.md), with a one-time accept/skip offer, a staged paid opponent, research, reinforcement, defense and a real-victory completion gate. All 21 Unreal tests, all 14 Mac render cases, the signed SDK 27 package and all four native iOS-on-Mac cases pass. A human full-tutorial playthrough and physical AEON touch acceptance remain pending; AEON was not changed during this pass.
+
 ## Scope
 
 - [x] Add a field guide reachable from the main menu, battlefield and pause screen.
@@ -38,7 +40,7 @@ Preview launches used `t.MaxFPS 30` and disabled shader workers. Final diagnosti
 
 ## Remaining acceptance
 
-- Play the full guided mission with a physical mouse/trackpad and assess instruction pacing, selection, placement, FIND/MORE and waypoint readability. The whole sequence passed automation through real simulation commands; it was not a complete human tutorial playthrough.
+- Play the full guided mission with a physical mouse/trackpad and assess instruction pacing, selection, placement, named objective selection, DETAILS/HIDE and waypoint readability. The whole sequence passed automation through real simulation commands; it was not a complete human tutorial playthrough. See [the tutorial control correction](TUTORIAL_CONTROLS_PASS.md).
 - Physical pointer clicks remain unreliable through the Mac automation bridge. Keyboard navigation and engine command/lifecycle tests provide separate evidence; real player pointer interaction still needs acceptance.
 - Validate on an actual iOS build: touch section buttons, safe areas, all later objective cards, dynamic recovery hints and completion preference persistence across relaunch. Compact Mac rendering does not prove iOS behavior.
 - Assess whether later lessons should teach technology, counters and expansion. Those topics are documented in the field guide but are outside this first guided mission.

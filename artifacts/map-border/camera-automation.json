@@ -1,0 +1,17 @@
+{
+  "name": "Cinderline.Presentation.CameraBoundary",
+  "state": "Success",
+  "entries": [
+    {
+      "event": {
+        "type": "Info",
+        "message": "CINDERLINE_CAMERA_BOUNDARY_PASS cases=96; four aspects, three zooms, eight edge/corner directions, repeated drag, reversal, and interpolated zoom. Physical input and rendered black pixels require viewport verification.",
+        "context": "",
+        "artifact": "00000000000000000000000000000000"
+      },
+      "filename": "",
+      "lineNumber": -1,
+      "timestamp": "2026.09.12-13.33.33"
+    }
+  ]
+}

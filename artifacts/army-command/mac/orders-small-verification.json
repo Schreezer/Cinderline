@@ -1,0 +1,194 @@
+{
+  "case": "orders-small",
+  "state": "orders",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "capture": "orders-small.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        545.0,
+        10.0,
+        589.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        319.0,
+        76.0,
+        363.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        82.0,
+        319.0,
+        146.0,
+        363.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        152.0,
+        319.0,
+        208.0,
+        363.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        427.0,
+        319.0,
+        480.0,
+        363.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        484.0,
+        319.0,
+        537.0,
+        363.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        541.0,
+        319.0,
+        594.0,
+        363.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        598.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        602.0,
+        161.0,
+        646.0,
+        205.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        216.0,
+        211.0,
+        354.7,
+        255.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "stop",
+      "argument": 0,
+      "bounds": [
+        361.7,
+        211.0,
+        500.3,
+        255.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "hold",
+      "argument": 0,
+      "bounds": [
+        507.3,
+        211.0,
+        646.0,
+        255.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        216.0,
+        261.0,
+        354.7,
+        305.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "buildmenu",
+      "argument": 0,
+      "bounds": [
+        361.7,
+        261.0,
+        500.3,
+        305.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 66409,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

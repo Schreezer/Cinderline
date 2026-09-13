@@ -1,0 +1,47 @@
+{
+  "case": "fog",
+  "family": "canyon",
+  "state": "fog",
+  "map": 0,
+  "canonical": true,
+  "obstacles": 4,
+  "exploredObstacles": 1,
+  "fog": {
+    "unknown": 3050,
+    "explored": 0,
+    "visible": 1046
+  },
+  "landscape": {
+    "matching": 1,
+    "visible": 1,
+    "raisedSamples": 612,
+    "heightCm": [
+      0.0,
+      150.9
+    ]
+  },
+  "tick": 4,
+  "viewport": [
+    2052,
+    1536
+  ],
+  "shaderPath": {
+    "rhiFeatureLevel": "ES3_1",
+    "shaderPlatform": "METAL_ES3_1_IOS",
+    "mobileHDR": true,
+    "stereoShaderPlatformConfirmed": true
+  },
+  "capture": "fog.png",
+  "captureSha256": "0997f67f9ec8b4bfcc24e7766c08bf75c2fbb2984e2ac8b1f9c3847fe5ba3274",
+  "ownedPid": 80240,
+  "launchNonceVerified": true,
+  "runningExecutableHashVerified": true,
+  "sourceExecutableSha256": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+  "wrappedExecutableSha256": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+  "equalExecutableSha256": true,
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "newCrashReports": [],
+  "protectedPlayerStateUnchanged": true,
+  "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+}

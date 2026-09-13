@@ -1,0 +1,271 @@
+{
+  "case": "global-jobs-small",
+  "state": "global-jobs",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 61,
+  "capture": "global-jobs-small.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        545.0,
+        10.0,
+        589.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        319.0,
+        68.0,
+        363.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        72.0,
+        319.0,
+        124.0,
+        363.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        128.0,
+        319.0,
+        204.0,
+        363.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        208.0,
+        319.0,
+        260.0,
+        363.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        266.0,
+        319.0,
+        341.5,
+        363.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        345.5,
+        319.0,
+        421.0,
+        363.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        427.0,
+        319.0,
+        480.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        484.0,
+        319.0,
+        537.0,
+        363.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        541.0,
+        319.0,
+        594.0,
+        363.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        598.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "armytab",
+      "argument": 0,
+      "bounds": [
+        274.0,
+        73.0,
+        334.0,
+        117.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "armytab",
+      "argument": 1,
+      "bounds": [
+        338.0,
+        73.0,
+        398.0,
+        117.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "armytab",
+      "argument": 2,
+      "bounds": [
+        402.0,
+        73.0,
+        462.0,
+        117.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        472.0,
+        73.0,
+        516.0,
+        117.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "productionrally",
+      "argument": 0,
+      "bounds": [
+        30.0,
+        121.0,
+        134.0,
+        165.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "jobpage",
+      "argument": 1,
+      "bounds": [
+        468.0,
+        121.0,
+        512.0,
+        165.0
+      ]
+    },
+    {
+      "index": 18,
+      "action": "productionfocus",
+      "argument": 0,
+      "bounds": [
+        408.0,
+        169.0,
+        468.0,
+        213.0
+      ]
+    },
+    {
+      "index": 19,
+      "action": "cancelproduction",
+      "argument": 0,
+      "bounds": [
+        472.0,
+        169.0,
+        516.0,
+        213.0
+      ]
+    },
+    {
+      "index": 20,
+      "action": "productionfocus",
+      "argument": 0,
+      "bounds": [
+        408.0,
+        216.0,
+        468.0,
+        260.0
+      ]
+    },
+    {
+      "index": 21,
+      "action": "cancelproduction",
+      "argument": 0,
+      "bounds": [
+        472.0,
+        216.0,
+        516.0,
+        260.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 98065,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

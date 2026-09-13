@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-12T11:58:43.448184+00:00",
+  "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+  "bundleIdentifier": "com.cinderline.game",
+  "executableSha256": "1870dcf9ef090b8d0125bd3265ebe5b59d82dff1723f3c800f9e330ef20b12ec",
+  "machoPlatform": "IOS",
+  "sdk": "27.0",
+  "minimumOS": "15.0",
+  "strictCodesignVerified": true,
+  "developmentProfile": true,
+  "phoneRegistered": true,
+  "profileUnexpired": true,
+  "orientations": [
+    "UIInterfaceOrientationLandscapeLeft",
+    "UIInterfaceOrientationLandscapeRight"
+  ],
+  "bundleBytes": 490390776,
+  "ioStoreContainers": [
+    "cookeddata/cinderline/content/paks/global.utoc",
+    "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+  ]
+}

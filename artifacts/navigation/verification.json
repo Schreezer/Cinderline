@@ -1,0 +1,65 @@
+{
+  "checkedAt": "2026-09-12T16:24:10.089051+00:00",
+  "executableSha256": "2bf6039a16a225aba6ce35d96e46a6e15aa4985b79cfe86834f35168e28531fa",
+  "sourceHashesMatchManifest": true,
+  "portableRelease": {
+    "ctestPassed": 3,
+    "simulationGroups": 27,
+    "navigationGroups": 10,
+    "networkGroups": 5
+  },
+  "portableAddressUndefinedSanitizers": {
+    "configuration": "RelWithDebInfo",
+    "ctestPassed": 3
+  },
+  "unrealIntegrationPassed": 17,
+  "serverIntegrationPassed": 6,
+  "unrealTwoClientTransport": "passed on owned loopback server, no errors or warnings",
+  "macEditorBuildPassed": true,
+  "iosBuild": {
+    "passed": true,
+    "sdk": "27.0",
+    "actions": 50,
+    "seconds": 160.92
+  },
+  "iosPackage": {
+    "passed": true,
+    "seconds": 93.7,
+    "strictSignature": true,
+    "engineSchema3CheckPassed": true
+  },
+  "nativeIOSOnMac": {
+    "menuPassed": true,
+    "liveBattlePassed": true,
+    "screenshotsVisuallyInspected": true,
+    "viewportPixels": [
+      2052,
+      1536
+    ],
+    "menuFPS": 14.66,
+    "menuWorldRenderingDisabled": true,
+    "liveBattleFPS": 29.18,
+    "liveBattleSampleSeconds": 20.562,
+    "newCrashes": 0,
+    "runtimeAssertions": 0,
+    "ownedProcessesStopped": true
+  },
+  "physicalAEON": {
+    "installedThisPass": false,
+    "lastKnownInstalledExecutableSha256": "1870dcf9ef090b8d0125bd3265ebe5b59d82dff1723f3c800f9e330ef20b12ec",
+    "pending": [
+      "physical routing and touch",
+      "physical map borders",
+      "sustained thermal measurement"
+    ],
+    "subsequentInstall": "The same package was installed and its physical main menu verified in the subsequent installation task; see aeon/verification.json."
+  },
+  "serverDeployed": false,
+  "commitCreated": false,
+  "limits": [
+    "Representative deterministic routing fixtures do not reproduce the exact user match.",
+    "Short native iOS-on-Mac tests do not establish iPhone heat or physical touch behavior.",
+    "Protocol 2 client and server must be rolled out together."
+  ],
+  "latestPhysicalAcceptance": "aeon/verification.json"
+}

@@ -1,0 +1,200 @@
+{
+  "pid": 75387,
+  "ownedPid": true,
+  "baselinePidsUntouched": [],
+  "launchNonceVerified": true,
+  "runningExecutableHashVerified": true,
+  "elapsedSeconds": 4.955045223236084,
+  "newCrashReports": [],
+  "sourceExecutableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+  "wrappedExecutableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+  "equalExecutableSha256": true,
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "state": "queue",
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 1,
+  "viewport": [
+    2052.0,
+    1536.0
+  ],
+  "scale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1808.0,
+        20.0,
+        1896.0,
+        108.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        20.0,
+        2020.0,
+        108.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        1424.0,
+        152.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        164.0,
+        1424.0,
+        292.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        304.0,
+        1424.0,
+        416.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "sheet",
+      "argument": 1,
+      "bounds": [
+        1572.0,
+        1424.0,
+        1732.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "sheet",
+      "argument": 3,
+      "bounds": [
+        1744.0,
+        1424.0,
+        1896.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        1424.0,
+        2020.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "queuepage",
+      "argument": 1,
+      "bounds": [
+        1922.0,
+        1092.0,
+        2010.0,
+        1180.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "cancelqueue",
+      "argument": 0,
+      "bounds": [
+        1150.0,
+        1196.0,
+        1427.3,
+        1284.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "cancelqueue",
+      "argument": 1,
+      "bounds": [
+        1441.3,
+        1196.0,
+        1718.7,
+        1284.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "cancelqueue",
+      "argument": 2,
+      "bounds": [
+        1732.7,
+        1196.0,
+        2010.0,
+        1284.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "cancelqueue",
+      "argument": 3,
+      "bounds": [
+        1150.0,
+        1298.0,
+        1427.3,
+        1386.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "cancelqueue",
+      "argument": 4,
+      "bounds": [
+        1441.3,
+        1298.0,
+        1718.7,
+        1386.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "cancelqueue",
+      "argument": 5,
+      "bounds": [
+        1732.7,
+        1298.0,
+        2010.0,
+        1386.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "captured": true,
+  "fatalRuntimeError": false,
+  "scope": "Exact signed iOS executable in a fresh native Mac wrapper; no physical touch, AEON installation, or thermal acceptance"
+}

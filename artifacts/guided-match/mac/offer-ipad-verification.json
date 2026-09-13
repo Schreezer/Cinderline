@@ -1,0 +1,47 @@
+{
+  "case": "offer-ipad",
+  "state": "offer",
+  "viewport": [
+    1024.0,
+    768.0
+  ],
+  "scale": 1.0,
+  "observed": {
+    "offer": 1,
+    "menu": 1,
+    "step": 0,
+    "complete": 0,
+    "preferenceCompleted": 0,
+    "winner": -1,
+    "opponentOrders": 0,
+    "tick": 0
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "onboardlearn",
+      "argument": 0,
+      "bounds": [
+        241.0,
+        446.0,
+        508.0,
+        490.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "onboardskip",
+      "argument": 0,
+      "bounds": [
+        516.0,
+        446.0,
+        783.0,
+        490.0
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "offer-ipad.png",
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

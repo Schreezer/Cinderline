@@ -1,0 +1,89 @@
+{
+  "case": "on-1080",
+  "mode": "on",
+  "requestedViewport": [
+    1920,
+    1080
+  ],
+  "viewport": [
+    1920,
+    1080
+  ],
+  "renderTarget": [
+    1920,
+    1080
+  ],
+  "compactHUD": false,
+  "warmupFrames": 30,
+  "sampleFrames": 120,
+  "gpuTiming": {
+    "source": "FRHIGPUFrameTimeHistory completed frames",
+    "samples": 120,
+    "meanMs": 11.562,
+    "medianMs": 11.561,
+    "p95Ms": 14.147,
+    "disjointEvents": 0
+  },
+  "elapsedSeconds": 8.731,
+  "screenPercentage": 80,
+  "taaUpsampling": 0,
+  "statusCommandProcessed": true,
+  "nativeStatus": {
+    "start": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 1,
+      "bridgeAvailable": 1,
+      "interfaceActive": 1,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 2,
+      "encodedFrames": 0,
+      "scalerCreations": 1,
+      "validationProbes": 1,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "none"
+    },
+    "finish": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 1,
+      "bridgeAvailable": 1,
+      "interfaceActive": 1,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 0.8,
+      "registeredFrames": 226,
+      "encodedFrames": 223,
+      "scalerCreations": 1,
+      "validationProbes": 1,
+      "fallbacks": 0,
+      "lastInput": [
+        1536,
+        864
+      ],
+      "lastOutput": [
+        1920,
+        1080
+      ],
+      "fallbackReason": "none"
+    },
+    "registeredFrameDelta": 224,
+    "encodedFrameDelta": 223,
+    "validationProbeDelta": 0,
+    "fallbackDelta": 0
+  },
+  "capture": "on-1080.png",
+  "captureSha256": "fee02991e31885618488fc4f7f00d99487218159d39e8e2d39e6c8c2b0368940",
+  "ownedPid": 20954,
+  "scope": "Mac Unreal renderer with deterministic army fixture; no physical device, native iOS-on-Mac, player save, preference, or AEON interaction"
+}

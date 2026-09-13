@@ -1,0 +1,71 @@
+{
+  "metric": "Union of logged HUD REGION and BUTTON rectangles, clipped to the viewport.",
+  "boundary": "Input-blocking HUD rectangles only; this is not rendered-pixel coverage, phone performance, or physical-touch evidence.",
+  "method": "Axis-aligned x-sweep union; overlapping buttons and regions are counted once.",
+  "comparisons": [
+    {
+      "state": "idle",
+      "old": {
+        "path": "artifacts/command-allocation/mac/idle-phone-runtime.txt",
+        "sha256": "988fdebaaac61a3bed4465a62a5defb5edb43c33d6b6ea5d50ffe231eec21851",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "selection": "[none]",
+        "rectangleCount": 25,
+        "unionAreaPixelsSquared": 133267.87,
+        "viewportFraction": 0.31682168,
+        "viewportPercent": 31.6822
+      },
+      "new": {
+        "path": "artifacts/hud-overhaul/mac/idle-phone-runtime.txt",
+        "sha256": "ebd8d5139f2aecbb35bdf86f2788a8723a7fd6ddab670de03cec5da5099a3583",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "selection": "[none]",
+        "rectangleCount": 23,
+        "unionAreaPixelsSquared": 79225.07,
+        "viewportFraction": 0.18834412,
+        "viewportPercent": 18.8344
+      },
+      "absoluteAreaChangePixelsSquared": -54042.8,
+      "percentagePointChange": -12.8478,
+      "relativeAreaChangePercent": -40.552
+    },
+    {
+      "state": "worker",
+      "old": {
+        "path": "artifacts/army-command/mac/worker-phone-runtime.txt",
+        "sha256": "ecb12d1f8966e54c7472a256ca5ec8eeb499cc05036e30d78562c4a61d1d416d",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "selection": "[6:Drudge]",
+        "rectangleCount": 18,
+        "unionAreaPixelsSquared": 111974.32,
+        "viewportFraction": 0.26619989,
+        "viewportPercent": 26.62
+      },
+      "new": {
+        "path": "artifacts/hud-overhaul/mac/worker-phone-runtime.txt",
+        "sha256": "34163d9b9e461bf772fcea6bfe1b39d05b6f5168257f012909ff81e0bdc9b916",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "selection": "[6:Drudge]",
+        "rectangleCount": 28,
+        "unionAreaPixelsSquared": 101774.75,
+        "viewportFraction": 0.24195214,
+        "viewportPercent": 24.1952
+      },
+      "absoluteAreaChangePixelsSquared": -10199.57,
+      "percentagePointChange": -2.4248,
+      "relativeAreaChangePercent": -9.1088
+    }
+  ]
+}

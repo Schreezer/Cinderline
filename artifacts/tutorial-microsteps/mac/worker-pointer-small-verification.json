@@ -1,0 +1,165 @@
+{
+  "case": "worker-pointer-small",
+  "state": "worker-pointer",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "step": 1,
+  "microstep": [
+    1,
+    1
+  ],
+  "target": "entity",
+  "selection": 0,
+  "rallyProducer": 0,
+  "tick": 0,
+  "actionsApplied": 0,
+  "capture": "worker-pointer-small.png",
+  "beforeShowCapture": null,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        545.0,
+        10.0,
+        589.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        319.0,
+        68.0,
+        363.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        72.0,
+        319.0,
+        124.0,
+        363.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        128.0,
+        319.0,
+        204.0,
+        363.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        208.0,
+        319.0,
+        260.0,
+        363.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        266.0,
+        319.0,
+        341.5,
+        363.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        345.5,
+        319.0,
+        421.0,
+        363.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        427.0,
+        319.0,
+        507.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        513.0,
+        319.0,
+        589.0,
+        363.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "orders",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "armytype",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        269.0,
+        74.0,
+        313.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "protectedPlayerState": true,
+  "ownedPid": 49992,
+  "scope": "Mac Unreal renderer and deterministic tutorial HUD/pointer chain; no physical touch or iPhone run"
+}

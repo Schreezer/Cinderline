@@ -1,0 +1,293 @@
+{
+  "case": "army-small",
+  "state": "army",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "capture": "army-small.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        545.0,
+        10.0,
+        589.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        319.0,
+        76.0,
+        363.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        82.0,
+        319.0,
+        146.0,
+        363.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        152.0,
+        319.0,
+        208.0,
+        363.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        427.0,
+        319.0,
+        480.0,
+        363.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        484.0,
+        319.0,
+        537.0,
+        363.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        541.0,
+        319.0,
+        594.0,
+        363.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        598.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytab",
+      "argument": 1,
+      "bounds": [
+        394.0,
+        73.0,
+        466.0,
+        117.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        472.0,
+        73.0,
+        516.0,
+        117.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "rosterpage",
+      "argument": 1,
+      "bounds": [
+        346.0,
+        73.0,
+        390.0,
+        117.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "armyall",
+      "argument": 0,
+      "bounds": [
+        30.0,
+        121.0,
+        85.5,
+        165.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "armytype",
+      "argument": 1,
+      "bounds": [
+        89.5,
+        121.0,
+        145.0,
+        165.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "armytype",
+      "argument": 2,
+      "bounds": [
+        149.0,
+        121.0,
+        204.5,
+        165.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "armytype",
+      "argument": 3,
+      "bounds": [
+        208.5,
+        121.0,
+        264.0,
+        165.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "armytype",
+      "argument": 4,
+      "bounds": [
+        268.0,
+        121.0,
+        323.5,
+        165.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "armytype",
+      "argument": 5,
+      "bounds": [
+        327.5,
+        121.0,
+        383.0,
+        165.0
+      ]
+    },
+    {
+      "index": 18,
+      "action": "armytype",
+      "argument": 6,
+      "bounds": [
+        387.0,
+        121.0,
+        442.5,
+        165.0
+      ]
+    },
+    {
+      "index": 19,
+      "action": "armytype",
+      "argument": 7,
+      "bounds": [
+        446.5,
+        121.0,
+        502.0,
+        165.0
+      ]
+    },
+    {
+      "index": 20,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        30.0,
+        199.0,
+        145.0,
+        263.0
+      ]
+    },
+    {
+      "index": 21,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        149.0,
+        199.0,
+        264.0,
+        263.0
+      ]
+    },
+    {
+      "index": 22,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        268.0,
+        199.0,
+        383.0,
+        263.0
+      ]
+    },
+    {
+      "index": 23,
+      "action": "armyunit",
+      "argument": 0,
+      "bounds": [
+        387.0,
+        199.0,
+        502.0,
+        263.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 71220,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

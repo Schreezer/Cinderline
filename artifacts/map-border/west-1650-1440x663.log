@@ -1,0 +1,3 @@
+[2026.09.12-13.37.46:578][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=west distance=1650 capture=scheduled delay=2.0
+[2026.09.12-13.37.48:494][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=west requested_distance=1650 actual_distance=1650.0 rig=(492.5,2400.0,0.0) camera=(-193.3,3085.8,1334.9) viewport=1440x663 elapsed=2.03 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/west-1650.png
+[2026.09.12-13.37.48:494][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=west screen_tl=1:(199.5,1333.0) screen_tr=1:(1559.4,2693.0) screen_br=1:(703.3,3167.7) screen_bl=1:(-275.2,2189.2) map_sw=1:(-516.0,-327.9) map_se=1:(1168.7,-944.9) map_ne=1:(3586.2,-327.9) map_nw=1:(5166.4,5786.1)

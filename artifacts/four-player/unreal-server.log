@@ -1,0 +1,4 @@
+Cinderline LAN server "Cinderline Four Player QA 2359" is listening on port 53684.
+LAN WebSocket (en0): ws://192.168.31.109:53684/play
+Bonjour: Cinderline Four Player QA 2359._cinderline._tcp.local
+Cinderline game server stopped after SIGTERM.

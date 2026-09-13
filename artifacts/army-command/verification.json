@@ -1,0 +1,188 @@
+{
+  "verifiedAt": "2026-09-12T19:51:13.883884+00:00",
+  "status": "Implemented; portable, server, Unreal, Mac renderer, and native iOS-on-Mac evidence passed. Physical timing remains pending.",
+  "featurePass": {
+    "armyRoster": true,
+    "threeExclusiveSquads": true,
+    "defendCommand": true,
+    "unitInformation": true,
+    "rangePresentation": true,
+    "projectedSelectionFix": true
+  },
+  "compatibility": {
+    "networkProtocol": 3,
+    "saveWriteVersion": 6,
+    "legacySaveReadVersions": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "currentSaveReadVersion": 6
+  },
+  "source": {
+    "unchanged": true,
+    "inputs": 80
+  },
+  "portableTests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "serverTests": {
+    "passed": 6,
+    "failed": 0
+  },
+  "unrealAutomation": {
+    "passed": 23,
+    "failed": 0,
+    "timing": "Passed against the final source snapshot and rebuilt Mac executable."
+  },
+  "macRenderer": {
+    "passed": true,
+    "cases": [
+      "army-desktop",
+      "army-ipad",
+      "army-phone",
+      "army-small",
+      "building-guide-small",
+      "building-info-small",
+      "defend-phone",
+      "healer-combat-small",
+      "healer-phone",
+      "idle-desktop",
+      "idle-phone",
+      "orders-small",
+      "queue-phone",
+      "queue-small",
+      "roster-page-phone",
+      "squads-phone",
+      "squads-small",
+      "tower-info-ipad",
+      "tower-phone",
+      "unit-combat-small",
+      "unit-guide-phone",
+      "unit-info-desktop",
+      "unit-info-phone",
+      "unit-info-small",
+      "worker-desktop",
+      "worker-phone"
+    ],
+    "captureSha256": {
+      "army-desktop": "b6513b0808ca8d635a9fa95255bcd721f5cf1404a68ea366ab8cbe576d3de786",
+      "army-ipad": "d68213b2fb24c083949b8880a21fa728b51241d7fcc5bfe6892c31538bda894d",
+      "army-phone": "4811908c485d3d2e62328d2e52e02934c202882ba7bbe579d93ddb17e96d1b91",
+      "army-small": "bc13bc2b02f6a7a34f1194234fd8879f915b60aecaec1a73d2e4d01d7205570a",
+      "building-guide-small": "d46d377edff59db84735d55dbf9b134cca1f92e2c97895b53ee872b4b05f4f4f",
+      "building-info-small": "daa5ee27eb3e95009b2a34f9dd8ee2b7634616b93b1ad2103980b67386f2747c",
+      "defend-phone": "25dac3325a414bb19b701a26f966e0dba4e488e19b5f52d129fdcbfb5a3c911f",
+      "healer-combat-small": "cb0f8163a21990a403df40fe1e317dd9eecda181f6633d92700cffa4dd5b6008",
+      "healer-phone": "ece72400257ce5bff7f9273ad6d9c0a85c207f75b79070472082f90f709b9286",
+      "idle-desktop": "040acc79b4e87ebce0a12c6b6091a755ea17ac9b7770066f0ea3fc6d4119b114",
+      "idle-phone": "befd2b8cb751c8e900a41d598b9def95f38eeca429637cafd283f695f2d7633c",
+      "orders-small": "65833103e3e415e6baf87ecd5211889e1beaab8a3bca6cb4d4759c5e761a1245",
+      "queue-phone": "8e5c7f0b89541e7acfaac817a8479173583f1dae38d65027a990332bc1769741",
+      "queue-small": "bf8832713181009a8cf06348e5184d52a73c78b5418520c706d9ac152327db75",
+      "roster-page-phone": "087c1870f960a3c329ddea3daa6aa974e22c43b7a0e5713f2a2c5a8c77f8ca4b",
+      "squads-phone": "4be18fc098c299d4c707c0527a7824185624840c85827f0a0d38a235da6f4489",
+      "squads-small": "35c54ff21919324c67d503e809adbcfd84f8fd2a76577aa2fa704f5709a7367e",
+      "tower-info-ipad": "4baa77628c2fe0625d717bf3f7f93850542a0311a1246a09d20756d88b9d6a81",
+      "tower-phone": "50165fc76b33fb9a12bcc8f1a300840d2954cd61b8d163300a0599e8cd8b8150",
+      "unit-combat-small": "4ab276ad56b416c1fcaccf78052cfcd9d52e081cb2fbff7d9bf70b2cb0945e97",
+      "unit-guide-phone": "1ef162040b8236b5e32d4382a7a740d268b69497371423715f753a2a7549cbf9",
+      "unit-info-desktop": "c4fa66baf2fea6f86bbdc6751a7002055f6453db497ef0414613b4bb51a411af",
+      "unit-info-phone": "1567ce000a2487996c84282847d4400791d32800f8a11fd03e3bb9259ca49a68",
+      "unit-info-small": "42c5b072aa22975ee707e0ab5185733d801c0c8e2b646c11c4e344b84fab7a14",
+      "worker-desktop": "a0c0f3c1fb4cf2d414fa4c9639112e597f62fb7fab282a2abfe35bcb75f98067",
+      "worker-phone": "29cbf9ec330e37c6ac4f29fc2fac697da612d816213d7a058ef1c44aff73086e"
+    },
+    "allBoundsPass": true,
+    "allStateActionsPresent": true,
+    "visuallyInspected": true
+  },
+  "tutorialRegressions": {
+    "passed": true,
+    "cases": [
+      "defend-phone",
+      "offer-phone",
+      "research-details-small"
+    ],
+    "captureSha256": {
+      "defend-phone": "658084683c0aa25460c17de37583820b17bb7974528ae2a5c7bf89dbfedbee8c",
+      "offer-phone": "dab005f694ff5c7f946fee80f2bb3fc69c4378275710a4c7bbdc6d1ed9483575",
+      "research-details-small": "654e7720e29c3628a4b3a0db202ae56febb70c11beb6fbaadea696e4b501ef97"
+    },
+    "allBoundsPass": true,
+    "visuallyInspected": true
+  },
+  "iosBuildPassed": true,
+  "iosAssemblePassed": true,
+  "iosPackagePassed": true,
+  "iosPackage": {
+    "checkedAt": "2026-09-12T19:51:13.434653+00:00",
+    "app": "Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "executableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+    "machoPlatform": "IOS",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "strictCodesignVerified": true,
+    "developmentProfile": true,
+    "phoneRegistered": true,
+    "profileUnexpired": true,
+    "orientations": [
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "bundleBytes": 493311965,
+    "ioStoreContainers": [
+      "cookeddata/cinderline/content/paks/global.utoc",
+      "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+    ]
+  },
+  "applePerformancePolicy": {
+    "gameMode": true,
+    "signedSustainedExecution": true,
+    "profileSustainedExecution": true
+  },
+  "nativeIOSOnMac": {
+    "passed": true,
+    "cases": [
+      "army",
+      "queue",
+      "squads",
+      "tower-info"
+    ],
+    "captureSha256": {
+      "army": "d1e3b46ba2948143b1d32bc3c076685bf0c721e65374af8e68f8412dcde2097e",
+      "queue": "2c3f9debe3d9617fe4194db87918ed263c14ea7e2a2a9bf579a26c9173b68d93",
+      "squads": "f42f100280fda8084d83b9df8db26906eae7295d845e4b1f3a257f398ae9529b",
+      "tower-info": "3c20dcbc5b77a5844647c0e82ffbf21feb07a1f1a496dadf68a9070cee59a593"
+    },
+    "exactPackagedBinary": true,
+    "strictSignatureVerified": true,
+    "allBoundsPass": true,
+    "allStateActionsPresent": true,
+    "newCrashReports": 0,
+    "ownedTestProcessesClosed": true,
+    "visuallyInspected": true,
+    "initialHarnessRecovery": "native-harness-recovery.json"
+  },
+  "protectedPlayerState": {
+    "mac": true,
+    "nativeIOSOnMac": true,
+    "tutorialRegressions": true
+  },
+  "physicalDevice": {
+    "newPackageInstalled": false,
+    "lastInstalledPackageSha256": "2bf6039a16a225aba6ce35d96e46a6e15aa4985b79cfe86834f35168e28531fa",
+    "currentSessionTouched": false,
+    "reason": "The last AEON package remains untouched while installation timing is pending."
+  },
+  "limits": [
+    "No physical-device proof for this package.",
+    "No physical tap or multitouch acceptance for this package.",
+    "No thermal or GPU-performance claim for this package.",
+    "Native iOS-on-Mac renderer evidence is not physical-device evidence."
+  ]
+}

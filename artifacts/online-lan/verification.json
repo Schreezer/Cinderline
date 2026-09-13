@@ -1,0 +1,148 @@
+{
+  "bonjourDiscovery": {
+    "allowedHostToolWarnings": [],
+    "clientStopAssertions": true,
+    "count": 1,
+    "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd",
+    "expectedPort": 49271,
+    "expectedService": "Cinderline LAN QA 20260913T145459Z-68920",
+    "liveAdvertisement": true,
+    "report": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T145459Z-68920/UnrealReport-bonjour/index.json",
+    "tests": [
+      "Cinderline.Online.LANDiscoveryTransport"
+    ]
+  },
+  "continuedFrom": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T144007Z-64399",
+  "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd",
+  "finishedAtUtc": "2026-09-13T14:55:43Z",
+  "gitHead": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "inputSha256": {
+    "/private/tmp/cinderline-match-length-build/CinderlineMatchWorker": "44698427f37256ccb3ce68acd95c73b3dd630267158ff7fcb19d12cd7f856a10",
+    "Server/index.js": "05e912b330a3d92776e2e6c1394c1699bd0cb525230402c7b508ddde7cfeb385",
+    "Server/lan.js": "2a28a6d71a064cdb8b27dff293d83342bc1f025c75ee60230c68a0a546e98c5e",
+    "Server/server.js": "4234568c7d6270f63c270ba4fd6bfc01f0ecbfa3ccc6cc00d506860ca841a054",
+    "Server/test/lan.test.js": "7a164f191863a706dcd6c6a2e4bdcb8d6693e3a543e66b7e33644d3b5d6b82e0",
+    "Server/test/server.test.js": "e10bde10da75a6fea5c7692dfe1063aacce3c5182a4a72d7c778f4d438b03f0c",
+    "Source/Cinderline/Private/Presentation/CinderLANDiscovery.cpp": "cf712a9276229047bb351fcfd7ce82d667d3504bebc86d008892c817502855b5",
+    "Source/Cinderline/Private/Presentation/CinderOnlineSubsystem.cpp": "95b9d3b3e9b94205b8b1a386cdbcb22323b3fce0767ac8f69c6fcc1723841654",
+    "Source/Cinderline/Private/Tests/CinderOnlineIntegrationTests.cpp": "842c02dd900c52082906204d89380c326a4cf270da76ab8fa2df424fce0b5188",
+    "Source/Cinderline/Private/Tests/CinderOnlineRecoveryTests.cpp": "f9dec5598c5e7f574099eca6b02382f53755e957a04a7cdcd07936227c5f21e9"
+  },
+  "nodeLanSuite": {
+    "counts": {
+      "cancelled": 0,
+      "fail": 0,
+      "pass": 6,
+      "skipped": 0,
+      "tests": 6,
+      "todo": 0
+    },
+    "log": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T145459Z-68920/node-lan-tests.log",
+    "returnCode": 0
+  },
+  "nodeServerSuite": {
+    "counts": {
+      "cancelled": 0,
+      "fail": 0,
+      "pass": 16,
+      "skipped": 0,
+      "tests": 16,
+      "todo": 0
+    },
+    "log": "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/online-lan/backend/server-tests.log",
+    "sourceRun": "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/online-lan/backend"
+  },
+  "protectedAfterRestore": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "protectedBefore": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "protectedChangedDuringRun": [],
+  "protectedExact": true,
+  "ready": {
+    "connections": 0,
+    "protocol": 6,
+    "rooms": 0,
+    "states": {
+      "active": 0,
+      "finished": 0,
+      "lobby": 0,
+      "starting": 0
+    },
+    "status": "ready",
+    "workerFailures": 0,
+    "workers": 0
+  },
+  "runId": "20260913T145459Z-68920",
+  "server": {
+    "bind": "0.0.0.0",
+    "bonjourService": "Cinderline LAN QA 20260913T145459Z-68920",
+    "lanEndpoint": "ws://192.168.31.109:49271/play",
+    "loopbackEndpoint": "ws://127.0.0.1:49271/play",
+    "port": 49271,
+    "stepsPerTick": 1,
+    "tickIntervalMs": 50
+  },
+  "serverShutdown": {
+    "exitCode": 0,
+    "forced": false,
+    "loggedCleanStop": true,
+    "pid": 68968
+  },
+  "socketScenario": {
+    "authoritativeCommands": true,
+    "createJoinReady": true,
+    "forfeit": true,
+    "lanEndpoint": "ws://192.168.31.109:64899/play",
+    "loopbackEndpoint": "ws://127.0.0.1:64899/play",
+    "measuredWorkerHz": 19.33,
+    "privateSnapshots": true,
+    "protocol": 6,
+    "reconnect": true,
+    "sourceRun": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T144007Z-64399"
+  },
+  "status": "passed",
+  "unrealLanTransport": {
+    "allowedHostToolWarnings": [],
+    "count": 1,
+    "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd",
+    "report": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T145459Z-68920/UnrealReport-lan/index.json",
+    "tests": [
+      "Cinderline.Online.Transport"
+    ]
+  },
+  "unrealLoopback": {
+    "allowedHostToolWarnings": [
+      "LogHAL: FMacPlatformProcess::CreateProc: posix_spawn(\"/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id\") failed (86, Bad CPU type in executable)",
+      "LogHAL: Failed to launch Tool. (/Users/Shared/Epic Games/UE_5.8/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)"
+    ],
+    "count": 3,
+    "editor": "/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealEditor-Cmd",
+    "report": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T144007Z-64399/UnrealReport-loopback/index.json",
+    "sourceRun": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T144007Z-64399",
+    "tests": [
+      "Cinderline.Online.LANDiscoveryTransport",
+      "Cinderline.Online.LANDiscoveryValues",
+      "Cinderline.Online.Transport"
+    ]
+  },
+  "unrealRecoveryPolicy": {
+    "allowedHostToolWarnings": [],
+    "count": 2,
+    "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd",
+    "report": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T-recovery-final/UnrealReport/index.json",
+    "sourceRun": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/OnlineLAN/runs/20260913T-recovery-final",
+    "tests": [
+      "Cinderline.Integration.OnlineEndpointPolicy",
+      "Cinderline.Integration.OnlineRecovery"
+    ]
+  },
+  "worker": "/private/tmp/cinderline-match-length-build/CinderlineMatchWorker"
+}

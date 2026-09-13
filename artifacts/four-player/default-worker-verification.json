@@ -1,0 +1,135 @@
+{
+  "worker": "/Users/chirag13/Documents/ChatGPT/starCraft/build/CinderlineMatchWorker",
+  "sha256": "9cf5d1ccce6bd838ac43669f1c0fa2b43375a7a240f0f4411c1c063791fd84f6",
+  "protocol": 7,
+  "twoPlayer": {
+    "players": 2,
+    "exitCode": 0,
+    "stderr": "",
+    "frameCounts": {
+      "128": 1,
+      "129": 4,
+      "131": 1
+    },
+    "initialSnapshots": [
+      {
+        "seat": 0,
+        "protocol": 7,
+        "playerCount": 2,
+        "winner": -1,
+        "eliminatedMask": 0
+      },
+      {
+        "seat": 1,
+        "protocol": 7,
+        "playerCount": 2,
+        "winner": -1,
+        "eliminatedMask": 0
+      }
+    ],
+    "finalSnapshots": [
+      {
+        "seat": 0,
+        "protocol": 7,
+        "playerCount": 2,
+        "winner": 1,
+        "eliminatedMask": 1
+      },
+      {
+        "seat": 1,
+        "protocol": 7,
+        "playerCount": 2,
+        "winner": 0,
+        "eliminatedMask": 2
+      }
+    ],
+    "resultBytes": [
+      1,
+      0
+    ],
+    "result": {
+      "winner": 1,
+      "causeSeat": 0
+    }
+  },
+  "fourPlayer": {
+    "players": 4,
+    "exitCode": 0,
+    "stderr": "",
+    "frameCounts": {
+      "128": 1,
+      "129": 16,
+      "131": 1
+    },
+    "initialSnapshots": [
+      {
+        "seat": 0,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": -1,
+        "eliminatedMask": 0
+      },
+      {
+        "seat": 1,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": -1,
+        "eliminatedMask": 0
+      },
+      {
+        "seat": 2,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": -1,
+        "eliminatedMask": 0
+      },
+      {
+        "seat": 3,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": -1,
+        "eliminatedMask": 0
+      }
+    ],
+    "finalSnapshots": [
+      {
+        "seat": 0,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": 3,
+        "eliminatedMask": 7
+      },
+      {
+        "seat": 1,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": 2,
+        "eliminatedMask": 11
+      },
+      {
+        "seat": 2,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": 1,
+        "eliminatedMask": 13
+      },
+      {
+        "seat": 3,
+        "protocol": 7,
+        "playerCount": 4,
+        "winner": 0,
+        "eliminatedMask": 14
+      }
+    ],
+    "resultBytes": [
+      3,
+      2
+    ],
+    "result": {
+      "winner": 3,
+      "causeSeat": 2
+    }
+  },
+  "passed": true,
+  "scope": "Direct worker framing only; no Node or portable test suite rerun."
+}

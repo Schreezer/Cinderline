@@ -1,0 +1,255 @@
+{
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "sheet": 5,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "38:Ember",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        10.0,
+        603.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        56.0,
+        64.0,
+        100.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        16.0,
+        104.0,
+        64.0,
+        148.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        16.0,
+        152.0,
+        64.0,
+        196.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        200.0,
+        64.0,
+        244.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        56.0,
+        603.0,
+        100.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        56.0,
+        651.0,
+        100.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        603.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytab",
+      "argument": 0,
+      "bounds": [
+        166.0,
+        56.0,
+        226.0,
+        100.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "armytab",
+      "argument": 1,
+      "bounds": [
+        230.0,
+        56.0,
+        290.0,
+        100.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "armytab",
+      "argument": 2,
+      "bounds": [
+        294.0,
+        56.0,
+        354.0,
+        100.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        364.0,
+        56.0,
+        408.0,
+        100.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "squad",
+      "argument": 0,
+      "bounds": [
+        86.0,
+        128.0,
+        184.7,
+        172.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "squadassign",
+      "argument": 0,
+      "bounds": [
+        86.0,
+        176.0,
+        184.7,
+        220.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "squad",
+      "argument": 1,
+      "bounds": [
+        190.7,
+        128.0,
+        289.3,
+        172.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "squadassign",
+      "argument": 1,
+      "bounds": [
+        190.7,
+        176.0,
+        289.3,
+        220.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "squad",
+      "argument": 2,
+      "bounds": [
+        295.3,
+        128.0,
+        394.0,
+        172.0
+      ]
+    },
+    {
+      "index": 18,
+      "action": "squadassign",
+      "argument": 2,
+      "bounds": [
+        295.3,
+        176.0,
+        394.0,
+        220.0
+      ]
+    }
+  ],
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "globalState": null,
+  "observedMaxFPS": 30,
+  "case": "squads-small",
+  "state": "squads",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "capture": "squads-small.png",
+  "captureSha256": "562e5e15342c36f040c42ed59fe726986cf4d04eff0456ffac4534f35e83bd38",
+  "captureDimensions": [
+    667,
+    375
+  ],
+  "ownedPid": 75543,
+  "launchToken": "HUDOverhaul-0752c4040ec8434885b0b50b8a8b2c47",
+  "startedAtNs": 1789299031679727000,
+  "captureModifiedAtNs": 1789299045481709457,
+  "freshCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "minimumCompactHitSize": 44,
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS or device performance measurement."
+}

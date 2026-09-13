@@ -1,0 +1,242 @@
+{
+  "scope": "Mac desktop Metal with mobile HUD. Frozen starting-base fixture; actual camera methods exercised. Not physical gesture or iPhone proof.",
+  "mac_build": "passed8actions34.41seconds",
+  "all_game_tests_passed": 17,
+  "camera_math_cases": 96,
+  "features": [
+    "Bounded world-footprint overscroll,15percent of smaller span clamped72..360worldunits",
+    "Saturating target prevents accumulated dead travel on reversing drag",
+    "Existing zoom limit retained, current interpolated view also constrained",
+    "Four retained unlit opaque black border planes, exact0..4800 inner bounds, no per-frame instance rebuild",
+    "Off-map taps still rejected; raw GroundPoint remains available for dragging from black back to map"
+  ],
+  "runs": [
+    {
+      "edge": "sw",
+      "requested_distance": 1650,
+      "requested_viewport": [
+        1440,
+        663
+      ],
+      "captured": true,
+      "elapsed_seconds": 19.920845985412598,
+      "scope": "Mac desktop Metal, mobile HUD, frozen ordinary starting-base fixture. Real camera Pan/Zoom; no physical gesture or AEON proof.",
+      "stopped": true,
+      "label": "sw-1650-1440x663",
+      "screenshot": "artifacts/map-border/sw-1650-1440x663.png",
+      "solid_black_probe": {
+        "point": [
+          12,
+          420
+        ],
+        "rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visual_review": "Hard straight black map boundary; fog and HUD remain visible. Inspected original screenshot.",
+      "diagnostics": [
+        "[2026.09.12-13.34.51:819][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=sw distance=1650 capture=scheduled delay=2.0",
+        "[2026.09.12-13.34.53:720][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=sw requested_distance=1650 actual_distance=1650.0 rig=(492.5,791.8,0.0) camera=(-193.3,1477.6,1334.9) viewport=1440x663 elapsed=2.01 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/sw-1650.png",
+        "[2026.09.12-13.34.53:720][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=sw screen_tl=1:(199.5,-275.2) screen_tr=1:(1559.4,1084.8) screen_br=1:(703.3,1559.4) screen_bl=1:(-275.2,581.0) map_sw=1:(-35.5,189.0) map_se=1:(1693.6,-810.9) map_ne=1:(5612.0,189.0) map_nw=0:(0.0,0.0)"
+      ]
+    },
+    {
+      "edge": "west",
+      "requested_distance": 1650,
+      "requested_viewport": [
+        1440,
+        663
+      ],
+      "captured": true,
+      "elapsed_seconds": 20.179519176483154,
+      "scope": "Mac desktop Metal, mobile HUD, frozen ordinary starting-base fixture. Real camera Pan/Zoom; no physical gesture or AEON proof.",
+      "stopped": true,
+      "label": "west-1650-1440x663",
+      "screenshot": "artifacts/map-border/west-1650-1440x663.png",
+      "solid_black_probe": {
+        "point": [
+          12,
+          420
+        ],
+        "rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visual_review": "Hard straight black map boundary; fog and HUD remain visible. Inspected original screenshot.",
+      "diagnostics": [
+        "[2026.09.12-13.37.46:578][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=west distance=1650 capture=scheduled delay=2.0",
+        "[2026.09.12-13.37.48:494][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=west requested_distance=1650 actual_distance=1650.0 rig=(492.5,2400.0,0.0) camera=(-193.3,3085.8,1334.9) viewport=1440x663 elapsed=2.03 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/west-1650.png",
+        "[2026.09.12-13.37.48:494][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=west screen_tl=1:(199.5,1333.0) screen_tr=1:(1559.4,2693.0) screen_br=1:(703.3,3167.7) screen_bl=1:(-275.2,2189.2) map_sw=1:(-516.0,-327.9) map_se=1:(1168.7,-944.9) map_ne=1:(3586.2,-327.9) map_nw=1:(5166.4,5786.1)"
+      ]
+    },
+    {
+      "edge": "east",
+      "requested_distance": 1650,
+      "requested_viewport": [
+        1440,
+        663
+      ],
+      "captured": true,
+      "elapsed_seconds": 16.084599018096924,
+      "scope": "Mac desktop Metal, mobile HUD, frozen ordinary starting-base fixture. Real camera Pan/Zoom; no physical gesture or AEON proof.",
+      "stopped": true,
+      "label": "east-1650-1440x663",
+      "screenshot": "artifacts/map-border/east-1650-1440x663.png",
+      "solid_black_probe": {
+        "point": [
+          1430,
+          110
+        ],
+        "rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visual_review": "Hard straight black map boundary; fog and HUD remain visible. Inspected original screenshot.",
+      "diagnostics": [
+        "[2026.09.12-13.38.02:707][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=east distance=1650 capture=scheduled delay=2.0",
+        "[2026.09.12-13.38.04:641][ 59]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=east requested_distance=1650 actual_distance=1650.0 rig=(4008.2,2400.0,0.0) camera=(3322.4,3085.8,1334.9) viewport=1440x663 elapsed=2.03 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/east-1650.png",
+        "[2026.09.12-13.38.04:641][ 59]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=east screen_tl=1:(3715.2,1333.0) screen_tr=1:(5075.2,2693.0) screen_br=1:(4219.0,3167.7) screen_bl=1:(3240.6,2189.2) map_sw=1:(-6094.7,1715.1) map_se=1:(156.0,-574.0) map_ne=1:(4114.2,1715.1) map_nw=0:(0.0,0.0)"
+      ]
+    },
+    {
+      "edge": "north",
+      "requested_distance": 1650,
+      "requested_viewport": [
+        1440,
+        663
+      ],
+      "captured": true,
+      "elapsed_seconds": 15.331171035766602,
+      "scope": "Mac desktop Metal, mobile HUD, frozen ordinary starting-base fixture. Real camera Pan/Zoom; no physical gesture or AEON proof.",
+      "stopped": true,
+      "label": "north-1650-1440x663",
+      "screenshot": "artifacts/map-border/north-1650-1440x663.png",
+      "solid_black_probe": {
+        "point": [
+          1430,
+          430
+        ],
+        "rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visual_review": "Hard straight black map boundary; fog and HUD remain visible. Inspected original screenshot.",
+      "diagnostics": [
+        "[2026.09.12-13.38.18:026][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=north distance=1650 capture=scheduled delay=2.0",
+        "[2026.09.12-13.38.19:935][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=north requested_distance=1650 actual_distance=1650.0 rig=(2400.0,4307.5,0.0) camera=(1714.2,4993.3,1334.9) viewport=1440x663 elapsed=2.01 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/north-1650.png",
+        "[2026.09.12-13.38.19:935][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=north screen_tl=1:(2107.0,3240.6) screen_tr=1:(3467.0,4600.5) screen_br=1:(2610.8,5075.2) screen_bl=1:(1632.3,4096.7) map_sw=1:(-2146.2,-327.9) map_se=1:(271.3,-944.9) map_ne=1:(1956.0,-327.9) map_nw=1:(-3726.4,5786.1)"
+      ]
+    },
+    {
+      "edge": "south",
+      "requested_distance": 1650,
+      "requested_viewport": [
+        1440,
+        663
+      ],
+      "captured": true,
+      "elapsed_seconds": 15.23353910446167,
+      "scope": "Mac desktop Metal, mobile HUD, frozen ordinary starting-base fixture. Real camera Pan/Zoom; no physical gesture or AEON proof.",
+      "stopped": true,
+      "label": "south-1650-1440x663",
+      "screenshot": "artifacts/map-border/south-1650-1440x663.png",
+      "solid_black_probe": {
+        "point": [
+          12,
+          110
+        ],
+        "rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visual_review": "Hard straight black map boundary; fog and HUD remain visible. Inspected original screenshot.",
+      "diagnostics": [
+        "[2026.09.12-13.38.33:191][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=south distance=1650 capture=scheduled delay=2.0",
+        "[2026.09.12-13.38.35:104][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=south requested_distance=1650 actual_distance=1650.0 rig=(2400.0,791.8,0.0) camera=(1714.2,1477.6,1334.9) viewport=1440x663 elapsed=2.00 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/south-1650.png",
+        "[2026.09.12-13.38.35:104][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=south screen_tl=1:(2107.0,-275.2) screen_tr=1:(3467.0,1084.8) screen_br=1:(2610.8,1559.4) screen_bl=1:(1632.3,581.0) map_sw=1:(-2674.2,1715.1) map_se=1:(1284.0,-574.0) map_ne=1:(7534.7,1715.1) map_nw=0:(0.0,0.0)"
+      ]
+    },
+    {
+      "edge": "sw",
+      "requested_distance": 650,
+      "requested_viewport": [
+        1024,
+        768
+      ],
+      "captured": true,
+      "elapsed_seconds": 15.226750135421753,
+      "scope": "Mac desktop Metal, mobile HUD, frozen ordinary starting-base fixture. Real camera Pan/Zoom; no physical gesture or AEON proof.",
+      "stopped": true,
+      "label": "sw-650-1024x768",
+      "screenshot": "artifacts/map-border/sw-650-1024x768.png",
+      "solid_black_probe": {
+        "point": [
+          12,
+          600
+        ],
+        "rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visual_review": "Hard straight black map boundary; fog and HUD remain visible. Inspected original screenshot.",
+      "diagnostics": [
+        "[2026.09.12-13.38.48:682][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=sw distance=650 capture=scheduled delay=2.0",
+        "[2026.09.12-13.38.50:616][ 59]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=sw requested_distance=650 actual_distance=650.0 rig=(201.8,448.9,0.0) camera=(-68.3,719.1,525.9) viewport=1024x768 elapsed=2.03 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/sw-650.png",
+        "[2026.09.12-13.38.50:616][ 59]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=sw screen_tl=1:(179.6,-139.4) screen_tr=1:(790.2,471.2) screen_br=1:(214.8,790.2) screen_bl=1:(-139.4,436.0) map_sw=1:(-129.8,186.9) map_se=1:(1632.9,-719.1) map_ne=1:(9337.6,186.9) map_nw=0:(0.0,0.0)"
+      ]
+    },
+    {
+      "edge": "ne",
+      "requested_distance": 3200,
+      "requested_viewport": [
+        1024,
+        768
+      ],
+      "captured": true,
+      "elapsed_seconds": 15.1771719455719,
+      "scope": "Mac desktop Metal, mobile HUD, frozen ordinary starting-base fixture. Real camera Pan/Zoom; no physical gesture or AEON proof.",
+      "stopped": true,
+      "label": "ne-3200-1024x768",
+      "screenshot": "artifacts/map-border/ne-3200-1024x768.png",
+      "solid_black_probe": {
+        "point": [
+          1016,
+          610
+        ],
+        "rgb": [
+          0,
+          0,
+          0
+        ]
+      },
+      "visual_review": "Hard straight black map boundary; fog and HUD remain visible. Inspected original screenshot.",
+      "diagnostics": [
+        "[2026.09.12-13.39.03:815][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=ne distance=3200 capture=scheduled delay=2.0",
+        "[2026.09.12-13.39.05:757][ 59]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=ne requested_distance=3200 actual_distance=3200.0 rig=(2263.5,3479.8,0.0) camera=(933.5,4809.8,2588.9) viewport=1024x768 elapsed=2.02 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/MapBorder/ne-3200.png",
+        "[2026.09.12-13.39.05:757][ 59]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=ne screen_tl=1:(2153.8,583.3) screen_tr=1:(5160.0,3589.5) screen_br=1:(2327.1,5160.0) screen_bl=1:(583.3,3416.2) map_sw=1:(-638.5,186.9) map_se=1:(389.2,-249.8) map_ne=1:(1284.6,186.9) map_nw=1:(102.7,1642.1)"
+      ]
+    }
+  ],
+  "ios_status": "SDK27 build,package,strict-signature and three native iOS-on-Mac rendered captures passed",
+  "installed_on_aeon": false,
+  "limits": [
+    "No physical touch acceptance.",
+    "Pixel probes cover known exterior locations; visual review covers each captured edge, not every output pixel.",
+    "Fog privacy verified by existing tests and these fixtures, not a complete human multiplayer playtest."
+  ],
+  "ios_package_policy": "artifacts/map-border/package-policy.json",
+  "native_verification": "artifacts/map-border/native-verification.json",
+  "executable_sha256": "7c603b0041aa5d268294b8acea96e64d29195864500923b978221d6a9b7c0a31"
+}

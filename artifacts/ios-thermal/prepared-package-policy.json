@@ -1,0 +1,12 @@
+{
+  "executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573",
+  "sustained_execution_signed": true,
+  "sustained_execution_profile": true,
+  "game_mode_plist": true,
+  "sdk": "iphoneos27.0",
+  "platforms": [
+    "iPhoneOS"
+  ],
+  "installed_on_aeon": false,
+  "entitlement_source": "Config/IOS/Cinderline.entitlements"
+}

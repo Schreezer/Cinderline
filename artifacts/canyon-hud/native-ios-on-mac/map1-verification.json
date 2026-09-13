@@ -1,0 +1,47 @@
+{
+  "case": "map1",
+  "family": "canyon",
+  "state": "map1",
+  "map": 1,
+  "canonical": true,
+  "obstacles": 5,
+  "exploredObstacles": 5,
+  "fog": {
+    "unknown": 0,
+    "explored": 0,
+    "visible": 4096
+  },
+  "landscape": {
+    "matching": 1,
+    "visible": 1,
+    "raisedSamples": 1024,
+    "heightCm": [
+      0.0,
+      219.9
+    ]
+  },
+  "tick": 4,
+  "viewport": [
+    2052,
+    1536
+  ],
+  "shaderPath": {
+    "rhiFeatureLevel": "ES3_1",
+    "shaderPlatform": "METAL_ES3_1_IOS",
+    "mobileHDR": true,
+    "stereoShaderPlatformConfirmed": true
+  },
+  "capture": "map1.png",
+  "captureSha256": "7107207a33914dc34c3cc3fe4542908a90f73117b57147a7fe0e764233ded9d1",
+  "ownedPid": 80183,
+  "launchNonceVerified": true,
+  "runningExecutableHashVerified": true,
+  "sourceExecutableSha256": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+  "wrappedExecutableSha256": "aac695ba1f7db76f990dbc8ebb8ae024317b639d3bc1c29af9bce0fb7eaafbed",
+  "equalExecutableSha256": true,
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "newCrashReports": [],
+  "protectedPlayerStateUnchanged": true,
+  "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+}

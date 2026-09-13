@@ -1,0 +1,187 @@
+{
+  "case": "rally-chain-phone",
+  "state": "rally-chain",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "step": 11,
+  "microstep": [
+    4,
+    10
+  ],
+  "target": "ground",
+  "selection": 36,
+  "rallyProducer": 36,
+  "tick": 7900,
+  "actionsApplied": 3,
+  "capture": "rally-chain-phone.png",
+  "beforeShowCapture": null,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        374.3,
+        79.8,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        84.5,
+        374.3,
+        145.5,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        150.2,
+        374.3,
+        239.4,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        244.1,
+        374.3,
+        305.1,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        312.1,
+        374.3,
+        487.4,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        492.1,
+        374.3,
+        667.4,
+        425.9
+      ]
+    },
+    {
+      "index": 8,
+      "action": "cancelrally",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytype",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        315.6,
+        86.8,
+        367.3
+      ]
+    },
+    {
+      "index": 10,
+      "action": "armytype",
+      "argument": 1,
+      "bounds": [
+        90.3,
+        315.6,
+        158.4,
+        367.3
+      ]
+    },
+    {
+      "index": 11,
+      "action": "armytype",
+      "argument": 3,
+      "bounds": [
+        161.9,
+        315.6,
+        230.0,
+        367.3
+      ]
+    },
+    {
+      "index": 12,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        315.6,
+        885.6,
+        367.3
+      ]
+    },
+    {
+      "index": 13,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        315.6,
+        937.2,
+        367.3
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "protectedPlayerState": true,
+  "ownedPid": 51646,
+  "scope": "Mac Unreal renderer and deterministic tutorial HUD/pointer chain; no physical touch or iPhone run"
+}

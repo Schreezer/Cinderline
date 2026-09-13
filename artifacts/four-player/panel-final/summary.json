@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "mode": "internet",
+      "viewport": [
+        956,
+        440
+      ],
+      "panel": [
+        956.0,
+        440.0
+      ],
+      "labels": 40,
+      "visibleButtons": 10,
+      "buttonsInitiallyOnscreen": 3,
+      "minimumTouchHeightPixels": 51.6,
+      "scrollRange": 403.3,
+      "includesSlateUI": true,
+      "case": "internet-phone",
+      "capture": "internet-phone.png",
+      "middleCapture": "internet-phone-middle.png",
+      "scrolledCapture": "internet-phone-scrolled.png",
+      "runtime": "internet-phone-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+    },
+    {
+      "mode": "lan",
+      "viewport": [
+        667,
+        375
+      ],
+      "panel": [
+        667.0,
+        375.0
+      ],
+      "labels": 40,
+      "visibleButtons": 11,
+      "buttonsInitiallyOnscreen": 6,
+      "minimumTouchHeightPixels": 44.0,
+      "scrollRange": 511.0,
+      "includesSlateUI": true,
+      "case": "lan-small",
+      "capture": "lan-small.png",
+      "middleCapture": "lan-small-middle.png",
+      "scrolledCapture": "lan-small-scrolled.png",
+      "runtime": "lan-small-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+    },
+    {
+      "mode": "four",
+      "viewport": [
+        956,
+        440
+      ],
+      "players": 4,
+      "connected": 4,
+      "ready": 3,
+      "minimumTouchHeightPixels": 51.6,
+      "includesSlateUI": true,
+      "case": "four-lobby-phone",
+      "capture": "four-lobby-phone.png",
+      "middleCapture": null,
+      "scrolledCapture": null,
+      "runtime": "four-lobby-phone-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; isolated loopback room"
+    },
+    {
+      "mode": "four",
+      "viewport": [
+        667,
+        375
+      ],
+      "players": 4,
+      "connected": 4,
+      "ready": 3,
+      "minimumTouchHeightPixels": 44.0,
+      "includesSlateUI": true,
+      "case": "four-lobby-small",
+      "capture": "four-lobby-small.png",
+      "middleCapture": null,
+      "scrolledCapture": null,
+      "runtime": "four-lobby-small-runtime.txt",
+      "protectedPlayerState": true,
+      "scope": "Mac Unreal renderer, real Slate multiplayer panel; isolated loopback room"
+    }
+  ],
+  "protectedBefore": {
+    "Matches/skirmish.cinder": {
+      "exists": false,
+      "sha256": null,
+      "size": null
+    },
+    "Config/Training.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null
+    },
+    "Config/Skirmish.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null
+    },
+    "Config/Online.ini": {
+      "exists": true,
+      "sha256": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+      "size": 62
+    }
+  },
+  "protectedAfter": {
+    "Matches/skirmish.cinder": {
+      "exists": false,
+      "sha256": null,
+      "size": null
+    },
+    "Config/Training.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null
+    },
+    "Config/Skirmish.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null
+    },
+    "Config/Online.ini": {
+      "exists": true,
+      "sha256": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+      "size": 62
+    }
+  },
+  "protectedPlayerState": true
+}

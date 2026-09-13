@@ -1,0 +1,75 @@
+{
+  "case": "menu-1080",
+  "menu": true,
+  "observationSeconds": 5.0,
+  "viewport": [
+    1920,
+    1080
+  ],
+  "renderTarget": [
+    1920,
+    1080
+  ],
+  "worldRenderingDisabled": true,
+  "encodedFrames": {
+    "start": 0,
+    "finish": 0,
+    "delta": 0
+  },
+  "nativeStatus": {
+    "start": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 1,
+      "bridgeAvailable": 1,
+      "interfaceActive": 1,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 1,
+      "encodedFrames": 0,
+      "scalerCreations": 0,
+      "validationProbes": 0,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "none"
+    },
+    "finish": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 1,
+      "bridgeAvailable": 1,
+      "interfaceActive": 1,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 1,
+      "encodedFrames": 0,
+      "scalerCreations": 0,
+      "validationProbes": 0,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "none"
+    }
+  },
+  "elapsedSeconds": 6.903,
+  "statusCommandProcessed": true,
+  "capture": "menu-1080.png",
+  "captureSha256": "895380cec10106a65ce228eb4b7c50b7f7fcc86a9d04843bb99c8549b0c14727",
+  "ownedPid": 4910,
+  "scope": "Normal Mac menu with read-only rendering observation; no input, match, physical device, native iOS-on-Mac, player save, preference, or AEON interaction"
+}

@@ -1,0 +1,148 @@
+{
+  "status": "passed",
+  "verifiedAtUTC": "2026-09-13T17:15:56.475528+00:00",
+  "scope": "Focused simulation, controller, multiplayer-client, Node worker transport, packaging and verification-tool refactors",
+  "compatibility": {
+    "protocol": 7,
+    "saveVersion": 10,
+    "visualLayoutChanged": false,
+    "deterministicScenariosMatchingBaseline": 12,
+    "opaqueHandlesCanonicalized": true
+  },
+  "tests": {
+    "portable": {
+      "passed": 8,
+      "log": "native-tests.log"
+    },
+    "node": {
+      "passed": 32,
+      "log": "server-tests.log"
+    },
+    "tooling": {
+      "passed": 43,
+      "log": "runner-tests.log"
+    },
+    "unreal": {
+      "passed": 39,
+      "receipt": "unreal-verification.json"
+    },
+    "workerComparison": {
+      "passed": 12,
+      "receipt": "worker-comparison.json"
+    },
+    "ctestRegistration": {
+      "unchanged": true,
+      "receipt": "ctest-registration.json"
+    }
+  },
+  "unrealResultScope": "Original 36 successful local cases plus scoped rerun of one corrected test fixture and both multiplayer transport cases. Four exact known host-tool warnings explicitly allowed; other warnings or failures are rejected.",
+  "review": {
+    "rounds": 3,
+    "importantUnresolvedFindings": 0,
+    "ledger": "docs/CODE_QUALITY_PASS.md"
+  },
+  "builds": {
+    "engine": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27",
+    "mac": {
+      "log": "mac-build-final.log",
+      "moduleSHA256": "5928e8c3bae29748db8f951337e244d9b5c39df13265b4538438d59aa0a09e06"
+    },
+    "testedWorker": {
+      "path": "/tmp/cinderline-quality-build/CinderlineMatchWorker",
+      "sha256": "eb4215d34d35c23e309a6e972317ab9c20fa3b8453edc0853470167141de59ba"
+    },
+    "defaultWorker": {
+      "path": "build/CinderlineMatchWorker",
+      "log": "default-worker-build.log",
+      "sha256": "6b633b94ea0b8f930724f8fd790015e7d62148164841a61f073c8af7f64f9b3d"
+    }
+  },
+  "protectedStateUnchanged": {
+    "local": true,
+    "multiplayer": true,
+    "worldtap": true
+  },
+  "ownedUnrealAndWorkerProcessesClosed": true,
+  "baseline": "Saved/QualityReview/baseline.json",
+  "packagingBaselineNote": "Saved/QualityReview/baseline-packaging/README.md",
+  "changedFiles": [
+    "CMakeLists.txt",
+    "Server/Dockerfile",
+    "Server/Dockerfile.dockerignore",
+    "Server/lan.js",
+    "Server/protocol.js",
+    "Server/server.js",
+    "Server/test/packaging.test.js",
+    "Server/test/worker-bridge.test.js",
+    "Server/worker-bridge.js",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp",
+    "Source/Cinderline/Private/Presentation/CinderOnlineSubsystem.cpp",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp",
+    "Source/Cinderline/Private/Sim/Network.cpp",
+    "Source/Cinderline/Private/Sim/Simulation.cpp",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp",
+    "Source/Cinderline/Private/Tests/CinderArmyControlTests.cpp",
+    "Source/Cinderline/Private/Tests/CinderDifficultyTests.cpp",
+    "Source/Cinderline/Private/Tests/CinderOnlineRecoveryTests.cpp",
+    "Source/Cinderline/Private/Tests/CinderProductionControlTests.cpp",
+    "Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp",
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h",
+    "Source/Cinderline/Public/Sim/SimulationRules.h",
+    "Tests/FourPlayerTests.cpp",
+    "docs/CODE_QUALITY_PASS.md",
+    "docs/TASKBOARD.md",
+    "scripts/lib/unreal-engine.sh",
+    "scripts/lib/unreal_suites.json",
+    "scripts/test-multiplayer.sh",
+    "scripts/test-unreal.sh",
+    "scripts/test.sh",
+    "scripts/tests/test_unreal_build.py",
+    "scripts/tests/test_unreal_engine.py",
+    "scripts/tests/test_unreal_report.py",
+    "scripts/unreal.sh",
+    "scripts/validate-unreal-report.py"
+  ],
+  "sourceSHA256": {
+    "CMakeLists.txt": "72154d4ae09870cea3fe30ce385762852526c0391f3a2a483f857f1296b928f8",
+    "Server/Dockerfile": "5b9ad74d9cf7dbe623d046fd87f59901b44f0712672a85187f1e1c3628a52034",
+    "Server/Dockerfile.dockerignore": "64ab04595598c582cdd441cc28bc174d1ccf4b29a11530fbd05b4b466098f5c5",
+    "Server/lan.js": "646769a0d4a09b5f52f3d0f23d1ab88e24242fad5d2976ded09d795e384a6988",
+    "Server/protocol.js": "8fb178755874592bf1178e0d77b734e73e5022d47c4df938ea4df321002a39de",
+    "Server/server.js": "d55560283d5ee1adfa650e0a2abdf99e45b0d1f476677a7c2e63fc503205e677",
+    "Server/test/packaging.test.js": "b2976b8dad13bb0dc5f264f740ddbcd39062abda8d305a16889f1266129eb704",
+    "Server/test/worker-bridge.test.js": "09d943434157c079ffe59165195a4df678d1ee6e34732d7da1d5cb570a17890e",
+    "Server/worker-bridge.js": "e88f2a10447a140ffb7a9374662b0aa867486ee924760d7edb6910b8550b0809",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "1c17f894ad980081a8ed833b629e56cfc7d12f6b7e664847924994726133a28f",
+    "Source/Cinderline/Private/Presentation/CinderOnlineSubsystem.cpp": "796e7e727f526d8dec263662e5f062180ef90342ee58df6739eba7b8fd82824b",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "e669078b293f3a488a0157ab70a97e5f82f837eb119681bfca0edf8ac82433e8",
+    "Source/Cinderline/Private/Sim/Network.cpp": "76d4ab1126c31db7fd35272cb624c1dbafccf9d12ea37dad98938577426408b5",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "024f627d7cb808a757964b3ac37cbeeed0e3229f6f2a6bc2e2aaf252dea61af6",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "3243f08bf8ea0aa2bf4c074ad217b64ef2f470a30751c86774b1977a37956a04",
+    "Source/Cinderline/Private/Tests/CinderArmyControlTests.cpp": "e51d3fbff9d1c21390c7cd7c174a4964f03bbc381e302de5c062f645625f7e37",
+    "Source/Cinderline/Private/Tests/CinderDifficultyTests.cpp": "bbd407988de3dce794db77c3148db512fba37f80855a222fdf761663d7e9919b",
+    "Source/Cinderline/Private/Tests/CinderOnlineRecoveryTests.cpp": "0c127ae9798a76f251275828abef1f6007b19e63c2e591e497c0c7eafb6c1989",
+    "Source/Cinderline/Private/Tests/CinderProductionControlTests.cpp": "1ed246ba80b9d43c69dfd66d6897984942df7c2cd84ad39f36a1a0000cbfe41a",
+    "Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp": "4f62b3f285195f0bed737e4a5d6eeffb92bcebd29cbcd3c0ff1580d34f601181",
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h": "faa17246a98b02c8fafee097453266ad4606eed88f5222f272d98c86e1aec484",
+    "Source/Cinderline/Public/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563",
+    "Tests/FourPlayerTests.cpp": "02a32c77ee30bb4fb5827f2a80b2a437435e7c02c93ea8bb382c144cb951293b",
+    "docs/CODE_QUALITY_PASS.md": "248ed35080565f6e146c6998afddcfea9690e6a2cfad13989acf05a4965cbe59",
+    "docs/TASKBOARD.md": "fde1cc8ba050200c8bc7bc947bc8bc38470bc01673a1406a78a9c95114bb541d",
+    "scripts/lib/unreal-engine.sh": "6412c24e8762303b1410690598fddb2b382f5330aa5df098ae0ea5110a930624",
+    "scripts/lib/unreal_suites.json": "1809c030059bddf4df2b616f11e5b463c181c4cd06789e57f8cd35ff4a23cc57",
+    "scripts/test-multiplayer.sh": "f2d13a2960509cc560d48e2eef626b27d16992101b399f4a11f8e6d5c598de57",
+    "scripts/test-unreal.sh": "10cd20dcc5efaaf728135900e16831a321838ae1a34ad82a6b1000f8d0097461",
+    "scripts/test.sh": "beed6e0156a4b344202d01f2f6c1a571fe09bdb63f0fd754db4544eabed922b4",
+    "scripts/tests/test_unreal_build.py": "5db640cf7263d69170b02cd05a5657eeff920bd33331f15094192c3038b16a25",
+    "scripts/tests/test_unreal_engine.py": "b53470dd7caec0330db22b0bbfcbbdda2a47ac788dd4593934e70c9befb8808f",
+    "scripts/tests/test_unreal_report.py": "6f40388e4161a8bd6d051c601c647c7306bcd48906ae4fe91e1e4a616ef89323",
+    "scripts/unreal.sh": "77caf770f1909015f0591fa044142cb878ab281bf21c37fcf749ccfdc1808c22",
+    "scripts/validate-unreal-report.py": "fe226a2ae0b9cd6c0bdf52c39cf25641652a920915ddc19679b4a2232e85524e"
+  },
+  "limits": [
+    "No new iOS package, physical-device test or public deployment.",
+    "No Docker image build; runtime dependency closure checked statically.",
+    "No GPU/CPU performance claim or live Bonjour advertisement rerun.",
+    "This is a scoped review of primary gameplay/network/build paths, not every asset-generation script or plugin."
+  ]
+}

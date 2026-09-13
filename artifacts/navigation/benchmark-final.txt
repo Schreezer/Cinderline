@@ -1,0 +1,10 @@
+NAVIGATION BENCHMARK FINAL
+Status: final after correctness and traffic fixes
+Compiler: AppleClang 21.0.0.21000334
+Configuration: CMake Release, C++17, native client OFF, server OFF
+Fixture source: Tests/NavigationTests.cpp benchmark()
+Build command: cmake -S . -B /tmp/cinderline-navigation-release -DCMAKE_BUILD_TYPE=Release -DCINDERLINE_BUILD_NATIVE=OFF -DCINDERLINE_BUILD_SERVER=OFF -DBUILD_TESTING=ON
+Run command: /tmp/cinderline-navigation-release/CinderlineNavigationTests --benchmark
+
+NAV_BENCHMARK workers=160 simulation_seconds=80.000 surviving=160 arrivals=160 mean_step_ms=0.181 p95_step_ms=0.393 max_step_ms=4.324 searches=194 expanded=18708 failures=0 budget_deferrals=720 wall_ms=289.752
+NAV_DISTRIBUTION median_remaining=17.958 p95_remaining=32.893 max_remaining=108.849 left_mean=3793.486,2793.153 right_mean=1000.898,1996.660

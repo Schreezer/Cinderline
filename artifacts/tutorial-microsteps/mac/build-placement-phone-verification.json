@@ -1,0 +1,132 @@
+{
+  "case": "build-placement-phone",
+  "state": "build-placement",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "step": 4,
+  "microstep": [
+    3,
+    4
+  ],
+  "target": "ground",
+  "selection": 0,
+  "rallyProducer": 0,
+  "tick": 360,
+  "actionsApplied": 2,
+  "capture": "build-placement-phone.png",
+  "beforeShowCapture": null,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        374.3,
+        79.8,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        84.5,
+        374.3,
+        145.5,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        150.2,
+        374.3,
+        239.4,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        244.1,
+        374.3,
+        305.1,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        312.1,
+        374.3,
+        487.4,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        492.1,
+        374.3,
+        667.4,
+        425.9
+      ]
+    },
+    {
+      "index": 8,
+      "action": "cancelplacement",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        374.3,
+        937.2,
+        425.9
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "protectedPlayerState": true,
+  "ownedPid": 50564,
+  "scope": "Mac Unreal renderer and deterministic tutorial HUD/pointer chain; no physical touch or iPhone run"
+}

@@ -1,0 +1,19 @@
+{
+  "mode": "four",
+  "viewport": [
+    956,
+    440
+  ],
+  "players": 4,
+  "connected": 4,
+  "ready": 3,
+  "minimumTouchHeightPixels": 51.6,
+  "includesSlateUI": true,
+  "case": "four-lobby-phone",
+  "capture": "four-lobby-phone.png",
+  "middleCapture": null,
+  "scrolledCapture": null,
+  "runtime": "four-lobby-phone-runtime.txt",
+  "protectedPlayerState": true,
+  "scope": "Mac Unreal renderer, real Slate multiplayer panel; isolated loopback room"
+}

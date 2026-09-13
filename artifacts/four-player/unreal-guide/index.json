@@ -1,0 +1,44 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "40A6949E484418BD3664F9B78DD2BCFD",
+			"instanceName": "MacBook-Pro-10.local-2366",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.0 26A428",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.13-16.07.12",
+	"succeeded": 1,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.12470641732215881,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "EarlyActionsAndContent",
+			"fullTestPath": "Cinderline.Tutorial.EarlyActionsAndContent",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"40A6949E484418BD3664F9B78DD2BCFD"
+			],
+			"duration": 0.12470641732215881,
+			"dateTime": "2026.09.13-16.07.12",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

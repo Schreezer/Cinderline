@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "engine": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27",
+  "worker": "/tmp/cinderline-four-player-build/CinderlineMatchWorker",
+  "workerSha256": "60da3119dfc5cee1a85ed1076cbc177c5fb6cbd6915fa80309bdb43fc7732802",
+  "endpoint": "ws://192.168.31.109:53684/play",
+  "protectedBefore": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "ready": {
+    "status": "ready",
+    "rooms": 0,
+    "connections": 0,
+    "workers": 0,
+    "states": {
+      "lobby": 0,
+      "starting": 0,
+      "active": 0,
+      "finished": 0
+    },
+    "workerFailures": 0,
+    "protocol": 7
+  },
+  "command": [
+    "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd",
+    "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject",
+    "/Engine/Maps/Entry",
+    "-unattended",
+    "-nop4",
+    "-nosplash",
+    "-NullRHI",
+    "-nosound",
+    "-stdout",
+    "-FullStdOutLogOutput",
+    "-CinderOnlineTestLAN",
+    "-ExecCmds=Automation RunTests Cinderline.Tutorial.EarlyActionsAndContent; Quit",
+    "-ReportExportPath=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/four-player/unreal-guide",
+    "-abslog=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/four-player/unreal-guide.log"
+  ],
+  "exitCode": 0,
+  "tests": [
+    {
+      "name": "Cinderline.Tutorial.EarlyActionsAndContent",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "allowedHostToolWarnings": [],
+  "serverStop": {
+    "pid": 2365,
+    "exitCode": 0,
+    "forced": false
+  },
+  "restoredFiles": [],
+  "protectedAfter": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  }
+}

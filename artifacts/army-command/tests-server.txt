@@ -1,0 +1,18 @@
+
+> cinderline-game-server@0.1.0 test
+> node --test
+
+✔ health and lobby controls reject stale, malformed, repeated, and excessive input (30.103125ms)
+✔ real clients create, join, reject a third seat, ready, and receive private snapshots (406.236708ms)
+✔ both seats command only their view handles and command sequences survive reconnect (39.96225ms)
+✔ surrender keeps the socket for the authoritative result (9.063958ms)
+✔ disconnect grace expires into a canonical result (43.586042ms)
+✔ ordinary attack-move play can finish a complete authoritative match (12757.817125ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13384.038209

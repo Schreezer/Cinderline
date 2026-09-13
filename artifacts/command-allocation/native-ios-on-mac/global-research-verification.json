@@ -1,0 +1,217 @@
+{
+  "case": "global-research",
+  "family": "hud",
+  "state": "global-research",
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 61,
+  "viewport": [
+    2052,
+    1536
+  ],
+  "hudScale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1808.0,
+        20.0,
+        1896.0,
+        108.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        20.0,
+        2020.0,
+        108.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        32.0,
+        1424.0,
+        136.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        144.0,
+        1424.0,
+        248.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        256.0,
+        1424.0,
+        408.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        416.0,
+        1424.0,
+        520.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        532.0,
+        1424.0,
+        1042.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        1050.0,
+        1424.0,
+        1560.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        1572.0,
+        1424.0,
+        1678.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        1686.0,
+        1424.0,
+        1792.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        1800.0,
+        1424.0,
+        1906.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        1914.0,
+        1424.0,
+        2020.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        944.0,
+        932.0,
+        1032.0,
+        1020.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "globalresearch",
+      "argument": 0,
+      "bounds": [
+        60.0,
+        1046.0,
+        365.3,
+        1134.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "globalresearch",
+      "argument": 1,
+      "bounds": [
+        379.3,
+        1046.0,
+        684.7,
+        1134.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "globalresearch",
+      "argument": 2,
+      "bounds": [
+        698.7,
+        1046.0,
+        1004.0,
+        1134.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "requiredHUDEntriesPresent": true,
+  "shaderPath": {
+    "rhiFeatureLevel": "ES3_1",
+    "shaderPlatform": "METAL_ES3_1_IOS",
+    "mobileHDR": true,
+    "stereoShaderPlatformConfirmed": true
+  },
+  "capture": "global-research.png",
+  "captureSha256": "da68c916568c2f6c52e48fc607015520647ca6ea1eb74c381516f61cb7e4e871",
+  "ownedPid": 8812,
+  "launchNonceVerified": true,
+  "runningExecutableHashVerified": true,
+  "sourceExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+  "wrappedExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+  "equalExecutableSha256": true,
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "newCrashReports": [],
+  "protectedPlayerStateUnchanged": true,
+  "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+}

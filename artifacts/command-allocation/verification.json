@@ -1,0 +1,372 @@
+{
+  "success": true,
+  "checkedAt": "2026-09-13T09:08:46.410665+00:00",
+  "scope": "Persistent Build, Train, Research and Army controls; deterministic automatic allocation; jobs, stable cancellation, rally and per-building overrides; guided tutorial alignment.",
+  "automation": {
+    "passed": 27,
+    "report": "artifacts/command-allocation/automation.json"
+  },
+  "portable": {
+    "passed": 6,
+    "report": "build/army-command/Testing/Temporary/LastTest.log"
+  },
+  "server": {
+    "passed": 7,
+    "report": "Saved/CommandAllocation/server-tests-runner.log"
+  },
+  "unrealLocalTransport": {
+    "passed": 1,
+    "protocol": 4,
+    "report": "Saved/Automation/Multiplayer/20260913T084941Z-978/index.json",
+    "publicDeployment": false
+  },
+  "macCaptures": [
+    {
+      "case": "army-small",
+      "viewport": [
+        667.0,
+        375.0
+      ],
+      "capture": "artifacts/command-allocation/mac/army-small.png",
+      "sha256": "60440c0d1dee248d099a1d5ed05590698873694d8d2eb5f5e06d5d7aa561cce2",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-blocked-small",
+      "viewport": [
+        667.0,
+        375.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-blocked-small.png",
+      "sha256": "a7afd33121be43aa371855593e28a0f5a3177ae1257565c8f0bbd08a49317656",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-build-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-build-phone.png",
+      "sha256": "8af096b6f844a16fc7d916d461ccd8458d214558a8eac1187a8ef4f63aed5272",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-construction-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-construction-phone.png",
+      "sha256": "6d4a5a24c5ad49999c3d9f91d2234ebe03a68f421871e0332abc665183b64498",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-jobs-desktop",
+      "viewport": [
+        1920.0,
+        1080.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-jobs-desktop.png",
+      "sha256": "1a94f78f001c01f1ad212079b2c051e1a81011c7fd43aadb6dc4a181ce4a131c",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-jobs-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-jobs-phone.png",
+      "sha256": "5cd6a11a7f49c87e467d89fad8946a7342d4092ebd3bd670e08d26533ff48b58",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-jobs-small",
+      "viewport": [
+        667.0,
+        375.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-jobs-small.png",
+      "sha256": "656f88980740ef2c791804af2e9088710369c2e309f64c7589036b8bb13e886a",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-pinned-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-pinned-phone.png",
+      "sha256": "6d2b4a4d48825ca390e64d5e4017b589bf5e1c3263b69aa1be7828e3745d196c",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-rally-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-rally-phone.png",
+      "sha256": "ff3a0ad798d36c897b8aa258cc20da42c95f77aaa1b5565e2b18bc64e0beea50",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-research-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-research-phone.png",
+      "sha256": "5f76cd3f36ed6c0ebb5632fe88bbeddbd7ef7e43ffe8d4877f41eede897397a7",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-train-ipad",
+      "viewport": [
+        1024.0,
+        768.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-train-ipad.png",
+      "sha256": "93d4b9a61a5c4ccb7dc505f3a3987fad4c3fb6e90eb2f903f49b7e924b435e2b",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-train-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-train-phone.png",
+      "sha256": "60879e4a675f37510904b21aff38c1549541c999e1a91d8e225e7ea27325da2d",
+      "visuallyInspected": true
+    },
+    {
+      "case": "global-train-small",
+      "viewport": [
+        667.0,
+        375.0
+      ],
+      "capture": "artifacts/command-allocation/mac/global-train-small.png",
+      "sha256": "48bb0c6486bcdb8dad58c2fc5f418067cc495931ce82b393dd1f00b62864f1ae",
+      "visuallyInspected": true
+    },
+    {
+      "case": "idle-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/idle-phone.png",
+      "sha256": "8150f3907774a852d406e9f9d42ca0c80211f0d49aeddeb315b6c008067292d3",
+      "visuallyInspected": true
+    },
+    {
+      "case": "queue-phone",
+      "viewport": [
+        956.0,
+        440.0
+      ],
+      "capture": "artifacts/command-allocation/mac/queue-phone.png",
+      "sha256": "54c1ba7d6c6c319d7806d09facecf47c1a673841f36d9c999d627fc67b901ceb",
+      "visuallyInspected": true
+    },
+    {
+      "case": "roster-page-small",
+      "viewport": [
+        667.0,
+        375.0
+      ],
+      "capture": "artifacts/command-allocation/mac/roster-page-small.png",
+      "sha256": "3a0edb6fe02a68c0f1acff3b9d78d51023e80b8302933728e7961aec827b2c4b",
+      "visuallyInspected": true
+    },
+    {
+      "case": "squads-small",
+      "viewport": [
+        667.0,
+        375.0
+      ],
+      "capture": "artifacts/command-allocation/mac/squads-small.png",
+      "sha256": "a291c3e19e8c0b35229552f447dfd25267ec2fb97b3b98cf3e9db6ce71a408ef",
+      "visuallyInspected": true
+    }
+  ],
+  "nativeIOSOnMac": {
+    "cases": 5,
+    "exactExecutable": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+    "viewport": [
+      2052,
+      1536
+    ],
+    "report": "artifacts/command-allocation/native-ios-on-mac/summary.json",
+    "visuallyInspected": true,
+    "noNewCrashReports": true,
+    "protectedPlayerStateUnchanged": true,
+    "scope": "Native iOS-on-Mac, not Xcode Simulator or physical iPhone"
+  },
+  "performance": {
+    "lane": "Short matched Mac Unreal army fixture, not physical iPhone",
+    "viewport": [
+      956,
+      440
+    ],
+    "sceneFraction": 0.8,
+    "samplesEach": 120,
+    "baseline": {
+      "source": "FRHIGPUFrameTimeHistory completed frames",
+      "samples": 120,
+      "meanMs": 9.706,
+      "medianMs": 9.321,
+      "p95Ms": 14.997,
+      "disjointEvents": 0
+    },
+    "candidate": {
+      "source": "FRHIGPUFrameTimeHistory completed frames",
+      "samples": 120,
+      "meanMs": 10.78,
+      "medianMs": 10.413,
+      "p95Ms": 13.228,
+      "disjointEvents": 0
+    },
+    "meanDeltaMs": 1.074,
+    "thermalAcceptance": "pending physical sustained session"
+  },
+  "package": {
+    "checkedAt": "2026-09-13T09:03:08.432456+00:00",
+    "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "executableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+    "machoPlatform": "IOS",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "strictCodesignVerified": true,
+    "developmentProfile": true,
+    "phoneRegistered": true,
+    "profileUnexpired": true,
+    "orientations": [
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "bundleBytes": 494781655,
+    "ioStoreContainers": [
+      "cookeddata/cinderline/content/paks/global.utoc",
+      "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+    ]
+  },
+  "physicalDevice": {
+    "installedThisPass": false,
+    "launchedThisPass": false,
+    "touchAndThermalAcceptance": "pending"
+  },
+  "sourceSHA256": {
+    "CMakeLists.txt": "dc41e0f920d678319f73712fdfe43f3f419b6ec028b82f0f352c2a75de5cfa58",
+    "Cinderline.uproject": "5f97d0026cb7b0dad4d085481f42c6e44814a3a6bc5f91164216db631a6616f9",
+    "Config/DefaultDeviceProfiles.ini": "4dbd087e049faa13b7ffc039180611b851184c2d16e1ae320def2cebda125007",
+    "Config/DefaultEngine.ini": "41da59d07b9c33c3339a4c20650bd1c232f18ac7394380315ff893a636cf0b95",
+    "Config/DefaultGame.ini": "70436feec4cde67273378fa5473e7a4e117480f725557ab1ad96d0c4495c2279",
+    "Config/DefaultInput.ini": "45c0cd66d9351dc830305468e9a9ed469e700bb6b289bfff314bbac4c4610e76",
+    "Config/IOS/IOSEngine.ini": "d74d93cb87bf7f89e09197e97d671c149ff147945df5d3ad49c2246607279f6b",
+    "Config/UserEngine.ini": "bbecae28d034a50b2bca99b1bc743a31e8a75a8fa8384139b75c142eaf0c64bb",
+    "Plugins/CinderMetalFX/CinderMetalFX.uplugin": "37667cf4757a5af03a98ed8a906d564cce2677504e6c60a3b90d065056d86abe",
+    "Plugins/CinderMetalFX/Source/CinderMetalFX/CinderMetalFX.Build.cs": "edebeb27cd14d57f2eb82e71fd94359926a59ccd76106273e6360bc37dce14a5",
+    "Plugins/CinderMetalFX/Source/CinderMetalFX/Private/CinderMetalFXModule.mm": "8f1781c0052235e32592ab3dcbc98c2b51ddd3cf6ce12b3d19c0947885bd81db",
+    "Plugins/CinderMetalFX/Source/CinderMetalFX/Public/CinderMetalFX.h": "43b8c70d20613d1f935956686d27f4d5ea02ff49fa2782ece0a1bea2ac96515d",
+    "Server/MatchWorker.cpp": "c26eec05973c143a6ac694dc2a380579486c495f7c7f9447a219344871bdfa60",
+    "Server/index.js": "0b3921e6cbdb6e2fbf6ffb5a9bb3ab4262ef6ba0815c983982dba29fd356bfc3",
+    "Server/package-lock.json": "f5dce378a166135f7d3aaa40e123ff3b02c6d8f294cbbf8afae554d96f3642f3",
+    "Server/package.json": "0b03b8beb319cbc585a108c835b8d3c84e70dfcc8e2dca748096a7df3e7fd376",
+    "Server/server.js": "4edc691e2d083693b32df5264274372fd01cc8bc6b7b8371dea50a3f68e4be16",
+    "Server/test/server.test.js": "0fe63bbd081f8210a9f763a349e572e00ad8bf088ddf0b2861baacc136cd38fb",
+    "Source/Cinderline/Cinderline.Build.cs": "862090f31dafc086dd76b1af3f6ece6a755e4d24a35ae03e16a9ddd0f9bc9d30",
+    "Source/Cinderline/Private/Cinderline.cpp": "9f79e908dfed58ec0bc6f4ffbd690ff22d95f0fcdac4c3e79a702cd4e53d3931",
+    "Source/Cinderline/Private/Presentation/CinderArtPreview.cpp": "fbaaf3cba36f36e952ee31ae9ee4d4a776525607e4a498668ff1ce80e318befe",
+    "Source/Cinderline/Private/Presentation/CinderAudioSubsystem.cpp": "3eb6f8cb4bb1618a75b9cfc507054ba38258ba691070089e6b74f5f9f90e5605",
+    "Source/Cinderline/Private/Presentation/CinderBattlefield.cpp": "333f0278a701695d84d5150060ff94b2d1f10d84db6ffa8ed3d8d4d094c5d148",
+    "Source/Cinderline/Private/Presentation/CinderCamera.cpp": "05bc5b6dac7c03d7da660c2850f768cfeddf4545ff69a626067dce8d6c4c849f",
+    "Source/Cinderline/Private/Presentation/CinderCameraPreview.cpp": "4392b774ef010e2af6137e33e12fede5fce70f4c64313878b27779046c0dc9ab",
+    "Source/Cinderline/Private/Presentation/CinderCanyonPreview.cpp": "66cc75e180cf65ae7753e532f3758425b620c08ef9d17a11839a96333c6b773a",
+    "Source/Cinderline/Private/Presentation/CinderCombatPreview.cpp": "6291de88a56a18af0d76de079e839725db341b7766728f240c4409bc157f078e",
+    "Source/Cinderline/Private/Presentation/CinderCommandPreview.cpp": "4e10a81c0a887bf12fe8eaf6c8c64150ce0407387eac9912b185d4dedb2ae2a8",
+    "Source/Cinderline/Private/Presentation/CinderDifficultyPreview.cpp": "3d55113cee7adcb214dae8bb678862558df6038e615520f15659fe52e4f88a91",
+    "Source/Cinderline/Private/Presentation/CinderEntityMotion.cpp": "d9204548ae5caf4f3f946ed52934436e4f23889b31791732c229d99ef76fcc8f",
+    "Source/Cinderline/Private/Presentation/CinderGameEngine.cpp": "86dc2cc88dd7f26e052374ce3e3ef9b75e3183b75a67277e4296243ef93ea011",
+    "Source/Cinderline/Private/Presentation/CinderGameMode.cpp": "ecacbd187e2a36bb0a741c7ea66d72a6542e0c2e2715695a6fd67b092c7e5151",
+    "Source/Cinderline/Private/Presentation/CinderGuidedPreview.cpp": "4d588830e5bba0d2091b2f5a6b6a83a4228a39511fdb2d509201557792b4ff4d",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "57dc54a319e0791b0c1153e5869e18355bb549b8d3c3585baff2a9d6e7bcfc65",
+    "Source/Cinderline/Private/Presentation/CinderHelpContent.cpp": "5b56c95da1693f1a9c0a1e9af501a07ca8b3e12b9266ddc3423261addf9233e3",
+    "Source/Cinderline/Private/Presentation/CinderIOSPerformancePolicy.cpp": "76d9ac8c147eb42386e3cba97158058378b16942807ea22c44ed81734dee1d9f",
+    "Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp": "b1101ed6632d536d3b1fce22bad1c2204809294a5bfb626b9831d6aaeb2290f8",
+    "Source/Cinderline/Private/Presentation/CinderMetalFXPreview.cpp": "e90861c46de2ad8ccae9d376074b0fd18a752a8407ebe4ce721eecaf5bb75dfb",
+    "Source/Cinderline/Private/Presentation/CinderMobileHUDPreview.cpp": "89fe38b936c911107ed1fd0749315fa71e79b593b7a7f158223cb108411904e3",
+    "Source/Cinderline/Private/Presentation/CinderMotionPreview.cpp": "a4f36702f9e7095ea4d8dfe3dec8e01d302145993b0c25454b9a22def4658548",
+    "Source/Cinderline/Private/Presentation/CinderOnlinePanel.cpp": "6bfc75201cc9d728f4f20cb8ed900c04cefdcb622d3ed5b5830066fc6d390134",
+    "Source/Cinderline/Private/Presentation/CinderOnlineSubsystem.cpp": "59a9b80cd93df594524972a23ade7b882087c9482279cda6c4079694cef609d8",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "9215b3f967d7dac4be4d9153c2c2b59df63ff6d1bf1aded9841d98798390c801",
+    "Source/Cinderline/Private/Presentation/CinderQualityDiagnostics.cpp": "1fc48e901b467a92c201d50a9726c6eb8cef44ffc9724eb8d568d45f9ace31d3",
+    "Source/Cinderline/Private/Presentation/CinderScenery.cpp": "6d9adf4c663fa3815d385afb663d618941540632cc4cbf47ad8a641192c475c4",
+    "Source/Cinderline/Private/Presentation/CinderTerrainSurface.cpp": "4abb4c7346236438711c7c49d2a4f9eb586d9e4105f58d17f22e8fc221c2d594",
+    "Source/Cinderline/Private/Presentation/CinderTutorial.cpp": "f434b853fee6d09eea0ce0be27ade26fb88642392ab8656e4a1a2debf9f6d390",
+    "Source/Cinderline/Private/Presentation/CinderUnitInfo.cpp": "23790d5d2c5b938c61177ea4083769d354959614a403110b5b73c9fc67127dfe",
+    "Source/Cinderline/Private/Presentation/CinderVisualPreview.cpp": "e206fcdabd7fb291ddd9f1f81b4cc78942eb01e7fdacad118f72a8dfc682fd3f",
+    "Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp": "2c9df5f1b39e4f6eb0188937f2bf479ff277c46c336c7d1cd395a8972e2cce91",
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "84e85262077ecd5a209c8ba19da9edc7af81fc9cb1c77452e4c6509fd78de65b",
+    "Source/Cinderline/Private/Sim/Network.cpp": "6ea592997a7fee36ab0c6e450998c26f1d4fca3809213330574aa8b275b13a49",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "ed37d68ad8ad1f679a8b08b6abb6dfeace35ac6b4ed6d80f3d2a38e034436d19",
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "69a5c2bc94e8c508ec573bc86989eb851beab5e4b4c9f11a1299c051f4a0cb63",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "5b471498f005123a521c0e02ac2ab6eaa7712a594c9bb49e8fef275db12a5508",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "4250d20701e19776069c2069bc54b8f5f9a78bce3a7636bdc3eb9bc9d5f77314",
+    "Source/Cinderline/Private/Tests/CinderArmyControlTests.cpp": "6a2f8fd6c1c3313fef2f181f1bcbf6e22d41841f50abb5fe055f525cf0cb9986",
+    "Source/Cinderline/Private/Tests/CinderCameraBoundaryTests.cpp": "f0f866a1d7a73953d21525f0f80bf53bd2daabb8c30b23e301dfa22fa3de5f36",
+    "Source/Cinderline/Private/Tests/CinderDifficultyTests.cpp": "6aa8ac055f9b3c82eccca62989f5efe98d13f2e001818a66cc46c61eeb7cfc73",
+    "Source/Cinderline/Private/Tests/CinderGuidedTestDriver.h": "0492a66a269d8468eaf5fe874fcb21a6daeecb6401c9b779b1540d25864e3865",
+    "Source/Cinderline/Private/Tests/CinderIOSPerformancePolicyTests.cpp": "3b8a220e177b269b67440af0da281179554cad629bb65333a7a82aa5658e4157",
+    "Source/Cinderline/Private/Tests/CinderLandscapeTerrainTests.cpp": "79a6dd33cb3f85f655304ed198a3f48d096369255c03a8ecee283ba80b56f7e6",
+    "Source/Cinderline/Private/Tests/CinderMetalFXResolutionTests.cpp": "65fec142468f013b692a7cfca8b3847c84c9b6bd0eaf6f430c5b8a099a3d5e64",
+    "Source/Cinderline/Private/Tests/CinderMobileHUDLayoutTests.cpp": "d93f4b7bfe044ac0de02826f2f9759953b71d2a8dd7451a4eb675f1a79c5ffc3",
+    "Source/Cinderline/Private/Tests/CinderOnboardingTests.cpp": "ff4e337e28dcae52b70e40dd1811286432a7c05568c51c2b728c818fddd51064",
+    "Source/Cinderline/Private/Tests/CinderOnlineIntegrationTests.cpp": "e0c65bc7c5ce36c7d6cdd7eb49ca659e71208636deb44b7bd1ac59f0980ab47d",
+    "Source/Cinderline/Private/Tests/CinderProductionControlTests.cpp": "28b1581d007761eabb0cf6fc5a3c26a6dd85fe9360f778d8df113068476bdd22",
+    "Source/Cinderline/Private/Tests/CinderSceneryTests.cpp": "34936d18d6449686f611294cd47b7d95f8dd0f22d28c74f3eeb8ba0b3491c3c7",
+    "Source/Cinderline/Private/Tests/CinderTutorialTests.cpp": "7472b5dc974f7401f2b4df8d8a685835655fdc61b547c0f42ca953b67ff06efd",
+    "Source/Cinderline/Private/Tests/CinderUnitInfoTests.cpp": "7685ea2aa8e57a10502fae4b468a9971eaf7d0d37f54a17c16606d1caa342b37",
+    "Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp": "2d6ad7d6b1ad2b0fe999959fa6315fcd2a6c53cd1e6c0ddc8119632ac8eeb416",
+    "Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp": "78e33f51dea8ce076288ea686e7edccc3f9940a15dcc28935476370972b17aaf",
+    "Source/Cinderline/Public/Presentation/CinderAudioSubsystem.h": "c9c12ed1621de728ff9799a19807fa3d8d4cd678a6c7599650812edf30e688f4",
+    "Source/Cinderline/Public/Presentation/CinderBattlefield.h": "14ee6d7cd20ee1f683eb294b4ef149e2fc255f7857c9d670979c3dfdbd46bcdb",
+    "Source/Cinderline/Public/Presentation/CinderCamera.h": "9ffaa9191dad9e41b2d8c212d356dbcf6aa2abd1fd7d2a8d139487acdada33d7",
+    "Source/Cinderline/Public/Presentation/CinderEntityMotion.h": "cec476d69d7f25e2e652c9873640e767763e97d6b9a063f21b0b40e58034a72d",
+    "Source/Cinderline/Public/Presentation/CinderGameEngine.h": "f1e4f3918fd8111fef08aa496713acb3060e5c18cf316a624d2d842a788fb229",
+    "Source/Cinderline/Public/Presentation/CinderGameMode.h": "7052c0e8f890213f57b310ab4686b7be8fadd1f07c4f6a3cfd14fa8e521c7a23",
+    "Source/Cinderline/Public/Presentation/CinderHUD.h": "d05a1b1d2e5664092a2017661f3f53287180b9837a6f3fdf716c15a25d866300",
+    "Source/Cinderline/Public/Presentation/CinderHelpContent.h": "898978b1815ea1a31717f84b4d090dd401cc4bf2e5034faece3e72fdd615cb36",
+    "Source/Cinderline/Public/Presentation/CinderIOSPerformancePolicy.h": "b75a9e309a3b1575a72447def30c511ee14f38c126bd20cd864e309451f7e300",
+    "Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h": "d430524fcfdead2fee36b99393c18888502292ad4fb15c674276e1123cad516e",
+    "Source/Cinderline/Public/Presentation/CinderMetalFXResolution.h": "c505ae869874c392ae7bdfea6a1cb14e64ff1667dd8a2d5c8b74000fd340c3ca",
+    "Source/Cinderline/Public/Presentation/CinderMobileHUDLayout.h": "c2e552d2e783bfed04a5c8ab93df6719ce515a8fcde28f305feb699f81d6f207",
+    "Source/Cinderline/Public/Presentation/CinderOnlinePanel.h": "8963bab99b4366db31a42b612185a45e5c808ed2c8abaa908ff380976357cf5d",
+    "Source/Cinderline/Public/Presentation/CinderOnlineSubsystem.h": "9fdfedbc9322e529382d1a0a6df0ffc878fadca38d8125839d0ad0b249877656",
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h": "f18ac9897c97737f6a355eddab07feffb7ae9ffb4e1e57d7b65a68bb48be2fc4",
+    "Source/Cinderline/Public/Presentation/CinderScenery.h": "cc4777c4db6982b889e8c37f698a09a3b3a6e7c2ae66a56b1d74021c4dba49ef",
+    "Source/Cinderline/Public/Presentation/CinderTerrainSurface.h": "3106cd5db94916ce54f78fab24d6dc68564c2846eb885657688f4e4d13c7cd03",
+    "Source/Cinderline/Public/Presentation/CinderTutorial.h": "bbf65cf2b8e9dfaa0aa1294047148d4f16316b87da433f568fd0e5de2f665c2c",
+    "Source/Cinderline/Public/Presentation/CinderUnitInfo.h": "96a5ea6f99b25b7d7c7414b683dd60e22d18bfc60f5f66cbd05c296a6a9c5358",
+    "Source/Cinderline/Public/Presentation/CinderWorldEffects.h": "04087c7017feba9b856077d72ada8ba3ffa1096d31b6391a8321abfaaaebb97b",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1",
+    "Source/Cinderline/Public/Sim/Navigation.h": "c1531f3006611568d80f952c3bd5d26a2af0fd066166deed0e010ea4b7488fe0",
+    "Source/Cinderline/Public/Sim/Network.h": "48e5b167284e39387929d64b44cee28e906015c5e8ca5170063f926d49e9b5d2",
+    "Source/Cinderline/Public/Sim/Simulation.h": "dfbaa6e953f52d1bf97f70d85bfb605fe4de0f63c679d3b6b421faeba630085a",
+    "Source/Cinderline.Target.cs": "929625a7d87e5215b9cf34c6cac50b18e17d26683be6b0cc9ac699b2ef717f42",
+    "Source/CinderlineEditor/CinderlineEditor.Build.cs": "c03b6afe5ff07e4eaa290f1e0db287f16a94e010896108495cc5589d419bb3b8",
+    "Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp": "1af916451d64279a5d886692079f094564ccc0e43b4fa44318bc6793f23782a7",
+    "Source/CinderlineEditor/Private/CinderlineEditorModule.cpp": "4502bc653bf5e9facf26205a8f0ea25af852717fab0788503b2e47c2c9644538",
+    "Source/CinderlineEditor/Public/CinderLandscapeAuthoringLibrary.h": "dd62b2f20b04c7c337920014b71afcc365821b1427f841209a8c854280b09af9",
+    "Source/CinderlineEditor.Target.cs": "a8c1d889409a84430295b106b696015af25479d71b81042ae03e522fb761f4c0",
+    "Tests/AIDifficultyTests.cpp": "e32c1c1912bffcf18f1bb6f444a72c454f4c45ebaf4959b810901d57619618a6",
+    "Tests/DefenseTests.cpp": "3de219969733371112ab3f85966a9b865f220b9fa358c80078097b94382ffbed",
+    "Tests/NavigationTests.cpp": "0275e684656061b8c2b185112154c1a7e8813b71d2cb8de6ef8e7d53fd75c5c3",
+    "Tests/NetworkTests.cpp": "47802b8327bc75747cec774921cd2a4ad726c092d89547fe528f01a8efcf44d2",
+    "Tests/ProductionAllocationTests.cpp": "6e07b795006791fdb1e9eecc51f0326de0b45a90b15f763d24b0ce967a94a14a",
+    "Tests/SimulationTests.cpp": "4c42a5ffd37aeb2414b2681b75ffc44300b3d40a3e8d50227e0d41a70e4d7be9"
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "viewport": [
+    1920.0,
+    1080.0
+  ],
+  "scale": 1.5,
+  "compactHUD": false,
+  "sheet": 0,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "none",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "map",
+      "argument": 0,
+      "bounds": [
+        108.0,
+        438.0,
+        370.0,
+        504.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "map",
+      "argument": 1,
+      "bounds": [
+        382.0,
+        438.0,
+        644.0,
+        504.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "map",
+      "argument": 2,
+      "bounds": [
+        656.0,
+        438.0,
+        918.0,
+        504.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "difficulty",
+      "argument": 0,
+      "bounds": [
+        108.0,
+        564.0,
+        262.8,
+        630.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "difficulty",
+      "argument": 1,
+      "bounds": [
+        271.8,
+        564.0,
+        426.6,
+        630.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "difficulty",
+      "argument": 2,
+      "bounds": [
+        435.6,
+        564.0,
+        590.4,
+        630.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "difficulty",
+      "argument": 3,
+      "bounds": [
+        599.4,
+        564.0,
+        754.2,
+        630.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "difficulty",
+      "argument": 4,
+      "bounds": [
+        763.2,
+        564.0,
+        918.0,
+        630.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "matchlength",
+      "argument": 0,
+      "bounds": [
+        108.0,
+        687.0,
+        372.0,
+        753.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "matchlength",
+      "argument": 1,
+      "bounds": [
+        381.0,
+        687.0,
+        645.0,
+        753.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "matchlength",
+      "argument": 2,
+      "bounds": [
+        654.0,
+        687.0,
+        918.0,
+        753.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "start",
+      "argument": 0,
+      "bounds": [
+        108.0,
+        801.0,
+        561.0,
+        867.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "load",
+      "argument": 0,
+      "bounds": [
+        579.0,
+        801.0,
+        918.0,
+        867.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "tutorial",
+      "argument": 0,
+      "bounds": [
+        108.0,
+        885.0,
+        561.0,
+        951.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        579.0,
+        885.0,
+        918.0,
+        951.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "online",
+      "argument": 0,
+      "bounds": [
+        108.0,
+        969.0,
+        918.0,
+        1035.0
+      ]
+    }
+  ],
+  "selectedLength": 2,
+  "configuredLength": 2,
+  "configuredName": "Long",
+  "configuredWorldSize": 6000.0,
+  "simulationLength": 1,
+  "simulationWorldSize": 4800.0,
+  "menu": true,
+  "map": 0,
+  "farFocus": false,
+  "scriptedVisionScout": 0,
+  "focus": [
+    -1.0,
+    -1.0
+  ],
+  "cameraRig": [
+    700.0,
+    903.5
+  ],
+  "cameraDistance": 1650.0,
+  "fogMaterial": "none",
+  "fogWorldSizeInverse": 0.0,
+  "groundMaterial": "none",
+  "groundWorldSizeInverse": 0.0,
+  "observedMaxFPS": 30,
+  "case": "menu-long-desktop",
+  "state": "menu-long",
+  "requestedViewport": [
+    1920,
+    1080
+  ],
+  "capture": "menu-long-desktop.png",
+  "captureSha256": "b003ef6c762e9accea6515fc1e0f7f339b4d8636df4277719d3b8b0c746a15fb",
+  "captureDimensions": [
+    1920,
+    1080
+  ],
+  "ownedPid": 47358,
+  "launchToken": "MatchLength-c872804d4a514f0285a7362a032af603",
+  "startedAtNs": 1789307689497119000,
+  "captureModifiedAtNs": 1789307703988592933,
+  "freshCompleteCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "minimumCompactHitSize": null,
+  "mockedMenuSafeInsets": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS, or device performance measurement."
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "Mac real rendered development fixture; input-independent match transitions through ordinary presentation state, no user save modified. Not a phone test.",
+  "world_rendering_disabled_sequence": [
+    true,
+    false,
+    true
+  ],
+  "sequence": [
+    "menu",
+    "gameplay",
+    "menu"
+  ],
+  "log": "artifacts/ios-thermal/menu-transitions.log",
+  "visuals": [
+    "artifacts/ios-thermal/transition-menu.png",
+    "artifacts/ios-thermal/transition-base.png",
+    "artifacts/ios-thermal/transition-battle.png"
+  ]
+}

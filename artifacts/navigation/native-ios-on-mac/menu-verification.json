@@ -1,0 +1,10 @@
+{
+  "pid": 38829,
+  "elapsedSeconds": 17.80116081237793,
+  "newCrashReports": [],
+  "executableSha256": "2bf6039a16a225aba6ce35d96e46a6e15aa4985b79cfe86834f35168e28531fa",
+  "scope": "Native iOS binary on Mac, default iPad aspect, unsaved development battle fixture; not physical touch or AEON thermal evidence",
+  "captured": true,
+  "profileCompleted": true,
+  "fatalRuntimeError": false
+}

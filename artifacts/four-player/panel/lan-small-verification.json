@@ -1,0 +1,24 @@
+{
+  "mode": "lan",
+  "viewport": [
+    667,
+    375
+  ],
+  "panel": [
+    667.0,
+    375.0
+  ],
+  "labels": 37,
+  "visibleButtons": 11,
+  "buttonsInitiallyOnscreen": 6,
+  "minimumTouchHeightPixels": 44.0,
+  "scrollRange": 511.0,
+  "includesSlateUI": true,
+  "case": "lan-small",
+  "capture": "lan-small.png",
+  "middleCapture": "lan-small-middle.png",
+  "scrolledCapture": "lan-small-scrolled.png",
+  "runtime": "lan-small-runtime.txt",
+  "protectedPlayerState": true,
+  "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+}

@@ -1,0 +1,145 @@
+{
+  "pid": 75330,
+  "ownedPid": true,
+  "baselinePidsUntouched": [],
+  "launchNonceVerified": true,
+  "runningExecutableHashVerified": true,
+  "elapsedSeconds": 5.5574421882629395,
+  "newCrashReports": [],
+  "sourceExecutableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+  "wrappedExecutableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+  "equalExecutableSha256": true,
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "state": "tower-info",
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "viewport": [
+    2052.0,
+    1536.0
+  ],
+  "scale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1808.0,
+        20.0,
+        1896.0,
+        108.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        20.0,
+        2020.0,
+        108.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        1424.0,
+        152.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        164.0,
+        1424.0,
+        292.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        304.0,
+        1424.0,
+        416.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        1572.0,
+        1424.0,
+        1732.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        1744.0,
+        1424.0,
+        1896.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        1424.0,
+        2020.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "infotab",
+      "argument": 1,
+      "bounds": [
+        648.0,
+        932.0,
+        792.0,
+        1020.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        804.0,
+        932.0,
+        892.0,
+        1020.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "captured": true,
+  "fatalRuntimeError": false,
+  "scope": "Exact signed iOS executable in a fresh native Mac wrapper; no physical touch, AEON installation, or thermal acceptance"
+}

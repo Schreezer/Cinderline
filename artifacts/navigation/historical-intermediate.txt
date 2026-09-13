@@ -1,0 +1,14 @@
+NAVIGATION INTERMEDIATE DIAGNOSTICS
+These runs were captured while routing and traffic code was incomplete. They are historical and are not final performance evidence.
+
+Debug build before adaptive route optimization:
+workers=160 surviving=160 arrivals=37 mean_step_ms=6.196 p95_step_ms=19.200 max_step_ms=334.232 searches=368 expanded=3790230 failures=196 budget_deferrals=720 wall_ms=9916.177
+
+Debug build after adaptive route optimization:
+workers=160 surviving=160 arrivals=24 mean_step_ms=4.457 p95_step_ms=6.644 max_step_ms=61.600 searches=414 expanded=34155 failures=249 budget_deferrals=720 wall_ms=7134.360
+
+The six-worker, 44-unit single-file mining corridor initially deadlocked. That correctness fixture later passed unchanged.
+
+Release traffic tuning snapshots, superseded by the final result:
+workers=160 arrivals=58 mean_step_ms=0.771 p95_step_ms=1.270 max_step_ms=4.921 searches=5966 expanded=166265 failures=5825 wall_ms=1233.881
+workers=160 arrivals=17 mean_step_ms=0.541 p95_step_ms=0.647 max_step_ms=4.367 searches=161 expanded=18708 failures=0 wall_ms=865.167

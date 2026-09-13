@@ -1,0 +1,5 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Running Unreal multiplayer transport automation against ws://127.0.0.1:57393/play
+Verified 2 expected Unreal tests: no errors or unfinished tests; explicitly allowed 2 idevice_id host warnings across 1 tests.
+Unreal multiplayer automation passed. Report: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Automation/Multiplayer/20260913T170839Z-30205/index.json

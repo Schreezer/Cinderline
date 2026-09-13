@@ -1,0 +1,205 @@
+{
+  "case": "global-research-phone",
+  "state": "global-research",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 61,
+  "capture": "global-research-phone.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        374.3,
+        79.8,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        84.5,
+        374.3,
+        145.5,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        150.2,
+        374.3,
+        239.4,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        244.1,
+        374.3,
+        305.1,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        312.1,
+        374.3,
+        487.4,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        492.1,
+        374.3,
+        667.4,
+        425.9
+      ]
+    },
+    {
+      "index": 8,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        374.3,
+        736.6,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        741.3,
+        374.3,
+        803.5,
+        425.9
+      ]
+    },
+    {
+      "index": 10,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        808.2,
+        374.3,
+        870.3,
+        425.9
+      ]
+    },
+    {
+      "index": 11,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        875.0,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 12,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        553.8,
+        85.7,
+        605.4,
+        137.3
+      ]
+    },
+    {
+      "index": 13,
+      "action": "globalresearch",
+      "argument": 0,
+      "bounds": [
+        35.2,
+        152.5,
+        214.3,
+        204.2
+      ]
+    },
+    {
+      "index": 14,
+      "action": "globalresearch",
+      "argument": 1,
+      "bounds": [
+        222.5,
+        152.5,
+        401.7,
+        204.2
+      ]
+    },
+    {
+      "index": 15,
+      "action": "globalresearch",
+      "argument": 2,
+      "bounds": [
+        409.9,
+        152.5,
+        589.0,
+        204.2
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 97394,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

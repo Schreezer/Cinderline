@@ -1,0 +1,302 @@
+{
+  "status": "failed",
+  "engine": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27",
+  "worker": "/tmp/cinderline-four-player-build/CinderlineMatchWorker",
+  "workerSha256": "60da3119dfc5cee1a85ed1076cbc177c5fb6cbd6915fa80309bdb43fc7732802",
+  "endpoint": "ws://192.168.31.109:53542/play",
+  "protectedBefore": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "ready": {
+    "status": "ready",
+    "rooms": 0,
+    "connections": 0,
+    "workers": 0,
+    "states": {
+      "lobby": 0,
+      "starting": 0,
+      "active": 0,
+      "finished": 0
+    },
+    "workerFailures": 0,
+    "protocol": 7
+  },
+  "command": [
+    "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd",
+    "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject",
+    "/Engine/Maps/Entry",
+    "-unattended",
+    "-nop4",
+    "-nosplash",
+    "-NullRHI",
+    "-nosound",
+    "-stdout",
+    "-FullStdOutLogOutput",
+    "-CinderOnlineTestLAN",
+    "-ExecCmds=Automation RunTests Cinderline.; Quit",
+    "-ReportExportPath=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/four-player/unreal-all",
+    "-abslog=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/four-player/unreal-all.log"
+  ],
+  "exitCode": 3,
+  "tests": [
+    {
+      "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 2
+    },
+    {
+      "name": "Cinderline.Integration.ArmyControl",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.CombatFeedback",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.FirstRunTutorialOffer",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.OnlineEndpointPolicy",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.OnlineRecovery",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.ProductionControls",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.SoloAIDifficulty",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.WorldTapSelection",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Online.FourPlayerTransport",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Online.LANDiscoveryTransport",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Online.LANDiscoveryValues",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Online.Transport",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.FourTeamRouting",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.Initialization",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.InstanceBudget",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.CameraBoundary",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.IOSPerformancePolicy",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.LandscapeHeightGeometry",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.MetalFXResolutionOwnership",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.SceneryGroundRoadFallback",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.SceneryObservedState",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.SceneryObstacleBounds",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.UnitInfo",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.ArmySequence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.EconomySequence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.InterruptedOrders",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.Introduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.RemainingBatch",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.CommandGates",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.EarlyActionsAndContent",
+      "state": "Fail",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.EmberGate",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.EndToEnd",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.LateCancellationRecovery",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.WaitsForLearner",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.UI.MobileHUDLayout",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "allowedHostToolWarnings": [
+    "LogHAL: FMacPlatformProcess::CreateProc: posix_spawn(\"/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id\") failed (86, Bad CPU type in executable)",
+    "LogHAL: Failed to launch Tool. (/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)"
+  ],
+  "serverStop": {
+    "pid": 591,
+    "exitCode": 0,
+    "forced": false
+  },
+  "restoredFiles": [],
+  "protectedAfter": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  }
+}

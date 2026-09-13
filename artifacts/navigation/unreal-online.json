@@ -1,0 +1,44 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "2F3A38148E432351FF06FA8809C2CFC9",
+			"instanceName": "MacBook-Pro-10.local-34006",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.0 26A428",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.12-16.15.13",
+	"succeeded": 1,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.74674564599990845,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "Transport",
+			"fullTestPath": "Cinderline.Online.Transport",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"2F3A38148E432351FF06FA8809C2CFC9"
+			],
+			"duration": 0.74674564599990845,
+			"dateTime": "2026.09.12-16.15.12",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

@@ -1,0 +1,168 @@
+{
+  "case": "skip-phone",
+  "state": "skip",
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "observed": {
+    "offer": 0,
+    "menu": 1,
+    "step": 0,
+    "complete": 0,
+    "preferenceCompleted": 0,
+    "winner": -1,
+    "opponentOrders": 0,
+    "tick": 0
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "map",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        130.2,
+        318.7,
+        181.9
+      ]
+    },
+    {
+      "index": 1,
+      "action": "map",
+      "argument": 1,
+      "bounds": [
+        328.1,
+        130.2,
+        627.9,
+        181.9
+      ]
+    },
+    {
+      "index": 2,
+      "action": "map",
+      "argument": 2,
+      "bounds": [
+        637.3,
+        130.2,
+        937.2,
+        181.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "difficulty",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        228.8,
+        198.7,
+        280.4
+      ]
+    },
+    {
+      "index": 4,
+      "action": "difficulty",
+      "argument": 1,
+      "bounds": [
+        203.4,
+        228.8,
+        383.3,
+        280.4
+      ]
+    },
+    {
+      "index": 5,
+      "action": "difficulty",
+      "argument": 2,
+      "bounds": [
+        388.0,
+        228.8,
+        568.0,
+        280.4
+      ]
+    },
+    {
+      "index": 6,
+      "action": "difficulty",
+      "argument": 3,
+      "bounds": [
+        572.7,
+        228.8,
+        752.6,
+        280.4
+      ]
+    },
+    {
+      "index": 7,
+      "action": "difficulty",
+      "argument": 4,
+      "bounds": [
+        757.3,
+        228.8,
+        937.2,
+        280.4
+      ]
+    },
+    {
+      "index": 8,
+      "action": "start",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        288.6,
+        518.1,
+        340.3
+      ]
+    },
+    {
+      "index": 9,
+      "action": "load",
+      "argument": 0,
+      "bounds": [
+        529.8,
+        288.6,
+        937.2,
+        340.3
+      ]
+    },
+    {
+      "index": 10,
+      "action": "tutorial",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        348.5,
+        321.0,
+        400.1
+      ]
+    },
+    {
+      "index": 11,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        326.9,
+        348.5,
+        629.1,
+        400.1
+      ]
+    },
+    {
+      "index": 12,
+      "action": "online",
+      "argument": 0,
+      "bounds": [
+        635.0,
+        348.5,
+        937.2,
+        400.1
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "skip-phone.png",
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

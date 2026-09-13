@@ -1,20 +1,22 @@
 # Cinderline visual target plan
 
-12 September 2026. The current visual kit is built and tested. The player has since prioritized an AEON playtest, persistent online service and HUD refinement. Further terrain expansion is deferred; Unreal Landscape is the proposed next terrain approach. Delivery and actual evidence are tracked in [VISUAL_TARGET_PASS.md](VISUAL_TARGET_PASS.md).
+Current package note, 2026-09-12: navigation package `2bf6039a...` passed SDK 27 build, package, signing and native iOS-on-Mac checks, then installed successfully on AEON, an iPhone 17 Pro Max running iOS 27. The physical menu is visually verified and the app remains running. The reported disappearance most likely came from the agent forcing a post-install relaunch after the user had started playing; no new crash or memory-termination report was found. Physical routing, touch, boundary and sustained thermal tests remain pending. Historical `1870dcf9...` phone thermal evidence, `7c603b00...` native edge captures and `4ae4305a...` native thermal runs remain tied to their original packages. See [NAVIGATION_PASS.md](NAVIGATION_PASS.md).
+
+12 September 2026. The visual kit is built, imported and tested. Final Mac stills exist, and the final SDK 27 safe-area package installed and rendered on AEON. The player confirmed that the main-menu spacing is perfect. The phone then became very hot, so iPhone heat and performance work is now first. Persistent public online service and a dedicated HUD redesign follow. Further terrain expansion is deferred; an authored Unreal Landscape is the proposed later direction. Delivery and actual evidence are tracked in [VISUAL_TARGET_PASS.md](VISUAL_TARGET_PASS.md).
 
 The reference labels itself a mobile RTS concept, not actual gameplay. It establishes a target for composition, detail and atmosphere; it does not establish achievable phone performance.
 
-## Starting point
+## Historical starting point
 
-We have working RTS rules, construction/production, combat events, fog-filtered presentation, instanced units, articulated motion and the compact mobile HUD. Preserve those foundations.
+The pass began with working RTS rules, construction/production, combat events, fog-filtered presentation, instanced units, articulated motion and the compact mobile HUD. Those foundations were preserved.
 
-Current limitations verified in source and recent runtime captures:
+The following limitations described the baseline before this pass. The original model and LDR statements are historical and no longer describe the current build:
 
-- Ground presentation remains a flat play surface with noise/material stains. Rectangular simulation obstacles drive stretched cliff segments, rather than an authored geological landscape.
-- The original models have clear silhouettes and five shared material roles, but lack a finished texture atlas, a LOD chain, fine surface wear and the density of mechanical detail seen in the reference.
-- Much combat feedback is drawn as HUD lines, rings and crosses. Existing authoritative events can drive richer world effects.
-- iOS runs a conservative LDR configuration with shadows and mobile anti-aliasing disabled. The last two settings reflect unresolved rendering compatibility problems, not a desired final quality target.
-- The reference packs buildings, formations, roads and props into a deliberately composed view. Our starter-base screenshot contains a few entities and large empty areas. A camera or quality preset alone cannot close that gap.
+- Ground presentation was a flat play surface with simple noise and material stains. The pass improved its material and scenery treatment, but it remains flat. No authored Unreal Landscape exists yet.
+- The original models had clear silhouettes and five shared material roles, but no three-level LOD chain or finished surface treatment. The replacement set now covers all seven building/mineral meshes, eight units and eighteen motion parts, with three validated LODs each.
+- Much combat feedback used HUD lines, rings and crosses. The completed world-effects work now drives bounded flashes, projectiles, impacts, dust, healing and destruction from authoritative events.
+- iOS used a conservative LDR configuration with shadows and mobile anti-aliasing disabled. The current path uses the tested mobile HDR, FXAA and shadow configuration.
+- The reference packed buildings, formations, roads and props into a composed view. The pass increased model and scenery density, but its achieved art should be judged from the actual final captures rather than as reference parity.
 
 ## Implementation order
 
@@ -39,7 +41,7 @@ My recommendation is to borrow the reference's layered terrain, blue-versus-warm
 
 ## First acceptance milestone
 
-A short, real in-engine sequence of the test sector showing mining, production and a small fight. Review terrain depth, readable silhouettes, surface detail, stable edges/shadows, effects visibility and unobstructed touch controls. Record on-device frame time before expanding the art pass.
+The Mac portion now has actual final base and battle stills. A six-second real in-engine battle recording also exists, but it predates the final ground anti-tiling and ambient-occlusion polish. The AEON main-menu spacing has passed in the captured orientation. The next milestone is a bounded heat and performance investigation, followed by physical gameplay: visually verify the other landscape orientation, then test multitouch, training, construction, production, a complete match and thermal behavior. Phone timing must come from the phone; the mixed-state Mac sample is not a phone-performance result.
 
 ## References
 
@@ -55,15 +57,28 @@ A short, real in-engine sequence of the test sector showing mining, production a
 - [x] Finished model/terrain materials and affordable world effects.
 - [x] Stable iOS HDR, edge smoothing and shadows; Mac lighting/camera pass.
 - [x] Integrate into ordinary matches with fog, placement and multiplayer rules intact.
-- [ ] Inspect real base, mining, production and battle footage; iterate on visual defects.
-- [ ] Mac/iOS builds, focused regressions and bounded runtime performance evidence.
-- [ ] Update final evidence and retain physical Aeon testing as a separate checkpoint if unavailable.
+- [x] Import final v1.6.1 materials; validate all 33 custom meshes at three LODs and all twelve scenery batches.
+- [x] Pass Mac and SDK 27 iOS builds, the 636-package iOS cook/package, 15/15 focused Unreal tests and 2/2 portable tests.
+- [x] Capture actual final Mac base and battle stills.
+- [ ] Record a final-polish battle video. The available six-second recording predates the last ground anti-tiling and ambient-occlusion changes.
+- [x] Install the menu-only safe-area package on AEON and obtain player approval of the revised main-menu spacing.
+- [ ] Visually verify the captured landscape-right result; both-orientation acceptance remains open.
+- [x] Build and validate the schema 3 thermal package on Mac while preserving the accepted menu and HUD geometry.
+- [x] Build, sign and validate map-border package `7c603b00...` through three rendered native iOS-on-Mac edge captures.
+- [x] Install navigation replacement `2bf6039a...` on AEON. Installation and physical menu verification passed; the reported disappearance most likely came from the agent's forced relaunch.
+- [ ] Resolve the current physical launch failure, then test routing, physical boundaries and a sustained ordinary match on a cooled phone.
+- [ ] Complete the AEON gameplay, multitouch, full-match and thermal playtest.
 
-## Implementation notes — 12 September, final verification
+## Implementation notes, 12 September final verification
 
-- Seven building/mineral meshes, eight unit meshes and eighteen articulated parts are imported with validated pivots, five material slots and three LODs. The original tier/cost/placement rules remain in force.
-- All twelve scenery batches are imported. Six use UV-preserving decimations of a CC0 photogrammetry scan. Road and pad heights were corrected after rendered fog-plane intersections were found.
-- Ground and model material revisions are being judged at the gameplay camera. The shared finish includes three low-strength CC0 metal maps. The final terrain and HUD polish is in progress.
-- World effects follow gameplay and use fixed instance caps. Review found a directional muzzle effect that could expose an unseen target's bearing; its final guard and regression are in progress.
-- The iOS HDR/FXAA/shadow probe rendered successfully in the native Designed for iPad window. The complete SDK 27 C++ build also passes. The finished asset cook and new-roster runtime capture remain pending.
-- Portable simulation/network CTests pass (2/2), and the engine suite passes (14/14) before final polish. Final builds, automation, video and frame timing will be recorded in [VISUAL_TARGET_PASS.md](VISUAL_TARGET_PASS.md).
+- Final `cinematic-visual-target-materials-v1.6.1` import passed. All 33 custom meshes have validated pivots, five material slots where required and three LODs. The original tier, cost and placement rules remain in force.
+- All twelve scenery batches imported. Six use UV-preserving decimations of a CC0 photogrammetry scan. Road and pad heights were corrected after rendered fog-plane intersections were found.
+- Final ground and model materials are integrated. The shared finish uses low-strength CC0 metal maps, vertex-baked ambient occlusion and restrained wear. The ground adds a rotated secondary albedo sample to reduce visible tiling.
+- World effects follow gameplay and use fixed instance caps. The hidden-target direction guard and its regression test are complete.
+- Mac and SDK 27 iOS builds passed. The full physical-iOS cook/package passed with 636 packages, as did 15/15 focused Unreal tests and 2/2 portable tests.
+- The packaged app installed and launched on AEON, an iPhone 17 Pro Max running iOS 27. A captured screen and the player's observation confirm normal menu rendering. The launch then exposed a Dynamic Island overlap on the left menu buttons.
+- The final menu-only repair reads UIKit insets on the main thread without broadcasting a global Unreal safe-area change. It applies and restores the adjusted Canvas region only while drawing the menu, leaving the full-bleed background and gameplay behavior intact. The SDK 27 package installed and launched, and the player confirmed that the revised menu spacing is perfect.
+- The captured runtime retained a 1912x880 full-bleed Canvas with UIKit insets of 124, 0, 124 and 40 render pixels. The 2868x1320 screenshot has a 1.5 scale, so those values must not be restated as 186 native pixels. The raw landscape-right screenshot has not been visually accepted.
+- Final Mac base and battle stills are complete. The measured 14.79 FPS wall-clock mean spans mixed foreground/background capture states, including 85 background frames and the 10 FPS background cap. GPU history reported a 16.492 ms mean. These figures are not a steady gameplay benchmark and do not measure iPhone performance.
+- The player reported that AEON became very hot during the historical `1870dcf9...` run, so further play paused for cooldown. Historical thermal package `4ae4305a...` passed schema 3 build/package/signing, tests and five fresh-process iOS-on-Mac launches; its evidence is preserved separately and it was not installed. Historical map-border replacement `7c603b00...` passed its 44-action SDK 27 build in 157.72 seconds, packaging in 93.72 seconds, post-build check, strict signing, sustained entitlement/profile and Game Mode checks. Three fresh 2052 x 1536 native iOS-on-Mac edge captures passed visual inspection and exact-black probes with no new crash reports. These runs do not prove physical gestures or phone performance. Navigation package `2bf6039a...` is now installed on AEON, and its physical menu is verified. The reported disappearance most likely came from the agent's forced relaunch. Current priority is combined physical routing, boundary and sustained thermal acceptance, followed by persistent public online service, dedicated HUD redesign and authored Unreal Landscape.
+- No Unreal Landscape was added. The flat playing surface remains.

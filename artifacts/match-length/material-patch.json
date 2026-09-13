@@ -1,0 +1,51 @@
+{
+  "materials": [
+    {
+      "afterSha256": "5f562d9851d4b2297de8abc05371fadcf65292507559302c89fdcd534976f1a5",
+      "beforeSha256": "188a1d6d04fcb906735ec3665f2d06f56bc60669dc09638e71efdc176123af1a",
+      "default": 0.00020833333333333335,
+      "multiplier": "World centimeters to texture UV",
+      "owner": "scripts/unreal_visual_upgrade.py",
+      "package": "Content/Art/Materials/M_CinderFogV2.uasset",
+      "parameter": "CinderWorldSizeInverse",
+      "path": "/Game/Art/Materials/M_CinderFogV2",
+      "shaderErrors": []
+    },
+    {
+      "afterSha256": "67420ad6098cb73408c5a1a0cf4ce036dfd677e88c6089fefb6065959c3bee3e",
+      "beforeSha256": "103d02b3d6232b35f894d374cee632419d9c6fc6b6cf9054694f9e383ba895ba",
+      "default": 0.00020833333333333335,
+      "multiplier": "Map World centimeters to texture UV",
+      "owner": "scripts/unreal_canyon_surface.py",
+      "package": "Content/Art/Canyon/Materials/M_CinderCanyonGround.uasset",
+      "parameter": "CinderWorldSizeInverse",
+      "path": "/Game/Art/Canyon/Materials/M_CinderCanyonGround",
+      "shaderErrors": []
+    },
+    {
+      "afterSha256": "e4d553409741235c95d0bbec91b86a8b64b991585567dc488bf09f0ffce6108f",
+      "beforeSha256": "be008b16b13966986346c32b016c7a54520b0d0fb8db1a079f0eef6bf4ee3491",
+      "default": 0.00020833333333333335,
+      "multiplier": "Layers World centimeters to texture UV",
+      "owner": "scripts/unreal_terrain_surface.py",
+      "package": "Content/Art/Materials/M_CinderGroundV3.uasset",
+      "parameter": "CinderWorldSizeInverse",
+      "path": "/Game/Art/Materials/M_CinderGroundV3",
+      "shaderErrors": []
+    },
+    {
+      "afterSha256": "2eb460345ed046505742089b30c881e1ee2fc8fffe3d1626e7142991275cd482",
+      "beforeSha256": "ebf5e2f9d5e85a1e09c2cdf3f3484a9ecac47e627a9da0a3a9f37f6015e7ff5e",
+      "default": 0.00020833333333333335,
+      "multiplier": "Layers World centimeters to texture UV",
+      "owner": "scripts/unreal_visual_target_materials.py",
+      "package": "Content/Art/VisualTarget/Materials/M_CinderGroundV4.uasset",
+      "parameter": "CinderWorldSizeInverse",
+      "path": "/Game/Art/VisualTarget/Materials/M_CinderGroundV4",
+      "shaderErrors": []
+    }
+  ],
+  "sourceSha256": "9a5705abf0cf9453af50b27442fb2a7173445ccf18361fa3dd13d206ab3fbf61",
+  "success": true,
+  "utc": "2026-09-13T13:45:39.137018+00:00"
+}

@@ -1,0 +1,150 @@
+{
+  "case": "unit-info-phone",
+  "state": "unit-info",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "capture": "unit-info-phone.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        374.3,
+        89.2,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        96.2,
+        374.3,
+        171.3,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        178.3,
+        374.3,
+        244.1,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        374.3,
+        736.6,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        741.3,
+        374.3,
+        803.5,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        808.2,
+        374.3,
+        870.3,
+        425.9
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        875.0,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "infotab",
+      "argument": 1,
+      "bounds": [
+        462.3,
+        85.7,
+        546.8,
+        137.3
+      ]
+    },
+    {
+      "index": 10,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        553.8,
+        85.7,
+        605.4,
+        137.3
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 70960,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

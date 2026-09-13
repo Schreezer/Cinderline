@@ -1,0 +1,8 @@
+{
+  "scope": "Fresh difficulty IOS/arm64 SDK 27 executable; paired with project and installed renderer source audit",
+  "metalLinked": true,
+  "metalFXLinked": false,
+  "metalFXUndefinedSymbols": false,
+  "frameInterpolationEnabled": false,
+  "appleReference": "https://developer.apple.com/videos/play/wwdc2025/211/"
+}

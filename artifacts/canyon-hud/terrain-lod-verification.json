@@ -1,0 +1,34 @@
+{
+  "authoring": "Authored three canonical collisionless 127x127 Cinderline Landscapes in /Game/Maps/Frontier.",
+  "shaders": "Finalized 3 owned Landscapes, 12 components and 12 renderable component materials.",
+  "maps": [
+    {
+      "map": "CinderLandscapeMap0",
+      "forcedLOD": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "map": "CinderLandscapeMap1",
+      "forcedLOD": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "map": "CinderLandscapeMap2",
+      "forcedLOD": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "activeTriangles": 31752
+}

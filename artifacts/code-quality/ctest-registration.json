@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "unchanged": {
+    "simulation_rules": {
+      "TIMEOUT": 120.0
+    },
+    "navigation_regressions": {
+      "LABELS": [
+        "navigation"
+      ],
+      "TIMEOUT": 180.0
+    },
+    "network_protocol": {
+      "TIMEOUT": 120.0
+    },
+    "defense_regressions": {
+      "LABELS": [
+        "defense"
+      ],
+      "TIMEOUT": 120.0
+    },
+    "ai_difficulty_regressions": {
+      "LABELS": [
+        "ai"
+      ],
+      "TIMEOUT": 120.0
+    },
+    "production_allocation_regressions": {
+      "LABELS": [
+        "network",
+        "production"
+      ],
+      "TIMEOUT": 120.0
+    },
+    "match_length_regressions": {
+      "LABELS": [
+        "match-length",
+        "navigation"
+      ],
+      "TIMEOUT": 180.0
+    },
+    "four_player_regressions": {
+      "LABELS": [
+        "four-player",
+        "navigation",
+        "network"
+      ],
+      "TIMEOUT": 180.0
+    }
+  }
+}

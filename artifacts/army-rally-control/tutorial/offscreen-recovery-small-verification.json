@@ -1,0 +1,147 @@
+{
+  "case": "offscreen-recovery-small",
+  "state": "offscreen-recovery",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "step": 2,
+  "microstep": [
+    1,
+    2
+  ],
+  "target": "entity",
+  "selection": 0,
+  "rallyProducer": 0,
+  "tick": 0,
+  "actionsApplied": 3,
+  "capture": "offscreen-recovery-small.png",
+  "beforeShowCapture": "offscreen-recovery-small-before-show.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        10.0,
+        603.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        56.0,
+        64.0,
+        100.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        16.0,
+        104.0,
+        64.0,
+        148.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        16.0,
+        152.0,
+        64.0,
+        196.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        200.0,
+        64.0,
+        244.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        56.0,
+        603.0,
+        100.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        56.0,
+        651.0,
+        100.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        603.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytype",
+      "argument": 0,
+      "bounds": [
+        112.0,
+        319.0,
+        170.0,
+        363.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "protectedPlayerState": true,
+  "frameRateCap": 30,
+  "compactMinimumHitTarget": 44.0,
+  "runtimeLog": "Saved/ArmyRallyControl/TutorialLogs/offscreen-recovery-small-runtime.txt",
+  "freshCaptureAfterNs": 1789303322561381000,
+  "ownedPid": 6329,
+  "scope": "Mac Unreal renderer and deterministic tutorial HUD/pointer chain; no physical touch or iPhone run"
+}

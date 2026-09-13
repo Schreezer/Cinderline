@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-12",
+  "scope": "Physical AEON iPhone 17 Pro Max running iOS 27; brief authorized window before owner left.",
+  "installed_executable_sha256": "1870dcf9ef090b8d0125bd3265ebe5b59d82dff1723f3c800f9e330ef20b12ec",
+  "game_stopped": true,
+  "baseline": {
+    "samples": 600,
+    "viewport_pixels": [
+      1912,
+      880
+    ],
+    "duration_seconds": 10.852,
+    "mean_frame_ms": 18.086,
+    "fps": 55.29,
+    "asynchronous_engine_gpu_mean_ms": 11.601
+  },
+  "optimized": {
+    "thermal": "serious",
+    "raw_thermal": 2,
+    "gameplay_requested_fps": 20,
+    "gameplay_actual_pacer_fps": 20,
+    "menu_actual_pacer_fps": 15,
+    "quality": "minimum",
+    "sampled_gameplay_gpu_frame_ms": 6.295,
+    "device_temperature_c": null,
+    "sustained_cooling_verified": false,
+    "aggregated_frame_profile": null,
+    "profile_failure_reason": "Requested 300 frames, which this command rejects. No optimized aggregate profile was collected."
+  },
+  "limitations": [
+    "The phone was already thermally stressed. This does not prove sustained cooling or lower temperature.",
+    "Engine GPU frame time and standard Apple HUD GPU duration are not hardware utilization percentages.",
+    "The installed build precedes the local fixes for automatic screen percentage, background quality retention, and render suppression placement.",
+    "The refreshed local package has not been installed on the phone."
+  ],
+  "logs": [
+    "artifacts/ios-thermal/quick-baseline-evidence.log",
+    "artifacts/ios-thermal/optimized-quick-evidence.log"
+  ]
+}

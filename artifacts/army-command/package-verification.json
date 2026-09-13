@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-12T19:51:13.434653+00:00",
+  "app": "Saved/Packages/IOS/Cinderline.app",
+  "bundleIdentifier": "com.cinderline.game",
+  "executableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+  "machoPlatform": "IOS",
+  "sdk": "27.0",
+  "minimumOS": "15.0",
+  "strictCodesignVerified": true,
+  "developmentProfile": true,
+  "phoneRegistered": true,
+  "profileUnexpired": true,
+  "orientations": [
+    "UIInterfaceOrientationLandscapeLeft",
+    "UIInterfaceOrientationLandscapeRight"
+  ],
+  "bundleBytes": 493311965,
+  "ioStoreContainers": [
+    "cookeddata/cinderline/content/paks/global.utoc",
+    "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+  ]
+}

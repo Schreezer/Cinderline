@@ -1,0 +1,23 @@
+{
+  "mode": "internet",
+  "viewport": [
+    1920,
+    1080
+  ],
+  "panel": [
+    1920.0,
+    1080.0
+  ],
+  "labels": 28,
+  "visibleButtons": 8,
+  "buttonsInitiallyOnscreen": 8,
+  "minimumTouchHeightPixels": 66.0,
+  "scrollRange": 0.0,
+  "includesSlateUI": true,
+  "case": "internet-desktop",
+  "capture": "internet-desktop.png",
+  "scrolledCapture": "internet-desktop-scrolled.png",
+  "runtime": "internet-desktop-runtime.txt",
+  "protectedPlayerState": true,
+  "scope": "Mac Unreal renderer, real Slate multiplayer panel; no network connection or physical-device interaction"
+}

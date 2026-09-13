@@ -1,0 +1,28 @@
+$ cmake -S /Users/chirag13/Documents/ChatGPT/starCraft -B /tmp/cinderline-match-length-native-build -DCMAKE_BUILD_TYPE=Release -DCINDERLINE_BUILD_NATIVE=ON -DCINDERLINE_BUILD_SERVER=OFF -DBUILD_TESTING=OFF
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The OBJCXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting OBJCXX compiler ABI info
+-- Detecting OBJCXX compiler ABI info - done
+-- Check for working OBJCXX compiler: /usr/bin/c++ - skipped
+-- Configuring done (0.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/cinderline-match-length-native-build
+EXIT_CODE=0
+$ cmake --build /tmp/cinderline-match-length-native-build --target CinderlineNative --parallel 1
+[ 11%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[ 22%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[ 33%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[ 44%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 55%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 66%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 77%] Linking CXX static library libCinderlineSimulation.a
+[ 77%] Built target CinderlineSimulation
+[ 88%] Building OBJCXX object CMakeFiles/CinderlineNative.dir/Tools/Native/CinderlineApp.mm.o
+[100%] Linking CXX executable CinderlineNative
+[100%] Built target CinderlineNative
+EXIT_CODE=0

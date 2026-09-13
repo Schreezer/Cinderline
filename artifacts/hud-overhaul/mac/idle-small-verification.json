@@ -1,0 +1,211 @@
+{
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "sheet": 0,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "none",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        10.0,
+        603.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        56.0,
+        64.0,
+        100.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        16.0,
+        104.0,
+        64.0,
+        148.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        16.0,
+        152.0,
+        64.0,
+        196.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        200.0,
+        64.0,
+        244.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        56.0,
+        603.0,
+        100.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        56.0,
+        651.0,
+        100.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        603.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytype",
+      "argument": 0,
+      "bounds": [
+        112.0,
+        319.0,
+        163.0,
+        363.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "armytype",
+      "argument": 1,
+      "bounds": [
+        166.0,
+        319.0,
+        217.0,
+        363.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "armytype",
+      "argument": 2,
+      "bounds": [
+        220.0,
+        319.0,
+        271.0,
+        363.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "armytype",
+      "argument": 3,
+      "bounds": [
+        274.0,
+        319.0,
+        325.0,
+        363.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "armytype",
+      "argument": 4,
+      "bounds": [
+        328.0,
+        319.0,
+        379.0,
+        363.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        382.0,
+        319.0,
+        433.0,
+        363.0
+      ]
+    }
+  ],
+  "selection": 0,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "globalState": null,
+  "observedMaxFPS": 30,
+  "case": "idle-small",
+  "state": "idle",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "capture": "idle-small.png",
+  "captureSha256": "3534330c89fc6f965b2b321b6864a8b84ae25162cb824470b6d0cc073a77ef5e",
+  "captureDimensions": [
+    667,
+    375
+  ],
+  "ownedPid": 74835,
+  "launchToken": "HUDOverhaul-3c90c626b18643c0b7dc6e472529d0ab",
+  "startedAtNs": 1789298947540190000,
+  "captureModifiedAtNs": 1789298962350535741,
+  "freshCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "minimumCompactHitSize": 44,
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS or device performance measurement."
+}

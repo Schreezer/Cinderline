@@ -1,0 +1,194 @@
+{
+  "case": "queue-small",
+  "state": "queue",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 1,
+  "capture": "queue-small.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        545.0,
+        10.0,
+        589.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        319.0,
+        76.0,
+        363.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        82.0,
+        319.0,
+        146.0,
+        363.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        152.0,
+        319.0,
+        208.0,
+        363.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "sheet",
+      "argument": 1,
+      "bounds": [
+        427.0,
+        319.0,
+        507.0,
+        363.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "sheet",
+      "argument": 3,
+      "bounds": [
+        513.0,
+        319.0,
+        589.0,
+        363.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "queuepage",
+      "argument": 1,
+      "bounds": [
+        602.0,
+        153.0,
+        646.0,
+        197.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "cancelqueue",
+      "argument": 0,
+      "bounds": [
+        216.0,
+        205.0,
+        354.7,
+        249.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "cancelqueue",
+      "argument": 1,
+      "bounds": [
+        361.7,
+        205.0,
+        500.3,
+        249.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "cancelqueue",
+      "argument": 2,
+      "bounds": [
+        507.3,
+        205.0,
+        646.0,
+        249.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "cancelqueue",
+      "argument": 3,
+      "bounds": [
+        216.0,
+        256.0,
+        354.7,
+        300.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "cancelqueue",
+      "argument": 4,
+      "bounds": [
+        361.7,
+        256.0,
+        500.3,
+        300.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "cancelqueue",
+      "argument": 5,
+      "bounds": [
+        507.3,
+        256.0,
+        646.0,
+        300.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 66542,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

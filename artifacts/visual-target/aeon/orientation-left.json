@@ -1,0 +1,28 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "orientation",
+      "set",
+      "--device",
+      "00008150-00060CE12684401C",
+      "landscapeLeft",
+      "--json-output",
+      "artifacts/visual-target/aeon/orientation-left.json"
+    ],
+    "commandType" : "devicectl.device.orientation.set",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "deviceIsOrientationLocked" : false,
+    "deviceOrientation" : "landscapeLeft",
+    "deviceOrientationNonFlat" : "landscapeLeft"
+  }
+}

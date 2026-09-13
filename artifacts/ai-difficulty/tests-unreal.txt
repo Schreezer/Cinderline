@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Integration.CombatFeedback",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Integration.EconomyAndProduction",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Integration.SoloAIDifficulty",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Integration.WorldLifecycle",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.Initialization",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.InstanceBudget",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.CameraBoundary",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.IOSPerformancePolicy",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.SceneryObservedState",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Presentation.SceneryObstacleBounds",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Tutorial.CommandGates",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Tutorial.EarlyActionsAndContent",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Tutorial.EmberGate",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.Tutorial.EndToEnd",
+    "state": "Success"
+  },
+  {
+    "name": "Cinderline.UI.MobileHUDLayout",
+    "state": "Success"
+  }
+]

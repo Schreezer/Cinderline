@@ -1,0 +1,50 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "info",
+      "apps",
+      "--device",
+      "00008150-00060CE12684401C",
+      "--bundle-id",
+      "com.cinderline.game",
+      "--json-output",
+      "artifacts/metalfx/aeon/installed-app.json",
+      "--quiet",
+      "--timeout",
+      "30"
+    ],
+    "commandType" : "devicectl.device.info.apps",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "apps" : [
+      {
+        "appClip" : false,
+        "builtByDeveloper" : true,
+        "bundleIdentifier" : "com.cinderline.game",
+        "bundleVersion" : "56702186.0.30",
+        "containerAccessible" : true,
+        "defaultApp" : false,
+        "hidden" : false,
+        "internalApp" : false,
+        "name" : "Cinderline",
+        "removable" : true,
+        "url" : "file:///private/var/containers/Bundle/Application/104D0B4F-23CC-4512-9E26-908645DD968E/Cinderline.app/",
+        "version" : "1.0"
+      }
+    ],
+    "defaultAppsIncluded" : false,
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "hiddenAppsIncluded" : false,
+    "internalAppsIncluded" : false,
+    "matchingBundleIdentifier" : "com.cinderline.game",
+    "removableAppsIncluded" : true
+  }
+}

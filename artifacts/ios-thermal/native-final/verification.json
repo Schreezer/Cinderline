@@ -1,0 +1,317 @@
+{
+  "scope": "Five fresh-process launches of the signed native iOS binary via Designed for iPad on Mac; not Simulator or AEON. All policy presets were development overrides, with actual Mac thermal state nominal.",
+  "executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573",
+  "strict_inner_signature_verified": true,
+  "mac_provisioning_verified": true,
+  "game_stopped": true,
+  "successful_launches": 5,
+  "new_crash_reports": [],
+  "runs": {
+    "menu-cold-1": {
+      "launch": {
+        "pid": 53545,
+        "new_crash_reports": [],
+        "elapsed_seconds": 15.46217679977417,
+        "thermal_override": 0,
+        "scope": "iOS binary on Mac; forced development policy, not physical thermal evidence",
+        "captured": true,
+        "frame_profile_completed": true,
+        "world_rendering_gated": true,
+        "executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573"
+      },
+      "frame_profile": {
+        "map": "Frontier",
+        "samples": "120",
+        "warmup_frames": "30",
+        "viewport_px": "2052x1536",
+        "window_seconds": "8.110",
+        "mean_ms": "67.587",
+        "median_ms": "67.056",
+        "p95_ms": "73.014",
+        "fps": "14.80",
+        "foreground": "unavailable",
+        "background_frames": "unavailable",
+        "measurement": "rendered_viewport_wall_clock",
+        "gpu_timing": "completed_engine_frames"
+      },
+      "gpu": {
+        "metric": "gpu",
+        "status": "available",
+        "samples": "120",
+        "viewport_samples": "120",
+        "unavailable_observations": "0",
+        "mean_ms": "1.204",
+        "median_ms": "0.631",
+        "p95_ms": "3.101",
+        "source": "FRHIGPUFrameTimeHistory",
+        "availability": "fresh_positive_completed_gpu_frames"
+      },
+      "policy": {
+        "state": "menu",
+        "actual_thermal": "nominal",
+        "effective_thermal": "nominal",
+        "low_power": "0",
+        "effective_low_power": "0",
+        "requested_fps": "15",
+        "actual_pacer_fps": "15",
+        "quality": "full",
+        "stable_seconds": "0.2",
+        "source": "development_override"
+      },
+      "scene_render_pass_present": false,
+      "scene_pixels": null,
+      "viewport_and_hud_pixels": [
+        2052,
+        1536
+      ],
+      "screenshot": "artifacts/ios-thermal/native-final/menu-cold-1.png"
+    },
+    "menu-cold-2": {
+      "launch": {
+        "pid": 53678,
+        "new_crash_reports": [],
+        "elapsed_seconds": 11.89909291267395,
+        "thermal_override": 0,
+        "scope": "iOS binary on Mac; forced development policy, not physical thermal evidence",
+        "captured": true,
+        "frame_profile_completed": true,
+        "world_rendering_gated": true,
+        "executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573"
+      },
+      "frame_profile": {
+        "map": "Frontier",
+        "samples": "120",
+        "warmup_frames": "30",
+        "viewport_px": "2052x1536",
+        "window_seconds": "8.131",
+        "mean_ms": "67.757",
+        "median_ms": "67.025",
+        "p95_ms": "75.679",
+        "fps": "14.76",
+        "foreground": "unavailable",
+        "background_frames": "unavailable",
+        "measurement": "rendered_viewport_wall_clock",
+        "gpu_timing": "completed_engine_frames"
+      },
+      "gpu": {
+        "metric": "gpu",
+        "status": "available",
+        "samples": "120",
+        "viewport_samples": "120",
+        "unavailable_observations": "0",
+        "mean_ms": "1.312",
+        "median_ms": "0.874",
+        "p95_ms": "3.145",
+        "source": "FRHIGPUFrameTimeHistory",
+        "availability": "fresh_positive_completed_gpu_frames"
+      },
+      "policy": {
+        "state": "menu",
+        "actual_thermal": "nominal",
+        "effective_thermal": "nominal",
+        "low_power": "0",
+        "effective_low_power": "0",
+        "requested_fps": "15",
+        "actual_pacer_fps": "15",
+        "quality": "full",
+        "stable_seconds": "0.2",
+        "source": "development_override"
+      },
+      "scene_render_pass_present": false,
+      "scene_pixels": null,
+      "viewport_and_hud_pixels": [
+        2052,
+        1536
+      ],
+      "screenshot": "artifacts/ios-thermal/native-final/menu-cold-2.png"
+    },
+    "menu-cold-3": {
+      "launch": {
+        "pid": 53793,
+        "new_crash_reports": [],
+        "elapsed_seconds": 11.97957181930542,
+        "thermal_override": 0,
+        "scope": "iOS binary on Mac; forced development policy, not physical thermal evidence",
+        "captured": true,
+        "frame_profile_completed": true,
+        "world_rendering_gated": true,
+        "executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573"
+      },
+      "frame_profile": {
+        "map": "Frontier",
+        "samples": "120",
+        "warmup_frames": "30",
+        "viewport_px": "2052x1536",
+        "window_seconds": "8.097",
+        "mean_ms": "67.474",
+        "median_ms": "66.913",
+        "p95_ms": "74.717",
+        "fps": "14.82",
+        "foreground": "unavailable",
+        "background_frames": "unavailable",
+        "measurement": "rendered_viewport_wall_clock",
+        "gpu_timing": "completed_engine_frames"
+      },
+      "gpu": {
+        "metric": "gpu",
+        "status": "available",
+        "samples": "120",
+        "viewport_samples": "120",
+        "unavailable_observations": "0",
+        "mean_ms": "1.043",
+        "median_ms": "0.579",
+        "p95_ms": "3.117",
+        "source": "FRHIGPUFrameTimeHistory",
+        "availability": "fresh_positive_completed_gpu_frames"
+      },
+      "policy": {
+        "state": "menu",
+        "actual_thermal": "nominal",
+        "effective_thermal": "nominal",
+        "low_power": "0",
+        "effective_low_power": "0",
+        "requested_fps": "15",
+        "actual_pacer_fps": "15",
+        "quality": "full",
+        "stable_seconds": "0.2",
+        "source": "development_override"
+      },
+      "scene_render_pass_present": false,
+      "scene_pixels": null,
+      "viewport_and_hud_pixels": [
+        2052,
+        1536
+      ],
+      "screenshot": "artifacts/ios-thermal/native-final/menu-cold-3.png"
+    },
+    "nominal": {
+      "launch": {
+        "pid": 53892,
+        "new_crash_reports": [],
+        "elapsed_seconds": 9.862449884414673,
+        "thermal_override": 0,
+        "scope": "iOS binary on Mac; forced development policy, not physical thermal evidence",
+        "captured": true,
+        "frame_profile_completed": true,
+        "world_rendering_gated": true,
+        "executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573"
+      },
+      "frame_profile": {
+        "map": "Frontier",
+        "samples": "120",
+        "warmup_frames": "30",
+        "viewport_px": "2052x1536",
+        "window_seconds": "4.041",
+        "mean_ms": "33.675",
+        "median_ms": "33.344",
+        "p95_ms": "36.667",
+        "fps": "29.70",
+        "foreground": "unavailable",
+        "background_frames": "unavailable",
+        "measurement": "rendered_viewport_wall_clock",
+        "gpu_timing": "completed_engine_frames"
+      },
+      "gpu": {
+        "metric": "gpu",
+        "status": "available",
+        "samples": "120",
+        "viewport_samples": "120",
+        "unavailable_observations": "0",
+        "mean_ms": "4.619",
+        "median_ms": "4.438",
+        "p95_ms": "8.159",
+        "source": "FRHIGPUFrameTimeHistory",
+        "availability": "fresh_positive_completed_gpu_frames"
+      },
+      "policy": {
+        "state": "gameplay",
+        "actual_thermal": "nominal",
+        "effective_thermal": "nominal",
+        "low_power": "0",
+        "effective_low_power": "0",
+        "requested_fps": "30",
+        "actual_pacer_fps": "30",
+        "quality": "full",
+        "stable_seconds": "0.2",
+        "source": "development_override"
+      },
+      "scene_render_pass_present": true,
+      "scene_pixels": [
+        2052,
+        1536
+      ],
+      "viewport_and_hud_pixels": [
+        2052,
+        1536
+      ],
+      "screenshot": "artifacts/ios-thermal/native-final/nominal.png"
+    },
+    "serious": {
+      "launch": {
+        "pid": 53965,
+        "new_crash_reports": [],
+        "elapsed_seconds": 9.804427862167358,
+        "thermal_override": 2,
+        "scope": "iOS binary on Mac; forced development policy, not physical thermal evidence",
+        "captured": true,
+        "frame_profile_completed": true,
+        "world_rendering_gated": true,
+        "executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573"
+      },
+      "frame_profile": {
+        "map": "Frontier",
+        "samples": "120",
+        "warmup_frames": "30",
+        "viewport_px": "2052x1536",
+        "window_seconds": "6.056",
+        "mean_ms": "50.469",
+        "median_ms": "50.207",
+        "p95_ms": "54.663",
+        "fps": "19.81",
+        "foreground": "unavailable",
+        "background_frames": "unavailable",
+        "measurement": "rendered_viewport_wall_clock",
+        "gpu_timing": "completed_engine_frames"
+      },
+      "gpu": {
+        "metric": "gpu",
+        "status": "available",
+        "samples": "120",
+        "viewport_samples": "120",
+        "unavailable_observations": "0",
+        "mean_ms": "2.493",
+        "median_ms": "1.820",
+        "p95_ms": "6.044",
+        "source": "FRHIGPUFrameTimeHistory",
+        "availability": "fresh_positive_completed_gpu_frames"
+      },
+      "policy": {
+        "state": "gameplay",
+        "actual_thermal": "nominal",
+        "effective_thermal": "serious",
+        "low_power": "0",
+        "effective_low_power": "0",
+        "requested_fps": "20",
+        "actual_pacer_fps": "20",
+        "quality": "minimum",
+        "stable_seconds": "0.0",
+        "source": "development_override"
+      },
+      "scene_render_pass_present": true,
+      "scene_pixels": [
+        1437,
+        1076
+      ],
+      "viewport_and_hud_pixels": [
+        2052,
+        1536
+      ],
+      "screenshot": "artifacts/ios-thermal/native-final/serious.png"
+    }
+  },
+  "visual_review": "Menu remains full bleed. Nominal and serious screenshots inspected: matching HUD layout and readable text; reduced shadows and scene resolution affect the 3D view only.",
+  "limits": [
+    "120 samples per run after 30 warmups, including one instrumented GPU frame. Not sustained foreground performance, power, phone temperature, GPU utilization or proof that every startup race is eliminated.",
+    "No new package was installed on AEON."
+  ]
+}

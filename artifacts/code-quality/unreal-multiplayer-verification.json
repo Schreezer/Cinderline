@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "command": [
+    "./scripts/test-multiplayer.sh",
+    "--no-build",
+    "--allow-idevice-id-warning"
+  ],
+  "protectedBefore": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "exitCode": 0,
+  "protectedAfterRun": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "restoredFiles": [],
+  "protectedAfter": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-12T16:40:31.570022+00:00",
+  "device": "Aeon",
+  "model": "iPhone17ProMax",
+  "os": "27.0",
+  "physicalDevice": true,
+  "executableSha256": "2bf6039a16a225aba6ce35d96e46a6e15aa4985b79cfe86834f35168e28531fa",
+  "installed": true,
+  "launchCommandSucceeded": true,
+  "pid": 997,
+  "processObservedAlive": true,
+  "menuScreenshotVisuallyVerified": true,
+  "appLeftRunningForUser": true,
+  "userReportedDisappearance": true,
+  "crashReproduced": false,
+  "latestAvailableCinderlineCrash": "2026-09-12T11:40:53.000Z",
+  "latestAvailableJetsam": "2026-09-12T13:39:29.000Z",
+  "launchUsedTerminateExisting": true,
+  "possibleExplanation": "The post-install launch command requested termination of an existing app instance. Whether that is the disappearance the user observed is unconfirmed.",
+  "menuObservation": {
+    "thermal": "nominal",
+    "pacerFPS": 15,
+    "worldRenderingDisabled": true,
+    "runtimeErrorsOrAssertions": false
+  },
+  "remaining": [
+    "Physical full-match routing, touch and map boundary acceptance",
+    "Sustained thermal acceptance"
+  ],
+  "previousSession": {
+    "startedLocal": "2026-09-12 22:03:37 +05:30",
+    "lastLogUTC": "2026-09-12T16:34:07.164Z",
+    "ordinaryGameplayObservedInLogs": true,
+    "gameplayPacerFPS": 30,
+    "thermal": "nominal",
+    "runtimeErrorsOrAssertions": false
+  },
+  "relaunchSessionStartedLocal": "2026-09-12 22:04:08 +05:30",
+  "likelyExplanation": "The agent post-install verification used --terminate-existing after the user had already opened and started playing. The previous match log ends normally immediately before that relaunch; no contemporaneous Cinderline crash or Jetsam report is available."
+}

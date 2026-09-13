@@ -1,0 +1,16 @@
+PASS view privacy and handles
+PASS resource memory
+PASS effect privacy
+PASS bounded codecs
+PASS replica guards
+RESULT passed=5 failed=0
+PASS remaining-time allocation and atomic gates
+PASS worker choice and producer gates
+PASS stable cancellation and research
+PASS persistent army rally and overrides
+PASS fresh worker mining assignment
+PASS deferred worker assignment persistence
+PASS replay and persistence
+RESULT passed=7 failed=0
+network_exit=0
+production_exit=0

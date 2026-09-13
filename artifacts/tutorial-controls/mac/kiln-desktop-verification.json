@@ -1,0 +1,227 @@
+{
+  "case": "kiln-desktop",
+  "state": "kiln",
+  "viewport": [
+    1920.0,
+    1080.0
+  ],
+  "scale": 1.5,
+  "observed": {
+    "offer": 0,
+    "menu": 0,
+    "step": 4,
+    "complete": 0,
+    "preferenceCompleted": 0,
+    "winner": -1,
+    "opponentOrders": 0,
+    "tick": 360
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1537.8,
+        19.5,
+        1705.8,
+        85.5
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1717.8,
+        19.5,
+        1852.8,
+        85.5
+      ]
+    },
+    {
+      "index": 2,
+      "action": "zoom+",
+      "argument": 0,
+      "bounds": [
+        1777.8,
+        129.0,
+        1852.8,
+        195.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "zoom-",
+      "argument": 0,
+      "bounds": [
+        1777.8,
+        205.5,
+        1852.8,
+        271.5
+      ]
+    },
+    {
+      "index": 4,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        1120.8,
+        891.0,
+        1291.8,
+        957.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        1306.8,
+        891.0,
+        1477.8,
+        957.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        1492.8,
+        891.0,
+        1663.8,
+        957.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        1678.8,
+        891.0,
+        1849.8,
+        957.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        1120.8,
+        970.5,
+        1291.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 9,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        1306.8,
+        970.5,
+        1477.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 10,
+      "action": "stop",
+      "argument": 0,
+      "bounds": [
+        1492.8,
+        970.5,
+        1663.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 11,
+      "action": "buildmenu",
+      "argument": 0,
+      "bounds": [
+        1678.8,
+        970.5,
+        1849.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 12,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        337.2,
+        808.5,
+        736.2,
+        874.5
+      ]
+    },
+    {
+      "index": 13,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        736.2,
+        808.5,
+        802.2,
+        874.5
+      ]
+    },
+    {
+      "index": 14,
+      "action": "kind",
+      "argument": 8,
+      "bounds": [
+        337.2,
+        912.0,
+        697.2,
+        978.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "train",
+      "argument": 0,
+      "bounds": [
+        1120.8,
+        802.5,
+        1291.8,
+        868.5
+      ]
+    },
+    {
+      "index": 16,
+      "action": "tutorialfocus",
+      "argument": 0,
+      "bounds": [
+        1168.8,
+        365.0,
+        1448.6,
+        431.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "tutorialhelp",
+      "argument": 0,
+      "bounds": [
+        1459.1,
+        365.0,
+        1738.8,
+        431.0
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "kiln-desktop.png",
+  "selection": {
+    "id": 1,
+    "kind": "Anchor"
+  },
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

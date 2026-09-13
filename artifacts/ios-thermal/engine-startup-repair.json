@@ -1,0 +1,41 @@
+{
+  "preparation_schema": 3,
+  "scope": "Cinderline native IOS arm64 Development: Core rebuilt with stock MiMalloc object; ApplicationCore and Launch rebuilt for Cinderline IOS",
+  "stock_engine_modified": false,
+  "patched_inputs": [
+    "Engine/Build/Build.version",
+    "Engine/Build/InstalledBuild.txt",
+    "Engine/CinderlinePrecompiled/IOS/arm64/UnrealGame/Development/Core/MiMalloc.c.o",
+    "Engine/Source/Programs/UnrealBuildTool/Platform/IOS/UEBuildIOS.cs",
+    "Engine/Source/Runtime/ApplicationCore/ApplicationCore.Build.cs",
+    "Engine/Source/Runtime/ApplicationCore/Private/IOS/IOSAppDelegate.cpp",
+    "Engine/Source/Runtime/ApplicationCore/Private/IOS/IOSSceneDelegate.cpp",
+    "Engine/Source/Runtime/Core/Core.Build.cs",
+    "Engine/Source/Runtime/Core/Private/IOS/IOSModuleDiagnostics.cpp",
+    "Engine/Source/Runtime/Core/Private/Thirdparty/MiMalloc.c",
+    "Engine/Source/Runtime/Launch/Launch.Build.cs",
+    "Engine/Source/Runtime/Launch/Private/IOS/LaunchIOS.cpp"
+  ],
+  "allocator_sha256": "7d32cd0001b5daf4bd16a02ca75746d5d4b3972dbd3c77592861a266bc5cd94c",
+  "allocator_platform": "native IOS arm64, minimum15.0, SDK26.1; reused byte-for-byte, no binary modification or relabeling",
+  "final_executable_sha256": "4ae4305ad7318bb25c35f0d65dfe1a6687a3ae42fe7f70d3b21415d3e82bd573",
+  "final_platform": "IOS arm64, SDK27.0, minimum15.0",
+  "build_actions": 29,
+  "build_succeeded": true,
+  "build_seconds": 112.85,
+  "package_succeeded": true,
+  "package_seconds": 88.84,
+  "strict_signature_verified": true,
+  "preparer_tests_passed": 8,
+  "game_tests_passed": 16,
+  "startup_callback_symbol_present": true,
+  "allocator_link_input_present": true,
+  "post_build_preparer_check_passed": true,
+  "native_launch_evidence": "artifacts/ios-thermal/native-final/verification.json",
+  "installed_on_aeon": false,
+  "historical_crashes": {
+    "native_d991": "Saved/IOSThermal/native-module-trace-crash.ips",
+    "earlier_physical_8def": "Saved/IOSThermal/profile-launch-crash.ips"
+  },
+  "limitations": "Five successful Mac launches validate the repaired path but do not establish exhaustive race-freedom or physical-device thermal acceptance."
+}

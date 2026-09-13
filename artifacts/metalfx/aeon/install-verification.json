@@ -1,0 +1,39 @@
+{
+  "verifiedAt": "2026-09-13T10:24:25+05:30",
+  "result": "passed",
+  "deviceName": "AEON",
+  "sourcePackage": {
+    "path": "Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "version": "1.0",
+    "bundleVersion": "56702186.0.30",
+    "executableSha256": "594f5a626d1e875152355c243cdd25a38511394a78165df8b2742934eee96b0c",
+    "strictCodesignVerified": true,
+    "platform": "IOS",
+    "architecture": "arm64",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "packageEvidence": "../package-verification.json"
+  },
+  "installation": {
+    "outcome": "success",
+    "bundleIdentifier": "com.cinderline.game",
+    "installationURL": "file:///private/var/containers/Bundle/Application/104D0B4F-23CC-4512-9E26-908645DD968E/Cinderline.app/",
+    "installEvidence": "install.json"
+  },
+  "postInstallQuery": {
+    "outcome": "success",
+    "bundleIdentifier": "com.cinderline.game",
+    "name": "Cinderline",
+    "version": "1.0",
+    "bundleVersion": "56702186.0.30",
+    "installationURLMatchesInstallResult": true,
+    "queryEvidence": "installed-app.json"
+  },
+  "evidenceChain": "The exact locally verified package path was passed to the successful CoreDevice install command. The immediate app query returned the same bundle identifier and installation URL, and its version fields match the source app Info.plist.",
+  "launchAttempted": false,
+  "physicalRenderingVerified": false,
+  "physicalTouchOrGameplayVerified": false,
+  "physicalPerformanceOrThermalsVerified": false,
+  "remainingAcceptance": "The user deferred further AEON interaction. Launch, rendering, touch, gameplay, streaming, memory, battery and sustained thermal checks remain pending."
+}

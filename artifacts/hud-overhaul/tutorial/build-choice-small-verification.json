@@ -1,0 +1,213 @@
+{
+  "case": "build-choice-small",
+  "state": "build-choice",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "step": 4,
+  "microstep": [
+    2,
+    4
+  ],
+  "target": "button",
+  "selection": 0,
+  "rallyProducer": 0,
+  "tick": 360,
+  "actionsApplied": 1,
+  "capture": "build-choice-small.png",
+  "beforeShowCapture": null,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        10.0,
+        603.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        56.0,
+        64.0,
+        100.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        16.0,
+        104.0,
+        64.0,
+        148.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        16.0,
+        152.0,
+        64.0,
+        196.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        200.0,
+        64.0,
+        244.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        56.0,
+        603.0,
+        100.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        56.0,
+        651.0,
+        100.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        603.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        364.0,
+        56.0,
+        408.0,
+        100.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "globalbuild",
+      "argument": 8,
+      "bounds": [
+        86.0,
+        105.0,
+        184.7,
+        149.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "globalbuild",
+      "argument": 9,
+      "bounds": [
+        190.7,
+        105.0,
+        289.3,
+        149.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "globalbuild",
+      "argument": 10,
+      "bounds": [
+        295.3,
+        105.0,
+        394.0,
+        149.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "globalbuild",
+      "argument": 11,
+      "bounds": [
+        86.0,
+        154.0,
+        184.7,
+        198.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "globalbuild",
+      "argument": 12,
+      "bounds": [
+        190.7,
+        154.0,
+        289.3,
+        198.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "globalbuild",
+      "argument": 13,
+      "bounds": [
+        295.3,
+        154.0,
+        394.0,
+        198.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "protectedPlayerState": true,
+  "frameRateCap": 30,
+  "compactMinimumHitTarget": 44.0,
+  "runtimeLog": "Saved/HUDOverhaul/TutorialLogs/build-choice-small-runtime.txt",
+  "freshCaptureAfterNs": 1789299204158799000,
+  "ownedPid": 77030,
+  "scope": "Mac Unreal renderer and deterministic tutorial HUD/pointer chain; no physical touch or iPhone run"
+}

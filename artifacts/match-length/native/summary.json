@@ -1,0 +1,13 @@
+{
+  "baseline_sha": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "build_directory": "/tmp/cinderline-match-length-build",
+  "configure": "cmake -S . -B /tmp/cinderline-match-length-build -DCINDERLINE_BUILD_NATIVE=OFF -DCMAKE_BUILD_TYPE=Release",
+  "build": {"command": "cmake --build /tmp/cinderline-match-length-build -j2", "exit_code": 0},
+  "ctest": {"command": "ctest --test-dir /tmp/cinderline-match-length-build --output-on-failure -j2", "passed": 7, "failed": 0, "exit_code": 0, "elapsed_seconds": 8.57},
+  "match_length": {"assertions_passed": 5368, "assertions_failed": 0, "travel_ticks": [244, 326, 408], "train_seconds": [19.2, 24.0, 24.0]},
+  "notes": [
+    "Portable Release build used AppleClang with at most two parallel jobs.",
+    "No Unreal build or application launch was started by this worker.",
+    "The shared worktree contains pre-existing concurrent changes; baseline_sha identifies HEAD and does not claim a clean checkout."
+  ]
+}

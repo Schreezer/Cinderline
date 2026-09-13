@@ -1,0 +1,55 @@
+{
+  "requested": [
+    "menu-short-small",
+    "menu-standard-phone-left",
+    "menu-long-phone-right",
+    "menu-long-desktop",
+    "map-short-small",
+    "map-short-phone",
+    "map-long-phone",
+    "map-long-desktop"
+  ],
+  "completed": [
+    {
+      "case": "menu-short-small",
+      "verification": "menu-short-small-verification.json",
+      "capture": "menu-short-small.png"
+    },
+    {
+      "case": "menu-standard-phone-left",
+      "verification": "menu-standard-phone-left-verification.json",
+      "capture": "menu-standard-phone-left.png"
+    },
+    {
+      "case": "menu-long-phone-right",
+      "verification": "menu-long-phone-right-verification.json",
+      "capture": "menu-long-phone-right.png"
+    },
+    {
+      "case": "menu-long-desktop",
+      "verification": "menu-long-desktop-verification.json",
+      "capture": "menu-long-desktop.png"
+    },
+    {
+      "case": "map-short-small",
+      "verification": "map-short-small-verification.json",
+      "capture": "map-short-small.png"
+    },
+    {
+      "case": "map-short-phone",
+      "verification": "map-short-phone-verification.json",
+      "capture": "map-short-phone.png"
+    },
+    {
+      "case": "map-long-phone",
+      "verification": "map-long-phone-verification.json",
+      "capture": "map-long-phone.png"
+    },
+    {
+      "case": "map-long-desktop",
+      "verification": "map-long-desktop-verification.json",
+      "capture": "map-long-desktop.png"
+    }
+  ],
+  "allRequestedPassed": true
+}

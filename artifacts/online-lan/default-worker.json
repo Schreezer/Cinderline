@@ -1,0 +1,25 @@
+{
+  "worker": "/Users/chirag13/Documents/ChatGPT/starCraft/build/CinderlineMatchWorker",
+  "sha256": "b2b144539aba885e096ebf45dcbfd6d2a9b388c42e9da14433748c30832947f6",
+  "frames": [
+    {
+      "opcode": 128,
+      "bytes": 1
+    },
+    {
+      "opcode": 129,
+      "bytes": 1192,
+      "seat": 0,
+      "magic": "CSNP",
+      "protocol": 6
+    },
+    {
+      "opcode": 129,
+      "bytes": 1192,
+      "seat": 1,
+      "magic": "CSNP",
+      "protocol": 6
+    }
+  ],
+  "exitCode": 0
+}

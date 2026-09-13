@@ -1,0 +1,100 @@
+{
+  "verifiedAt": "2026-09-12T18:32:32.064184+00:00",
+  "status": "Implemented, automated full victory passed, rendered Mac and native iOS-on-Mac verified; physical install timing pending",
+  "firstRunOffer": [
+    "GET GUIDED TUTORIAL",
+    "SKIP FOR NOW"
+  ],
+  "offerChoicePersistedSeparatelyFromCompletion": true,
+  "objectives": 14,
+  "tutorialOpponent": {
+    "readiness": "Six paid living Embers and completed weapons level 1",
+    "maxPaidTrains": 4,
+    "runtimeOrders": 6,
+    "finitePressure": true,
+    "ordinaryPlayerProductionAndCombat": true
+  },
+  "macBuild": {
+    "passed": true,
+    "sourceInputs": 75
+  },
+  "unrealAutomation": {
+    "passed": 21,
+    "failed": 0
+  },
+  "ordinaryCommandVictoryEvidence": "CINDERLINE_GUIDED_ORDINARY_COMPLETE: winner=0 step=14 complete=1 simulated_seconds=808.6 produced=9 lost=2 upgrades=1 opponent_trains=4 opponent_runtime_orders=6 state_hash=13225372430167087688 repeat_match=1; ordinary player commands, paid queues, normal combat, no player debug grants or spawns.",
+  "durationNote": "808.6 simulated seconds includes a deliberate 120-second idle wait; not a human completion-time claim.",
+  "macRenderedCases": [
+    "assault-phone",
+    "camera-feedback-small",
+    "camera-phone",
+    "defend-phone",
+    "offer-desktop",
+    "offer-ipad",
+    "offer-phone",
+    "offer-small",
+    "research-details-phone",
+    "research-details-small",
+    "research-phone",
+    "skip-phone",
+    "win-desktop",
+    "win-phone"
+  ],
+  "macBoundsPassed": true,
+  "macVisuallyInspected": true,
+  "iosBuildPassed": true,
+  "iosPackagePassed": true,
+  "iosPackage": {
+    "checkedAt": "2026-09-12T18:30:40.658188+00:00",
+    "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "executableSha256": "9b61b72e9c09abcd34effa487bac42dfe050f9c1e75c065686fb8da0c068cf2c",
+    "machoPlatform": "IOS",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "strictCodesignVerified": true,
+    "developmentProfile": true,
+    "phoneRegistered": true,
+    "profileUnexpired": true,
+    "orientations": [
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "bundleBytes": 493176589,
+    "ioStoreContainers": [
+      "cookeddata/cinderline/content/paks/global.utoc",
+      "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+    ]
+  },
+  "applePerformancePolicy": {
+    "gameMode": true,
+    "signedSustainedExecution": true,
+    "profileSustainedExecution": true
+  },
+  "nativeIOSOnMac": {
+    "passed": true,
+    "cases": [
+      "camera",
+      "offer",
+      "research-details",
+      "win"
+    ],
+    "exactPackagedBinary": true,
+    "allBoundsPass": true,
+    "visuallyInspected": true,
+    "newCrashReports": 0,
+    "testProcessesClosed": true
+  },
+  "physicalDevice": {
+    "newPackageInstalled": false,
+    "lastInstalledPackageSha256": "2bf6039a16a225aba6ce35d96e46a6e15aa4985b79cfe86834f35168e28531fa",
+    "currentSessionTouched": false,
+    "reason": "Awaiting installation timing confirmation to avoid interrupting an active match"
+  },
+  "limits": [
+    "Automated ordinary-command full match, not a human full tutorial playthrough",
+    "No new physical tap or multitouch acceptance",
+    "No new physical thermal or GPU measurements",
+    "Native iOS-on-Mac proof is not Xcode Simulator proof"
+  ]
+}

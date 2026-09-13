@@ -1,0 +1,18 @@
+{
+  "executable_sha256": "7c603b0041aa5d268294b8acea96e64d29195864500923b978221d6a9b7c0a31",
+  "strict_signing_verified": true,
+  "sustained_execution_signed": true,
+  "sustained_execution_profile_authorized": true,
+  "game_mode_enabled": true,
+  "engine_preparer_post_build_check_passed": true,
+  "ios_build": {
+    "actions": 44,
+    "seconds": 157.72,
+    "passed": true
+  },
+  "ios_package": {
+    "seconds": 93.72,
+    "passed": true
+  },
+  "installed_on_aeon": false
+}

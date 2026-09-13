@@ -1,0 +1,89 @@
+{
+  "case": "off-1080",
+  "mode": "off",
+  "requestedViewport": [
+    1920,
+    1080
+  ],
+  "viewport": [
+    1920,
+    1080
+  ],
+  "renderTarget": [
+    1920,
+    1080
+  ],
+  "compactHUD": false,
+  "warmupFrames": 30,
+  "sampleFrames": 120,
+  "gpuTiming": {
+    "source": "FRHIGPUFrameTimeHistory completed frames",
+    "samples": 120,
+    "meanMs": 13.279,
+    "medianMs": 13.348,
+    "p95Ms": 15.174,
+    "disjointEvents": 0
+  },
+  "elapsedSeconds": 8.803,
+  "screenPercentage": 80,
+  "taaUpsampling": 0,
+  "statusCommandProcessed": true,
+  "nativeStatus": {
+    "start": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 1,
+      "bridgeAvailable": 1,
+      "interfaceActive": 1,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 2,
+      "encodedFrames": 0,
+      "scalerCreations": 1,
+      "validationProbes": 1,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "none"
+    },
+    "finish": {
+      "requested": 0,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 0,
+      "bridgeAvailable": 1,
+      "interfaceActive": 0,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 2,
+      "encodedFrames": 0,
+      "scalerCreations": 1,
+      "validationProbes": 1,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "disabled"
+    },
+    "registeredFrameDelta": 0,
+    "encodedFrameDelta": 0,
+    "validationProbeDelta": 0,
+    "fallbackDelta": 0
+  },
+  "capture": "off-1080.png",
+  "captureSha256": "167b85e8518adad53b7c5d6ebf252e9a16588b965ee1fa1f5d9a634bfd2578ff",
+  "ownedPid": 4432,
+  "scope": "Mac Unreal renderer with deterministic army fixture; no physical device, native iOS-on-Mac, player save, preference, or AEON interaction"
+}

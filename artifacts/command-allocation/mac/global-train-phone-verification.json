@@ -1,0 +1,326 @@
+{
+  "case": "global-train-phone",
+  "state": "global-train",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 61,
+  "capture": "global-train-phone.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        374.3,
+        79.8,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        84.5,
+        374.3,
+        145.5,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        150.2,
+        374.3,
+        239.4,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        244.1,
+        374.3,
+        305.1,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        312.1,
+        374.3,
+        487.4,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        492.1,
+        374.3,
+        667.4,
+        425.9
+      ]
+    },
+    {
+      "index": 8,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        374.3,
+        736.6,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        741.3,
+        374.3,
+        803.5,
+        425.9
+      ]
+    },
+    {
+      "index": 10,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        808.2,
+        374.3,
+        870.3,
+        425.9
+      ]
+    },
+    {
+      "index": 11,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        875.0,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 12,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        553.8,
+        85.7,
+        605.4,
+        137.3
+      ]
+    },
+    {
+      "index": 13,
+      "action": "trainkind",
+      "argument": 0,
+      "bounds": [
+        35.2,
+        142.0,
+        100.3,
+        193.6
+      ]
+    },
+    {
+      "index": 14,
+      "action": "trainkind",
+      "argument": 1,
+      "bounds": [
+        105.0,
+        142.0,
+        170.1,
+        193.6
+      ]
+    },
+    {
+      "index": 15,
+      "action": "trainkind",
+      "argument": 2,
+      "bounds": [
+        174.8,
+        142.0,
+        239.9,
+        193.6
+      ]
+    },
+    {
+      "index": 16,
+      "action": "trainkind",
+      "argument": 3,
+      "bounds": [
+        244.6,
+        142.0,
+        309.8,
+        193.6
+      ]
+    },
+    {
+      "index": 17,
+      "action": "trainkind",
+      "argument": 4,
+      "bounds": [
+        314.5,
+        142.0,
+        379.6,
+        193.6
+      ]
+    },
+    {
+      "index": 18,
+      "action": "trainkind",
+      "argument": 5,
+      "bounds": [
+        384.3,
+        142.0,
+        449.4,
+        193.6
+      ]
+    },
+    {
+      "index": 19,
+      "action": "trainkind",
+      "argument": 6,
+      "bounds": [
+        454.1,
+        142.0,
+        519.2,
+        193.6
+      ]
+    },
+    {
+      "index": 20,
+      "action": "trainkind",
+      "argument": 7,
+      "bounds": [
+        523.9,
+        142.0,
+        589.0,
+        193.6
+      ]
+    },
+    {
+      "index": 21,
+      "action": "trainqty",
+      "argument": 1,
+      "bounds": [
+        35.2,
+        201.8,
+        86.8,
+        253.4
+      ]
+    },
+    {
+      "index": 22,
+      "action": "trainqty",
+      "argument": 3,
+      "bounds": [
+        91.5,
+        201.8,
+        143.1,
+        253.4
+      ]
+    },
+    {
+      "index": 23,
+      "action": "trainqty",
+      "argument": 6,
+      "bounds": [
+        147.8,
+        201.8,
+        199.5,
+        253.4
+      ]
+    },
+    {
+      "index": 24,
+      "action": "trainqtydelta",
+      "argument": -1,
+      "bounds": [
+        204.2,
+        201.8,
+        255.8,
+        253.4
+      ]
+    },
+    {
+      "index": 25,
+      "action": "trainqtydelta",
+      "argument": 1,
+      "bounds": [
+        260.5,
+        201.8,
+        312.1,
+        253.4
+      ]
+    },
+    {
+      "index": 26,
+      "action": "globaltrain",
+      "argument": 0,
+      "bounds": [
+        316.8,
+        201.8,
+        589.0,
+        253.4
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 97241,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

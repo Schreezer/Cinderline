@@ -1,0 +1,1383 @@
+{
+  "success": true,
+  "cases": [
+    {
+      "case": "global-construction",
+      "family": "hud",
+      "state": "global-construction",
+      "selection": 1,
+      "squads": [
+        0,
+        0,
+        0
+      ],
+      "tick": 61,
+      "viewport": [
+        2052,
+        1536
+      ],
+      "hudScale": 2.0,
+      "buttons": [
+        {
+          "index": 0,
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            1808.0,
+            20.0,
+            1896.0,
+            108.0
+          ]
+        },
+        {
+          "index": 1,
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            1908.0,
+            20.0,
+            2020.0,
+            108.0
+          ]
+        },
+        {
+          "index": 2,
+          "action": "globalcatalog",
+          "argument": 7,
+          "bounds": [
+            32.0,
+            1424.0,
+            136.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 3,
+          "action": "globalcatalog",
+          "argument": 8,
+          "bounds": [
+            144.0,
+            1424.0,
+            248.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 4,
+          "action": "globalcatalog",
+          "argument": 9,
+          "bounds": [
+            256.0,
+            1424.0,
+            408.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 5,
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            416.0,
+            1424.0,
+            520.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 6,
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            532.0,
+            1424.0,
+            1042.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 7,
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            1050.0,
+            1424.0,
+            1560.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 8,
+          "action": "move",
+          "argument": 0,
+          "bounds": [
+            1572.0,
+            1424.0,
+            1678.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 9,
+          "action": "attack",
+          "argument": 0,
+          "bounds": [
+            1686.0,
+            1424.0,
+            1792.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 10,
+          "action": "defend",
+          "argument": 0,
+          "bounds": [
+            1800.0,
+            1424.0,
+            1906.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 11,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            1914.0,
+            1424.0,
+            2020.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 12,
+          "action": "armytab",
+          "argument": 0,
+          "bounds": [
+            548.0,
+            932.0,
+            668.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 13,
+          "action": "armytab",
+          "argument": 1,
+          "bounds": [
+            676.0,
+            932.0,
+            796.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 14,
+          "action": "armytab",
+          "argument": 2,
+          "bounds": [
+            804.0,
+            932.0,
+            924.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 15,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            932.0,
+            1032.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 16,
+          "action": "productionrally",
+          "argument": 0,
+          "bounds": [
+            60.0,
+            1028.0,
+            268.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 17,
+          "action": "jobpage",
+          "argument": -1,
+          "bounds": [
+            840.0,
+            1028.0,
+            928.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 18,
+          "action": "productionfocus",
+          "argument": 0,
+          "bounds": [
+            816.0,
+            1124.0,
+            936.0,
+            1212.0
+          ]
+        },
+        {
+          "index": 19,
+          "action": "cancelproduction",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            1124.0,
+            1032.0,
+            1212.0
+          ]
+        },
+        {
+          "index": 20,
+          "action": "productionfocus",
+          "argument": 0,
+          "bounds": [
+            816.0,
+            1218.0,
+            936.0,
+            1306.0
+          ]
+        },
+        {
+          "index": 21,
+          "action": "cancelconstruction",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            1218.0,
+            1032.0,
+            1306.0
+          ]
+        }
+      ],
+      "buttonsWithinViewport": true,
+      "noButtonOverlap": true,
+      "requiredHUDEntriesPresent": true,
+      "shaderPath": {
+        "rhiFeatureLevel": "ES3_1",
+        "shaderPlatform": "METAL_ES3_1_IOS",
+        "mobileHDR": true,
+        "stereoShaderPlatformConfirmed": true
+      },
+      "capture": "global-construction.png",
+      "captureSha256": "021cda673dc1090f19a42815ef76d41b31beabd38a19753beb3d24378114cca0",
+      "ownedPid": 8604,
+      "launchNonceVerified": true,
+      "runningExecutableHashVerified": true,
+      "sourceExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "wrappedExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "equalExecutableSha256": true,
+      "strictSignatureVerified": true,
+      "nativeMacProvisioned": true,
+      "newCrashReports": [],
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+    },
+    {
+      "case": "global-train",
+      "family": "hud",
+      "state": "global-train",
+      "selection": 1,
+      "squads": [
+        0,
+        0,
+        0
+      ],
+      "tick": 61,
+      "viewport": [
+        2052,
+        1536
+      ],
+      "hudScale": 2.0,
+      "buttons": [
+        {
+          "index": 0,
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            1808.0,
+            20.0,
+            1896.0,
+            108.0
+          ]
+        },
+        {
+          "index": 1,
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            1908.0,
+            20.0,
+            2020.0,
+            108.0
+          ]
+        },
+        {
+          "index": 2,
+          "action": "globalcatalog",
+          "argument": 7,
+          "bounds": [
+            32.0,
+            1424.0,
+            136.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 3,
+          "action": "globalcatalog",
+          "argument": 8,
+          "bounds": [
+            144.0,
+            1424.0,
+            248.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 4,
+          "action": "globalcatalog",
+          "argument": 9,
+          "bounds": [
+            256.0,
+            1424.0,
+            408.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 5,
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            416.0,
+            1424.0,
+            520.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 6,
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            532.0,
+            1424.0,
+            1042.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 7,
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            1050.0,
+            1424.0,
+            1560.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 8,
+          "action": "move",
+          "argument": 0,
+          "bounds": [
+            1572.0,
+            1424.0,
+            1678.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 9,
+          "action": "attack",
+          "argument": 0,
+          "bounds": [
+            1686.0,
+            1424.0,
+            1792.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 10,
+          "action": "defend",
+          "argument": 0,
+          "bounds": [
+            1800.0,
+            1424.0,
+            1906.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 11,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            1914.0,
+            1424.0,
+            2020.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 12,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            932.0,
+            1032.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 13,
+          "action": "trainkind",
+          "argument": 0,
+          "bounds": [
+            60.0,
+            1028.0,
+            171.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 14,
+          "action": "trainkind",
+          "argument": 1,
+          "bounds": [
+            179.0,
+            1028.0,
+            290.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 15,
+          "action": "trainkind",
+          "argument": 2,
+          "bounds": [
+            298.0,
+            1028.0,
+            409.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 16,
+          "action": "trainkind",
+          "argument": 3,
+          "bounds": [
+            417.0,
+            1028.0,
+            528.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 17,
+          "action": "trainkind",
+          "argument": 4,
+          "bounds": [
+            536.0,
+            1028.0,
+            647.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 18,
+          "action": "trainkind",
+          "argument": 5,
+          "bounds": [
+            655.0,
+            1028.0,
+            766.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 19,
+          "action": "trainkind",
+          "argument": 6,
+          "bounds": [
+            774.0,
+            1028.0,
+            885.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 20,
+          "action": "trainkind",
+          "argument": 7,
+          "bounds": [
+            893.0,
+            1028.0,
+            1004.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 21,
+          "action": "trainqty",
+          "argument": 1,
+          "bounds": [
+            60.0,
+            1130.0,
+            148.0,
+            1218.0
+          ]
+        },
+        {
+          "index": 22,
+          "action": "trainqty",
+          "argument": 3,
+          "bounds": [
+            156.0,
+            1130.0,
+            244.0,
+            1218.0
+          ]
+        },
+        {
+          "index": 23,
+          "action": "trainqty",
+          "argument": 6,
+          "bounds": [
+            252.0,
+            1130.0,
+            340.0,
+            1218.0
+          ]
+        },
+        {
+          "index": 24,
+          "action": "trainqtydelta",
+          "argument": -1,
+          "bounds": [
+            348.0,
+            1130.0,
+            436.0,
+            1218.0
+          ]
+        },
+        {
+          "index": 25,
+          "action": "trainqtydelta",
+          "argument": 1,
+          "bounds": [
+            444.0,
+            1130.0,
+            532.0,
+            1218.0
+          ]
+        },
+        {
+          "index": 26,
+          "action": "globaltrain",
+          "argument": 0,
+          "bounds": [
+            540.0,
+            1130.0,
+            1004.0,
+            1218.0
+          ]
+        }
+      ],
+      "buttonsWithinViewport": true,
+      "noButtonOverlap": true,
+      "requiredHUDEntriesPresent": true,
+      "shaderPath": {
+        "rhiFeatureLevel": "ES3_1",
+        "shaderPlatform": "METAL_ES3_1_IOS",
+        "mobileHDR": true,
+        "stereoShaderPlatformConfirmed": true
+      },
+      "capture": "global-train.png",
+      "captureSha256": "f28aa38ffec528ffd2a0052df5a5a7502b94ed2ffe31ae688d7f761c5e5eb219",
+      "ownedPid": 8694,
+      "launchNonceVerified": true,
+      "runningExecutableHashVerified": true,
+      "sourceExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "wrappedExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "equalExecutableSha256": true,
+      "strictSignatureVerified": true,
+      "nativeMacProvisioned": true,
+      "newCrashReports": [],
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+    },
+    {
+      "case": "global-build",
+      "family": "hud",
+      "state": "global-build",
+      "selection": 1,
+      "squads": [
+        0,
+        0,
+        0
+      ],
+      "tick": 61,
+      "viewport": [
+        2052,
+        1536
+      ],
+      "hudScale": 2.0,
+      "buttons": [
+        {
+          "index": 0,
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            1808.0,
+            20.0,
+            1896.0,
+            108.0
+          ]
+        },
+        {
+          "index": 1,
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            1908.0,
+            20.0,
+            2020.0,
+            108.0
+          ]
+        },
+        {
+          "index": 2,
+          "action": "globalcatalog",
+          "argument": 7,
+          "bounds": [
+            32.0,
+            1424.0,
+            136.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 3,
+          "action": "globalcatalog",
+          "argument": 8,
+          "bounds": [
+            144.0,
+            1424.0,
+            248.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 4,
+          "action": "globalcatalog",
+          "argument": 9,
+          "bounds": [
+            256.0,
+            1424.0,
+            408.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 5,
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            416.0,
+            1424.0,
+            520.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 6,
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            532.0,
+            1424.0,
+            1042.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 7,
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            1050.0,
+            1424.0,
+            1560.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 8,
+          "action": "move",
+          "argument": 0,
+          "bounds": [
+            1572.0,
+            1424.0,
+            1678.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 9,
+          "action": "attack",
+          "argument": 0,
+          "bounds": [
+            1686.0,
+            1424.0,
+            1792.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 10,
+          "action": "defend",
+          "argument": 0,
+          "bounds": [
+            1800.0,
+            1424.0,
+            1906.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 11,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            1914.0,
+            1424.0,
+            2020.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 12,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            932.0,
+            1032.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 13,
+          "action": "globalbuild",
+          "argument": 8,
+          "bounds": [
+            60.0,
+            1030.0,
+            366.7,
+            1118.0
+          ]
+        },
+        {
+          "index": 14,
+          "action": "globalbuild",
+          "argument": 9,
+          "bounds": [
+            378.7,
+            1030.0,
+            685.3,
+            1118.0
+          ]
+        },
+        {
+          "index": 15,
+          "action": "globalbuild",
+          "argument": 10,
+          "bounds": [
+            697.3,
+            1030.0,
+            1004.0,
+            1118.0
+          ]
+        },
+        {
+          "index": 16,
+          "action": "globalbuild",
+          "argument": 11,
+          "bounds": [
+            60.0,
+            1128.0,
+            366.7,
+            1216.0
+          ]
+        },
+        {
+          "index": 17,
+          "action": "globalbuild",
+          "argument": 12,
+          "bounds": [
+            378.7,
+            1128.0,
+            685.3,
+            1216.0
+          ]
+        },
+        {
+          "index": 18,
+          "action": "globalbuild",
+          "argument": 13,
+          "bounds": [
+            697.3,
+            1128.0,
+            1004.0,
+            1216.0
+          ]
+        }
+      ],
+      "buttonsWithinViewport": true,
+      "noButtonOverlap": true,
+      "requiredHUDEntriesPresent": true,
+      "shaderPath": {
+        "rhiFeatureLevel": "ES3_1",
+        "shaderPlatform": "METAL_ES3_1_IOS",
+        "mobileHDR": true,
+        "stereoShaderPlatformConfirmed": true
+      },
+      "capture": "global-build.png",
+      "captureSha256": "c97017a4b2a2e2506237f00d4b91def8fac9bbdc5034ee6a932df7fb4ffb25b0",
+      "ownedPid": 8758,
+      "launchNonceVerified": true,
+      "runningExecutableHashVerified": true,
+      "sourceExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "wrappedExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "equalExecutableSha256": true,
+      "strictSignatureVerified": true,
+      "nativeMacProvisioned": true,
+      "newCrashReports": [],
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+    },
+    {
+      "case": "global-research",
+      "family": "hud",
+      "state": "global-research",
+      "selection": 1,
+      "squads": [
+        0,
+        0,
+        0
+      ],
+      "tick": 61,
+      "viewport": [
+        2052,
+        1536
+      ],
+      "hudScale": 2.0,
+      "buttons": [
+        {
+          "index": 0,
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            1808.0,
+            20.0,
+            1896.0,
+            108.0
+          ]
+        },
+        {
+          "index": 1,
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            1908.0,
+            20.0,
+            2020.0,
+            108.0
+          ]
+        },
+        {
+          "index": 2,
+          "action": "globalcatalog",
+          "argument": 7,
+          "bounds": [
+            32.0,
+            1424.0,
+            136.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 3,
+          "action": "globalcatalog",
+          "argument": 8,
+          "bounds": [
+            144.0,
+            1424.0,
+            248.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 4,
+          "action": "globalcatalog",
+          "argument": 9,
+          "bounds": [
+            256.0,
+            1424.0,
+            408.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 5,
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            416.0,
+            1424.0,
+            520.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 6,
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            532.0,
+            1424.0,
+            1042.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 7,
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            1050.0,
+            1424.0,
+            1560.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 8,
+          "action": "move",
+          "argument": 0,
+          "bounds": [
+            1572.0,
+            1424.0,
+            1678.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 9,
+          "action": "attack",
+          "argument": 0,
+          "bounds": [
+            1686.0,
+            1424.0,
+            1792.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 10,
+          "action": "defend",
+          "argument": 0,
+          "bounds": [
+            1800.0,
+            1424.0,
+            1906.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 11,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            1914.0,
+            1424.0,
+            2020.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 12,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            932.0,
+            1032.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 13,
+          "action": "globalresearch",
+          "argument": 0,
+          "bounds": [
+            60.0,
+            1046.0,
+            365.3,
+            1134.0
+          ]
+        },
+        {
+          "index": 14,
+          "action": "globalresearch",
+          "argument": 1,
+          "bounds": [
+            379.3,
+            1046.0,
+            684.7,
+            1134.0
+          ]
+        },
+        {
+          "index": 15,
+          "action": "globalresearch",
+          "argument": 2,
+          "bounds": [
+            698.7,
+            1046.0,
+            1004.0,
+            1134.0
+          ]
+        }
+      ],
+      "buttonsWithinViewport": true,
+      "noButtonOverlap": true,
+      "requiredHUDEntriesPresent": true,
+      "shaderPath": {
+        "rhiFeatureLevel": "ES3_1",
+        "shaderPlatform": "METAL_ES3_1_IOS",
+        "mobileHDR": true,
+        "stereoShaderPlatformConfirmed": true
+      },
+      "capture": "global-research.png",
+      "captureSha256": "da68c916568c2f6c52e48fc607015520647ca6ea1eb74c381516f61cb7e4e871",
+      "ownedPid": 8812,
+      "launchNonceVerified": true,
+      "runningExecutableHashVerified": true,
+      "sourceExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "wrappedExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "equalExecutableSha256": true,
+      "strictSignatureVerified": true,
+      "nativeMacProvisioned": true,
+      "newCrashReports": [],
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+    },
+    {
+      "case": "global-jobs",
+      "family": "hud",
+      "state": "global-jobs",
+      "selection": 1,
+      "squads": [
+        0,
+        0,
+        0
+      ],
+      "tick": 61,
+      "viewport": [
+        2052,
+        1536
+      ],
+      "hudScale": 2.0,
+      "buttons": [
+        {
+          "index": 0,
+          "action": "help",
+          "argument": 0,
+          "bounds": [
+            1808.0,
+            20.0,
+            1896.0,
+            108.0
+          ]
+        },
+        {
+          "index": 1,
+          "action": "pause",
+          "argument": 0,
+          "bounds": [
+            1908.0,
+            20.0,
+            2020.0,
+            108.0
+          ]
+        },
+        {
+          "index": 2,
+          "action": "globalcatalog",
+          "argument": 7,
+          "bounds": [
+            32.0,
+            1424.0,
+            136.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 3,
+          "action": "globalcatalog",
+          "argument": 8,
+          "bounds": [
+            144.0,
+            1424.0,
+            248.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 4,
+          "action": "globalcatalog",
+          "argument": 9,
+          "bounds": [
+            256.0,
+            1424.0,
+            408.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 5,
+          "action": "army",
+          "argument": 0,
+          "bounds": [
+            416.0,
+            1424.0,
+            520.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 6,
+          "action": "box",
+          "argument": 0,
+          "bounds": [
+            532.0,
+            1424.0,
+            1042.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 7,
+          "action": "home",
+          "argument": 0,
+          "bounds": [
+            1050.0,
+            1424.0,
+            1560.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 8,
+          "action": "move",
+          "argument": 0,
+          "bounds": [
+            1572.0,
+            1424.0,
+            1678.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 9,
+          "action": "attack",
+          "argument": 0,
+          "bounds": [
+            1686.0,
+            1424.0,
+            1792.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 10,
+          "action": "defend",
+          "argument": 0,
+          "bounds": [
+            1800.0,
+            1424.0,
+            1906.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 11,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            1914.0,
+            1424.0,
+            2020.0,
+            1512.0
+          ]
+        },
+        {
+          "index": 12,
+          "action": "armytab",
+          "argument": 0,
+          "bounds": [
+            548.0,
+            932.0,
+            668.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 13,
+          "action": "armytab",
+          "argument": 1,
+          "bounds": [
+            676.0,
+            932.0,
+            796.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 14,
+          "action": "armytab",
+          "argument": 2,
+          "bounds": [
+            804.0,
+            932.0,
+            924.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 15,
+          "action": "closesheet",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            932.0,
+            1032.0,
+            1020.0
+          ]
+        },
+        {
+          "index": 16,
+          "action": "productionrally",
+          "argument": 0,
+          "bounds": [
+            60.0,
+            1028.0,
+            268.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 17,
+          "action": "jobpage",
+          "argument": 1,
+          "bounds": [
+            936.0,
+            1028.0,
+            1024.0,
+            1116.0
+          ]
+        },
+        {
+          "index": 18,
+          "action": "productionfocus",
+          "argument": 0,
+          "bounds": [
+            816.0,
+            1124.0,
+            936.0,
+            1212.0
+          ]
+        },
+        {
+          "index": 19,
+          "action": "cancelproduction",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            1124.0,
+            1032.0,
+            1212.0
+          ]
+        },
+        {
+          "index": 20,
+          "action": "productionfocus",
+          "argument": 0,
+          "bounds": [
+            816.0,
+            1218.0,
+            936.0,
+            1306.0
+          ]
+        },
+        {
+          "index": 21,
+          "action": "cancelproduction",
+          "argument": 0,
+          "bounds": [
+            944.0,
+            1218.0,
+            1032.0,
+            1306.0
+          ]
+        }
+      ],
+      "buttonsWithinViewport": true,
+      "noButtonOverlap": true,
+      "requiredHUDEntriesPresent": true,
+      "shaderPath": {
+        "rhiFeatureLevel": "ES3_1",
+        "shaderPlatform": "METAL_ES3_1_IOS",
+        "mobileHDR": true,
+        "stereoShaderPlatformConfirmed": true
+      },
+      "capture": "global-jobs.png",
+      "captureSha256": "e639a6475b50644a26856e0e30da00e4690195768a5e842ac6fcb0943203819a",
+      "ownedPid": 8865,
+      "launchNonceVerified": true,
+      "runningExecutableHashVerified": true,
+      "sourceExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "wrappedExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+      "equalExecutableSha256": true,
+      "strictSignatureVerified": true,
+      "nativeMacProvisioned": true,
+      "newCrashReports": [],
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Exact signed iOS executable in a fresh native Mac wrapper; mobile ES3_1/MobileHDR shader path; no physical device or AEON interaction"
+    }
+  ],
+  "sourceExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+  "wrappedExecutableSha256": "bb634a6de18cda60d75c7689e9beacbb3409224c7951a62544e48644d285a395",
+  "exactExecutableBytes": true,
+  "sequential": true,
+  "nonceOwnedPidsOnly": true,
+  "protectedPlayerStateUnchanged": true,
+  "scope": "Native iOS-on-Mac only; no AEON or physical-device interaction"
+}

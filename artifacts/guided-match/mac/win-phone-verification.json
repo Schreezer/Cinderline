@@ -1,0 +1,47 @@
+{
+  "case": "win-phone",
+  "state": "win",
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "observed": {
+    "offer": 0,
+    "menu": 0,
+    "step": 14,
+    "complete": 1,
+    "preferenceCompleted": 1,
+    "winner": 0,
+    "opponentOrders": 6,
+    "tick": 13916
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "tutorialrestart",
+      "argument": 0,
+      "bounds": [
+        161.2,
+        295.7,
+        431.1,
+        347.3
+      ]
+    },
+    {
+      "index": 1,
+      "action": "menu",
+      "argument": 0,
+      "bounds": [
+        454.5,
+        295.7,
+        724.4,
+        347.3
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "win-phone.png",
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

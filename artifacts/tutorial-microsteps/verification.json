@@ -1,0 +1,280 @@
+{
+  "recordedAtUTC": "2026-09-13T10:38:03.987599+00:00",
+  "gitHead": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "workingTreeBuild": true,
+  "scope": "Mac Unreal build, headless automation, and rendered compact/desktop tutorial guidance; no iOS package or physical-device test",
+  "build": {
+    "result": "Succeeded",
+    "log": "Saved/TutorialMicrosteps/build-final.log",
+    "sha256": "606edd1d05428e5010c5cf10030722fde89bf602dc705e588a61ba11b0b6efe9",
+    "maxParallelActions": 2
+  },
+  "automation": {
+    "passed": 32,
+    "failed": 0,
+    "report": "automation.json",
+    "sha256": "9f5ef8b4a25f3863b76b8f694cf5ac1540f54085655e248607fddebe894754f0"
+  },
+  "rendering": {
+    "frameRateCap": 30,
+    "caseCount": 15,
+    "cases": [
+      {
+        "case": "build-choice-small",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "target": "button",
+        "actionsApplied": 1,
+        "capture": "mac/build-choice-small.png",
+        "captureSha256": "5ddb586fe58a5355dad94b5451ec86e6d56158ad38246a2aff44fe077739b9f2",
+        "runtimeSha256": "88deccb650e1ac4393969b0d8c8d34a9578817963c1a7dac80afe399c6bae91a",
+        "verificationSha256": "5b73ee4e0543a4bf6b814d73dd5dc26b5253312ec20000f3ada96f7e3c337874",
+        "finalGuide": "[2026.09.13-10.34.12:054][ 27]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=1 action=globalbuild argument=10 entity=0 step=4 micro=2/4 waiting=0 pointer=(355.3,144.0) card=(440.0,65.0,651.0,158.0) target_bounds=(292.7,122.0,418.0,166.0) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "build-open-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "button",
+        "actionsApplied": 0,
+        "capture": "mac/build-open-phone.png",
+        "captureSha256": "49b4fa1ee512c14707526e3d928cbf48b70994b8ffa9573d9a1a8bc07b0db9b7",
+        "runtimeSha256": "9391bcbf77e7db7e3a1a234ed143641dfdd68a4efc85f6e970bb0f85310ca436",
+        "verificationSha256": "881061c5fbbbe29e929b9d62893f69fd287a599218c7f7c97b61a73e99ea712c",
+        "finalGuide": "[2026.09.13-10.33.57:702][ 20]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=1 action=globalcatalog argument=7 entity=0 step=4 micro=1/4 waiting=0 pointer=(49.3,400.1) card=(18.8,76.3,413.0,165.9) target_bounds=(18.8,374.3,79.8,425.9) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "build-placement-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "ground",
+        "actionsApplied": 2,
+        "capture": "mac/build-placement-phone.png",
+        "captureSha256": "589f3cfb9a88f3501ad5d28ee64246e153d636972f8b3f26626e5a6847cabdd7",
+        "runtimeSha256": "fea730959648862bc4fdc8c4f2da68231551501220fb9f02bf193b2a79569e6f",
+        "verificationSha256": "b079f66c8c79ee6353f0d2c3a9020f522a9538965fe5ec23a6b3bde04c1ae424",
+        "finalGuide": "[2026.09.13-10.34.27:976][ 42]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=3 action=none argument=0 entity=0 step=4 micro=3/4 waiting=0 pointer=(414.1,161.6) card=(543.0,76.3,937.2,165.9) target_bounds=(386.0,133.4,442.3,189.8) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "build-wait-small",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "target": "wait",
+        "actionsApplied": 3,
+        "capture": "mac/build-wait-small.png",
+        "captureSha256": "402ef5f8152307e233538df834b6780983bc9ae00a6a90c16b5795c99d2ff855",
+        "runtimeSha256": "f5d1aa7ba7db801975250d4f08c9ea13653851be421a215d983ed8c4850c0c45",
+        "verificationSha256": "bddeb0d317855c97bc57776716aef00346c5b34036ab5bf0224c2c260eabf78e",
+        "finalGuide": "[2026.09.13-10.34.43:677][ 49]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=5 action=none argument=0 entity=0 step=4 micro=4/4 waiting=1 pointer=(0.0,0.0) card=(16.0,65.0,352.0,141.0) target_bounds=(0.0,0.0,0.0,0.0) target_visible=0 needs_show=0 target_clear=0",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "mining-pointer-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "entity",
+        "actionsApplied": 1,
+        "capture": "mac/mining-pointer-phone.png",
+        "captureSha256": "66fbd35a2505fd9a3ccd76c0bbb705e80c1ac42e918faaa4b9f2bc6249e0a1c9",
+        "runtimeSha256": "988e3a17fc31bb0155f37c2e4817340bf6312971140184a4a5939bc5eecf0660",
+        "verificationSha256": "ac93068d1d9ac4b668d341f84093b410e308146d1c39e38eb316fa3434910a73",
+        "finalGuide": "[2026.09.13-10.33.43:066][ 43]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=2 action=none argument=0 entity=2 step=2 micro=2/2 waiting=0 pointer=(474.7,208.0) card=(18.8,76.3,413.0,165.9) target_bounds=(446.5,179.9,502.9,236.2) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "offscreen-recovery-small",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "target": "entity",
+        "actionsApplied": 3,
+        "capture": "mac/offscreen-recovery-small.png",
+        "captureSha256": "ef6ef243d5118dcd9817e26abbacc00636e288c3ffa7b7136ef9490bbb31bb12",
+        "runtimeSha256": "424ad570b80ad81abd10e2f374ffb2e16d4d2932b374de2b2fb939463be45b7c",
+        "verificationSha256": "5b5fdb2bd0cac63dfb018d2af98a692763697fd772331950e3bb755c860a93d0",
+        "finalGuide": "[2026.09.13-10.37.13:777][ 55]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=2 action=none argument=0 entity=6 step=2 micro=1/2 waiting=0 pointer=(333.5,176.1) card=(431.0,177.0,651.0,270.0) target_bounds=(309.5,152.1,357.5,200.1) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "rally-chain-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "ground",
+        "actionsApplied": 3,
+        "capture": "mac/rally-chain-phone.png",
+        "captureSha256": "009fa92be4e331c9554df0b13d5db9d172918e2415105038ebef7dda5b2c598a",
+        "runtimeSha256": "4f9f1a9787f5c59c96b4350ccb5710d90cc81fc39d3750fce6d491834cf38bda",
+        "verificationSha256": "8eb1bedb2ce2451723fd58f80372c56e5122bc2f95dee46ded2460ccd563cdb6",
+        "finalGuide": "[2026.09.13-10.36.34:339][ 50]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=3 action=none argument=0 entity=0 step=11 micro=4/10 waiting=0 pointer=(495.2,223.9) card=(18.8,76.3,413.0,165.9) target_bounds=(467.0,195.7,523.4,252.0) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "research-button-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "button",
+        "actionsApplied": 1,
+        "capture": "mac/research-button-phone.png",
+        "captureSha256": "f93af3c29a3d68f5c0de5e53727705206c69ed8d1d890b5f15b4dd56212ff929",
+        "runtimeSha256": "f3d2c2f068db7a08f4e76f3575378ca0de67e080ccd92e03060436160a053558",
+        "verificationSha256": "e0d1260311f21a069d79f193b44df14ee366a5a62c84ca2160327218f3bc4c2e",
+        "finalGuide": "[2026.09.13-10.36.16:451][ 21]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=1 action=globalresearch argument=1 entity=0 step=10 micro=2/4 waiting=0 pointer=(262.8,178.3) card=(516.3,76.3,937.2,165.9) target_bounds=(189.7,152.5,336.0,204.2) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "scout-chain-desktop",
+        "viewport": [
+          1920.0,
+          1080.0
+        ],
+        "target": "ground",
+        "actionsApplied": 9,
+        "capture": "mac/scout-chain-desktop.png",
+        "captureSha256": "70315b59a9d0798ea069db66e4490212ab295a2bb47f792af31fdd4a9f7d9a25",
+        "runtimeSha256": "df19af02619a05db88dec40fe6ba25936a59cd519ef5fa867a63114ae2c7720f",
+        "verificationSha256": "5b572b86d82f88e78129c960d03e2f478f3d8b1c936ef6f9c249408efde04dfe",
+        "finalGuide": "[2026.09.13-10.36.56:970][255]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=3 action=none argument=0 entity=0 step=7 micro=9/10 waiting=0 pointer=(991.1,541.3) card=(67.2,97.5,571.2,212.5) target_bounds=(955.1,505.3,1027.1,577.3) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "train-open-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "button",
+        "actionsApplied": 0,
+        "capture": "mac/train-open-phone.png",
+        "captureSha256": "39a357c1885f11eb5a5bb3d71f1bde8aab1a60bf8f1a0e6030702c4f81591e51",
+        "runtimeSha256": "f63df7a1e7c5e76966231d82233c48375b7f92e478c65b5b3916ce28cf08e485",
+        "verificationSha256": "8dbad7867fda07e5304aa894632ae38a258eaf679221b6ab3e44b02e7f477d37",
+        "finalGuide": "[2026.09.13-10.34.57:678][ 20]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=1 action=globalcatalog argument=8 entity=0 step=3 micro=1/6 waiting=0 pointer=(115.0,400.1) card=(18.8,76.3,413.0,187.4) target_bounds=(84.5,374.3,145.5,425.9) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "train-portrait-small",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "target": "button",
+        "actionsApplied": 1,
+        "capture": "mac/train-portrait-small.png",
+        "captureSha256": "e34a5c59e72b7526b89ba728e6c80b301e8c894f9961070bc5f2ccabf48d9c69",
+        "runtimeSha256": "2cb77c99683b169d1921727751ba55c232933a0e44edc494d6821294e14c7640",
+        "verificationSha256": "ad23c1ad5548900ece884b72255a0d93bc9ac0e07dc86a8a5ec138ba3e083a3a",
+        "finalGuide": "[2026.09.13-10.35.12:886][ 27]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=1 action=trainkind argument=0 entity=0 step=3 micro=2/6 waiting=0 pointer=(52.5,143.0) card=(440.0,65.0,651.0,158.0) target_bounds=(30.0,121.0,75.0,165.0) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "train-quantity-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "button",
+        "actionsApplied": 2,
+        "capture": "mac/train-quantity-phone.png",
+        "captureSha256": "4241277a6d0fc2bc4a43fc0d7afa773fd60c8f7866f7dfcc1d238675b08b5c05",
+        "runtimeSha256": "c8ded0d6bc2cdfdc81ea05491eb85f409e722a2d82199fd276b6e5c3249ee0ef",
+        "verificationSha256": "88299be3f710de7d2734f0767f162a9611fd338ebed6127944c09dc57702589b",
+        "finalGuide": "[2026.09.13-10.35.27:882][ 35]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=1 action=trainqty argument=1 entity=0 step=3 micro=3/6 waiting=0 pointer=(61.0,227.6) card=(516.3,76.3,937.2,187.4) target_bounds=(35.2,201.8,86.8,253.4) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "train-queue-small",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "target": "button",
+        "actionsApplied": 3,
+        "capture": "mac/train-queue-small.png",
+        "captureSha256": "c16f265e48fd7cf8a53cc8ce01cc476891d64b9dab09ea5ef8d2ac84fbdf3d30",
+        "runtimeSha256": "e5fa7bf96b808fcfaa79a5a132cb2383f5f45ea4073cb76a8ee691a0ab5eea2a",
+        "verificationSha256": "cedc30bd8241bfef98e6560cb08aef9d1532ce1ad4c605c194a78ec829a37533",
+        "finalGuide": "[2026.09.13-10.35.43:429][ 42]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=1 action=globaltrain argument=0 entity=0 step=3 micro=4/6 waiting=0 pointer=(344.0,194.0) card=(440.0,65.0,651.0,158.0) target_bounds=(270.0,172.0,418.0,216.0) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "train-wait-phone",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "target": "wait",
+        "actionsApplied": 5,
+        "capture": "mac/train-wait-phone.png",
+        "captureSha256": "4e93d2300fb4c075586cf9c68732770e33232b8ca93dead0981246cfcf1c32c3",
+        "runtimeSha256": "97ce11477f97203659c6ea10f33a1e55a46484327ab144114ad4448e872916d2",
+        "verificationSha256": "6930a16eb5cbd86cb7c52b050eea1abd8d4e992c0897e3b14190ddd69950b99e",
+        "finalGuide": "[2026.09.13-10.36.01:864][ 57]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=5 action=none argument=0 entity=0 step=3 micro=6/6 waiting=1 pointer=(0.0,0.0) card=(18.8,76.3,413.0,187.4) target_bounds=(0.0,0.0,0.0,0.0) target_visible=0 needs_show=0 target_clear=0",
+        "visuallyReviewed": true
+      },
+      {
+        "case": "worker-pointer-small",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "target": "entity",
+        "actionsApplied": 0,
+        "capture": "mac/worker-pointer-small.png",
+        "captureSha256": "fa8225fc3af5174cecd9c2cb33b1d961788ce5df4457b6cd1f280d0cba78bf5d",
+        "runtimeSha256": "f053250b3fbd09edf3ee83b18d3632ac89e166634a3c91978a481f7b6ee667b6",
+        "verificationSha256": "21b4d534c1e38a349caf8568ece12db4a58e475ece99f011ad05449cfa534ff6",
+        "finalGuide": "[2026.09.13-10.33.24:487][ 20]LogCinderHUD: Display: CINDERLINE_TUTORIAL_GUIDE target=2 action=none argument=0 entity=6 step=1 micro=1/1 waiting=0 pointer=(281.7,139.1) card=(431.0,177.0,651.0,270.0) target_bounds=(257.7,115.1,305.7,163.1) target_visible=1 needs_show=0 target_clear=1",
+        "visuallyReviewed": true
+      }
+    ],
+    "beforeShowCapture": "mac/offscreen-recovery-small-before-show.png"
+  },
+  "protectedPlayerState": {
+    "unchanged": true,
+    "before": {
+      "Matches/skirmish.cinder": null,
+      "Config/Training.ini": null,
+      "Config/Skirmish.ini": null
+    },
+    "after": {
+      "Matches/skirmish.cinder": null,
+      "Config/Training.ini": null,
+      "Config/Skirmish.ini": null
+    }
+  },
+  "sourceSha256": {
+    "Source/Cinderline/Public/Presentation/CinderTutorial.h": "c361f479d29109cc3b1a34164e41d05d845ca190a8ce0b2b645974c18c406df7",
+    "Source/Cinderline/Private/Presentation/CinderTutorial.cpp": "8d11c8d0c55dbb6645af021cd4e88652acaa6344fa1315c27cb2f3db680471f8",
+    "Source/Cinderline/Public/Presentation/CinderHUD.h": "39b213e671675a031b08e244a4eba8861b77518b42503b9c49e25e5f282fc753",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "147473f2c688baa0304aab37b0d56e0c1251d4cc83f6b4134f76eb02207909dd",
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h": "5573149ce4cbbdf88cede512c29118743944641e912ebdd6a319b73250c8cedc",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "bac5badd34d4245e6a537f53eaaf422f018422a792e56c6ace1c4bb69f06853b",
+    "Source/Cinderline/Private/Presentation/CinderTutorialCoachPreview.cpp": "594e000571e8fd9f2c5a9a1cfc7f53c7339d969e78bf9f6b0a920ddbf8d1d870",
+    "Source/Cinderline/Private/Tests/CinderTutorialGuidanceTests.cpp": "2d043d2cefa5acd0539034c1240ca3b8b70d68df99d025355d1daf75ec59fede",
+    "Source/Cinderline/Private/Tests/CinderProductionControlTests.cpp": "25e81c5ea5d1a4d22738e6fa2bda49288b867af1dfdb5626c0271e9ad02997b2"
+  },
+  "sourceReview": {
+    "path": "source-review.md",
+    "sha256": "54c4e5056e658d86866846da1e6b27b34afb094c6f3ed35893f140d4d0b34551"
+  },
+  "iOSPackageCreated": false,
+  "physicalDeviceTested": false
+}

@@ -1,0 +1,59 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "process",
+      "launch",
+      "--device",
+      "00008150-00060CE12684401C",
+      "--terminate-existing",
+      "--json-output",
+      "artifacts/visual-target/aeon/menu-only-launch.json",
+      "--log-output",
+      "Saved/IOSDevice/menu-only-launch.log",
+      "com.cinderline.game"
+    ],
+    "commandType" : "devicectl.device.process.launch",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "launchOptions" : {
+      "activatedWhenStarted" : true,
+      "arguments" : [
+
+      ],
+      "environmentVariables" : {
+        "TERM" : "dumb"
+      },
+      "platformSpecificOptions" : {
+
+      },
+      "startStopped" : false,
+      "terminateExistingInstances" : true,
+      "user" : {
+        "active" : true
+      }
+    },
+    "process" : {
+      "auditToken" : [
+        4294967295,
+        501,
+        501,
+        501,
+        501,
+        14428,
+        0,
+        37972
+      ],
+      "executable" : "file:///private/var/containers/Bundle/Application/71276F45-2E5D-4D28-A118-B690785571B3/Cinderline.app/Cinderline",
+      "processIdentifier" : 14428
+    }
+  }
+}

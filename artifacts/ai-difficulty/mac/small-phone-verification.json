@@ -1,0 +1,160 @@
+{
+  "case": "small-phone",
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "selectedDifficulty": 4,
+  "capture": "small-phone.png",
+  "buttonCount": 13,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "map",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        111.0,
+        222.3,
+        155.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "map",
+      "argument": 1,
+      "bounds": [
+        230.3,
+        111.0,
+        436.7,
+        155.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "map",
+      "argument": 2,
+      "bounds": [
+        444.7,
+        111.0,
+        651.0,
+        155.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "difficulty",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        195.0,
+        139.8,
+        239.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "difficulty",
+      "argument": 1,
+      "bounds": [
+        143.8,
+        195.0,
+        267.6,
+        239.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "difficulty",
+      "argument": 2,
+      "bounds": [
+        271.6,
+        195.0,
+        395.4,
+        239.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "difficulty",
+      "argument": 3,
+      "bounds": [
+        399.4,
+        195.0,
+        523.2,
+        239.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "difficulty",
+      "argument": 4,
+      "bounds": [
+        527.2,
+        195.0,
+        651.0,
+        239.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "start",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        246.0,
+        360.2,
+        290.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "load",
+      "argument": 0,
+      "bounds": [
+        370.2,
+        246.0,
+        651.0,
+        290.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "tutorial",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        297.0,
+        224.3,
+        341.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        229.3,
+        297.0,
+        437.7,
+        341.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "online",
+      "argument": 0,
+      "bounds": [
+        442.7,
+        297.0,
+        651.0,
+        341.0
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "scope": "Mac Unreal renderer with actual menu actions and logged hit bounds; no physical touch test",
+  "visuallyInspected": true
+}

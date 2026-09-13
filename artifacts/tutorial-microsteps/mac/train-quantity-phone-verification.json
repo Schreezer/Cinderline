@@ -1,0 +1,319 @@
+{
+  "case": "train-quantity-phone",
+  "state": "train-quantity",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "step": 3,
+  "microstep": [
+    3,
+    6
+  ],
+  "target": "button",
+  "selection": 0,
+  "rallyProducer": 0,
+  "tick": 120,
+  "actionsApplied": 2,
+  "capture": "train-quantity-phone.png",
+  "beforeShowCapture": null,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        374.3,
+        79.8,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        84.5,
+        374.3,
+        145.5,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        150.2,
+        374.3,
+        239.4,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        244.1,
+        374.3,
+        305.1,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        312.1,
+        374.3,
+        487.4,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        492.1,
+        374.3,
+        667.4,
+        425.9
+      ]
+    },
+    {
+      "index": 8,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        674.4,
+        374.3,
+        768.3,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        775.3,
+        374.3,
+        864.5,
+        425.9
+      ]
+    },
+    {
+      "index": 10,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 11,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        455.3,
+        85.7,
+        506.9,
+        137.3
+      ]
+    },
+    {
+      "index": 12,
+      "action": "trainkind",
+      "argument": 0,
+      "bounds": [
+        35.2,
+        142.0,
+        88.0,
+        193.6
+      ]
+    },
+    {
+      "index": 13,
+      "action": "trainkind",
+      "argument": 1,
+      "bounds": [
+        92.7,
+        142.0,
+        145.5,
+        193.6
+      ]
+    },
+    {
+      "index": 14,
+      "action": "trainkind",
+      "argument": 2,
+      "bounds": [
+        150.2,
+        142.0,
+        203.0,
+        193.6
+      ]
+    },
+    {
+      "index": 15,
+      "action": "trainkind",
+      "argument": 3,
+      "bounds": [
+        207.7,
+        142.0,
+        260.5,
+        193.6
+      ]
+    },
+    {
+      "index": 16,
+      "action": "trainkind",
+      "argument": 4,
+      "bounds": [
+        265.2,
+        142.0,
+        318.0,
+        193.6
+      ]
+    },
+    {
+      "index": 17,
+      "action": "trainkind",
+      "argument": 5,
+      "bounds": [
+        322.7,
+        142.0,
+        375.5,
+        193.6
+      ]
+    },
+    {
+      "index": 18,
+      "action": "trainkind",
+      "argument": 6,
+      "bounds": [
+        380.2,
+        142.0,
+        433.0,
+        193.6
+      ]
+    },
+    {
+      "index": 19,
+      "action": "trainkind",
+      "argument": 7,
+      "bounds": [
+        437.7,
+        142.0,
+        490.5,
+        193.6
+      ]
+    },
+    {
+      "index": 20,
+      "action": "trainqty",
+      "argument": 1,
+      "bounds": [
+        35.2,
+        201.8,
+        86.8,
+        253.4
+      ]
+    },
+    {
+      "index": 21,
+      "action": "trainqty",
+      "argument": 3,
+      "bounds": [
+        91.5,
+        201.8,
+        143.1,
+        253.4
+      ]
+    },
+    {
+      "index": 22,
+      "action": "trainqty",
+      "argument": 6,
+      "bounds": [
+        147.8,
+        201.8,
+        199.5,
+        253.4
+      ]
+    },
+    {
+      "index": 23,
+      "action": "trainqtydelta",
+      "argument": -1,
+      "bounds": [
+        204.2,
+        201.8,
+        255.8,
+        253.4
+      ]
+    },
+    {
+      "index": 24,
+      "action": "trainqtydelta",
+      "argument": 1,
+      "bounds": [
+        260.5,
+        201.8,
+        312.1,
+        253.4
+      ]
+    },
+    {
+      "index": 25,
+      "action": "globaltrain",
+      "argument": 0,
+      "bounds": [
+        316.8,
+        201.8,
+        490.5,
+        253.4
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "protectedPlayerState": true,
+  "ownedPid": 51059,
+  "scope": "Mac Unreal renderer and deterministic tutorial HUD/pointer chain; no physical touch or iPhone run"
+}

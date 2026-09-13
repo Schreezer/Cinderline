@@ -1,0 +1,93 @@
+{
+  "label": "menu",
+  "mode": "menu",
+  "thermalPolicyOverride": 0,
+  "pid": 27869,
+  "ownedPid": true,
+  "captured": true,
+  "sourceExecutableSha256": "594f5a626d1e875152355c243cdd25a38511394a78165df8b2742934eee96b0c",
+  "wrappedExecutableSha256": "594f5a626d1e875152355c243cdd25a38511394a78165df8b2742934eee96b0c",
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "newCrashReports": [],
+  "result": [
+    "[2026.09.12-21.21.25:947][ 90]LogCinderMetalFXPreview: Display: CINDERLINE_METALFX_MENU_PREVIEW result passed=1 menu=1 observation_seconds=5.0 encoded_start=0 encoded_finish=0 encoded_delta=0 viewport_px=2052x1536 render_target_px=2052x1536 world_rendering_disabled=1 status_emitted=1 elapsed_seconds=6.225 screenshot=../../../Cinderline/Saved/MetalFX/menu-2052x1536.png"
+  ],
+  "status": [
+    "[2026.09.12-21.21.20:684][ 15]LogCinderMetalFX: Display: CINDER_METALFX_STATUS requested=0 metal_rhi=0 os_supported=0 device_supported=0 bridge_available=0 interface_active=0 requested_percent=100.00 effective_fraction=1.0000 registered_frames=0 encoded_frames=0 scaler_creations=0 validation_probes=0 fallbacks=0 last_input=0x0 last_output=0x0 fallback_reason=none",
+    "[2026.09.12-21.21.25:723][ 90]LogCinderMetalFX: Display: CINDER_METALFX_STATUS requested=0 metal_rhi=0 os_supported=0 device_supported=0 bridge_available=0 interface_active=0 requested_percent=100.00 effective_fraction=1.0000 registered_frames=0 encoded_frames=0 scaler_creations=0 validation_probes=0 fallbacks=0 last_input=0x0 last_output=0x0 fallback_reason=none",
+    "[2026.09.12-21.21.25:723][ 90]LogCinderMetalFX: Display: CINDER_METALFX_STATUS requested=0 metal_rhi=0 os_supported=0 device_supported=0 bridge_available=0 interface_active=0 requested_percent=100.00 effective_fraction=1.0000 registered_frames=0 encoded_frames=0 scaler_creations=0 validation_probes=0 fallbacks=0 last_input=0x0 last_output=0x0 fallback_reason=none"
+  ],
+  "nativeStatuses": [
+    {
+      "requested": "0",
+      "metal_rhi": "0",
+      "os_supported": "0",
+      "device_supported": "0",
+      "bridge_available": "0",
+      "interface_active": "0",
+      "requested_percent": "100.00",
+      "effective_fraction": "1.0000",
+      "registered_frames": "0",
+      "encoded_frames": "0",
+      "scaler_creations": "0",
+      "validation_probes": "0",
+      "fallbacks": "0",
+      "last_input": "0x0",
+      "last_output": "0x0",
+      "fallback_reason": "none"
+    },
+    {
+      "requested": "0",
+      "metal_rhi": "0",
+      "os_supported": "0",
+      "device_supported": "0",
+      "bridge_available": "0",
+      "interface_active": "0",
+      "requested_percent": "100.00",
+      "effective_fraction": "1.0000",
+      "registered_frames": "0",
+      "encoded_frames": "0",
+      "scaler_creations": "0",
+      "validation_probes": "0",
+      "fallbacks": "0",
+      "last_input": "0x0",
+      "last_output": "0x0",
+      "fallback_reason": "none"
+    },
+    {
+      "requested": "0",
+      "metal_rhi": "0",
+      "os_supported": "0",
+      "device_supported": "0",
+      "bridge_available": "0",
+      "interface_active": "0",
+      "requested_percent": "100.00",
+      "effective_fraction": "1.0000",
+      "registered_frames": "0",
+      "encoded_frames": "0",
+      "scaler_creations": "0",
+      "validation_probes": "0",
+      "fallbacks": "0",
+      "last_input": "0x0",
+      "last_output": "0x0",
+      "fallback_reason": "none"
+    }
+  ],
+  "metrics": {
+    "passed": "1",
+    "menu": "1",
+    "observation_seconds": "5.0",
+    "encoded_start": "0",
+    "encoded_finish": "0",
+    "encoded_delta": "0",
+    "viewport_px": "2052x1536",
+    "render_target_px": "2052x1536",
+    "world_rendering_disabled": "1",
+    "status_emitted": "1",
+    "elapsed_seconds": "6.225",
+    "screenshot": "../../../Cinderline/Saved/MetalFX/menu-2052x1536.png"
+  },
+  "nativeAssertionsPassed": true,
+  "scope": "Exact signed iOS executable on native Mac; not Simulator or physical phone proof"
+}

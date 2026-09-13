@@ -1,0 +1,211 @@
+{
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "sheet": 4,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "38:Ember",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        10.0,
+        603.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        56.0,
+        64.0,
+        100.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        16.0,
+        104.0,
+        64.0,
+        148.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        16.0,
+        152.0,
+        64.0,
+        196.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        200.0,
+        64.0,
+        244.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        56.0,
+        603.0,
+        100.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        56.0,
+        651.0,
+        100.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        603.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        359.0,
+        58.0,
+        403.0,
+        102.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        77.0,
+        108.0,
+        181.0,
+        152.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "stop",
+      "argument": 0,
+      "bounds": [
+        188.0,
+        108.0,
+        292.0,
+        152.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "hold",
+      "argument": 0,
+      "bounds": [
+        299.0,
+        108.0,
+        403.0,
+        152.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        77.0,
+        158.0,
+        181.0,
+        202.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        188.0,
+        158.0,
+        292.0,
+        202.0
+      ]
+    }
+  ],
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "globalState": null,
+  "observedMaxFPS": 30,
+  "case": "orders-small",
+  "state": "orders",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "capture": "orders-small.png",
+  "captureSha256": "e18463fa5a58cfff41529d9e18be21bbe5ea4df3c03f1e7fba581939509133c8",
+  "captureDimensions": [
+    667,
+    375
+  ],
+  "ownedPid": 76181,
+  "launchToken": "HUDOverhaul-38a24ebb547c48b3b0b9aea96fdbcfa9",
+  "startedAtNs": 1789299099421018000,
+  "captureModifiedAtNs": 1789299113746044337,
+  "freshCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "minimumCompactHitSize": 44,
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS or device performance measurement."
+}

@@ -1,0 +1,222 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CinderlineEditor Mac Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile -MaxParallelActions=1
+Argument '-MaxParallelActions=1' conflicts with '-MaxParallelActions=2'; ignoring.
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Argument '-MaxParallelActions=1' conflicts with '-MaxParallelActions=2'; ignoring.
+Executing up to 2 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for CinderlineEditor (source file added)
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+UHT compiled-in object format Default
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.2.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.3.cpp.d!
+Building CinderlineEditor...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from Cinderline unity file: CinderCameraBoundaryTests.cpp, CinderMobileHUDLayoutTests.cpp, CinderWorldIntegrationTests.cpp, CinderOnlineRecoveryTests.cpp, CinderTutorialTests.cpp, CinderDifficultyTests.cpp, CinderMetalFXResolutionTests.cpp, CinderIOSPerformancePolicyTests.cpp, CinderUnitInfoTests.cpp, CinderWorldEffectsTests.cpp, CinderArmyControlTests.cpp, CinderSceneryTests.cpp, CinderLandscapeTerrainTests.cpp, CinderTutorialGuidanceTests.cpp, CinderOnlineIntegrationTests.cpp, CinderProductionControlTests.cpp, CinderOnboardingTests.cpp, Network.cpp, SimulationMovement.cpp, Navigation.cpp, SimulationAI.cpp, SimulationJobs.cpp, Simulation.cpp, CinderHUD.cpp, CinderGuidedPreview.cpp, CinderTutorial.cpp, CinderHelpContent.cpp, CinderOnlinePreview.cpp, CinderIOSPerformancePolicy.cpp, CinderBattlefield.cpp, CinderMatchLengthPreview.cpp, CinderPlayerController.cpp, CinderWorldEffects.cpp, CinderDifficultyPreview.cpp, CinderMetalFXPreview.cpp, CinderHUDStyle.cpp, CinderQualityDiagnostics.cpp, CinderCanyonPreview.cpp, CinderCommandPreview.cpp, CinderGameEngine.cpp, CinderUnitInfo.cpp, CinderFourPlayerPreview.cpp, CinderOnlinePanel.cpp, CinderLandscapeTerrain.cpp, CinderTerrainSurface.cpp, CinderCameraPreview.cpp, CinderCamera.cpp, CinderScenery.cpp, CinderLANDiscovery.cpp, CinderOnlineSubsystem.cpp, CinderTutorialCoachPreview.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 55 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 30.79 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/55] Compile [Apple] CinderArmyControlTests.cpp
+[2/55] Compile [Apple] CinderBattlefield.cpp
+[3/55] Compile [Apple] CinderCamera.cpp
+[4/55] Compile [Apple] CinderCameraBoundaryTests.cpp
+[5/55] Compile [Apple] CinderCameraPreview.cpp
+[6/55] Compile [Apple] CinderCanyonPreview.cpp
+[7/55] Compile [Apple] CinderCommandPreview.cpp
+[8/55] Compile [Apple] CinderDifficultyPreview.cpp
+[9/55] Compile [Apple] CinderDifficultyTests.cpp
+[10/55] Compile [Apple] CinderFourPlayerPreview.cpp
+[11/55] Compile [Apple] CinderGameEngine.cpp
+[12/55] Compile [Apple] CinderGuidedPreview.cpp
+[13/55] Compile [Apple] CinderHUD.cpp
+[14/55] Compile [Apple] CinderHUDStyle.cpp
+[15/55] Compile [Apple] CinderHelpContent.cpp
+[16/55] Compile [Apple] CinderLANDiscovery.cpp
+[17/55] Compile [Apple] CinderLandscapeTerrainTests.cpp
+[18/55] Compile [Apple] CinderLandscapeTerrain.cpp
+[19/55] Compile [Apple] CinderMatchLengthPreview.cpp
+[20/55] Compile [Apple] CinderMetalFXPreview.cpp
+[21/55] Compile [Apple] CinderOnboardingTests.cpp
+[22/55] Compile [Apple] CinderOnlineIntegrationTests.cpp
+[23/55] Compile [Apple] CinderOnlinePreview.cpp
+[24/55] Compile [Apple] CinderOnlinePanel.cpp
+[25/55] Compile [Apple] CinderOnlineRecoveryTests.cpp
+[26/55] Compile [Apple] CinderOnlineSubsystem.cpp
+[27/55] Compile [Apple] CinderPlayerController.cpp
+[28/55] Compile [Apple] CinderProductionControlTests.cpp
+[29/55] Compile [Apple] CinderScenery.cpp
+[30/55] Compile [Apple] CinderSceneryTests.cpp
+[31/55] Compile [Apple] CinderTerrainSurface.cpp
+[32/55] Compile [Apple] CinderTutorial.cpp
+[33/55] Compile [Apple] CinderTutorialCoachPreview.cpp
+[34/55] Compile [Apple] CinderTutorialGuidanceTests.cpp
+[35/55] Compile [Apple] CinderTutorialTests.cpp
+[36/55] Compile [Apple] CinderUnitInfo.cpp
+[37/55] Compile [Apple] CinderUnitInfoTests.cpp
+[38/55] Compile [Apple] CinderWorldEffects.cpp
+[39/55] Compile [Apple] CinderWorldEffectsTests.cpp
+[40/55] Compile [Apple] CinderWorldIntegrationTests.cpp
+[41/55] Compile [Apple] Module.Cinderline.1.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:151:216: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68184 to 2648 [-Werror,-Wconstant-conversion]
+  151 | const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_MeshComponents = { "MeshComponents", nullptr, (EPropertyFlags)0x0144008000000008, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, MeshComponents), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MeshComponents_MetaData), NewProp_MeshComponents_MetaData) };
+      |                                                                                     ~                                                                                                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:153:210: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68200 to 2664 [-Werror,-Wconstant-conversion]
+  153 | const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_ModelMeshes = { "ModelMeshes", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, ModelMeshes), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ModelMeshes_MetaData), NewProp_ModelMeshes_MetaData) };
+      |                                                                                  ~                                                                                                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:155:212: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68216 to 2680 [-Werror,-Wconstant-conversion]
+  155 | const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_MotionMeshes = { "MotionMeshes", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, MotionMeshes), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MotionMeshes_MetaData), NewProp_MotionMeshes_MetaData) };
+      |                                                                                   ~                                                                                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:157:216: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68232 to 2696 [-Werror,-Wconstant-conversion]
+  157 | const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_ModelMaterials = { "ModelMaterials", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, ModelMaterials), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ModelMaterials_MetaData), NewProp_ModelMaterials_MetaData) };
+      |                                                                                     ~                                                                                                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:158:254: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68248 to 2712 [-Werror,-Wconstant-conversion]
+  158 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Scenery = { "Scenery", nullptr, (EPropertyFlags)0x0144000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, Scenery), Z_Construct_UClass_UCinderScenery, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Scenery_MetaData), NewProp_Scenery_MetaData) };
+      |                                                                               ~                                                                                                                                                                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:159:264: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68256 to 2720 [-Werror,-Wconstant-conversion]
+  159 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_WorldEffects = { "WorldEffects", nullptr, (EPropertyFlags)0x0144000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, WorldEffects), Z_Construct_UClass_UCinderWorldEffects, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_WorldEffects_MetaData), NewProp_WorldEffects_MetaData) };
+      |                                                                                    ~                                                                                                                                                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:160:266: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68264 to 2728 [-Werror,-Wconstant-conversion]
+  160 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_CanyonTerrain = { "CanyonTerrain", nullptr, (EPropertyFlags)0x0144000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, CanyonTerrain), Z_Construct_UClass_UCinderLandscapeTerrain, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CanyonTerrain_MetaData), NewProp_CanyonTerrain_MetaData) };
+      |                                                                                     ~                                                                                                                                                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:161:258: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68272 to 2736 [-Werror,-Wconstant-conversion]
+  161 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_CameraRig = { "CameraRig", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, CameraRig), Z_Construct_UClass_ACinderCamera, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CameraRig_MetaData), NewProp_CameraRig_MetaData) };
+      |                                                                                 ~                                                                                                                                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:162:248: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68280 to 2744 [-Werror,-Wconstant-conversion]
+  162 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Cube = { "Cube", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, Cube), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Cube_MetaData), NewProp_Cube_MetaData) };
+      |                                                                            ~                                                                                                                                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:163:256: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68288 to 2752 [-Werror,-Wconstant-conversion]
+  163 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Cylinder = { "Cylinder", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, Cylinder), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Cylinder_MetaData), NewProp_Cylinder_MetaData) };
+      |                                                                                ~                                                                                                                                                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:164:248: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68296 to 2760 [-Werror,-Wconstant-conversion]
+  164 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Cone = { "Cone", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, Cone), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Cone_MetaData), NewProp_Cone_MetaData) };
+      |                                                                            ~                                                                                                                                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:165:252: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68304 to 2768 [-Werror,-Wconstant-conversion]
+  165 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Sphere = { "Sphere", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, Sphere), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Sphere_MetaData), NewProp_Sphere_MetaData) };
+      |                                                                              ~                                                                                                                                                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:166:250: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68312 to 2776 [-Werror,-Wconstant-conversion]
+  166 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Plane = { "Plane", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, Plane), Z_Construct_UClass_UStaticMesh, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Plane_MetaData), NewProp_Plane_MetaData) };
+      |                                                                             ~                                                                                                                                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:167:260: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68320 to 2784 [-Werror,-Wconstant-conversion]
+  167 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_FogTexture = { "FogTexture", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, FogTexture), Z_Construct_UClass_UTexture2D, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FogTexture_MetaData), NewProp_FogTexture_MetaData) };
+      |                                                                                  ~                                                                                                                                                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:168:262: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68328 to 2792 [-Werror,-Wconstant-conversion]
+  168 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_FogMaterial = { "FogMaterial", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, FogMaterial), Z_Construct_UClass_UMaterialInstanceDynamic, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FogMaterial_MetaData), NewProp_FogMaterial_MetaData) };
+      |                                                                                   ~                                                                                                                                                                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:169:280: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68336 to 2800 [-Werror,-Wconstant-conversion]
+  169 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_GroundSurfaceTexture = { "GroundSurfaceTexture", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, GroundSurfaceTexture), Z_Construct_UClass_UTexture2D, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_GroundSurfaceTexture_MetaData), NewProp_GroundSurfaceTexture_MetaData) };
+      |                                                                                            ~                                                                                                                                                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:170:282: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68344 to 2808 [-Werror,-Wconstant-conversion]
+  170 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_GroundSurfaceMaterial = { "GroundSurfaceMaterial", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, GroundSurfaceMaterial), Z_Construct_UClass_UMaterialInstanceDynamic, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_GroundSurfaceMaterial_MetaData), NewProp_GroundSurfaceMaterial_MetaData) };
+      |                                                                                             ~                                                                                                                                                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:171:268: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68352 to 2816 [-Werror,-Wconstant-conversion]
+  171 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_AmbientCubemap = { "AmbientCubemap", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, AmbientCubemap), Z_Construct_UClass_UTextureCube, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_AmbientCubemap_MetaData), NewProp_AmbientCubemap_MetaData) };
+      |                                                                                      ~                                                                                                                                                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:4:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderBattlefield.gen.cpp:172:264: error: implicit conversion from 'unsigned long' to 'uint16' (aka 'unsigned short') changes value from 68360 to 2824 [-Werror,-Wconstant-conversion]
+  172 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_BaseMaterial = { "BaseMaterial", nullptr, (EPropertyFlags)0x0144000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, STRUCT_OFFSET(ACinderBattlefield, BaseMaterial), Z_Construct_UClass_UMaterialInterface, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BaseMaterial_MetaData), NewProp_BaseMaterial_MetaData) };
+      |                                                                                    ~                                                                                                                                                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:226:40: note: expanded from macro 'STRUCT_OFFSET'
+  226 | #define STRUCT_OFFSET( struc, member )  __builtin_offsetof(struc, member)
+      |                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+19 errors generated.
+[42/55] Compile [Apple] Module.Cinderline.2.cpp
+[43/55] Compile [Apple] Module.Cinderline.3.cpp
+[44/55] Compile [Apple] Network.cpp
+[45/55] Compile [Apple] Simulation.cpp
+[46/55] Compile [Apple] SimulationAI.cpp
+[47/55] Compile [Apple] SimulationJobs.cpp
+[48/55] Compile [Apple] SimulationMovement.cpp
+[49/55] Compile [Apple] Module.MetalRHI.1.cpp
+[50/55] Compile [Apple] Module.MetalRHI.2.cpp
+[51/55] Compile [Apple] CinderLandscapeAuthoringLibrary.cpp
+[52/55] Compile [Apple] Module.MetalRHI.3.cpp
+[53/55] Link [Apple] libUnrealEditor-MetalRHI.dylib
+Total time in Unreal Build Accelerator local executor: 144.63 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 150.48 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 45.2kb

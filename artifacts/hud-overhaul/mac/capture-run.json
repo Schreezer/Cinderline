@@ -1,0 +1,157 @@
+{
+  "requested": [
+    "idle-phone",
+    "worker-phone",
+    "unit-phone",
+    "defend-phone",
+    "army-phone",
+    "squads-phone",
+    "queue-phone",
+    "global-build-phone",
+    "global-train-phone",
+    "global-research-phone",
+    "global-jobs-phone",
+    "global-pinned-phone",
+    "global-rally-phone",
+    "idle-small",
+    "army-small",
+    "roster-page-small",
+    "global-train-small",
+    "global-jobs-small",
+    "squads-small",
+    "unit-info-small",
+    "unit-combat-small",
+    "building-guide-small",
+    "orders-small",
+    "idle-desktop",
+    "army-ipad"
+  ],
+  "completed": [
+    {
+      "case": "idle-phone",
+      "verification": "idle-phone-verification.json",
+      "capture": "idle-phone.png"
+    },
+    {
+      "case": "worker-phone",
+      "verification": "worker-phone-verification.json",
+      "capture": "worker-phone.png"
+    },
+    {
+      "case": "unit-phone",
+      "verification": "unit-phone-verification.json",
+      "capture": "unit-phone.png"
+    },
+    {
+      "case": "defend-phone",
+      "verification": "defend-phone-verification.json",
+      "capture": "defend-phone.png"
+    },
+    {
+      "case": "army-phone",
+      "verification": "army-phone-verification.json",
+      "capture": "army-phone.png"
+    },
+    {
+      "case": "squads-phone",
+      "verification": "squads-phone-verification.json",
+      "capture": "squads-phone.png"
+    },
+    {
+      "case": "queue-phone",
+      "verification": "queue-phone-verification.json",
+      "capture": "queue-phone.png"
+    },
+    {
+      "case": "global-build-phone",
+      "verification": "global-build-phone-verification.json",
+      "capture": "global-build-phone.png"
+    },
+    {
+      "case": "global-train-phone",
+      "verification": "global-train-phone-verification.json",
+      "capture": "global-train-phone.png"
+    },
+    {
+      "case": "global-research-phone",
+      "verification": "global-research-phone-verification.json",
+      "capture": "global-research-phone.png"
+    },
+    {
+      "case": "global-jobs-phone",
+      "verification": "global-jobs-phone-verification.json",
+      "capture": "global-jobs-phone.png"
+    },
+    {
+      "case": "global-pinned-phone",
+      "verification": "global-pinned-phone-verification.json",
+      "capture": "global-pinned-phone.png"
+    },
+    {
+      "case": "global-rally-phone",
+      "verification": "global-rally-phone-verification.json",
+      "capture": "global-rally-phone.png"
+    },
+    {
+      "case": "idle-small",
+      "verification": "idle-small-verification.json",
+      "capture": "idle-small.png"
+    },
+    {
+      "case": "army-small",
+      "verification": "army-small-verification.json",
+      "capture": "army-small.png"
+    },
+    {
+      "case": "roster-page-small",
+      "verification": "roster-page-small-verification.json",
+      "capture": "roster-page-small.png"
+    },
+    {
+      "case": "global-train-small",
+      "verification": "global-train-small-verification.json",
+      "capture": "global-train-small.png"
+    },
+    {
+      "case": "global-jobs-small",
+      "verification": "global-jobs-small-verification.json",
+      "capture": "global-jobs-small.png"
+    },
+    {
+      "case": "squads-small",
+      "verification": "squads-small-verification.json",
+      "capture": "squads-small.png"
+    },
+    {
+      "case": "unit-info-small",
+      "verification": "unit-info-small-verification.json",
+      "capture": "unit-info-small.png"
+    },
+    {
+      "case": "unit-combat-small",
+      "verification": "unit-combat-small-verification.json",
+      "capture": "unit-combat-small.png"
+    },
+    {
+      "case": "building-guide-small",
+      "verification": "building-guide-small-verification.json",
+      "capture": "building-guide-small.png"
+    },
+    {
+      "case": "orders-small",
+      "verification": "orders-small-verification.json",
+      "capture": "orders-small.png"
+    },
+    {
+      "case": "idle-desktop",
+      "verification": "idle-desktop-verification.json",
+      "capture": "idle-desktop.png"
+    },
+    {
+      "case": "army-ipad",
+      "verification": "army-ipad-verification.json",
+      "capture": "army-ipad.png"
+    }
+  ],
+  "allRequestedPassed": true
+}

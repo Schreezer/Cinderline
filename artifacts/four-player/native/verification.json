@@ -1,0 +1,42 @@
+{
+  "source_state": "working tree, 2026-09-13",
+  "build_directory": "/tmp/cinderline-four-player-build",
+  "configure": "cmake -S . -B /tmp/cinderline-four-player-build -DCINDERLINE_BUILD_NATIVE=OFF -DCINDERLINE_BUILD_SERVER=ON -DBUILD_TESTING=ON",
+  "build": {
+    "command": "cmake --build /tmp/cinderline-four-player-build --parallel 2",
+    "result": "passed"
+  },
+  "tests": {
+    "focused_core_migration": {
+      "result": "6/6 passed",
+      "tests": [
+        "simulation_rules",
+        "navigation_regressions",
+        "defense_regressions",
+        "production_allocation_regressions",
+        "match_length_regressions",
+        "four_player_regressions"
+      ]
+    },
+    "network_ai": {
+      "command": "ctest --test-dir /tmp/cinderline-four-player-build -R 'network_protocol|ai_difficulty_regressions' -j2 --output-on-failure",
+      "result": "2/2 passed",
+      "log": "artifacts/four-player/native/ctest-network-ai.log"
+    },
+    "combined": "8/8 passed, 0 failed"
+  },
+  "match_worker": {
+    "path": "/tmp/cinderline-four-player-build/CinderlineMatchWorker",
+    "sha256": "60da3119dfc5cee1a85ed1076cbc177c5fb6cbd6915fa80309bdb43fc7732802",
+    "binary_mtime_epoch": 1789314740,
+    "source_mtime_epoch": 1789314496
+  },
+  "source_sha256": {
+    "Simulation.h": "82fb2b77b210cad25fd1bfa1998c2261b44c24c1b567be7cc23eabd4ca5046a5",
+    "Simulation.cpp": "8c337e556ee6aa3c2a32deee78885839d89dacdaef6a090d82db439d7f52df85",
+    "SimulationAI.cpp": "576d8b5acbce58d2c1b3ccad1523072a39a4c708a4885aa4e3e075774c8d8a2c",
+    "SimulationJobs.cpp": "fdec4ede828c565cee63e71d312d4fbb3a75649b9a074b438bb43be6092b6fa9",
+    "FourPlayerTests.cpp": "cbf02f337356c7a18ac222ca9bd7ae038d5c3701c4a648ddf765081735f1dc4d",
+    "CMakeLists.txt": "d392976a31fc1e0ac306e0b92809ff48a526ceedd5774cef60e690c34f61abca"
+  }
+}

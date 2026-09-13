@@ -1,0 +1,260 @@
+{
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "sheet": 5,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "37:Ember",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        11.7,
+        880.9,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        65.7,
+        75.1,
+        117.3
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        18.8,
+        122.0,
+        75.1,
+        173.7
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        18.8,
+        178.3,
+        75.1,
+        230.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        234.7,
+        75.1,
+        286.3
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        65.7,
+        880.9,
+        117.3
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        65.7,
+        937.2,
+        117.3
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        880.9,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytab",
+      "argument": 0,
+      "bounds": [
+        288.6,
+        65.7,
+        359.0,
+        117.3
+      ]
+    },
+    {
+      "index": 10,
+      "action": "armytab",
+      "argument": 1,
+      "bounds": [
+        363.7,
+        65.7,
+        434.1,
+        117.3
+      ]
+    },
+    {
+      "index": 11,
+      "action": "armytab",
+      "argument": 2,
+      "bounds": [
+        438.8,
+        65.7,
+        509.2,
+        117.3
+      ]
+    },
+    {
+      "index": 12,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        521.0,
+        65.7,
+        572.6,
+        117.3
+      ]
+    },
+    {
+      "index": 13,
+      "action": "productionrally",
+      "argument": 0,
+      "bounds": [
+        100.9,
+        122.0,
+        222.9,
+        173.7
+      ]
+    },
+    {
+      "index": 14,
+      "action": "jobpage",
+      "argument": 1,
+      "bounds": [
+        516.3,
+        122.0,
+        567.9,
+        173.7
+      ]
+    },
+    {
+      "index": 15,
+      "action": "productionfocus",
+      "argument": 0,
+      "bounds": [
+        445.9,
+        178.3,
+        516.3,
+        230.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "cancelproduction",
+      "argument": 0,
+      "bounds": [
+        521.0,
+        178.3,
+        572.6,
+        230.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "productionfocus",
+      "argument": 0,
+      "bounds": [
+        445.9,
+        233.5,
+        516.3,
+        285.1
+      ]
+    },
+    {
+      "index": 18,
+      "action": "cancelproduction",
+      "argument": 0,
+      "bounds": [
+        521.0,
+        233.5,
+        572.6,
+        285.1
+      ]
+    }
+  ],
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 61,
+  "globalState": {
+    "jobs": 7,
+    "producers": 3,
+    "batchSix": false,
+    "rallyArmed": false
+  },
+  "observedMaxFPS": 30,
+  "case": "global-jobs-phone",
+  "state": "global-jobs",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "capture": "global-jobs-phone.png",
+  "captureSha256": "1b6c0afd51ebd6ec1ec3cdb8e06b24808424311ccf5610c518388671db5f878b",
+  "captureDimensions": [
+    956,
+    440
+  ],
+  "ownedPid": 74416,
+  "launchToken": "HUDOverhaul-14f02cd63d3545eca4a475d4b8fad286",
+  "startedAtNs": 1789298897751424000,
+  "captureModifiedAtNs": 1789298911869798118,
+  "freshCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "minimumCompactHitSize": 44,
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS or device performance measurement."
+}

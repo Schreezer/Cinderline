@@ -1,0 +1,6 @@
+2026-09-13 02:51:33.988 Cinderline[28044:6572618] Using MallocBinned2 allocator.
+2026-09-13 02:51:34.283 Cinderline[28044:6572618] You've implemented -[<UIApplicationDelegate> application:didReceiveRemoteNotification:fetchCompletionHandler:], but you still need to add "remote-notification" to the list of your supported UIBackgroundModes in your Info.plist.
+2026-09-13 02:51:34.340 Cinderline[28044:6573222] Metal API Validation Enabled
+2026-09-13 02:51:34.666 Cinderline[28044:6572618] ::: Created a UIView that will support Metal :::
+2026-09-13 02:51:35.027 Cinderline[28044:6573253] Initializing ULD Communications in game mode
+2026-09-13 02:51:35.027 Cinderline[28044:6573253] Low power mode: DISABLED

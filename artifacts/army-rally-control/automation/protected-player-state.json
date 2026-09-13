@@ -1,0 +1,43 @@
+{
+  "unchanged": true,
+  "before": {
+    "Matches/skirmish.cinder": {
+      "exists": false,
+      "sha256": null,
+      "size": null,
+      "mtimeNs": null
+    },
+    "Config/Training.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null,
+      "mtimeNs": null
+    },
+    "Config/Skirmish.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null,
+      "mtimeNs": null
+    }
+  },
+  "after": {
+    "Matches/skirmish.cinder": {
+      "exists": false,
+      "sha256": null,
+      "size": null,
+      "mtimeNs": null
+    },
+    "Config/Training.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null,
+      "mtimeNs": null
+    },
+    "Config/Skirmish.ini": {
+      "exists": false,
+      "sha256": null,
+      "size": null,
+      "mtimeNs": null
+    }
+  }
+}

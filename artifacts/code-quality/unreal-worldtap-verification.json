@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "command": [
+    "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd",
+    "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject",
+    "/Engine/Maps/Entry",
+    "-unattended",
+    "-nop4",
+    "-nosplash",
+    "-NullRHI",
+    "-nosound",
+    "-stdout",
+    "-FullStdOutLogOutput",
+    "-ExecCmds=Automation RunTests Cinderline.Integration.WorldTapSelection; Quit",
+    "-ReportExportPath=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/code-quality/unreal-worldtap",
+    "-abslog=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/code-quality/unreal-worldtap.log"
+  ],
+  "protectedBefore": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "exitCode": 0,
+  "protectedAfterRun": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  },
+  "reportValidation": {
+    "tests": 1,
+    "warning_tests": 0,
+    "allowed_warnings": 0
+  },
+  "restoredFiles": [],
+  "protectedAfter": {
+    "Saved/Config/Online.ini": "e26698b391d4e2ac58c23ffe6d1fe396267dab772129a5199a7719eea44838b3",
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null,
+    "Saved/Matches/skirmish.cinder": null
+  }
+}

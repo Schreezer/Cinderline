@@ -1,0 +1,216 @@
+{
+  "case": "squads-small",
+  "state": "squads",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "capture": "squads-small.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        545.0,
+        10.0,
+        589.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        595.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        319.0,
+        76.0,
+        363.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        82.0,
+        319.0,
+        146.0,
+        363.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        152.0,
+        319.0,
+        208.0,
+        363.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        427.0,
+        319.0,
+        480.0,
+        363.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        484.0,
+        319.0,
+        537.0,
+        363.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        541.0,
+        319.0,
+        594.0,
+        363.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        598.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytab",
+      "argument": 0,
+      "bounds": [
+        394.0,
+        73.0,
+        466.0,
+        117.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        472.0,
+        73.0,
+        516.0,
+        117.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "squad",
+      "argument": 0,
+      "bounds": [
+        30.0,
+        145.0,
+        183.3,
+        189.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "squadassign",
+      "argument": 0,
+      "bounds": [
+        30.0,
+        193.0,
+        183.3,
+        237.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "squad",
+      "argument": 1,
+      "bounds": [
+        189.3,
+        145.0,
+        342.7,
+        189.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "squadassign",
+      "argument": 1,
+      "bounds": [
+        189.3,
+        193.0,
+        342.7,
+        237.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "squad",
+      "argument": 2,
+      "bounds": [
+        348.7,
+        145.0,
+        502.0,
+        189.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "squadassign",
+      "argument": 2,
+      "bounds": [
+        348.7,
+        193.0,
+        502.0,
+        237.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 71420,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

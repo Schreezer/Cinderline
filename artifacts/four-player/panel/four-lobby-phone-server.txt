@@ -1,0 +1,2 @@
+Cinderline game server listening on 127.0.0.1:54337
+Cinderline game server stopped after SIGTERM.

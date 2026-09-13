@@ -1,0 +1,15 @@
+[2026.09.12-12.25.33:531][  0]LogCinderFramePacing: Display: CINDERLINE_WORLD_RENDERING disabled=1 state=menu
+[2026.09.12-12.25.33:642][  0]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_FRAME mode=base viewport=1440x810 distance=2400.0 focus=(1356.4,2816.6) target_screen=(115,73)-(1282,648) projected=(56,-110)-(1339,832)
+[2026.09.12-12.25.33:643][  0]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW mode=base fixture=development_unsaved seed=4280916 buildings=6 mining_workers=3 army=7 cliff=(1320,2400,380,140) camera=projected_fit_1300_2400; ordinary simulation and fog, no save written
+[2026.09.12-12.25.33:643][  0]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW sweep=started base_capture=3.0 battle_stage=3.35 battle_capture_after_stage=4.0 reset_after_capture=0.75 output=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/VisualTarget; development fixture, no save written
+[2026.09.12-12.25.33:651][  1]LogCinderFramePacing: Display: CINDERLINE_WORLD_RENDERING disabled=0 state=gameplay
+[2026.09.12-12.25.36:545][ 88]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_READY mode=base shader_jobs=0->0 static_meshes=0->0
+[2026.09.12-12.25.36:545][ 88]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_VIEW mode=base viewport=ready view_mode=3 materials=1 lighting=1 post_processing=1
+[2026.09.12-12.25.36:545][ 88]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_CAPTURE mode=base elapsed=3.02 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/VisualTarget/base.png fixture=development_unsaved; no save written
+[2026.09.12-12.25.37:511][ 89]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_FRAME mode=battle viewport=1440x810 distance=2400.0 focus=(1285.0,3114.5) target_screen=(115,73)-(1282,648) projected=(362,23)-(1037,699)
+[2026.09.12-12.25.37:512][ 89]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW mode=battle fixture=development_unsaved raiders=7 defenders=6 cliff_clear=1; ordinary attack-move orders and combat, no save written
+[2026.09.12-12.25.41:512][209]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_READY mode=battle shader_jobs=0->0 static_meshes=0->0
+[2026.09.12-12.25.41:512][209]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_VIEW mode=battle viewport=ready view_mode=3 materials=1 lighting=1 post_processing=1
+[2026.09.12-12.25.41:512][209]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW_CAPTURE mode=battle elapsed=4.00 file=../../../../../../chirag13/Documents/ChatGPT/starCraft/Saved/VisualTarget/battle.png fixture=development_unsaved; no save written
+[2026.09.12-12.25.42:271][228]LogCinderArtPreview: Display: CINDERLINE_ART_PREVIEW reset=fresh_menu fixture_cleared=1; no save written
+[2026.09.12-12.25.42:271][228]LogCinderFramePacing: Display: CINDERLINE_WORLD_RENDERING disabled=1 state=menu

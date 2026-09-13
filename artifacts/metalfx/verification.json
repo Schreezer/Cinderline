@@ -1,0 +1,91 @@
+{
+  "verifiedAt": "2026-09-12T21:28:45.267764+00:00",
+  "feature": "Apple MetalFX spatial upscaling",
+  "scope": "Mac renderer and exact signed native iOS executable on Mac. No Xcode Simulator or physical phone run.",
+  "defaults": {
+    "enabledApplePlatforms": true,
+    "scenePercent": 80,
+    "minimumThermalPercent": 70,
+    "hud": "native output resolution",
+    "iosForceSharedTextures": false
+  },
+  "sourceSnapshotSha256": "b49c4ff4ee1e35c80d39cb8123876093a830ef045ec32cb5260cbe14fda76ea9",
+  "gitHead": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "worktreeDirty": true,
+  "iosPackage": {
+    "checkedAt": "2026-09-12T21:20:40.328315+00:00",
+    "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "executableSha256": "594f5a626d1e875152355c243cdd25a38511394a78165df8b2742934eee96b0c",
+    "machoPlatform": "IOS",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "strictCodesignVerified": true,
+    "developmentProfile": true,
+    "phoneRegistered": true,
+    "profileUnexpired": true,
+    "orientations": [
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "bundleBytes": 493661317,
+    "ioStoreContainers": [
+      "cookeddata/cinderline/content/paks/global.utoc",
+      "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+    ]
+  },
+  "macCases": {
+    "on-1080": "mac/on-1080-verification.json",
+    "off-1080": "mac/off-1080-verification.json",
+    "on-phone": "mac/on-phone-verification.json",
+    "menu-1080": "mac/menu-1080-verification.json",
+    "stock-fallback": "mac/stock-fallback-verification.json"
+  },
+  "nativeIOSCases": {
+    "on": "native-ios-on-mac/on-verification.json",
+    "off": "native-ios-on-mac/off-verification.json",
+    "minimum": "native-ios-on-mac/minimum-verification.json",
+    "menu": "native-ios-on-mac/menu-verification.json"
+  },
+  "nativeIOSMetalAPIValidation": {
+    "enabledMarkerVerified": true,
+    "nativeStatus": {
+      "requested": "1",
+      "metal_rhi": "1",
+      "os_supported": "1",
+      "device_supported": "1",
+      "bridge_available": "1",
+      "interface_active": "1",
+      "requested_percent": "80.00",
+      "effective_fraction": "0.8001",
+      "registered_frames": "228",
+      "encoded_frames": "225",
+      "scaler_creations": "1",
+      "validation_probes": "1",
+      "fallbacks": "0",
+      "last_input": "1642x1229",
+      "last_output": "2052x1536",
+      "fallback_reason": "none"
+    },
+    "path": "native-ios-api-validation/on-verification.json"
+  },
+  "automation": {
+    "success": 24,
+    "failed": 0,
+    "file": "automation.json"
+  },
+  "stockEnginePatchInputsUnchanged": true,
+  "diffCheckPassed": true,
+  "review": "Important source, view-family, packaging and diagnostic issues resolved.",
+  "physicalDevice": {
+    "installedThisPass": false,
+    "lastRecordedInstalledExecutablePrefix": "2bf6039a",
+    "sustainedPerformanceHeatBatteryMeasured": false
+  },
+  "performanceConclusion": "Mac SM5 final sample improved. The light iOS-on-Mac fixture was slower with MetalFX. No consistent phone performance or energy saving claimed.",
+  "remainingAcceptance": [
+    "Safe AEON installation timing",
+    "Physical touch and sustained GPU/CPU/memory/temperature comparison",
+    "Tune shipping MetalFX quality from device measurements"
+  ]
+}

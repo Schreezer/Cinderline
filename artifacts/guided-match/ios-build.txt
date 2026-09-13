@@ -1,0 +1,67 @@
+Exit code: 0
+Completed: 2026-09-12T18:28:07.050747+00:00
+Full local log: Saved/GuidedMatch/ios-build.log
+
+[1/60] Compile [arm64] PCH.Core.h
+[2/60] Compile [arm64] SharedPCH.CoreUObject.Plat.Cpp20.h
+[3/60] Compile [arm64] SharedPCH.Engine.Project.ValApi.ValExpApi.Cpp20.h
+[4/60] Compile [arm64] SharedPCH.Engine.Plat.Cpp20.h
+[5/60] Compile [arm64] MiMalloc.c
+[6/60] Compile [arm64] Module.ApplicationCore.cpp
+[7/60] Compile [arm64] Module.Core.1.cpp
+[8/60] Compile [arm64] Module.Core.10.cpp
+[9/60] Compile [arm64] Module.Core.11.cpp
+[10/60] Compile [arm64] Module.Core.12.cpp
+[11/60] Compile [arm64] Module.Core.13.cpp
+[12/60] Compile [arm64] Module.Core.14.cpp
+[13/60] Compile [arm64] Module.Core.16.cpp
+[14/60] Compile [arm64] Module.Core.15.cpp
+[15/60] Compile [arm64] Module.Core.18.cpp
+[16/60] Compile [arm64] Module.Core.17.cpp
+[17/60] Compile [arm64] Module.Core.19.cpp
+[18/60] Compile [arm64] Module.Core.20.cpp
+[19/60] Compile [arm64] Module.Core.21.cpp
+[20/60] Compile [arm64] Module.Core.3.cpp
+[21/60] Compile [arm64] Module.Core.2.cpp
+[22/60] Compile [arm64] Module.Core.4.cpp
+[23/60] Compile [arm64] Module.Core.5.cpp
+[24/60] Compile [arm64] Module.Core.6.cpp
+[25/60] Compile [arm64] Module.Core.7.cpp
+[26/60] Compile [arm64] Module.Core.8.cpp
+[27/60] Compile [arm64] Module.Core.9.cpp
+[28/60] Compile [arm64] CinderBattlefield.cpp
+[29/60] Compile [arm64] CinderCamera.cpp
+[30/60] Compile [arm64] Module.Launch.cpp
+[31/60] Compile [arm64] CinderCameraBoundaryTests.cpp
+[32/60] Compile [arm64] CinderCameraPreview.cpp
+[33/60] Compile [arm64] CinderDifficultyPreview.cpp
+[34/60] Compile [arm64] CinderDifficultyTests.cpp
+[35/60] Compile [arm64] CinderGameEngine.cpp
+[36/60] Compile [arm64] CinderGuidedPreview.cpp
+[37/60] Compile [arm64] CinderHelpContent.cpp
+[38/60] Compile [arm64] CinderHUD.cpp
+[39/60] Compile [arm64] CinderIOSPerformancePolicy.cpp
+[40/60] Compile [arm64] CinderIOSPerformancePolicyTests.cpp
+[41/60] Compile [arm64] CinderOnboardingTests.cpp
+[42/60] Compile [arm64] CinderOnlineSubsystem.cpp
+[43/60] Compile [arm64] CinderPlayerController.cpp
+[44/60] Compile [arm64] CinderQualityDiagnostics.cpp
+[45/60] Compile [arm64] CinderTutorial.cpp
+[46/60] Compile [arm64] CinderTutorialTests.cpp
+[47/60] Compile [arm64] CinderWorldIntegrationTests.cpp
+[48/60] Compile [arm64] Module.Cinderline.1.cpp
+[49/60] Compile [arm64] Module.Cinderline.2.cpp
+[50/60] Compile [arm64] Module.Cinderline.3.cpp
+[51/60] Compile [arm64] Navigation.cpp
+[52/60] Compile [arm64] Network.cpp
+[53/60] Compile [arm64] Simulation.cpp
+[54/60] Compile [arm64] SimulationAI.cpp
+[55/60] Compile [arm64] SimulationJobs.cpp
+[56/60] Compile [arm64] SimulationMovement.cpp
+[57/60] Link [arm64] Cinderline
+[58/60] Updating version file: /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Versions.xcconfig [NoUba]
+[59/60] ApplePostBuildSync Executing PostBuildSync [/Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline] [NoUba]
+[60/60] WriteMetadata Cinderline.target [NoUba]
+Total time in Unreal Build Accelerator local executor: 171.86 seconds
+Result: Succeeded
+Total execution time: 179.18 seconds

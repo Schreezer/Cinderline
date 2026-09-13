@@ -1,0 +1,47 @@
+{
+  "case": "win-desktop",
+  "state": "win",
+  "viewport": [
+    2560.0,
+    1440.0
+  ],
+  "scale": 2.0,
+  "observed": {
+    "offer": 0,
+    "menu": 0,
+    "step": 14,
+    "complete": 1,
+    "preferenceCompleted": 1,
+    "winner": 0,
+    "opponentOrders": 6,
+    "tick": 13916
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "tutorialrestart",
+      "argument": 0,
+      "bounds": [
+        740.0,
+        736.0,
+        1200.0,
+        824.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "menu",
+      "argument": 0,
+      "bounds": [
+        1240.0,
+        736.0,
+        1700.0,
+        824.0
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "win-desktop.png",
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

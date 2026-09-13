@@ -1,0 +1,107 @@
+{
+  "verifiedAt": "2026-09-12T17:24:22.815252+00:00",
+  "status": "Implemented and verified on Mac and native iOS-on-Mac; physical installation pending user timing confirmation",
+  "difficulties": [
+    "Very Easy",
+    "Easy",
+    "Normal",
+    "Hard",
+    "Expert"
+  ],
+  "default": "Normal",
+  "savedConfigAggression": [
+    0.5,
+    0.75,
+    1,
+    1.5,
+    2
+  ],
+  "portableTests": {
+    "passed": 4,
+    "failed": 0,
+    "elapsedSeconds": 13.26,
+    "report": "tests-portable.txt"
+  },
+  "normalHistoricalComparison": {
+    "baselineGitRevision": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+    "baselineSource": "Source/Cinderline/Private/Sim/SimulationAI.cpp",
+    "sampledStates": 24,
+    "maps": 3,
+    "hashesIdentical": true,
+    "hashFileSha256": "d9f72bc820d34ba48090f27b3efe541a5c482b34a368b23dbb892094db05f96f",
+    "scope": "Actual historical AI object linked in place of the new AI object; current simulation/navigation otherwise shared"
+  },
+  "firstAttackSeconds": [
+    440.8,
+    321.9,
+    241.95,
+    198.9,
+    157.9
+  ],
+  "macEngineBuild": {
+    "passed": true,
+    "sourceInputs": 72
+  },
+  "unrealAutomation": {
+    "passed": 18,
+    "failed": 0
+  },
+  "macRenderedCases": [
+    "desktop",
+    "ipad",
+    "phone-easy",
+    "phone",
+    "small-phone"
+  ],
+  "iosBuild": {
+    "passed": true,
+    "sdk": "27.0",
+    "actions": 54,
+    "elapsedSeconds": 192.72
+  },
+  "iosPackage": {
+    "checkedAt": "2026-09-12T17:21:59.760455+00:00",
+    "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "executableSha256": "9e362e674d9b840fe8af6ef036555a2e197b369b1836d2e44276706797a84230",
+    "machoPlatform": "IOS",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "strictCodesignVerified": true,
+    "developmentProfile": true,
+    "phoneRegistered": true,
+    "profileUnexpired": true,
+    "orientations": [
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "bundleBytes": 493057805,
+    "ioStoreContainers": [
+      "cookeddata/cinderline/content/paks/global.utoc",
+      "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+    ]
+  },
+  "nativeIOSOnMac": {
+    "passed": true,
+    "capturedSelectedLevels": [
+      0,
+      4
+    ],
+    "allBoundsPass": true,
+    "visuallyInspected": true,
+    "newCrashReports": 0,
+    "testProcessesClosed": true
+  },
+  "physicalDevice": {
+    "newPackageInstalled": false,
+    "lastInstalledPackageSha256": "2bf6039a16a225aba6ce35d96e46a6e15aa4985b79cfe86834f35168e28531fa",
+    "currentSessionTouched": false,
+    "reason": "Awaiting installation timing confirmation to avoid interrupting an active match"
+  },
+  "metalFXFrameInterpolationEnabled": false,
+  "limits": [
+    "No physical tap acceptance for the new controls yet",
+    "No new physical thermal measurements",
+    "Difficulty spacing is tested behavior, not a human win-rate ranking"
+  ]
+}

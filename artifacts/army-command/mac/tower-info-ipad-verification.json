@@ -1,0 +1,139 @@
+{
+  "case": "tower-info-ipad",
+  "state": "tower-info",
+  "requestedViewport": [
+    1024,
+    768
+  ],
+  "viewport": [
+    1024.0,
+    768.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "capture": "tower-info-ipad.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        902.0,
+        10.0,
+        946.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        952.0,
+        10.0,
+        1008.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        712.0,
+        76.0,
+        756.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        82.0,
+        712.0,
+        146.0,
+        756.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        152.0,
+        712.0,
+        208.0,
+        756.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        784.0,
+        712.0,
+        864.0,
+        756.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        870.0,
+        712.0,
+        946.0,
+        756.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        952.0,
+        712.0,
+        1008.0,
+        756.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "infotab",
+      "argument": 1,
+      "bounds": [
+        324.0,
+        466.0,
+        396.0,
+        510.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        402.0,
+        466.0,
+        446.0,
+        510.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 66931,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

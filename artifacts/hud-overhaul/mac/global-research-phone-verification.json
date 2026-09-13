@@ -1,0 +1,194 @@
+{
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "sheet": 9,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "37:Ember",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        11.7,
+        880.9,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        65.7,
+        75.1,
+        117.3
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        18.8,
+        122.0,
+        75.1,
+        173.7
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        18.8,
+        178.3,
+        75.1,
+        230.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        234.7,
+        75.1,
+        286.3
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        65.7,
+        880.9,
+        117.3
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        65.7,
+        937.2,
+        117.3
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        880.9,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        521.0,
+        65.7,
+        572.6,
+        117.3
+      ]
+    },
+    {
+      "index": 10,
+      "action": "globalresearch",
+      "argument": 0,
+      "bounds": [
+        100.9,
+        132.6,
+        247.2,
+        184.2
+      ]
+    },
+    {
+      "index": 11,
+      "action": "globalresearch",
+      "argument": 1,
+      "bounds": [
+        255.4,
+        132.6,
+        401.7,
+        184.2
+      ]
+    },
+    {
+      "index": 12,
+      "action": "globalresearch",
+      "argument": 2,
+      "bounds": [
+        409.9,
+        132.6,
+        556.2,
+        184.2
+      ]
+    }
+  ],
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 61,
+  "globalState": {
+    "jobs": 7,
+    "producers": 3,
+    "batchSix": false,
+    "rallyArmed": false
+  },
+  "observedMaxFPS": 30,
+  "case": "global-research-phone",
+  "state": "global-research",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "capture": "global-research-phone.png",
+  "captureSha256": "b284850a6d40bbc433eed362e2570b6630cf2c9f884b75dc4361bd585a45671b",
+  "captureDimensions": [
+    956,
+    440
+  ],
+  "ownedPid": 74055,
+  "launchToken": "HUDOverhaul-febc5494aa68401b8bd55f3979c9d18d",
+  "startedAtNs": 1789298881891292000,
+  "captureModifiedAtNs": 1789298895819069223,
+  "freshCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "minimumCompactHitSize": 44,
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS or device performance measurement."
+}

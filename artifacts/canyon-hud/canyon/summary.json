@@ -1,0 +1,153 @@
+{
+  "success": true,
+  "cases": [
+    {
+      "state": "map0",
+      "map": 0,
+      "canonical": true,
+      "obstacles": 4,
+      "exploredObstacles": 4,
+      "fog": {
+        "unknown": 0,
+        "explored": 0,
+        "visible": 4096
+      },
+      "landscape": {
+        "matching": 1,
+        "visible": 1,
+        "raisedSamples": 612,
+        "heightCm": [
+          0.0,
+          150.9
+        ]
+      },
+      "tick": 4,
+      "engineScreenshot": "../../../../starCraft/Saved/CanyonPreview/map0.png",
+      "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+      "editorKind": "prepared",
+      "viewport": [
+        956,
+        440
+      ],
+      "maxFPS": 30,
+      "mobileHUD": true,
+      "capture": "map0.png",
+      "captureSha256": "4ee20d3d5d42d9ce22b1547aab36fa65289a775b15cbbefadadb59100842caf6",
+      "ownedPid": 74744,
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Mac Unreal renderer and deterministic canyon fixture; no physical device, native iOS, player save, or preference mutation"
+    },
+    {
+      "state": "map1",
+      "map": 1,
+      "canonical": true,
+      "obstacles": 5,
+      "exploredObstacles": 5,
+      "fog": {
+        "unknown": 0,
+        "explored": 0,
+        "visible": 4096
+      },
+      "landscape": {
+        "matching": 1,
+        "visible": 1,
+        "raisedSamples": 1024,
+        "heightCm": [
+          0.0,
+          219.9
+        ]
+      },
+      "tick": 4,
+      "engineScreenshot": "../../../../starCraft/Saved/CanyonPreview/map1.png",
+      "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+      "editorKind": "prepared",
+      "viewport": [
+        956,
+        440
+      ],
+      "maxFPS": 30,
+      "mobileHUD": true,
+      "capture": "map1.png",
+      "captureSha256": "2443e61b8063e12a04d2695424fb55fd0b7aaf148f69c778b019b7d60ed2c51b",
+      "ownedPid": 74883,
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Mac Unreal renderer and deterministic canyon fixture; no physical device, native iOS, player save, or preference mutation"
+    },
+    {
+      "state": "map2",
+      "map": 2,
+      "canonical": true,
+      "obstacles": 6,
+      "exploredObstacles": 6,
+      "fog": {
+        "unknown": 0,
+        "explored": 0,
+        "visible": 4096
+      },
+      "landscape": {
+        "matching": 1,
+        "visible": 1,
+        "raisedSamples": 666,
+        "heightCm": [
+          0.0,
+          118.9
+        ]
+      },
+      "tick": 4,
+      "engineScreenshot": "../../../../starCraft/Saved/CanyonPreview/map2.png",
+      "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+      "editorKind": "prepared",
+      "viewport": [
+        956,
+        440
+      ],
+      "maxFPS": 30,
+      "mobileHUD": true,
+      "capture": "map2.png",
+      "captureSha256": "c6e391f00066ae9a9bdb183afe1470fe8a681a9edc861f3ece50bf3439405b58",
+      "ownedPid": 75026,
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Mac Unreal renderer and deterministic canyon fixture; no physical device, native iOS, player save, or preference mutation"
+    },
+    {
+      "state": "fog",
+      "map": 0,
+      "canonical": true,
+      "obstacles": 4,
+      "exploredObstacles": 1,
+      "fog": {
+        "unknown": 3050,
+        "explored": 0,
+        "visible": 1046
+      },
+      "landscape": {
+        "matching": 1,
+        "visible": 1,
+        "raisedSamples": 612,
+        "heightCm": [
+          0.0,
+          150.9
+        ]
+      },
+      "tick": 4,
+      "engineScreenshot": "../../../../starCraft/Saved/CanyonPreview/fog.png",
+      "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+      "editorKind": "prepared",
+      "viewport": [
+        956,
+        440
+      ],
+      "maxFPS": 30,
+      "mobileHUD": true,
+      "capture": "fog.png",
+      "captureSha256": "2d94140eb85e40d2ca7b6407eea7c308a059398de1f639552346dbd377e2f68d",
+      "ownedPid": 75167,
+      "protectedPlayerStateUnchanged": true,
+      "scope": "Mac Unreal renderer and deterministic canyon fixture; no physical device, native iOS, player save, or preference mutation"
+    }
+  ],
+  "editor": "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+  "editorKind": "prepared",
+  "sequential": true,
+  "ownedSubprocessOnly": true
+}

@@ -1,0 +1,9 @@
+[ 30%] Built target CinderlineSimulation
+[ 39%] Built target CinderlineTests
+[ 47%] Built target CinderlineMatchWorker
+[ 65%] Built target CinderlineNetworkTests
+[ 65%] Built target CinderlineNavigationTests
+[ 73%] Built target CinderlineDefenseTests
+[ 82%] Built target CinderlineAIDifficultyTests
+[ 91%] Built target CinderlineProductionAllocationTests
+[100%] Built target CinderlineMatchLengthTests

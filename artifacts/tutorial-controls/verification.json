@@ -1,0 +1,72 @@
+{
+  "verifiedAt": "2026-09-13T06:27:09.323244+00:00",
+  "feature": "Tutorial control clarity and exact friendly focus selection",
+  "sourceSnapshotSha256": "ffd72e2745a58edcd74a4a1eaed248a8c7097c7d36693e8758cf3887a2a9c287",
+  "macExecutableModuleSha256": "028a86b9d14ed0f5ec33ac33cc0ad64878699edd4d193aee1c902ec9d37aa991",
+  "gitHead": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "worktreeDirty": true,
+  "automatedTests": {
+    "passed": 8,
+    "failed": 0,
+    "file": "automation.json"
+  },
+  "renderCaptures": [
+    "mac/assault-phone-verification.json",
+    "mac/camera-focus-phone-verification.json",
+    "mac/defend-details-small-verification.json",
+    "mac/kiln-desktop-verification.json",
+    "mac/kiln-details-phone-verification.json",
+    "mac/kiln-details-small-verification.json",
+    "mac/kiln-focus-phone-verification.json",
+    "mac/kiln-phone-verification.json",
+    "mac/research-details-small-verification.json",
+    "mac/research-focus-phone-verification.json"
+  ],
+  "allCapturesVisuallyReviewed": true,
+  "iosPackage": {
+    "checkedAt": "2026-09-13T06:27:08.828433+00:00",
+    "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+    "bundleIdentifier": "com.cinderline.game",
+    "executableSha256": "1390d92a603da62a72efae870cd2a362b09db5600bcb41ac5020d947b4189040",
+    "machoPlatform": "IOS",
+    "sdk": "27.0",
+    "minimumOS": "15.0",
+    "strictCodesignVerified": true,
+    "developmentProfile": true,
+    "phoneRegistered": true,
+    "profileUnexpired": true,
+    "orientations": [
+      "UIInterfaceOrientationLandscapeLeft",
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "bundleBytes": 493663045,
+    "ioStoreContainers": [
+      "cookeddata/cinderline/content/paks/global.utoc",
+      "cookeddata/cinderline/content/paks/cinderline-ios.utoc"
+    ]
+  },
+  "iosBuildSteps": {
+    "build": {
+      "exitCode": 0,
+      "completedAt": "2026-09-13T06:23:44.420708+00:00"
+    },
+    "assemble": {
+      "exitCode": 0,
+      "completedAt": "2026-09-13T06:24:17.835114+00:00"
+    },
+    "package": {
+      "exitCode": 0,
+      "completedAt": "2026-09-13T06:26:34.391191+00:00"
+    }
+  },
+  "physicalDevice": {
+    "installedThisPass": false,
+    "launchedThisPass": false,
+    "lastInstalledExecutableSha256": "594f5a626d1e875152355c243cdd25a38511394a78165df8b2742934eee96b0c"
+  },
+  "evidenceScope": "Current Mac Unreal render and tutorial/controller tests plus signed SDK 27 iOS compilation and packaging. This package has not been run on physical iPhone or native iOS-on-Mac.",
+  "remaining": [
+    "Physical touch acceptance of tutorial controls"
+  ],
+  "diffCheckPassed": true
+}

@@ -1,0 +1,251 @@
+{
+  "status": "passed",
+  "testCount": 39,
+  "validation": {
+    "tests": 39,
+    "warning_tests": 2,
+    "allowed_warnings": 4
+  },
+  "sourceReports": [
+    "Saved/Automation/Integration/20260913T170452Z-29048/index.json",
+    "artifacts/code-quality/unreal-worldtap/index.json",
+    "Saved/Automation/Multiplayer/20260913T170839Z-30205/index.json"
+  ],
+  "note": "The initial local run passed 36 of 37 tests. A new terminal-state fixture was invalid; it was fixed using actual forfeit and only that test was rerun. All other passing results were retained. Both multiplayer paths ran through the maintained runner. Live Bonjour advertisement was not retested in this pass.",
+  "tests": [
+    {
+      "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.ArmyControl",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.CombatFeedback",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.EconomyAndProduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.FirstRunTutorialOffer",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.OnlineEndpointPolicy",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.OnlineRecovery",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.ProductionControls",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.SoloAIDifficulty",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.WorldLifecycle",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Integration.WorldTapSelection",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Online.LANDiscoveryValues",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.FourTeamRouting",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.Initialization",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.WorldEffects.InstanceBudget",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.CameraBoundary",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.IOSPerformancePolicy",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.LandscapeHeightGeometry",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.MetalFXResolutionOwnership",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.SceneryGroundRoadFallback",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.SceneryObservedState",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.SceneryObstacleBounds",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Presentation.UnitInfo",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 2
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.ArmySequence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.EconomySequence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.InterruptedOrders",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.Introduction",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.Guidance.RemainingBatch",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.CommandGates",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.EarlyActionsAndContent",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.EmberGate",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.EndToEnd",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.LateCancellationRecovery",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Tutorial.WaitsForLearner",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.UI.MobileHUDLayout",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Online.FourPlayerTransport",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "name": "Cinderline.Online.Transport",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 2
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+
+> cinderline-game-server@0.1.0 test
+> node --test
+
+✔ LAN address selection keeps only reachable private addresses and formats WebSocket URLs (12.876458ms)
+✔ host configuration makes LAN binding explicit and rejects ambiguous environment values (0.738292ms)
+✔ Bonjour instance labels stay within the 63-byte DNS label limit (0.136208ms)
+✔ Bonjour advertises the actual bound port and stops the service before destroying its socket (0.387583ms)
+✔ Bonjour failure leaves manual LAN URLs available (0.243541ms)
+✔ configured startup forwards mode and name, advertises only LAN, and closes once (0.41ms)
+✔ health and lobby controls reject stale, malformed, repeated, and excessive input (33.845291ms)
+✔ rooms accept only two or four players and a four-player worker waits for every ready seat (17.032042ms)
+✔ four simultaneous disconnects preserve seats through grace and finish through the worker (43.432125ms)
+✔ multiple four-player disconnects can reconnect independently within grace (7.140084ms)
+✔ worker result byte 255 is exposed as a draw (5.35825ms)
+✔ worker backpressure preserves a prioritized forfeit until drain (2.892875ms)
+✔ commands queued during worker backpressure receive and cache one authoritative acknowledgement (3.24175ms)
+✔ active worker progress timeout closes a hung room independently of socket pong (3.058667ms)
+✔ sustained snapshot backpressure disconnects a slow client for normal recovery (4.436459ms)
+✔ draining fails readiness and new room creation while keeping the listener observable (3.887ms)
+✔ origin, per-address connections, room creation, and public metadata are bounded (5.047458ms)
+✔ forwarded addresses are trusted only from an explicitly configured proxy (3.076625ms)
+✔ active worker capacity queues a ready room and starts it when capacity returns (4.591167ms)
+✔ real clients create, join, reject a third seat, ready, and receive private snapshots (12.227208ms)
+✔ both seats command only their view handles and command sequences survive reconnect (325.602666ms)
+✔ automatic batches and stable queue cancellation remain authoritative online (574.633584ms)
+✔ four authoritative clients keep private ownership through nonfinal eliminations and one final winner (798.682625ms)
+✔ surrender keeps the socket for the authoritative result (8.883375ms)
+✔ disconnect grace expires into a canonical result (510.963583ms)
+✔ a simultaneous outage preserves the active room for reconnect, then expires through the worker (527.418208ms)
+✔ ordinary attack-move play can finish a complete authoritative match (15443.942ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19445.253125

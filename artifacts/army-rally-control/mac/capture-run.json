@@ -1,0 +1,115 @@
+{
+  "requested": [
+    "selected-units-phone",
+    "deselected-phone",
+    "army-roster-phone",
+    "rally-unset-phone",
+    "rally-set-phone",
+    "rally-marker-phone",
+    "rally-override-phone",
+    "worker-rally-phone",
+    "selected-units-small",
+    "deselected-small",
+    "army-roster-small",
+    "rally-unset-small",
+    "rally-set-small",
+    "rally-marker-small",
+    "rally-override-small",
+    "worker-rally-small",
+    "selected-units-desktop",
+    "rally-marker-desktop"
+  ],
+  "completed": [
+    {
+      "case": "selected-units-phone",
+      "verification": "selected-units-phone-verification.json",
+      "capture": "selected-units-phone.png"
+    },
+    {
+      "case": "deselected-phone",
+      "verification": "deselected-phone-verification.json",
+      "capture": "deselected-phone.png"
+    },
+    {
+      "case": "army-roster-phone",
+      "verification": "army-roster-phone-verification.json",
+      "capture": "army-roster-phone.png"
+    },
+    {
+      "case": "rally-unset-phone",
+      "verification": "rally-unset-phone-verification.json",
+      "capture": "rally-unset-phone.png"
+    },
+    {
+      "case": "rally-set-phone",
+      "verification": "rally-set-phone-verification.json",
+      "capture": "rally-set-phone.png"
+    },
+    {
+      "case": "rally-marker-phone",
+      "verification": "rally-marker-phone-verification.json",
+      "capture": "rally-marker-phone.png"
+    },
+    {
+      "case": "rally-override-phone",
+      "verification": "rally-override-phone-verification.json",
+      "capture": "rally-override-phone.png"
+    },
+    {
+      "case": "worker-rally-phone",
+      "verification": "worker-rally-phone-verification.json",
+      "capture": "worker-rally-phone.png"
+    },
+    {
+      "case": "selected-units-small",
+      "verification": "selected-units-small-verification.json",
+      "capture": "selected-units-small.png"
+    },
+    {
+      "case": "deselected-small",
+      "verification": "deselected-small-verification.json",
+      "capture": "deselected-small.png"
+    },
+    {
+      "case": "army-roster-small",
+      "verification": "army-roster-small-verification.json",
+      "capture": "army-roster-small.png"
+    },
+    {
+      "case": "rally-unset-small",
+      "verification": "rally-unset-small-verification.json",
+      "capture": "rally-unset-small.png"
+    },
+    {
+      "case": "rally-set-small",
+      "verification": "rally-set-small-verification.json",
+      "capture": "rally-set-small.png"
+    },
+    {
+      "case": "rally-marker-small",
+      "verification": "rally-marker-small-verification.json",
+      "capture": "rally-marker-small.png"
+    },
+    {
+      "case": "rally-override-small",
+      "verification": "rally-override-small-verification.json",
+      "capture": "rally-override-small.png"
+    },
+    {
+      "case": "worker-rally-small",
+      "verification": "worker-rally-small-verification.json",
+      "capture": "worker-rally-small.png"
+    },
+    {
+      "case": "selected-units-desktop",
+      "verification": "selected-units-desktop-verification.json",
+      "capture": "selected-units-desktop.png"
+    },
+    {
+      "case": "rally-marker-desktop",
+      "verification": "rally-marker-desktop-verification.json",
+      "capture": "rally-marker-desktop.png"
+    }
+  ],
+  "allRequestedPassed": true
+}

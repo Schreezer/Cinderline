@@ -1,0 +1,312 @@
+[
+  {
+    "name": "Cinderline.Integration.AIKnowledgeAndPersistence",
+    "state": "Success",
+    "entries": [
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=6, first_seen_tick=616, retained_seen_tick=616, continuation_ticks=60; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.04"
+      }
+    ]
+  },
+  {
+    "name": "Cinderline.Integration.ArmyControl",
+    "state": "Success",
+    "entries": [
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_ARMY_CONTROL_PASS opaque_id=2147483704 projected_edge=1 single_move=1 defend=1 squad_count=3 online_reset=1",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.04"
+      }
+    ]
+  },
+  {
+    "name": "Cinderline.Integration.CombatFeedback",
+    "state": "Success",
+    "entries": [
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_INTEGRATION_COMBAT_FEEDBACK_PASS: weapon=4, impact=4, heal=4, death=1, hidden_weapon=1; development spawns, real combat actor ticks, exactly-once requests, pause/reset, temporary snapshot cursor, absent subsystem; no audible-output, viewport or physical-input proof.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.04"
+      }
+    ]
+  },
+  {
+    "name": "Cinderline.Integration.EconomyAndProduction",
+    "state": "Success",
+    "entries": [
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=270, produced=2, built=1, ore=360; paid commands, builder travel and pause/resume, actual actor ticks, selected-controller dispatch, temporary snapshot only.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.05"
+      }
+    ]
+  },
+  {
+    "name": "Cinderline.Integration.FirstRunTutorialOffer",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Integration.ProductionControls",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Integration.SoloAIDifficulty",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Integration.WorldLifecycle",
+    "state": "Success",
+    "entries": [
+      {
+        "event": {
+          "type": "Warning",
+          "message": "LogHAL: FMacPlatformProcess::CreateProc: posix_spawn(\"/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id\") failed (86, Bad CPU type in executable)",
+          "context": "log",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.05"
+      },
+      {
+        "event": {
+          "type": "Warning",
+          "message": "LogHAL: Failed to launch Tool. (/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Extras/ThirdPartyNotUE/libimobiledevice/Mac/idevice_id)",
+          "context": "log",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.05"
+      },
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_INTEGRATION_GESTURES_PASS: ordinary mouse rectangle selection, nine desktop-pan mode/distance cases, plain placement drag/cancel/pause, Tier 2 Crucible rejection, touch drag/hold/placement/multi-touch, app background pause, player-pause preservation and reset; real gesture methods with explicit pan intent and starting worker selection. NullRHI does not prove viewport targeting, camera movement, physical modifier routing, or internal TapWorld non-invocation when deprojection is unavailable.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.05"
+      },
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.06"
+      },
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_IDLE_WORK_POLICY_PASS: production state classifier/cap helpers, 120/30/10 transitions, stricter/unlimited engine limits, automation scope bypass, one pause-transition flush of actual pending movement, frozen menu/pause/results upload counters, final combat death rendered on a short tick, and new-match render recovery. This does not measure native focus delivery, presented FPS, GPU load or thermal behavior.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.06"
+      },
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_HELP_TUTORIAL_LIFECYCLE_PASS: modal input isolation, explicit help resume, tutorial start/action tracking, rejected command, save/load routing, restart confirmation and normal-match restoration. No player save or completion preference was written.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.06"
+      },
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.06"
+      }
+    ]
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.Initialization",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.WorldEffects.InstanceBudget",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.CameraBoundary",
+    "state": "Success",
+    "entries": [
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_CAMERA_BOUNDARY_PASS cases=96; four aspects, three zooms, eight edge/corner directions, repeated drag, reversal, and interpolated zoom. Physical input and rendered black pixels require viewport verification.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.06"
+      }
+    ]
+  },
+  {
+    "name": "Cinderline.Presentation.IOSPerformancePolicy",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.LandscapeHeightGeometry",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.MetalFXResolutionOwnership",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.SceneryGroundRoadFallback",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.SceneryObservedState",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.SceneryObstacleBounds",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Presentation.UnitInfo",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.Guidance.ArmySequence",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.Guidance.EconomySequence",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.Guidance.InterruptedOrders",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.Guidance.Introduction",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.Guidance.RemainingBatch",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.CommandGates",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.EarlyActionsAndContent",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.EmberGate",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.EndToEnd",
+    "state": "Success",
+    "entries": [
+      {
+        "event": {
+          "type": "Info",
+          "message": "CINDERLINE_GUIDED_ORDINARY_COMPLETE: winner=0 step=14 complete=1 simulated_seconds=806.4 produced=9 lost=2 upgrades=1 opponent_trains=4 opponent_runtime_orders=6 state_hash=9599470175635503275 repeat_match=1; ordinary player commands, paid queues, normal combat, no player debug grants or spawns.",
+          "context": "",
+          "artifact": "00000000000000000000000000000000"
+        },
+        "filename": "",
+        "lineNumber": -1,
+        "timestamp": "2026.09.13-10.33.08"
+      }
+    ]
+  },
+  {
+    "name": "Cinderline.Tutorial.LateCancellationRecovery",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.Tutorial.WaitsForLearner",
+    "state": "Success",
+    "entries": []
+  },
+  {
+    "name": "Cinderline.UI.MobileHUDLayout",
+    "state": "Success",
+    "entries": []
+  }
+]

@@ -1,0 +1,117 @@
+{
+  "case": "idle-phone",
+  "state": "idle",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "selection": 0,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "capture": "idle-phone.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        374.3,
+        89.2,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        96.2,
+        374.3,
+        171.3,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        178.3,
+        374.3,
+        244.1,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "buildmenu",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        374.3,
+        768.3,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        775.3,
+        374.3,
+        864.5,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "orders",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        374.3,
+        937.2,
+        425.9
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 63074,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

@@ -1,0 +1,74 @@
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/cinderline-quality-build
+[  8%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[  8%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[ 12%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[ 16%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 20%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 24%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 28%] Linking CXX static library libCinderlineSimulation.a
+[ 28%] Built target CinderlineSimulation
+[ 36%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 36%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 40%] Linking CXX executable CinderlineMatchWorker
+[ 40%] Built target CinderlineMatchWorker
+[ 44%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 48%] Linking CXX executable CinderlineNavigationTests
+[ 48%] Built target CinderlineNavigationTests
+[ 52%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 56%] Linking CXX executable CinderlineTests
+[ 56%] Built target CinderlineTests
+[ 60%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 64%] Linking CXX executable CinderlineNetworkTests
+[ 64%] Built target CinderlineNetworkTests
+[ 68%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 72%] Linking CXX executable CinderlineDefenseTests
+[ 72%] Built target CinderlineDefenseTests
+[ 76%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 80%] Linking CXX executable CinderlineAIDifficultyTests
+[ 80%] Built target CinderlineAIDifficultyTests
+[ 84%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 88%] Linking CXX executable CinderlineProductionAllocationTests
+[ 88%] Built target CinderlineProductionAllocationTests
+[ 92%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 96%] Linking CXX executable CinderlineMatchLengthTests
+[ 96%] Built target CinderlineMatchLengthTests
+[100%] Linking CXX executable CinderlineFourPlayerTests
+[100%] Built target CinderlineFourPlayerTests
+Test project /tmp/cinderline-quality-build
+    Start 1: simulation_rules
+1/8 Test #1: simulation_rules ....................   Passed    7.07 sec
+    Start 2: navigation_regressions
+2/8 Test #2: navigation_regressions ..............   Passed    0.51 sec
+    Start 3: network_protocol
+3/8 Test #3: network_protocol ....................   Passed    0.53 sec
+    Start 4: defense_regressions
+4/8 Test #4: defense_regressions .................   Passed    0.55 sec
+    Start 5: ai_difficulty_regressions
+5/8 Test #5: ai_difficulty_regressions ...........   Passed    5.00 sec
+    Start 6: production_allocation_regressions
+6/8 Test #6: production_allocation_regressions ...   Passed    1.57 sec
+    Start 7: match_length_regressions
+7/8 Test #7: match_length_regressions ............   Passed    4.08 sec
+    Start 8: four_player_regressions
+8/8 Test #8: four_player_regressions .............   Passed    1.42 sec
+
+100% tests passed, 0 tests failed out of 8
+
+Label Time Summary:
+ai              =   5.00 sec*proc (1 test)
+defense         =   0.55 sec*proc (1 test)
+four-player     =   1.42 sec*proc (1 test)
+match-length    =   4.08 sec*proc (1 test)
+navigation      =   6.00 sec*proc (3 tests)
+network         =   2.99 sec*proc (2 tests)
+production      =   1.57 sec*proc (1 test)
+
+Total Test time (real) =  20.73 sec

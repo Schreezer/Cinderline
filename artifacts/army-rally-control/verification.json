@@ -1,0 +1,326 @@
+{
+  "verifiedAtUTC": "2026-09-13T12:46:17.361089+00:00",
+  "scope": "Local Mac build, Unreal integration tests and rendered layouts. Device testing remains separate.",
+  "gitHead": "156b5eb0f482a86518b3db2ecb09d27e0a63a6e3",
+  "sourceSha256": {
+    "Server/server.js": "7bdca96bd4b3406bdd9a4ce159cf9b54368ff693237c4c4d21b9440225a38485",
+    "Source/Cinderline/Private/Presentation/CinderCommandPreview.cpp": "b60b32c3629d45e7123e2ce761c01dc83d49232a3e11bd0e4698037fec8df10b",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "5d79ba082854f7f08631ccae5562807e755f14813dabceca885b0d7df46425c4",
+    "Source/Cinderline/Private/Presentation/CinderHUDStyle.cpp": "6114ca4257119a9dcc39c39ea231f07487ad23b733fdc6f4e47529260dd789f2",
+    "Source/Cinderline/Private/Presentation/CinderHelpContent.cpp": "3d3a0360ae020158812c110c9e821e146e72ff1af049f7ed571355ae2741bc91",
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "e53288d0e30fde169f7fd27f2ab74bc62bf215f9af6862449d8a525b12c1b371",
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "84e85262077ecd5a209c8ba19da9edc7af81fc9cb1c77452e4c6509fd78de65b",
+    "Source/Cinderline/Private/Sim/Network.cpp": "57fe5f613127a55ce73188b65daf31699f0b84e57878a3437c0841d5c1a82c78",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "9acbb871c766af32d77256f41a8f6cbb94d42f360f30b701dec0fe31d2368469",
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "69a5c2bc94e8c508ec573bc86989eb851beab5e4b4c9f11a1299c051f4a0cb63",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "47637fa1cfaa5052659391e49ded8cb0113be86f451e05baa5addde96460ad2f",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "2eb142ab245695c4ad9705e293b13b7e3a107d3412f3e8f53b9a53f546fa4fae",
+    "Source/Cinderline/Private/Tests/CinderArmyControlTests.cpp": "0c793f3de620da618c339d9f75e12725042dc41547648f8840980f601d832b18",
+    "Source/Cinderline/Private/Tests/CinderMobileHUDLayoutTests.cpp": "c2ccaa0d90bd8b646469c5f05625618f1e3733835d45adf701582b753c44ecb8",
+    "Source/Cinderline/Private/Tests/CinderProductionControlTests.cpp": "6aab1e77c6628b235b33c2cb469d2aef594d23a40f9bdb3c395380013a7e24a2",
+    "Source/Cinderline/Public/Presentation/CinderMobileHUDLayout.h": "ea1e6dc05230c210ef6a61810e108b9fedc4716de830879b34904cc00b7263c0",
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h": "2330fe3eaf882a073e3e72882ab0f7146713747c56bdc8648927bcff7adba8cc",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1",
+    "Source/Cinderline/Public/Sim/Navigation.h": "c1531f3006611568d80f952c3bd5d26a2af0fd066166deed0e010ea4b7488fe0",
+    "Source/Cinderline/Public/Sim/Network.h": "77b94c4cd8a07edfa3e0e30db6348fc1ae3488bdd818cafee13213ec9d2d5e98",
+    "Source/Cinderline/Public/Sim/Simulation.h": "b65323dd86aa2b5c97c941c1df16fa89de7286367f0020d24cf514daca4a0636",
+    "Tests/NetworkTests.cpp": "e204934cacbad0ec95f6b9bc03c534ac487c21bb5e5c767964f5465dffd3812b",
+    "Tests/ProductionAllocationTests.cpp": "623656e14b07a9eb8762815f5cc19636838cd3ca83404e15183b3f0509a64ffa"
+  },
+  "build": {
+    "result": "Succeeded",
+    "log": "Saved/ArmyRallyControl/build.log",
+    "sha256": "f9b77d30ca963360e30eeeff88d2e5b5edf927a454776891d46282922a343c82"
+  },
+  "automation": {
+    "passed": 33,
+    "failed": 0,
+    "report": "automation/results.json",
+    "sha256": "fd8f68012bcd94bbe54ec9f0263dc856cb7be017d8f933552f16604577a7685e"
+  },
+  "nativeVerification": {
+    "summary": "native/summary.json",
+    "sha256": "3d3d04ae52069d9766a971f55f6c9d1fa2def0b18b4a9a9a9d1587185547b339",
+    "evidenceSha256": {
+      "native/post-validator-focused.log": "798118be03858d36a149de92f46ff5704de74f448d0f086c14eb50d270437892",
+      "native/summary.json": "3d3d04ae52069d9766a971f55f6c9d1fa2def0b18b4a9a9a9d1587185547b339",
+      "native/ctest.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "native/post-validator-focused.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "native/native-build.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "native/ctest.log": "6d0557f17cf1e5be6c7d4d29d79c6fcb39a9a0216064d94751ddfffe7f63d773",
+      "native/node-server-tests.log": "743af207f555ead233ea0cf7b1ba6c27d03675704f60e52a4268a323c3c1024d",
+      "native/native-build.log": "786e5bdc75f9dc6dec1c7f5253038ad21788e55e29403347ccb075916c5a10d1",
+      "native/node-server-tests.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    }
+  },
+  "sourceReview": {
+    "path": "source-review.md",
+    "sha256": "461873b108e9799743ea7d7edcde20c9d35d2004a1115e7a815d9abb04c905ca"
+  },
+  "visualReview": {
+    "path": "visual-review.md",
+    "sha256": "a72e8e4805e10710cca3244799dd63efb71183d80138f5b30e82144242273da1",
+    "mainCasesReviewed": 18,
+    "tutorialCasesReviewed": 4,
+    "notes": "Root reviewed eight phone PNGs; independent review covered eight small and two desktop PNGs plus four tutorial cases. Noninteractive local-rally captions can clip at the viewport edge; HUD controls are contained."
+  },
+  "renderedVerification": {
+    "cases": [
+      {
+        "case": "army-roster-phone",
+        "capture": "mac/army-roster-phone.png",
+        "captureSha256": "902992ec77c702478e6c2458eb9a3308cd02c3b51bafcd98160422a6a78fdd4c",
+        "receiptSha256": "17e3fa310a94fab7d66ef33989df44c8cb6a6155737e9f4064a3918c138f09b8",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "army-roster-small",
+        "capture": "mac/army-roster-small.png",
+        "captureSha256": "510bd441ac5734f799d3f9d08501da5f6866a7b63f92321a636c8341f1fca1d9",
+        "receiptSha256": "8884022073b92eb85f4ee4e963882a06719bdb80d9b45695c7fc659de2b3fd7d",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "deselected-phone",
+        "capture": "mac/deselected-phone.png",
+        "captureSha256": "e62c3d511900186659a65f69a6e72275c8b7d8ce5d46945fdf35be0cd32308f6",
+        "receiptSha256": "fcca70248ebe10194a7dda963c18da9d274f09db7eeb48f0f6fc9e3233388b89",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "deselected-small",
+        "capture": "mac/deselected-small.png",
+        "captureSha256": "f479a1278370ee346a3fba77656e1728bcd788760841115562ca18c1a79c94c2",
+        "receiptSha256": "7129aaa13a9e73a7123ffda7fd1e5fc325c32a4fd32139c053c93140761d1723",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-marker-desktop",
+        "capture": "mac/rally-marker-desktop.png",
+        "captureSha256": "717cfea4cc7c9174cb20d8dac5077305957da353e017840d1e9d5abbf23490e4",
+        "receiptSha256": "73cb15fda038a322d8d76a1db0fc1b46b95b59d1d6fb80b1d3cfb17fdbab23d1",
+        "viewport": [
+          1920.0,
+          1080.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-marker-phone",
+        "capture": "mac/rally-marker-phone.png",
+        "captureSha256": "f3eee0f0f8aa21fbfb146ec2bb021cbb69c4e695b19f3c600d29be77ed78883c",
+        "receiptSha256": "9d12fd6e29c3a5145491b372f349777c51a1ad6dc5f6b0aaeb3bcc6cf1c7879d",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-marker-small",
+        "capture": "mac/rally-marker-small.png",
+        "captureSha256": "a8174f1c0c551347a08b5245bb3da5fc849cdf8873107713df3c405ad8c8cca2",
+        "receiptSha256": "108755f8a320215b6771bee450c737aca501dc215026354a4768262974ab6e27",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-override-phone",
+        "capture": "mac/rally-override-phone.png",
+        "captureSha256": "6a58a9ee88d7c21cb1ea496928e4a416d43b50f0a345d2da905ff83075924bd7",
+        "receiptSha256": "f8eddd5a447a6c01151e2b5d9f39846393acbb258b409482231abfd1ec649cf3",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-override-small",
+        "capture": "mac/rally-override-small.png",
+        "captureSha256": "af11c2b55c3a6439c7141f65810f20d444caaa3d0c238c5f766cfa0f78b47d93",
+        "receiptSha256": "a1d651af02639d34ee38e9fce9927db2b4b76a81a5ac81c28a16c7de16331fca",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-set-phone",
+        "capture": "mac/rally-set-phone.png",
+        "captureSha256": "d4bd2af9d95d50925c4ba7137d2ba15237370a5fc3b98d2e3b10cb1a08543e1a",
+        "receiptSha256": "71fa8c1efb279c90969fc4c375266bbe41913cc21dd2435ec78d6397a4bcab94",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-set-small",
+        "capture": "mac/rally-set-small.png",
+        "captureSha256": "abe6e6332defc4de4a19e41ddbd2968576755bda17ba3a95772d7b094c71874f",
+        "receiptSha256": "dd0bfc8de1fd33e5ee18aa652cdd4ac5489fee1403635f12d939dda411b05b88",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-unset-phone",
+        "capture": "mac/rally-unset-phone.png",
+        "captureSha256": "98226ea516e9dbad5ccbc2ccdd80f6af2d5adcc7e57f1c6e35c3e885fe59f5ea",
+        "receiptSha256": "192d9944e3914fcbac18ddfaba346932bd942e3676e35763823612da1489afd9",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "rally-unset-small",
+        "capture": "mac/rally-unset-small.png",
+        "captureSha256": "2a7aea32b0c275370fc8f19c3425f5cfbf911e0071ff2642f5ddc7332340bfa7",
+        "receiptSha256": "02ccdc18dfa17f618e570fc5e1a6f2fae66d94ad77094519f6c54b7cd9bdf8a5",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "selected-units-desktop",
+        "capture": "mac/selected-units-desktop.png",
+        "captureSha256": "6c1bd61dd8c4fd97c585b7538f1828f87b4f8dfce0ec475fc7ddb2253b8432a4",
+        "receiptSha256": "d86872687eaaa6873c87fc4a1ff8c3bc0b9fbac835c50fd0f27655cd793a70b6",
+        "viewport": [
+          1920.0,
+          1080.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "selected-units-phone",
+        "capture": "mac/selected-units-phone.png",
+        "captureSha256": "dff1a250b6b7ff5de529fd39e37858069a00a63df0454d171a74df7790931ab2",
+        "receiptSha256": "733b14ec579c7dd285dd3eaf0d8e299d0e5b25107f5f99cbf4a4027396e4df97",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "selected-units-small",
+        "capture": "mac/selected-units-small.png",
+        "captureSha256": "02da1164fd6941a834ec54afe2b4c2457af6c2c7ad3706192b7ae9db7fd5a8ea",
+        "receiptSha256": "47c63f7b550da263133a125bf1148b3cbb4bcefdef5918c93d730a5b94a8366a",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "worker-rally-phone",
+        "capture": "mac/worker-rally-phone.png",
+        "captureSha256": "aebfc6c60a5484edc1432419a7c5f9d91efa5c417a3b0f125d5d490a6c864a83",
+        "receiptSha256": "60f8571a53a67eb540ace9183e18a3faa4171fb7db57125f9503692b8f03acff",
+        "viewport": [
+          956.0,
+          440.0
+        ],
+        "layoutChecksPassed": true
+      },
+      {
+        "case": "worker-rally-small",
+        "capture": "mac/worker-rally-small.png",
+        "captureSha256": "d8343d02dd7601c2d20e3f666113f35a70705579646a33ed30b3b79912f8c6d4",
+        "receiptSha256": "7d0f2656604a5e343cea24101f05307be35e7ac388a1658419c02a199978cfb5",
+        "viewport": [
+          667.0,
+          375.0
+        ],
+        "layoutChecksPassed": true
+      }
+    ],
+    "tutorialCases": [
+      {
+        "case": "offscreen-recovery-small",
+        "capture": "tutorial/offscreen-recovery-small.png",
+        "captureSha256": "888e12b7fa6dbb0c8d2dbcb4cdd114a2c7f411a57713d9b632e4b05549d5648b",
+        "receiptSha256": "aa809d6aac391a0e1694853c514807d09d8e5a127320adfbf3878fd55cc24f12",
+        "runtimeSha256": "9d708dbf60e10ba7bf289614b46ff5d4cc97819149a0d605233c693884c203bc",
+        "targetChecksPassed": true
+      },
+      {
+        "case": "rally-chain-phone",
+        "capture": "tutorial/rally-chain-phone.png",
+        "captureSha256": "ffd33c84d8d98cbe907dfc1cac6e49c413d1ca5ab53823700b6003d2d65d56dc",
+        "receiptSha256": "b8cbfc2b96fb34f7a4adf40d4a679cc3691c77bba3b02c7654a9841886995fbb",
+        "runtimeSha256": "c043730d389cb2b6329e40e3280bd330e30a9fc8dded0ae495baf38b058b472b",
+        "targetChecksPassed": true
+      },
+      {
+        "case": "scout-chain-desktop",
+        "capture": "tutorial/scout-chain-desktop.png",
+        "captureSha256": "931742e091f1bcff7b8fdc043e7b737cda03c95a99c90df2cbee69db4011c4b8",
+        "receiptSha256": "54019b985f744aa5462ef36d28526aecacfb748b08490077ecd0502bd81d4b12",
+        "runtimeSha256": "8c412a1e20b8bded8551af46ded2aba2eba213507145281a744a2edae84a4629",
+        "targetChecksPassed": true
+      },
+      {
+        "case": "train-portrait-small",
+        "capture": "tutorial/train-portrait-small.png",
+        "captureSha256": "bf4aa34ded6d631409d5c9b3305a4978d512d8822d81988064d73a2df59d0136",
+        "receiptSha256": "02eb59e2dc1c50f7998dda29b68f8517e2701aac9f566cbd01fc175b47c7f4a5",
+        "runtimeSha256": "adc472887c1ec5b9143744f920fed7ede2e34e4c39cff4059e0cdc46c6e9cef0",
+        "targetChecksPassed": true
+      }
+    ],
+    "frameRateCap": 30
+  },
+  "protectedPlayerState": [
+    {
+      "path": "tutorial/protected-player-state.json",
+      "sha256": "6bdbef60869ac9466d914ce214ff6f149773b5d063d2e0a6efff96aeed342779",
+      "unchanged": true
+    },
+    {
+      "path": "mac/protected-player-state.json",
+      "sha256": "55d25beeb20854d56f11cd34be8f96928a0645cbb71557472b50c09b19a2323e",
+      "unchanged": true
+    },
+    {
+      "path": "automation/protected-player-state.json",
+      "sha256": "55d25beeb20854d56f11cd34be8f96928a0645cbb71557472b50c09b19a2323e",
+      "unchanged": true
+    }
+  ],
+  "iOSPackageBuilt": false,
+  "installedOnAEON": false,
+  "physicalTouchTested": false,
+  "devicePerformanceMeasured": false,
+  "onlineServiceDeployed": false
+}

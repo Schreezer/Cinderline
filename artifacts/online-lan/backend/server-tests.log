@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: health and lobby controls reject stale, malformed, repeated, and excessive input
+ok 1 - health and lobby controls reject stale, malformed, repeated, and excessive input
+  ---
+  duration_ms: 30.38325
+  type: 'test'
+  ...
+# Subtest: worker backpressure preserves a prioritized forfeit until drain
+ok 2 - worker backpressure preserves a prioritized forfeit until drain
+  ---
+  duration_ms: 6.831625
+  type: 'test'
+  ...
+# Subtest: commands queued during worker backpressure receive and cache one authoritative acknowledgement
+ok 3 - commands queued during worker backpressure receive and cache one authoritative acknowledgement
+  ---
+  duration_ms: 3.475209
+  type: 'test'
+  ...
+# Subtest: active worker progress timeout closes a hung room independently of socket pong
+ok 4 - active worker progress timeout closes a hung room independently of socket pong
+  ---
+  duration_ms: 4.4045
+  type: 'test'
+  ...
+# Subtest: sustained snapshot backpressure disconnects a slow client for normal recovery
+ok 5 - sustained snapshot backpressure disconnects a slow client for normal recovery
+  ---
+  duration_ms: 5.433042
+  type: 'test'
+  ...
+# Subtest: draining fails readiness and new room creation while keeping the listener observable
+ok 6 - draining fails readiness and new room creation while keeping the listener observable
+  ---
+  duration_ms: 3.311125
+  type: 'test'
+  ...
+# Subtest: origin, per-address connections, room creation, and public metadata are bounded
+ok 7 - origin, per-address connections, room creation, and public metadata are bounded
+  ---
+  duration_ms: 5.149292
+  type: 'test'
+  ...
+# Subtest: forwarded addresses are trusted only from an explicitly configured proxy
+ok 8 - forwarded addresses are trusted only from an explicitly configured proxy
+  ---
+  duration_ms: 3.231834
+  type: 'test'
+  ...
+# Subtest: active worker capacity queues a ready room and starts it when capacity returns
+ok 9 - active worker capacity queues a ready room and starts it when capacity returns
+  ---
+  duration_ms: 4.941042
+  type: 'test'
+  ...
+# Subtest: real clients create, join, reject a third seat, ready, and receive private snapshots
+ok 10 - real clients create, join, reject a third seat, ready, and receive private snapshots
+  ---
+  duration_ms: 9.808125
+  type: 'test'
+  ...
+# Subtest: both seats command only their view handles and command sequences survive reconnect
+ok 11 - both seats command only their view handles and command sequences survive reconnect
+  ---
+  duration_ms: 32.296667
+  type: 'test'
+  ...
+# Subtest: automatic batches and stable queue cancellation remain authoritative online
+ok 12 - automatic batches and stable queue cancellation remain authoritative online
+  ---
+  duration_ms: 110.408833
+  type: 'test'
+  ...
+# Subtest: surrender keeps the socket for the authoritative result
+ok 13 - surrender keeps the socket for the authoritative result
+  ---
+  duration_ms: 7.696458
+  type: 'test'
+  ...
+# Subtest: disconnect grace expires into a canonical result
+ok 14 - disconnect grace expires into a canonical result
+  ---
+  duration_ms: 42.034375
+  type: 'test'
+  ...
+# Subtest: a simultaneous outage preserves the active room for reconnect, then expires through the worker
+ok 15 - a simultaneous outage preserves the active room for reconnect, then expires through the worker
+  ---
+  duration_ms: 119.474333
+  type: 'test'
+  ...
+# Subtest: ordinary attack-move play can finish a complete authoritative match
+ok 16 - ordinary attack-move play can finish a complete authoritative match
+  ---
+  duration_ms: 12597.912667
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13075.576042

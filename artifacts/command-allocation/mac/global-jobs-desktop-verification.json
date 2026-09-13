@@ -1,0 +1,326 @@
+{
+  "case": "global-jobs-desktop",
+  "state": "global-jobs",
+  "requestedViewport": [
+    1920,
+    1080
+  ],
+  "viewport": [
+    1920.0,
+    1080.0
+  ],
+  "scale": 1.5,
+  "compactHUD": false,
+  "selection": 1,
+  "squads": [
+    0,
+    0,
+    0
+  ],
+  "tick": 61,
+  "capture": "global-jobs-desktop.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1537.8,
+        19.5,
+        1705.8,
+        85.5
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1717.8,
+        19.5,
+        1852.8,
+        85.5
+      ]
+    },
+    {
+      "index": 2,
+      "action": "zoom+",
+      "argument": 0,
+      "bounds": [
+        1777.8,
+        129.0,
+        1852.8,
+        195.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "zoom-",
+      "argument": 0,
+      "bounds": [
+        1777.8,
+        205.5,
+        1852.8,
+        271.5
+      ]
+    },
+    {
+      "index": 4,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        814.8,
+        891.0,
+        958.8,
+        957.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        967.8,
+        891.0,
+        1111.8,
+        957.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        1120.8,
+        891.0,
+        1291.8,
+        957.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        1306.8,
+        891.0,
+        1477.8,
+        957.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        1492.8,
+        891.0,
+        1663.8,
+        957.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        1678.8,
+        891.0,
+        1849.8,
+        957.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        1120.8,
+        970.5,
+        1291.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 11,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        1306.8,
+        970.5,
+        1477.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 12,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        1492.8,
+        970.5,
+        1663.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 13,
+      "action": "orders",
+      "argument": 0,
+      "bounds": [
+        1678.8,
+        970.5,
+        1849.8,
+        1036.5
+      ]
+    },
+    {
+      "index": 14,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        337.2,
+        808.5,
+        736.2,
+        874.5
+      ]
+    },
+    {
+      "index": 15,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        736.2,
+        808.5,
+        802.2,
+        874.5
+      ]
+    },
+    {
+      "index": 16,
+      "action": "kind",
+      "argument": 1,
+      "bounds": [
+        337.2,
+        912.0,
+        697.2,
+        978.0
+      ]
+    },
+    {
+      "index": 17,
+      "action": "armytab",
+      "argument": 0,
+      "bounds": [
+        484.2,
+        480.0,
+        574.2,
+        546.0
+      ]
+    },
+    {
+      "index": 18,
+      "action": "armytab",
+      "argument": 1,
+      "bounds": [
+        580.2,
+        480.0,
+        670.2,
+        546.0
+      ]
+    },
+    {
+      "index": 19,
+      "action": "armytab",
+      "argument": 2,
+      "bounds": [
+        676.2,
+        480.0,
+        766.2,
+        546.0
+      ]
+    },
+    {
+      "index": 20,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        781.2,
+        480.0,
+        847.2,
+        546.0
+      ]
+    },
+    {
+      "index": 21,
+      "action": "productionrally",
+      "argument": 0,
+      "bounds": [
+        88.2,
+        552.0,
+        244.2,
+        618.0
+      ]
+    },
+    {
+      "index": 22,
+      "action": "jobpage",
+      "argument": 1,
+      "bounds": [
+        775.2,
+        552.0,
+        841.2,
+        618.0
+      ]
+    },
+    {
+      "index": 23,
+      "action": "productionfocus",
+      "argument": 0,
+      "bounds": [
+        685.2,
+        624.0,
+        775.2,
+        690.0
+      ]
+    },
+    {
+      "index": 24,
+      "action": "cancelproduction",
+      "argument": 0,
+      "bounds": [
+        781.2,
+        624.0,
+        847.2,
+        690.0
+      ]
+    },
+    {
+      "index": 25,
+      "action": "productionfocus",
+      "argument": 0,
+      "bounds": [
+        685.2,
+        694.5,
+        775.2,
+        760.5
+      ]
+    },
+    {
+      "index": 26,
+      "action": "cancelproduction",
+      "argument": 0,
+      "bounds": [
+        781.2,
+        694.5,
+        847.2,
+        760.5
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 624,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

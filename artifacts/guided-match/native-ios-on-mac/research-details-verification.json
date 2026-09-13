@@ -1,0 +1,150 @@
+{
+  "pid": 21450,
+  "elapsedSeconds": 5.717968702316284,
+  "newCrashReports": [],
+  "executableSha256": "9b61b72e9c09abcd34effa487bac42dfe050f9c1e75c065686fb8da0c068cf2c",
+  "state": "research-details",
+  "captured": true,
+  "fatalRuntimeError": false,
+  "scope": "Exact signed iOS binary on Mac, default iPad aspect; actual menu action and ordinary-command tutorial pilot. No physical touch, AEON installation, or thermal acceptance.",
+  "observed": {
+    "offer": 0,
+    "menu": 0,
+    "step": 10,
+    "complete": 0,
+    "preferenceCompleted": 0,
+    "winner": -1,
+    "opponentOrders": 0,
+    "tick": 6620
+  },
+  "viewport": [
+    2052.0,
+    1536.0
+  ],
+  "scale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1808.0,
+        20.0,
+        1896.0,
+        108.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        20.0,
+        2020.0,
+        108.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        1424.0,
+        152.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        164.0,
+        1424.0,
+        292.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        304.0,
+        1424.0,
+        416.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "buildmenu",
+      "argument": 0,
+      "bounds": [
+        1572.0,
+        1424.0,
+        1732.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        1744.0,
+        1424.0,
+        1896.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "sheet",
+      "argument": 4,
+      "bounds": [
+        1908.0,
+        1424.0,
+        2020.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "tutorialfocus",
+      "argument": 0,
+      "bounds": [
+        636.0,
+        130.0,
+        740.0,
+        218.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "tutorialhelp",
+      "argument": 0,
+      "bounds": [
+        748.0,
+        130.0,
+        852.0,
+        218.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "tutorialdetails",
+      "argument": 0,
+      "bounds": [
+        860.0,
+        130.0,
+        964.0,
+        218.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true
+}

@@ -1,0 +1,47 @@
+{
+  "case": "offer-small",
+  "state": "offer",
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "observed": {
+    "offer": 1,
+    "menu": 1,
+    "step": 0,
+    "complete": 0,
+    "preferenceCompleted": 0,
+    "winner": -1,
+    "opponentOrders": 0,
+    "tick": 0
+  },
+  "buttons": [
+    {
+      "index": 0,
+      "action": "onboardlearn",
+      "argument": 0,
+      "bounds": [
+        62.5,
+        249.5,
+        329.5,
+        293.5
+      ]
+    },
+    {
+      "index": 1,
+      "action": "onboardskip",
+      "argument": 0,
+      "bounds": [
+        337.5,
+        249.5,
+        604.5,
+        293.5
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "capture": "offer-small.png",
+  "scope": "Actual Unreal renderer and deterministic ordinary-command tutorial pilot; no physical gesture test"
+}

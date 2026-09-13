@@ -1,0 +1,89 @@
+{
+  "case": "off-1080",
+  "mode": "off",
+  "requestedViewport": [
+    1920,
+    1080
+  ],
+  "viewport": [
+    1920,
+    1080
+  ],
+  "renderTarget": [
+    1920,
+    1080
+  ],
+  "compactHUD": false,
+  "warmupFrames": 30,
+  "sampleFrames": 120,
+  "gpuTiming": {
+    "source": "FRHIGPUFrameTimeHistory completed frames",
+    "samples": 120,
+    "meanMs": 14.491,
+    "medianMs": 14.492,
+    "p95Ms": 17.831,
+    "disjointEvents": 0
+  },
+  "elapsedSeconds": 8.759,
+  "screenPercentage": 80,
+  "taaUpsampling": 0,
+  "statusCommandProcessed": true,
+  "nativeStatus": {
+    "start": {
+      "requested": 1,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 1,
+      "bridgeAvailable": 1,
+      "interfaceActive": 1,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 2,
+      "encodedFrames": 0,
+      "scalerCreations": 1,
+      "validationProbes": 1,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "none"
+    },
+    "finish": {
+      "requested": 0,
+      "metalRHI": 1,
+      "osSupported": 1,
+      "deviceSupported": 0,
+      "bridgeAvailable": 1,
+      "interfaceActive": 0,
+      "requestedPercent": 80.0,
+      "effectiveFraction": 1.0,
+      "registeredFrames": 2,
+      "encodedFrames": 0,
+      "scalerCreations": 1,
+      "validationProbes": 1,
+      "fallbacks": 0,
+      "lastInput": [
+        0,
+        0
+      ],
+      "lastOutput": [
+        0,
+        0
+      ],
+      "fallbackReason": "disabled"
+    },
+    "registeredFrameDelta": 0,
+    "encodedFrameDelta": 0,
+    "validationProbeDelta": 0,
+    "fallbackDelta": 0
+  },
+  "capture": "off-1080.png",
+  "captureSha256": "735c5a45839aca26d4e9712b912e0ae47030f113e24568fed959fa09035894c9",
+  "ownedPid": 21391,
+  "scope": "Mac Unreal renderer with deterministic army fixture; no physical device, native iOS-on-Mac, player save, preference, or AEON interaction"
+}

@@ -1,0 +1,187 @@
+{
+  "viewport": [
+    667.0,
+    375.0
+  ],
+  "scale": 1.0,
+  "compactHUD": true,
+  "sheet": 0,
+  "buildMenu": false,
+  "placement": false,
+  "selectionReport": "none",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        10.0,
+        603.0,
+        54.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        10.0,
+        651.0,
+        54.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        16.0,
+        56.0,
+        64.0,
+        100.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        16.0,
+        104.0,
+        64.0,
+        148.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        16.0,
+        152.0,
+        64.0,
+        196.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        16.0,
+        200.0,
+        64.0,
+        244.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        559.0,
+        56.0,
+        603.0,
+        100.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        607.0,
+        56.0,
+        651.0,
+        100.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "workers",
+      "argument": 0,
+      "bounds": [
+        603.0,
+        319.0,
+        651.0,
+        363.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytype",
+      "argument": 0,
+      "bounds": [
+        112.0,
+        319.0,
+        170.0,
+        363.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "armytype",
+      "argument": 3,
+      "bounds": [
+        173.0,
+        319.0,
+        231.0,
+        363.0
+      ]
+    }
+  ],
+  "selectedLength": 0,
+  "configuredLength": 0,
+  "configuredName": "Short",
+  "configuredWorldSize": 3600.0,
+  "simulationLength": 0,
+  "simulationWorldSize": 3600.0,
+  "menu": false,
+  "map": 0,
+  "farFocus": true,
+  "scriptedVisionScout": 33,
+  "focus": [
+    3348.0,
+    3348.0
+  ],
+  "cameraRig": [
+    2696.8,
+    3097.0
+  ],
+  "cameraDistance": 1650.0,
+  "fogMaterial": "M_CinderFogV2",
+  "fogWorldSizeInverse": 0.000277778,
+  "groundMaterial": "M_CinderCanyonGround",
+  "groundWorldSizeInverse": 0.000277778,
+  "observedMaxFPS": 30,
+  "case": "map-short-small",
+  "state": "map-short",
+  "requestedViewport": [
+    667,
+    375
+  ],
+  "capture": "map-short-small.png",
+  "captureSha256": "d91d8644e8ac1e843e04bc30ccf81aa3836c9915c26c0e191a185269df211d25",
+  "captureDimensions": [
+    667,
+    375
+  ],
+  "ownedPid": 47508,
+  "launchToken": "MatchLength-f7e4a438174d4a7ea22f1448660bee67",
+  "startedAtNs": 1789307705253864000,
+  "captureModifiedAtNs": 1789307719685642150,
+  "freshCompleteCapture": true,
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "minimumCompactHitSize": 44,
+  "mockedMenuSafeInsets": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "originalPreviewRestored": true,
+  "scope": "Mac Unreal renderer and deterministic development preview. No physical touch, iOS, or device performance measurement."
+}

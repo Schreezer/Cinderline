@@ -1,0 +1,151 @@
+{
+  "success": true,
+  "authoring": "Authored three canonical collisionless 127x127 Cinderline Landscapes in /Game/Maps/Frontier.",
+  "shaderValidation": "Finalized 3 owned Landscapes, 12 components and 12 renderable component materials.",
+  "landscapes": [
+    {
+      "label": "CinderLandscapeMap0",
+      "tags": [
+        "CinderLandscapeMap0",
+        "CinderLandscapeGeometry_118BA617280B3B2A"
+      ],
+      "components": 4,
+      "scale": "<Struct 'Vector' (0x70fe3bb7b0) {x: 38.095238, y: 38.095238, z: 1.000000}>",
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround"
+    },
+    {
+      "label": "CinderLandscapeMap1",
+      "tags": [
+        "CinderLandscapeMap1",
+        "CinderLandscapeGeometry_2A5ED9CDFC910B28"
+      ],
+      "components": 4,
+      "scale": "<Struct 'Vector' (0x70f1fe9820) {x: 38.095238, y: 38.095238, z: 1.000000}>",
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround"
+    },
+    {
+      "label": "CinderLandscapeMap2",
+      "tags": [
+        "CinderLandscapeMap2",
+        "CinderLandscapeGeometry_5CB345890272150C"
+      ],
+      "components": 4,
+      "scale": "<Struct 'Vector' (0x70f1fe9910) {x: 38.095238, y: 38.095238, z: 1.000000}>",
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround"
+    }
+  ],
+  "portraits": {
+    "destination": "/Game/Art/UI/Units",
+    "count": 9,
+    "assets": [
+      {
+        "kind": "Worker",
+        "display_name": "Drudge",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Drudge.T_CinderPortrait_Drudge",
+        "source_sha256": "f4eebd7119c75223356664aeb6b127c7ad37c619fe87e646de73e48acf5aee20",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": false,
+        "operation": "updated"
+      },
+      {
+        "kind": "Striker",
+        "display_name": "Ember",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Ember.T_CinderPortrait_Ember",
+        "source_sha256": "28608594ad6b3df2465991a9b3eaab2b0e2d35fe775734b848d637cdb0c58ed1",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": true,
+        "operation": "updated"
+      },
+      {
+        "kind": "Lancer",
+        "display_name": "Needle",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Needle.T_CinderPortrait_Needle",
+        "source_sha256": "e9c968ddee0f2f37a4ae42e3968694c72507794cb2eebc721712ade2edd4d1cb",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": true,
+        "operation": "updated"
+      },
+      {
+        "kind": "Scout",
+        "display_name": "Skim",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Skim.T_CinderPortrait_Skim",
+        "source_sha256": "cfa265a9a8b0116b550250fdeebc01b2a5339f6aa55bee87943c1e465992ca07",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": true,
+        "operation": "updated"
+      },
+      {
+        "kind": "Bastion",
+        "display_name": "Anvil",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Anvil.T_CinderPortrait_Anvil",
+        "source_sha256": "abbd7f6bf00d6070a5457a3783f3424fcafac3038ff22887f9695db381092ccf",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": true,
+        "operation": "updated"
+      },
+      {
+        "kind": "Mortar",
+        "display_name": "Cinderthrow",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Cinderthrow.T_CinderPortrait_Cinderthrow",
+        "source_sha256": "8f2afc782955ad3b27ae76bf4706b2fd68992c45a18c89d1553e3fef21de9e77",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": true,
+        "operation": "updated"
+      },
+      {
+        "kind": "Mender",
+        "display_name": "Mend",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Mend.T_CinderPortrait_Mend",
+        "source_sha256": "91eb1567b78b59b66e7e019d2dcb67b1ed5c2cba02ea273da3336ccbbed9ba8b",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": true,
+        "operation": "updated"
+      },
+      {
+        "kind": "Kite",
+        "display_name": "Veil",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Veil.T_CinderPortrait_Veil",
+        "source_sha256": "ffd36e5a21bd6b045647e72b554f6b03d0949fda907f9c7cd3daf4069043b712",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": true,
+        "operation": "updated"
+      },
+      {
+        "kind": "Turret",
+        "display_name": "Ward",
+        "asset": "/Game/Art/UI/Units/T_CinderPortrait_Ward.T_CinderPortrait_Ward",
+        "source_sha256": "33f0fd0926e44c511f0e128b3952411fbcecb8d43853cbfc5ec3422ec5568f52",
+        "size": [
+          384,
+          384
+        ],
+        "army_ribbon": false,
+        "operation": "updated"
+      }
+    ]
+  }
+}

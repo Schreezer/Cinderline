@@ -1,0 +1,95 @@
+{
+  "scope": "Native Designed for iPad iOS binary on Apple Silicon Mac, not iOS Simulator or physical AEON. Thermal states are development overrides; raw Mac thermal state remained nominal.",
+  "executable_sha256": "d991e6462df26129beddb6293f00bb66efd3d9a0e83e2b6d9dfb4822bef3e12e",
+  "inner_signature_verified": true,
+  "mac_provisioning_verified": true,
+  "game_stopped": true,
+  "runs": {
+    "nominal": {
+      "frame_profile": {
+        "map": "Frontier",
+        "samples": "120",
+        "warmup_frames": "30",
+        "viewport_px": "2052x1536",
+        "window_seconds": "4.048",
+        "mean_ms": "33.731",
+        "median_ms": "33.259",
+        "p95_ms": "37.553",
+        "fps": "29.65",
+        "foreground": "unavailable",
+        "background_frames": "unavailable",
+        "measurement": "rendered_viewport_wall_clock",
+        "gpu_timing": "completed_engine_frames"
+      },
+      "gpu": {
+        "metric": "gpu",
+        "status": "available",
+        "samples": "120",
+        "viewport_samples": "120",
+        "unavailable_observations": "0",
+        "mean_ms": "3.729",
+        "median_ms": "3.369",
+        "p95_ms": "6.830",
+        "source": "FRHIGPUFrameTimeHistory",
+        "availability": "fresh_positive_completed_gpu_frames"
+      },
+      "scene_pixels": [
+        2052,
+        1536
+      ],
+      "viewport_and_hud_pixels": [
+        2052,
+        1536
+      ],
+      "frame_pacer_fps": 30,
+      "quality": "full",
+      "screenshot": "artifacts/ios-thermal/native-mobile-scaling/nominal.png"
+    },
+    "serious": {
+      "frame_profile": {
+        "map": "Frontier",
+        "samples": "120",
+        "warmup_frames": "30",
+        "viewport_px": "2052x1536",
+        "window_seconds": "6.054",
+        "mean_ms": "50.454",
+        "median_ms": "50.493",
+        "p95_ms": "54.443",
+        "fps": "19.82",
+        "foreground": "unavailable",
+        "background_frames": "unavailable",
+        "measurement": "rendered_viewport_wall_clock",
+        "gpu_timing": "completed_engine_frames"
+      },
+      "gpu": {
+        "metric": "gpu",
+        "status": "available",
+        "samples": "120",
+        "viewport_samples": "120",
+        "unavailable_observations": "0",
+        "mean_ms": "2.461",
+        "median_ms": "1.731",
+        "p95_ms": "5.297",
+        "source": "FRHIGPUFrameTimeHistory",
+        "availability": "fresh_positive_completed_gpu_frames"
+      },
+      "scene_pixels": [
+        1437,
+        1076
+      ],
+      "viewport_and_hud_pixels": [
+        2052,
+        1536
+      ],
+      "frame_pacer_fps": 20,
+      "quality": "minimum",
+      "screenshot": "artifacts/ios-thermal/native-mobile-scaling/serious.png"
+    }
+  },
+  "visual_review": "Both original screenshots inspected: matching HUD geometry and crisp text; reduced scene resolution and shadows under serious override, with readable units and terrain.",
+  "limitations": [
+    "Only 120 sampled frames after 30 warmups; this checks mechanics and render dimensions, not sustained performance or cooling.",
+    "The initial nominal launch crashed in Unreal Modules_Initialize before project startup; a subsequent serious launch and both repeat captures succeeded. The engine race is being repaired separately.",
+    "This binary precedes the later stable-policy CVar lookup fast path and any engine trace-race fix."
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "pid": 75268,
+  "ownedPid": true,
+  "baselinePidsUntouched": [],
+  "launchNonceVerified": true,
+  "runningExecutableHashVerified": true,
+  "elapsedSeconds": 4.960186004638672,
+  "newCrashReports": [],
+  "sourceExecutableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+  "wrappedExecutableSha256": "025d6ce3026f43543a79d67daa53b30664a6bd11b4a8427e0406ff87612975ff",
+  "equalExecutableSha256": true,
+  "strictSignatureVerified": true,
+  "nativeMacProvisioned": true,
+  "state": "squads",
+  "selection": 1,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "viewport": [
+    2052.0,
+    1536.0
+  ],
+  "scale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        1808.0,
+        20.0,
+        1896.0,
+        108.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        1908.0,
+        20.0,
+        2020.0,
+        108.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        1424.0,
+        152.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        164.0,
+        1424.0,
+        292.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        304.0,
+        1424.0,
+        416.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        1572.0,
+        1424.0,
+        1678.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        1686.0,
+        1424.0,
+        1792.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        1800.0,
+        1424.0,
+        1906.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        1914.0,
+        1424.0,
+        2020.0,
+        1512.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytab",
+      "argument": 0,
+      "bounds": [
+        648.0,
+        932.0,
+        792.0,
+        1020.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        804.0,
+        932.0,
+        892.0,
+        1020.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "squad",
+      "argument": 0,
+      "bounds": [
+        60.0,
+        1076.0,
+        320.0,
+        1164.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "squadassign",
+      "argument": 0,
+      "bounds": [
+        60.0,
+        1172.0,
+        320.0,
+        1260.0
+      ]
+    },
+    {
+      "index": 13,
+      "action": "squad",
+      "argument": 1,
+      "bounds": [
+        332.0,
+        1076.0,
+        592.0,
+        1164.0
+      ]
+    },
+    {
+      "index": 14,
+      "action": "squadassign",
+      "argument": 1,
+      "bounds": [
+        332.0,
+        1172.0,
+        592.0,
+        1260.0
+      ]
+    },
+    {
+      "index": 15,
+      "action": "squad",
+      "argument": 2,
+      "bounds": [
+        604.0,
+        1076.0,
+        864.0,
+        1164.0
+      ]
+    },
+    {
+      "index": 16,
+      "action": "squadassign",
+      "argument": 2,
+      "bounds": [
+        604.0,
+        1172.0,
+        864.0,
+        1260.0
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "captured": true,
+  "fatalRuntimeError": false,
+  "scope": "Exact signed iOS executable in a fresh native Mac wrapper; no physical touch, AEON installation, or thermal acceptance"
+}

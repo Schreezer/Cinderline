@@ -1,0 +1,163 @@
+{
+  "pid": 82454,
+  "elapsedSeconds": 11.735667943954468,
+  "newCrashReports": [],
+  "executableSha256": "9e362e674d9b840fe8af6ef036555a2e197b369b1836d2e44276706797a84230",
+  "selectedDifficulty": 0,
+  "captured": true,
+  "fatalRuntimeError": false,
+  "scope": "Exact signed iOS binary on Mac, default iPad aspect; actual menu action and renderer. No physical touch, AEON installation, or thermal acceptance.",
+  "viewport": [
+    2052.0,
+    1536.0
+  ],
+  "scale": 2.0,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "map",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        222.0,
+        684.0,
+        310.0
+      ]
+    },
+    {
+      "index": 1,
+      "action": "map",
+      "argument": 1,
+      "bounds": [
+        700.0,
+        222.0,
+        1352.0,
+        310.0
+      ]
+    },
+    {
+      "index": 2,
+      "action": "map",
+      "argument": 2,
+      "bounds": [
+        1368.0,
+        222.0,
+        2020.0,
+        310.0
+      ]
+    },
+    {
+      "index": 3,
+      "action": "difficulty",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        390.0,
+        423.2,
+        478.0
+      ]
+    },
+    {
+      "index": 4,
+      "action": "difficulty",
+      "argument": 1,
+      "bounds": [
+        431.2,
+        390.0,
+        822.4,
+        478.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "difficulty",
+      "argument": 2,
+      "bounds": [
+        830.4,
+        390.0,
+        1221.6,
+        478.0
+      ]
+    },
+    {
+      "index": 6,
+      "action": "difficulty",
+      "argument": 3,
+      "bounds": [
+        1229.6,
+        390.0,
+        1620.8,
+        478.0
+      ]
+    },
+    {
+      "index": 7,
+      "action": "difficulty",
+      "argument": 4,
+      "bounds": [
+        1628.8,
+        390.0,
+        2020.0,
+        478.0
+      ]
+    },
+    {
+      "index": 8,
+      "action": "start",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        492.0,
+        1115.4,
+        580.0
+      ]
+    },
+    {
+      "index": 9,
+      "action": "load",
+      "argument": 0,
+      "bounds": [
+        1135.4,
+        492.0,
+        2020.0,
+        580.0
+      ]
+    },
+    {
+      "index": 10,
+      "action": "tutorial",
+      "argument": 0,
+      "bounds": [
+        32.0,
+        594.0,
+        688.0,
+        682.0
+      ]
+    },
+    {
+      "index": 11,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        698.0,
+        594.0,
+        1354.0,
+        682.0
+      ]
+    },
+    {
+      "index": 12,
+      "action": "online",
+      "argument": 0,
+      "bounds": [
+        1364.0,
+        594.0,
+        2020.0,
+        682.0
+      ]
+    }
+  ],
+  "noButtonOverlap": true,
+  "buttonsWithinViewport": true,
+  "visuallyInspected": true
+}

@@ -1,0 +1,238 @@
+{
+  "case": "ribbon-phone",
+  "state": "ribbon",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "selection": 14,
+  "squads": [
+    4,
+    3,
+    2
+  ],
+  "tick": 1,
+  "capture": "ribbon-phone.png",
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        812.9,
+        11.7,
+        864.5,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        871.5,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        374.3,
+        89.2,
+        425.9
+      ]
+    },
+    {
+      "index": 3,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        96.2,
+        374.3,
+        171.3,
+        425.9
+      ]
+    },
+    {
+      "index": 4,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        178.3,
+        374.3,
+        244.1,
+        425.9
+      ]
+    },
+    {
+      "index": 5,
+      "action": "move",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        374.3,
+        736.6,
+        425.9
+      ]
+    },
+    {
+      "index": 6,
+      "action": "attack",
+      "argument": 0,
+      "bounds": [
+        741.3,
+        374.3,
+        803.5,
+        425.9
+      ]
+    },
+    {
+      "index": 7,
+      "action": "defend",
+      "argument": 0,
+      "bounds": [
+        808.2,
+        374.3,
+        870.3,
+        425.9
+      ]
+    },
+    {
+      "index": 8,
+      "action": "orders",
+      "argument": 0,
+      "bounds": [
+        875.0,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "armytype",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        315.6,
+        86.8,
+        367.3
+      ]
+    },
+    {
+      "index": 10,
+      "action": "armytype",
+      "argument": 1,
+      "bounds": [
+        90.3,
+        315.6,
+        158.4,
+        367.3
+      ]
+    },
+    {
+      "index": 11,
+      "action": "armytype",
+      "argument": 2,
+      "bounds": [
+        161.9,
+        315.6,
+        230.0,
+        367.3
+      ]
+    },
+    {
+      "index": 12,
+      "action": "armytype",
+      "argument": 3,
+      "bounds": [
+        233.5,
+        315.6,
+        301.5,
+        367.3
+      ]
+    },
+    {
+      "index": 13,
+      "action": "armytype",
+      "argument": 4,
+      "bounds": [
+        305.1,
+        315.6,
+        373.1,
+        367.3
+      ]
+    },
+    {
+      "index": 14,
+      "action": "armytype",
+      "argument": 5,
+      "bounds": [
+        376.6,
+        315.6,
+        444.7,
+        367.3
+      ]
+    },
+    {
+      "index": 15,
+      "action": "armytype",
+      "argument": 6,
+      "bounds": [
+        448.2,
+        315.6,
+        516.3,
+        367.3
+      ]
+    },
+    {
+      "index": 16,
+      "action": "armytype",
+      "argument": 7,
+      "bounds": [
+        519.8,
+        315.6,
+        587.8,
+        367.3
+      ]
+    },
+    {
+      "index": 17,
+      "action": "focus",
+      "argument": 0,
+      "bounds": [
+        674.4,
+        315.6,
+        885.6,
+        367.3
+      ]
+    },
+    {
+      "index": 18,
+      "action": "info",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        315.6,
+        937.2,
+        367.3
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "stateActionsPresent": true,
+  "ownedPid": 75296,
+  "scope": "Mac Unreal renderer and deterministic command preview; no physical touch, native iOS, or AEON interaction"
+}

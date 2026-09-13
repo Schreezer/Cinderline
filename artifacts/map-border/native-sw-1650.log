@@ -1,0 +1,3 @@
+[2026.09.12-13.51.03:611][  0]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=sw distance=1650 capture=scheduled delay=2.0
+[2026.09.12-13.51.05:574][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER edge=sw requested_distance=1650 actual_distance=1650.0 rig=(512.3,1137.5,0.0) camera=(-173.4,1823.3,1334.9) viewport=2052x1536 elapsed=2.01 file=../../../Cinderline/Saved/MapBorder/sw-1650.png
+[2026.09.12-13.51.05:574][ 58]LogCinderCameraPreview: Display: CINDERLINE_MAP_BORDER_GROUND edge=sw screen_tl=1:(454.4,-353.5) screen_tr=1:(2003.4,1195.4) screen_br=1:(546.0,2003.4) screen_bl=1:(-353.5,1103.9) map_sw=1:(-259.0,374.1) map_se=1:(2226.0,-903.9) map_ne=1:(7217.9,374.1) map_nw=0:(0.0,0.0)

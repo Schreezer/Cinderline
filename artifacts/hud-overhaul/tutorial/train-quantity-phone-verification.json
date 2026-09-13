@@ -1,0 +1,301 @@
+{
+  "case": "train-quantity-phone",
+  "state": "train-quantity",
+  "requestedViewport": [
+    956,
+    440
+  ],
+  "viewport": [
+    956.0,
+    440.0
+  ],
+  "scale": 1.1733,
+  "compactHUD": true,
+  "step": 3,
+  "microstep": [
+    3,
+    6
+  ],
+  "target": "button",
+  "selection": 0,
+  "rallyProducer": 0,
+  "tick": 120,
+  "actionsApplied": 2,
+  "capture": "train-quantity-phone.png",
+  "beforeShowCapture": null,
+  "buttons": [
+    {
+      "index": 0,
+      "action": "help",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        11.7,
+        880.9,
+        63.4
+      ]
+    },
+    {
+      "index": 1,
+      "action": "pause",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        11.7,
+        937.2,
+        63.4
+      ]
+    },
+    {
+      "index": 2,
+      "action": "globalcatalog",
+      "argument": 7,
+      "bounds": [
+        18.8,
+        65.7,
+        75.1,
+        117.3
+      ]
+    },
+    {
+      "index": 3,
+      "action": "globalcatalog",
+      "argument": 8,
+      "bounds": [
+        18.8,
+        122.0,
+        75.1,
+        173.7
+      ]
+    },
+    {
+      "index": 4,
+      "action": "globalcatalog",
+      "argument": 9,
+      "bounds": [
+        18.8,
+        178.3,
+        75.1,
+        230.0
+      ]
+    },
+    {
+      "index": 5,
+      "action": "army",
+      "argument": 0,
+      "bounds": [
+        18.8,
+        234.7,
+        75.1,
+        286.3
+      ]
+    },
+    {
+      "index": 6,
+      "action": "box",
+      "argument": 0,
+      "bounds": [
+        829.3,
+        65.7,
+        880.9,
+        117.3
+      ]
+    },
+    {
+      "index": 7,
+      "action": "home",
+      "argument": 0,
+      "bounds": [
+        885.6,
+        65.7,
+        937.2,
+        117.3
+      ]
+    },
+    {
+      "index": 8,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        880.9,
+        374.3,
+        937.2,
+        425.9
+      ]
+    },
+    {
+      "index": 9,
+      "action": "closesheet",
+      "argument": 0,
+      "bounds": [
+        521.0,
+        65.7,
+        572.6,
+        117.3
+      ]
+    },
+    {
+      "index": 10,
+      "action": "trainkind",
+      "argument": 0,
+      "bounds": [
+        100.9,
+        122.0,
+        153.7,
+        173.7
+      ]
+    },
+    {
+      "index": 11,
+      "action": "trainkind",
+      "argument": 1,
+      "bounds": [
+        158.4,
+        122.0,
+        211.2,
+        173.7
+      ]
+    },
+    {
+      "index": 12,
+      "action": "trainkind",
+      "argument": 2,
+      "bounds": [
+        215.9,
+        122.0,
+        268.7,
+        173.7
+      ]
+    },
+    {
+      "index": 13,
+      "action": "trainkind",
+      "argument": 3,
+      "bounds": [
+        273.4,
+        122.0,
+        326.2,
+        173.7
+      ]
+    },
+    {
+      "index": 14,
+      "action": "trainkind",
+      "argument": 4,
+      "bounds": [
+        330.9,
+        122.0,
+        383.7,
+        173.7
+      ]
+    },
+    {
+      "index": 15,
+      "action": "trainkind",
+      "argument": 5,
+      "bounds": [
+        388.4,
+        122.0,
+        441.2,
+        173.7
+      ]
+    },
+    {
+      "index": 16,
+      "action": "trainkind",
+      "argument": 6,
+      "bounds": [
+        445.9,
+        122.0,
+        498.7,
+        173.7
+      ]
+    },
+    {
+      "index": 17,
+      "action": "trainkind",
+      "argument": 7,
+      "bounds": [
+        503.4,
+        122.0,
+        556.2,
+        173.7
+      ]
+    },
+    {
+      "index": 18,
+      "action": "trainqty",
+      "argument": 1,
+      "bounds": [
+        100.9,
+        181.9,
+        152.5,
+        233.5
+      ]
+    },
+    {
+      "index": 19,
+      "action": "trainqty",
+      "argument": 3,
+      "bounds": [
+        157.2,
+        181.9,
+        208.9,
+        233.5
+      ]
+    },
+    {
+      "index": 20,
+      "action": "trainqty",
+      "argument": 6,
+      "bounds": [
+        213.5,
+        181.9,
+        265.2,
+        233.5
+      ]
+    },
+    {
+      "index": 21,
+      "action": "trainqtydelta",
+      "argument": -1,
+      "bounds": [
+        269.9,
+        181.9,
+        321.5,
+        233.5
+      ]
+    },
+    {
+      "index": 22,
+      "action": "trainqtydelta",
+      "argument": 1,
+      "bounds": [
+        326.2,
+        181.9,
+        377.8,
+        233.5
+      ]
+    },
+    {
+      "index": 23,
+      "action": "globaltrain",
+      "argument": 0,
+      "bounds": [
+        382.5,
+        181.9,
+        556.2,
+        233.5
+      ]
+    }
+  ],
+  "buttonsWithinViewport": true,
+  "noButtonOverlap": true,
+  "protectedPlayerState": true,
+  "frameRateCap": 30,
+  "compactMinimumHitTarget": 51.6252,
+  "runtimeLog": "Saved/HUDOverhaul/TutorialLogs/train-quantity-phone-runtime.txt",
+  "freshCaptureAfterNs": 1789299283648508000,
+  "ownedPid": 77657,
+  "scope": "Mac Unreal renderer and deterministic tutorial HUD/pointer chain; no physical touch or iPhone run"
+}

@@ -1,0 +1,50 @@
+
+> cinderline-game-server@0.1.0 test
+> node --test
+
+TAP version 13
+# Subtest: health and lobby controls reject stale, malformed, repeated, and excessive input
+ok 1 - health and lobby controls reject stale, malformed, repeated, and excessive input
+  ---
+  duration_ms: 39.087708
+  type: 'test'
+  ...
+# Subtest: real clients create, join, reject a third seat, ready, and receive private snapshots
+ok 2 - real clients create, join, reject a third seat, ready, and receive private snapshots
+  ---
+  duration_ms: 397.143916
+  type: 'test'
+  ...
+# Subtest: both seats command only their view handles and command sequences survive reconnect
+ok 3 - both seats command only their view handles and command sequences survive reconnect
+  ---
+  duration_ms: 38.043417
+  type: 'test'
+  ...
+# Subtest: surrender keeps the socket for the authoritative result
+ok 4 - surrender keeps the socket for the authoritative result
+  ---
+  duration_ms: 10.369833
+  type: 'test'
+  ...
+# Subtest: disconnect grace expires into a canonical result
+ok 5 - disconnect grace expires into a canonical result
+  ---
+  duration_ms: 42.72925
+  type: 'test'
+  ...
+# Subtest: ordinary attack-move play can finish a complete authoritative match
+ok 6 - ordinary attack-move play can finish a complete authoritative match
+  ---
+  duration_ms: 11842.11
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12491.5245
