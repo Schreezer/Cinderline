@@ -40,6 +40,13 @@ struct FSceneryFixture
         Test.TestTrue(TEXT("Initialize creates every fixed scenery batch"), Scenery->IsInitialized());
         Test.TestEqual(TEXT("Scenery uses one fixed component per authored mesh role"),
             Scenery->Diagnostics().BatchCount, 12);
+        const FCinderSceneryDiagnostics Diagnostics = Scenery->Diagnostics();
+        Test.TestEqual(TEXT("Every canyon role resolves independently to its authored, legacy, or primitive mesh"),
+            Diagnostics.CanyonMeshBatches + Diagnostics.LegacyCanyonFallbackBatches
+                + Diagnostics.PrimitiveCanyonFallbackBatches,
+            8);
+        Test.TestEqual(TEXT("Every scenery batch remains presentation-only with collision disabled"),
+            Diagnostics.CollisionEnabledBatches, 0);
         WorldOwner.ForwardErrorMessages(&Test);
         return !Test.HasAnyErrors();
     }
@@ -75,6 +82,8 @@ bool FCinderSceneryObservedStateTest::RunTest(const FString& Parameters)
     const FCinderSceneryDiagnostics Initial = Fixture.Scenery->Diagnostics();
     TestTrue(TEXT("Initial friendly completed base receives foundation dressing"),
         Initial.IndustrialInstances > 0);
+    TestTrue(TEXT("Unexplored obstacle rectangles do not reveal cliff silhouettes"),
+        Initial.TallRockInstances < static_cast<int32>(Fixture.Simulation.obstacles().size()) * 4);
     TestEqual(TEXT("First observed state produces one scenery rebuild"), Initial.Rebuilds, uint64(1));
 
     Fixture.Scenery->Update(Fixture.Simulation, KnownResources);
@@ -155,30 +164,76 @@ bool FCinderSceneryObstacleBoundsTest::RunTest(const FString& Parameters)
     FSceneryFixture Fixture;
     if (!Fixture.Initialize(*this)) return false;
 
-    for (const Obstacle& Obstacle : Fixture.Simulation.obstacles())
-        Fixture.Simulation.debugSpawn(Kind::Scout, 0, Obstacle.center);
-    for (const Obstacle& Obstacle : Fixture.Simulation.obstacles())
-        TestTrue(TEXT("A friendly scout observation marks the obstacle center explored"),
-            Fixture.Simulation.explored(0, Obstacle.center));
+    for (int32 Map = 0; Map < 3; ++Map)
+    for (MatchLength Length : {MatchLength::Short, MatchLength::Standard, MatchLength::Long})
+    {
+        Config MapConfig;
+        MapConfig.map = Map;
+        MapConfig.matchLength = Length;
+        Fixture.Simulation.reset(MapConfig);
+        Fixture.Scenery->Reset();
+        for (const Obstacle& Obstacle : Fixture.Simulation.obstacles())
+            Fixture.Simulation.debugSpawn(Kind::Scout, 0, Obstacle.center);
+        for (const Obstacle& Obstacle : Fixture.Simulation.obstacles())
+            TestTrue(*FString::Printf(TEXT("Map %d %s scout observation marks each obstacle center explored"),
+                Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+                Fixture.Simulation.explored(0, Obstacle.center));
 
+        Fixture.Scenery->Update(Fixture.Simulation, {});
+        const FCinderSceneryDiagnostics Diagnostics = Fixture.Scenery->Diagnostics();
+        TestTrue(*FString::Printf(TEXT("Map %d %s obstacles produce a layered cliff composition"),
+            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+            Diagnostics.TallRockInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()) * 4);
+        TestTrue(*FString::Printf(TEXT("Map %d %s obstacles receive contiguous low cliff-mass segments"),
+            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+            Diagnostics.CliffMassInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()) * 2);
+        TestTrue(*FString::Printf(TEXT("Map %d %s authored rocks remain layered over the cliff skirt"),
+            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+            Diagnostics.RockVariantInstances >= Diagnostics.CliffMassInstances);
+        TestTrue(*FString::Printf(TEXT("Map %d %s mesa relief stays in the 180-240 cm authored range"),
+            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+            Diagnostics.MinimumMesaHeightCm >= 180.0f && Diagnostics.MaximumMesaHeightCm <= 240.0f
+                && Diagnostics.MaximumMesaHeightCm >= 210.0f);
+        TestEqual(*FString::Printf(TEXT("Map %d %s tall bounds stay inside authoritative obstacles"),
+            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+            Diagnostics.OutOfBoundsTallInstances, 0);
+        TestTrue(*FString::Printf(TEXT("Map %d %s keeps the fixed mobile instance caps"),
+            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+            Diagnostics.TallRockInstances <= 120 && Diagnostics.DebrisInstances <= 72
+                && Diagnostics.IndustrialInstances <= 80);
+        if (Map == 1)
+            TestTrue(TEXT("The broad central map-one obstacle composes multiple rock rows without widening gameplay bounds"),
+                Diagnostics.MultiRowMesaInstances > 0);
+
+        const uint64 BuiltAt = Diagnostics.Rebuilds;
+        Fixture.Scenery->Update(Fixture.Simulation, {});
+        TestEqual(*FString::Printf(TEXT("Map %d %s obstacle geometry is cached after submission"),
+            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+            Fixture.Scenery->Diagnostics().Rebuilds, BuiltAt);
+    }
+    return !HasAnyErrors();
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderSceneryGroundRoadFallbackTest,
+    "Cinderline.Presentation.SceneryGroundRoadFallback",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderSceneryGroundRoadFallbackTest::RunTest(const FString& Parameters)
+{
+    using namespace CinderSceneryTests;
+    using namespace cinder;
+    FSceneryFixture Fixture;
+    if (!Fixture.Initialize(*this)) return false;
+
+    Fixture.Simulation.debugSpawn(Kind::Foundry, 0, {900.0f, 600.0f});
     Fixture.Scenery->Update(Fixture.Simulation, {});
     const FCinderSceneryDiagnostics Diagnostics = Fixture.Scenery->Diagnostics();
-    TestTrue(TEXT("Observed obstacles produce broad cliff and authored outcrop instances"),
-        Diagnostics.TallRockInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()) * 4);
-    TestTrue(TEXT("Every observed obstacle receives at least two contiguous low cliff-mass segments"),
-        Diagnostics.CliffMassInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()) * 2);
-    TestTrue(TEXT("Irregular authored rock variants remain layered over the continuous mass"),
-        Diagnostics.RockVariantInstances >= Diagnostics.CliffMassInstances);
-    TestEqual(TEXT("Every tall scenery bound remains inside its authoritative obstacle rectangle"),
-        Diagnostics.OutOfBoundsTallInstances, 0);
-    TestTrue(TEXT("The fixed mobile instance caps remain active"),
-        Diagnostics.TallRockInstances <= 120 && Diagnostics.DebrisInstances <= 72
-        && Diagnostics.IndustrialInstances <= 80);
-
-    const uint64 BuiltAt = Diagnostics.Rebuilds;
-    Fixture.Scenery->Update(Fixture.Simulation, {});
-    TestEqual(TEXT("Observed obstacle geometry is cached after submission"),
-        Fixture.Scenery->Diagnostics().Rebuilds, BuiltAt);
+    if (Diagnostics.bCanyonGroundMaterialLoaded)
+        TestEqual(TEXT("Terrain-layer canyon ground suppresses raised rectangular road meshes"),
+            Diagnostics.RoadInstances, 0);
+    else
+        TestEqual(TEXT("Missing canyon ground retains the single legacy service-road mesh"),
+            Diagnostics.RoadInstances, 1);
     return !HasAnyErrors();
 }
 

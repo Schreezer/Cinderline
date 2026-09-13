@@ -1,0 +1,485 @@
+{
+  "assets": [
+    {
+      "dimensions_cm": [
+        100.0,
+        78.0,
+        118.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        0.0,
+        59.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_A.SM_CinderCanyon_Rock_A",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "bde6589fe33f45383f5fdd5e6d3ac9086700040e3eb43e9ccdb9c0f3580128fd",
+        "884ac310afc92d72d98f6b9f6eeee98d4dff7b356d3c8cc785bc90f30b8ce29a",
+        "930698ca380ed7f8c0ca8cd39fb888f6361d7d519137289a518a868651b38ceb"
+      ],
+      "triangles": [
+        1376,
+        588,
+        228
+      ],
+      "vertex_colors": true
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        90.99999618530273,
+        104.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        -1.9073486328125e-06,
+        52.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_B.SM_CinderCanyon_Rock_B",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "3c7014937a72f3c999608f37002562141886d46f82e58096a5c0626bcb24b5c6",
+        "297b09879764eae827b456002a90ea6c44c5ac8aed0ce3cb649f53e04165d2a4",
+        "95acd47a508e29c3465183089ada87939b97ddfee0ab141cf4ca8444bc13150d"
+      ],
+      "triangles": [
+        1376,
+        588,
+        228
+      ],
+      "vertex_colors": true
+    },
+    {
+      "dimensions_cm": [
+        100.00000381469727,
+        72.00000381469727,
+        128.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        -1.9073486328125e-06,
+        -1.9073486328125e-06,
+        64.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_C.SM_CinderCanyon_Rock_C",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "5aef9b4118c0aafdad8f8f3ed984e41f42c4a50b04dbdcef255d10b5e01b1740",
+        "5b0aa29e13a83a020683fd32250c2d5c071af87d3be1a7f0bbcf8d0387cfe4bf",
+        "34f1e32e43dfd1583de39bdabee07b4c9192addc3ea71ee0dd37e1e09135ac68"
+      ],
+      "triangles": [
+        1376,
+        588,
+        228
+      ],
+      "vertex_colors": true
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        95.99999618530273,
+        100.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        1.9073486328125e-06,
+        50.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_D.SM_CinderCanyon_Rock_D",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "e33b4acaa2fe876a103cb63702d4ffdd9b350440ae0fea0851e5402b0fc16b2a",
+        "7cfe91a1d35356df5d9bfc226f182d985bf304f62c619469fdae9e922a6a9403",
+        "66a98f78a0d9476654982d296d3e7be34cc7e6a5511899f4f24a2e400c2eb046"
+      ],
+      "triangles": [
+        1376,
+        588,
+        228
+      ],
+      "vertex_colors": true
+    },
+    {
+      "dimensions_cm": [
+        99.99999618530273,
+        84.0,
+        132.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        -1.9073486328125e-06,
+        3.814697265625e-06,
+        66.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_E.SM_CinderCanyon_Rock_E",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "9707e8082027dbb470ccc42efa9febdffd9ff63a9800304dd437dda1f87739a3",
+        "615938055aede8e0c2a9dd68e81967b4b323f8cfb68b388d746fc498c859a5f5",
+        "e4744c5ab91f3631e390fa873149128a991ae23ae7378ad3f92dd759d31aaee9"
+      ],
+      "triangles": [
+        1376,
+        588,
+        228
+      ],
+      "vertex_colors": true
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        89.00000381469727,
+        112.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        1.9073486328125e-06,
+        56.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_F.SM_CinderCanyon_Rock_F",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "d0229adf353d62df84e4a78014c385e5e750f07f1d25a91b2f343ca2df3d1b64",
+        "a769c9fbca93041dd0c38b8815def651b40501c4f7f9c430b4fcd58de4668799",
+        "d892f524ff5e004838befa8a29ff7720bc36c7a59c81ea33c1583612bcc622f0"
+      ],
+      "triangles": [
+        1376,
+        588,
+        228
+      ],
+      "vertex_colors": true
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        90.0,
+        12.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        0.0,
+        6.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_CliffMass.SM_CinderCanyon_CliffMass",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "a63d35e132604bc0a3b061cdcbd91c4a6a29033af7f6cd9ce2e0b16778d2d8cb",
+        "c8a0828fb0c48ae4d0411a3dce16e80bccb6217897fe23a1752953c6e11ce494",
+        "cb4cc25fec72c133cf828becec9ed72b0a1aa0d1220a2c3a91f4e69ee2ce0914"
+      ],
+      "triangles": [
+        224,
+        108,
+        48
+      ],
+      "vertex_colors": true
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        70.0,
+        20.0
+      ],
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        0.0,
+        10.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Debris.SM_CinderCanyon_Debris",
+      "section_collision": [
+        false,
+        false,
+        false
+      ],
+      "sections": [
+        1,
+        1,
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "6b9d81f6b56c97035e666a3807c53271a699e187f8ad0977d7342e53a9d1a7b2",
+        "cf76ed1ff7531ca72e66629856cde550595e124c742cb552a8ebdb39410e8b06",
+        "46f79de7c88ec3defc56403ffad4fd0ab3f623a5642216a3f49a4544a96d6a6c"
+      ],
+      "triangles": [
+        192,
+        96,
+        48
+      ],
+      "vertex_colors": true
+    }
+  ],
+  "destination": "/Game/Art/Canyon/Meshes",
+  "manifest_sha256": "7711b64b201364b0651fa91e27b6b7802164a3f311c0d31a734f2004dc5a1ccd",
+  "material": {
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "connections": [
+      {
+        "from": "CanyonShadow",
+        "input": "A",
+        "output": "",
+        "to": "Stratified sandstone color"
+      },
+      {
+        "from": "CanyonSandstone",
+        "input": "B",
+        "output": "",
+        "to": "Stratified sandstone color"
+      },
+      {
+        "from": "Authored strata, iron, and cavity masks",
+        "input": "Alpha",
+        "output": "R",
+        "to": "Stratified sandstone color"
+      },
+      {
+        "from": "Stratified sandstone color",
+        "input": "A",
+        "output": "",
+        "to": "Warm iron staining"
+      },
+      {
+        "from": "IronOxide",
+        "input": "B",
+        "output": "",
+        "to": "Warm iron staining"
+      },
+      {
+        "from": "Authored strata, iron, and cavity masks",
+        "input": "Alpha",
+        "output": "G",
+        "to": "Warm iron staining"
+      },
+      {
+        "from": "Authored UV0",
+        "input": "UVs",
+        "output": "",
+        "to": "Licensed sediment grain"
+      },
+      {
+        "from": "Licensed sediment grain",
+        "input": "",
+        "output": "RGB",
+        "to": "Neutral sediment luminance"
+      },
+      {
+        "from": "Full grain desaturation",
+        "input": "Fraction",
+        "output": "",
+        "to": "Neutral sediment luminance"
+      },
+      {
+        "from": "Neutral sediment luminance",
+        "input": "A",
+        "output": "",
+        "to": "Restrained grain contrast"
+      },
+      {
+        "from": "Restrained grain contrast",
+        "input": "A",
+        "output": "",
+        "to": "Centered grain value"
+      },
+      {
+        "from": "Centered grain value",
+        "input": "",
+        "output": "",
+        "to": "Bounded sediment modulation"
+      },
+      {
+        "from": "Warm iron staining",
+        "input": "A",
+        "output": "",
+        "to": "Strata with sediment grain"
+      },
+      {
+        "from": "Bounded sediment modulation",
+        "input": "B",
+        "output": "",
+        "to": "Strata with sediment grain"
+      },
+      {
+        "from": "Authored UV0",
+        "input": "UVs",
+        "output": "",
+        "to": "Restrained sediment normal"
+      },
+      {
+        "from": "Flat tangent normal",
+        "input": "A",
+        "output": "",
+        "to": "Restrained normal detail"
+      },
+      {
+        "from": "Restrained sediment normal",
+        "input": "B",
+        "output": "RGB",
+        "to": "Restrained normal detail"
+      },
+      {
+        "from": "NormalStrength",
+        "input": "Alpha",
+        "output": "",
+        "to": "Restrained normal detail"
+      },
+      {
+        "from": "Restrained normal detail",
+        "input": "VectorInput",
+        "output": "",
+        "to": "Normalized tangent normal"
+      },
+      {
+        "from": "Authored strata, iron, and cavity masks",
+        "input": "Alpha",
+        "output": "R",
+        "to": "Layered roughness"
+      }
+    ],
+    "depth_test_enabled": true,
+    "graph_replacement": {
+      "before_count": 8,
+      "method": "snapshot of expressions, delete each through engine API",
+      "remaining_after_delete": 0
+    },
+    "licensed_surface_detail": {
+      "albedo_modulation": [
+        0.78,
+        1.2
+      ],
+      "license": "CC0-1.0",
+      "mapping": "authored UV0 at 2x tiling",
+      "normal_strength": 0.42,
+      "source": "Poly Haven gravel_floor_04",
+      "specular": 0.08,
+      "texture_samples": 2,
+      "textures": [
+        "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Color",
+        "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Normal"
+      ]
+    },
+    "nodes": 22,
+    "outputs": {
+      "AMBIENT_OCCLUSION": {
+        "node": "Authored strata, iron, and cavity masks",
+        "output": "B"
+      },
+      "BASE_COLOR": {
+        "node": "Strata with sediment grain",
+        "output": ""
+      },
+      "METALLIC": {
+        "node": "Nonmetal sandstone",
+        "output": ""
+      },
+      "NORMAL": {
+        "node": "Normalized tangent normal",
+        "output": ""
+      },
+      "ROUGHNESS": {
+        "node": "Layered roughness",
+        "output": ""
+      },
+      "SPECULAR": {
+        "node": "Low sandstone specular",
+        "output": ""
+      }
+    },
+    "path": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+    "shader_errors": [],
+    "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+    "two_sided": false,
+    "version": "cinder-canyon-v1"
+  },
+  "owner": "scripts/unreal_canyon_assets.py",
+  "success": true,
+  "utc": "2026-09-13T07:29:45.735458+00:00",
+  "version": "cinder-canyon-v1"
+}

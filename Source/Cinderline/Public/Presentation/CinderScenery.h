@@ -25,7 +25,17 @@ struct FCinderSceneryDiagnostics
     int32 RockVariantInstances = 0;
     int32 CliffMassInstances = 0;
     int32 IndustrialInstances = 0;
+    int32 RoadInstances = 0;
     int32 DebrisInstances = 0;
+    int32 CanyonMeshBatches = 0;
+    int32 LegacyCanyonFallbackBatches = 0;
+    int32 PrimitiveCanyonFallbackBatches = 0;
+    int32 CollisionEnabledBatches = 0;
+    int32 MultiRowMesaInstances = 0;
+    float MinimumMesaHeightCm = 0.0f;
+    float MaximumMesaHeightCm = 0.0f;
+    bool bCanyonMaterialLoaded = false;
+    bool bCanyonGroundMaterialLoaded = false;
     int32 OutOfBoundsTallInstances = 0;
     int32 FogRejectedResourceInstances = 0;
     int32 FogRejectedRoads = 0;
@@ -72,7 +82,7 @@ private:
 
     UInstancedStaticMeshComponent* AddBatch(EBatch Batch, UStaticMesh* Mesh, UMaterialInterface* Material,
                                             USceneComponent* AttachParent, bool bCastShadow, int32 EndCullDistance);
-    void AddInstance(EBatch Batch, const FTransform& Transform);
+    bool AddInstance(EBatch Batch, const FTransform& Transform);
     void SubmitPending();
     uint32 ObservedStateHash(const cinder::Simulation& Simulation,
                              const std::vector<cinder::Entity>& KnownResources) const;
@@ -93,5 +103,13 @@ private:
     int32 LastOutOfBoundsTallInstances = 0;
     int32 LastFogRejectedResourceInstances = 0;
     int32 LastFogRejectedRoads = 0;
+    int32 CanyonMeshBatchCount = 0;
+    int32 LegacyCanyonFallbackBatchCount = 0;
+    int32 PrimitiveCanyonFallbackBatchCount = 0;
+    int32 LastMultiRowMesaInstances = 0;
+    float LastMinimumMesaHeightCm = 0.0f;
+    float LastMaximumMesaHeightCm = 0.0f;
+    bool bCanyonMaterialLoaded = false;
+    bool bCanyonGroundMaterialLoaded = false;
     bool bHasObservedHash = false;
 };

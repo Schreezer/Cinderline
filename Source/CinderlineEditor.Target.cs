@@ -8,6 +8,6 @@ public class CinderlineEditorTarget : TargetRules
         Type = TargetType.Editor;
         DefaultBuildSettings = BuildSettingsVersion.V7;
         IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_8;
-        ExtraModuleNames.Add("Cinderline");
+        ExtraModuleNames.AddRange(new string[] { "Cinderline", "CinderlineEditor" });
     }
 }

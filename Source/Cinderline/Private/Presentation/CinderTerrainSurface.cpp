@@ -47,21 +47,37 @@ FColor Sample(const FFeatures& Features, float X, float Y)
         const float DX = X - Ore.x, DY = Y - Ore.y;
         Mineral = FMath::Max(Mineral, Feather(FMath::Sqrt(DX * DX + DY * DY), 115 + Broken * 125));
     }
+    float Service = 0;
+    for (const auto& Pad : Features.ServicePads)
+    {
+        const float DX = FMath::Max(0.0f, FMath::Abs(X - Pad.center.x) - Pad.half.x);
+        const float DY = FMath::Max(0.0f, FMath::Abs(Y - Pad.center.y) - Pad.half.y);
+        Service = FMath::Max(Service, Feather(FMath::Sqrt(DX * DX + DY * DY), 32 + Broken * 24));
+    }
+    for (const auto& Road : Features.Roads)
+    {
+        const float DX = Road.Value.x - Road.Key.x, DY = Road.Value.y - Road.Key.y;
+        const float LengthSq = DX * DX + DY * DY;
+        const float Along = LengthSq > 1 ? FMath::Clamp(((X - Road.Key.x) * DX + (Y - Road.Key.y) * DY) / LengthSq, 0.0f, 1.0f) : 0;
+        const float PX = X - Road.Key.x - Along * DX, PY = Y - Road.Key.y - Along * DY;
+        Service = FMath::Max(Service, Feather(FMath::Max(0.0f, FMath::Sqrt(PX * PX + PY * PY) - 24), 28 + Broken * 12));
+    }
     const float Ash = FMath::Clamp((Broad - 0.20f) * 1.55f + (Broken - 0.5f) * 0.12f, 0.0f, 1.0f);
     return FColor(static_cast<uint8>(Stone * 255), static_cast<uint8>(Mineral * 255),
-        static_cast<uint8>(Ash * 255), 255);
+        static_cast<uint8>(Ash * 255), static_cast<uint8>(Service * 255));
 }
 
 void BuildPixels(const FFeatures& Features, TArray<uint8>& OutBGRA)
 {
+    const float WorldSize = FMath::Max(1.0f, Features.WorldSize);
     OutBGRA.SetNumUninitialized(TextureSize * TextureSize * 4);
     for (int32 Y = 0; Y < TextureSize; ++Y) for (int32 X = 0; X < TextureSize; ++X)
     {
-        const FColor Mask = Sample(Features, (X + 0.5f) * cinder::Simulation::WorldSize / TextureSize,
-            (Y + 0.5f) * cinder::Simulation::WorldSize / TextureSize);
+        const FColor Mask = Sample(Features, (X + 0.5f) * WorldSize / TextureSize,
+            (Y + 0.5f) * WorldSize / TextureSize);
         const int32 Pixel = (Y * TextureSize + X) * 4;
         OutBGRA[Pixel] = Mask.B; OutBGRA[Pixel + 1] = Mask.G;
-        OutBGRA[Pixel + 2] = Mask.R; OutBGRA[Pixel + 3] = 255;
+        OutBGRA[Pixel + 2] = Mask.R; OutBGRA[Pixel + 3] = Mask.A;
     }
 }
 }

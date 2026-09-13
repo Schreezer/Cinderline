@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "render": {
+    "application": "Blender",
+    "version": "5.2.1 LTS",
+    "engine": "CYCLES_CPU",
+    "serial": true,
+    "thread_limit": 2,
+    "resolution": [
+      384,
+      384
+    ],
+    "composition": "+X-front three-quarter orthographic"
+  },
+  "assets": [
+    {
+      "kind": "Worker",
+      "display_name": "Drudge",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Drudge.fbx",
+      "source_sha256": "b4091f4ee276a820f0c62f6461fbd352bb123ca2abf9428f4e484eecc38e62a7",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Drudge.png",
+      "texture_sha256": "f4eebd7119c75223356664aeb6b127c7ad37c619fe87e646de73e48acf5aee20",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Drudge",
+      "army_ribbon": false
+    },
+    {
+      "kind": "Striker",
+      "display_name": "Ember",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Ember.fbx",
+      "source_sha256": "5b73291db36c6b5a463175136822076d1b36fe466e627a2076bbaf310be1a430",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Ember.png",
+      "texture_sha256": "28608594ad6b3df2465991a9b3eaab2b0e2d35fe775734b848d637cdb0c58ed1",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Ember",
+      "army_ribbon": true,
+      "projected_vertex_bounds": [
+        0.227935,
+        0.08,
+        0.772065,
+        0.92
+      ]
+    },
+    {
+      "kind": "Lancer",
+      "display_name": "Needle",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Needle.fbx",
+      "source_sha256": "118c75277a9df4b93aacd2322e47f914eff310f442e60acd3760ec45d6e00fb2",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Needle.png",
+      "texture_sha256": "e9c968ddee0f2f37a4ae42e3968694c72507794cb2eebc721712ade2edd4d1cb",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Needle",
+      "army_ribbon": true,
+      "projected_vertex_bounds": [
+        0.1637,
+        0.08,
+        0.8363,
+        0.92
+      ]
+    },
+    {
+      "kind": "Scout",
+      "display_name": "Skim",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Skim.fbx",
+      "source_sha256": "8dc11f7a2ec3fb0b1e69e091d1829db12747f176a85b7747d1dd7c9b924d832a",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Skim.png",
+      "texture_sha256": "cfa265a9a8b0116b550250fdeebc01b2a5339f6aa55bee87943c1e465992ca07",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Skim",
+      "army_ribbon": true
+    },
+    {
+      "kind": "Bastion",
+      "display_name": "Anvil",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Anvil.fbx",
+      "source_sha256": "49843a4e20b4ae21a0849c25d279981809c8eb23a27d05409d26f14e97623425",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Anvil.png",
+      "texture_sha256": "abbd7f6bf00d6070a5457a3783f3424fcafac3038ff22887f9695db381092ccf",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Anvil",
+      "army_ribbon": true
+    },
+    {
+      "kind": "Mortar",
+      "display_name": "Cinderthrow",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Cinderthrow.fbx",
+      "source_sha256": "0004b82001f532d51bf2e6d883cd50d7a004a019f35c6b3a22047b88740b8703",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Cinderthrow.png",
+      "texture_sha256": "8f2afc782955ad3b27ae76bf4706b2fd68992c45a18c89d1553e3fef21de9e77",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Cinderthrow",
+      "army_ribbon": true
+    },
+    {
+      "kind": "Mender",
+      "display_name": "Mend",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Mend.fbx",
+      "source_sha256": "d6f2c3d414deacdf5d825a2aff6cd594150526e5ef2b5a32ee9767de5cd20b51",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Mend.png",
+      "texture_sha256": "91eb1567b78b59b66e7e019d2dcb67b1ed5c2cba02ea273da3336ccbbed9ba8b",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Mend",
+      "army_ribbon": true
+    },
+    {
+      "kind": "Kite",
+      "display_name": "Veil",
+      "source_fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Veil.fbx",
+      "source_sha256": "dc28ea362f571e31075b2b5a945f5722a97dcd1c42a53e56c4e8171ffedd9ff3",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Veil.png",
+      "texture_sha256": "ffd36e5a21bd6b045647e72b554f6b03d0949fda907f9c7cd3daf4069043b712",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Veil",
+      "army_ribbon": true
+    },
+    {
+      "kind": "Turret",
+      "display_name": "Ward",
+      "source_fbx": "RawAssets/VisualTarget/Models/FBX/SM_Ward.fbx",
+      "source_sha256": "75454c46ba55bd01d0015f437e97ce5affcbf801b8343d91b0745e094e07d2de",
+      "texture": "RawAssets/UI/Units/T_CinderPortrait_Ward.png",
+      "texture_sha256": "33f0fd0926e44c511f0e128b3952411fbcecb8d43853cbfc5ec3422ec5568f52",
+      "size": [
+        384,
+        384
+      ],
+      "unreal_asset": "/Game/Art/UI/Units/T_CinderPortrait_Ward",
+      "army_ribbon": false,
+      "projected_vertex_bounds": [
+        0.190892,
+        0.08,
+        0.809108,
+        0.92
+      ]
+    }
+  ]
+}

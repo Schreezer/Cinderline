@@ -1,0 +1,32 @@
+{
+  "name": "M_CinderCanyonRock",
+  "unreal_path": "/Game/Art/Canyon/Materials/M_CinderCanyonRock",
+  "base_colors_linear": {
+    "shadow": [
+      0.23,
+      0.075,
+      0.026
+    ],
+    "sandstone": [
+      0.58,
+      0.24,
+      0.072
+    ],
+    "iron": [
+      0.48,
+      0.105,
+      0.025
+    ]
+  },
+  "vertex_color_channels": {
+    "R": "strata blend",
+    "G": "iron stain blend",
+    "B": "ambient occlusion"
+  },
+  "roughness": [
+    0.82,
+    0.95
+  ],
+  "metallic": 0.0,
+  "texture_coordinates": "authored dominant-axis UV0 at 40 cm per tile; material color uses authored strata masks"
+}
