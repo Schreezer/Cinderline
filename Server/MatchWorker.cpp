@@ -84,8 +84,8 @@ bool parseUnsigned(std::string_view text, std::uint32_t& value) {
 
 class MatchWorker {
 public:
-    MatchWorker(int map, std::uint32_t seed) {
-        simulation_.reset({map, seed, false, 1.0f});
+    MatchWorker(int map, std::uint32_t seed, int players) {
+        simulation_.reset({map, seed, false, 1.0f, cinder::MatchLength::Standard, players});
     }
 
     bool start() {
@@ -97,7 +97,7 @@ public:
             if (size != 4) return protocolError("step body must be four bytes");
             const std::uint32_t count = readU32(data);
             if (count < 1 || count > 5) return protocolError("step count is outside 1..5");
-            for (std::uint32_t index = 0; index < count && simulation_.winner() < 0; ++index) {
+            for (std::uint32_t index = 0; index < count && simulation_.winner() == -1; ++index) {
                 simulation_.update(cinder::Simulation::Step);
             }
             return sendResultIfEnded();
@@ -107,7 +107,7 @@ public:
                 return protocolError("command body is outside bounds");
             }
             const int seat = data[0];
-            if (seat < 0 || seat > 1) return protocolError("command seat is outside bounds");
+            if (seat < 0 || seat >= simulation_.playerCount()) return protocolError("command seat is outside bounds");
             cinder::Command command;
             std::uint32_t sequence = commandSequence(data + 1, size - 1);
             std::string error;
@@ -116,15 +116,22 @@ public:
             cinder::CommandResult result;
             if (accepted) {
                 result = simulation_.command(command);
+                // Local feedback may name authoritative entity IDs. Network
+                // clients identify assignments from their opaque snapshot handles.
+                if (result.accepted && command.type == cinder::CommandType::AutoBuild)
+                    result.message = std::string(cinder::definition(command.kind).name)
+                        + " assigned to a Drudge. Open JOBS to view it.";
+                else if (result.accepted && command.type == cinder::CommandType::AutoResearch)
+                    result.message = "Research assigned to a Resonator. Open JOBS to view it.";
             } else {
                 result = {false, error.empty() ? "Malformed command." : error};
             }
             return sendAcknowledgement(seat, sequence, result) && sendResultIfEnded();
         }
         if (opcode == ForfeitOpcode) {
-            if (size != 1 || data[0] > 1) return protocolError("forfeit body is invalid");
+            if (size != 1 || data[0] >= simulation_.playerCount()) return protocolError("forfeit body is invalid");
             simulation_.forfeit(data[0]);
-            return sendResultIfEnded();
+            return simulation_.winner() == -1 ? sendSnapshots() : sendResultIfEnded(data[0]);
         }
         if (opcode == SnapshotRequestOpcode) {
             if (size != 0) return protocolError("snapshot request body must be empty");
@@ -135,7 +142,7 @@ public:
 
 private:
     cinder::Simulation simulation_;
-    std::array<cinder::net::ViewMemory, 2> views_;
+    std::array<cinder::net::ViewMemory, cinder::Simulation::MaxPlayers> views_;
     bool resultSent_ = false;
 
     static bool protocolError(const char* message) {
@@ -149,7 +156,7 @@ private:
     }
 
     bool sendSnapshots() {
-        for (int seat = 0; seat < 2; ++seat) {
+        for (int seat = 0; seat < simulation_.playerCount(); ++seat) {
             auto snapshot = cinder::net::snapshotFor(simulation_, seat, &views_[seat]);
             auto encoded = cinder::net::encodeSnapshot(snapshot);
             if (encoded.empty() || encoded.size() > cinder::net::MaxMessageBytes) {
@@ -177,16 +184,17 @@ private:
         return writeFrame(AcknowledgementOpcode, payload);
     }
 
-    bool sendResultIfEnded() {
-        if (simulation_.winner() < 0 || resultSent_) return true;
+    bool sendResultIfEnded(std::uint8_t causeSeat = 255) {
+        if (simulation_.winner() == -1 || resultSent_) return true;
         if (!sendSnapshots()) return false;
         resultSent_ = true;
-        return writeFrame(ResultOpcode, {static_cast<std::uint8_t>(simulation_.winner())});
+        const auto winner = simulation_.winner() == -2 ? std::uint8_t{255} : static_cast<std::uint8_t>(simulation_.winner());
+        return writeFrame(ResultOpcode, {winner, causeSeat});
     }
 };
 
 void usage() {
-    std::cerr << "Usage: CinderlineMatchWorker --map 0..2 --seed UINT32\n";
+    std::cerr << "Usage: CinderlineMatchWorker --map 0..2 --seed UINT32 [--players 2|4]\n";
 }
 } // namespace
 
@@ -194,11 +202,12 @@ int main(int argc, char** argv) {
     std::signal(SIGPIPE, SIG_IGN);
     int map = 0;
     std::uint32_t seed = 0;
+    int players = 2;
     bool haveMap = false;
     bool haveSeed = false;
     for (int index = 1; index < argc; ++index) {
         const std::string_view argument(argv[index]);
-        if ((argument == "--map" || argument == "--seed") && index + 1 < argc) {
+        if ((argument == "--map" || argument == "--seed" || argument == "--players") && index + 1 < argc) {
             std::uint32_t value = 0;
             if (!parseUnsigned(argv[++index], value)) {
                 usage();
@@ -211,9 +220,15 @@ int main(int argc, char** argv) {
                 }
                 map = static_cast<int>(value);
                 haveMap = true;
-            } else {
+            } else if (argument == "--seed") {
                 seed = value;
                 haveSeed = true;
+            } else {
+                if (value != 2 && value != 4) {
+                    usage();
+                    return 2;
+                }
+                players = static_cast<int>(value);
             }
         } else {
             usage();
@@ -225,7 +240,7 @@ int main(int argc, char** argv) {
         return 2;
     }
 
-    MatchWorker worker(map, seed);
+    MatchWorker worker(map, seed, players);
     if (!worker.start()) return 1;
 
     std::vector<std::uint8_t> input;

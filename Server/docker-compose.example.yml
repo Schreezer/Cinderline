@@ -4,9 +4,16 @@ services:
       context: ..
       dockerfile: Server/Dockerfile
     environment:
-      HOST: 0.0.0.0
+      HOST: 127.0.0.1
       PORT: 8787
-    ports:
-      - "127.0.0.1:8787:8787"
+      CINDERLINE_TRUSTED_PROXIES: 127.0.0.1
+      CINDERLINE_MAX_ROOMS: 32
+      CINDERLINE_MAX_CONNECTIONS: 128
+      CINDERLINE_MAX_ACTIVE_WORKERS: 8
+    network_mode: host
     restart: unless-stopped
     init: true
+    stop_grace_period: 15s
+    cpus: 2.0
+    mem_limit: 1g
+    pids_limit: 256

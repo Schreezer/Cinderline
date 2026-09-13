@@ -1,25 +1,17 @@
 import { randomBytes } from "node:crypto";
 import { spawn } from "node:child_process";
+import { accessSync, constants as fsConstants } from "node:fs";
 import { createServer } from "node:http";
+import { isIP } from "node:net";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { WebSocket, WebSocketServer } from "ws";
+import { PROTOCOL_VERSION, WEBSOCKET_PATH, WORKER_IPC as IPC } from "./protocol.js";
+import { WorkerBridge } from "./worker-bridge.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const ROOM_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const COMMAND_MAGIC = Buffer.from("CCMD");
-const PROTOCOL_VERSION = 1;
-
-const IPC = Object.freeze({
-  step: 1,
-  command: 2,
-  forfeit: 3,
-  snapshotRequest: 4,
-  ready: 128,
-  snapshot: 129,
-  acknowledgement: 130,
-  result: 131,
-});
 
 function defaultClock() {
   return {
@@ -64,6 +56,11 @@ function cleanMap(value) {
   return Number.isInteger(value) && value >= 0 && value <= 2 ? value : null;
 }
 
+function cleanPlayerCount(value) {
+  if (value === undefined) return 2;
+  return value === 2 || value === 4 ? value : null;
+}
+
 function jsonBuffer(message) {
   return JSON.stringify(message);
 }
@@ -76,14 +73,6 @@ function requestPath(request) {
   }
 }
 
-function ipcFrame(opcode, payload = Buffer.alloc(0)) {
-  const frame = Buffer.allocUnsafe(5 + payload.length);
-  frame.writeUInt32LE(1 + payload.length, 0);
-  frame[4] = opcode;
-  payload.copy(frame, 5);
-  return frame;
-}
-
 function commandSequence(data) {
   if (data.length < 12 || !data.subarray(0, 4).equals(COMMAND_MAGIC)) return null;
   if (data.readUInt32LE(4) !== PROTOCOL_VERSION) return null;
@@ -91,9 +80,21 @@ function commandSequence(data) {
   return sequence === 0 ? null : sequence;
 }
 
+function normalizedIp(address) {
+  if (typeof address !== "string") return "unknown";
+  const mapped = address.toLowerCase().startsWith("::ffff:") ? address.slice(7) : address;
+  return isIP(mapped) ? mapped : address;
+}
+
 export function createGameServer(options = {}) {
   const clock = options.clock ?? defaultClock();
   const logger = options.logger ?? console;
+  const spawnWorker = options.spawnWorker ?? spawn;
+  const bufferedAmountFor = options.bufferedAmountFor ?? ((socket) => socket.bufferedAmount);
+  const trustedProxyAddresses = new Set(
+    Array.isArray(options.trustedProxyAddresses) ? options.trustedProxyAddresses.map(normalizedIp) : [],
+  );
+  const allowedOrigins = new Set(Array.isArray(options.allowedOrigins) ? options.allowedOrigins : []);
   const config = {
     host: options.host ?? process.env.HOST ?? "127.0.0.1",
     port: boundedInteger(options.port ?? process.env.PORT, 8787, 0, 65535),
@@ -113,9 +114,35 @@ export function createGameServer(options = {}) {
     stepsPerTick: boundedInteger(options.stepsPerTick, 1, 1, 5),
     snapshotEverySteps: boundedInteger(options.snapshotEverySteps, 2, 1, 20),
     maxSequenceCache: boundedInteger(options.maxSequenceCache, 256, 8, 4096),
+    maxActiveWorkers: boundedInteger(options.maxActiveWorkers, 32, 1, 1024),
+    maxWorkerCommandQueue: boundedInteger(options.maxWorkerCommandQueue, 256, 8, 4096),
+    maxWorkerBacklogSteps: boundedInteger(options.maxWorkerBacklogSteps, 40, 5, 400),
+    workerProgressTimeoutMs: boundedInteger(options.workerProgressTimeoutMs, 15_000, 500, 300_000),
+    slowClientTimeoutMs: boundedInteger(options.slowClientTimeoutMs, 10_000, 500, 300_000),
+    maxConnectionsPerIp: boundedInteger(options.maxConnectionsPerIp, 16, 1, 1000),
+    roomCreateLimitCount: boundedInteger(options.roomCreateLimitCount, 8, 1, 1000),
+    roomCreateLimitWindowMs: boundedInteger(options.roomCreateLimitWindowMs, 60_000, 1000, 3_600_000),
+    serverName: typeof options.serverName === "string" && options.serverName.trim() ? options.serverName.trim().slice(0, 64) : "Cinderline",
+    networkMode: options.networkMode === "lan" ? "lan" : "online",
   };
 
   const rooms = new Map();
+  const connectionCounts = new Map();
+  const creationWindows = new Map();
+  let draining = false;
+  let closing = false;
+  let workerFailures = 0;
+  const roomCounts = () => {
+    const counts = { lobby: 0, starting: 0, active: 0, finished: 0 };
+    for (const room of rooms.values()) if (Object.hasOwn(counts, room.state)) counts[room.state] += 1;
+    return counts;
+  };
+  const workerCount = () => [...rooms.values()].filter((room) => room.workerBridge?.running).length;
+  const publicInfo = () => ({ name: config.serverName, mode: config.networkMode, protocol: PROTOCOL_VERSION, maxRooms: config.maxRooms });
+  const workerExecutableReady = () => {
+    if (options.spawnWorker) return true;
+    try { accessSync(config.workerPath, fsConstants.X_OK); return true; } catch { return false; }
+  };
   const httpServer = createServer((request, response) => {
     const path = requestPath(request);
     if (path === null) {
@@ -124,9 +151,21 @@ export function createGameServer(options = {}) {
       return;
     }
     if (request.method === "GET" && path === "/healthz") {
-      const body = jsonBuffer({ status: "ok", rooms: rooms.size, connections: wss.clients.size, protocol: PROTOCOL_VERSION });
+      const body = jsonBuffer({ status: "ok", rooms: rooms.size, connections: wss.clients.size, workers: workerCount(), states: roomCounts(), protocol: PROTOCOL_VERSION });
       response.writeHead(200, { "content-type": "application/json", "cache-control": "no-store" });
       response.end(body);
+      return;
+    }
+    if (request.method === "GET" && path === "/readyz") {
+      const ready = !draining && !closing && workerExecutableReady();
+      const body = jsonBuffer({ status: ready ? "ready" : "degraded", rooms: rooms.size, connections: wss.clients.size, workers: workerCount(), states: roomCounts(), workerFailures, protocol: PROTOCOL_VERSION });
+      response.writeHead(ready ? 200 : 503, { "content-type": "application/json", "cache-control": "no-store" });
+      response.end(body);
+      return;
+    }
+    if (request.method === "GET" && path === "/info") {
+      response.writeHead(200, { "content-type": "application/json", "cache-control": "no-store" });
+      response.end(jsonBuffer(publicInfo()));
       return;
     }
     response.writeHead(404, { "content-type": "text/plain", "cache-control": "no-store" });
@@ -138,17 +177,24 @@ export function createGameServer(options = {}) {
     if (!socket || socket.readyState !== WebSocket.OPEN) return false;
     const body = binary ? message : jsonBuffer(message);
     const bodySize = typeof body === "string" ? Buffer.byteLength(body) : body.length;
-    if (socket.bufferedAmount + bodySize > config.maxBackpressureBytes) {
-      if (volatile) return false;
+    if (bufferedAmountFor(socket) + bodySize > config.maxBackpressureBytes) {
+      if (volatile) {
+        if (socket.slowSince === null) socket.slowSince = clock.now();
+        if (clock.now() - socket.slowSince >= config.slowClientTimeoutMs) socket.terminate();
+        return false;
+      }
       socket.terminate();
       return false;
     }
+    socket.slowSince = null;
     socket.send(body, { binary });
     return true;
   }
 
-  function sendError(socket, message) {
-    send(socket, { type: "error", message });
+  function sendError(socket, message, code, retryable = false) {
+    const body = { type: "error", message };
+    if (code) { body.code = code; body.retryable = retryable; }
+    send(socket, body);
   }
 
   function playerView(player) {
@@ -163,6 +209,7 @@ export function createGameServer(options = {}) {
       type: "lobby",
       room: room.code,
       map: room.map,
+      playerCount: room.playerCount,
       players: room.players.map(playerView),
       state,
     };
@@ -178,6 +225,13 @@ export function createGameServer(options = {}) {
     broadcast(room, lobbyMessage(room));
   }
 
+  function broadcastPeer(room, subject, connected, graceSeconds) {
+    const message = { type: "peer", team: subject.seat, connected, graceSeconds };
+    for (const player of room.players) {
+      if (player && player !== subject) send(player.socket, message);
+    }
+  }
+
   function clearPlayerTimer(player) {
     if (player && player.disconnectTimer !== null) {
       clock.clearTimeout(player.disconnectTimer);
@@ -190,17 +244,7 @@ export function createGameServer(options = {}) {
       clock.clearInterval(room.tickTimer);
       room.tickTimer = null;
     }
-    if (room.handshakeTimer !== null) {
-      clock.clearTimeout(room.handshakeTimer);
-      room.handshakeTimer = null;
-    }
-    if (room.worker && room.worker.exitCode === null && room.worker.signalCode === null) {
-      room.worker.stdin.end();
-      const child = room.worker;
-      clock.setTimeout(() => {
-        if (child.exitCode === null && child.signalCode === null) child.kill("SIGTERM");
-      }, 1000);
-    }
+    room.workerBridge?.stop();
   }
 
   function destroyRoom(room) {
@@ -216,12 +260,13 @@ export function createGameServer(options = {}) {
       if (socket?.readyState === WebSocket.OPEN) socket.close(1000, "Room closed");
     }
     stopWorker(room);
+    queueMicrotask(pumpWorkerQueue);
   }
 
-  function finishRoom(room, winner) {
+  function finishRoom(room, winner, reason = "victory") {
     if (room.state === "finished") return;
     room.state = "finished";
-    room.result = { winner, reason: room.pendingEndReason ?? "victory" };
+    room.result = { winner, reason };
     for (const player of room.players) clearPlayerTimer(player);
     if (room.tickTimer !== null) {
       clock.clearInterval(room.tickTimer);
@@ -229,24 +274,32 @@ export function createGameServer(options = {}) {
     }
     broadcast(room, { type: "result", ...room.result });
     broadcastLobby(room);
-    if (room.worker?.stdin.writable) room.worker.stdin.end();
+    room.workerBridge?.finish();
     room.expiryTimer = clock.setTimeout(() => destroyRoom(room), config.finishedExpiryMs);
   }
 
-  function writeWorker(room, opcode, payload = Buffer.alloc(0)) {
-    if (!room.worker || !room.worker.stdin.writable || room.worker.stdin.writableNeedDrain) return false;
-    if (payload.length + 1 > config.maxPayloadBytes + 2) return false;
-    room.worker.stdin.write(ipcFrame(opcode, payload));
-    return true;
+  function queueWorker(room, opcode, payload = Buffer.alloc(0)) {
+    const bridge = room.workerBridge;
+    if (!bridge) return false;
+    if (opcode === IPC.forfeit) return bridge.enqueueForfeit(payload);
+    if (opcode === IPC.command) return bridge.enqueueCommand(payload);
+    if (opcode === IPC.step) return payload.length === 4 && bridge.enqueueSteps(payload.readUInt32LE(0));
+    if (opcode === IPC.snapshotRequest) return payload.length === 0 && bridge.requestSnapshot();
+    return false;
   }
 
-  function forfeit(room, seat, reason) {
-    if (room.state !== "starting" && room.state !== "active") return;
-    if (room.pendingForfeit !== null) return;
-    room.pendingForfeit = seat;
-    room.pendingEndReason = reason;
-    const body = Buffer.from([seat]);
-    if (!writeWorker(room, IPC.forfeit, body)) room.queuedForfeit = body;
+  function forfeit(room, player, reason) {
+    if ((room.state !== "starting" && room.state !== "active") || player.eliminated) return false;
+    player.eliminated = true;
+    player.eliminationReason = reason;
+    const body = Buffer.from([player.seat]);
+    if (!queueWorker(room, IPC.forfeit, body)) {
+      workerFailures += 1;
+      broadcast(room, { type: "error", message: "The match worker became unavailable.", code: "worker_unavailable", retryable: true });
+      destroyRoom(room);
+      return false;
+    }
+    return true;
   }
 
   function cacheAcknowledgement(player, sequence, acknowledgement) {
@@ -267,33 +320,33 @@ export function createGameServer(options = {}) {
     if (opcode === IPC.snapshot) {
       if (!room.workerReady || payload.length < 2) throw new Error("invalid worker snapshot frame");
       const seat = payload[0];
-      if (seat > 1 || payload.length - 1 > config.maxPayloadBytes) throw new Error("invalid worker snapshot seat");
+      if (seat >= room.playerCount || payload.length - 1 > config.maxPayloadBytes) throw new Error("invalid worker snapshot seat");
       const body = Buffer.from(payload.subarray(1));
       room.lastSnapshots[seat] = body;
       room.initialSnapshots.add(seat);
-      if (room.state === "starting" && room.initialSnapshots.size === 2) {
-        if (room.handshakeTimer !== null) clock.clearTimeout(room.handshakeTimer);
-        room.handshakeTimer = null;
+      if (room.state === "starting" && room.initialSnapshots.size === room.playerCount) {
+        room.workerBridge?.completeHandshake();
         room.state = "active";
         room.lastStepAt = clock.now();
         broadcast(room, { type: "started" });
-        for (let initialSeat = 0; initialSeat < 2; initialSeat += 1) {
+        for (let initialSeat = 0; initialSeat < room.playerCount; initialSeat += 1) {
           send(room.players[initialSeat]?.socket, room.lastSnapshots[initialSeat], true, true);
         }
         broadcastLobby(room);
-        if (room.queuedForfeit) {
-          writeWorker(room, IPC.forfeit, room.queuedForfeit);
-          room.queuedForfeit = null;
-        }
         room.tickTimer = clock.setInterval(() => {
           if (room.state !== "active") return;
           const step = Buffer.allocUnsafe(4);
           step.writeUInt32LE(config.stepsPerTick);
-          if (!writeWorker(room, IPC.step, step)) return;
+          if (!queueWorker(room, IPC.step, step)) {
+            workerFailures += 1;
+            broadcast(room, { type: "error", message: "The match worker is not keeping up.", code: "worker_unavailable", retryable: true });
+            destroyRoom(room);
+            return;
+          }
           room.stepsSinceSnapshot += config.stepsPerTick;
           if (room.stepsSinceSnapshot >= config.snapshotEverySteps) {
             room.stepsSinceSnapshot %= config.snapshotEverySteps;
-            writeWorker(room, IPC.snapshotRequest);
+            queueWorker(room, IPC.snapshotRequest);
           }
         }, config.tickIntervalMs);
       } else if (room.state !== "starting") {
@@ -307,7 +360,7 @@ export function createGameServer(options = {}) {
       const sequence = payload.readUInt32LE(1);
       const accepted = payload[5] !== 0;
       const messageBytes = payload.readUInt16LE(6);
-      if (seat > 1 || payload.length !== 8 + messageBytes) throw new Error("invalid worker acknowledgement");
+      if (seat >= room.playerCount || payload.length !== 8 + messageBytes) throw new Error("invalid worker acknowledgement");
       const player = room.players[seat];
       if (!player || !player.pendingSequences.has(sequence)) return;
       const acknowledgement = {
@@ -321,61 +374,83 @@ export function createGameServer(options = {}) {
       return;
     }
     if (opcode === IPC.result) {
-      if (payload.length !== 1 || payload[0] > 1) throw new Error("invalid worker result frame");
-      finishRoom(room, payload[0]);
+      if (payload.length !== 2) throw new Error("invalid worker result frame");
+      const winner = payload[0] === 255 ? -2 : payload[0];
+      if (winner !== -2 && winner >= room.playerCount) throw new Error("invalid worker result frame");
+      const causeSeat = payload[1];
+      if (causeSeat !== 255 && causeSeat >= room.playerCount) throw new Error("invalid worker result cause");
+      const causePlayer = causeSeat === 255 ? null : room.players[causeSeat];
+      if (causeSeat !== 255 && (!causePlayer?.eliminated || !causePlayer.eliminationReason)) {
+        throw new Error("worker result cause was not a pending elimination");
+      }
+      finishRoom(room, winner, causePlayer?.eliminationReason ?? "victory");
       return;
     }
     throw new Error("unknown worker output opcode");
   }
 
+  function handleWorkerFailure(room, failure) {
+    if (!rooms.has(room.code) || room.state === "finished") return;
+    workerFailures += 1;
+    const detail = failure.error instanceof Error ? failure.error.message : String(failure.error ?? "");
+    if (failure.kind === "input") {
+      logger.warn?.(`Match worker input failed: ${detail}`);
+      broadcast(room, { type: "error", message: "The match worker became unavailable.", code: "worker_unavailable", retryable: true });
+    } else if (failure.kind === "inputStopped") {
+      logger.warn?.(`Match worker input stopped: ${detail}`);
+      broadcast(room, { type: "error", message: "The match worker became unavailable.", code: "worker_unavailable", retryable: true });
+    } else if (failure.kind === "protocol") {
+      logger.error?.(`Match worker protocol error: ${detail}`);
+      broadcast(room, { type: "error", message: "The match worker sent invalid data." });
+    } else if (failure.kind === "exit") {
+      logger.error?.(`Match worker stopped before the result, code=${failure.code ?? "none"} signal=${failure.signal ?? "none"}`);
+      broadcast(room, { type: "error", message: "The match worker stopped.", code: "worker_unavailable", retryable: true });
+    } else if (failure.kind === "handshake") {
+      broadcast(room, { type: "error", message: "The match worker did not become ready." });
+    } else if (failure.kind === "progress") {
+      logger.warn?.("Match worker stopped making progress.");
+      broadcast(room, { type: "error", message: "The match worker stopped responding.", code: "worker_unavailable", retryable: true });
+    } else {
+      logger.error?.(`Could not start match worker: ${detail}`);
+      broadcast(room, { type: "error", message: "The match worker could not start.", code: "worker_unavailable", retryable: true });
+    }
+    destroyRoom(room);
+  }
+
   function startWorker(room) {
     if (room.state !== "lobby" || room.players.some((player) => !player?.ready)) return;
+    if (workerCount() >= config.maxActiveWorkers) {
+      room.waitingForWorker = true;
+      broadcast(room, { type: "error", message: "The server is waiting for match capacity.", code: "worker_capacity", retryable: true });
+      return;
+    }
+    room.waitingForWorker = false;
     room.state = "starting";
     broadcastLobby(room);
-    const child = spawn(config.workerPath, ["--map", String(room.map), "--seed", String(room.seed)], {
-      stdio: ["pipe", "pipe", "pipe"],
-      windowsHide: true,
+    const bridge = new WorkerBridge({
+      spawnWorker,
+      workerPath: config.workerPath,
+      args: ["--map", String(room.map), "--seed", String(room.seed), "--players", String(room.playerCount)],
+      clock,
+      maxPayloadBytes: config.maxPayloadBytes,
+      maxCommandQueue: config.maxWorkerCommandQueue,
+      maxBacklogSteps: config.maxWorkerBacklogSteps,
+      handshakeMs: config.workerHandshakeMs,
+      onFrame: (opcode, payload) => handleWorkerFrame(room, opcode, payload),
+      onFailure: (failure) => handleWorkerFailure(room, failure),
+      onExit: () => pumpWorkerQueue(),
+      onStderr: (message) => logger.warn?.(`Match worker: ${message.trim().slice(0, 1000)}`),
     });
-    room.worker = child;
-    let output = Buffer.alloc(0);
-    child.stdout.on("data", (chunk) => {
-      try {
-        output = output.length === 0 ? chunk : Buffer.concat([output, chunk]);
-        while (output.length >= 4) {
-          const length = output.readUInt32LE(0);
-          if (length < 1 || length > config.maxPayloadBytes + 2) throw new Error("invalid worker frame length");
-          if (output.length < 4 + length) break;
-          const frame = output.subarray(4, 4 + length);
-          output = output.subarray(4 + length);
-          handleWorkerFrame(room, frame[0], frame.subarray(1));
-        }
-        if (output.length > config.maxPayloadBytes + 6) throw new Error("worker output buffer exceeded limit");
-      } catch (error) {
-        logger.error?.(`Match worker protocol error: ${error instanceof Error ? error.message : String(error)}`);
-        broadcast(room, { type: "error", message: "The match worker sent invalid data." });
-        destroyRoom(room);
-      }
-    });
-    child.stderr.setEncoding("utf8");
-    child.stderr.on("data", (message) => logger.warn?.(`Match worker: ${message.trim().slice(0, 1000)}`));
-    child.on("error", (error) => {
-      logger.error?.(`Could not start match worker: ${error.message}`);
-      broadcast(room, { type: "error", message: "The match worker could not start." });
-      destroyRoom(room);
-    });
-    child.on("exit", (code, signal) => {
-      room.worker = null;
-      if (room.state === "finished" || !rooms.has(room.code)) return;
-      logger.error?.(`Match worker stopped before the result, code=${code ?? "none"} signal=${signal ?? "none"}`);
-      broadcast(room, { type: "error", message: "The match worker stopped." });
-      destroyRoom(room);
-    });
-    room.handshakeTimer = clock.setTimeout(() => {
-      if (room.state === "starting") {
-        broadcast(room, { type: "error", message: "The match worker did not become ready." });
-        destroyRoom(room);
-      }
-    }, config.workerHandshakeMs);
+    room.workerBridge = bridge;
+    bridge.start();
+  }
+
+  function pumpWorkerQueue() {
+    if (closing) return;
+    for (const room of rooms.values()) {
+      if (workerCount() >= config.maxActiveWorkers) break;
+      if (room.state === "lobby" && room.waitingForWorker && room.players.every((player) => player?.ready)) startWorker(room);
+    }
   }
 
   function newPlayer(name, socket, seat) {
@@ -390,6 +465,9 @@ export function createGameServer(options = {}) {
       highestSequence: 0,
       pendingSequences: new Set(),
       acknowledgements: new Map(),
+      eliminated: false,
+      eliminationReason: null,
+      departed: false,
     };
   }
 
@@ -399,45 +477,54 @@ export function createGameServer(options = {}) {
     player.socket = socket;
     player.connected = true;
     clearPlayerTimer(player);
-    send(socket, { type: "welcome", room: room.code, token: player.token, team: player.seat });
+    send(socket, { type: "welcome", room: room.code, token: player.token, team: player.seat, playerCount: room.playerCount });
     send(socket, lobbyMessage(room));
     if (room.state === "active") send(socket, { type: "started" });
     if (reconnecting && room.lastSnapshots[player.seat]) send(socket, room.lastSnapshots[player.seat], true);
     if (room.state === "finished" && room.result) send(socket, { type: "result", ...room.result });
     if (reconnecting) {
-      const peer = room.players[1 - player.seat];
-      send(peer?.socket, { type: "peer", connected: true, graceSeconds: 0 });
+      broadcastPeer(room, player, true, 0);
     }
     broadcastLobby(room);
   }
 
   function createRoom(socket, message) {
-    if (rooms.size >= config.maxRooms) return sendError(socket, "The server has reached its room limit.");
+    if (draining) return sendError(socket, "The server is draining.", "server_busy", true);
+    const now = clock.now();
+    const key = socket.clientIp ?? "unknown";
+    let window = creationWindows.get(key);
+    if (!window || now - window.startedAt >= config.roomCreateLimitWindowMs) {
+      window = { startedAt: now, count: 0 };
+      creationWindows.set(key, window);
+    }
+    window.count += 1;
+    if (window.count > config.roomCreateLimitCount) return sendError(socket, "Room creation rate limit exceeded.", "rate_limited", true);
+    if (rooms.size >= config.maxRooms) return sendError(socket, "The server has reached its room limit.", "server_busy", true);
     const name = cleanName(message.name);
     const map = cleanMap(message.map);
+    const playerCount = cleanPlayerCount(message.playerCount);
     if (!name) return sendError(socket, "Name must be 1 to 32 printable characters.");
     if (map === null) return sendError(socket, "Unknown map.");
+    if (playerCount === null) return sendError(socket, "Player count must be 2 or 4.");
     let code;
     do code = makeRoomCode(); while (rooms.has(code));
     const room = {
       code,
       map,
+      playerCount,
       seed: randomBytes(4).readUInt32LE(),
       state: "lobby",
-      players: [null, null],
-      worker: null,
+      players: Array(playerCount).fill(null),
+      workerBridge: null,
       workerReady: false,
       initialSnapshots: new Set(),
-      lastSnapshots: [null, null],
+      lastSnapshots: Array(playerCount).fill(null),
       result: null,
-      pendingEndReason: null,
-      pendingForfeit: null,
-      queuedForfeit: null,
       stepsSinceSnapshot: 0,
       lastStepAt: 0,
       tickTimer: null,
-      handshakeTimer: null,
       expiryTimer: null,
+      waitingForWorker: false,
     };
     const player = newPlayer(name, socket, 0);
     room.players[0] = player;
@@ -467,8 +554,8 @@ export function createGameServer(options = {}) {
     }
     const room = rooms.get(code);
     const player = room?.players.find((candidate) => candidate?.token === message.token);
-    if (!room || !player) return sendError(socket, "Invalid reconnect credentials.");
-    if (player.connected) return sendError(socket, "That seat is already connected.");
+    if (!room || !player || player.departed) return sendError(socket, "Invalid reconnect credentials.", "invalid_credentials", false);
+    if (player.connected) return sendError(socket, "That seat is already connected.", "seat_connected", true);
     attach(socket, room, player, true);
   }
 
@@ -485,17 +572,19 @@ export function createGameServer(options = {}) {
     const context = socket.context;
     if (!context) return sendError(socket, "You are not in a room.");
     const { room, player } = context;
-    if (room.state === "active" || room.state === "starting") {
-      forfeit(room, player.seat, "forfeit");
-      room.players[player.seat] = null;
+    const active = room.state === "active" || room.state === "starting";
+    if (active) {
+      forfeit(room, player, "forfeit");
     } else if (room.state === "lobby") {
       room.players[player.seat] = null;
-      broadcastLobby(room);
       if (room.players.every((candidate) => candidate === null)) destroyRoom(room);
     }
+    player.departed = true;
     socket.context = null;
     player.connected = false;
     player.socket = null;
+    if (active) broadcastPeer(room, player, false, 0);
+    if (rooms.has(room.code)) broadcastLobby(room);
     socket.close(1000, "Left match");
   }
 
@@ -504,7 +593,7 @@ export function createGameServer(options = {}) {
     if (!context || (context.room.state !== "active" && context.room.state !== "starting")) {
       return sendError(socket, "Surrender is only available during a match.");
     }
-    forfeit(context.room, context.player.seat, "forfeit");
+    forfeit(context.room, context.player, "forfeit");
   }
 
   function handleJson(socket, data) {
@@ -539,7 +628,7 @@ export function createGameServer(options = {}) {
 
   function handleCommand(socket, data) {
     const context = socket.context;
-    if (!context || context.room.state !== "active" || context.room.pendingForfeit !== null) {
+    if (!context || context.room.state !== "active" || context.player.eliminated) {
       return sendError(socket, "The match is not accepting commands.");
     }
     if (data.length > config.maxPayloadBytes) return sendError(socket, "Command is too large.");
@@ -557,7 +646,7 @@ export function createGameServer(options = {}) {
     const payload = Buffer.allocUnsafe(1 + data.length);
     payload[0] = player.seat;
     data.copy(payload, 1);
-    if (!writeWorker(room, IPC.command, payload)) {
+    if (!queueWorker(room, IPC.command, payload)) {
       player.pendingSequences.delete(sequence);
       const acknowledgement = { type: "ack", seq: sequence, accepted: false, message: "Server command queue is busy." };
       cacheAcknowledgement(player, sequence, acknowledgement);
@@ -575,18 +664,19 @@ export function createGameServer(options = {}) {
     player.connected = false;
     player.ready = room.state === "lobby" ? false : player.ready;
     if (!rooms.has(room.code) || room.state === "finished") return;
-    if (room.players.filter(Boolean).every((candidate) => !candidate.connected)) {
+    if (room.state === "lobby" && room.players.filter(Boolean).every((candidate) => !candidate.connected)) {
       destroyRoom(room);
       return;
     }
     const graceSeconds = Math.ceil(config.disconnectGraceMs / 1000);
-    send(room.players[1 - player.seat]?.socket, { type: "peer", connected: false, graceSeconds });
+    broadcastPeer(room, player, false, player.eliminated ? 0 : graceSeconds);
     broadcastLobby(room);
+    if (player.eliminated) return;
     player.disconnectTimer = clock.setTimeout(() => {
       player.disconnectTimer = null;
       if (player.connected || !rooms.has(room.code)) return;
       if (room.state === "active" || room.state === "starting") {
-        forfeit(room, player.seat, "disconnect");
+        forfeit(room, player, "disconnect");
       } else if (room.state === "lobby") {
         room.players[player.seat] = null;
         broadcastLobby(room);
@@ -600,6 +690,7 @@ export function createGameServer(options = {}) {
     socket.isAlive = true;
     socket.rateWindowStart = clock.now();
     socket.rateCount = 0;
+    socket.slowSince = null;
     socket.on("pong", () => { socket.isAlive = true; });
     socket.on("message", (data, isBinary) => {
       const now = clock.now();
@@ -609,7 +700,7 @@ export function createGameServer(options = {}) {
       }
       socket.rateCount += 1;
       if (socket.rateCount > config.rateLimitCount) {
-        sendError(socket, "Message rate limit exceeded.");
+        sendError(socket, "Message rate limit exceeded.", "rate_limited", true);
         socket.close(1008, "Rate limit");
         return;
       }
@@ -617,7 +708,14 @@ export function createGameServer(options = {}) {
       if (isBinary) handleCommand(socket, body);
       else handleJson(socket, body);
     });
-    socket.on("close", () => onDisconnected(socket));
+    socket.on("close", () => {
+      if (socket.connectionCounted) {
+        const count = connectionCounts.get(socket.clientIp) ?? 0;
+        if (count <= 1) connectionCounts.delete(socket.clientIp); else connectionCounts.set(socket.clientIp, count - 1);
+        socket.connectionCounted = false;
+      }
+      onDisconnected(socket);
+    });
     socket.on("error", () => {});
   });
 
@@ -628,22 +726,55 @@ export function createGameServer(options = {}) {
       socket.destroy();
       return;
     }
-    if (path !== "/play") {
+    if (path !== WEBSOCKET_PATH) {
       socket.write("HTTP/1.1 404 Not Found\r\nConnection: close\r\n\r\n");
       socket.destroy();
       return;
+    }
+    if (closing) {
+      socket.write("HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\n\r\n");
+      socket.destroy();
+      return;
+    }
+    const origin = typeof request.headers.origin === "string" ? request.headers.origin : "";
+    if (origin && allowedOrigins.size > 0 && !allowedOrigins.has(origin)) {
+      socket.write("HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n");
+      socket.destroy();
+      return;
+    }
+    const remote = normalizedIp(request.socket.remoteAddress);
+    let clientIp = remote;
+    if (trustedProxyAddresses.has(remote)) {
+      const forwarded = typeof request.headers["x-forwarded-for"] === "string"
+        ? request.headers["x-forwarded-for"].split(",", 1)[0].trim() : "";
+      if (isIP(forwarded)) clientIp = normalizedIp(forwarded);
     }
     if (wss.clients.size >= config.maxConnections) {
       socket.write("HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\n\r\n");
       socket.destroy();
       return;
     }
-    wss.handleUpgrade(request, socket, head, (webSocket) => wss.emit("connection", webSocket, request));
+    if ((connectionCounts.get(clientIp) ?? 0) >= config.maxConnectionsPerIp) {
+      socket.write("HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\n\r\n");
+      socket.destroy();
+      return;
+    }
+    wss.handleUpgrade(request, socket, head, (webSocket) => {
+      webSocket.clientIp = clientIp;
+      webSocket.connectionCounted = true;
+      connectionCounts.set(clientIp, (connectionCounts.get(clientIp) ?? 0) + 1);
+      wss.emit("connection", webSocket, request);
+    });
   });
 
   const heartbeatTimer = clock.setInterval(() => {
+    const now = clock.now();
     for (const socket of wss.clients) {
       if (socket.readyState !== WebSocket.OPEN) continue;
+      if (socket.slowSince !== null && now - socket.slowSince >= config.slowClientTimeoutMs) {
+        socket.terminate();
+        continue;
+      }
       if (!socket.isAlive) {
         socket.terminate();
         continue;
@@ -651,7 +782,16 @@ export function createGameServer(options = {}) {
       socket.isAlive = false;
       socket.ping();
     }
+    for (const [address, window] of creationWindows) {
+      if (now - window.startedAt >= config.roomCreateLimitWindowMs) creationWindows.delete(address);
+    }
   }, config.heartbeatMs);
+
+  const workerWatchdogTimer = clock.setInterval(() => {
+    for (const room of [...rooms.values()]) {
+      if (room.state === "active") room.workerBridge?.checkProgress(config.workerProgressTimeoutMs);
+    }
+  }, Math.max(250, Math.min(config.workerProgressTimeoutMs / 2, config.heartbeatMs)));
 
   let listening = false;
   async function listen() {
@@ -674,7 +814,10 @@ export function createGameServer(options = {}) {
   }
 
   async function close() {
+    draining = true;
+    closing = true;
     clock.clearInterval(heartbeatTimer);
+    clock.clearInterval(workerWatchdogTimer);
     for (const room of [...rooms.values()]) destroyRoom(room);
     for (const socket of wss.clients) socket.terminate();
     wss.close();
@@ -683,5 +826,9 @@ export function createGameServer(options = {}) {
     listening = false;
   }
 
-  return { listen, close, server: httpServer, webSocketServer: wss, rooms, config };
+  function drain() {
+    draining = true;
+  }
+
+  return { listen, drain, close, server: httpServer, webSocketServer: wss, rooms, config };
 }

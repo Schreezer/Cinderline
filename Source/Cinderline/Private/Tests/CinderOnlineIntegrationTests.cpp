@@ -8,6 +8,8 @@
 #include "HAL/PlatformMisc.h"
 #include "HAL/PlatformTime.h"
 #include "Misc/AutomationTest.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
 #include "Presentation/CinderBattlefield.h"
 #include "Presentation/CinderGameMode.h"
 #include "Presentation/CinderOnlineSubsystem.h"
@@ -18,6 +20,40 @@
 namespace CinderOnlineIntegration
 {
 constexpr double TestTimeoutSeconds = 30.0;
+
+bool ResolveTestEndpoint(FAutomationTestBase& Test, FString& Endpoint, ECinderConnectionMode& Mode)
+{
+    Endpoint = FPlatformMisc::GetEnvironmentVariable(TEXT("CINDERLINE_TEST_SERVER"));
+    const bool bPublicTlsTest = FPlatformMisc::GetEnvironmentVariable(TEXT("CINDERLINE_TEST_PUBLIC")) == TEXT("1");
+    const bool bLANTest = FParse::Param(FCommandLine::Get(), TEXT("CinderOnlineTestLAN"));
+    const FString Prefix = TEXT("ws://127.0.0.1:");
+    if (!Test.TestFalse(TEXT("LAN and public TLS test modes are mutually exclusive"), bLANTest && bPublicTlsTest)) return false;
+    if (bLANTest)
+    {
+        FString Normalized, Error;
+        if (!Test.TestTrue(TEXT("Explicit LAN transport test supplies a valid local-network endpoint"),
+            UCinderOnlineSubsystem::ValidateEndpoint(Endpoint, ECinderConnectionMode::LocalNetwork, Normalized, Error))) return false;
+        Endpoint = MoveTemp(Normalized);
+    }
+    else if (bPublicTlsTest)
+    {
+        if (!Test.TestTrue(TEXT("CINDERLINE_TEST_PUBLIC=1 supplies an explicit TLS WebSocket /play endpoint"),
+            Endpoint.StartsWith(TEXT("wss://")) && Endpoint.EndsWith(TEXT("/play")))) return false;
+    }
+    else
+    {
+        if (!Test.TestTrue(TEXT("CINDERLINE_TEST_SERVER supplies an explicit loopback WebSocket endpoint"),
+            Endpoint.StartsWith(Prefix) && Endpoint.EndsWith(TEXT("/play")))) return false;
+
+        const FString PortText = Endpoint.Mid(Prefix.Len(), Endpoint.Len() - Prefix.Len() - FString(TEXT("/play")).Len());
+        int32 Port = 0;
+        if (!Test.TestTrue(TEXT("CINDERLINE_TEST_SERVER contains a valid nonzero loopback port"),
+            LexTryParseString(Port, *PortText) && Port > 0 && Port <= 65535)) return false;
+    }
+
+    Mode = bLANTest ? ECinderConnectionMode::LocalNetwork : ECinderConnectionMode::Internet;
+    return true;
+}
 
 const cinder::Entity* FindOwnWorker(const cinder::net::Snapshot& Snapshot)
 {
@@ -43,7 +79,7 @@ bool HasNormalizedOwnArmy(const cinder::net::Snapshot& Snapshot)
             if (Entity.kind != cinder::Kind::Resource) return false;
             continue;
         }
-        if (Entity.team < 0 || Entity.team > 1) return false;
+        if (Entity.team < 0 || Entity.team >= Snapshot.config.playerCount) return false;
         bFoundOwnEntity |= Entity.team == 0 && Entity.alive();
     }
     return bFoundOwnEntity && FindOwnWorker(Snapshot) != nullptr;
@@ -127,6 +163,225 @@ struct FTransportFixture
     }
 };
 
+struct FFourPlayerTransportFixture
+{
+    FTransportFixture Base;
+    FTestWorldWrapper AdditionalWorlds[2];
+    UCinderOnlineSubsystem* Clients[4] = {};
+
+    bool Initialize(FAutomationTestBase& Test)
+    {
+        if (!Base.Initialize(Test)) return false;
+        Clients[0] = Base.Host; Clients[1] = Base.Guest;
+        for (int32 Index = 0; Index < 2; ++Index)
+        {
+            if (!AdditionalWorlds[Index].CreateTestWorld(EWorldType::Game))
+            { AdditionalWorlds[Index].ForwardErrorMessages(&Test); return false; }
+            UWorld* World = AdditionalWorlds[Index].GetTestWorld();
+            UGameInstance* Instance = World ? World->GetGameInstance() : nullptr;
+            Clients[Index + 2] = Instance ? Instance->GetSubsystem<UCinderOnlineSubsystem>() : nullptr;
+            if (!Test.TestNotNull(TEXT("Each extra player owns an initialized real online subsystem"), Clients[Index + 2])) return false;
+            for (int32 Previous = 0; Previous < Index + 2; ++Previous)
+                if (!Test.TestTrue(TEXT("Every player has an independent transport client"), Clients[Previous] != Clients[Index + 2])) return false;
+        }
+        return true;
+    }
+    void Close() { for (auto* Client : Clients) if (Client) Client->Leave(); }
+    ~FFourPlayerTransportFixture() { Close(); }
+};
+
+enum class EFourPlayerPhase : uint8
+{
+    Initialize, WaitForRoom, WaitForJoin, WaitForPartialReady, WaitForSnapshots,
+    WaitForOrders, WaitForRejectedEnemyOrder, WaitForElimination, WaitForEliminatedReconnect,
+    WaitForSecondElimination, WaitForResult, WaitForLeave
+};
+
+class FCinderFourPlayerTransportCommand final : public IAutomationLatentCommand
+{
+public:
+    FCinderFourPlayerTransportCommand(FAutomationTestBase* InTest, FString InEndpoint, ECinderConnectionMode InMode)
+        : Test(InTest), Endpoint(MoveTemp(InEndpoint)), Mode(InMode), StartedAt(FPlatformTime::Seconds()) {}
+
+    virtual bool Update() override
+    {
+        const double Now = FPlatformTime::Seconds();
+        if (Now - StartedAt > TestTimeoutSeconds)
+            return Fail(FString::Printf(TEXT("Four-player transport timed out in phase %d"), static_cast<int32>(Phase)));
+        for (int32 Seat = 0; Seat < 4; ++Seat)
+            if (Fixture.Clients[Seat] && Fixture.Clients[Seat]->State() == ECinderOnlineState::Error)
+                return Fail(FString::Printf(TEXT("Player %d failed: %s"), Seat, *Fixture.Clients[Seat]->ErrorText()));
+
+        switch (Phase)
+        {
+        case EFourPlayerPhase::Initialize:
+            if (!Fixture.Initialize(*Test)) return Finish();
+            for (auto* Client : Fixture.Clients)
+                if (!Test->TestTrue(TEXT("Four-player clients accept the explicit test connection mode"), Client->SetConnectionMode(Mode))) return Finish();
+            Fixture.Clients[0]->CreateRoom(Endpoint, PlayerName(0), 2, 4);
+            Phase = EFourPlayerPhase::WaitForRoom;
+            return false;
+        case EFourPlayerPhase::WaitForRoom:
+            if (!Fixture.Clients[0]->HasRoom() || Fixture.Clients[0]->State() != ECinderOnlineState::Lobby) return false;
+            if (!Test->TestEqual(TEXT("Create negotiates a four-player room"), Fixture.Clients[0]->PlayerCount(), 4)) return Finish();
+            JoiningSeat = 1;
+            Fixture.Clients[JoiningSeat]->JoinRoom(Endpoint, PlayerName(JoiningSeat), Fixture.Clients[0]->RoomCode());
+            Phase = EFourPlayerPhase::WaitForJoin;
+            return false;
+        case EFourPlayerPhase::WaitForJoin:
+        {
+            auto* Joined = Fixture.Clients[JoiningSeat];
+            if (!Joined->HasRoom() || Joined->State() != ECinderOnlineState::Lobby) return false;
+            if (!Test->TestEqual(TEXT("Sequential join receives the next distinct seat"), Joined->LocalSeat(), JoiningSeat)
+                || !Test->TestEqual(TEXT("Joined client learns the room size"), Joined->PlayerCount(), 4)) return Finish();
+            if (++JoiningSeat < 4)
+            {
+                Fixture.Clients[JoiningSeat]->JoinRoom(Endpoint, PlayerName(JoiningSeat), Fixture.Clients[0]->RoomCode());
+                return false;
+            }
+            for (auto* Client : Fixture.Clients)
+                for (int32 Seat = 0; Seat < 4; ++Seat)
+                    if (!Client->SeatConnected(Seat) || Client->SeatName(Seat) != PlayerName(Seat))
+                    { JoiningSeat = 3; return false; }
+            for (int32 Seat = 0; Seat < 3; ++Seat) Fixture.Clients[Seat]->SetReady(true);
+            Phase = EFourPlayerPhase::WaitForPartialReady;
+            PartialReadyAt = 0;
+            return false;
+        }
+        case EFourPlayerPhase::WaitForPartialReady:
+            for (auto* Client : Fixture.Clients)
+            {
+                if (Client->HasMatch()) return Fail(TEXT("Four-player match started before the fourth seat was ready"));
+                for (int32 Seat = 0; Seat < 3; ++Seat) if (!Client->SeatReady(Seat)) return false;
+                if (Client->SeatReady(3)) return Fail(TEXT("An unready fourth seat was incorrectly marked ready"));
+            }
+            if (PartialReadyAt == 0) PartialReadyAt = Now;
+            if (Now - PartialReadyAt < 0.35) return false;
+            Fixture.Clients[3]->SetReady(true);
+            Phase = EFourPlayerPhase::WaitForSnapshots;
+            return false;
+        case EFourPlayerPhase::WaitForSnapshots:
+            for (auto* Client : Fixture.Clients)
+                if (Client->State() != ECinderOnlineState::Playing || !Client->LatestSnapshot()) return false;
+            for (int32 Seat = 0; Seat < 4; ++Seat)
+            {
+                auto* Client = Fixture.Clients[Seat];
+                const auto& Snapshot = *Client->LatestSnapshot();
+                if (!Test->TestTrue(TEXT("Each private snapshot has its own living army normalized to zero"), HasNormalizedOwnArmy(Snapshot))
+                    || !Test->TestTrue(TEXT("Four-player snapshot retains map, roster size, and all active seats"),
+                        Snapshot.config.map == 2 && Snapshot.config.playerCount == 4 && Snapshot.eliminatedMask == 0
+                        && Client->RemainingPlayers() == 4 && !Client->IsEliminated())) return Finish();
+                Workers[Seat] = FindOwnWorker(Snapshot)->id;
+                for (int32 Previous = 0; Previous < Seat; ++Previous)
+                    if (!Test->TestTrue(TEXT("Private snapshots address distinct owned workers"), Workers[Seat] != Workers[Previous])) return Finish();
+                FeedbackBefore[Seat] = Client->FeedbackSerial();
+                cinder::Command Command; Command.type = cinder::CommandType::Hold; Command.team = 0; Command.units = {Workers[Seat]};
+                if (!Test->TestTrue(TEXT("Every seat can submit its own normalized command"), Client->SendCommand(Command))) return Finish();
+            }
+            Fixture.Base.Controller->PlayerTick(0.01f);
+            if (!Test->TestTrue(TEXT("The controller starts a passive four-player battlefield"),
+                Fixture.Base.Battle->IsOnlineMatch() && Fixture.Base.Battle->Sim().isReplica()
+                && Fixture.Base.Battle->Sim().config().playerCount == 4)) return Finish();
+            Phase = EFourPlayerPhase::WaitForOrders;
+            return false;
+        case EFourPlayerPhase::WaitForOrders:
+            for (int32 Seat = 0; Seat < 4; ++Seat)
+            {
+                auto* Client = Fixture.Clients[Seat];
+                if (Client->FeedbackSerial() <= FeedbackBefore[Seat]) return false;
+                if (!Test->TestTrue(TEXT("Authority accepts orders from all four independent seats"), Client->LastOrderAccepted())) return Finish();
+                const auto* Worker = FindEntity(*Client->LatestSnapshot(), Workers[Seat]);
+                if (!Worker || Worker->order != cinder::Order::Hold) return false;
+            }
+            {
+                cinder::Command Command; Command.type = cinder::CommandType::Hold; Command.team = 0; Command.units = {Workers[0]};
+                FeedbackBefore[2] = Fixture.Clients[2]->FeedbackSerial();
+                if (!Test->TestTrue(TEXT("Seat two transmits another seat's opaque ID for authoritative rejection"), Fixture.Clients[2]->SendCommand(Command))) return Finish();
+            }
+            Phase = EFourPlayerPhase::WaitForRejectedEnemyOrder;
+            return false;
+        case EFourPlayerPhase::WaitForRejectedEnemyOrder:
+            if (Fixture.Clients[2]->FeedbackSerial() <= FeedbackBefore[2]) return false;
+            if (!Test->TestFalse(TEXT("Authority rejects seat two attempting to control seat zero's worker"), Fixture.Clients[2]->LastOrderAccepted())) return Finish();
+            Fixture.Base.Battle->Tick(0.0f);
+            if (!Test->TestTrue(TEXT("The controller has a selected living worker before elimination"),
+                Fixture.Base.Controller->SelectOwnedEntity(Workers[0]) && Fixture.Base.Controller->Selection().size() == 1)) return Finish();
+            Fixture.Base.Controller->ExecuteAction(TEXT("onlinesurrender"));
+            if (!Test->TestTrue(TEXT("Four-player surrender requires explicit controller confirmation"), Fixture.Base.Controller->IsOnlineSurrenderPending())) return Finish();
+            Fixture.Base.Controller->ExecuteAction(TEXT("onlineconfirm"));
+            Phase = EFourPlayerPhase::WaitForElimination;
+            return false;
+        case EFourPlayerPhase::WaitForElimination:
+            for (int32 Seat = 0; Seat < 4; ++Seat)
+            {
+                auto* Client = Fixture.Clients[Seat];
+                const auto* Snapshot = Client->LatestSnapshot();
+                if (!Snapshot || Snapshot->eliminatedMask != (1u << ((4 - Seat) % 4))) return false;
+                if (!Test->TestTrue(TEXT("One surrender leaves a live three-player match for every connected seat"),
+                    Client->State() == ECinderOnlineState::Playing && Snapshot->winner == -1 && Client->RemainingPlayers() == 3
+                    && Client->IsEliminated() == (Seat == 0) && Client->CanSendOrders() == (Seat != 0))) return Finish();
+            }
+            Fixture.Base.Battle->Tick(0.0f); Fixture.Base.Controller->PlayerTick(0.01f);
+            if (!Test->TestTrue(TEXT("Controller imports elimination without ending the authoritative match"),
+                Fixture.Base.Battle->Sim().eliminated(0) && Fixture.Base.Battle->Sim().winner() == -1
+                && Fixture.Base.Controller->Selection().empty() && !Fixture.Base.Controller->IsOnlineLeavePending())) return Finish();
+            {
+                cinder::Command Command; Command.type = cinder::CommandType::Hold; Command.units = {Workers[0]};
+                if (!Test->TestFalse(TEXT("Eliminated client cannot submit another order"), Fixture.Clients[0]->SendCommand(Command))
+                    || !Test->TestFalse(TEXT("Eliminated client cannot surrender twice"), Fixture.Clients[0]->Surrender())) return Finish();
+            }
+            ReconnectTick = Fixture.Clients[0]->LatestSnapshot()->tick;
+            ReconnectSerial = Fixture.Clients[0]->SnapshotSerial();
+            Fixture.Clients[0]->Reconnect();
+            Phase = EFourPlayerPhase::WaitForEliminatedReconnect;
+            return false;
+        case EFourPlayerPhase::WaitForEliminatedReconnect:
+            if (Fixture.Clients[0]->State() != ECinderOnlineState::Playing || Fixture.Clients[0]->SnapshotSerial() <= ReconnectSerial
+                || Fixture.Clients[0]->LatestSnapshot()->tick <= ReconnectTick) return false;
+            if (!Test->TestTrue(TEXT("An eliminated seat reconnects to newer private snapshots without regaining command authority"),
+                Fixture.Clients[0]->IsEliminated() && !Fixture.Clients[0]->CanSendOrders()
+                && Fixture.Clients[0]->LocalSeat() == 0 && Fixture.Clients[0]->PlayerCount() == 4
+                && Fixture.Clients[0]->RoomCode() == Fixture.Clients[3]->RoomCode())) return Finish();
+            if (!Test->TestTrue(TEXT("Second surviving seat can surrender"), Fixture.Clients[1]->Surrender())) return Finish();
+            Phase = EFourPlayerPhase::WaitForSecondElimination;
+            return false;
+        case EFourPlayerPhase::WaitForSecondElimination:
+            for (auto* Client : Fixture.Clients)
+                if (Client->RemainingPlayers() != 2 || Client->State() != ECinderOnlineState::Playing) return false;
+            if (!Test->TestTrue(TEXT("Third surviving seat can surrender"), Fixture.Clients[2]->Surrender())) return Finish();
+            Phase = EFourPlayerPhase::WaitForResult;
+            return false;
+        case EFourPlayerPhase::WaitForResult:
+            for (auto* Client : Fixture.Clients) if (Client->State() != ECinderOnlineState::Finished) return false;
+            for (int32 Seat = 0; Seat < 4; ++Seat)
+                if (!Test->TestEqual(TEXT("Every seat receives the cyclic-normalized winner after the final elimination"),
+                    Fixture.Clients[Seat]->MatchWinner(), (3 - Seat + 4) % 4)) return Finish();
+            Fixture.Close(); Phase = EFourPlayerPhase::WaitForLeave;
+            return false;
+        case EFourPlayerPhase::WaitForLeave:
+            for (auto* Client : Fixture.Clients) if (Client->State() != ECinderOnlineState::Offline) return false;
+            for (auto* Client : Fixture.Clients)
+                if (!Test->TestTrue(TEXT("All four clients drain their seats and snapshots on leave"), !Client->HasRoom() && !Client->HasMatch() && !Client->LatestSnapshot())) return Finish();
+            UE_LOG(LogTemp, Display, TEXT("CINDERLINE_ONLINE_FOUR_PLAYER_TRANSPORT PASS"));
+            return Finish();
+        }
+        return Fail(TEXT("Unknown four-player transport phase"));
+    }
+private:
+    static FString PlayerName(int32 Seat) { return FString::Printf(TEXT("Transport Player %d"), Seat + 1); }
+    bool Fail(const FString& Message) { Test->AddError(Message); return Finish(); }
+    bool Finish() { Fixture.Close(); return true; }
+    FAutomationTestBase* Test;
+    FString Endpoint;
+    ECinderConnectionMode Mode;
+    double StartedAt = 0, PartialReadyAt = 0;
+    int32 JoiningSeat = 0;
+    EFourPlayerPhase Phase = EFourPlayerPhase::Initialize;
+    FFourPlayerTransportFixture Fixture;
+    cinder::Id Workers[4] = {};
+    uint64 FeedbackBefore[4] = {}, ReconnectTick = 0, ReconnectSerial = 0;
+};
+
 enum class ETransportPhase : uint8
 {
     Initialize,
@@ -145,8 +400,8 @@ enum class ETransportPhase : uint8
 class FCinderOnlineTransportCommand final : public IAutomationLatentCommand
 {
 public:
-    FCinderOnlineTransportCommand(FAutomationTestBase* InTest, FString InEndpoint)
-        : Test(InTest), Endpoint(MoveTemp(InEndpoint)), StartedAt(FPlatformTime::Seconds())
+    FCinderOnlineTransportCommand(FAutomationTestBase* InTest, FString InEndpoint, ECinderConnectionMode InMode)
+        : Test(InTest), Endpoint(MoveTemp(InEndpoint)), TestMode(InMode), StartedAt(FPlatformTime::Seconds())
     {
     }
 
@@ -170,6 +425,8 @@ public:
         {
         case ETransportPhase::Initialize:
             if (!Fixture.Initialize(*Test)) return Finish();
+            if (!Test->TestTrue(TEXT("Both real transport clients accept the explicitly selected connection mode"),
+                Fixture.Host->SetConnectionMode(TestMode) && Fixture.Guest->SetConnectionMode(TestMode))) return Finish();
             Fixture.Host->CreateRoom(Endpoint, TEXT("Transport Host"), 1);
             Phase = ETransportPhase::WaitForRoom;
             return false;
@@ -471,6 +728,7 @@ private:
 
     FAutomationTestBase* Test = nullptr;
     FString Endpoint;
+    ECinderConnectionMode TestMode = ECinderConnectionMode::Internet;
     double StartedAt = 0;
     ETransportPhase Phase = ETransportPhase::Initialize;
     FTransportFixture Fixture;
@@ -499,26 +757,27 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderOnlineTransportIntegration,
 
 bool FCinderOnlineTransportIntegration::RunTest(const FString& Parameters)
 {
-    const FString Endpoint = FPlatformMisc::GetEnvironmentVariable(TEXT("CINDERLINE_TEST_SERVER"));
-    const bool bPublicTlsTest = FPlatformMisc::GetEnvironmentVariable(TEXT("CINDERLINE_TEST_PUBLIC")) == TEXT("1");
-    const FString Prefix = TEXT("ws://127.0.0.1:");
-    if (bPublicTlsTest)
-    {
-        if (!TestTrue(TEXT("CINDERLINE_TEST_PUBLIC=1 supplies an explicit TLS WebSocket /play endpoint"),
-            Endpoint.StartsWith(TEXT("wss://")) && Endpoint.EndsWith(TEXT("/play")))) return false;
-    }
-    else
-    {
-        if (!TestTrue(TEXT("CINDERLINE_TEST_SERVER supplies an explicit loopback WebSocket endpoint"),
-            Endpoint.StartsWith(Prefix) && Endpoint.EndsWith(TEXT("/play")))) return false;
+    (void)Parameters;
+    FString Endpoint;
+    ECinderConnectionMode Mode;
+    if (!CinderOnlineIntegration::ResolveTestEndpoint(*this, Endpoint, Mode)) return false;
 
-        const FString PortText = Endpoint.Mid(Prefix.Len(), Endpoint.Len() - Prefix.Len() - FString(TEXT("/play")).Len());
-        int32 Port = 0;
-        if (!TestTrue(TEXT("CINDERLINE_TEST_SERVER contains a valid nonzero loopback port"),
-            LexTryParseString(Port, *PortText) && Port > 0 && Port <= 65535)) return false;
-    }
+    ADD_LATENT_AUTOMATION_COMMAND(CinderOnlineIntegration::FCinderOnlineTransportCommand(this, Endpoint,
+        Mode));
+    return true;
+}
 
-    ADD_LATENT_AUTOMATION_COMMAND(CinderOnlineIntegration::FCinderOnlineTransportCommand(this, Endpoint));
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderFourPlayerTransportIntegration,
+    "Cinderline.Online.FourPlayerTransport",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderFourPlayerTransportIntegration::RunTest(const FString& Parameters)
+{
+    (void)Parameters;
+    FString Endpoint;
+    ECinderConnectionMode Mode;
+    if (!CinderOnlineIntegration::ResolveTestEndpoint(*this, Endpoint, Mode)) return false;
+    ADD_LATENT_AUTOMATION_COMMAND(CinderOnlineIntegration::FCinderFourPlayerTransportCommand(this, Endpoint, Mode));
     return true;
 }
 

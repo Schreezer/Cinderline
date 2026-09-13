@@ -14,4 +14,7 @@
 !Server/package.json
 !Server/package-lock.json
 !Server/index.js
+!Server/lan.js
+!Server/protocol.js
 !Server/server.js
+!Server/worker-bridge.js

@@ -1,4 +1,8 @@
 game.example.com {
     encode zstd gzip
-    reverse_proxy 127.0.0.1:8787
+    reverse_proxy 127.0.0.1:8787 {
+        health_uri /readyz
+        health_interval 15s
+        health_timeout 3s
+    }
 }

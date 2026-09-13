@@ -1,49 +1,93 @@
 # Cinderline game server
 
-This service hosts private two-player rooms at `/play`. It has no accounts, public matchmaking, ranking, or purchased service dependency. Each active room runs one authoritative `CinderlineMatchWorker` process built from the same simulation code as the game.
+This Node service hosts private two-player 1v1 or four-player free-for-all rooms at `/play`. It has no accounts, public matchmaking, ranking or purchased service dependency. Each active room runs one authoritative `CinderlineMatchWorker` process built from the same simulation code as the game. Rooms, reconnect tokens and completed results stay in one server process and do not survive a restart.
 
-## Run locally
+## Run on one computer
 
-The direct Node setup requires Node 22 or newer. Build the worker from the repository root, then install the pinned server dependency.
+The server requires Node 22 or newer. Build the worker from the repository root, then install the pinned dependencies:
 
 ```sh
-cmake -S . -B build -DCINDERLINE_BUILD_NATIVE=OFF -DBUILD_TESTING=OFF
+cmake -S . -B build -DCINDERLINE_BUILD_NATIVE=OFF -DCINDERLINE_BUILD_SERVER=ON \
+  -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release
 cmake --build build --target CinderlineMatchWorker
 cd Server
 npm ci
 CINDERLINE_MATCH_WORKER=../build/CinderlineMatchWorker npm start
 ```
 
-The executable reads these environment variables:
+Keep `CINDERLINE_BUILD_SERVER=ON` explicit because an existing CMake cache can otherwise retain a disabled server target. This command configures a Release worker for hosting.
+
+`npm start` is the online/proxy mode. It binds `127.0.0.1:8787` by default and does not publish a Bonjour service. Put a TLS WebSocket proxy such as Caddy in front of it before accepting internet traffic.
+
+## Host a LAN match
+
+Use the explicit LAN command on the computer that will host the match:
+
+```sh
+cd Server
+CINDERLINE_MATCH_WORKER=../build/CinderlineMatchWorker \
+CINDERLINE_SERVER_NAME="Chirag's Cinderline" \
+npm run start:lan
+```
+
+LAN mode binds IPv4 `0.0.0.0`. It prints a `ws://.../play` URL for every private or link-local IPv4 address on the host. The server also advertises `_cinderline._tcp` through Bonjour on the actual bound port with TXT fields `protocol=7`, `path=/play` and a DNS-safe discovery name. Its service record disables IPv6 because the listener is IPv4-only. Join a private IPv4 network before starting the host; IPv6-only hosting is not supported in this pass.
+
+Bonjour discovery is a convenience. If multicast setup fails, the server stays available and prints an actionable warning; clients can use one of the manual URLs. Set `CINDERLINE_LAN_ADVERTISE=false` to skip advertising. A firewall must allow the selected TCP port, and Bonjour discovery needs multicast DNS on UDP 5353. Plain `ws://` is suitable only on a trusted local network. LAN mode does not turn a phone into the host and does not provision an internet endpoint.
+
+## Configuration
+
+The entry point validates its environment before it opens a listener.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `HOST` | `127.0.0.1` | HTTP and WebSocket bind address. |
-| `PORT` | `8787` | HTTP and WebSocket port. |
-| `CINDERLINE_MATCH_WORKER` | `../build/CinderlineMatchWorker`, resolved from `Server/server.js` | Worker executable path. The container sets this to `/app/CinderlineMatchWorker`. |
-| `NODE_ENV` | unset locally | The container sets this to `production`. |
+| `HOST` | `127.0.0.1` | Online-mode bind address. LAN mode requires `0.0.0.0` or no value. |
+| `PORT` | `8787` | HTTP and WebSocket port, from 0 through 65535. Port 0 selects an ephemeral port and LAN output reports the actual result. |
+| `CINDERLINE_NETWORK_MODE` | `online` | `online` or `lan`. The `start:lan` script supplies `--lan`. |
+| `CINDERLINE_SERVER_NAME` | `Cinderline` | Public `/info` name, 1 to 64 printable characters. Its Bonjour instance and TXT discovery name replace dots and truncate safely to 63 UTF-8 bytes. |
+| `CINDERLINE_LAN_ADVERTISE` | `true` in LAN mode | Enable Bonjour. Enabling it in online mode is rejected. |
+| `CINDERLINE_MATCH_WORKER` | `../build/CinderlineMatchWorker` | Authoritative worker executable. The path is resolved by the server when omitted. |
+| `CINDERLINE_SHUTDOWN_GRACE_MS` | `0` | Drain interval before active rooms end, from 0 through 30000 ms. The example container uses 5000 ms. |
+| `CINDERLINE_TRUSTED_PROXIES` | empty | Comma-separated exact proxy IP addresses allowed to supply `X-Forwarded-For`. Do not trust all addresses. |
+| `CINDERLINE_ALLOWED_ORIGINS` | empty | Comma-separated exact HTTP or HTTPS origins. An empty list retains native clients and accepts any supplied Origin. |
 
-`GET /healthz` returns protocol status plus room and connection counts. It contains no room codes or reconnect credentials.
+The bounded admission and worker controls are:
 
-Code that imports `createGameServer(options)` can also set room, connection, payload, backpressure, message-rate, disconnect, result-expiry, heartbeat, worker-handshake, and simulation scheduling limits. The production defaults are 128 rooms, 256 connections, a 60-second disconnect grace, a five-minute finished-room expiry, 20 rule steps per second, and 10 snapshot updates per second. These options are trusted server configuration and are not client controls.
+| Variable | Default | Valid range |
+| --- | ---: | ---: |
+| `CINDERLINE_MAX_ROOMS` | 128 | 1 to 10000 |
+| `CINDERLINE_MAX_CONNECTIONS` | 256 | 1 to 100000 |
+| `CINDERLINE_MAX_ACTIVE_WORKERS` | 32 | 1 to 1024 |
+| `CINDERLINE_MAX_WORKER_COMMAND_QUEUE` | 256 | 8 to 4096 |
+| `CINDERLINE_MAX_WORKER_BACKLOG_STEPS` | 40 | 5 to 400 |
+| `CINDERLINE_WORKER_PROGRESS_TIMEOUT_MS` | 15000 | 500 to 300000 |
+| `CINDERLINE_SLOW_CLIENT_TIMEOUT_MS` | 10000 | 500 to 300000 |
+| `CINDERLINE_MAX_CONNECTIONS_PER_IP` | 16 | 1 to 1000 |
+| `CINDERLINE_ROOM_CREATE_LIMIT_COUNT` | 8 | 1 to 1000 |
+| `CINDERLINE_ROOM_CREATE_LIMIT_WINDOW_MS` | 60000 | 1000 to 3600000 |
+
+`GET /healthz` reports liveness, protocol and aggregate room, connection and worker counts. `GET /readyz` returns 200 only while the server can accept work and the worker executable is ready; it returns 503 while draining or degraded. `GET /info` returns the server name, `online` or `lan` mode, protocol and room limit. These endpoints contain no room codes or reconnect credentials.
 
 ## Deploy with Docker and Caddy
 
-The supplied Compose file assumes Docker runs the game service while Caddy runs directly on the same host. Port `8787` stays bound to host loopback; only Caddy accepts public traffic.
+The example uses Linux host networking so the Caddy process on the host reaches the container through loopback and the server can trust only `127.0.0.1` as its proxy. Port 8787 is not bound to a public interface. The Compose limits are two CPUs, 1 GiB of memory, 256 processes, 32 rooms, 128 connections and eight active workers.
 
-1. Provision a Linux host with a public IP, Docker with the Compose plugin, and Caddy. Allow inbound TCP ports `80` and `443`. Do not expose `8787` publicly.
+1. Provision a Linux host with a public IP, Docker with the Compose plugin, and Caddy. Allow inbound TCP ports 80 and 443. Do not expose 8787 publicly.
 
-2. Create a DNS `A` record such as `game.example.com` pointing to the host's public IPv4 address. Add an `AAAA` record only if the host has working public IPv6. Wait until the record resolves from outside the host.
+2. Create a DNS `A` record such as `game.example.com` for the host. Add an `AAAA` record only when the host has working public IPv6.
 
-3. Copy the whole repository to the host and run the build from the repository root. The Compose file deliberately uses the repository root as its Docker build context because the image compiles `CinderlineSimulation` and `Server/MatchWorker.cpp` before copying the worker into the Node runtime image.
+3. Copy the repository to the host and run from its root:
 
    ```sh
    docker compose -f Server/docker-compose.example.yml up -d --build
    docker compose -f Server/docker-compose.example.yml ps
    curl --fail http://127.0.0.1:8787/healthz
+   curl --fail http://127.0.0.1:8787/readyz
+   curl --fail http://127.0.0.1:8787/info
    ```
 
-4. Replace `game.example.com` in `Server/Caddyfile.example` with the DNS name from step 2. Install it as Caddy's active configuration, validate it, and reload Caddy.
+   The image compiles `CinderlineSimulation` and `Server/MatchWorker.cpp` before copying the worker into the Node 22 runtime. The readiness check prevents a missing or failed worker from looking healthy.
+
+4. Replace `game.example.com` in `Server/Caddyfile.example`, install the file as Caddy's active configuration, validate it, and reload Caddy:
 
    ```sh
    sudo cp Server/Caddyfile.example /etc/caddy/Caddyfile
@@ -51,24 +95,18 @@ The supplied Compose file assumes Docker runs the game service while Caddy runs 
    sudo systemctl reload caddy
    ```
 
-   Caddy obtains and renews the public certificate. Its `reverse_proxy` directive supports the WebSocket upgrade used by `/play`.
+   Caddy terminates TLS, forwards WebSocket upgrades, and uses `/readyz` for its upstream health check.
 
-5. Verify the public TLS route from a machine outside the host network.
+5. From another network, verify `https://game.example.com/healthz`, `https://game.example.com/readyz`, and a two-client room through `wss://game.example.com/play`.
 
-   ```sh
-   curl --fail https://game.example.com/healthz
-   ```
+The repository has not provisioned or tested a public endpoint. The example's restart policy can restart the process after failure, but it cannot restore in-memory matches. On `SIGTERM`, the server stops Bonjour, marks readiness unavailable, rejects new rooms, permits existing reconnects during the configured drain interval, and then ends the remaining rooms before Docker's 15-second stop deadline.
 
-   Configure the game endpoint as `wss://game.example.com/play`. A usable public deployment needs both the HTTPS health check and a two-client room test through this public WebSocket URL. The Docker image and public TLS path have not been validated by the repository's local server tests.
+## Room lifecycle and protocol
 
-`docker-compose.example.yml` uses `restart: unless-stopped`, so Docker restarts the service after a host reboot or process failure. This keeps the service available, but it does not make rooms persistent.
+The first player sends `create` with protocol version 7, a name, map number `0`, `1`, or `2`, and an optional `playerCount`. Omitting the count creates a two-player 1v1; the only accepted values are `2` and `4`. Welcome and lobby messages carry the chosen count, and the lobby always has exactly that many player entries. A four-player room remains in the lobby with two or three ready players and starts only after all four seats are occupied, connected and ready.
 
-## Room lifecycle
+Protocol version 7 carries the room player count and per-viewer elimination mask. Snapshot and acknowledgement routing accepts only the room's seat range, and result winner values are global seats; `-2` is a draw. Protocol version 6 introduced the match-length preset and active bounds. Hosted rooms currently use Standard; Short and Long remain solo choices. Protocol version 5 introduced each recipient's private army rally and owned producer override state. Version 4 introduced automatic commands and stable queue job IDs. Update the game client, Node service and match worker together. The lobby rejects older protocol handshakes before matchmaking.
 
-The first player sends `create` with protocol version 1, a name, and map number `0`, `1`, or `2`. The server returns a six-character room code, reconnect token, and canonical seat in `welcome`. The second player sends `join` with the room code and receives separate seat credentials. Both players must send `ready` before the service starts the match worker.
+Lobby states are `lobby`, `playing` and `finished`. Binary commands carry no team; the server binds each command to the authenticated seat. Surrender, leave and disconnect expiry eliminate only that seat, so a four-player match continues until the authoritative worker reports one winner or a draw. Eliminated players may stay connected as observers, and disconnected seat records and tokens remain available through the grace period. Peer connection messages identify the affected global team. Finished rooms retain the final result for five minutes. `surrender` keeps the socket open, while `leave` closes it.
 
-Lobby messages always contain two player entries in canonical seat order. Public lobby states are `lobby`, `playing`, and `finished`. Binary commands carry no team; the server binds each command to the authenticated seat and preserves command sequence history across socket reconnects.
-
-If one active player disconnects, that seat has 60 seconds to reconnect with its room code and token. Expiry forfeits the disconnected seat. `surrender` forfeits while keeping the socket open for the authoritative result. `leave` forfeits an active match, vacates the seat, and closes that connection. Finished rooms keep the final per-seat snapshot and result for five minutes, allowing a disconnected player to recover the outcome during that window.
-
-All room state, reconnect tokens, sequence history, and retained results live in one Node process. A service restart ends every lobby and active match and invalidates every token. If both players disconnect before a match finishes, the service cleans up that room instead of retaining a reconnect window. Multiple server replicas do not share room state, so horizontal scaling requires connection affinity plus a shared room design that this release does not provide.
+All state lives in one Node process. Multiple replicas do not share rooms, and a service restart invalidates every room and token. Public scale requires connection affinity plus shared room persistence that this implementation does not provide.
