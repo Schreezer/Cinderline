@@ -132,3 +132,27 @@ Using Unreal Build Accelerator local executor to run 91 action(s)
 [75/91] Compile [arm64] CinderWorldEffects.cpp
 [76/91] Compile [arm64] CinderWorldEffectsTests.cpp
 [77/91] Compile [arm64] CinderWorldIntegrationTests.cpp
+[78/91] Compile [arm64] Module.Cinderline.1.cpp
+[79/91] Compile [arm64] Module.Cinderline.2.cpp
+[80/91] Compile [arm64] Module.Cinderline.3.cpp
+[81/91] Compile [arm64] Navigation.cpp
+[82/91] Compile [arm64] Network.cpp
+[83/91] Compile [arm64] SimulationAI.cpp
+[84/91] Compile [arm64] Simulation.cpp
+[85/91] Compile [arm64] SimulationJobs.cpp
+[86/91] Compile [arm64] SimulationMovement.cpp
+[87/91] Compile [arm64] CinderMetalFXModule.mm
+[88/91] Link [arm64] Cinderline
+ld: warning: ignoring duplicate libraries: 'ThirdParty/Vorbis/libvorbis-1.3.2/lib/IOS/libvorbis.a', 'ThirdParty/Vorbis/libvorbis-1.3.2/lib/IOS/libvorbisenc.a', 'ThirdParty/Vorbis/libvorbis-1.3.2/lib/IOS/libvorbisfile.a'
+[89/91] Updating version file: /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Versions.xcconfig [NoUba]
+[90/91] ApplePostBuildSync Executing PostBuildSync [/Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline] [NoUba]
+[91/91] WriteMetadata Cinderline.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 252.00 seconds
+Output binary: /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline
+
+Result: Succeeded
+Total execution time: 260.12 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 36.1kb
+Physical-device iOS binary and target receipt are ready.
+Next run: ./scripts/unreal.sh package-ios -skipbuild

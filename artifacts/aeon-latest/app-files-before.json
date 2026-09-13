@@ -1,0 +1,1946 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "info",
+      "files",
+      "--device",
+      "00008150-00060CE12684401C",
+      "--domain-type",
+      "appDataContainer",
+      "--domain-identifier",
+      "com.cinderline.game",
+      "--json-output",
+      "artifacts/aeon-latest/app-files-before.json"
+    ],
+    "commandType" : "devicectl.device.info.files",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "domain" : "appDataContainer",
+    "domainIdentifier" : "com.cinderline.game",
+    "files" : [
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Documents",
+        "relativePath" : "Documents",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 160
+        },
+        "name" : "Documents/Cinderline",
+        "relativePath" : "Documents/Cinderline",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.metadata:com_apple_backup_excludeItem" : "com.apple.MobileBackup"
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "Documents/Cinderline/Content",
+        "relativePath" : "Documents/Cinderline/Content",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.metadata:com_apple_backup_excludeItem" : "com.apple.MobileBackup"
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/PersistentDownloadDir",
+        "relativePath" : "Documents/Cinderline/PersistentDownloadDir",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "Documents/Cinderline/PersistentDownloadDir/BackgroundHttp",
+        "relativePath" : "Documents/Cinderline/PersistentDownloadDir/BackgroundHttp",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Documents/Cinderline/Saved",
+        "relativePath" : "Documents/Cinderline/Saved",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T05:54:55.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 160
+        },
+        "name" : "Documents/Cinderline/Saved/Config",
+        "relativePath" : "Documents/Cinderline/Saved/Config",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 512
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:36:49.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-1D7A8EE1714EB2E8C956BA9FBB82D764",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-1D7A8EE1714EB2E8C956BA9FBB82D764",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:36:49.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-1D7A8EE1714EB2E8C956BA9FBB82D764/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-1D7A8EE1714EB2E8C956BA9FBB82D764/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:22:18.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-232DEFCCF54F6FD492B65B849A195A1B",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-232DEFCCF54F6FD492B65B849A195A1B",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:22:18.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-232DEFCCF54F6FD492B65B849A195A1B/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-232DEFCCF54F6FD492B65B849A195A1B/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:58:17.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-322FFD58A940A585A5A9EE8798CCC210",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-322FFD58A940A585A5A9EE8798CCC210",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:58:17.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-322FFD58A940A585A5A9EE8798CCC210/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-322FFD58A940A585A5A9EE8798CCC210/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:36:52.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-3FEEEEB1C44905C2C327B39521B03532",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-3FEEEEB1C44905C2C327B39521B03532",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:36:52.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-3FEEEEB1C44905C2C327B39521B03532/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-3FEEEEB1C44905C2C327B39521B03532/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T12:00:23.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-48586B23D5425AA5EC082992EC9A6B42",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-48586B23D5425AA5EC082992EC9A6B42",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T12:00:23.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-48586B23D5425AA5EC082992EC9A6B42/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-48586B23D5425AA5EC082992EC9A6B42/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T17:39:15.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-4A9894BB684F055B221CECB2038CF2A3",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-4A9894BB684F055B221CECB2038CF2A3",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T17:39:15.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-4A9894BB684F055B221CECB2038CF2A3/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-4A9894BB684F055B221CECB2038CF2A3/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:23:06.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-630155C91243F960789E808E922ED125",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-630155C91243F960789E808E922ED125",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:23:06.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-630155C91243F960789E808E922ED125/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-630155C91243F960789E808E922ED125/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T16:34:08.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-63E07776854BE3A71D9E0AAC6327124C",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-63E07776854BE3A71D9E0AAC6327124C",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T16:34:08.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-63E07776854BE3A71D9E0AAC6327124C/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-63E07776854BE3A71D9E0AAC6327124C/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-947243D3CA4E5E5BD61D9CAC1892946A",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-947243D3CA4E5E5BD61D9CAC1892946A",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-947243D3CA4E5E5BD61D9CAC1892946A/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-947243D3CA4E5E5BD61D9CAC1892946A/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:49:25.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-AD58198871458CBF39E08292446986B4",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-AD58198871458CBF39E08292446986B4",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:49:25.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-AD58198871458CBF39E08292446986B4/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-AD58198871458CBF39E08292446986B4/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B1D9D699CE4CFF3864211597CC43996D",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B1D9D699CE4CFF3864211597CC43996D",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B1D9D699CE4CFF3864211597CC43996D/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B1D9D699CE4CFF3864211597CC43996D/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T05:49:39.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B24AFA3A954268913D26BB968B68E708",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B24AFA3A954268913D26BB968B68E708",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T05:49:39.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B24AFA3A954268913D26BB968B68E708/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B24AFA3A954268913D26BB968B68E708/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T16:33:37.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B92F31D9A54B26F4E39A0DA4847EF41D",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B92F31D9A54B26F4E39A0DA4847EF41D",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T16:33:37.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B92F31D9A54B26F4E39A0DA4847EF41D/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B92F31D9A54B26F4E39A0DA4847EF41D/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:31:19.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-D9D4C6F6D048E81AD3ABE7B27D416537",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-D9D4C6F6D048E81AD3ABE7B27D416537",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:31:19.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 230
+        },
+        "name" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-D9D4C6F6D048E81AD3ABE7B27D416537/CrashReportClient.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-D9D4C6F6D048E81AD3ABE7B27D416537/CrashReportClient.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:36:53.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Cinderline/Saved/Config/IOS",
+        "relativePath" : "Documents/Cinderline/Saved/Config/IOS",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:36:53.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 107
+        },
+        "name" : "Documents/Cinderline/Saved/Config/IOS/Engine.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/IOS/Engine.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T05:54:55.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 47
+        },
+        "name" : "Documents/Cinderline/Saved/Config/Training.ini",
+        "relativePath" : "Documents/Cinderline/Saved/Config/Training.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 416
+        },
+        "name" : "Documents/Cinderline/Saved/Logs",
+        "relativePath" : "Documents/Cinderline/Saved/Logs",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:31:33.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 103080
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.31.33.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.31.33.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:36:51.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 101124
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.36.51.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.36.51.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:40:26.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 125258
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.40.26.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.40.26.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:51:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 112779
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.51.21.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.51.21.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:59:13.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 121859
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.59.13.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.59.13.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T12:00:42.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 107397
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-12.00.42.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-12.00.42.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T16:34:07.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 109270
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-16.34.07.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-16.34.07.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T16:48:06.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 315601
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-16.48.06.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-16.48.06.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T18:09:29.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 256148
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-18.09.29.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-18.09.29.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T06:16:39.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 122156
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.13-06.16.39.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.13-06.16.39.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-13T10:16:44.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 148079
+        },
+        "name" : "Documents/Cinderline/Saved/Logs/Cinderline.log",
+        "relativePath" : "Documents/Cinderline/Saved/Logs/Cinderline.log",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Documents/Engine",
+        "relativePath" : "Documents/Engine",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.metadata:com_apple_backup_excludeItem" : "com.apple.MobileBackup"
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "Documents/Engine/Content",
+        "relativePath" : "Documents/Engine/Content",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Documents/Engine/Saved",
+        "relativePath" : "Documents/Engine/Saved",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Engine/Saved/Config",
+        "relativePath" : "Documents/Engine/Saved/Config",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Documents/Engine/Saved/Config/IOS",
+        "relativePath" : "Documents/Engine/Saved/Config/IOS",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 22
+        },
+        "name" : "Documents/Engine/Saved/Config/IOS/Manifest.ini",
+        "relativePath" : "Documents/Engine/Saved/Config/IOS/Manifest.ini",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "Documents/Engine/Saved/Crashes",
+        "relativePath" : "Documents/Engine/Saved/Crashes",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 192
+        },
+        "name" : "Library",
+        "relativePath" : "Library",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 160
+        },
+        "name" : "Library/Caches",
+        "relativePath" : "Library/Caches",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T05:49:39.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/Caches/com.apple.dyld",
+        "relativePath" : "Library/Caches/com.apple.dyld",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T05:49:39.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 256,
+          "size" : 37688
+        },
+        "name" : "Library/Caches/com.apple.dyld/Cinderline.dyld4",
+        "relativePath" : "Library/Caches/com.apple.dyld/Cinderline.dyld4",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/Caches/com.apple.nsurlsessiond",
+        "relativePath" : "Library/Caches/com.apple.nsurlsessiond",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/Caches/com.apple.nsurlsessiond/Downloads",
+        "relativePath" : "Library/Caches/com.apple.nsurlsessiond/Downloads",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "Library/Caches/com.apple.nsurlsessiond/Downloads/com.cinderline.game",
+        "relativePath" : "Library/Caches/com.apple.nsurlsessiond/Downloads/com.cinderline.game",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:36:52.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 160
+        },
+        "name" : "Library/Caches/com.cinderline.game",
+        "relativePath" : "Library/Caches/com.cinderline.game",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:36:52.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.gpuarchiver",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.gpuarchiver",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 160
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metal",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metal",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T12:00:23.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metal/32024",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metal/32024",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd",
+            "com.apple.runningboard.can-suspend-locked" : "\u0001"
+          },
+          "lastModDate" : "2026-09-12T11:49:25.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 49152
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metal/32024/libraries.data",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metal/32024/libraries.data",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd",
+            "com.apple.runningboard.can-suspend-locked" : "\u0001"
+          },
+          "lastModDate" : "2026-09-12T12:00:23.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 220
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metal/32024/libraries.list",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metal/32024/libraries.list",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd",
+            "com.apple.runningboard.can-suspend-locked" : "\u0001"
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 851968
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metal/functions.data",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metal/functions.data",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.runningboard.can-suspend-locked" : "\u0001"
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 16236
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metal/functions.list",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metal/functions.list",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:36:52.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metalfe",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metalfe",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:36:53.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 488,
+          "size" : 128
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:36:53.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 85072
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8/modules.idx",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8/modules.idx",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:36:53.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 5528448
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8/monolithic_metal.pcm",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8/monolithic_metal.pcm",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:36:52.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 0
+        },
+        "name" : "Library/Caches/com.cinderline.game/com.apple.metalfe/modules.timestamp",
+        "relativePath" : "Library/Caches/com.cinderline.game/com.apple.metalfe/modules.timestamp",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/Preferences",
+        "relativePath" : "Library/Preferences",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-12T11:01:20.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 384,
+          "size" : 119
+        },
+        "name" : "Library/Preferences/com.cinderline.game.plist",
+        "relativePath" : "Library/Preferences/com.cinderline.game.plist",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/Saved Application State",
+        "relativePath" : "Library/Saved Application State",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/Saved Application State/com.cinderline.game.savedState",
+        "relativePath" : "Library/Saved Application State/com.cinderline.game.savedState",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T11:01:21.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/Saved Application State/com.cinderline.game.savedState/KnownSceneSessions",
+        "relativePath" : "Library/Saved Application State/com.cinderline.game.savedState/KnownSceneSessions",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+            "com.apple.dataprotection.policy.exception-applied-by" : "com.apple.containermanagerd"
+          },
+          "lastModDate" : "2026-09-13T09:59:12.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 756
+        },
+        "name" : "Library/Saved Application State/com.cinderline.game.savedState/KnownSceneSessions/data.data",
+        "relativePath" : "Library/Saved Application State/com.cinderline.game.savedState/KnownSceneSessions/data.data",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T05:30:19.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 96
+        },
+        "name" : "Library/SplashBoard",
+        "relativePath" : "Library/SplashBoard",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T16:48:05.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Library/SplashBoard/Snapshots",
+        "relativePath" : "Library/SplashBoard/Snapshots",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T04:53:57.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 128
+        },
+        "name" : "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}",
+        "relativePath" : "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T04:53:57.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 4161560
+        },
+        "name" : "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/84CDC3B1-469C-42DF-9568-577FDE750283@3x.ktx",
+        "relativePath" : "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/84CDC3B1-469C-42DF-9568-577FDE750283@3x.ktx",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T04:53:57.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 420,
+          "size" : 4161560
+        },
+        "name" : "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/A17FC8D7-E6CC-4FF9-A259-227A370B801F@3x.ktx",
+        "relativePath" : "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/A17FC8D7-E6CC-4FF9-A259-227A370B801F@3x.ktx",
+        "resources" : {
+          "isDirectory" : false,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-13T10:16:47.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "Library/SplashBoard/Snapshots/sceneID:com.cinderline.game-default",
+        "relativePath" : "Library/SplashBoard/Snapshots/sceneID:com.cinderline.game-default",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      },
+      {
+        "metadata" : {
+          "extendedAttributes" : {
+
+          },
+          "lastModDate" : "2026-09-12T05:30:00.000Z",
+          "ownerGid" : 501,
+          "ownerUid" : 501,
+          "permissions" : 493,
+          "size" : 64
+        },
+        "name" : "tmp",
+        "relativePath" : "tmp",
+        "resources" : {
+          "isDirectory" : true,
+          "isHidden" : false,
+          "isReadable" : true,
+          "isSymbolicLink" : false,
+          "isWritable" : true
+        }
+      }
+    ]
+  }
+}

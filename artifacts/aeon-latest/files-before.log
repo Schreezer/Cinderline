@@ -1,0 +1,94 @@
+91 files:
+Name                                                                                                                  URL Resources                   Size        Modification date
+-------------------------------------------------------------------------------------------------------------------   -----------------------------   ---------   -----------------
+Documents                                                                                                             Writable, Readable, Directory   128 bytes   9/12/26, 4:31 PM 
+Documents/Cinderline                                                                                                  Writable, Readable, Directory   160 bytes   9/12/26, 4:31 PM 
+Documents/Cinderline/Content                                                                                          Writable, Readable, Directory   64 bytes    9/12/26, 4:31 PM 
+Documents/Cinderline/PersistentDownloadDir                                                                            Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Documents/Cinderline/PersistentDownloadDir/BackgroundHttp                                                             Writable, Readable, Directory   64 bytes    9/12/26, 4:31 PM 
+Documents/Cinderline/Saved                                                                                            Writable, Readable, Directory   128 bytes   9/12/26, 4:31 PM 
+Documents/Cinderline/Saved/Config                                                                                     Writable, Readable, Directory   160 bytes   9/13/26, 11:24 AM
+Documents/Cinderline/Saved/Config/CrashReportClient                                                                   Writable, Readable, Directory   512 bytes   9/13/26, 3:29 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-1D7A8EE1714EB2E8C956BA9FBB82D764                         Writable, Readable, Directory   96 bytes    9/12/26, 5:06 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-1D7A8EE1714EB2E8C956BA9FBB82D764/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 5:06 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-232DEFCCF54F6FD492B65B849A195A1B                         Writable, Readable, Directory   96 bytes    9/12/26, 4:52 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-232DEFCCF54F6FD492B65B849A195A1B/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 4:52 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-322FFD58A940A585A5A9EE8798CCC210                         Writable, Readable, Directory   96 bytes    9/12/26, 5:28 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-322FFD58A940A585A5A9EE8798CCC210/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 5:28 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-3FEEEEB1C44905C2C327B39521B03532                         Writable, Readable, Directory   96 bytes    9/12/26, 5:06 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-3FEEEEB1C44905C2C327B39521B03532/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 5:06 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-48586B23D5425AA5EC082992EC9A6B42                         Writable, Readable, Directory   96 bytes    9/12/26, 5:30 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-48586B23D5425AA5EC082992EC9A6B42/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 5:30 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-4A9894BB684F055B221CECB2038CF2A3                         Writable, Readable, Directory   96 bytes    9/12/26, 11:09 PM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-4A9894BB684F055B221CECB2038CF2A3/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 11:09 PM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-630155C91243F960789E808E922ED125                         Writable, Readable, Directory   96 bytes    9/12/26, 4:53 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-630155C91243F960789E808E922ED125/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 4:53 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-63E07776854BE3A71D9E0AAC6327124C                         Writable, Readable, Directory   96 bytes    9/12/26, 10:04 PM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-63E07776854BE3A71D9E0AAC6327124C/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 10:04 PM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-947243D3CA4E5E5BD61D9CAC1892946A                         Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-947243D3CA4E5E5BD61D9CAC1892946A/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 4:31 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-AD58198871458CBF39E08292446986B4                         Writable, Readable, Directory   96 bytes    9/12/26, 5:19 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-AD58198871458CBF39E08292446986B4/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 5:19 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B1D9D699CE4CFF3864211597CC43996D                         Writable, Readable, Directory   96 bytes    9/13/26, 3:29 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B1D9D699CE4CFF3864211597CC43996D/CrashReportClient.ini   Writable, Readable              230 bytes   9/13/26, 3:29 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B24AFA3A954268913D26BB968B68E708                         Writable, Readable, Directory   96 bytes    9/13/26, 11:19 AM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B24AFA3A954268913D26BB968B68E708/CrashReportClient.ini   Writable, Readable              230 bytes   9/13/26, 11:19 AM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B92F31D9A54B26F4E39A0DA4847EF41D                         Writable, Readable, Directory   96 bytes    9/12/26, 10:03 PM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-B92F31D9A54B26F4E39A0DA4847EF41D/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 10:03 PM
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-D9D4C6F6D048E81AD3ABE7B27D416537                         Writable, Readable, Directory   96 bytes    9/12/26, 5:01 PM 
+Documents/Cinderline/Saved/Config/CrashReportClient/UECC-IOS-D9D4C6F6D048E81AD3ABE7B27D416537/CrashReportClient.ini   Writable, Readable              230 bytes   9/12/26, 5:01 PM 
+Documents/Cinderline/Saved/Config/IOS                                                                                 Writable, Readable, Directory   96 bytes    9/12/26, 5:06 PM 
+Documents/Cinderline/Saved/Config/IOS/Engine.ini                                                                      Writable, Readable              107 bytes   9/12/26, 5:06 PM 
+Documents/Cinderline/Saved/Config/Training.ini                                                                        Writable, Readable              47 bytes    9/13/26, 11:24 AM
+Documents/Cinderline/Saved/Logs                                                                                       Writable, Readable, Directory   416 bytes   9/13/26, 3:29 PM 
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.31.33.log                                             Writable, Readable              101 KB      9/12/26, 5:01 PM 
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.36.51.log                                             Writable, Readable              99 KB       9/12/26, 5:06 PM 
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.40.26.log                                             Writable, Readable              122 KB      9/12/26, 5:10 PM 
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.51.21.log                                             Writable, Readable              110 KB      9/12/26, 5:21 PM 
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-11.59.13.log                                             Writable, Readable              119 KB      9/12/26, 5:29 PM 
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-12.00.42.log                                             Writable, Readable              105 KB      9/12/26, 5:30 PM 
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-16.34.07.log                                             Writable, Readable              107 KB      9/12/26, 10:04 PM
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-16.48.06.log                                             Writable, Readable              308 KB      9/12/26, 10:18 PM
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.12-18.09.29.log                                             Writable, Readable              250 KB      9/12/26, 11:39 PM
+Documents/Cinderline/Saved/Logs/Cinderline-backup-2026.09.13-06.16.39.log                                             Writable, Readable              119 KB      9/13/26, 11:46 AM
+Documents/Cinderline/Saved/Logs/Cinderline.log                                                                        Writable, Readable              145 KB      9/13/26, 3:46 PM 
+Documents/Engine                                                                                                      Writable, Readable, Directory   128 bytes   9/12/26, 4:31 PM 
+Documents/Engine/Content                                                                                              Writable, Readable, Directory   64 bytes    9/12/26, 4:31 PM 
+Documents/Engine/Saved                                                                                                Writable, Readable, Directory   128 bytes   9/12/26, 4:31 PM 
+Documents/Engine/Saved/Config                                                                                         Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Documents/Engine/Saved/Config/IOS                                                                                     Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Documents/Engine/Saved/Config/IOS/Manifest.ini                                                                        Writable, Readable              22 bytes    9/12/26, 4:31 PM 
+Documents/Engine/Saved/Crashes                                                                                        Writable, Readable, Directory   64 bytes    9/12/26, 4:31 PM 
+Library                                                                                                               Writable, Readable, Directory   192 bytes   9/12/26, 4:31 PM 
+Library/Caches                                                                                                        Writable, Readable, Directory   160 bytes   9/12/26, 4:31 PM 
+Library/Caches/com.apple.dyld                                                                                         Writable, Readable, Directory   96 bytes    9/13/26, 11:19 AM
+Library/Caches/com.apple.dyld/Cinderline.dyld4                                                                        Writable, Readable              37 KB       9/13/26, 11:19 AM
+Library/Caches/com.apple.nsurlsessiond                                                                                Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Library/Caches/com.apple.nsurlsessiond/Downloads                                                                      Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Library/Caches/com.apple.nsurlsessiond/Downloads/com.cinderline.game                                                  Writable, Readable, Directory   64 bytes    9/12/26, 4:31 PM 
+Library/Caches/com.cinderline.game                                                                                    Writable, Readable, Directory   160 bytes   9/12/26, 5:06 PM 
+Library/Caches/com.cinderline.game/com.apple.gpuarchiver                                                              Writable, Readable, Directory   64 bytes    9/12/26, 5:06 PM 
+Library/Caches/com.cinderline.game/com.apple.metal                                                                    Writable, Readable, Directory   160 bytes   9/13/26, 3:29 PM 
+Library/Caches/com.cinderline.game/com.apple.metal/32024                                                              Writable, Readable, Directory   128 bytes   9/12/26, 5:30 PM 
+Library/Caches/com.cinderline.game/com.apple.metal/32024/libraries.data                                               Writable, Readable              48 KB       9/12/26, 5:19 PM 
+Library/Caches/com.cinderline.game/com.apple.metal/32024/libraries.list                                               Writable, Readable              220 bytes   9/12/26, 5:30 PM 
+Library/Caches/com.cinderline.game/com.apple.metal/functions.data                                                     Writable, Readable              832 KB      9/13/26, 3:29 PM 
+Library/Caches/com.cinderline.game/com.apple.metal/functions.list                                                     Writable, Readable              16 KB       9/13/26, 3:29 PM 
+Library/Caches/com.cinderline.game/com.apple.metalfe                                                                  Writable, Readable, Directory   128 bytes   9/12/26, 5:06 PM 
+Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8                                                    Writable, Readable, Directory   128 bytes   9/12/26, 5:06 PM 
+Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8/modules.idx                                        Writable, Readable              83 KB       9/12/26, 5:06 PM 
+Library/Caches/com.cinderline.game/com.apple.metalfe/145B168O4KLO8/monolithic_metal.pcm                               Writable, Readable              5.3 MB      9/12/26, 5:06 PM 
+Library/Caches/com.cinderline.game/com.apple.metalfe/modules.timestamp                                                Writable, Readable              Zero KB     9/12/26, 5:06 PM 
+Library/Preferences                                                                                                   Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Library/Preferences/com.cinderline.game.plist                                                                         Writable, Readable              119 bytes   9/12/26, 4:31 PM 
+Library/Saved Application State                                                                                       Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Library/Saved Application State/com.cinderline.game.savedState                                                        Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Library/Saved Application State/com.cinderline.game.savedState/KnownSceneSessions                                     Writable, Readable, Directory   96 bytes    9/12/26, 4:31 PM 
+Library/Saved Application State/com.cinderline.game.savedState/KnownSceneSessions/data.data                           Writable, Readable              756 bytes   9/13/26, 3:29 PM 
+Library/SplashBoard                                                                                                   Writable, Readable, Directory   96 bytes    9/12/26, 11:00 AM
+Library/SplashBoard/Snapshots                                                                                         Writable, Readable, Directory   128 bytes   9/12/26, 10:18 PM
+Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}                                                   Writable, Readable, Directory   128 bytes   9/13/26, 10:23 AM
+Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/84CDC3B1-469C-42DF-9568-577FDE750283@3x.ktx       Writable, Readable              4 MB        9/13/26, 10:23 AM
+Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/A17FC8D7-E6CC-4FF9-A259-227A370B801F@3x.ktx       Writable, Readable              4 MB        9/13/26, 10:23 AM
+Library/SplashBoard/Snapshots/sceneID:com.cinderline.game-default                                                     Writable, Readable, Directory   64 bytes    9/13/26, 3:46 PM 
+tmp                                                                                                                   Writable, Readable, Directory   64 bytes    9/12/26, 11:00 AM
