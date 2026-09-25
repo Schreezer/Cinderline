@@ -103,7 +103,7 @@
       "version": "cinematic-visual-target-materials-v1.6.1"
     }
   ],
-  "generator_sha256": "45a75a3b78aa2d345e84521530ee24b136222d54a8611c595ed57f935c056315",
+  "generator_sha256": "2d43d7ed837b9617ca0b045ca153db2290be57d6da4ac8b98232012bc718765b",
   "instances": [
     {
       "parameters": {
@@ -111,6 +111,12 @@
         "FinishVariation": 0.05000000074505806,
         "GlowIntensity": 0.0,
         "Metallic": 0.30000001192092896,
+        "RimColor": [
+          0.62,
+          0.78,
+          1.0
+        ],
+        "RimLight": 0.550000011920929,
         "Roughness": 0.4300000071525574,
         "SurfaceWear": 0.09000000357627869,
         "Tint": [
@@ -129,6 +135,12 @@
         "FinishVariation": 0.03999999910593033,
         "GlowIntensity": 0.0,
         "Metallic": 0.2199999988079071,
+        "RimColor": [
+          0.66,
+          0.8,
+          1.0
+        ],
+        "RimLight": 0.4000000059604645,
         "Roughness": 0.4000000059604645,
         "SurfaceWear": 0.05000000074505806,
         "Tint": [
@@ -147,6 +159,12 @@
         "FinishVariation": 0.02500000037252903,
         "GlowIntensity": 0.0,
         "Metallic": 0.9200000166893005,
+        "RimColor": [
+          0.8,
+          0.86,
+          1.0
+        ],
+        "RimLight": 0.3499999940395355,
         "Roughness": 0.25,
         "SurfaceWear": 0.07999999821186066,
         "Tint": [
@@ -163,8 +181,14 @@
       "parameters": {
         "AO": 1.0,
         "FinishVariation": 0.03500000014901161,
-        "GlowIntensity": 0.009999999776482582,
+        "GlowIntensity": 0.550000011920929,
         "Metallic": 0.2199999988079071,
+        "RimColor": [
+          0.66,
+          0.8,
+          1.0
+        ],
+        "RimLight": 0.25,
         "Roughness": 0.3799999952316284,
         "SurfaceWear": 0.05000000074505806,
         "Tint": [
@@ -183,6 +207,12 @@
         "FinishVariation": 0.03500000014901161,
         "GlowIntensity": 0.0,
         "Metallic": 0.8799999952316284,
+        "RimColor": [
+          0.8,
+          0.86,
+          1.0
+        ],
+        "RimLight": 0.18000000715255737,
         "Roughness": 0.30000001192092896,
         "SurfaceWear": 0.10999999940395355,
         "Tint": [
@@ -201,6 +231,12 @@
         "FinishVariation": 0.05000000074505806,
         "GlowIntensity": 0.0,
         "Metallic": 0.2800000011920929,
+        "RimColor": [
+          0.66,
+          0.8,
+          1.0
+        ],
+        "RimLight": 0.18000000715255737,
         "Roughness": 0.46000000834465027,
         "SurfaceWear": 0.14000000059604645,
         "Tint": [
@@ -215,7 +251,7 @@
     },
     {
       "parameters": {
-        "GlowIntensity": 0.8,
+        "GlowIntensity": 2.6,
         "Tint": [
           0.18,
           0.46,
@@ -344,10 +380,28 @@
           "to": "Visible baked AO scale"
         },
         {
+          "from": "RecessDepth",
+          "input": "B",
+          "output": "",
+          "to": "Visible baked AO scale"
+        },
+        {
+          "from": "RecessDepth",
+          "input": "",
+          "output": "",
+          "to": "Baked AO floor"
+        },
+        {
           "from": "Visible baked AO scale",
           "input": "A",
           "output": "",
-          "to": "Gentle baked AO floor"
+          "to": "Baked recess response"
+        },
+        {
+          "from": "Baked AO floor",
+          "input": "B",
+          "output": "",
+          "to": "Baked recess response"
         },
         {
           "from": "Tint with subtle finish variation",
@@ -356,10 +410,52 @@
           "to": "Finish color with baked recess AO"
         },
         {
-          "from": "Gentle baked AO floor",
+          "from": "Baked recess response",
           "input": "B",
           "output": "",
           "to": "Finish color with baked recess AO"
+        },
+        {
+          "from": "World vertex normal",
+          "input": "",
+          "output": "",
+          "to": "Vertex normal up component"
+        },
+        {
+          "from": "SkyShading",
+          "input": "A",
+          "output": "",
+          "to": "Half sky shading"
+        },
+        {
+          "from": "Vertex normal up component",
+          "input": "A",
+          "output": "",
+          "to": "Signed sky shading"
+        },
+        {
+          "from": "Half sky shading",
+          "input": "B",
+          "output": "",
+          "to": "Signed sky shading"
+        },
+        {
+          "from": "Signed sky shading",
+          "input": "A",
+          "output": "",
+          "to": "Sky shading gain"
+        },
+        {
+          "from": "Finish color with baked recess AO",
+          "input": "A",
+          "output": "",
+          "to": "Shaded color with sky term"
+        },
+        {
+          "from": "Sky shading gain",
+          "input": "B",
+          "output": "",
+          "to": "Shaded color with sky term"
         },
         {
           "from": "Centered finish patches",
@@ -410,6 +506,18 @@
           "to": "Physical roughness bounds"
         },
         {
+          "from": "Physical roughness bounds",
+          "input": "A",
+          "output": "",
+          "to": "Roughness with grazing sheen"
+        },
+        {
+          "from": "Grazing angle sheen",
+          "input": "Alpha",
+          "output": "",
+          "to": "Roughness with grazing sheen"
+        },
+        {
           "from": "Mesh vertex color",
           "input": "A",
           "output": "A",
@@ -432,6 +540,42 @@
           "input": "B",
           "output": "",
           "to": "Restrained emissive"
+        },
+        {
+          "from": "Silhouette rim",
+          "input": "A",
+          "output": "",
+          "to": "Rim strength"
+        },
+        {
+          "from": "RimLight",
+          "input": "B",
+          "output": "",
+          "to": "Rim strength"
+        },
+        {
+          "from": "RimColor",
+          "input": "A",
+          "output": "RGB",
+          "to": "Rim colour"
+        },
+        {
+          "from": "Rim strength",
+          "input": "B",
+          "output": "",
+          "to": "Rim colour"
+        },
+        {
+          "from": "Restrained emissive",
+          "input": "A",
+          "output": "",
+          "to": "Emissive plus rim"
+        },
+        {
+          "from": "Rim colour",
+          "input": "B",
+          "output": "",
+          "to": "Emissive plus rim"
         }
       ],
       "depth_test_enabled": true,
@@ -442,28 +586,32 @@
           0.9825,
           1.0175
         ],
+        "bloom_threshold_reference": 0.62,
         "coordinates": "authored UV0",
+        "grazing_sheen": "Fresnel exponent 8 lerps clamped roughness towards 0.22",
+        "rim_light": "Fresnel exponent 3.2 times RimLight times RimColor, added to emissive, not a scene light; band widened for 80% MetalFX plus FXAA",
+        "sky_shading": "1 + world vertex normal Z * SkyShading * 0.5, neutral on level faces",
         "texture_samples": 0,
         "vertex_alpha_contract": "1.0 fully lit; lower values mark baked crevices",
-        "visible_vertex_ao_multiplier": "0.65 + 0.35 * vertex color alpha"
+        "visible_vertex_ao_multiplier": "(1 - RecessDepth) + RecessDepth * vertex color alpha, RecessDepth 0.58"
       },
       "graph_replacement": {
-        "before_count": 30,
+        "before_count": 45,
         "method": "snapshot of expressions, delete each through engine API",
         "remaining_after_delete": 0
       },
-      "nodes": 30,
+      "nodes": 47,
       "outputs": {
         "AMBIENT_OCCLUSION": {
           "node": "Vertex AO times instance AO",
           "output": ""
         },
         "BASE_COLOR": {
-          "node": "Finish color with baked recess AO",
+          "node": "Shaded color with sky term",
           "output": ""
         },
         "EMISSIVE_COLOR": {
-          "node": "Restrained emissive",
+          "node": "Emissive plus rim",
           "output": ""
         },
         "METALLIC": {
@@ -471,7 +619,7 @@
           "output": ""
         },
         "ROUGHNESS": {
-          "node": "Physical roughness bounds",
+          "node": "Roughness with grazing sheen",
           "output": ""
         }
       },
@@ -481,10 +629,14 @@
           "FinishVariation",
           "GlowIntensity",
           "Metallic",
+          "RecessDepth",
+          "RimLight",
           "Roughness",
+          "SkyShading",
           "SurfaceWear"
         ],
         "vectors": [
+          "RimColor",
           "Tint"
         ]
       },
@@ -735,6 +887,12 @@
         {
           "from": "Layers World XY",
           "input": "A",
+          "output": "",
+          "to": "Layers World centimeters to texture UV"
+        },
+        {
+          "from": "CinderWorldSizeInverse",
+          "input": "B",
           "output": "",
           "to": "Layers World centimeters to texture UV"
         },
@@ -1035,7 +1193,7 @@
       ],
       "depth_test_enabled": true,
       "graph_replacement": {
-        "before_count": 48,
+        "before_count": 65,
         "method": "snapshot of expressions, delete each through engine API",
         "remaining_after_delete": 0
       },
@@ -1052,10 +1210,10 @@
           "secondary_weight": 0.35
         },
         "pbr_set": "primary planar absolute world XY / 400 cm",
-        "terrain_mask": "planar absolute world XY / 4800 cm",
+        "terrain_mask": "planar absolute world XY * CinderWorldSizeInverse",
         "world_aligned_triplanar_samples": 0
       },
-      "nodes": 64,
+      "nodes": 65,
       "outputs": {
         "AMBIENT_OCCLUSION": {
           "node": "GroundAO",
@@ -1112,6 +1270,19 @@
           "R": "explored cliff stone"
         },
         "parameter": "TerrainLayers"
+      },
+      "sampler_slots": {
+        "own_slot": [
+          "TerrainLayers"
+        ],
+        "reason": "clamped fog-privacy mask must never sample in a wrap group",
+        "shared_world_wrap_group": [
+          "GroundColor",
+          "GroundColorOffset",
+          "GroundNormal",
+          "GroundRoughness",
+          "GroundAO"
+        ]
       },
       "shader_errors": [],
       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
@@ -1862,6 +2033,6 @@
       "tile_width_cm": 400.0
     }
   ],
-  "utc": "2026-09-12T10:56:48.364346+00:00",
+  "utc": "2026-09-16T04:17:52.121991+00:00",
   "version": "cinematic-visual-target-materials-v1.6.1"
 }

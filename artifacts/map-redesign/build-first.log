@@ -1,0 +1,1082 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CinderlineEditor Mac Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -MaxParallelActions=10 -ForceRulesCompile -SkipRulesCompile
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Executing up to 10 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for CinderlineEditor (source file added)
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+UHT compiled-in object format Default
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.2.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.3.cpp.d!
+Building CinderlineEditor...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.2.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.2.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from CinderlineEditor unity file: CinderLandscapeAuthoringLibrary.cpp
+[Adaptive Build] Excluded from Cinderline unity file: CinderCameraBoundaryTests.cpp, CinderCampaignHUDTests.cpp, CinderCampaignGuidanceTests.cpp, CinderMobileHUDLayoutTests.cpp, CinderWorldIntegrationTests.cpp, CinderFormationTests.cpp, CinderCampaignTests.cpp, CinderMapSceneryTests.cpp, CinderTacticalOrderTests.cpp, CinderCampaignLifecycleTests.cpp, CinderFogMaskTests.cpp, CinderUnitInfoTests.cpp, CinderWorldEffectsTests.cpp, CinderArmyControlTests.cpp, CinderPatrolEscortTests.cpp, CinderSceneryTests.cpp, CinderLandscapeTerrainTests.cpp, CinderCampaignSaveTests.cpp, CinderOnlineIntegrationTests.cpp, CinderHUDInputTests.cpp, CinderProductionControlTests.cpp, CinderOnboardingTests.cpp, Network.cpp, MapDefinition.cpp, SimulationMovement.cpp, Navigation.cpp, SimulationProduction.cpp, SimulationAI.cpp, SimulationTactics.cpp, SimulationJobs.cpp, Simulation.cpp, SimulationWorkerPlans.cpp, CinderHUD.cpp, CinderBattlefieldCampaign.cpp, CinderTutorial.cpp, CinderHelpContent.cpp, CinderCampaignSave.cpp, CinderEntityMotion.cpp, CinderCampaign.cpp, CinderCampaignGuidance.cpp, CinderBattlefield.cpp, CinderFogMask.cpp, CinderPlayerController.cpp, CinderHUDCampaign.cpp, CinderWorldEffects.cpp, CinderHUDStyle.cpp, CinderQualityDiagnostics.cpp, CinderArtPreview.cpp, CinderCanyonPreview.cpp, CinderPlayerControllerCampaign.cpp, CinderGroundPalette.cpp, CinderCommandPreview.cpp, CinderCampaignPreview.cpp, CinderGameEngine.cpp, CinderUnitInfo.cpp, CinderLandscapeTerrain.cpp, CinderTerrainSurface.cpp, CinderCameraPreview.cpp, CinderCamera.cpp, CinderScenery.cpp, CinderLANDiscovery.cpp, CinderOnlineSubsystem.cpp, CinderMobileHUDPreview.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 84 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 30.77 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/84] Compile [Apple] CinderCamera.cpp
+[2/84] Compile [Apple] CinderCampaignGuidance.cpp
+[3/84] Compile [Apple] CinderCampaignGuidanceTests.cpp
+[4/84] Compile [Apple] CinderCameraPreview.cpp
+[5/84] Compile [Apple] CinderBattlefieldCampaign.cpp
+[6/84] Compile [Apple] CinderCameraBoundaryTests.cpp
+[7/84] Compile [Apple] CinderCampaign.cpp
+[8/84] Compile [Apple] CinderArtPreview.cpp
+[9/84] Compile [Apple] CinderArmyControlTests.cpp
+[10/84] Compile [Apple] CinderBattlefield.cpp
+[11/84] Compile [Apple] CinderCampaignLifecycleTests.cpp
+[12/84] Compile [Apple] CinderCampaignSaveTests.cpp
+[13/84] Compile [Apple] CinderCampaignPreview.cpp
+[14/84] Compile [Apple] CinderCampaignHUDTests.cpp
+[15/84] Compile [Apple] CinderCampaignTests.cpp
+[16/84] Compile [Apple] CinderCombatPreview.cpp
+[17/84] Compile [Apple] CinderCampaignSave.cpp
+[18/84] Compile [Apple] CinderCommandPreview.cpp
+[19/84] Compile [Apple] CinderDifficultyPreview.cpp
+[20/84] Compile [Apple] CinderCanyonPreview.cpp
+[21/84] Compile [Apple] CinderFogMask.cpp
+[22/84] Compile [Apple] CinderDifficultyTests.cpp
+[23/84] Compile [Apple] CinderFogMaskTests.cpp
+[24/84] Compile [Apple] CinderEntityMotion.cpp
+[25/84] Compile [Apple] CinderFormationTests.cpp
+[26/84] Compile [Apple] CinderGameEngine.cpp
+[27/84] Compile [Apple] CinderFourPlayerPreview.cpp
+[28/84] Compile [Apple] CinderGameMode.cpp
+[29/84] Compile [Apple] CinderGuidedPreview.cpp
+[30/84] Compile [Apple] CinderHUD.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderHUD.cpp:12:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: error: missing '}' at end of definition of 'UCinderLandscapeTerrain'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderUnitInfo.h:30:1: note: still within definition of 'UCinderLandscapeTerrain' here
+   30 | namespace CinderUnitInfo
+      | ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderUnitInfo.h:32:20: error: unknown type name 'FCinderUnitDetails'
+   32 |     CINDERLINE_API FCinderUnitDetails Describe(const cinder::Simulation& Simulation, const cinder::Entity& Entity);
+      |                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderHUD.cpp:3487:11: error: unknown type name 'FCinderUnitDetails'
+ 3487 |     const FCinderUnitDetails Details = CinderUnitInfo::Describe(Sim, *Entity);
+      |           ^
+4 errors generated.
+[31/84] Compile [Apple] CinderHelpContent.cpp
+[32/84] Compile [Apple] CinderHUDStyle.cpp
+[33/84] Compile [Apple] CinderHUDCampaign.cpp
+[34/84] Compile [Apple] CinderLANDiscovery.cpp
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLANDiscovery.cpp:15:15: error: static assertion failed due to requirement 'CurrentLANProtocol == 11': Bonjour compatibility must track the queued-work wire protocol
+   15 | static_assert(CurrentLANProtocol == 11, "Bonjour compatibility must track the queued-work wire protocol");
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLANDiscovery.cpp:15:34: note: expression evaluates to '12 == 11'
+   15 | static_assert(CurrentLANProtocol == 11, "Bonjour compatibility must track the queued-work wire protocol");
+      |               ~~~~~~~~~~~~~~~~~~~^~~~~
+1 error generated.
+[35/84] Compile [Apple] CinderHUDInputTests.cpp
+[36/84] Compile [Apple] CinderLandscapeTerrainTests.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderLandscapeTerrainTests.cpp:6:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: error: missing '}' at end of definition of 'UCinderLandscapeTerrain'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderLandscapeTerrainTests.cpp:9:1: note: still within definition of 'UCinderLandscapeTerrain' here
+    9 | IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderLandscapeHeightGeometryTest,
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Misc/AutomationTest.h:4299:3: note: expanded from macro 'IMPLEMENT_SIMPLE_AUTOMATION_TEST'
+ 4299 |         namespace\
+      |         ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderLandscapeTerrainTests.cpp:9:34: error: unknown type name 'FCinderLandscapeHeightGeometryTest'
+    9 | IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderLandscapeHeightGeometryTest,
+      |                                  ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderLandscapeTerrainTests.cpp:13:6: error: use of undeclared identifier 'FCinderLandscapeHeightGeometryTest'
+   13 | bool FCinderLandscapeHeightGeometryTest::RunTest(const FString& Parameters)
+      |      ^
+4 errors generated.
+[37/84] Compile [Apple] CinderLandscapeTerrain.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:1:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: error: missing '}' at end of definition of 'UCinderLandscapeTerrain'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderGroundPalette.h:28:1: note: still within definition of 'UCinderLandscapeTerrain' here
+   28 | namespace CinderGroundPalette
+      | ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:658:5: error: use of undeclared identifier 'ActiveMap'; did you mean 'ActiveMa'?
+  658 |     ActiveMap = INDEX_NONE;
+      |     ^~~~~~~~~
+      |     ActiveMa
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:11: note: 'ActiveMa' declared here
+  200 |     int32 ActiveMa
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:710:33: error: use of undeclared identifier 'ActiveMap'; did you mean 'ActiveMa'?
+  710 |     if (Landscapes.IsValidIndex(ActiveMap) && Landscapes[ActiveMap])
+      |                                 ^~~~~~~~~
+      |                                 ActiveMa
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:11: note: 'ActiveMa' declared here
+  200 |     int32 ActiveMa
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:710:58: error: use of undeclared identifier 'ActiveMap'; did you mean 'ActiveMa'?
+  710 |     if (Landscapes.IsValidIndex(ActiveMap) && Landscapes[ActiveMap])
+      |                                                          ^~~~~~~~~
+      |                                                          ActiveMa
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:11: note: 'ActiveMa' declared here
+  200 |     int32 ActiveMa
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:714:46: error: use of undeclared identifier 'ActiveMap'; did you mean 'ActiveMa'?
+  714 |         SetLandscapeShadowCasting(Landscapes[ActiveMap], false);
+      |                                              ^~~~~~~~~
+      |                                              ActiveMa
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:11: note: 'ActiveMa' declared here
+  200 |     int32 ActiveMa
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:715:20: error: use of undeclared identifier 'ActiveMap'; did you mean 'ActiveMa'?
+  715 |         Landscapes[ActiveMap]->SetActorHiddenInGame(true);
+      |                    ^~~~~~~~~
+      |                    ActiveMa
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:11: note: 'ActiveMa' declared here
+  200 |     int32 ActiveMa
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:717:5: error: use of undeclared identifier 'ActiveMap'; did you mean 'ActiveMa'?
+  717 |     ActiveMap = INDEX_NONE;
+      |     ^~~~~~~~~
+      |     ActiveMa
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:11: note: 'ActiveMa' declared here
+  200 |     int32 ActiveMa
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:753:27: error: incomplete type 'UCinderLandscapeTerrain::UMaterialInstanceDynamic' named in nested name specifier
+  753 |                 Dynamic = UMaterialInstanceDynamic::Create(Material, Component);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderGroundPalette.h:6:7: note: forward declaration of 'UCinderLandscapeTerrain::UMaterialInstanceDynamic'
+    6 | class UMaterialInstanceDynamic;
+      |       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:755:26: error: no viable overloaded '='
+  755 |                 Material = Dynamic;
+      |                 ~~~~~~~~ ^ ~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h:605:17: note: candidate function not viable: cannot convert argument of incomplete type 'UMaterialInstanceDynamic *' to 'TObjectPtr<UMaterialInterface>' for 1st argument
+  605 |     TObjectPtr<T>& operator=(TObjectPtr<T>&& Other)
+      |                    ^         ~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h:610:17: note: candidate function not viable: cannot convert argument of incomplete type 'UMaterialInstanceDynamic *' to 'const TObjectPtr<UMaterialInterface>' for 1st argument
+  610 |     TObjectPtr<T>& operator=(const TObjectPtr<T>& Other)
+      |                    ^         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h:620:29: note: candidate function not viable: cannot convert argument of incomplete type 'UMaterialInstanceDynamic *' to 'TYPE_OF_NULLPTR' (aka 'std::nullptr_t') for 1st argument
+  620 |     FORCEINLINE TObjectPtr<T>& operator=(TYPE_OF_NULLPTR)
+      |                                ^         ~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h:647:29: note: candidate function not viable: cannot convert argument of incomplete type 'UMaterialInstanceDynamic *' to 'TPrivateObjectPtr<UMaterialInterface>' for 1st argument
+  647 |     FORCEINLINE TObjectPtr<T>& operator=(TPrivateObjectPtr<T>&& PrivatePtr)
+      |                                ^         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h:630:29: note: candidate template ignored: could not match 'TObjectPtr<U>' against 'UMaterialInstanceDynamic *'
+  630 |     FORCEINLINE TObjectPtr<T>& operator=(const TObjectPtr<U>& Other)
+      |                                ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h:641:29: note: candidate template ignored: constraints not satisfied [with U = UMaterialInstanceDynamic *&]
+  641 |     FORCEINLINE TObjectPtr<T>& operator=(U&& Object)
+      |                                ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h:639:3: note: because '!!(!TIsTObjectPtr_V<std::decay_t<UCinderLandscapeTerrain::UMaterialInstanceDynamic *&>> && std::is_convertible_v<UCinderLandscapeTerrain::UMaterialInstanceDynamic *&, UMaterialInterface *>)' evaluated to false
+  639 |         UE_REQUIRES(!TIsTObjectPtr_V<std::decay_t<U>> && std::is_convertible_v<U, T*>)
+      |         ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Requires.h:98:39: note: expanded from macro 'UE_REQUIRES'
+   98 |     #define UE_REQUIRES(...) > requires (!!(__VA_ARGS__)) && UE::Core::Private::BoolIdentityConcept<true
+      |                                          ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:758:20: error: member access into incomplete type 'UMaterialInstanceDynamic'
+  758 |             Dynamic->SetTextureParameterValue(TEXT("FogMask"), FogMask);
+      |                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderGroundPalette.h:6:7: note: forward declaration of 'UCinderLandscapeTerrain::UMaterialInstanceDynamic'
+    6 | class UMaterialInstanceDynamic;
+      |       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:759:20: error: member access into incomplete type 'UMaterialInstanceDynamic'
+  759 |             Dynamic->SetTextureParameterValue(TEXT("TerrainLayers"), TerrainLayers);
+      |                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderGroundPalette.h:6:7: note: forward declaration of 'UCinderLandscapeTerrain::UMaterialInstanceDynamic'
+    6 | class UMaterialInstanceDynamic;
+      |       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:760:20: error: member access into incomplete type 'UMaterialInstanceDynamic'
+  760 |             Dynamic->SetScalarParameterValue(TEXT("CinderWorldSizeInverse"), WorldSizeInverse);
+      |                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderGroundPalette.h:6:7: note: forward declaration of 'UCinderLandscapeTerrain::UMaterialInstanceDynamic'
+    6 | class UMaterialInstanceDynamic;
+      |       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:761:20: error: member access into incomplete type 'UMaterialInstanceDynamic'
+  761 |             Dynamic->SetScalarParameterValue(TEXT("AuthoredMap"), bAuthoredMap ? 1.0f : 0.0f);
+      |                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderGroundPalette.h:6:7: note: forward declaration of 'UCinderLandscapeTerrain::UMaterialInstanceDynamic'
+    6 | class UMaterialInstanceDynamic;
+      |       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:795:9: error: use of undeclared identifier 'ActiveMap'
+  795 |     if (ActiveMap != Map)
+      |         ^~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:799:35: error: use of undeclared identifier 'S'
+  799 |         SetLandscapeShadowCasting(S
+      |                                   ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:799:36: error: expected ';' after expression
+  799 |         SetLandscapeShadowCasting(S
+      |                                    ^
+      |                                    ;
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:799:36: error: expected '}'
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:796:5: note: to match this '{'
+  796 |     {
+      |     ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:799:36: error: expected '}'
+  799 |         SetLandscapeShadowCasting(S
+      |                                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp:771:1: note: to match this '{'
+  771 | {
+      | ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[38/84] Compile [Apple] CinderMapSceneryTests.cpp
+[39/84] Compile [Apple] CinderMatchLengthPreview.cpp
+[40/84] Compile [Apple] CinderMetalFXPreview.cpp
+[41/84] Compile [Apple] CinderMobileHUDPreview.cpp
+[42/84] Compile [Apple] CinderOnboardingTests.cpp
+[43/84] Compile [Apple] CinderMotionPreview.cpp
+[44/84] Compile [Apple] CinderOnlineIntegrationTests.cpp
+[45/84] Compile [Apple] CinderOnlinePreview.cpp
+[46/84] Compile [Apple] CinderOnlineRecoveryTests.cpp
+[47/84] Compile [Apple] CinderPatrolEscortTests.cpp
+[48/84] Compile [Apple] CinderOnlinePanel.cpp
+[49/84] Compile [Apple] CinderOnlineSubsystem.cpp
+[50/84] Compile [Apple] CinderPlayerController.cpp
+[51/84] Compile [Apple] CinderPlayerControllerCampaign.cpp
+[52/84] Compile [Apple] CinderScenery.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderScenery.cpp:7:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderScenery.cpp:1665:2: error: expected '}'
+ 1665 | }
+      |  ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:185:1: note: to match this '{'
+  185 | {
+      | ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderScenery.cpp:1665:2: error: expected ';' after class
+ 1665 | }
+      |  ^
+      |  ;
+3 errors generated.
+[53/84] Compile [Apple] CinderProductionControlTests.cpp
+[54/84] Compile [Apple] CinderQualityDiagnostics.cpp
+[55/84] Compile [Apple] CinderSceneryTests.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:13:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderScenery.h:68:5: error: no struct named 'Z_Construct_UClass_UCinderScenery_Statics' in the global namespace
+   68 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:392:1: note: expanded from here
+  392 | FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderScenery.generated.h:47:2: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_GENERATED_BODY'
+   47 |     FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderScenery.generated.h:26:18: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_INCLASS_NO_PURE_DECLS'
+   26 |     friend struct ::Z_Construct_UClass_UCinderScenery_Statics; \
+      |                   ~~^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderScenery.h:68:5: error: out-of-line declaration of 'Z_Construct_UClass_UCinderScenery' does not match any declaration in the global namespace; did you mean 'Z_Construct_UClass_UScene'?
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:392:1: note: expanded from here
+  392 | FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_GENERATED_BODY
+      | ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderScenery.generated.h:47:2: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_GENERATED_BODY'
+   47 |     FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_INCLASS_NO_PURE_DECLS \
+      |     ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderScenery.generated.h:27:34: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_INCLASS_NO_PURE_DECLS'
+   27 |     friend CINDERLINE_API UClass* ::Z_Construct_UClass_UCinderScenery(ETypeConstructPhase); \
+      |                                     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/Scene.generated.h:179:20: note: 'Z_Construct_UClass_UScene' declared here
+  179 | ENGINE_API UClass* Z_Construct_UClass_UScene(ETypeConstructPhase);
+      |                    ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:13:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: error: missing '}' at end of definition of 'UCinderLandscapeTerrain'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Sim/Network.h:7:1: note: still within definition of 'UCinderLandscapeTerrain' here
+    7 | namespace cinder::net {
+      | ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderScenery.h:68:5: error: call to non-static member function without an object argument
+   68 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:392:1: note: expanded from here
+  392 | FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderScenery.generated.h:47:2: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_GENERATED_BODY'
+   47 |     FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderScenery.generated.h:29:131: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderScenery_h_68_INCLASS_NO_PURE_DECLS'
+   29 |     DECLARE_CLASS2(UCinderScenery, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/Cinderline"), Z_Construct_UClass_UCinderScenery) \
+      |                                                                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:24:5: error: unknown type name 'UCinderScenery'
+   24 |     UCinderScenery* Scenery = nullptr;
+      |     ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:46:29: error: use of undeclared identifier 'UCinderScenery'
+   46 |         Scenery = NewObject<UCinderScenery>(Owner, TEXT("SceneryUnderTest"));
+      |                             ^~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:54:15: error: unknown type name 'FCinderSceneryDiagnostics'
+   54 |         const FCinderSceneryDiagnostics Diagnostics = Scenery->Diagnostics();
+      |               ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:95:11: error: unknown type name 'FCinderSceneryDiagnostics'
+   95 |     const FCinderSceneryDiagnostics Initial = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:142:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  142 |     const FCinderSceneryDiagnostics HiddenEnemy = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:149:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  149 |     const FCinderSceneryDiagnostics HiddenResource = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:163:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  163 |     const FCinderSceneryDiagnostics RevealedResource = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:181:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  181 |     const FCinderSceneryDiagnostics RevealedEnemy = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:189:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  189 |     const FCinderSceneryDiagnostics Reset = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:211:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  211 |     const FCinderSceneryDiagnostics Unknown = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:228:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  228 |     const FCinderSceneryDiagnostics Partial = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:240:11: error: unknown type name 'FCinderSceneryDiagnostics'
+  240 |     const FCinderSceneryDiagnostics FullyKnown = Fixture.Scenery->Diagnostics();
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:270:15: error: unknown type name 'FCinderSceneryDiagnostics'
+  270 |         const FCinderSceneryDiagnostics Flat = Fixture.Scenery->Diagnostics();
+      |               ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp:283:15: error: unknown type name 'FCinderSceneryDiagnostics'
+  283 |         const FCinderSceneryDiagnostics Relief = Fixture.Scenery->Diagnostics();
+      |               ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[56/84] Compile [Apple] CinderTerrainSurface.cpp
+[57/84] Compile [Apple] CinderTacticalOrderTests.cpp
+[58/84] Compile [Apple] CinderTutorial.cpp
+[59/84] Compile [Apple] CinderTutorialCoachPreview.cpp
+[60/84] Compile [Apple] CinderUnitInfo.cpp
+[61/84] Compile [Apple] CinderTutorialGuidanceTests.cpp
+[62/84] Compile [Apple] CinderTutorialTests.cpp
+[63/84] Compile [Apple] CinderUnitInfoTests.cpp
+[64/84] Compile [Apple] CinderVisualPreview.cpp
+[65/84] Compile [Apple] CinderWorldEffects.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:2:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:8:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceElementId.h:12:7: error: class member cannot be redeclared [-Werror,-Wredeclared-class-member]
+   12 | class USMInstanceElementIdMapTransactor;
+      |       ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceElementId.generated.h:62:7: note: previous declaration is here
+   62 | class USMInstanceElementIdMapTransactor;
+      |       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:8:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceElementId.h:14:12: error: storage class specified for a member declaration
+   14 | ENGINE_API extern const FName NAME_SMInstance;
+      |            ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceElementId.h:205:2: error: no struct named 'Z_Construct_UClass_USMInstanceElementIdMapTransactor_Statics' in the global namespace
+  205 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:323:1: note: expanded from here
+  323 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceElementId.generated.h:56:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_GENERATED_BODY'
+   56 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceElementId.generated.h:34:18: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_INCLASS_NO_PURE_DECLS'
+   34 |     friend struct ::Z_Construct_UClass_USMInstanceElementIdMapTransactor_Statics; \
+      |                   ~~^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:8:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceElementId.h:205:2: error: friend declaration of 'Z_Construct_UClass_USMInstanceElementIdMapTransactor' does not match any declaration in the global namespace
+  205 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:323:1: note: expanded from here
+  323 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceElementId.generated.h:56:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_GENERATED_BODY'
+   56 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceElementId.generated.h:35:30: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_INCLASS_NO_PURE_DECLS'
+   35 |     friend ENGINE_API UClass* ::Z_Construct_UClass_USMInstanceElementIdMapTransactor(ETypeConstructPhase); \
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:13:7: error: class member cannot be redeclared [-Werror,-Wredeclared-class-member]
+   13 | class USMInstanceProxyEditingObject;
+      |       ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:110:7: note: previous declaration is here
+  110 | class USMInstanceProxyEditingObject;
+      |       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:23:2: error: no struct named 'Z_Construct_UClass_USMInstanceManager_Statics' in the global namespace
+   23 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:22:1: note: expanded from here
+   22 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:47:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_BODY'
+   47 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_UINTERFACE_BODY() \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:38:18: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_UINTERFACE_BODY'
+   38 |     friend struct ::Z_Construct_UClass_USMInstanceManager_Statics; \
+      |                   ~~^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:23:2: error: out-of-line declaration of 'Z_Construct_UClass_USMInstanceManager' does not match any declaration in the global namespace; did you mean 'Z_Construct_UClass_USlateThemeManager'?
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:22:1: note: expanded from here
+   22 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_BODY
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:47:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_BODY'
+   47 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_UINTERFACE_BODY() \
+      |     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:39:30: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_UINTERFACE_BODY'
+   39 |     friend ENGINE_API UClass* ::Z_Construct_UClass_USMInstanceManager(ETypeConstructPhase); \
+      |                                 ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/SlateCore/UHT/StyleColors.generated.h:47:23: note: 'Z_Construct_UClass_USlateThemeManager' declared here
+   47 | SLATECORE_API UClass* Z_Construct_UClass_USlateThemeManager(ETypeConstructPhase);
+      |                       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:157:2: error: no struct named 'Z_Construct_UClass_USMInstanceProxyEditingObject_Statics' in the global namespace
+  157 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:47:1: note: expanded from here
+   47 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:104:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_GENERATED_BODY'
+  104 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:81:18: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_INCLASS_NO_PURE_DECLS'
+   81 |     friend struct ::Z_Construct_UClass_USMInstanceProxyEditingObject_Statics; \
+      |                   ~~^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:157:2: error: friend declaration of 'Z_Construct_UClass_USMInstanceProxyEditingObject' does not match any declaration in the global namespace
+  157 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:47:1: note: expanded from here
+   47 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:104:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_GENERATED_BODY'
+  104 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:82:30: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_INCLASS_NO_PURE_DECLS'
+   82 |     friend ENGINE_API UClass* ::Z_Construct_UClass_USMInstanceProxyEditingObject(ETypeConstructPhase); \
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:174:2: error: no struct named 'Z_Construct_UClass_USMInstanceManagerProvider_Statics' in the global namespace
+  174 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:62:1: note: expanded from here
+   62 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:141:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_BODY'
+  141 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_UINTERFACE_BODY() \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:132:18: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_UINTERFACE_BODY'
+  132 |     friend struct ::Z_Construct_UClass_USMInstanceManagerProvider_Statics; \
+      |                   ~~^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:174:2: error: out-of-line declaration of 'Z_Construct_UClass_USMInstanceManagerProvider' does not match any declaration in the global namespace; did you mean 'Z_Construct_UClass_USlateTabManagerContext'?
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:62:1: note: expanded from here
+   62 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_BODY
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:141:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_BODY'
+  141 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_UINTERFACE_BODY() \
+      |     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:133:30: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_UINTERFACE_BODY'
+  133 |     friend ENGINE_API UClass* ::Z_Construct_UClass_USMInstanceManagerProvider(ETypeConstructPhase); \
+      |                                 ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/ToolMenus/UHT/ToolMenuContext.generated.h:61:23: note: 'Z_Construct_UClass_USlateTabManagerContext' declared here
+   61 | TOOLMENUS_API UClass* Z_Construct_UClass_USlateTabManagerContext(ETypeConstructPhase);
+      |                       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:2:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: error: missing '}' at end of definition of 'UCinderLandscapeTerrain'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Rendering/RenderingSpatialHash.h:7:1: note: still within definition of 'UCinderLandscapeTerrain' here
+    7 | namespace RenderingSpatialHash
+      | ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:8:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceElementId.h:205:2: error: call to non-static member function without an object argument
+  205 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:323:1: note: expanded from here
+  323 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceElementId.generated.h:56:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_GENERATED_BODY'
+   56 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceElementId.generated.h:37:141: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceElementId_h_205_INCLASS_NO_PURE_DECLS'
+   37 |     DECLARE_CLASS2(USMInstanceElementIdMapTransactor, UObject, COMPILED_IN_FLAGS(0 | CLASS_Transient), CASTCLASS_None, TEXT("/Script/Engine"), Z_Construct_UClass_USMInstanceElementIdMapTransactor) \
+      |                                                                                                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:23:2: error: call to non-static member function without an object argument
+   23 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:22:1: note: expanded from here
+   22 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:47:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_BODY'
+   47 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_UINTERFACE_BODY() \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:41:142: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_23_GENERATED_UINTERFACE_BODY'
+   41 |     DECLARE_CLASS2(USMInstanceManager, UInterface, COMPILED_IN_FLAGS(CLASS_Abstract | CLASS_Interface), CASTCLASS_None, TEXT("/Script/Engine"), Z_Construct_UClass_USMInstanceManager) \
+      |                                                                                                                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:157:2: error: call to non-static member function without an object argument
+  157 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:47:1: note: expanded from here
+   47 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:104:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_GENERATED_BODY'
+  104 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:84:132: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_157_INCLASS_NO_PURE_DECLS'
+   84 |     DECLARE_CLASS2(USMInstanceProxyEditingObject, UObject, COMPILED_IN_FLAGS(CLASS_Abstract), CASTCLASS_None, TEXT("/Script/Engine"), Z_Construct_UClass_USMInstanceProxyEditingObject) \
+      |                                                                                                                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:13:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/Elements/SMInstance/SMInstanceManager.h:174:2: error: call to non-static member function without an object argument
+  174 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:62:1: note: expanded from here
+   62 | FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:141:2: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_BODY'
+  141 |     FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_UINTERFACE_BODY() \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/Engine/UHT/SMInstanceManager.generated.h:135:150: note: expanded from macro 'FID_Engine_Source_Runtime_Engine_Public_Elements_SMInstance_SMInstanceManager_h_174_GENERATED_UINTERFACE_BODY'
+  135 |     DECLARE_CLASS2(USMInstanceManagerProvider, UInterface, COMPILED_IN_FLAGS(CLASS_Abstract | CLASS_Interface), CASTCLASS_None, TEXT("/Script/Engine"), Z_Construct_UClass_USMInstanceManagerProvider) \
+      |                                                                                                                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:158:75: error: unknown class name 'ISMInstanceManager'; did you mean 'UActorInstanceManager'?
+  158 | class UInstancedStaticMeshComponent : public UStaticMeshComponent, public ISMInstanceManager
+      |                                                                           ^~~~~~~~~~~~~~~~~~
+      |                                                                           UActorInstanceManager
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Engine/ActorInstanceHandle.h:10:7: note: 'UActorInstanceManager' declared here
+   10 | class UActorInstanceManager;
+      |       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderWorldEffects.cpp:5:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Components/InstancedStaticMeshComponent.h:158:75: error: base class has incomplete type
+  158 | class UInstancedStaticMeshComponent : public UStaticMeshComponent, public ISMInstanceManager
+      |                                                                    ~~~~~~~^~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Classes/Engine/ActorInstanceHandle.h:10:7: note: forward declaration of 'UActorInstanceManager'
+   10 | class UActorInstanceManager;
+      |       ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[66/84] Compile [Apple] CinderWorldEffectsTests.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:12:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderWorldEffects.h:27:5: error: no struct named 'Z_Construct_UClass_UCinderWorldEffects_Statics' in the global namespace
+   27 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:397:1: note: expanded from here
+  397 | FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderWorldEffects.generated.h:47:2: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_GENERATED_BODY'
+   47 |     FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderWorldEffects.generated.h:26:18: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_INCLASS_NO_PURE_DECLS'
+   26 |     friend struct ::Z_Construct_UClass_UCinderWorldEffects_Statics; \
+      |                   ~~^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderWorldEffects.h:27:5: error: out-of-line declaration of 'Z_Construct_UClass_UCinderWorldEffects' does not match any declaration in the global namespace; did you mean 'Z_Construct_UClass_USoundfieldEffectBase'?
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:397:1: note: expanded from here
+  397 | FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_GENERATED_BODY
+      | ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderWorldEffects.generated.h:47:2: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_GENERATED_BODY'
+   47 |     FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_INCLASS_NO_PURE_DECLS \
+      |     ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderWorldEffects.generated.h:27:34: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_INCLASS_NO_PURE_DECLS'
+   27 |     friend CINDERLINE_API UClass* ::Z_Construct_UClass_UCinderWorldEffects(ETypeConstructPhase); \
+      |                                     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/AudioExtensions/UHT/ISoundfieldFormat.generated.h:100:29: note: 'Z_Construct_UClass_USoundfieldEffectBase' declared here
+  100 | AUDIOEXTENSIONS_API UClass* Z_Construct_UClass_USoundfieldEffectBase(ETypeConstructPhase);
+      |                             ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:12:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: error: missing '}' at end of definition of 'UCinderLandscapeTerrain'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Sim/Network.h:7:1: note: still within definition of 'UCinderLandscapeTerrain' here
+    7 | namespace cinder::net {
+      | ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderWorldEffects.h:27:5: error: call to non-static member function without an object argument
+   27 |     GENERATED_BODY()
+      |     ^~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^~~~~~~~~~
+<scratch space>:397:1: note: expanded from here
+  397 | FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_GENERATED_BODY
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderWorldEffects.generated.h:47:2: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_GENERATED_BODY'
+   47 |     FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_INCLASS_NO_PURE_DECLS \
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderWorldEffects.generated.h:29:136: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderWorldEffects_h_27_INCLASS_NO_PURE_DECLS'
+   29 |     DECLARE_CLASS2(UCinderWorldEffects, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/Cinderline"), Z_Construct_UClass_UCinderWorldEffects) \
+      |                                                                                                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:24:5: error: unknown type name 'UCinderWorldEffects'
+   24 |     UCinderWorldEffects* Effects = nullptr;
+      |     ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:43:29: error: use of undeclared identifier 'UCinderWorldEffects'; did you mean 'CinderWorldEffectsTests'?
+   43 |         Effects = NewObject<UCinderWorldEffects>(Owner, TEXT("WorldEffects"));
+      |                             ^~~~~~~~~~~~~~~~~~~
+      |                             CinderWorldEffectsTests
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:18:11: note: 'CinderWorldEffectsTests' declared here
+   18 | namespace CinderWorldEffectsTests
+      |           ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:43:29: error: unexpected namespace name 'CinderWorldEffectsTests': expected expression
+   43 |         Effects = NewObject<UCinderWorldEffects>(Owner, TEXT("WorldEffects"));
+      |                             ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:159:33: error: use of undeclared identifier 'CinderTeamColors'
+  159 |     for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
+      |                                 ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:161:40: error: use of undeclared identifier 'CinderTeamColors'
+  161 |             Fixture.ComponentsWithTint(CinderTeamColors::Accent(Team))
+      |                                        ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:162:46: error: use of undeclared identifier 'CinderTeamColors'
+  162 |                 + Fixture.ComponentsWithTint(CinderTeamColors::Color(Team)), 2);
+      |                                              ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:201:33: error: use of undeclared identifier 'CinderTeamColors'
+  201 |     for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
+      |                                 ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:204:39: error: use of undeclared identifier 'CinderTeamColors'
+  204 |             Fixture.InstancesWithTint(CinderTeamColors::Color(Team)) > 0);
+      |                                       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Tests/CinderWorldEffectsTests.cpp:206:39: error: use of undeclared identifier 'CinderTeamColors'
+  206 |             Fixture.InstancesWithTint(CinderTeamColors::Accent(Team)) > 0);
+      |                                       ^
+14 errors generated.
+[67/84] Compile [Apple] Module.Cinderline.gen.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.gen.cpp:8:
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:8:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.gen.cpp:8:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:23:24: error: class member cannot be redeclared
+   23 | CINDERLINE_API UClass* Z_Construct_UClass_UCinderLandscapeTerrain(ETypeConstructPhase);
+      |                        ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:22:24: note: previous declaration is here
+   22 | CINDERLINE_API UClass* Z_Construct_UClass_UCinderLandscapeTerrain(ETypeConstructPhase);
+      |                        ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.gen.cpp:1:
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/CinderlineEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h:4:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Editor/UnrealEd/Public/UnrealEdSharedPCH.h:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/EngineSharedPCH.h:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Slate/Public/SlateSharedPCH.h:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/CoreUObjectSharedPCH.h:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/CoreSharedPCH.h:7:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Async/AsyncWork.h:11:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Misc/Compression.h:5:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Containers/Map.h:9:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Containers/Set.h:29:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Containers/ScriptSparseSet.h:7:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Containers/SetUtilities.h:6:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Serialization/MemoryLayout.h:12:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/IsAbstract.h:11:17: error: incomplete type 'UCinderLandscapeTerrain' used in type trait expression
+   11 |     enum { Value = __is_abstract(T) };
+      |                    ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/Class.h:3745:16: note: in instantiation of template class 'TIsAbstract<UCinderLandscapeTerrain>' requested here
+ 3745 |         IsAbstract = TIsAbstract<CPPCLASS>::Value
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:69:3: note: in instantiation of template class 'TCppClassTypeTraits<UCinderLandscapeTerrain>' requested here
+   69 |         TCppClassTypeTraits<UCinderLandscapeTerrain>::IsAbstract,
+      |         ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: note: definition of 'UCinderLandscapeTerrain' is not complete until the closing '}'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.gen.cpp:8:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:75:61: error: non-friend class member 'NewProp_Landscapes_Inner' cannot have a qualified name
+   75 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_Landscapes_Inner = { "Landscapes", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_ALandscape, METADATA_PARAMS(0, nullptr) };
+      |                                                ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:76:60: error: non-friend class member 'NewProp_Landscapes' cannot have a qualified name
+   76 | const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_Landscapes = { "Landscapes", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(UCinderLandscapeTerrain, Landscapes), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Landscapes_MetaData), NewProp_Landscapes_MetaData) };
+      |                                               ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:77:61: error: non-friend class member 'NewProp_BoundFogMasks_Inner' cannot have a qualified name
+   77 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_BoundFogMasks_Inner = { "BoundFogMasks", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UTexture2D, METADATA_PARAMS(0, nullptr) };
+      |                                                ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:78:60: error: non-friend class member 'NewProp_BoundFogMasks' cannot have a qualified name
+   78 | const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_BoundFogMasks = { "BoundFogMasks", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(UCinderLandscapeTerrain, BoundFogMasks), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BoundFogMasks_MetaData), NewProp_BoundFogMasks_MetaData) };
+      |                                               ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:79:61: error: non-friend class member 'NewProp_BoundTerrainLayers_Inner' cannot have a qualified name
+   79 | const UECodeGen_Private::FObjectPropertyParams UHT_STATICS::NewProp_BoundTerrainLayers_Inner = { "BoundTerrainLayers", nullptr, (EPropertyFlags)0x0104000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, nullptr, nullptr, 1, 0, Z_Construct_UClass_UTexture2D, METADATA_PARAMS(0, nullptr) };
+      |                                                ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:80:60: error: non-friend class member 'NewProp_BoundTerrainLayers' cannot have a qualified name
+   80 | const UECodeGen_Private::FArrayPropertyParams UHT_STATICS::NewProp_BoundTerrainLayers = { "BoundTerrainLayers", nullptr, (EPropertyFlags)0x0144000000002000, UECodeGen_Private::EPropertyGenFlags::Array, nullptr, nullptr, 1, STRUCT_OFFSET(UCinderLandscapeTerrain, BoundTerrainLayers), EArrayPropertyFlags::None, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_BoundTerrainLayers_MetaData), NewProp_BoundTerrainLayers_MetaData) };
+      |                                               ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:81:66: error: non-friend class member 'PropPointers' cannot have a qualified name
+   81 | const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
+      |                                                     ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:81:81: error: array bound cannot be deduced from a default member initializer
+   81 | const UECodeGen_Private::FPropertyParamsBase* const UHT_STATICS::PropPointers[] = {
+      |                                                                                 ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:89:15: error: no matching function for call to 'UEArrayCountHelper'
+   89 | static_assert(UE_ARRAY_COUNT(UHT_STATICS::PropPointers) < 2048);
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:222:41: note: expanded from macro 'UE_ARRAY_COUNT'
+  222 | #define UE_ARRAY_COUNT( array ) (sizeof(UEArrayCountHelper(array)) - 1)
+      |                                         ^~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:215:7: note: candidate template ignored: substitution failure [with T = const UECodeGen_Private::FPropertyParamsBase *const[]]: invalid application of 'sizeof' to an incomplete type 'const UECodeGen_Private::FPropertyParamsBase *const[]'
+  215 |     auto UEArrayCountHelper(T& t) -> char(&)[sizeof(t) / sizeof(t[0]) + 1];
+      |          ^                                         ~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.gen.cpp:8:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:91:34: error: non-friend class member 'DependentSingletons' cannot have a qualified name
+   91 | FTypeConstructFunc* UHT_STATICS::DependentSingletons[] = {
+      |                     ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:91:56: error: array bound cannot be deduced from a default member initializer
+   91 | FTypeConstructFunc* UHT_STATICS::DependentSingletons[] = {
+      |                                                        ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:95:15: error: no matching function for call to 'UEArrayCountHelper'
+   95 | static_assert(UE_ARRAY_COUNT(UHT_STATICS::DependentSingletons) < 16);
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:222:41: note: expanded from macro 'UE_ARRAY_COUNT'
+  222 | #define UE_ARRAY_COUNT( array ) (sizeof(UEArrayCountHelper(array)) - 1)
+      |                                         ^~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/UnrealTemplate.h:215:7: note: candidate template ignored: substitution failure [with T = FTypeConstructFunc *[]]: invalid application of 'sizeof' to an incomplete type 'UObject *(*[])(ETypeConstructPhase)'
+  215 |     auto UEArrayCountHelper(T& t) -> char(&)[sizeof(t) / sizeof(t[0]) + 1];
+      |          ^                                         ~
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.gen.cpp:8:
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:96:52: error: non-friend class member 'ClassParams' cannot have a qualified name
+   96 | const UECodeGen_Private::FClassParams UHT_STATICS::ClassParams = {
+      |                                       ~~~~~~~~~~~~~^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:112:9: error: class member cannot be redeclared
+  112 | UClass* Z_Construct_UClass_UCinderLandscapeTerrain(ETypeConstructPhase Phase)
+      |         ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:22:24: note: previous declaration is here
+   22 | CINDERLINE_API UClass* Z_Construct_UClass_UCinderLandscapeTerrain(ETypeConstructPhase);
+      |                        ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:145:36: error: extra qualification on member 'UCinderLandscapeTerrain'
+  145 | DEFINE_VTABLE_PTR_HELPER_CTOR_NS(, UCinderLandscapeTerrain);
+      |                                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.gen.cpp:145:36: error: constructor cannot be redeclared
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:186:5: note: previous declaration is here
+  186 |     GENERATED_BODY()
+      |     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:800:29: note: expanded from macro 'GENERATED_BODY'
+  800 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:795:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  795 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:794:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  794 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:104:1: note: expanded from here
+  104 | FID_starCraft_Source_Cinderline_Public_Presentation_CinderLandscapeTerrain_h_186_GENERATED_BODY
+      | ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.generated.h:48:2: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderLandscapeTerrain_h_186_GENERATED_BODY'
+   48 |     FID_starCraft_Source_Cinderline_Public_Presentation_CinderLandscapeTerrain_h_186_ENHANCED_CONSTRUCTORS \
+      |     ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/UnrealEditor/Inc/Cinderline/UHT/CinderLandscapeTerrain.generated.h:37:41: note: expanded from macro 'FID_starCraft_Source_Cinderline_Public_Presentation_CinderLandscapeTerrain_h_186_ENHANCED_CONSTRUCTORS'
+   37 |     DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UCinderLandscapeTerrain); \
+      |                                            ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[68/84] Compile [Apple] MapDefinition.cpp
+[69/84] Compile [Apple] CinderWorldIntegrationTests.cpp
+[70/84] Compile [Apple] SimulationMovement.cpp
+[71/84] Compile [Apple] SimulationJobs.cpp
+[72/84] Compile [Apple] SimulationAI.cpp
+[73/84] Compile [Apple] SimulationProduction.cpp
+[74/84] Compile [Apple] SimulationTactics.cpp
+[75/84] Compile [Apple] Simulation.cpp
+[76/84] Compile [Apple] Network.cpp
+[77/84] Compile [Apple] SimulationWorkerPlans.cpp
+[78/84] Compile [Apple] CinderLandscapeAuthoringLibrary.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:200:19: error: expected ';' at end of declaration list
+  200 |     int32 ActiveMa
+      |                   ^
+      |                   ;
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:15:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/ShaderCompiler.h:12:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:35:1: error: 'inline' can only appear on functions and non-local variables
+   35 | inline const int32 ShaderCompileWorkerInputVersion = 33;
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:37:1: error: 'inline' can only appear on functions and non-local variables
+   37 | inline const int32 ShaderCompileWorkerOutputVersion = 31;
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:39:1: error: 'inline' can only appear on functions and non-local variables
+   39 | inline const int32 ShaderCompileWorkerSingleJobHeader = 'S';
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:41:1: error: 'inline' can only appear on functions and non-local variables
+   41 | inline const int32 ShaderCompileWorkerPipelineJobHeader = 'P';
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:46:1: error: storage class specified for a member declaration
+   46 | extern RENDERCORE_API const FGuid UE_SHADER_CACHE_VERSION;
+      | ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:14:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h:184:22: error: missing '}' at end of definition of 'UCinderLandscapeTerrain'
+  184 | class CINDERLINE_API UCinderLandscapeTerrain : public UActorComponent
+      |                      ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:48:1: note: still within definition of 'UCinderLandscapeTerrain' here
+   48 | namespace UE::ShaderCompiler
+      | ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:53:93: error: unknown type name 'FShaderCompilerInput'; did you mean 'FShaderCompilerOutput'?
+   53 |     RENDERCORE_API bool ShouldCompileWithBindlessEnabled(EShaderPlatform ShaderPlatform, const FShaderCompilerInput& Input);
+      |                                                                                                ^~~~~~~~~~~~~~~~~~~~
+      |                                                                                                FShaderCompilerOutput
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/Shader.h:87:8: note: 'FShaderCompilerOutput' declared here
+   87 | struct FShaderCompilerOutput;
+      |        ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:15:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/ShaderCompiler.h:12:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:686:101: error: unknown type name 'FShaderPipelineCompileJob'; did you mean 'FShaderCommonCompileJob'?
+  686 | extern RENDERCORE_API void CompileShaderPipeline(const TArray<const IShaderFormat*>& ShaderFormats, FShaderPipelineCompileJob* PipelineJob, int32* CompileCount = nullptr);
+      |                                                                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                                     FShaderCommonCompileJob
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/MeshMaterialShaderType.h:15:7: note: 'FShaderCommonCompileJob' declared here
+   15 | class FShaderCommonCompileJob;
+      |       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:15:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/ShaderCompiler.h:12:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:717:228: error: unknown type name 'FShaderSharedAnsiStringPtr'; did you mean 'FThreadSafeSharedAnsiStringPtr'?
+  717 | extern RENDERCORE_API bool LoadShaderSourceFile(const TCHAR* VirtualFilePath, EShaderPlatform ShaderPlatform, FString* OutFileContents, TArray<FShaderCompilerError>* OutCompileErrors, const FName* ShaderPlatformName = nullptr, FShaderSharedAnsiStringPtr* OutStrippedContents = nullptr);
+      |                                                                                                                                                                                                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                                                                                                                                                                    FThreadSafeSharedAnsiStringPtr
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderParameterMetadata.h:30:7: note: 'FThreadSafeSharedAnsiStringPtr' declared here
+   30 | using FThreadSafeSharedAnsiStringPtr = TSharedPtr<TArray<ANSICHAR>, ESPMode::ThreadSafe>;
+      |       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:15:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/ShaderCompiler.h:12:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:719:117: error: unknown type name 'FShaderSharedStringPtr'; did you mean 'FThreadSafeSharedStringPtr'?
+  719 | extern RENDERCORE_API bool LoadCachedShaderSourceFile(const TCHAR* VirtualFilePath, EShaderPlatform ShaderPlatform, FShaderSharedStringPtr* OutFileContents, TArray<FShaderCompilerError>* OutCompileErrors, const FName* ShaderPlatformName = nullptr, FShaderSharedAnsiStringPtr* OutStrippedContents = nullptr);
+      |                                                                                                                     ^~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                                                     FThreadSafeSharedStringPtr
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCore.h:411:7: note: 'FThreadSafeSharedStringPtr' declared here
+  411 | using FThreadSafeSharedStringPtr = TSharedPtr<FString, ESPMode::ThreadSafe>;
+      |       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:15:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/ShaderCompiler.h:12:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:719:249: error: unknown type name 'FShaderSharedAnsiStringPtr'; did you mean 'FThreadSafeSharedAnsiStringPtr'?
+  719 | extern RENDERCORE_API bool LoadCachedShaderSourceFile(const TCHAR* VirtualFilePath, EShaderPlatform ShaderPlatform, FShaderSharedStringPtr* OutFileContents, TArray<FShaderCompilerError>* OutCompileErrors, const FName* ShaderPlatformName = nullptr, FShaderSharedAnsiStringPtr* OutStrippedContents = nullptr);
+      |                                                                                                                                                                                                                                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                                                                                                                                                                                                                         FThreadSafeSharedAnsiStringPtr
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderParameterMetadata.h:30:7: note: 'FThreadSafeSharedAnsiStringPtr' declared here
+   30 | using FThreadSafeSharedAnsiStringPtr = TSharedPtr<TArray<ANSICHAR>, ESPMode::ThreadSafe>;
+      |       ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Source/CinderlineEditor/Private/CinderLandscapeAuthoringLibrary.cpp:15:
+In file included from /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Engine/Public/ShaderCompiler.h:12:
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderCompilerCore.h:730:2: error: unknown type name 'FShaderSharedAnsiStringPtr'; did you mean 'FThreadSafeSharedAnsiStringPtr'?
+  730 |     FShaderSharedAnsiStringPtr  StrippedSource;         // Source with comments stripped out, and converted to ANSICHAR (output of ShaderConvertAndStripComments)
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+      |     FThreadSafeSharedAnsiStringPtr
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/RenderCore/Public/ShaderParameterMetadata.h:30:7: note: 'FThreadSafeSharedAnsiStringPtr' declared here
+   30 | using FThreadSafeSharedAnsiStringPtr = TSharedPtr<TArray<ANSICHAR>, ESPMode::ThreadSafe>;
+      |       ^
+13 errors generated.
+[79/84] Compile [Apple] Module.MetalRHI.3.cpp
+[80/84] Compile [Apple] Module.MetalRHI.1.cpp
+[81/84] Compile [Apple] Module.MetalRHI.2.cpp
+[82/84] Link [Apple] libUnrealEditor-MetalRHI.dylib
+Total time in Unreal Build Accelerator local executor: 97.68 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 103.98 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 107.7kb

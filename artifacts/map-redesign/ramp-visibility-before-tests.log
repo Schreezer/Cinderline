@@ -1,0 +1,4 @@
+FAIL adjacent Anchor ramp vision: adjacent low-ground Anchor reveals the gradual ramp, including its middle and foot
+FAIL moving ramp observer vision: ground observer has no invisible own-cell gaps while ascending or descending the ramp interior
+FAIL ramp vision save/load: a reloaded ground observer retains current ramp visibility
+PASS existing upper edge and air privacy

@@ -1,0 +1,908 @@
+--- before/Source/Cinderline/Private/Presentation/CinderBattlefield.cpp
++++ after/Source/Cinderline/Private/Presentation/CinderBattlefield.cpp
+@@ -711,6 +711,7 @@
+     Features.Map = Simulation->config().map;
+     Features.WorldSize = Simulation->worldSize();
+     uint32 Hash = HashCombineFast(GetTypeHash(Features.Map), GetTypeHash(Features.WorldSize));
++    Hash = HashCombineFast(Hash, GetTypeHash(Simulation->playerCount()));
+     for (const auto& Cliff : Simulation->obstacles())
+     {
+         if (!Simulation->explored(0, Cliff.center)) continue;
+@@ -745,6 +746,7 @@
+     Hash = HashCombineFast(Hash, GetTypeHash(Features.Minerals.Num()));
+     Hash = HashCombineFast(Hash, GetTypeHash(ServiceBuildings.Num()));
+     if (!bTerrainSurfaceInvalid && GroundSurfaceTexture && Hash == TerrainSurfaceHash) return;
++    CinderLandscapeTerrain::GatherPathways(*Simulation, Features.Trails);
+     for (const cinder::Entity* Building : ServiceBuildings)
+     {
+         const float Radius = cinder::definition(Building->kind).radius * 1.20f;
+@@ -964,8 +966,10 @@
+     SunComponent->SetDynamicShadowDistanceMovableLight(4200);
+     SunComponent->SetDynamicShadowCascades(PLATFORM_IOS ? 2 : 4);
+     SunComponent->SetCascadeDistributionExponent(3.2f);
+-    SunComponent->SetShadowBias(0.25f);
+-    SunComponent->SetShadowSlopeBias(0.35f);
++    // Steep landscape walls need more slope bias than flat ground; the lower
++    // values produced dense self-shadow stripes that hid the rock's strata.
++    SunComponent->SetShadowBias(0.70f);
++    SunComponent->SetShadowSlopeBias(1.0f);
+     auto* Sky = GetWorld()->SpawnActor<ASkyLight>();
+     auto* SkyComponent = Sky->GetLightComponent();
+     SkyComponent->SetMobility(EComponentMobility::Movable);
+--- before/Source/Cinderline/Private/Presentation/CinderCanyonPreview.cpp
++++ after/Source/Cinderline/Private/Presentation/CinderCanyonPreview.cpp
+@@ -16,6 +16,11 @@
+ #include "TimerManager.h"
+ #include "UnrealClient.h"
+ 
++#if WITH_EDITOR
++#include "ShaderCompiler.h"
++#include "StaticMeshCompiler.h"
++#endif
++
+ DEFINE_LOG_CATEGORY_STATIC(LogCinderCanyonPreview, Log, All);
+ 
+ namespace
+@@ -23,6 +28,22 @@
+ constexpr uint32 CanyonPreviewSeed = 0xCA770001u;
+ TWeakObjectPtr<UWorld> CanyonCaptureWorld;
+ FTimerHandle CanyonCaptureTimer;
++
++void FinishCanyonPreviewCompilation(const FString& State)
++{
++#if WITH_EDITOR
++    const int32 ShaderJobsBefore = GShaderCompilingManager
++        ? GShaderCompilingManager->GetNumRemainingJobs() : 0;
++    const int32 MeshesBefore = FStaticMeshCompilingManager::Get().GetNumRemainingMeshes();
++    FStaticMeshCompilingManager::Get().FinishAllCompilation();
++    if (GShaderCompilingManager) GShaderCompilingManager->FinishAllCompilation();
++    UE_LOG(LogCinderCanyonPreview, Display,
++        TEXT("CINDERLINE_CANYON_PREVIEW_COMPILED state=%s shader_jobs=%d->%d static_meshes=%d->%d"),
++        *State, ShaderJobsBefore,
++        GShaderCompilingManager ? GShaderCompilingManager->GetNumRemainingJobs() : 0,
++        MeshesBefore, FStaticMeshCompilingManager::Get().GetNumRemainingMeshes());
++#endif
++}
+ 
+ bool CircleTouchesObstacle(cinder::Vec2 Point, float Radius, const cinder::Obstacle& Obstacle)
+ {
+@@ -230,6 +251,7 @@
+         Battle->Sim().update(cinder::Simulation::Step * 4.0f);
+         Battle->ResetPresentation();
+         Battle->RenderState();
++        FinishCanyonPreviewCompilation(State);
+         Battle->SetActorTickEnabled(false);
+         PC->Notify(FString());
+ 
+--- before/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp
++++ after/Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp
+@@ -400,6 +400,21 @@
+     }
+     return Relief;
+ }
++}
++
++void GatherPathways(const cinder::Simulation& Simulation,
++    TArray<TPair<cinder::Vec2, cinder::Vec2>>& OutSegments)
++{
++    OutSegments.Reset();
++    const float Scale = Simulation.worldSize() / cinder::Simulation::WorldSize;
++    const FRouteSet& Set = PathwaySetFor(Simulation);
++    for (int32 RouteIndex = 0; RouteIndex < Set.RouteCount; ++RouteIndex)
++    {
++        const FRoute& Route = Set.Routes[RouteIndex];
++        for (int32 Index = 0; Index + 1 < Route.PointCount; ++Index)
++            OutSegments.Emplace(cinder::Vec2{Route.Points[Index].X * Scale, Route.Points[Index].Y * Scale},
++                cinder::Vec2{Route.Points[Index + 1].X * Scale, Route.Points[Index + 1].Y * Scale});
++    }
+ }
+ 
+ int32 PathwaySampleCount(const cinder::Simulation& Simulation)
+@@ -515,11 +530,30 @@
+             (Alpha - BenchAlpha) / CliffCrestQuadFraction);
+         const float Shape = CliffBenchHeight * ToeShape + (1.0f - CliffBenchHeight) * CrestShape;
+         const float Toe = CliffToeRelief * FMath::Lerp(0.80f, 1.20f, ContourWave);
+-        const float BroadVariation = 0.90f + 0.10f * (0.5f
+-            + 0.25f * FMath::Sin(X * 0.007f + ObstacleIndex * 0.83f)
+-            + 0.25f * FMath::Sin(Y * 0.009f + ObstacleIndex * 1.37f));
++        // Broad planar fragments and a shallow diagonal weathering cut break up the
++        // tabletop and give the crest a height rhythm without eroding its blocked
++        // footprint. A half-period spans at least four quads; finer folds disappear
++        // into this 127-sample landscape or turn its cap into noisy teeth.
++        const float LocalX = X - Obstacle.center.x;
++        const float LocalY = Y - Obstacle.center.y;
++        const float PatchSpan = FMath::Max(Spacing * 8.0f, MinHalf * 0.85f);
++        const float PhaseA = (LocalX * 0.94f + LocalY * 0.34f) / PatchSpan
++            + ObstacleIndex * 0.317f;
++        const float PhaseB = (-LocalX * 0.42f + LocalY * 0.91f) / (PatchSpan * 1.47f)
++            + ObstacleIndex * 0.193f + 0.27f;
++        const float FacetA = FMath::Abs(2.0f * (PhaseA - FMath::FloorToFloat(PhaseA)) - 1.0f);
++        const float FacetB = FMath::Abs(2.0f * (PhaseB - FMath::FloorToFloat(PhaseB)) - 1.0f);
++        const float CutDistance = FMath::Abs(LocalX * 0.56f - LocalY * 0.83f
++            + MinHalf * (ObstacleIndex % 2 == 0 ? 0.23f : -0.29f));
++        const float Cut = Feather(CutDistance, FMath::Max(Spacing * 3.2f, MinHalf * 0.38f));
++        // Thin ridges carry modest cap relief; broad mesas can show a deeper incision.
++        // The cap floor remains above the tested obstacle-height floor, so no cut can
++        // become a low passage across an obstacle that the simulation still blocks.
++        const float CapRelief = FMath::Clamp((MinHalf - Spacing) * 0.20f, 18.0f, 72.0f);
++        const float CapHeight = FMath::Max(CliffPeakFloor * 0.92f,
++            Peak - CapRelief * (FacetA * 0.72f + FacetB * 0.28f + Cut * 0.46f));
+         Height = FMath::Max(Height,
+-            FMath::Min(MaxRelief, FMath::Lerp(Toe, Peak * BroadVariation, Shape)));
++            FMath::Min(MaxRelief, FMath::Lerp(Toe, CapHeight, Shape)));
+     }
+ 
+     // --- Walkable relief, everywhere the cliffs are not --------------------------------
+--- before/Source/Cinderline/Private/Presentation/CinderScenery.cpp
++++ after/Source/Cinderline/Private/Presentation/CinderScenery.cpp
+@@ -13,11 +13,8 @@
+ constexpr int32 BatchCount = 12;
+ constexpr float FogPlaneZ = 2.5f;
+ 
+-// Ground props sink this far into the surface they stand on. The heightfield the
+-// landscape lane builds is a smoothed plateau, so a mesa parked exactly on the sampled
+-// height shows a hairline of ground plane under its skirt wherever the interpolation
+-// dips between samples. Twenty centimetres is below the silhouette budget of even the
+-// smallest 240 cm mesa and hides that seam at every camera angle.
++// The tall wall dressing is only used over the flat fallback. Relief caps use their
++// own shallow seat so the heightfield remains the main cliff silhouette.
+ constexpr float MesaSinkCm = 20.0f;
+ 
+ // Ambient scatter lattice. Thirty cells per axis regardless of world size keeps both
+@@ -227,11 +224,18 @@
+     // The flat gameplay fog plane cannot darken geometry taller than itself, so
+     // the cliffs sample the same mask the ground does and fog themselves. Without
+     // a mask the material keeps its fully-explored default and renders as before.
+-    if (CanyonMaterial && FogMask)
++    if (CanyonMaterial)
+     {
+         if (auto* Fogged = UMaterialInstanceDynamic::Create(CanyonMaterial, this))
+         {
+-            Fogged->SetTextureParameterValue(TEXT("FogMask"), FogMask);
++            if (FogMask) Fogged->SetTextureParameterValue(TEXT("FogMask"), FogMask);
++            // Keep rock faces readable beside the dusty ground. These are existing
++            // diffuse parameters; visibility and fog emission retain their authored gates.
++            Fogged->SetVectorParameterValue(TEXT("CanyonShadow"), FLinearColor(0.24f, 0.20f, 0.16f));
++            Fogged->SetVectorParameterValue(TEXT("CanyonSandstone"), FLinearColor(0.43f, 0.34f, 0.25f));
++            Fogged->SetVectorParameterValue(TEXT("CanyonCap"), FLinearColor(0.28f, 0.25f, 0.20f));
++            Fogged->SetVectorParameterValue(TEXT("IronOxide"), FLinearColor(0.29f, 0.20f, 0.14f));
++            Fogged->SetScalarParameterValue(TEXT("NormalStrength"), 0.28f);
+             CanyonFogMaterial = Fogged;
+             CanyonMaterial = Fogged;
+         }
+@@ -414,6 +418,7 @@
+     const std::vector<cinder::Entity>& KnownResources) const
+ {
+     uint32 Hash = HashFloat(GetTypeHash(Simulation.config().map), Simulation.worldSize());
++    Hash = HashCombineFast(Hash, bSurfaceRelief ? 1u : 0u);
+     for (const cinder::Obstacle& Obstacle : Simulation.obstacles())
+     {
+         Hash = HashFloat(Hash, Obstacle.center.x);
+@@ -536,7 +541,84 @@
+         const float LongSize = 2.0f * (bLongX ? Obstacle.half.x : Obstacle.half.y);
+         const int32 Segments = FMath::Clamp(FMath::CeilToInt(LongSize / 300.0f), 2, 7);
+         const float SegmentSize = LongSize / Segments;
+-        for (int32 Segment = 0; Segment < Segments; ++Segment)
++        if (bSurfaceRelief)
++        {
++            // The landscape already supplies the continuous 280-480 cm cliff body.
++            // A few broad, shallow outcrops break its crest without stacking another
++            // wall on top or hiding the plateau between repeated columns.
++            const float CrossHalf = bLongX ? Obstacle.half.y : Obstacle.half.x;
++            const float Inset = FMath::Min(CrossHalf * 0.60f,
++                CinderLandscapeTerrain::VertexSpacing(Simulation.worldSize()) * 2.9f);
++            const float CoreHalfAcross = FMath::Max(12.0f, CrossHalf - Inset);
++            const float CoreLongSize = FMath::Max(24.0f, LongSize - Inset * 2.0f);
++            const int32 Groups = FMath::Clamp(FMath::CeilToInt(LongSize / 530.0f), 1, 5);
++            const float GroupSpan = CoreLongSize / Groups;
++            for (int32 Group = 0; Group < Groups; ++Group)
++            {
++                const int32 Rows = CrossHalf >= 300.0f && (Group + Seed) % 2 == 0 ? 2 : 1;
++                for (int32 Row = 0; Row < Rows; ++Row)
++                {
++                    const float Along = (Group + 0.5f) * GroupSpan - CoreLongSize * 0.5f
++                        + Random.FRandRange(-0.08f, 0.08f) * GroupSpan;
++                    const float Cross = (Rows > 1 ? (Row == 0 ? -0.36f : 0.36f) : 0.0f)
++                        * CoreHalfAcross + Random.FRandRange(-0.08f, 0.08f) * CoreHalfAcross;
++                    const float YawOffset = Random.FRandRange(-17.0f, 17.0f);
++                    const float SinYaw = FMath::Abs(FMath::Sin(FMath::DegreesToRadians(YawOffset)));
++                    const float CosYaw = FMath::Abs(FMath::Cos(FMath::DegreesToRadians(YawOffset)));
++                    float Width = FMath::Min(330.0f, GroupSpan * Random.FRandRange(0.64f, 0.88f));
++                    float Depth = FMath::Min(Width * Random.FRandRange(0.52f, 0.78f),
++                        CoreHalfAcross * (Rows > 1 ? 0.72f : 1.35f));
++                    const float Fit = FMath::Min(1.0f, FMath::Min(
++                        (CoreLongSize * 0.5f - FMath::Abs(Along))
++                            / FMath::Max(1.0f, (Width * CosYaw + Depth * SinYaw) * 0.5f),
++                        (CoreHalfAcross - FMath::Abs(Cross))
++                            / FMath::Max(1.0f, (Depth * CosYaw + Width * SinYaw) * 0.5f)));
++                    Width *= Fit;
++                    Depth *= Fit;
++                    const float Height = Random.FRandRange(50.0f, Row == 0 ? 120.0f : 82.0f);
++                    const float X = Obstacle.center.x + (bLongX ? Along : Cross);
++                    const float Y = Obstacle.center.y + (bLongX ? Cross : Along);
++                    float HalfX = 0.0f, HalfY = 0.0f, Seat = 0.0f;
++                    for (int32 Attempt = 0; Attempt < 4; ++Attempt)
++                    {
++                        HalfX = ((bLongX ? Width : Depth) * CosYaw
++                            + (bLongX ? Depth : Width) * SinYaw) * 0.5f;
++                        HalfY = ((bLongX ? Depth : Width) * CosYaw
++                            + (bLongX ? Width : Depth) * SinYaw) * 0.5f;
++                        float Low = SurfaceRelief(Simulation, X, Y);
++                        float High = Low;
++                        // Seat into the lowest sampled support. Shrinking on steep
++                        // shoulders keeps a short cap from hovering over the cliff face.
++                        for (int32 CornerX : {-1, 1})
++                        for (int32 CornerY : {-1, 1})
++                        {
++                            const float Support = SurfaceRelief(Simulation,
++                                X + CornerX * HalfX, Y + CornerY * HalfY);
++                            Low = FMath::Min(Low, Support);
++                            High = FMath::Max(High, Support);
++                        }
++                        Seat = Low - 12.0f;
++                        if (High - Low <= Height * 0.55f || Attempt == 3) break;
++                        Width *= 0.78f;
++                        Depth *= 0.78f;
++                    }
++                    if (FMath::Abs(X - Obstacle.center.x) + HalfX > Obstacle.half.x + 0.05f
++                        || FMath::Abs(Y - Obstacle.center.y) + HalfY > Obstacle.half.y + 0.05f)
++                        ++LastOutOfBoundsTallInstances;
++                    const EBatch Variant = static_cast<EBatch>((Seed * 3 + Group * 5 + Row * 2) % 6);
++                    if (AddInstance(Variant, FTransform(
++                        FRotator(0, (bLongX ? 0.0f : 90.0f) + YawOffset, 0), FVector(X, Y, Seat),
++                        FVector(Width / 100.0f, Depth / 100.0f, Height / 100.0f))))
++                    {
++                        LastMinimumMesaHeightCm = LastMinimumMesaHeightCm <= 0.0f
++                            ? Height : FMath::Min(LastMinimumMesaHeightCm, Height);
++                        LastMaximumMesaHeightCm = FMath::Max(LastMaximumMesaHeightCm, Height);
++                        if (Rows > 1) ++LastMultiRowMesaInstances;
++                    }
++                }
++            }
++        }
++        else for (int32 Segment = 0; Segment < Segments; ++Segment)
+         {
+             const float Along = (Segment + 0.5f) / Segments * LongSize - LongSize * 0.5f;
+             const float CrossHalf = bLongX ? Obstacle.half.y : Obstacle.half.x;
+@@ -602,9 +684,7 @@
+                     2.0f * (SegmentSize * 0.5f - Depth * 0.5f * SinYaw - 3.0f) / CosYaw));
+                 Depth = FMath::Min(Depth, FMath::Max(20.0f,
+                     2.0f * (CrossHalf - FMath::Abs(Cross) - Width * 0.5f * SinYaw - 3.0f) / CosYaw));
+-                // The landscape lane raises obstacle plateaus to a 480 cm cap. A 180-240 cm
+-                // mesa parked at absolute Z would be swallowed whole by its own plateau, so
+-                // the range moves with it and every instance now stands on the heightfield.
++                // Without landscape relief the meshes carry the blocked silhouette.
+                 const float Height = FMath::Clamp(ProfileHeight + Random.FRandRange(-7.0f, 7.0f)
+                     - Row * 4.0f, 240.0f, 340.0f);
+                 const FVector Position = GroundPoint(Simulation,
+@@ -748,6 +828,7 @@
+     for (const cinder::Obstacle& Cliff : Simulation.obstacles())
+         if (Simulation.explored(0, Cliff.center)) Features.Cliffs.Add(Cliff);
+     for (const cinder::Entity& Resource : KnownResources) Features.Minerals.Add(Resource.pos);
++    CinderLandscapeTerrain::GatherPathways(Simulation, Features.Trails);
+     int32 Scattered = 0;
+     ForEachScatterCandidate(Simulation, [&](const FScatterCandidate& Candidate)
+     {
+@@ -772,11 +853,13 @@
+         const FColor Mask = CinderTerrainSurface::Sample(Features, Candidate.X, Candidate.Y);
+         const float Stone = Mask.R / 255.0f;
+         const float Ash = Mask.B / 255.0f;
++        const float Worn = Mask.A / 255.0f;
+         // Chips collect on exposed stone - which the mask already feathers outward from
+         // every explored cliff, so obstacle skirts get their density for free - and blow
+         // clear of the windblown ash drifts. The 0.09 floor keeps open lanes lightly
+         // littered rather than sterile without crowding ground a player reads for pathing.
+-        const float Density = FMath::Clamp(0.09f + Stone * 0.74f - Ash * 0.24f, 0.0f, 1.0f);
++        const float Density = FMath::Clamp(0.09f + Stone * 0.74f - Ash * 0.24f, 0.0f, 1.0f)
++            * (1.0f - Worn * 0.88f);
+         if (Candidate.Roll > Density) return true;
+         const float Size = FMath::Clamp(Candidate.SizeCm * FMath::Lerp(0.82f, 1.14f, Stone), 9.0f, 30.0f);
+         if (!AddInstance(EBatch::Debris, FTransform(FRotator(0, Candidate.Yaw, 0),
+--- before/Source/Cinderline/Private/Presentation/CinderTerrainSurface.cpp
++++ after/Source/Cinderline/Private/Presentation/CinderTerrainSurface.cpp
+@@ -32,15 +32,9 @@
+ 
+ FColor Sample(const FFeatures& Features, float X, float Y)
+ {
+-    // The ash channel is the only macro-scale signal anywhere in the ground pipeline, and a
+-    // single octave of it gave the whole battlefield one flat statistical texture: no basins,
+-    // no drifts, nothing for the eye to compose against at the RTS camera height. Three
+-    // octaves instead - a ~900 cm stretched drift carrying the composition, a ~1800 cm swell
+-    // that decides which half of the map is pale, and a ~400 cm break that keeps the edges of
+-    // the drifts from reading as airbrush. Weights sum to 1 so the channel still spans 0..1
+-    // and the Ash contrast curve below is unchanged. All three seeds key off Features.Map so
+-    // a map change still moves this channel. CPU-only inside the hash-gated BuildPixels: the
+-    // GPU pays exactly one texture fetch for this whether it is one octave or ten.
++    // Three deterministic scales separate broad dust basins from broken shoulders.
++    // The contrast curve below lets the macro mask reach both ends of the palette.
++    // This CPU work runs only when observed features change; rendering samples one mask.
+     const float Broad = Noise((X + Y * 0.24f) / 880.0f, Y / 340.0f, Features.Map + 31) * 0.55f
+         + Noise(X / 1900.0f, Y / 1650.0f, Features.Map + 11) * 0.30f
+         + Noise(X / 430.0f, Y / 390.0f, Features.Map + 53) * 0.15f;
+@@ -80,7 +74,26 @@
+         const float PX = X - Road.Key.x - Along * DX, PY = Y - Road.Key.y - Along * DY;
+         Service = FMath::Max(Service, Feather(FMath::Max(0.0f, FMath::Sqrt(PX * PX + PY * PY) - 24), 28 + Broken * 12));
+     }
+-    const float Ash = FMath::Clamp((Broad - 0.20f) * 1.55f + (Broken - 0.5f) * 0.12f, 0.0f, 1.0f);
++    // Wide worn routes follow the same authored corridors that flatten the landscape.
++    // Their irregular shoulders are paint only; all collision stays in the simulation.
++    const float Scale = Features.WorldSize / cinder::Simulation::WorldSize;
++    float Trail = 0;
++    for (const auto& Segment : Features.Trails)
++    {
++        const float DX = Segment.Value.x - Segment.Key.x, DY = Segment.Value.y - Segment.Key.y;
++        const float LengthSq = DX * DX + DY * DY;
++        const float Along = LengthSq > 1 ? FMath::Clamp(
++            ((X - Segment.Key.x) * DX + (Y - Segment.Key.y) * DY) / LengthSq, 0.0f, 1.0f) : 0;
++        const float PX = X - Segment.Key.x - Along * DX, PY = Y - Segment.Key.y - Along * DY;
++        const float Distance = FMath::Sqrt(PX * PX + PY * PY);
++        const float Core = (62.0f + Broken * 42.0f) * Scale;
++        const float Shoulder = (88.0f + Broken * 38.0f) * Scale;
++        Trail = FMath::Max(Trail, Feather(FMath::Max(0.0f, Distance - Core), Shoulder));
++    }
++    // Exposed rock interrupts the road at a cliff instead of painting a false ramp.
++    Service = FMath::Max(Service, Trail * (1.0f - Stone) * (0.88f + Broken * 0.12f));
++    const float Ash = FMath::SmoothStep(0.30f, 0.68f,
++        Broad + (Broken - 0.5f) * 0.14f);
+     return FColor(static_cast<uint8>(Stone * 255), static_cast<uint8>(Mineral * 255),
+         static_cast<uint8>(Ash * 255), static_cast<uint8>(Service * 255));
+ }
+--- before/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp
++++ after/Source/Cinderline/Private/Tests/CinderSceneryTests.cpp
+@@ -207,9 +207,9 @@
+                 Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+                 Fixture.Simulation.explored(0, Obstacle.center));
+ 
+-        Fixture.Scenery->Update(Fixture.Simulation, {});
++        Fixture.Scenery->Update(Fixture.Simulation, {}, false);
+         const FCinderSceneryDiagnostics Diagnostics = Fixture.Scenery->Diagnostics();
+-        TestTrue(*FString::Printf(TEXT("Map %d %s obstacles produce a layered cliff composition"),
++        TestTrue(*FString::Printf(TEXT("Map %d %s flat fallback obstacles produce a layered cliff composition"),
+             Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+             Diagnostics.TallRockInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()) * 4);
+         TestTrue(*FString::Printf(TEXT("Map %d %s obstacles receive contiguous low cliff-mass segments"),
+@@ -218,11 +218,8 @@
+         TestTrue(*FString::Printf(TEXT("Map %d %s authored rocks remain layered over the cliff skirt"),
+             Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+             Diagnostics.RockVariantInstances >= Diagnostics.CliffMassInstances);
+-        // The obstacle heightfield now lifts its own plateau to 480 cm, so a mesa authored
+-        // for the old flat baseline would be buried by the ground it stands on. The range
+-        // moves with the terrain, and the 300 cm floor on the maximum is what proves the
+-        // chokepoint segments still rise into their lanes rather than tapering away.
+-        TestTrue(*FString::Printf(TEXT("Map %d %s mesa relief stays in the 240-340 cm authored range"),
++        // Flat terrain still needs a tall mesh to communicate its blocked footprint.
++        TestTrue(*FString::Printf(TEXT("Map %d %s flat fallback keeps the 240-340 cm blocked silhouette"),
+             Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+             Diagnostics.MinimumMesaHeightCm >= 240.0f && Diagnostics.MaximumMesaHeightCm <= 340.0f
+                 && Diagnostics.MaximumMesaHeightCm >= 300.0f);
+@@ -237,11 +234,34 @@
+             TestTrue(TEXT("The broad central map-one obstacle composes multiple rock rows without widening gameplay bounds"),
+                 Diagnostics.MultiRowMesaInstances > 0);
+ 
+-        const uint64 BuiltAt = Diagnostics.Rebuilds;
+-        Fixture.Scenery->Update(Fixture.Simulation, {});
++        Fixture.Scenery->Update(Fixture.Simulation, {}, true);
++        const FCinderSceneryDiagnostics Relief = Fixture.Scenery->Diagnostics();
++        TestEqual(TEXT("Changing the rendered terrain mode alone invalidates the scenery cache"),
++            Relief.Rebuilds, Diagnostics.Rebuilds + 1);
++        TestEqual(TEXT("Relief uses the continuous landscape cliff instead of a duplicate skirt"),
++            Relief.CliffMassInstances, 0);
++        TestTrue(*FString::Printf(TEXT("Map %d %s plateau outcrops stay within 50-120 cm"),
++            Map, ANSI_TO_TCHAR(matchLengthName(Length))),
++            Relief.MinimumMesaHeightCm >= 50.0f && Relief.MaximumMesaHeightCm <= 120.0f);
++        TestTrue(TEXT("Every explored obstacle receives crest dressing"),
++            Relief.RockVariantInstances >= static_cast<int32>(Fixture.Simulation.obstacles().size()));
++        TestTrue(TEXT("Sparse relief caps leave more plateau visible than the flat fallback wall"),
++            Relief.RockVariantInstances < Diagnostics.RockVariantInstances);
++        TestEqual(TEXT("Relief caps remain wholly inside authoritative obstacles"),
++            Relief.OutOfBoundsTallInstances, 0);
++        TestEqual(TEXT("Relief dressing retains the twelve fixed batches"), Relief.BatchCount, 12);
++        TestEqual(TEXT("Relief dressing has no collision"), Relief.CollisionEnabledBatches, 0);
++
++        Fixture.Scenery->Update(Fixture.Simulation, {}, true);
+         TestEqual(*FString::Printf(TEXT("Map %d %s obstacle geometry is cached after submission"),
+             Map, ANSI_TO_TCHAR(matchLengthName(Length))),
+-            Fixture.Scenery->Diagnostics().Rebuilds, BuiltAt);
++            Fixture.Scenery->Diagnostics().Rebuilds, Relief.Rebuilds);
++        Fixture.Scenery->Update(Fixture.Simulation, {}, false);
++        const FCinderSceneryDiagnostics Restored = Fixture.Scenery->Diagnostics();
++        TestEqual(TEXT("Returning to flat terrain restores the same deterministic wall count"),
++            Restored.TallRockInstances, Diagnostics.TallRockInstances);
++        TestEqual(TEXT("Returning to flat terrain restores its original rock height"),
++            Restored.MaximumMesaHeightCm, Diagnostics.MaximumMesaHeightCm);
+     }
+     return !HasAnyErrors();
+ }
+--- before/Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp
++++ after/Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp
+@@ -350,6 +350,25 @@
+     }
+     TestTrue(TEXT("Map seed changes the ash mask while identical inputs stay deterministic"),
+         bMapChangesAsh && bSameInputDeterministic);
++
++    CinderTerrainSurface::FFeatures TrailTerrain;
++    TrailTerrain.Trails.Emplace(Vec2{1400, 1600}, Vec2{1900, 1600});
++    const FColor TrailCenter = CinderTerrainSurface::Sample(TrailTerrain, 1650, 1600);
++    const FColor TrailShoulder = CinderTerrainSurface::Sample(TrailTerrain, 1650, 1740);
++    TestTrue(TEXT("Authored routes have a worn core, ragged shoulder and finite extent"),
++        TrailCenter.A > 200 && TrailShoulder.A > 0 && TrailShoulder.A < TrailCenter.A
++        && CinderTerrainSurface::Sample(TrailTerrain, 1650, 1900).A == 0
++        && CinderTerrainSurface::Sample(TrailTerrain, 1100, 1600).A == 0);
++    TrailTerrain.Cliffs.Add({{1650, 1600}, {80, 80}});
++    TestEqual(TEXT("A worn route cannot paint a traversable-looking ramp across known cliffs"),
++        CinderTerrainSurface::Sample(TrailTerrain, 1650, 1600).A, uint8(0));
++    TrailTerrain.Cliffs.Reset();
++    TrailTerrain.WorldSize *= 0.75f;
++    TrailTerrain.Trails.Reset();
++    TrailTerrain.Trails.Emplace(Vec2{1050, 1200}, Vec2{1425, 1200});
++    TestTrue(TEXT("Short-map route paint follows scaled route coordinates"),
++        CinderTerrainSurface::Sample(TrailTerrain, 1237.5f, 1200).A > 200
++        && CinderTerrainSurface::Sample(TrailTerrain, 1237.5f, 1430).A == 0);
+ 
+     CinderTerrainSurface::FFeatures ServiceTerrain;
+     ServiceTerrain.ServicePads.Add({{1000, 1000}, {120, 80}});
+--- before/Source/Cinderline/Public/Presentation/CinderGroundPalette.h
++++ after/Source/Cinderline/Public/Presentation/CinderGroundPalette.h
+@@ -29,65 +29,22 @@
+ {
+ struct FPalette
+ {
+-    /** How far the sampled grain is pushed toward greyscale before tinting.
+-        Counter-intuitively this wants to be HIGH. Every layer below multiplies
+-        the SAME desaturated grain by its own tint, so the grain's own warm
+-        colour is common to all of them: leaving it in (a low value) drags every
+-        layer back toward the same warm brown and cancels the hue spread. Push
+-        the grain to near-grey and the tints are what the eye actually sees.
++    // Muted olive regolith against warm worn routes. Keep the ground away from
++    // the cyan team accents and reserve the brightest values for units and ore.
++    float Desaturation = 0.93f;
++    FLinearColor SandTint{0.19f, 0.22f, 0.16f, 1.0f};
++    FLinearColor WindblownDust{0.43f, 0.40f, 0.29f, 1.0f};
++    FLinearColor ExposedSandstone{0.34f, 0.29f, 0.22f, 1.0f};
++    FLinearColor MineralStaining{0.25f, 0.34f, 0.38f, 1.0f};
++    FLinearColor PackedServiceGround{0.45f, 0.42f, 0.34f, 1.0f};
++    FLinearColor ValleyShade{0.72f, 0.78f, 0.75f, 1.0f};
++    FLinearColor CrestShade{1.18f, 1.12f, 1.00f, 1.0f};
+ 
+-        The layers below were never broken - they were all authored inside one
+-        narrow warm-brown band, so four working masks blended into a single
+-        indistinguishable sheet. Hue SPREAD is what makes them visible, not mask
+-        strength: cool sage against warm sand is the largest composition win
+-        available here, and it costs nothing because the fetches already happen.
+-        Keep these four meaningfully apart in hue or the ground goes flat again
+-        with no error anywhere. */
+-    float Desaturation = 0.93f;
+-    /** TWO-TONE COMPOSITION. The field is deep green and the built ground is pale
+-        stone; everything else is an accent on that pair. This is a deliberate
+-        move away from the old monochrome warm sand, which could not show its own
+-        layers: four working masks all tinted inside one narrow brown band blended
+-        into a single indistinguishable sheet.
+-
+-        Hue clearance matters as much as boldness. Team 0's accent is teal near
+-        170 degrees, so the ground greens are pushed toward yellow (95 and 72
+-        degrees) to stay roughly 60-100 degrees clear. Do not drift these toward
+-        cyan or a team's identity colour stops reading against its own ground. */
+-    FLinearColor SandTint{0.24f, 0.34f, 0.16f, 1.0f};
+-    /** Macro octaves (880/1900/430 cm) - the large sunlit and shaded patches.
+-        This is the only layer covering the whole map, so it carries the
+-        large-scale variation. It is deliberately much LIGHTER than the base:
+-        the blend strength is a graph constant at 0.62 against a mask averaging
+-        ~0.47, so roughly a 29% blend - only a wide value gap survives that. */
+-    FLinearColor WindblownDust{0.54f, 0.62f, 0.28f, 1.0f};
+-    FLinearColor ExposedSandstone{0.42f, 0.33f, 0.21f, 1.0f};
+-    /** Stains around ore. Kept in the same family as the azure crystals so a
+-        deposit and its basin read as one feature rather than two. */
+-    FLinearColor MineralStaining{0.22f, 0.46f, 0.66f, 1.0f};
+-    /** Worn ground under bases and along routes - the reference's laid plaza. */
+-    FLinearColor PackedServiceGround{0.56f, 0.57f, 0.54f, 1.0f};
+-    /** Altitude shading. Relief this shallow reaches the eye only through these
+-        two multipliers, so they carry the entire read of the heightfield. */
+-    FLinearColor ValleyShade{0.68f, 0.78f, 0.74f, 1.0f};
+-    FLinearColor CrestShade{1.24f, 1.17f, 0.95f, 1.0f};
+-    /** CLIFF FACES. These three are the only values here that reach a near-vertical
+-        surface, because the material gates them behind a slope mask that no walkable
+-        sample can enter: WalkableGradient holds every lane at a normal Z of 0.965 or
+-        better, and the mask is fully off above 0.62.
+-
+-        CliffFaceShade is a MULTIPLIER sharing CrestShade's slot, not an albedo. At the
+-        shipped camera pitch a plateau top is roughly half of an obstacle's projected area
+-        and is the brightest surface in the frame, so a face that keeps the cap's own
+-        multiplier makes the whole mesa read as one flat blob. 0.72 against CrestShade's
+-        1.24 is the intended 0.58x separation - push it toward 1.0 and the cliff flattens.
+-
+-        The other two are the bedding ramp. Keep them dark and close in hue: they are
+-        multiplied by a bounded grain and land on faces that, for one of the two visible
+-        sides of every axis-aligned obstacle, receive exactly zero key light. */
+-    FLinearColor CliffFaceShade{0.72f, 0.68f, 0.62f, 1.0f};
+-    FLinearColor CanyonShadow{0.178f, 0.127f, 0.099f, 1.0f};
+-    FLinearColor CanyonSandstone{0.315f, 0.205f, 0.140f, 1.0f};
++    // The rock albedo carries strata contrast. A gentle face multiplier keeps
++    // the unlit side readable instead of darkening already-dark rock twice.
++    FLinearColor CliffFaceShade{0.94f, 0.91f, 0.85f, 1.0f};
++    FLinearColor CanyonShadow{0.24f, 0.20f, 0.16f, 1.0f};
++    FLinearColor CanyonSandstone{0.48f, 0.36f, 0.24f, 1.0f};
+ };
+ 
+ CINDERLINE_API const FPalette& Active();
+--- before/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h
++++ after/Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h
+@@ -51,7 +51,7 @@
+  *  With the version folded in, a forgotten bake fails the tag check, Update() returns false
+  *  and the game falls back to the flat plane WITH its props - loud and visibly wrong rather
+  *  than quietly divergent. */
+-constexpr uint32 CliffProfileVersion = 3;
++constexpr uint32 CliffProfileVersion = 4;
+ 
+ /** Relief at the first sculpted vertex, one VertexSpacing inside the rectangle. This is the
+  *  CliffMass skirt prop moved into the heightfield: it turns the mandatory one-quad guard
+@@ -154,6 +154,9 @@
+  * entities. Index in [0, PathwaySampleCount); out of range yields the world centre.
+  */
+ CINDERLINE_API int32 PathwaySampleCount(const cinder::Simulation& Simulation);
++/** Map-authored segments for ground paint; never derives paths from hidden entities. */
++CINDERLINE_API void GatherPathways(const cinder::Simulation& Simulation,
++    TArray<TPair<cinder::Vec2, cinder::Vec2>>& OutSegments);
+ CINDERLINE_API void PathwaySample(const cinder::Simulation& Simulation, int32 Index,
+     float& OutX, float& OutY);
+ CINDERLINE_API void BuildCanonicalHeightData(int32 Map, TArray<uint16>& OutHeights);
+--- before/Source/Cinderline/Public/Presentation/CinderTerrainSurface.h
++++ after/Source/Cinderline/Public/Presentation/CinderTerrainSurface.h
+@@ -15,6 +15,8 @@
+     TArray<cinder::Vec2> Minerals;
+     TArray<cinder::Obstacle> ServicePads;
+     TArray<TPair<cinder::Vec2, cinder::Vec2>> Roads;
++    /** Authored geographic routes, independent of units, buildings and resource state. */
++    TArray<TPair<cinder::Vec2, cinder::Vec2>> Trails;
+ };
+ 
+ /** Packed linear mask: R exposed stone, G mineral stain, B windblown ash, A service ground. */
+--- before/scripts/unreal_canyon_surface.py
++++ after/scripts/unreal_canyon_surface.py
+@@ -20,7 +20,7 @@
+     helper = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(helper)
+     helper.OWNER = 'scripts/unreal_canyon_surface.py'
+-    helper.VERSION = 'canyon-ground-v1'
++    helper.VERSION = 'canyon-ground-v3'
+     helper.MATERIALS = '/Game/Art/Canyon/Materials'
+     helper.TEXTURES = '/Game/Art/Canyon/Textures'
+     report = {'success': False, 'textures': [], 'source_sha256': helper.sha256(__file__)}
+@@ -40,8 +40,13 @@
+         textures = {role: unreal.load_asset('/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_' + role)
+                     for role in ('Color', 'Normal', 'Roughness')}
+         helper.require(all(isinstance(t, unreal.Texture2D) for t in [fog, *textures.values()]), 'missing existing PBR/fog texture')
++        coarse_ground_path = '/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Color'
++        coarse_ground = unreal.load_asset(coarse_ground_path)
++        has_coarse_ground = isinstance(coarse_ground, unreal.Texture2D)
++        if not has_coarse_ground:
++            coarse_ground = textures['Color']
+         g = helper.Graph('M_CinderCanyonGround')
+-        uv = g.world_uv(246.0)
++        uv = g.world_uv(420.0)
+         world_uv = g.world_uv(prefix='Map ')
+         # TerrainLayers, FogMask and HeightFog below stay on their own asset
+         # samplers on purpose. They are TA_CLAMP and cover exactly one
+@@ -87,15 +92,11 @@
+         g.link(layers, cliff, 'B', 'R')
+         grain = g.sample('GroundColor', textures['Color'], uv, 'COLOR',
+                          sampler_source=helper.WRAP_SAMPLER_GROUP)
+-        # Anti-tiling. The previous second octave re-sampled this same albedo at
+-        # 1190 cm, desaturated it to pure luminance, and multiplied it back in as
+-        # a value gain of 1.2 with a 1.22 bias. Two axis-aligned lookups of one
+-        # photograph mip to the same flat average at the shipped camera height,
+-        # so at play distance the ground was mathematically a constant colour.
+-        # Take a second full-colour lookup instead, on a UV rotated 37 degrees and
+-        # tiled at 0.618x the base (golden ratio, so the two grids never re-align
+-        # anywhere inside the battlefield), and keep the darker of the two. Still
+-        # exactly two colour fetches, so this is sampler-neutral.
++        # Use the already imported CC0 coarse rock albedo for the second octave.
++        # The fine sand alone mipped to an almost uniform field at the game camera.
++        # A wider 420 cm base tile and rotated coarse octave leave readable chips in
++        # untraveled ground while the existing service mask keeps routes quieter.
++        # Missing optional artwork falls back to the original sand; still two fetches.
+         primary_u = g.node('Primary sand U', 'ComponentMask', r=True, g=False, b=False, a=False)
+         primary_v = g.node('Primary sand V', 'ComponentMask', r=False, g=True, b=False, a=False)
+         g.link(uv, primary_u, 'Input')
+@@ -125,14 +126,30 @@
+         detail_uv = g.node('Rotated sand detail UV', 'AppendVector')
+         g.link(detail_u, detail_uv, 'A')
+         g.link(detail_v, detail_uv, 'B')
+-        detail = g.sample('GroundDetail', textures['Color'], detail_uv, 'COLOR',
++        detail = g.sample('GroundDetail', coarse_ground, detail_uv, 'COLOR',
+                           sampler_source=helper.WRAP_SAMPLER_GROUP)
+-        # Minimum rather than a lerp: keeping the darker octave preserves the
+-        # crevice contrast of both grids, where averaging them pulls the result
+-        # back towards the flat mean this change exists to destroy.
+-        broken = g.node('Anti-tiled sand albedo', 'Min')
++        coarse_gain = g.node('Coarse ground gain', 'Multiply', const_b=1.10)
++        g.link(detail, coarse_gain, 'A', 'RGB')
++        coarse_bias = g.node('Coarse ground floor', 'Add', const_b=0.12)
++        g.link(coarse_gain, coarse_bias, 'A')
++        bounded_coarse = g.node('Bounded coarse ground', 'Clamp', min_default=0.12, max_default=0.90)
++        g.link(coarse_bias, bounded_coarse, 'Input')
++        rocky = g.node('Anti-tiled sand albedo', 'Min')
++        g.link(grain, rocky, 'A', 'RGB')
++        g.link(bounded_coarse, rocky, 'B')
++        quiet_routes = g.node('Outside worn service routes', 'OneMinus')
++        g.link(layers, quiet_routes, 'Input', 'A')
++        toe_gain = g.node('Cliff toe coarse ground gain', 'Multiply', const_b=0.30)
++        g.link(layers, toe_gain, 'A', 'R')
++        coarse_strength = g.node('Natural coarse ground strength', 'Add', const_b=0.70)
++        g.link(toe_gain, coarse_strength, 'A')
++        coarse_weight = g.node('Untraveled coarse ground weight', 'Multiply')
++        g.link(coarse_strength, coarse_weight, 'A')
++        g.link(quiet_routes, coarse_weight, 'B')
++        broken = g.node('Worn routes against rocky soil', 'LinearInterpolate')
+         g.link(grain, broken, 'A', 'RGB')
+-        g.link(detail, broken, 'B', 'RGB')
++        g.link(rocky, broken, 'B')
++        g.link(coarse_weight, broken, 'Alpha')
+         # M2. One extra albedo fetch, projected from the side, for the cliff faces only.
+         # Which side depends on which way the face points: |N.x| > |N.y| means the normal
+         # runs along X, so the face spans Y and Z and its horizontal coordinate is world Y.
+@@ -165,17 +182,17 @@
+         side_xy = g.node('Cliff side coordinates', 'AppendVector')
+         g.link(side_h, side_xy, 'A')
+         g.link(cliff_wz, side_xy, 'B')
+-        side_uv = g.node('Cliff side projection at 246 cm', 'Multiply', const_b=1.0 / 246.0)
++        side_uv = g.node('Cliff side projection at 360 cm', 'Multiply', const_b=1.0 / 360.0)
+         g.link(side_xy, side_uv, 'A')
+-        cliff_grain = g.sample('CliffGrain', textures['Color'], side_uv, 'COLOR',
++        cliff_grain = g.sample('CliffGrain', coarse_ground, side_uv, 'COLOR',
+                                sampler_source=helper.WRAP_SAMPLER_GROUP)
+         # M3. Blend the two SAMPLES, never the two coordinate sets. Cross-fading the UVs
+         # would drag one lookup across a large fraction of a tile inside the blend band and
+-        # smear the grain into exactly the streaks this whole block exists to remove - the
+-        # project's own cliff material at unreal_canyon_assets.py:272-278 says so in as many
+-        # words. NORMAL and ROUGHNESS deliberately stay on the flat-projected uv below:
+-        # feeding them a side projection would reinterpret a side-projected normal map
+-        # through the landscape's world-XY-derived tangent basis.
++        # smear the grain into exactly the streaks this whole block exists to remove.
++        # Normal detail remains XY-projected, then fades to the geometric surface normal
++        # on known cliff faces below. A side-projected tangent normal would need a matching
++        # basis transform; the old full-strength XY normal instead stretched fine sand into
++        # horizontal micro-ribs over the broad sediment bands.
+         face_mix = g.node('Cliff face grain', 'LinearInterpolate')
+         g.link(broken, face_mix, 'A')
+         g.link(cliff_grain, face_mix, 'B', 'RGB')
+@@ -210,27 +227,59 @@
+         color = tint_layer('Mineral staining', color, (0.30, 0.72, 0.66), 'G', 0.52)
+         color = tint_layer('Packed service ground', color, (0.43, 0.37, 0.29), 'A', 0.72)
+ 
+-        # M4. Horizontal bedding from world Z. Zero fetches: the vertex already carries its
+-        # own height. This is what replaces the four geometric terraces that used to live in
+-        # HeightAt - at 126 quads the narrowest obstacle has about two vertex spacings of
+-        # sculptable half-width, so four terraces were sub-resolution on every obstacle in
+-        # the game and never reached the screen at all. Strata painted at 85 cm read at any
+-        # obstacle size because they cost no geometry.
+-        bed_phase = g.node('Cliff bedding at 85 cm', 'Multiply', const_b=1.0 / 85.0)
+-        g.link(cliff_wz, bed_phase, 'A')
+-        bed_wave = g.node('Cliff bedding wave', 'Sine')
++        # Broad sediment beds follow height, but their boundaries wander along the wall.
++        # Two cheap triangular fields make angular folds instead of the former ruler-
++        # straight stripes. The existing side-projected grain breaks their edges further;
++        # none of this adds a texture fetch or moves the heightfield/collision footprint.
++        def triangular_field(label, coordinate, wavelength):
++            scaled = g.node(label + ' scale', 'Multiply', const_b=1.0 / wavelength)
++            g.link(coordinate, scaled, 'A')
++            period = g.node(label + ' period', 'Frac')
++            g.link(scaled, period, 'Input')
++            centered = g.node(label + ' centered', 'Subtract', const_b=0.5)
++            g.link(period, centered, 'A')
++            folded = g.node(label + ' folded', 'Abs')
++            g.link(centered, folded, 'Input')
++            return folded  # [0, 0.5], continuous across the period boundary.
++
++        broad_fold = triangular_field('Broad sediment fold', side_h, 390.0)
++        cross_fold = triangular_field('Cross sediment fold', cliff_wx, 670.0)
++        cross_weight = g.node('Cross sediment fold amplitude', 'Multiply', const_b=0.36)
++        g.link(cross_fold, cross_weight, 'A')
++        folds = g.node('Angular sediment folds', 'Add')
++        g.link(broad_fold, folds, 'A')
++        g.link(cross_weight, folds, 'B')
++        fold_weight = g.node('Sediment fold amplitude', 'Multiply', const_b=0.50)
++        g.link(folds, fold_weight, 'A')
++        grain_warp = g.node('Weathered sediment edge', 'Multiply', const_b=0.16)
++        g.link(cliff_grain, grain_warp, 'A', 'R')
++        bed_height = g.node('Cliff bedding at 112 cm', 'Multiply', const_b=1.0 / 112.0)
++        g.link(cliff_wz, bed_height, 'A')
++        folded_height = g.node('Folded sediment height', 'Add')
++        g.link(bed_height, folded_height, 'A')
++        g.link(fold_weight, folded_height, 'B')
++        bed_phase = g.node('Weathered sediment height', 'Add')
++        g.link(folded_height, bed_phase, 'A')
++        g.link(grain_warp, bed_phase, 'B')
++        bed_wave = g.node('Cliff bedding wave', 'Sine', period=1.0)
+         g.link(bed_phase, bed_wave, 'Input')
+-        bed_scaled = g.node('Cliff bedding amplitude', 'Multiply', const_b=0.34)
++        # Clamp the wave shoulders so strata read as broad exposed shelves with narrow
++        # seams, rather than softly airbrushed bands. Keep some shadow on every shelf.
++        bed_scaled = g.node('Cliff bedding amplitude', 'Multiply', const_b=0.64)
+         g.link(bed_wave, bed_scaled, 'A')
+-        bed = g.node('Cliff bedding fraction', 'Add', const_b=0.62)
+-        g.link(bed_scaled, bed, 'A')
++        bed_bias = g.node('Cliff bedding bias', 'Add', const_b=0.55)
++        g.link(bed_scaled, bed_bias, 'A')
++        bed = g.node('Cliff bedding fraction', 'Clamp', min_default=0.08, max_default=0.96)
++        g.link(bed_bias, bed, 'Input')
++        shadow_tint = g.color('CanyonShadow', (0.24, 0.20, 0.16))
++        sandstone_tint = g.color('CanyonSandstone', (0.48, 0.36, 0.24))
+         strata = g.node('Cliff strata tint', 'LinearInterpolate')
+-        g.link(g.color('CanyonShadow', (0.178, 0.127, 0.099)), strata, 'A', 'RGB')
+-        g.link(g.color('CanyonSandstone', (0.315, 0.205, 0.140)), strata, 'B', 'RGB')
++        g.link(shadow_tint, strata, 'A', 'RGB')
++        g.link(sandstone_tint, strata, 'B', 'RGB')
+         g.link(bed, strata, 'Alpha')
+         # THIS BOUND IS MANDATORY, and it is the same one the rock material uses. The sun is
+         # a single key at yaw 45, so on every axis-aligned obstacle one face receives
+-        # N dot -L of exactly zero. Multiplying an absolute strata colour of 0.18-0.32 by a
++        # N dot -L of exactly zero. Multiplying an absolute strata colour by a
+         # raw grain value on a face that already has no key light lands it at black. Holding
+         # the grain in [0.78, 1.20] keeps it a variation rather than a second darkener.
+         grain_gain = g.node('Cliff grain gain', 'Multiply', const_b=0.72)
+@@ -242,11 +291,72 @@
+         face_rock = g.node('Cliff face rock', 'Multiply')
+         g.link(strata, face_rock, 'A')
+         g.link(bounded_grain, face_rock, 'B')
++        # Narrow, uneven vertical joints complement the broad horizontal shelves.
++        # Their phase shares the angular folds and their depth shares the existing side
++        # grain, so neither spacing nor darkness becomes another regular stripe pattern.
++        fissure_scale = g.node('Vertical joint spacing', 'Multiply', const_b=1.0 / 156.0)
++        g.link(side_h, fissure_scale, 'A')
++        fissure_phase = g.node('Uneven vertical joint phase', 'Add')
++        g.link(fissure_scale, fissure_phase, 'A')
++        g.link(fold_weight, fissure_phase, 'B')
++        fissure_period = g.node('Vertical joint period', 'Frac')
++        g.link(fissure_phase, fissure_period, 'Input')
++        fissure_center = g.node('Centered vertical joints', 'Subtract', const_b=0.5)
++        g.link(fissure_period, fissure_center, 'A')
++        fissure_fold = g.node('Folded vertical joints', 'Abs')
++        g.link(fissure_center, fissure_fold, 'Input')
++        fissure_gain = g.node('Narrow vertical joints', 'Multiply', const_b=8.0)
++        g.link(fissure_fold, fissure_gain, 'A')
++        fissure_bias = g.node('Vertical joint threshold', 'Subtract', const_b=3.0)
++        g.link(fissure_gain, fissure_bias, 'A')
++        fissure = g.node('Clamped vertical joints', 'Clamp', min_default=0.0, max_default=1.0)
++        g.link(fissure_bias, fissure, 'Input')
++        fissure_grain = g.node('Weathered vertical joints', 'Multiply')
++        g.link(fissure, fissure_grain, 'A')
++        g.link(cliff_grain, fissure_grain, 'B', 'R')
++        fissure_depth = g.node('Restrained vertical joint shade', 'Multiply', const_b=0.18)
++        g.link(fissure_grain, fissure_depth, 'A')
++        fissure_light = g.node('Vertical joint light', 'OneMinus')
++        g.link(fissure_depth, fissure_light, 'Input')
++        jointed_rock = g.node('Jointed cliff face rock', 'Multiply')
++        g.link(face_rock, jointed_rock, 'A')
++        g.link(fissure_light, jointed_rock, 'B')
+         layer_color = color
+         color = g.node('Ground against cliff face', 'LinearInterpolate')
+         g.link(layer_color, color, 'A')
+-        g.link(face_rock, color, 'B')
++        g.link(jointed_rock, color, 'B')
+         g.link(cliff, color, 'Alpha')
++
++        # A weathered, lighter shoulder marks the transition from cap to vertical rock.
++        # This mask is exactly zero on the documented walkable bound N.z >= 0.965,
++        # then is independently gated by known-stone R. It cannot draw across lanes or
++        # reveal an unseen obstacle. The full-face slope fades it out below the shoulder.
++        shoulder_slope = g.node('Cap shoulder below flat', 'Subtract', const_a=0.96)
++        g.link(up, shoulder_slope, 'B')
++        shoulder_gain = g.node('Cap shoulder width', 'Multiply', const_b=12.5)
++        g.link(shoulder_slope, shoulder_gain, 'A')
++        shoulder = g.node('Saturated cap shoulder', 'Clamp', min_default=0.0, max_default=1.0)
++        g.link(shoulder_gain, shoulder, 'Input')
++        cap_facing = g.node('Above cliff face', 'OneMinus')
++        g.link(slope, cap_facing, 'Input')
++        shoulder_band = g.node('Weathered cap shoulder band', 'Multiply')
++        g.link(shoulder, shoulder_band, 'A')
++        g.link(cap_facing, shoulder_band, 'B')
++        known_shoulder = g.node('Known stone cap shoulder', 'Multiply')
++        g.link(shoulder_band, known_shoulder, 'A')
++        g.link(layers, known_shoulder, 'B', 'R')
++        shoulder_weight = g.node('Cap shoulder blend weight', 'Multiply', const_b=0.72)
++        g.link(known_shoulder, shoulder_weight, 'A')
++        lip_tint = g.node('Sun weathered cap lip', 'Multiply', const_b=1.24)
++        g.link(sandstone_tint, lip_tint, 'A', 'RGB')
++        lip_grain = g.node('Weathered cap lip grain', 'Multiply')
++        g.link(lip_tint, lip_grain, 'A')
++        g.link(bounded_grain, lip_grain, 'B')
++        faced_color = color
++        color = g.node('Cliff cap lip separation', 'LinearInterpolate')
++        g.link(faced_color, color, 'A')
++        g.link(lip_grain, color, 'B')
++        g.link(shoulder_weight, color, 'Alpha')
+ 
+         # Altitude shading. The landscape now carries real relief - rolling hills,
+         # drainage troughs and damped pathways outside the obstacle cliffs - but
+@@ -275,14 +385,15 @@
+         g.link(altitude_span, altitude_mask, 'Input')
+         altitude_tint = g.node('Valley to crest tint', 'LinearInterpolate')
+         g.link(g.color('ValleyShade', (0.84, 0.88, 0.95)), altitude_tint, 'A', 'RGB')
+-        # M5. Split the bleached crest into cap-versus-face. At the shipped camera pitch the
++        # Split the bleached crest into cap-versus-face. At the shipped camera pitch the
+         # plateau top is about half of every obstacle's projected area and is the brightest
+         # surface in the scene, so letting the face share the cap's multiplier is what makes
+         # a sculpted mesa read as one flat blob. CliffFaceShade is a MULTIPLIER into this
+-        # slot, not an albedo: the runtime CrestShade is 1.24, so 0.72 is a 0.58x separation.
++        # slot, not an albedo. The face keeps a restrained multiplier because its strata
++        # are already darker than the cap; a second heavy shade crushed unlit faces.
+         crest_split = g.node('Cap against face', 'LinearInterpolate')
+         g.link(g.color('CrestShade', (1.12, 1.07, 0.98)), crest_split, 'A', 'RGB')
+-        g.link(g.color('CliffFaceShade', (0.72, 0.68, 0.62)), crest_split, 'B', 'RGB')
++        g.link(g.color('CliffFaceShade', (0.94, 0.91, 0.85)), crest_split, 'B', 'RGB')
+         g.link(cliff, crest_split, 'Alpha')
+         g.link(crest_split, altitude_tint, 'B')
+         g.link(altitude_mask, altitude_tint, 'Alpha')
+@@ -326,8 +437,26 @@
+         g.link(hidden_height, flatten, 'A')
+         g.link(g.color('Downward offset', (0.0, 0.0, -1.0)), flatten, 'B', 'RGB')
+         g.output(flatten, 'WORLD_POSITION_OFFSET')
+-        g.normal(g.sample('GroundNormal', textures['Normal'], uv, 'NORMAL',
+-                          sampler_source=helper.WRAP_SAMPLER_GROUP), 0.78)
++        # XY-projected normal detail is valid on ground/caps, but its tangent basis does
++        # not follow a vertical side projection. Neutralize it on known steep faces so a
++        # few broad rock shelves are not obscured by dozens of stretched normal-map ribs.
++        # Keep NormalStrength and the existing single sample for runtime compatibility.
++        ground_normal = g.sample('GroundNormal', textures['Normal'], uv, 'NORMAL',
++                                 sampler_source=helper.WRAP_SAMPLER_GROUP)
++        flat_normal = g.node('Flat tangent normal', 'Constant3Vector',
++                             constant=unreal.LinearColor(0, 0, 1, 0))
++        normal_ground_weight = g.node('Ground normal outside cliff faces', 'OneMinus')
++        g.link(cliff, normal_ground_weight, 'Input')
++        normal_strength = g.node('Slope gated normal strength', 'Multiply')
++        g.link(g.scalar('NormalStrength', 0.78), normal_strength, 'A')
++        g.link(normal_ground_weight, normal_strength, 'B')
++        normal_mix = g.node('Restrained normal detail', 'LinearInterpolate')
++        g.link(flat_normal, normal_mix, 'A')
++        g.link(ground_normal, normal_mix, 'B', 'RGB')
++        g.link(normal_strength, normal_mix, 'Alpha')
++        normalized_normal = g.node('Normalized tangent normal', 'Normalize')
++        g.link(normal_mix, normalized_normal, 'VectorInput')
++        g.output(normalized_normal, 'NORMAL')
+         roughness = g.node('Dry ground roughness', 'LinearInterpolate', const_b=0.96, const_alpha=0.70)
+         g.link(g.sample('GroundRoughness', textures['Roughness'], uv, 'MASKS',
+                         sampler_source=helper.WRAP_SAMPLER_GROUP), roughness, 'A', 'R')
+@@ -340,7 +469,7 @@
+         # The first ambient occlusion of any kind on iOS in this project: SSAO is
+         # Mac-only, static lighting is off, and distance fields are off. It costs
+         # zero new samplers because it reuses the TerrainLayers fetch already
+-        # taken above, so the count stays at six pixel plus one vertex. R is the
++        # taken above, so the count stays at seven pixel plus one vertex. R is the
+         # known-stone channel, so contact darkening only ever appears where
+         # explored stone already appears - no unobserved state becomes visible.
+         ao = g.node('Contact occlusion', 'LinearInterpolate', const_a=1.0, const_b=0.62)
+@@ -348,9 +477,32 @@
+         g.output(ao, 'AMBIENT_OCCLUSION')
+         report['material'] = g.finish()
+         report['texture_samples'] = {'pixel': 7, 'vertex': 1}
+-        report['albedo_anti_tiling'] = {'second_octave_rotation_degrees': 37.0,
++        report['albedo_anti_tiling'] = {'base_tile_width_cm': 420.0,
++                                        'second_octave_rotation_degrees': 37.0,
+                                         'second_octave_tiling_ratio': 0.61803399,
+-                                        'combine': 'per-channel minimum', 'added_fetches': 0}
++                                        'combine': 'bounded coarse per-channel minimum, service-mask blend',
++                                        'coarse_albedo': coarse_ground.get_path_name(),
++                                        'coarse_albedo_fallback': not has_coarse_ground,
++                                        'coarse_albedo_bounds': [0.12, 0.90],
++                                        'coarse_weight': '(0.70 + 0.30 * known stone R) * (1 - service A)',
++                                        'added_fetches': 0}
++        report['cliff_surface'] = {
++            'bedding_period_cm': 112.0,
++            'bedding_sine_period': 1.0,
++            'bedding_warp': '390/670 cm triangular folds plus existing side albedo',
++            'bedding_fraction_bounds': [0.08, 0.96],
++            'vertical_joint_spacing_cm': 156.0,
++            'vertical_joint_max_darkening': 0.18,
++            'cap_shoulder_normal_z_start': 0.96,
++            'cap_shoulder_max_weight': 0.72,
++            'mask': 'known-stone R times slope; full fog gate remains downstream',
++            'walkable_normal_z_floor': 0.965,
++            'side_albedo': coarse_ground.get_path_name(),
++            'side_albedo_tile_cm': 360.0,
++            'normal_detail': 'NormalStrength * (1 - known cliff face); neutral tangent normal on full face',
++            'added_fetches': 0,
++            'geometry_displacement': False,
++        }
+         report['ambient_occlusion'] = {'source': 'TerrainLayers R', 'floor': 0.62,
+                                        'added_fetches': 0}
+         report['specular'] = 'engine default 0.5; no longer driven to zero'

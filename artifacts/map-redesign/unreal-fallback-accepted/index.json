@@ -1,0 +1,44 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "EB9169EEAE4D751CD02DFF929B9264AA",
+			"instanceName": "MacBook-Pro-10.local-43612",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.2 26B5091g",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM5",
+			"rHI": "Metal Bindful (SM5)",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.22-15.14.57",
+	"succeeded": 1,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.053162708878517151,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "Lifecycle",
+			"fullTestPath": "Cinderline.Presentation.AuthoredTerrainFallback.Lifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"EB9169EEAE4D751CD02DFF929B9264AA"
+			],
+			"duration": 0.053162708878517151,
+			"dateTime": "2026.09.22-15.14.57",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

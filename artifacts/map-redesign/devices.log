@@ -1,0 +1,8 @@
+Name                        Hostname   Identifier                                    State                Model                            Reality  
+-------------------------   --------   -------------------------------------------   ------------------   ------------------------------   ---------
+Aeon                                   00008150-00060CE12684401C (UDID)              available (paired)   iPhone 17 Pro Max (iPhone18,2)   physical 
+Chirag’s Apple Watch                   00008310-001311382608A01E (UDID)              available (paired)   Watch7,5                                  
+Learnfold Landing Capture              FFE1BBE0-BC23-4FA9-BA63-6093ED5F6630 (UDID)   shutdown             iPhone 17 Pro (iPhone18,1)       simulated
+iPhone 17 Pro                          A6DA8D8A-EF7C-4EC5-BEBB-2833CB967BF1 (UDID)   shutdown             iPhone 17 Pro (iPhone18,1)       simulated
+iPhone 18 Pro                          DAE4CD1A-DF2D-4086-A01A-9CB6FAEEB9F3 (UDID)   shutdown             iPhone 18 Pro (iPhone19,2)       simulated
+iPhone 18 Pro Max                      6A9E2FA0-0902-4BDD-AEA2-12FFEA42F118 (UDID)   shutdown             iPhone 18 Pro Max (iPhone19,3)   simulated

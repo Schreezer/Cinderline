@@ -1,0 +1,1199 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Existing physical-iOS app quarantined before Xcode assembly: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/IOSDevice/Archives/build-20260922T155109242947Z-56585-Cinderline.app
+
+Running AutomationTool...
+
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Start UAT Interactively: dotnet AutomationTool.dll BuildCookRun -project=/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -noP4 -platform=IOS -clientconfig=Development -build -cook -stage -pak -package -archive -target=Cinderline -archivedirectory=/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS -skipbuild -ubtargs=-MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile -AdditionalCookerOptions=-CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64/dotnet
+Starting AutomationTool...
+Parsing command line: BuildCookRun -project=/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -noP4 -platform=IOS -clientconfig=Development -build -cook -stage -pak -package -archive -target=Cinderline -archivedirectory=/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS -skipbuild -ubtargs="-MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile" -AdditionalCookerOptions="-CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9"
+Initializing script modules...
+Total script module initialization time: 0.36 s.
+Using /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64/dotnet
+Executing commands...
+Setting up ProjectParams for /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject
+********** COOK COMMAND STARTED **********
+Running UnrealEditor Cook for project /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject
+Commandlet log file is /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Programs/AutomationTool/Saved/Cook-2026.09.22-21.21.11.txt
+Running: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor-Cmd "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject" -run=Cook  -TargetPlatform=IOS  -unversioned -CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9 -fileopenlog -abslog="/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Programs/AutomationTool/Saved/Cook-2026.09.22-21.21.11.txt" -stdout -CrashForUAT -unattended -NoLogTimes
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Wait until we know the daemon has started.
+Parent received signal 30
+Daemon signalled successful start
+Forked complete (ret=0)
+LogInit: Display: Running engine for game: Cinderline
+LogCore: Display: Requested channels: 'cpu,gpu,frame,log,bookmark,screenshot,region'
+LogTrace: Display: Control listening on port 1985
+LogCsvProfiler: Display: Metadata set : platform="Mac"
+LogCsvProfiler: Display: Metadata set : config="Development"
+LogCsvProfiler: Display: Metadata set : buildversion="++UE5+Release-5.8-CL-56702186"
+LogCsvProfiler: Display: Metadata set : engineversion="5.8.2-56702186+++UE5+Release-5.8"
+LogCsvProfiler: Display: Metadata set : enginereleaseversion="5.8.2"
+LogCsvProfiler: Display: Metadata set : os="macOS 27.2 26B5091g"
+LogCsvProfiler: Display: Metadata set : cpu="Apple|Apple M1 Max"
+LogCsvProfiler: Display: Metadata set : pgoenabled="0"
+LogCsvProfiler: Display: Metadata set : pgoprofilingenabled="0"
+LogCsvProfiler: Display: Metadata set : ltoenabled="0"
+LogCsvProfiler: Display: Metadata set : asan="0"
+LogCsvProfiler: Display: Metadata set : mergedmodules="0"
+LogCsvProfiler: Display: Metadata set : compacttset="0"
+LogCsvProfiler: Display: Metadata set : commandline="" /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -run=Cook -TargetPlatform=IOS -unversioned -CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9 -fileopenlog -abslog=/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Programs/AutomationTool/Saved/Cook-2026.09.22-21.21.11.txt -stdout -CrashForUAT -unattended -NoLogTimes""
+LogCsvProfiler: Display: Metadata set : loginid="e153dc515844b7ef936fddb6789fe54e"
+LogCsvProfiler: Display: Metadata set : llm="0"
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogCsvProfiler: Display: Metadata set : zenstreaming="0"
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll -Mode=ValidatePlatforms -OutputSDKs -AllPlatforms -project=/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -log=/Users/chirag13/Library/Logs/Unreal Engine/CinderlineEditor/AutoSDKInfo.txt -verbose -timestamps
+LogCsvProfiler: Display: Metadata set : systemresolution.resx="1280"
+LogCsvProfiler: Display: Metadata set : systemresolution.resy="720"
+LogAudio: Display: Audio Device Manager not initializing due to all audio being disabled. If this is not intentional, please check command line arguments for "-nosound".
+LogAssetRegistry: Display: FindShardedCacheFiles: 1 via .ref, 0 via migration fallback, 1 total
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PreLoad): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+LogAssetRegistry: Display: LoadCacheFiles: loading 1 cache files, memory-mapping=enabled
+Log file: /Users/chirag13/Library/Logs/Unreal Engine/CinderlineEditor/AutoSDKInfo.txt
+LogConfig: Display: Loading Mac ini files took 0.05 seconds
+LogConfig: Display: Loading VulkanPC ini files took 0.06 seconds
+LogConfig: Display: Loading IOS ini files took 0.07 seconds
+LogConfig: Display: Loading Linux ini files took 0.07 seconds
+LogConfig: Display: Loading Unix ini files took 0.07 seconds
+LogConfig: Display: Loading TVOS ini files took 0.07 seconds
+LogConfig: Display: Loading LinuxArm64 ini files took 0.07 seconds
+LogConfig: Display: Loading Android ini files took 0.04 seconds
+LogConfig: Display: Loading Windows ini files took 0.03 seconds
+LogConfig: Display: Loading VisionOS ini files took 0.03 seconds
+LogAssetRegistry: Display: Asset registry cache read as 118.7 MiB from ../../../../starCraft/Intermediate/CachedAssetRegistry/CachedAssetRegistry_0_1D551723E74F0A1A433B0AA52869E206.bin (memory-mapped=no, platform unsupported)
+##PlatformValidate: Win64 INVALID <UNKNOWN>
+##PlatformValidate: Mac VALID 26.1.1
+##PlatformValidate: IOS VALID 26.1.1
+##PlatformValidate: Android INVALID r27c
+##PlatformValidate: Linux INVALID <UNKNOWN>
+##PlatformValidate: LinuxArm64 INVALID <UNKNOWN>
+##PlatformValidate: TVOS VALID 26.1.1
+##PlatformValidate: VisionOS VALID 26.1.1
+Unable to find required SDK version 'MainVersion' for platform Win64. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform Linux. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform LinuxArm64. Check your SDK.json files
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 350b
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+LogAsyncCompilation: Display: MemorySharingInfo: UsedMemory=481255MiB, MaxMemoryAvailable=41984MiB
+2026-09-22 21:21:15.039 UnrealEditor-Cmd[56622:452557] [UE4] Shutdown handler: initialize.
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogHAL: Display: Platform has ~ 32 GB [34359738368 / 34359738368 / 32], which maps to Largest [LargestMinGB=32, LargerMinGB=12, DefaultMinGB=8, SmallerMinGB=6, SmallestMinGB=0)
+LogCsvProfiler: Display: Metadata set : extradevelopmentmemorymb="0"
+LogObj: Display: Attempting to load config data for Default__DownlinkBandwidthManagerConfig before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+LogTextureFormatASTC: Display: ASTCEnc version 5.0.1 library loaded
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatASTC
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatDXT
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatETC2
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatIntelISPCTexComp
+LogTextureFormatOodle: Display: Oodle Texture TFO init; latest sdk version = 2.9.16
+LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.16.dylib
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatOodle
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatUncompressed
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'IOS'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'IOSClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Mac'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacEditor'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacServer'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'TVOS'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'TVOSClient'
+LogTargetPlatformManager: Display: Failed to SetupSDK for platform 'Android'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'VisionOS'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'VisionOSClient'
+LogTargetPlatformManager: Display: Building Assets For IOS
+LogObj: Display: Attempting to load config data for Default__SlateThemeManager before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+LogTemp: Display: /Applications/Xcode.app/Contents/Developer
+
+LogCsvProfiler: Display: Metadata set : verbatimrhiname="Null"
+LogCsvProfiler: Display: Metadata set : rhiname="Null"
+LogCsvProfiler: Display: Metadata set : rhifeaturelevel="SM6"
+LogCsvProfiler: Display: Metadata set : shaderplatform="METAL_SM6"
+LogCsvProfiler: Display: Metadata set : gpu=""
+LogCsvProfiler: Display: Metadata set : gpudriver=""
+LogDerivedDataCache: Display: ../../../Engine/DerivedDataCache/Compressed.ddp: Opened pak cache for reading. (2978 MiB)
+LogZenServiceInstance: Display: Launching zen utility '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/zen service status'.
+LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+LogZenServiceInstance: Display: Launching executable '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver', working dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install', data dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data', args '--port 8558 --data-dir "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data" --http asio --gc-cache-duration-seconds 1209600 --gc-interval-seconds 21600 --gc-low-diskspace-threshold 2147483648 --cache-bucket-limit-overwrites --quiet --restrict-content-types --allow-external-oidctoken-exe=false --plugins-config "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugins_v1.json" --security-config-path "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/security-config.json" --owner-pid 56622  --child-id Zen_56622_Startup --detach'
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogDerivedDataCache: Display: ZenLocal: Using ZenServer HTTP service at [::1] with namespace ue.ddc. Status: OK!.
+LogDerivedDataCache: Display: /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/DerivedDataCache: Performance: Latency=0.00ms. RandomReadSpeed=382.25MBs, RandomWriteSpeed=269.47MBs. Assigned SpeedClass 'Local'
+LogUbaHorde: Display: UBA/Horde Configuration [Uba.Provider.Horde]: Not Enabled
+LogShaderCompilers: Display: No distributed shader compiler controller found
+LogShaderCompilers: Display: Using 1 local workers for shader compilation
+LogShaderCompilers: Display: Compiling shader autogen file: ../../../../starCraft/Intermediate/ShaderAutogen/METAL_SM6/AutogenShaderHeaders.ush
+LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+LogAssetRegistry: Display: AssetDataGatherer spent 0.001s loading caches from ../../../../starCraft/Intermediate/CachedAssetRegistry.
+LogEditorDomain: Display: EditorDomain is Disabled
+LogDeviceProfileManager: Display: Deviceprofile LinuxArm64Editor not found.
+LogDeviceProfileManager: Display: Deviceprofile LinuxArm64 not found.
+LogCsvProfiler: Display: Metadata set : deviceprofile="MacEditor"
+LogStreaming: Display: FlushAsyncLoading(1): 1 QueuedPackages, 0 AsyncPackages
+LogTextureEncodingSettings: Display: Texture Encode Speed: Final (cook).
+LogTextureEncodingSettings: Display: Oodle Texture Encode Speed settings: Fast: RDO Off Lambda=0, Effort=Normal Final: RDO Off Lambda=0, Effort=Normal
+LogTextureEncodingSettings: Display: Shared linear texture encoding: Disabled
+LogMeshReduction: Display: HLOD mesh reduction module (r.ProxyLODMeshReductionModule) set to "ProxyLODMeshReduction" which doesn't exist.
+LogMeshReduction: Display: Using QuadricMeshReduction for automatic static mesh reduction
+LogMeshReduction: Display: Using SkeletalMeshReduction for automatic skeletal mesh reduction
+LogMeshReduction: Display: No automatic mesh merging module available
+LogMeshReduction: Display: No distributed automatic mesh merging module available
+LogVirtualization: Display: VirtualizationSystem name found in ini file: None
+LogVirtualization: Display: FNullVirtualizationSystem mounted, virtualization will be disabled
+LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize started...
+LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize took 4.733 ms
+LogMetaSound: Display: MetaSound Page Target Initialized to 'Default'
+LogAudio: Display: Registering Engine Module Parameter Interfaces...
+LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+LogCsvProfiler: Display: Metadata set : largeworldcoordinates="1"
+LogCsvProfiler: Display: Metadata set : raytracing="0"
+LogCook: Display: CookProcessCount=1. CookMultiprocess is disabled and the cooker is running as a single process.
+LogCook: Display: CookSettings for Memory:
+	MemoryMaxUsedVirtual 0MiB
+	MemoryMaxUsedPhysical 0MiB
+	MemoryMinFreeVirtual 2048MiB
+	MemoryMinFreePhysical 2048MiB
+	MemoryTriggerGCAtPressureLevel None
+	SoftGCMemoryUseTrigger disabled
+	SoftGCTimeBudgetTrigger enabled (0.05 budget, 30s min period)
+LogCook: Display: SkipOnlyEditorOnly is enabled, unsolicited packages will not be cooked unless they are referenced from the cooked version of the instigator package.
+LogCook: Display: ---- Pre Content Initialisation: End ----
+LogCook: Display: ---- Post Content Initialisation: Start ----
+LogEditorDomain: Display: Cycle detected in parents of class /Script/RigVMDeveloper.RigVMUnitNode. Allow flags for editordomain and incremental cooking will be invalid.
+LogZenStore: Display: Establishing oplog 'Cinderline.f13a95aa/EditorDomain'
+LogZenStore: Display: Zen project 'Cinderline.f13a95aa' already exists
+LogZenStore: Display: Zen oplog 'Cinderline.f13a95aa/EditorDomain' already exists
+LogCook: Display: Waiting for Asset Registry
+LogAssetRegistry: Display: Starting OnFilesLoaded.Broadcast
+LogAssetRegistry: Display: Completed OnFilesLoaded.Broadcast: 0.012s
+LogAssetRegistry: Display: Asset registry cache written as 118.7 MiB to ../../../../starCraft/Intermediate/CachedAssetRegistry/CachedAssetRegistry_*.ref
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display:   CachedAssetRegistry_0_1D551723E74F0A1A433B0AA52869E206.bin: deleted (orphaned, unreferenced by any .ref)
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 2 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 1 orphans deleted, 0 orphans locked (kept)
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+LogCook: Display: INCREMENTAL COOK DEPENDENCIES: Enabled. Incremental Cook Dependencies are enabled in Editor.ini:[CookSettings]:LegacyIterative=false.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogZenStore: Display: Establishing oplog 'Cinderline.f13a95aa/IOS'
+LogZenStore: Display: Zen project 'Cinderline.f13a95aa' already exists
+LogStorageServerPlatformFile: Display: Found '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore'
+LogStorageServerPlatformFile: Display: Using connection settings from ue.projectstore: HostAddrs='[::1]+192.168.31.109+macserver://MacBook-Pro-10' and HostPort='8558'
+LogStorageServerPlatformFile: Display: Found '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore'
+LogStorageServerPlatformFile: Display: Using password authentication from ue.projectstore
+LogStorageServerPlatformFile: Display: Using settings from ue.projectstore: ServerProject='Cinderline.f13a95aa' and ServerPlatform='IOS'
+LogSockets: Warning: Could not serialize macserver://MacBook-Pro-10, got error code SE_NO_ERROR [0]
+LogSockets: Warning: GetAddressInfo failed to resolve host with error SE_HOST_NOT_FOUND [8]
+LogStorageServerConnection: Display: Creating zen store connection to [::1]:8558 ("::1").
+LogStorageServerConnection: Display: Zen store connection established to [::1]:8558.
+LogCook: Display: CalculateGlobalDependenciesHash(IOS):
+LogCook: Display: 	FGuid CookIncrementalVersion = ffa12fdc-c822-1fe2-7757-627a12f1d3a7
+LogCook: Display: 	[Editor]:CookSettings.ProjectCookIncrementalVersion = 00000000-0000-0000-0000-000000000000
+LogCook: Display: 	[Engine]:Core.System.CanStripEditorOnlyExportsAndImports = True
+LogCook: Display: 	[Engine]:Core.System.CanSkipEditorReferencedPackagesWhenCooking = False
+LogCook: Display: 	CanUseUnversionedPropertySerialization = True
+LogCook: Display: 	[Editor]:CookSettings.AutomaticOptionalInclusionAssetType = /Script/Niagara.NiagaraScript, /Script/Niagara.NiagaraEmitter, /Script/Niagara.NiagaraSystem, /Script/NiagaraEditor.NiagaraParameterDefinitions, /Script/Niagara.NiagaraEffectType, /Script/Niagara.NiagaraValidationRuleSet, /Script/OptimusCore.OptimusDeformer
+LogCook: Display: 	IsCookFlagSet(ECookInitializationFlags::Unversioned) = True
+LogCook: Display: 	FCoreRedirects::AppendHashOfGlobalRedirects = 02c9fd35aac3c00095df0219fc925d7070b41f449d3b97578d818a4016ee6805
+LogCook: Display: 	GlobalDependenciesHash(IOS) = 2de5b37f143f8e25d634acd39f60ca4c07ed1761ed763f60105e89ce30e27192
+LogCook: Display: FULL COOK: Incremental Cooks are disabled by default in Editor.ini:[CookSettings]:CookIncrementalDefaultIncremental=false, and commandline did not specify -forcerecook=false. Deleting previously cooked packages for platform IOS and recooking all packages discovered in the current cook.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogZenStore: Display: Deleting oplog 'Cinderline.f13a95aa/IOS' if it exists
+LogZenStoreWriter: Display: Deleting /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/...
+LogZenStore: Display: Zen oplog 'Cinderline.f13a95aa/IOS' created
+LogCook: Display: Sandbox cleanup took 0.142 seconds for platforms IOS
+LogCook: Display: Compiling global changed shaders for platform 'IOS'
+LogShaderLibrary: Display:
+LogShaderLibrary: Display: Shader Library 'Global' (SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS) Stats:
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display: Assets: 1, Unique Shadermaps: 187 (18700.00%)
+LogShaderLibrary: Display: Total Shaders: 1896, Unique Shaders: 1893 (99.84%)
+LogShaderLibrary: Display: Total Shader Size: 13.13mb, Unique Shaders Size: 13.12mb (99.93%)
+LogShaderLibrary: Display: === Extended info:
+LogShaderLibrary: Display: Minimum number of shaders in shadermap: 1
+LogShaderLibrary: Display: Median number of shaders in shadermap: 2
+LogShaderLibrary: Display: Maximum number of shaders in shadermap: 205
+LogShaderLibrary: Display: Number of shadermaps referencing top 10 most shared shaders:
+LogShaderLibrary: Display:     2, 2, 2, 1, 1, 1, 1, 1, 1, 1
+LogShaderLibrary: Display: Unique shaders itemization (sorted by compressed size):
+LogShaderLibrary: Display: SF_Compute: 839 shaders (44.32%), compressed size: 6.63 MB (8.09 KB avg per shader), uncompressed size: 8.51 MB (10.39 KB avg per shader)
+LogShaderLibrary: Display: SF_Pixel: 968 shaders (51.14%), compressed size: 6.17 MB (6.53 KB avg per shader), uncompressed size: 7.77 MB (8.22 KB avg per shader)
+LogShaderLibrary: Display: SF_Vertex: 86 shaders (4.54%), compressed size: 0.31 MB (3.71 KB avg per shader), uncompressed size: 0.37 MB (4.45 KB avg per shader)
+LogShaderLibrary: Display: Textual dump saved to '../../../../starCraft/Saved/Shaders/SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS/ShaderDebug-Global-SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS/Dump.txt'
+LogShaderLibrary: Display: =================
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogCook: Display: Discovering localized assets for cultures: en
+LogCook: Display: Found 0 localized assets
+LogCook: Display: ---- Post Content Initialisation: End ----
+LogCook: Display: Cooked packages 0 Packages Remain 611 Total 611
+LogCook: Display: Cook Diagnostics: OpenFileHandles=193, VirtualMemory=483425MiB, VirtualMemoryAvailable=23418MiB
+LogCook: Display: Garbage collection triggered (Soft). Triggered by conditions:
+  CookSettings.SoftGCTimeTrigger: Periodic triggering of SoftGC: No duration data.
+LogCookCommandlet: Display: GarbageCollection... (Periodic GC)
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Mask but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Blend but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Transmission but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Opaque but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Mask but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Blend but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Opaque_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Mask_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Blend_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Transmission_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Opaque_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Mask_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Blend_DS but never used. This is wasteful and bad for cook performance.
+LogMaterial: Display: Missing cached shadermap for /Game/Maps/Frontier.Frontier:PersistentLevel.Landscape_5.LandscapeMaterialInstanceConstant_0 in METAL_ES3_1_IOS, Default, ES3_1, Game (DDC key hash: a3fea5268faa9be324cff61d76ffafde024456e2), compiling.
+LogCook: Display: Cooked packages 256 Packages Remain 407 Total 663
+LogMaterial: Display: Missing cached shadermap for /Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround in METAL_ES3_1_IOS, Default, ES3_1, Game (DDC key hash: ae7c847a6cee57bac6aea0bbf9805d555c82eb1e), compiling.
+LogMaterial: Display: Missing cached shadermap for /Game/Art/Canyon/Materials/M_CinderMapArchitecture.M_CinderMapArchitecture in METAL_ES3_1_IOS, Default, ES3_1, Game (DDC key hash: 5cee9fd66d3926098059049a871e298558cb103c), compiling.
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_HighQuality_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Fast_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm_small__dyn__fp16_opset11_DenoiseAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTIM_ColorAlbedoNormal_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDT_Oidn2-3_Balanced_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_calb_cnrm_large__dyn__fp16_opset11_ForwardAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_ColorAlbedoNormal_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDOM_Output_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm__dyn__fp16_opset11_ForwardAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDOM_Output_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_HighQuality_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_ColorAlbedoNormal_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDT_Oidn2-3_Balanced -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Fast -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTIM_ColorAlbedoNormal_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_HighQuality_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm__dyn__fp16_opset11_DenoiseAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_HighQuality -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTOM_Output_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Balanced -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm_small__dyn__fp16_opset11_ForwardAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTOM_Output_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_calb_cnrm_large__dyn__fp16_opset11_DenoiseAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Balanced_Alpha -> Rejected PlatformSpecificNeverCook
+LogTextureBuildUtilities: Display: Unexpected non-BC PixelFormat: 47.
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultMaterialXPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultGLTFAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultGLTFPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultFBXOBJAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultMaterialPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultTexturePipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultAudioPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultSceneAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultSceneLevelPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultGLTFSceneAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultFBXOBJSceneAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooked packages 660 Packages Remain 3 Total 663
+LogCook: Display: Cooked packages 660 Packages Remain 3 Total 663
+LogCook: Display: Cooked packages 660 Packages Remain 3 Total 663
+LogCook: Display: Cooked packages 660 Packages Remain 3 Total 663
+LogMaterial: Display: Missing cached shadermap for /Game/Maps/Frontier.Frontier:PersistentLevel.Landscape_5.LandscapeMaterialInstanceConstant_1 in METAL_ES3_1_IOS, Default, ES3_1, Game (DDC key hash: a3fea5268faa9be324cff61d76ffafde024456e2), compiling.
+LogCook: Display: Cooked packages 661 Packages Remain 2 Total 663
+LogCook: Display: Cooked packages 663 Packages Remain 0 Total 663
+LogCook: Display: Cook Diagnostics: OpenFileHandles=193, VirtualMemory=483835MiB, VirtualMemoryAvailable=21656MiB
+LogCook: Display: ---- Finalisation: Start ----
+LogShaderCompilers: Display: ================================================
+LogShaderCompilers: Display: === FShaderJobCache stats ===
+LogShaderCompilers: Display: Total job queries 38, among them cache hits 12 (31.58%), DDC hits 2 (5.26%), Duplicates 2 (5.26%)
+LogShaderCompilers: Display: Tracking 24 distinct input hashes that result in 21 distinct outputs (87.50%)
+LogShaderCompilers: Display: RAM used: 255.35 KiB of 1.60 GiB budget. Usage: 0.02%
+LogShaderCompilers: Display: === Shader Compilation stats ===
+LogShaderCompilers: Display: Shaders Compiled: 22
+LogShaderCompilers: Display: Jobs assigned 22, completed 22 (100%)
+LogShaderCompilers: Display: Average time worker was idle: 0.00 s
+LogShaderCompilers: Display: Time job spent in pending queue: average 3.71 s, longest 5.36 s
+LogShaderCompilers: Display: Job execution time: average 15.05 s, max 17.20 s
+LogShaderCompilers: Display: Job life time (pending + execution): average 18.76 s, max 22.56
+LogShaderCompilers: Display: Shader code size: total 216.193 KiB, numShaders 22, average 9.826 KiB, min 3.79 KiB, max 12.864 KiB
+LogShaderCompilers: Display: Time at least one job was in flight (either pending or executed): 22.56 s
+LogShaderCompilers: Display: Jobs were issued in 2 batches (only local compilation was used), average 11.00 jobs/batch
+LogShaderCompilers: Display: Average processing rate: 0.98 jobs/sec
+LogShaderCompilers: Display: Total thread time: 21.978 s
+LogShaderCompilers: Display: Total thread preprocess time: 0.544 s
+LogShaderCompilers: Display: Percentage time preprocessing: 2.47%
+LogShaderCompilers: Display: Effective parallelization: 0.97 (times faster than compiling all shaders on one thread). Compare with number of workers: 1 - 0.974197
+LogShaderCompilers: Display: Top 5 most expensive shader types by average time:
+LogShaderCompilers: Display:            TVelocityPS<EVelocityPassMode::Velocity_Standard> (compiled    3 times, average 1.23 sec, max 1.98 sec, min 0.85 sec)
+LogShaderCompilers: Display:            TVelocityVS<EVelocityPassMode::Velocity_Standard> (compiled    4 times, average 1.02 sec, max 1.05 sec, min 0.96 sec)
+LogShaderCompilers: Display:                           TMobileBasePassPSFNoLightMapPolicy (compiled    3 times, average 0.99 sec, max 1.01 sec, min 0.96 sec)
+LogShaderCompilers: Display:                                    TShadowDepthVSOutputDepth (compiled    4 times, average 0.95 sec, max 0.96 sec, min 0.93 sec)
+LogShaderCompilers: Display:                                          TDepthOnlyVS<false> (compiled    4 times, average 0.94 sec, max 0.95 sec, min 0.92 sec)
+LogShaderCompilers: Display: Top 5 shader types by total compile time:
+LogShaderCompilers: Display:            TVelocityVS<EVelocityPassMode::Velocity_Standard> - 18.48% of total time (compiled    4 times, average 1.02 sec, max 1.05 sec, min 0.96 sec)
+LogShaderCompilers: Display:                                    TShadowDepthVSOutputDepth - 17.27% of total time (compiled    4 times, average 0.95 sec, max 0.96 sec, min 0.93 sec)
+LogShaderCompilers: Display:                                          TDepthOnlyVS<false> - 17.05% of total time (compiled    4 times, average 0.94 sec, max 0.95 sec, min 0.92 sec)
+LogShaderCompilers: Display:                           TMobileBasePassVSFNoLightMapPolicy - 16.95% of total time (compiled    4 times, average 0.93 sec, max 0.95 sec, min 0.89 sec)
+LogShaderCompilers: Display:            TVelocityPS<EVelocityPassMode::Velocity_Standard> - 16.80% of total time (compiled    3 times, average 1.23 sec, max 1.98 sec, min 0.85 sec)
+LogShaderCompilers: Display: === Material stats ===
+LogShaderCompilers: Display: Materials Cooked:        191
+LogShaderCompilers: Display: Materials Translated:    4
+LogShaderCompilers: Display: Material Total Translate Time: 0.01 s
+LogShaderCompilers: Display: Material Translation Only: 0.00 s (74%)
+LogShaderCompilers: Display: Material DDC Serialization Only: 0.00 s (1%)
+LogShaderCompilers: Display: Material Cache Hits: 1 (25%)
+LogShaderCompilers: Display: ================================================
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogCook: Display: CookArtifact '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/ValidationCookArtifact.json' saved.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogAssetRegistryGenerator: Display: Saving asset registry v24.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogAssetRegistryGenerator: Display: Generated development asset registry /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/DevelopmentAssetRegistry.bin num assets 665, size is 530.20kb, XxHash64[LE] = 0x46B97F65F80DB1B5, waited on hash 0.00 seconds
+LogAssetRegistryGenerator: Display: Generated asset registry num assets 622, size is 188.62kb
+LogShaderLibrary: Display:
+LogShaderLibrary: Display: Shader Library 'Cinderline' (SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS) Stats:
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display: Assets: 123, Unique Shadermaps: 120 (97.56%)
+LogShaderLibrary: Display: Total Shaders: 893, Unique Shaders: 616 (68.98%)
+LogShaderLibrary: Display: Total Shader Size: 6.64mb, Unique Shaders Size: 4.74mb (71.35%)
+LogShaderLibrary: Display: === Extended info:
+LogShaderLibrary: Display: Minimum number of shaders in shadermap: 1
+LogShaderLibrary: Display: Median number of shaders in shadermap: 4
+LogShaderLibrary: Display: Maximum number of shaders in shadermap: 165
+LogShaderLibrary: Display: Number of shadermaps referencing top 10 most shared shaders:
+LogShaderLibrary: Display:     27, 23, 16, 15, 15, 11, 11, 9, 9, 8
+LogShaderLibrary: Display: Unique shaders itemization (sorted by compressed size):
+LogShaderLibrary: Display: SF_Pixel: 329 shaders (53.41%), compressed size: 2.45 MB (7.62 KB avg per shader), uncompressed size: 3.18 MB (9.89 KB avg per shader)
+LogShaderLibrary: Display: SF_Vertex: 238 shaders (38.64%), compressed size: 1.98 MB (8.52 KB avg per shader), uncompressed size: 2.48 MB (10.68 KB avg per shader)
+LogShaderLibrary: Display: SF_Compute: 49 shaders (7.95%), compressed size: 0.31 MB (6.49 KB avg per shader), uncompressed size: 0.39 MB (8.11 KB avg per shader)
+LogShaderLibrary: Display: Textual dump saved to '../../../../starCraft/Saved/Shaders/SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS/ShaderDebug-Cinderline-SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS/Dump.txt'
+LogShaderLibrary: Display: =================
+LogCook: Display: Dependent plugin "SteamShared" referenced by "EOS Shared" wasn't found in enabled plugins list when creating cook metadata file... skipping
+LogCook: Display: Dependent plugin "UAF" referenced by "IK Rig" wasn't found in enabled plugins list when creating cook metadata file... skipping
+LogCook: Display: Dependent plugin "UAFAnimGraph" referenced by "IK Rig" wasn't found in enabled plugins list when creating cook metadata file... skipping
+LogCook: Display: Finalize package store(s)...
+LogZenStoreWriter: Display: Flushing...
+LogZenStoreWriter: Display: Saving Zen filesystem manifest '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/zenfs.manifest'
+LogZenStoreWriter: Display: Output:	48779 Public runtime script objects
+LogCook: Display: Cook by the book total time in tick 24.449679s total time 27.467648
+LogCook: Display: Peak Used virtual 483858 MiB Peak Used physical 1744 MiB
+LogCook: Display: Packages Cooked: 620, Packages Incrementally Skipped: 0, Packages Skipped by Platform: 43, Total Packages: 663
+LogCookStats: Display: Hierarchy Timer Information:
+LogCookStats: Display:   Root: 0.000s (0)
+LogCookStats: Display:     CleanSandbox: 0.142s (1)
+LogCookStats: Display:     CollectFilesToCook: 0.013s (1)
+LogCookStats: Display:       CookModificationDelegate: 0.000s (1)
+LogCookStats: Display:     GenerateLongPackageName: 0.001s (1)
+LogCookStats: Display:     TickMainCookLoop: 24.450s (2)
+LogCookStats: Display:       PumpPollables: 0.005s (6)
+LogCookStats: Display:       PumpRequests: 0.016s (21)
+LogCookStats: Display:       LoadPackageForCooking: 1.174s (663)
+LogCookStats: Display:       ValidateSourcePackage: 0.000s (663)
+LogCookStats: Display:       SavingPackages: 1.823s (1119)
+LogCookStats: Display:         PollPendingCookedPlatformDatas: 0.193s (5627)
+LogCookStats: Display:         PrepareSave: 0.611s (5032)
+LogCookStats: Display:         PrecachePlatformDataForNextPackage: 0.487s (662)
+LogCookStats: Display:           PrepareSave: 0.487s (813)
+LogCookStats: Display:         SaveCookedPackage: 0.490s (663)
+LogCookStats: Display:           GEditorSavePackage: 0.386s (627)
+LogCookStats: Display:             VerifyCanCookPackage: 0.001s (620)
+LogCookStats: Display:           TargetDomainDependencies: 0.070s (627)
+LogCookStats: Display:         ClearAllCachedCookedPlatformData: 0.006s (663)
+LogCookStats: Display:       PostLoadPackageFixup: 0.000s (2)
+LogCookStats: Display:       WaitForAsync: 21.364s (1044)
+LogCookStats: Display:     CookByTheBookFinished: 0.326s (1)
+LogCookStats: Display:       SavingCurrentIniSettings: 0.022s (1)
+LogCookStats: Display:         ProcessingAccessedStrings: 0.003s (1)
+LogCookStats: Display:       ChunkGeneration: 0.013s (1)
+LogCookStats: Display:       FinishPopulateShaderLibrary: 0.001s (1)
+LogCookStats: Display:       CalculateReferencedSet: 0.000s (1)
+LogCookStats: Display:       CookArtifacts.UpdateOplogPackages: 0.003s (1)
+LogCookStats: Display:       PruneShaderLibrary: 0.000s (1)
+LogCookStats: Display:       GeneratorPreSave: 0.000s (1)
+LogCookStats: Display:       BuildChunkManifest: 0.009s (1)
+LogCookStats: Display:         FixupPackageDependenciesForChunks: 0.005s (1)
+LogCookStats: Display:       SaveManifests: 0.000s (1)
+LogCookStats: Display:       SaveAssetRegistry: 0.022s (1)
+LogCookStats: Display:       WriteCookerOpenOrder: 0.002s (1)
+LogCookStats: Display:       WriteCookMetadata: 0.001s (1)
+LogCookStats: Display:       WriteReferencedSet: 0.000s (1)
+LogCookStats: Display:       FinalizePackageStore: 0.229s (1)
+LogCookStats: Display: Misc Cook Stats
+LogCookStats: Display: ===============
+LogCookStats: Display: Validation
+LogCookStats: Display:     Stats=[]
+LogCookStats: Display: Niagara
+LogCookStats: Display:     NiagaraScriptTranslationCount=0
+LogCookStats: Display:     NiagaraCpuScriptCompileCount=0
+LogCookStats: Display:     NiagaraCpuScriptDdcCacheHitCount=0
+LogCookStats: Display:     NiagaraCpuScriptDdcCacheMissCount=0
+LogCookStats: Display:     NiagaraGpuScriptCompileCount=0
+LogCookStats: Display:     NiagaraGpuScriptDdcCacheHitCount=0
+LogCookStats: Display:     NiagaraGpuScriptDdcCacheMissCount=0
+LogCookStats: Display:     NiagaraSystemWaitForCompilationCompleteTime=0.000000
+LogCookStats: Display: ComputeKernelShader.Misc
+LogCookStats: Display:     ShadersCompiled=0
+LogCookStats: Display: NiagaraShader.Misc
+LogCookStats: Display:     ShadersCompiled=0
+LogCookStats: Display: ShaderCompiler
+LogCookStats: Display:     BlockingTimeSec=0.000050
+LogCookStats: Display:     AsyncCompileTimeSec=22.554329
+LogCookStats: Display:     GlobalBeginCompileShaderTimeSec=0.003414
+LogCookStats: Display:     GlobalBeginCompileShaderCalls=38
+LogCookStats: Display:     ProcessAsyncResultsTimeSec=0.006757
+LogCookStats: Display: GlobalShader.Misc
+LogCookStats: Display:     ShadersCompiled=0
+LogCookStats: Display: Material
+LogCookStats: Display:     FinishCacheShadersSec=0.134253
+LogCookStats: Display: Cook.Profile.Params
+LogCookStats: Display:     CookProject=Cinderline
+LogCookStats: Display:     CookCultures=
+LogCookStats: Display:     CookLabel=
+LogCookStats: Display:     TargetPlatforms=IOS
+LogCookStats: Display:     IsCookAll=false
+LogCookStats: Display:     IsCookOnTheFly=false
+LogCookStats: Display:     IsIncrementalCook=false
+LogCookStats: Display:     IsIterativeCook=false
+LogCookStats: Display:     IsFastCook=false
+LogCookStats: Display:     IsUnversioned=true
+LogCookStats: Display: CookOnTheFlyServer.Package.Load
+LogCookStats: Display:     NumRequestedLoads=302
+LogCookStats: Display:     NumPackagesLoaded=3475
+LogCookStats: Display:     NumInlineLoads=3173
+LogCookStats: Display: CookOnTheFlyServer.Package.Save
+LogCookStats: Display:     NumPackagesIncrementallySkipped=0
+LogCookStats: Display: CookOnTheFlyServer.QueueSize
+LogCookStats: Display:     PeakRequest=662
+LogCookStats: Display:     PeakLoad=61
+LogCookStats: Display:     PeakSave=69
+LogCookStats: Display: Package.Load
+LogCookStats: Display:     LoadPackageTimeSec=1.367437
+LogCookStats: Display: Package.Save
+LogCookStats: Display:     NumPackagesSaved=627
+LogCookStats: Display:     SavePackageTimeSec=0.368628
+LogCookStats: Display:     TagPackageExportsPresaveTimeSec=0.000000
+LogCookStats: Display:     TagPackageExportsTimeSec=0.000000
+LogCookStats: Display:     FullyLoadLoadersTimeSec=0.000000
+LogCookStats: Display:     ResetLoadersTimeSec=0.000000
+LogCookStats: Display:     TagPackageExportsGetObjectsWithOuter=0.000000
+LogCookStats: Display:     TagPackageExportsGetObjectsWithMarks=0.000000
+LogCookStats: Display:     SerializeImportsTimeSec=0.000000
+LogCookStats: Display:     SortExportsSeekfreeInnerTimeSec=0.000000
+LogCookStats: Display:     SerializeExportsTimeSec=0.000000
+LogCookStats: Display:     SerializeBulkDataTimeSec=0.001226
+LogCookStats: Display:     AsyncWriteTimeSec=0.000000
+LogCookStats: Display:     MBWritten=0.000000
+LogCookStats: Display: Package.DifferentPackagesSizeMBPerAsset
+LogCookStats: Display: Package.NumberOfDifferencesInPackagesPerAsset
+LogCookStats: Display: Package.PackageDifferencesSizeMBPerAsset
+LogCookStats: Display: Package.DiffTotal
+LogCookStats: Display:     NumberOfDifferentPackages=0
+LogCookStats: Display:     DifferentPackagesSizeMB=0.000000
+LogCookStats: Display:     NumberOfDifferencesInPackages=0
+LogCookStats: Display:     PackageDifferencesSizeMB=0.000000
+LogCookStats: Display: UnversionedProperties
+LogCookStats: Display:     SavedStructs=0
+LogCookStats: Display:     SavedMB=0
+LogCookStats: Display:     EquivalentTaggedMB=0
+LogCookStats: Display:     CompressionRatio=nan
+LogCookStats: Display:     BitfieldWasteKB=0
+LogCookStats: Display:
+LogCookStats: Display: Cook Profile
+LogCookStats: Display: ============
+LogCookStats: Display:  0.CookWallTimeSec=47.773256
+LogCookStats: Display:  0. 0.StartupWallTimeSec=20.084669
+LogCookStats: Display:  0. 1.CookProcessingTime=27.688587
+LogCookStats: Display:  0. 1. 1.StartCookByTheBookTimeSec=2.867990
+LogCookStats: Display:  0. 1. 1. 0.BlockOnAssetRegistryTimeSec=1.103547
+LogCookStats: Display:  0. 1. 1. 1.GameCookModificationDelegateTimeSec=0.000054
+LogCookStats: Display:  0. 1. 2.TickCookOnTheSideTimeSec=0.360463
+LogCookStats: Display:  0. 1. 2. 0.TickCookOnTheSideLoadPackagesTimeSec=1.173784
+LogCookStats: Display:  0. 1. 2. 1.TickCookOnTheSideSaveCookedPackageTimeSec=0.490289
+LogCookStats: Display:  0. 1. 2. 1. 0.TickCookOnTheSideResolveRedirectorsTimeSec=0.000000
+LogCookStats: Display:  0. 1. 2. 2.TickCookOnTheSidePrepareSaveTimeSec=1.098120
+LogCookStats: Display:  0. 1. 3.TickLoopGCTimeSec=0.040879
+LogCookStats: Display:  0. 1. 4.TickLoopRecompileShaderRequestsTimeSec=0.000000
+LogCookStats: Display:  0. 1. 5.TickLoopShaderProcessAsyncResultsTimeSec=0.000030
+LogCookStats: Display:  0. 1. 6.TickLoopProcessDeferredCommandsTimeSec=0.000057
+LogCookStats: Display:  0. 1. 7.TickLoopTickCommandletStatsTimeSec=0.000002
+LogCookStats: Display:  0. 1. 8.TickLoopFlushRenderingCommandsTimeSec=0.001039
+LogCookStats: Display:  0. 1. 9.ShaderFlushTimeSec=0.000000
+LogCookStats: Display:  0. 1. 10.ValidationTimeSec=0.000065
+LogCookStats: Display:
+LogCookStats: Display: DDC Summary Stats
+LogCookStats: Display: =================
+LogCookStats: Display: BackEnd         = Installed
+LogCookStats: Display: HasLocalCache   =      true
+LogCookStats: Display: HasSharedCache  =     false
+LogCookStats: Display: HasCloudCache   =     false
+LogCookStats: Display: HasZenCache     =      true
+LogCookStats: Display: TotalGetHits    =      4692
+LogCookStats: Display: TotalGetMisses  =        38
+LogCookStats: Display: TotalGets       =      4730
+LogCookStats: Display: TotalGetHitPct  =  0.991966
+LogCookStats: Display: GetMissPct      =  0.008034
+LogCookStats: Display: TotalPutHits    =        31
+LogCookStats: Display: TotalPutMisses  =         0
+LogCookStats: Display: TotalPuts       =        31
+LogCookStats: Display: TotalPutHitPct  =  1.000000
+LogCookStats: Display: PutMissPct      =  0.000000
+LogCookStats: Display: LocalGetHits    =      4682
+LogCookStats: Display: LocalGetMisses  =        38
+LogCookStats: Display: LocalGetTotal   =      4720
+LogCookStats: Display: LocalGetHitPct  =  0.991949
+LogCookStats: Display: SharedGetHits   =         0
+LogCookStats: Display: SharedGetTotal  =         0
+LogCookStats: Display: SharedGetHitPct =  0.000000
+LogCookStats: Display: ZenLocalGetHits =      4682
+LogCookStats: Display: ZenLocalGetTotal=      4720
+LogCookStats: Display: ZenLocalGetHitPct=  0.991949
+LogCookStats: Display: ZenRemoteGetHits=         0
+LogCookStats: Display: ZenRemoteGetTotal=         0
+LogCookStats: Display: ZenRemoteGetHitPct=  0.000000
+LogCookStats: Display: ZenRemoteReadSpeed=  0.000000
+LogCookStats: Display: ZenRemoteWriteSpeed=  0.000000
+LogCookStats: Display: ZenRemoteLatency=  0.000000
+LogCookStats: Display: CloudGetHits    =         0
+LogCookStats: Display: CloudGetTotal   =         0
+LogCookStats: Display: CloudGetHitPct  =  0.000000
+LogCookStats: Display: LocalLatency    =  2.759645
+LogCookStats: Display: LocalReadSpeed  = 93.760712
+LogCookStats: Display: LocalWriteSpeed = 57.835684
+LogCookStats: Display: SharedLatency   =  0.000000
+LogCookStats: Display: SharedReadSpeed =  0.000000
+LogCookStats: Display: SharedWriteSpeed=  0.000000
+LogCookStats: Display: CloudLatency    =  0.000000
+LogCookStats: Display: CloudReadSpeed  =  0.000000
+LogCookStats: Display: CloudWriteSpeed =  0.000000
+LogCookStats: Display:
+LogCookStats: Display: DDC Resource Stats
+LogCookStats: Display: =======================================================================================================
+LogCookStats: Display: Asset Type                          Total Time (Sec)  GameThread Time (Sec)  Assets Built  MB Processed
+LogCookStats: Display: ----------------------------------  ----------------  ---------------------  ------------  ------------
+LogCookStats: Display: GlobalShader                                    0.92                   0.00             0         13.59
+LogCookStats: Display: BulkDataList                                    0.66                   0.00             2          0.57
+LogCookStats: Display: MaterialShader                                  0.20                   0.08             4          6.85
+LogCookStats: Display: StaticMesh                                      0.15                   0.07             0         35.65
+LogCookStats: Display: Texture                                         0.15                   0.00             0         45.53
+LogCookStats: Display: CardRepresentation                              0.04                   0.00             0          0.04
+LogCookStats: Display: NavCollision                                    0.03                   0.00             0          0.10
+LogCookStats: Display: Shader                                          0.03                   0.00            22          0.01
+LogCookStats: Display: STREAMEDAUDIO                                   0.02                   0.00             0          0.12
+LogCookStats: Display: Audio                                           0.01                   0.00             0          0.11
+LogCookStats: Display: BodySetup                                       0.01                   0.00             0          2.60
+LogCookStats: Display: MaterialTranslation                             0.00                   0.00             3          0.01
+LogCookStats: Display: CKERSM                                          0.00                   0.00             0          0.13
+LogCookStats: Display:
+LogCookStats: Display: Accumulated DDC Resource Stats Per Asset Type
+LogCookStats: Display: =======================================================================================================
+LogCookStats: Display: AnimationSequence                               0.00                   0.00             0          0.00
+LogCookStats: Display: Audio                                           0.01                   0.00             0          0.11
+LogCookStats: Display: CardRepresentation                              0.04                   0.00             0          0.04
+LogCookStats: Display: DistanceField                                   0.00                   0.00             0          0.00
+LogCookStats: Display: MaterialShader                                  0.20                   0.08             4          6.85
+LogCookStats: Display: MaterialTranslation                             0.00                   0.00             3          0.01
+LogCookStats: Display: NiagaraScript                                   0.00                   0.00             0          0.00
+LogCookStats: Display: SkeletalMesh                                    0.00                   0.00             0          0.00
+LogCookStats: Display: StaticMesh                                      0.15                   0.07             0         35.65
+LogCookStats: Display: Texture                                         0.15                   0.00             0         45.53
+LogCookStats: Display: Other                                           1.67                   0.00            24         17.11
+LogPackageBuildDependencyTracker: Display: Package Accesses (346 referencing packages with a total of 2534 unique accesses)
+LogConfigBuildDependencyTracker: Display: Config Accesses (461 referencing packages with a total of 2144 unique accesses). 1737 unique accesses that were not associated with a package.
+LogCook: Display: ---- Finalisation: End ----
+LogCook: Display: Done!
+LogSavePackage: Display: Took 0.000333s to verify the EDL loading graph.
+LogInit: Display:
+LogInit: Display: Warning/Error Summary (Unique only)
+LogInit: Display: -----------------------------------
+LogInit: Display: LogSockets: Warning: Could not serialize macserver://MacBook-Pro-10, got error code SE_NO_ERROR [0]
+LogInit: Display: LogSockets: Warning: GetAddressInfo failed to resolve host with error SE_HOST_NOT_FOUND [8]
+LogInit: Display:
+LogInit: Display: Success - 0 error(s), 2 warning(s)
+LogInit: Display:
+Execution of commandlet took:  27.69 seconds, PeakPhysMemoryMB=1744 MB, PeakVirtMemoryMB=483858 MB
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+LogStreaming: Display: ============ Loader Stats ============
+LogStreaming: Display: Unique Partial Flushes: 0
+LogStreaming: Display: ============ Loader Stats End ============
+LogShaderCompilers: Display: Exiting ShaderCompilingThread
+2026-09-22 21:22:01.525 UnrealEditor-Cmd[56622:452471] [UE4] Shutdown handler: cleanup.
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Opening shared memory
+Starting the store
+Reading settings from '/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini'
+
+Unable to open settings file /Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini.
+
+Store settings (/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini):
+ - Store port: 1989
+ - Recorder port: 1981
+ - Thread count: 0
+ - Sponsored mode: 1
+ - Directory: '/Users/chirag13/UnrealEngine/UnrealTrace/Store/001'
+Watcher enabled on /Users/chirag13/UnrealEngine/UnrealTrace/Store/001
+Signalling parent 56637
+Terminating server, no sponsors or connections active.
+Received signal 15
+Daemon is exiting without errors.
+Listening cancelled, closing port...
+Listening cancelled, closing port...
+Took 52.42s to run UnrealEditor-Cmd, ExitCode=0
+Cook command time: 52.47 s
+********** COOK COMMAND COMPLETED **********
+********** STAGE COMMAND STARTED **********
+Creating UECommandLine.txt
+Creating Staging Manifest...
+CookPlat IOS, this IOSPlatform
+UPL Init: None
+App has no custom Localization resources
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/PortableObjectImport.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseLightmass.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/Category.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/WordCount.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/PropertyNames.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/Keywords.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/RepairData.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/Editor.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/PortableObjectExport.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/ToolTips.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Localization/Engine.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseEditorSettings.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseEditorKeyBindings.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseUnrealInsightsSettings.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseEditor.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BasePakFileRules.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseEditorPerProjectUserSettings.ini
+Excluding config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseSourceControlSettings.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/ConsoleVariables.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Layouts/UE4ClassicLayout.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Layouts/DefaultLayout.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseCompat.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseInstallBundle.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseInput.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/IOS/IOSGame.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/IOS/IOSScalability.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/IOS/BaseIOSEngine.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/IOS/BaseIOSInput.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseGame.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseDeviceProfiles.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseMaterialExpressions.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/Base.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseScalability.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/IOS/BaseIOSInstallBundle.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/IOS/BaseIOSGame.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/IOS/DataDrivenPlatformInfo.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/VulkanPC/DataDrivenPlatformInfo.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseRuntimeOptions.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseHardware.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseEngine.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/ConfigRedirects.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/PluginBase.ini
+Including config file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Config/BaseGameUserSettings.ini
+The config file 'Cinderline/Config/UserEngine.ini' will be staged, but is not explicitly allowed or denied. Add +AllowedConfigFiles=Cinderline/Config/UserEngine.ini or +DisallowedConfigFiles=Cinderline/Config/UserEngine.ini to the [Staging] section of DefaultGame.ini
+Including config file /Users/chirag13/Documents/ChatGPT/starCraft/Config/UserEngine.ini
+Including config file /Users/chirag13/Documents/ChatGPT/starCraft/Config/DefaultDeviceProfiles.ini
+Including config file /Users/chirag13/Documents/ChatGPT/starCraft/Config/IOS/IOSEngine.ini
+Including config file /Users/chirag13/Documents/ChatGPT/starCraft/Config/DefaultInput.ini
+Including config file /Users/chirag13/Documents/ChatGPT/starCraft/Config/DefaultEngine.ini
+Including config file /Users/chirag13/Documents/ChatGPT/starCraft/Config/DefaultGame.ini
+Reading oplog from Zen...
+Running UnrealPak with arguments: "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject" IoStore -StartZenServerForStage -SponsorProcessID=56607 -ProjectStore="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore"
+Running: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealPak "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject" IoStore -StartZenServerForStage -SponsorProcessID=56607 -ProjectStore="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore"
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogPakFile: Display: ProjectDir: ../../../../starCraft/
+LogIoStore: Display: ==================== IoStore Utils ====================
+LogIoStore: Display: Using command line for crypto configuration
+LogZenServiceInstance: Display: Launching zen utility '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/zen service status'.
+LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+LogZenServiceInstance: Display: Launching executable '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver', working dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install', data dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data', args '--port 8558 --data-dir "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data" --http asio --gc-cache-duration-seconds 1209600 --gc-interval-seconds 21600 --gc-low-diskspace-threshold 2147483648 --cache-bucket-limit-overwrites --quiet --restrict-content-types --allow-external-oidctoken-exe=false --plugins-config "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugins_v1.json" --security-config-path "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/security-config.json" --owner-pid 57074  --child-id Zen_57074_Startup --detach'
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogPakFile: Display: UnrealPak executed in 1.566799 seconds
+Took 2.18s to run UnrealPak, ExitCode=0
+Reading oplog from http://[::1]:8558/prj/Cinderline.f13a95aa/oplog/IOS/entries?trim_by_referencedset=true
+Parsed 629 package entries from oplog.
+Cleaning Stage Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS
+Creating pak using staging manifest.
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PrePak_IOS_NonUFSFiles.txt, NumItems: 5
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PrePak_IOS_NonUFSFilesDebug.txt, NumItems: 5
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PrePak_IOS_UFSFiles.txt, NumItems: 2407
+Excluding /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Engine/Content/EngineMaterials/PPM_DefaultCalibrationGrayscale.uasset from pak files
+Excluding /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Engine/Content/EngineMaterials/PPM_DefaultCalibrationColor.uasset from pak files
+Excluding /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Engine/Content/EngineMaterials/DefaultCalibrationGrayscale.uasset from pak files
+Excluding /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Engine/Content/EngineMaterials/DefaultCalibrationColor.uasset from pak files
+Excluding /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Engine/Content/EngineMaterials/DefaultBloomKernel.uasset from pak files
+Using 0 pak order files:
+Running UnrealPak with arguments: "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject"  -cryptokeys="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/Crypto.json" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid  -ProjectStore="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore" -platform=IOS  -CreateMultiple="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PakCommands.txt"
+Running: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealPak "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject"  -cryptokeys="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/Crypto.json" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid  -ProjectStore="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore" -platform=IOS  -CreateMultiple="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PakCommands.txt"
+LogTrace: Display: Control listening on port 1985
+OodleDataCompression: Display: Oodle v2.9.16 format for pak/iostore with method=Mermaid, level=4=Normal
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogPakFile: Display: ProjectDir: ../../../../starCraft/
+LogPakFile: Display: Parsing crypto keys from a crypto key cache file
+LogPakFile: Display: CompressionFormats in priority order: Oodle, Zlib
+LogZenServiceInstance: Display: Launching zen utility '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/zen service status'.
+LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogZenStore: Display: Opening oplog Cinderline.f13a95aa / IOS
+LogIoStore: Display: Fetched 630 oplog items from Zen in 2.40 seconds
+LogIoStore: Display: Parsed 630 oplog items 0.01 seconds, 3442 chunks
+LogIoStore: Display: Loaded 678 chunk hashes from Zen in 0.01 seconds, 678 hashes updated in 0.00 seconds
+LogPakFile: Display: Oodle enabled on 'NoPluginCompression' files
+LogPakFile: Display: Loading response file /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Programs/AutomationTool/Saved/ResponseFiles/PakList_cinderline-ios.txt
+LogPakFile: Display: Added 1727 entries to add to pak file.
+LogPakFile: Display: Collecting files to add to pak file...
+LogPakFile: Display: Collected 1727 files in 0.01s.
+LogPakFile: Display: Creating pak /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/cookeddata/cinderline/content/paks/cinderline-ios.pak.
+LogPakFile: Display: Created pak file: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/cookeddata/cinderline/content/paks/cinderline-ios.pak
+LogPakFile: Display: CompressionFormat 0 [Oodle] : 368 files, 22508529 -> 9388396 bytes
+LogPakFile: Display: CompressionFormat 2 [None] : 1359 files, 1198588 -> 1198588 bytes
+LogPakFile: Display: Added 1727 files, 10825375 bytes total
+LogPakFile: Display: PrimaryIndex size: 23586 bytes
+LogPakFile: Display: PathHashIndex size: 53918 bytes
+LogPakFile: Display: FullDirectoryIndex size: 57183 bytes
+LogPakFile: Display: Compression summary: 41.71% of original size. Compressed Size 9388396 bytes, Original Size 22508529 bytes.
+LogPakFile: Display: Encryption - DISABLED
+LogPakFile: Display:
+LogPakFile: Display: Writer and Compression Threads exited.
+LogPakFile: Display: UnrealPak executed in 2.522615 seconds
+Took 2.87s to run UnrealPak, ExitCode=0
+Running UnrealPak with arguments: "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject" /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -CreateGlobalContainer="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/cookeddata/cinderline/content/paks/global.utoc" -ProjectStore="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore" -CookedDirectory="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS" -Commands="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/IoStoreCommands.txt" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid   -cryptokeys="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/Crypto.json" -compressionMinBytesSaved=1024 -compressionMinPercentSaved=5 -WriteBackMetadataToAssetRegistry=Disabled -platform=IOS 
+Running: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealPak "/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject" /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -CreateGlobalContainer="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/cookeddata/cinderline/content/paks/global.utoc" -ProjectStore="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/ue.projectstore" -CookedDirectory="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS" -Commands="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/IoStoreCommands.txt" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid   -cryptokeys="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/Crypto.json" -compressionMinBytesSaved=1024 -compressionMinPercentSaved=5 -WriteBackMetadataToAssetRegistry=Disabled -platform=IOS
+LogTrace: Display: Control listening on port 1985
+OodleDataCompression: Display: Oodle v2.9.16 format for pak/iostore with method=Mermaid, level=4=Normal
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogPakFile: Display: ProjectDir: ../../../../starCraft/
+LogIoStore: Display: ==================== IoStore Utils ====================
+LogIoStore: Display: Parsing crypto keys from a crypto key cache file '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Metadata/Crypto.json'
+LogIoStore: Display: Container signing - DISABLED
+LogIoStore: Display: Directory index - ENABLED
+LogIoStore: Display: Using compression format 'Oodle'
+LogConfig: Display: Read in platform IOS ini files took 0.01 seconds
+LogIoStore: Display: Using memory mapping alignment '16'
+LogIoStore: Display: Using compression block size '65536'
+LogIoStore: Display: Using compression block alignment '0'
+LogIoStore: Display: Using compression min bytes saved '1024'
+LogIoStore: Display: Using compression min percent saved '5'
+LogIoStore: Display: Using max partition size '0'
+LogIoStore: Display: Not using DDC for compression
+LogIoStore: Display: Container metadata disabled
+LogIoStore: Display: Using command list file: '/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/IoStoreCommands.txt'
+LogIoStore: Display: Selected Oodle level 4 (Normal) from command line for shaders
+LogZenServiceInstance: Display: Launching zen utility '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/zen service status'.
+LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogZenStore: Display: Opening oplog Cinderline.f13a95aa / IOS
+LogIoStore: Display: Fetched 630 oplog items from Zen in 1.46 seconds
+LogIoStore: Display: Parsed 630 oplog items 0.01 seconds, 3442 chunks
+LogIoStore: Display: Loaded 678 chunk hashes from Zen in 0.00 seconds, 678 hashes updated in 0.00 seconds
+LogIoStore: Display: Searching for cooked assets in folder '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS'
+LogIoStore: Display: Found '4' files
+LogIoStore: Display: Creating container targets...
+LogIoStore: Display: Processing shader libraries, compressing with Oodle Mermaid, level 4 (Normal)
+LogIoStore: Display: Shader library chunk override is disabled
+LogShaderLibrary: Display: Created IoStoreShaderArchive header: shaders grouped in 195 groups (84 of them didn't need new indices), average uncompressed size 89564 bytes, min 3225 bytes, max 926482 bytes (r.ShaderCodeLibrary.MaxShaderGroupSize=1048576)
+LogIoStore: Display: Global-SF_METAL_ES3_1_IOS(METAL_ES3_1_IOS): Recompressed 1893 shaders as 195 groups. Library size changed from 13432 KB (1.27 : 1 ratio) to 5308 KB (3.21 : 1 ratio), 39.52% of previous.
+LogIoStore: Display: Save IoStoreShaderCodeArchive 'Global-SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS' with ChunkId '49915f19670f2afc00000008' for target file '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Content/ShaderArchive-Global-SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS.ushaderbytecode'
+LogShaderLibrary: Display: Created IoStoreShaderArchive header: shaders grouped in 165 groups (104 of them didn't need new indices), average uncompressed size 38424 bytes, min 3145 bytes, max 705773 bytes (r.ShaderCodeLibrary.MaxShaderGroupSize=1048576)
+LogIoStore: Display: Cinderline-SF_METAL_ES3_1_IOS(METAL_ES3_1_IOS): Recompressed 616 shaders as 165 groups. Library size changed from 4853 KB (1.28 : 1 ratio) to 3006 KB (2.06 : 1 ratio), 61.94% of previous.
+LogIoStore: Display: Save IoStoreShaderCodeArchive 'Cinderline-SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS' with ChunkId 'e8876ebde5a00ecc00000008' for target file '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Cooked/IOS/Cinderline/Content/ShaderArchive-Cinderline-SF_METAL_ES3_1_IOS-METAL_ES3_1_IOS.ushaderbytecode'
+LogIoStore: Display: Shaders processed in 0.05 seconds
+LogIoStore: Display: Initialized WriteRequestManager with MaxConcurrentSourceReads=5 (10 cores), MaxSourceBufferMemory=3072MiB
+LogIoStore: Display: Processing redirects...
+LogIoStore: Display: Creating disk layout...
+LogIoStore: Display: Ordered 615 packages using fallback bundle order
+LogIoStore: Display: Disabled WriteRequestManager memory throttling, MaxConcurrentSourceReads=5 (10 cores)
+LogIoStore: Display: Writing container(s)...
+LogIoStore: Display: Writing and compressing took 0.26 seconds, writes to disk took 0.08 seconds for 73,605,504 bytes @ 973,374,755 bytes per second.
+LogIoStore: Display: cinderline-ios: Found perfect hashmap for 1036 items.
+LogIoStore: Display: global: Found perfect hashmap for 1 items.
+LogIoStore: Display: Finalize took 0.0 seconds for 2 writers to write 117,653 bytes, 4,552,540 bytes per second
+LogIoStore: Display: Writing tocs... [Physical: 723 MiB, Virtual: 481342 MiB]
+LogIoStore: Display: 673 / 1,037 hashes were loaded from the hash database, by type:
+LogIoStore: Display:     ExportBundleData           615
+LogIoStore: Display:     BulkData                   58
+LogIoStore: Display: 673 / 1,037 chunks attempted to compress, by type:
+LogIoStore: Display:     ExportBundleData           615 / 615
+LogIoStore: Display:     BulkData                   58 / 58
+LogIoStore: Display:     ScriptObjects              0 / 1
+LogIoStore: Display:     ContainerHeader            0 / 1
+LogIoStore: Display:     ShaderCodeLibrary          0 / 2
+LogIoStore: Display:     ShaderCode                 0 / 360
+LogIoStore: Display: Source bytes read:
+LogIoStore: Display:     Zen:                        125,289,507
+LogIoStore: Display:         ExportBundleData         84,249,977 bytes over 615 reads
+LogIoStore: Display:         BulkData                 41,039,530 bytes over 58 reads
+LogIoStore: Display:     Loose File:                           0
+LogIoStore: Display:     Memory:                      17,179,330
+LogIoStore: Display:         ShaderCodeLibrary           151,056 bytes over 4 reads
+LogIoStore: Display:         ShaderCode               17,028,274 bytes over 720 reads
+LogIoStore: Display: Calculating stats...
+LogIoStore: Display:
+LogIoStore: Display: Container Summary
+LogIoStore: Display: ==================
+LogIoStore: Display:
+LogIoStore: Display:            Container      Flags      Chunk(s) #       TOC (KiB)       Raw Size (MiB)           Size (MiB)
+LogIoStore: Display: ---------------------------------------------------------------------------------------------------------
+LogIoStore: Display:               global  -/-/-/-/-               1            0.78                 3.06                 3.06 -
+LogIoStore: Display:       cinderline-ios  C/-/-/I/-            1036          114.12               127.70                67.13 (47.43% Oodle)
+LogIoStore: Display: ---------------------------------------------------------------------------------------------------------
+LogIoStore: Display:                Total                       1037          114.90               130.76                70.20
+LogIoStore: Display:
+LogIoStore: Display: ** Flags: (C)ompressed / (E)ncrypted / (S)igned) / (I)ndexed) / (O)nDemand **
+LogIoStore: Display:
+LogIoStore: Display: Compression block padding:     0.00 MiB
+LogIoStore: Display:
+LogIoStore: Display: Container Directory Index
+LogIoStore: Display: ==========================
+LogIoStore: Display:
+LogIoStore: Display:            Container      Size (KiB)
+LogIoStore: Display: ------------------------------------
+LogIoStore: Display:               global            0.00
+LogIoStore: Display:       cinderline-ios           31.51
+LogIoStore: Display:
+LogIoStore: Display: Container Patch Report
+LogIoStore: Display: ========================
+LogIoStore: Display:
+LogIoStore: Display:            Container          Total #       Modified #          Added #   Modified (MiB)      Added (MiB)
+LogIoStore: Display: ---------------------------------------------------------------------------------------------------------
+LogIoStore: Display:               global                1                0                0             0.00             0.00
+LogIoStore: Display:       cinderline-ios             1036                0             1036             0.00            67.13
+LogIoStore: Display: ---------------------------------------------------------------------------------------------------------
+LogIoStore: Display:
+LogIoStore: Display: PackageStore
+LogIoStore: Display: =============
+LogIoStore: Display:
+LogIoStore: Display:            Container      Size (KiB)      Packages #     Localized #
+LogIoStore: Display: --------------------------------------------------------------------
+LogIoStore: Display:       cinderline-ios              17             615               0
+LogIoStore: Display: --------------------------------------------------------------------
+LogIoStore: Display:                Total              17             615               0
+LogIoStore: Display:
+LogIoStore: Display:
+LogIoStore: Display: Input:       615 Packages
+LogIoStore: Display: Input:         0   B UExp
+LogIoStore: Display: Input:     80.35 MiB UAsset
+LogIoStore: Display: Input:     39.14 MiB UBulk
+LogIoStore: Display: Input:      5.18 MiB for 195 Global shaders
+LogIoStore: Display: Input:    471.32 KiB for 51 Shared shaders
+LogIoStore: Display: Input:     12.82 KiB for 3 Unique shaders
+LogIoStore: Display: Input:      2.46 MiB for 111 Inline shaders
+LogIoStore: Display:
+LogIoStore: Display: Output:      865 Imported package entries
+LogIoStore: Display: Output:      314 Packages without imports
+LogIoStore: Display: Output:        0 Public runtime script objects
+LogIoStore: Display: Output:     3.06 MiB InitialLoadData
+LogIoStore: Display:
+LogIoStore: Display: Success
+LogPakFile: Display: UnrealPak executed in 1.894822 seconds
+Took 2.24s to run UnrealPak, ExitCode=0
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/FinalCopyIOS_UFSFiles.txt, NumItems: 2408
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/FinalCopyIOS_NonUFSFiles.txt, NumItems: 5
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/FinalCopyIOS_NonUFSFilesDebug.txt, NumItems: 5
+Copying NonUFSFiles to staging directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS
+Copying DebugFiles to staging directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS
+Discovering modules, targets and source code for project...
+Adding projects for all targets...
+Adding projects for all targets took 0.00s
+Adding projects for all game projects took 0.00s
+Adding projects for all modules took 0.00s
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with IOS SDK 27.0, minimum Target OS version 15.0
+Adding additional Xcode project info took 0.00s
+Writing project files...
+Writing xcode workspace /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFiles/Cinderline_IOS_Cinderline.xcworkspace
+Writing project files... 100%
+Writing project files took 0.00s
+No certs of truth reported, skipping certificate verification...
+Known Apple certificate for this team is installed!
+params: UBT_NO_POST_DEPLOY=true /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild build -workspace "/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFiles/Cinderline_IOS_Cinderline.xcworkspace" -scheme "Cinderline" -configuration "Development" -destination generic/platform="iOS" CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION=YES SYMROOT="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds" EFFECTIVE_PLATFORM_NAME=IOS UE_OVERRIDE_STAGE_DIR="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS" -allowProvisioningUpdates UE_XCODE_BUILD_MODE=Stage -hideShellScriptEnvironment
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild build -workspace /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFiles/Cinderline_IOS_Cinderline.xcworkspace -scheme Cinderline -configuration Development -destination generic/platform=iOS CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION=YES SYMROOT=/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds EFFECTIVE_PLATFORM_NAME=IOS UE_OVERRIDE_STAGE_DIR=/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS -allowProvisioningUpdates UE_XCODE_BUILD_MODE=Stage -hideShellScriptEnvironment
+
+Build settings from command line:
+    CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES
+    EFFECTIVE_PLATFORM_NAME = IOS
+    SYMROOT = /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds
+    UE_OVERRIDE_STAGE_DIR = /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS
+    UE_XCODE_BUILD_MODE = Stage
+
+Run pre-actions
+
+SchemeAction Touch\ UBT\ generated\ tiles /var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/SchemeScriptAction-R3q8ph.sh
+    cd /var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/
+    /bin/sh -c /var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/SchemeScriptAction-R3q8ph.sh
+
+ComputePackagePrebuildTargetDependencyGraph
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'Cinderline' in project 'Cinderline (IOS)' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/chirag13/Documents/ChatGPT/starCraft/Resources/IOS/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+Build description signature: 3559af5bea2a88686236f6a9ead2ffb0
+Build description path: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/XCBuildData/3559af5bea2a88686236f6a9ead2ffb0.xcbuilddata
+MkDir /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /bin/mkdir -p /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks
+
+ProcessProductPackaging /Users/chirag13/Library/Developer/Xcode/UserData/Provisioning\ Profiles/30e96ed6-e735-4ab5-a37f-705eefaed539.mobileprovision /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/embedded.mobileprovision (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-productPackagingUtility /Users/chirag13/Library/Developer/Xcode/UserData/Provisioning\ Profiles/30e96ed6-e735-4ab5-a37f-705eefaed539.mobileprovision -o /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/embedded.mobileprovision
+
+CopyPNGFile /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/LaunchScreenIOS.png /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/Graphics/LaunchScreenIOS.png (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /Applications/Xcode.app/Contents/Developer/usr/bin/copypng -compress -strip-PNG-text /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/Graphics/LaunchScreenIOS.png /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/LaunchScreenIOS.png
+
+LinkStoryboards (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --errors --warnings --notices --module Cinderline --target-device iphone --target-device ipad --minimum-deployment-target 15.0 --output-format human-readable-text --link /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/Interface/LaunchScreen.storyboardc
+
+CpResource /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/UEMetadata /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/UEMetadata (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/UEMetadata /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app
+
+LinkAssetCatalog /Users/chirag13/Documents/ChatGPT/starCraft/Resources/IOS/Assets.xcassets (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-linkAssetCatalog --thinned /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_output/thinned --thinned-dependencies /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist_unthinned --output /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app --plist-output /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Assets.car (in target 'Cinderline' from project 'Cinderline (IOS)')
+note: Emplaced /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/AppIcon60x60@2x.png (in target 'Cinderline' from project 'Cinderline (IOS)')
+note: Emplaced /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/AppIcon76x76@2x~ipad.png (in target 'Cinderline' from project 'Cinderline (IOS)')
+
+Copy /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/UnzippedFrameworks/MarketplaceKitWrapper/MarketplaceKitWrapper.embeddedframework/MarketplaceKitWrapper.framework (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -bitcode-strip all -bitcode-strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/UnzippedFrameworks/MarketplaceKitWrapper/MarketplaceKitWrapper.embeddedframework/MarketplaceKitWrapper.framework /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/UnzippedFrameworks/MarketplaceKitWrapper/MarketplaceKitWrapper.embeddedframework/MarketplaceKitWrapper.framework/MarketplaceKitWrapper -o /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework/MarketplaceKitWrapper/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework/MarketplaceKitWrapper -r -o /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework/MarketplaceKitWrapper
+CodeSign /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+
+    Signing Identity:     "Apple Development: Chirag Aggarwal (7BCSJMT3UX)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.cinderline.game"
+                          (30e96ed6-e735-4ab5-a37f-705eefaed539)
+
+    /usr/bin/codesign --force --sign CC0F01D671365062D2BEFDBF96D5953FB6C3D5B0 --timestamp\=none --preserve-metadata\=identifier,entitlements,flags --generate-entitlement-der /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework
+
+PhaseScriptExecution Copy\ Executable\ and\ Staged\ Data\ into\ .app /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ (IOS).build/IOS/Cinderline.build/Script-84EC3F7D3A5509BF7E4DF279.sh (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /bin/sh -c /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\\\ \\\(IOS\\\).build/IOS/Cinderline.build/Script-84EC3F7D3A5509BF7E4DF279.sh
+Copying executable and any standalone dylibs into /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app but do not overwrite unless src is newer
+Syncing /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/uecommandline.txt to /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app
+Syncing /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/cookeddata to /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/cookeddata
+
+ProcessInfoPlistFile /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Info.plist /Users/chirag13/Documents/ChatGPT/starCraft/Build/IOS/UBTGenerated/Info.Template.plist (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-infoPlistUtility /Users/chirag13/Documents/ChatGPT/starCraft/Build/IOS/UBTGenerated/Info.Template.plist -producttype com.apple.product-type.application -genpkginfo /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/PkgInfo -expandbuildsettings -format xml -platform iphoneos -additionalcontentfile /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework -requiredArchitecture arm64 -o /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app/Info.plist
+warning: User supplied UIDeviceFamily key in the Info.plist will be overwritten. Please use the build setting TARGETED_DEVICE_FAMILY and remove UIDeviceFamily from your Info.plist. (in target 'Cinderline' from project 'Cinderline (IOS)')
+
+CodeSign /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+
+    Signing Identity:     "Apple Development: Chirag Aggarwal (7BCSJMT3UX)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.cinderline.game"
+                          (30e96ed6-e735-4ab5-a37f-705eefaed539)
+
+    /usr/bin/codesign --force --sign CC0F01D671365062D2BEFDBF96D5953FB6C3D5B0 --entitlements /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/Cinderline\ \(IOS\).build/IOS/Cinderline.build/Cinderline.app.xcent --timestamp\=none --generate-entitlement-der /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app
+
+Validate /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-validationUtility /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/Cinderline.app -shallow-bundle -infoplist-subpath Info.plist
+
+PruneExplicitPrecompiledModules /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/chirag13/Library/Developer/Xcode/DerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/ExplicitPrecompiledModules
+
+** BUILD SUCCEEDED **
+
+Stage command time: 46.84 s
+********** STAGE COMMAND COMPLETED **********
+********** PACKAGE COMMAND STARTED **********
+Discovering modules, targets and source code for project...
+Adding projects for all targets...
+Adding projects for all targets took 0.00s
+Adding projects for all game projects took 0.00s
+Adding projects for all modules took 0.00s
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Adding additional Xcode project info took 0.00s
+Writing project files...
+Writing xcode workspace /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFiles/Cinderline_IOS_Cinderline.xcworkspace
+Writing project files... 100%
+Writing project files took 0.00s
+params: UBT_NO_POST_DEPLOY=true /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild build -workspace "/Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFiles/Cinderline_IOS_Cinderline.xcworkspace" -scheme "Cinderline" -configuration "Development" -destination generic/platform="iOS" CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION=YES UE_OVERRIDE_STAGE_DIR="/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS" -allowProvisioningUpdates UE_XCODE_BUILD_MODE=Package -hideShellScriptEnvironment
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild build -workspace /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFiles/Cinderline_IOS_Cinderline.xcworkspace -scheme Cinderline -configuration Development -destination generic/platform=iOS CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION=YES UE_OVERRIDE_STAGE_DIR=/Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS -allowProvisioningUpdates UE_XCODE_BUILD_MODE=Package -hideShellScriptEnvironment
+
+Build settings from command line:
+    CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES
+    UE_OVERRIDE_STAGE_DIR = /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS
+    UE_XCODE_BUILD_MODE = Package
+
+Run pre-actions
+
+SchemeAction Touch\ UBT\ generated\ tiles /var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/SchemeScriptAction-0KDokb.sh
+    cd /var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/
+    /bin/sh -c /var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/SchemeScriptAction-0KDokb.sh
+
+ComputePackagePrebuildTargetDependencyGraph
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'Cinderline' in project 'Cinderline (IOS)' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/chirag13/Documents/ChatGPT/starCraft/Resources/IOS/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --version --output-format xml1
+
+Build description signature: 8a8c6a346021a0d13e762e944e326302
+Build description path: /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS/build/XCBuildData/8a8c6a346021a0d13e762e944e326302.xcbuilddata
+MkDir /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /bin/mkdir -p /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks
+
+ProcessProductPackaging /Users/chirag13/Library/Developer/Xcode/UserData/Provisioning\ Profiles/30e96ed6-e735-4ab5-a37f-705eefaed539.mobileprovision /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/embedded.mobileprovision (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-productPackagingUtility /Users/chirag13/Library/Developer/Xcode/UserData/Provisioning\ Profiles/30e96ed6-e735-4ab5-a37f-705eefaed539.mobileprovision -o /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/embedded.mobileprovision
+
+CopyPNGFile /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/LaunchScreenIOS.png /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/Graphics/LaunchScreenIOS.png (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /Applications/Xcode.app/Contents/Developer/usr/bin/copypng -compress -strip-PNG-text /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/Graphics/LaunchScreenIOS.png /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/LaunchScreenIOS.png
+
+LinkStoryboards (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --errors --warnings --notices --module Cinderline --target-device iphone --target-device ipad --minimum-deployment-target 15.0 --output-format human-readable-text --link /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/Interface/LaunchScreen.storyboardc
+
+CpResource /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/UEMetadata /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/UEMetadata (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/IOS/Resources/UEMetadata /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app
+
+LinkAssetCatalog /Users/chirag13/Documents/ChatGPT/starCraft/Resources/IOS/Assets.xcassets (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-linkAssetCatalog --thinned /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_output/thinned --thinned-dependencies /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist_unthinned --output /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app --plist-output /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Assets.car (in target 'Cinderline' from project 'Cinderline (IOS)')
+note: Emplaced /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/AppIcon60x60@2x.png (in target 'Cinderline' from project 'Cinderline (IOS)')
+note: Emplaced /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/AppIcon76x76@2x~ipad.png (in target 'Cinderline' from project 'Cinderline (IOS)')
+
+Copy /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/UnzippedFrameworks/MarketplaceKitWrapper/MarketplaceKitWrapper.embeddedframework/MarketplaceKitWrapper.framework (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -bitcode-strip all -bitcode-strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/UnzippedFrameworks/MarketplaceKitWrapper/MarketplaceKitWrapper.embeddedframework/MarketplaceKitWrapper.framework /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/UnzippedFrameworks/MarketplaceKitWrapper/MarketplaceKitWrapper.embeddedframework/MarketplaceKitWrapper.framework/MarketplaceKitWrapper -o /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework/MarketplaceKitWrapper/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework/MarketplaceKitWrapper -r -o /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework/MarketplaceKitWrapper
+CodeSign /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+
+    Signing Identity:     "Apple Development: Chirag Aggarwal (7BCSJMT3UX)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.cinderline.game"
+                          (30e96ed6-e735-4ab5-a37f-705eefaed539)
+
+    /usr/bin/codesign --force --sign CC0F01D671365062D2BEFDBF96D5953FB6C3D5B0 --timestamp\=none --preserve-metadata\=identifier,entitlements,flags --generate-entitlement-der /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework
+
+PhaseScriptExecution Copy\ Executable\ and\ Staged\ Data\ into\ .app /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ (IOS).build/IOS/Cinderline.build/Script-48A5DC053713BB921990C949.sh (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    /bin/sh -c /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\\\ \\\(IOS\\\).build/IOS/Cinderline.build/Script-48A5DC053713BB921990C949.sh
+Copying executable and any standalone dylibs into /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app but do not overwrite unless src is newer
+Syncing /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/uecommandline.txt to /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app
+Syncing /Users/chirag13/Documents/ChatGPT/starCraft/Saved/StagedBuilds/IOS/cookeddata to /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/cookeddata
+
+ProcessInfoPlistFile /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Info.plist /Users/chirag13/Documents/ChatGPT/starCraft/Build/IOS/UBTGenerated/Info.Template.plist (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-infoPlistUtility /Users/chirag13/Documents/ChatGPT/starCraft/Build/IOS/UBTGenerated/Info.Template.plist -producttype com.apple.product-type.application -genpkginfo /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/PkgInfo -expandbuildsettings -format xml -platform iphoneos -additionalcontentfile /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Frameworks/MarketplaceKitWrapper.framework -requiredArchitecture arm64 -o /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app/Info.plist
+warning: User supplied UIDeviceFamily key in the Info.plist will be overwritten. Please use the build setting TARGETED_DEVICE_FAMILY and remove UIDeviceFamily from your Info.plist. (in target 'Cinderline' from project 'Cinderline (IOS)')
+
+CodeSign /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+
+    Signing Identity:     "Apple Development: Chirag Aggarwal (7BCSJMT3UX)"
+    Provisioning Profile: "iOS Team Provisioning Profile: com.cinderline.game"
+                          (30e96ed6-e735-4ab5-a37f-705eefaed539)
+
+    /usr/bin/codesign --force --sign CC0F01D671365062D2BEFDBF96D5953FB6C3D5B0 --entitlements /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Cinderline\ \(IOS\).build/IOS/Cinderline.build/Cinderline.app.xcent --timestamp\=none --generate-entitlement-der /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app
+
+Validate /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app (in target 'Cinderline' from project 'Cinderline (IOS)')
+    cd /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/ProjectFilesIOS
+    builtin-validationUtility /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app -shallow-bundle -infoplist-subpath Info.plist
+
+PruneExplicitPrecompiledModules /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/chirag13/Library/Developer/Xcode/DerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/SwiftExplicitPrecompiledModules
+
+** BUILD SUCCEEDED **
+
+==================================================================================================================================================
+Finalized /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app for running fully self-contained
+==================================================================================================================================================
+Package command time: 6.59 s
+********** PACKAGE COMMAND COMPLETED **********
+********** ARCHIVE COMMAND STARTED **********
+Archiving to /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS
+staging targets: 'Cinderline', 'Development'
+==================================================================================================================================================
+Copying Development package /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline.app to archive directory /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app
+==================================================================================================================================================
+Archive command time: 0.81 s
+********** ARCHIVE COMMAND COMPLETED **********
+BuildCookRun time: 107.64 s
+BUILD SUCCESSFUL
+AutomationTool executed for 0h 1m 48s
+AutomationTool exiting with ExitCode=0 (Success)
+Verified physical-iOS archive: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app
+Previous archive quarantined: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/IOSDevice/Archives/previous-20260922T155259Z-57205-Cinderline.app

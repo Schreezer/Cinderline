@@ -1,0 +1,1164 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "4351A52B4A4CA8A80F1F3DA1506F29A7",
+			"instanceName": "MacBook-Pro-10.local-65486",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.2 26B5091g",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.22-16.30.09",
+	"succeeded": 63,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 52.27880859375,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "Fade",
+			"fullTestPath": "Cinderline.Campaign.Guidance.Fade",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.019155997782945633,
+			"dateTime": "2026.09.22-16.29.15",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MissionCoverage",
+			"fullTestPath": "Cinderline.Campaign.Guidance.MissionCoverage",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.013992585241794586,
+			"dateTime": "2026.09.22-16.29.15",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SharedContract",
+			"fullTestPath": "Cinderline.Campaign.Guidance.SharedContract",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0081331655383110046,
+			"dateTime": "2026.09.22-16.29.15",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AuthoredMissionsEndToEnd",
+			"fullTestPath": "Cinderline.Campaign.AuthoredMissionsEndToEnd",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 6.8926773071289062,
+			"dateTime": "2026.09.22-16.29.15",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CheckpointPersistence",
+			"fullTestPath": "Cinderline.Campaign.CheckpointPersistence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.38673090934753418,
+			"dateTime": "2026.09.22-16.29.22",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CheckpointSimulationVersion",
+			"fullTestPath": "Cinderline.Campaign.CheckpointSimulationVersion",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.18225954473018646,
+			"dateTime": "2026.09.22-16.29.23",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CommandAndReplacementGates",
+			"fullTestPath": "Cinderline.Campaign.CommandAndReplacementGates",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 2.4732155799865723,
+			"dateTime": "2026.09.22-16.29.23",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "PaidWaveBudget",
+			"fullTestPath": "Cinderline.Campaign.PaidWaveBudget",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 3.1028695106506348,
+			"dateTime": "2026.09.22-16.29.25",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ProgressPersistence",
+			"fullTestPath": "Cinderline.Campaign.ProgressPersistence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.029385749250650406,
+			"dateTime": "2026.09.22-16.29.29",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ScenarioDeterminism",
+			"fullTestPath": "Cinderline.Campaign.ScenarioDeterminism",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.026075039058923721,
+			"dateTime": "2026.09.22-16.29.29",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TransactionalLifecycle",
+			"fullTestPath": "Cinderline.Campaign.TransactionalLifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0066629163920879364,
+			"dateTime": "2026.09.22-16.29.29",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AIKnowledgeAndPersistence",
+			"fullTestPath": "Cinderline.Integration.AIKnowledgeAndPersistence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 2.0241973400115967,
+			"dateTime": "2026.09.22-16.29.29",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_AI_KNOWLEDGE_PASS: observed_worker=6, first_seen_tick=1026, retained_seen_tick=1026, continuation_ticks=60; ordinary scouting/retreat commands, active opponent, real actor ticks, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.31"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ArmyControl",
+			"fullTestPath": "Cinderline.Integration.ArmyControl",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.019854333251714706,
+			"dateTime": "2026.09.22-16.29.31",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_ARMY_CONTROL_PASS opaque_id=2147483704 projected_edge=1 single_move=1 defend=1 squad_count=3 online_reset=1",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.31"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CampaignHUDTouch",
+			"fullTestPath": "Cinderline.Integration.CampaignHUDTouch",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.09803454577922821,
+			"dateTime": "2026.09.22-16.29.31",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CampaignLifecycle",
+			"fullTestPath": "Cinderline.Integration.CampaignLifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.038035832345485687,
+			"dateTime": "2026.09.22-16.29.31",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CombatFeedback",
+			"fullTestPath": "Cinderline.Integration.CombatFeedback",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.04198133572936058,
+			"dateTime": "2026.09.22-16.29.31",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_COMBAT_FEEDBACK_PASS: weapon=4, impact=4, heal=4, death=1, hidden_weapon=1; development spawns, real combat actor ticks, exactly-once requests, pause/reset, temporary snapshot cursor, absent subsystem; no audible-output, viewport or physical-input proof.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.31"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EconomyAndProduction",
+			"fullTestPath": "Cinderline.Integration.EconomyAndProduction",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.62365341186523438,
+			"dateTime": "2026.09.22-16.29.31",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_ECONOMY_PASS: gathered=270, produced=2, built=1, ore=360; paid commands, builder travel and pause/resume, actual actor ticks, selected-controller dispatch, temporary snapshot only.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.32"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "FirstRunTutorialOffer",
+			"fullTestPath": "Cinderline.Integration.FirstRunTutorialOffer",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 1.2960447072982788,
+			"dateTime": "2026.09.22-16.29.32",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "FogMaskPrivacy",
+			"fullTestPath": "Cinderline.Integration.FogMaskPrivacy",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0080812498927116394,
+			"dateTime": "2026.09.22-16.29.33",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "FormationPointerPaths",
+			"fullTestPath": "Cinderline.Integration.FormationPointerPaths",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.11896383762359619,
+			"dateTime": "2026.09.22-16.29.33",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "HUDTouchSafeZone",
+			"fullTestPath": "Cinderline.Integration.HUDTouchSafeZone",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.12679392099380493,
+			"dateTime": "2026.09.22-16.29.33",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "OnlineEndpointPolicy",
+			"fullTestPath": "Cinderline.Integration.OnlineEndpointPolicy",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.008374582976102829,
+			"dateTime": "2026.09.22-16.29.33",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "OnlineRecovery",
+			"fullTestPath": "Cinderline.Integration.OnlineRecovery",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.10779245942831039,
+			"dateTime": "2026.09.22-16.29.33",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "PatrolEscortPointerPaths",
+			"fullTestPath": "Cinderline.Integration.PatrolEscortPointerPaths",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.12224107980728149,
+			"dateTime": "2026.09.22-16.29.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ProductionControls",
+			"fullTestPath": "Cinderline.Integration.ProductionControls",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.12385450303554535,
+			"dateTime": "2026.09.22-16.29.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SoloAIDifficulty",
+			"fullTestPath": "Cinderline.Integration.SoloAIDifficulty",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.021353583782911301,
+			"dateTime": "2026.09.22-16.29.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TacticalOrderPointerPaths",
+			"fullTestPath": "Cinderline.Integration.TacticalOrderPointerPaths",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.12361066043376923,
+			"dateTime": "2026.09.22-16.29.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorldLifecycle",
+			"fullTestPath": "Cinderline.Integration.WorldLifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.59638381004333496,
+			"dateTime": "2026.09.22-16.29.34",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_GESTURES_PASS: ordinary mouse rectangle selection, nine desktop-pan mode/distance cases, plain placement drag/cancel/pause, Tier 2 Crucible rejection, touch drag/hold/placement/multi-touch, app background pause, player-pause preservation and reset; real gesture methods with explicit pan intent and starting worker selection. NullRHI does not prove viewport targeting, camera movement, physical modifier routing, or internal TapWorld non-invocation when deprojection is unavailable.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.34"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.34"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_IDLE_WORK_POLICY_PASS: production state classifier/cap helpers, 120/30/10 transitions, stricter/unlimited engine limits, automation scope bypass, one pause-transition flush of actual pending movement, frozen menu/pause/results upload counters, final combat death rendered on a short tick, and new-match render recovery. This does not measure native focus delivery, presented FPS, GPU load or thermal behavior.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.34"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_HELP_TUTORIAL_LIFECYCLE_PASS: modal input isolation, explicit help resume, tutorial start/action tracking, rejected command, save/load routing, restart confirmation and normal-match restoration. No player save or completion preference was written.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.35"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.35"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorldTapSelection",
+			"fullTestPath": "Cinderline.Integration.WorldTapSelection",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.31793457269668579,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_WORLD_TAP_PASS controller_pointer_mixed_drag_move=1 friendly_touch=1 friendly_desktop=1 destination_modes=3 toggles=3 rejected_modes=9 minimap_attack_move=1 moving_latch=1 empty_ground_latch=1 dead_latch=1 gesture_latches=4 deselect_preserves_jobs=1 elimination_clears_mode=1",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.35"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LANDiscoveryTransport",
+			"fullTestPath": "Cinderline.Online.LANDiscoveryTransport",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0084943734109401703,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "SKIPPED: set CINDERLINE_TEST_LAN_SERVICE and CINDERLINE_TEST_LAN_PORT to test a live Bonjour advertisement.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.35"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LANDiscoveryValues",
+			"fullTestPath": "Cinderline.Online.LANDiscoveryValues",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0082305856049060822,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Geometry",
+			"fullTestPath": "Cinderline.Presentation.AuthoredTerrainFallback.Geometry",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.033787749707698822,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Lifecycle",
+			"fullTestPath": "Cinderline.Presentation.AuthoredTerrainFallback.Lifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0095191672444343567,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "NullRHI: verified the no-render guard; rendered fallback lifecycle requires a rendering-enabled run.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.35"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "DisplayCadence",
+			"fullTestPath": "Cinderline.Presentation.EntityMotion.DisplayCadence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0081799589097499847,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorkCadence",
+			"fullTestPath": "Cinderline.Presentation.EntityMotion.WorkCadence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0082012079656124115,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "FogResetAndStableFrame",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.015358377248048782,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "FourTeamRouting",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.FourTeamRouting",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.021149083971977234,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "HiddenTargetDirection",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.021122124046087265,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Initialization",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.Initialization",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.014190126210451126,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "InstanceBudget",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.InstanceBudget",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.01490841805934906,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AuthoredMapScenery",
+			"fullTestPath": "Cinderline.Presentation.AuthoredMapScenery",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0093925818800926208,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CameraBoundary",
+			"fullTestPath": "Cinderline.Presentation.CameraBoundary",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.03427920863032341,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_CAMERA_ELEVATED_HOME_PASS cases=6; actual 250x250x185 cm Anchor bounds, desktop/phone, closest/default/farthest requests, elevated border footprint, ramp pan, fog flattening and flat fallback.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.35"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_CAMERA_BOUNDARY_PASS cases=288; three world sizes, four aspects, three zooms, eight edge/corner directions, repeated drag, reversal, interpolated zoom, and resized black borders. Physical input and rendered black pixels require viewport verification.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.29.35"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "IOSPerformancePolicy",
+			"fullTestPath": "Cinderline.Presentation.IOSPerformancePolicy",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.008313249796628952,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LandscapeHeightGeometry",
+			"fullTestPath": "Cinderline.Presentation.LandscapeHeightGeometry",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.16054011881351471,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MetalFXResolutionOwnership",
+			"fullTestPath": "Cinderline.Presentation.MetalFXResolutionOwnership",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0081115439534187317,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryAmbientScatter",
+			"fullTestPath": "Cinderline.Presentation.SceneryAmbientScatter",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.009789835661649704,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryFoliage",
+			"fullTestPath": "Cinderline.Presentation.SceneryFoliage",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0097758732736110687,
+			"dateTime": "2026.09.22-16.29.35",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryGroundRoadFallback",
+			"fullTestPath": "Cinderline.Presentation.SceneryGroundRoadFallback",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0093534141778945923,
+			"dateTime": "2026.09.22-16.29.36",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryObservedState",
+			"fullTestPath": "Cinderline.Presentation.SceneryObservedState",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0080733746290206909,
+			"dateTime": "2026.09.22-16.29.36",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryObstacleBounds",
+			"fullTestPath": "Cinderline.Presentation.SceneryObstacleBounds",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.06756146252155304,
+			"dateTime": "2026.09.22-16.29.36",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TerrainPicking",
+			"fullTestPath": "Cinderline.Presentation.TerrainPicking",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0097710825502872467,
+			"dateTime": "2026.09.22-16.29.36",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "UnitInfo",
+			"fullTestPath": "Cinderline.Presentation.UnitInfo",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.16041111946105957,
+			"dateTime": "2026.09.22-16.29.36",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ArmySequence",
+			"fullTestPath": "Cinderline.Tutorial.Guidance.ArmySequence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 1.3644394874572754,
+			"dateTime": "2026.09.22-16.29.36",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EconomySequence",
+			"fullTestPath": "Cinderline.Tutorial.Guidance.EconomySequence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 1.22184157371521,
+			"dateTime": "2026.09.22-16.29.37",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "InterruptedOrders",
+			"fullTestPath": "Cinderline.Tutorial.Guidance.InterruptedOrders",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 2.0403015613555908,
+			"dateTime": "2026.09.22-16.29.38",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Introduction",
+			"fullTestPath": "Cinderline.Tutorial.Guidance.Introduction",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.0066247470676898956,
+			"dateTime": "2026.09.22-16.29.40",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "RemainingBatch",
+			"fullTestPath": "Cinderline.Tutorial.Guidance.RemainingBatch",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 1.0945537090301514,
+			"dateTime": "2026.09.22-16.29.41",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "CommandGates",
+			"fullTestPath": "Cinderline.Tutorial.CommandGates",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.60507023334503174,
+			"dateTime": "2026.09.22-16.29.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EmberGate",
+			"fullTestPath": "Cinderline.Tutorial.EmberGate",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.92767053842544556,
+			"dateTime": "2026.09.22-16.29.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EndToEnd",
+			"fullTestPath": "Cinderline.Tutorial.EndToEnd",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 20.911418914794922,
+			"dateTime": "2026.09.22-16.29.43",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_GUIDED_ORDINARY_COMPLETE: winner=0 step=14 complete=1 simulated_seconds=821.4 produced=8 lost=1 upgrades=1 opponent_trains=4 opponent_runtime_orders=6 state_hash=11095921404139938924 repeat_match=1; ordinary player commands, paid queues, normal combat, no player debug grants or spawns.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-16.30.04"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LateCancellationRecovery",
+			"fullTestPath": "Cinderline.Tutorial.LateCancellationRecovery",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 3.3001012802124023,
+			"dateTime": "2026.09.22-16.30.04",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WaitsForLearner",
+			"fullTestPath": "Cinderline.Tutorial.WaitsForLearner",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 1.0908517837524414,
+			"dateTime": "2026.09.22-16.30.08",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MobileHUDLayout",
+			"fullTestPath": "Cinderline.UI.MobileHUDLayout",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"4351A52B4A4CA8A80F1F3DA1506F29A7"
+			],
+			"duration": 0.099077045917510986,
+			"dateTime": "2026.09.22-16.30.09",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

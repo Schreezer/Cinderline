@@ -1,0 +1,60 @@
+{
+  "success": true,
+  "verification": "source-level only; revised Unreal import, shader compile and runtime art review remain pending",
+  "version": "canyon-ground-v4.1",
+  "texture_samples": {
+    "pixel": 7,
+    "vertex": 1
+  },
+  "source_texture_calibration": {
+    "fine": {
+      "source": "RawAssets/Textures/VisualUpgrade/gravel_floor_04/gravel_floor_04_diff_2k.png",
+      "mean_linear_luminance": 0.20265158042481995,
+      "raw_luminance_stddev": 0.026136207296290147,
+      "bounded_luminance_mean": 0.2022516295584399,
+      "bounded_luminance_stddev": 0.022180674798470024
+    },
+    "coarse": {
+      "source": "RawAssets/VisualTarget/Materials/dry_ground_rocks/dry_ground_rocks_diff_2k.jpg",
+      "mean_linear_luminance": 0.2086629323767424,
+      "raw_luminance_stddev": 0.07746607956698466,
+      "bounded_luminance_mean": 0.2055147314545555,
+      "bounded_luminance_stddev": 0.056987682100317086
+    }
+  },
+  "route_to_plain_soil_luminance_ratio_at_full_A_without_other_masks": {
+    "before": 1.7601565557729941,
+    "after": 1.2104551365409624
+  },
+  "preserved_fog_and_unknown_flatten_block_exactly": true,
+  "mask_samples_keep_asset_clamp_sampler": true,
+  "removed_periodic_sediment_and_joint_nodes": true,
+  "removed_per_channel_min": true,
+  "palette_defaults_match_runtime": true,
+  "normal_strength": 0.4,
+  "checks": [
+    "Python AST parse and py_compile",
+    "material node labels unique",
+    "all 8 sample declarations and sampler choices",
+    "FogMask through WPO block byte-for-byte against snapshot",
+    "no Min, Sine or Frac nodes",
+    "no bedding, joint, lip or shoulder nodes",
+    "all palette parameter defaults match C++ values",
+    "git diff --check"
+  ],
+  "absolute_cliff_palette": {
+    "CanyonShadow": [
+      0.065,
+      0.082,
+      0.078
+    ],
+    "CanyonSandstone": [
+      0.135,
+      0.15,
+      0.12
+    ]
+  },
+  "calibration_followup": "Actual Stage 3 runtime capture was too smooth and grey. Restored visible coarse texture, olive/brown variation and 0.40 normals while preserving the darker rock palette.",
+  "coarse_weight": "(0.22 + 0.50 * known stone R) * (1 - 0.82 * service A)",
+  "soil_grain": "clamp(0.03 + 0.85 * desaturated blended albedo, 0.10, 0.33)"
+}

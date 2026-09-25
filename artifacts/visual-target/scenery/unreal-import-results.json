@@ -135,6 +135,30 @@
           "to": "PhotogrammetryDiffuse"
         },
         {
+          "from": "PhotogrammetryDiffuse",
+          "input": "",
+          "output": "RGB",
+          "to": "Neutral photogrammetry grain"
+        },
+        {
+          "from": "Desaturation",
+          "input": "Fraction",
+          "output": "",
+          "to": "Neutral photogrammetry grain"
+        },
+        {
+          "from": "Neutral photogrammetry grain",
+          "input": "A",
+          "output": "",
+          "to": "Canyon rock albedo"
+        },
+        {
+          "from": "RockTint",
+          "input": "B",
+          "output": "RGB",
+          "to": "Canyon rock albedo"
+        },
+        {
           "from": "Authored UV0",
           "input": "UVs",
           "output": "",
@@ -177,15 +201,15 @@
         "method": "snapshot of expressions, delete each through engine API",
         "remaining_after_delete": 0
       },
-      "nodes": 9,
+      "nodes": 13,
       "outputs": {
         "AMBIENT_OCCLUSION": {
           "node": "PhotogrammetryARM",
           "output": "R"
         },
         "BASE_COLOR": {
-          "node": "PhotogrammetryDiffuse",
-          "output": "RGB"
+          "node": "Canyon rock albedo",
+          "output": ""
         },
         "METALLIC": {
           "node": "Nonmetal rock",
@@ -244,5 +268,5 @@
     ]
   },
   "success": true,
-  "utc": "2026-09-12T10:35:20.258938+00:00"
+  "utc": "2026-09-16T04:18:51.603724+00:00"
 }

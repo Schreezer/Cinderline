@@ -1,0 +1,1001 @@
+{
+  "success": true,
+  "source_sha256": "8937af794f80b6bae894635dcff4e869a2d1630377ba7283db550f2eb3baea27",
+  "material": {
+    "path": "/Game/Art/Canyon/Materials/M_CinderMapArchitecture.M_CinderMapArchitecture",
+    "version": "cinder-map-architecture-v2.1-explored-detail",
+    "nodes": 127,
+    "graph_replacement": {
+      "method": "snapshot of expressions, delete each through engine API",
+      "before_count": 124,
+      "remaining_after_delete": 0
+    },
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+    "two_sided": false,
+    "depth_test_enabled": true,
+    "connections": [
+      {
+        "from": "Architecture world position",
+        "output": "",
+        "to": "Architecture world X",
+        "input": ""
+      },
+      {
+        "from": "Architecture world position",
+        "output": "",
+        "to": "Architecture world Y",
+        "input": ""
+      },
+      {
+        "from": "Architecture world position",
+        "output": "",
+        "to": "Architecture world Z",
+        "input": ""
+      },
+      {
+        "from": "Architecture geometric world normal",
+        "output": "",
+        "to": "Architecture absolute world normal",
+        "input": ""
+      },
+      {
+        "from": "Architecture absolute world normal",
+        "output": "",
+        "to": "Architecture X facing",
+        "input": ""
+      },
+      {
+        "from": "Architecture absolute world normal",
+        "output": "",
+        "to": "Architecture Y facing",
+        "input": ""
+      },
+      {
+        "from": "Architecture absolute world normal",
+        "output": "",
+        "to": "Architecture up facing",
+        "input": ""
+      },
+      {
+        "from": "Architecture X facing",
+        "output": "",
+        "to": "Wall projection facing difference",
+        "input": "A"
+      },
+      {
+        "from": "Architecture Y facing",
+        "output": "",
+        "to": "Wall projection facing difference",
+        "input": "B"
+      },
+      {
+        "from": "Wall projection facing difference",
+        "output": "",
+        "to": "Wall projection axis threshold",
+        "input": "A"
+      },
+      {
+        "from": "Wall projection axis threshold",
+        "output": "",
+        "to": "Wall projection axis span",
+        "input": "A"
+      },
+      {
+        "from": "Wall projection axis span",
+        "output": "",
+        "to": "Wall projection axis bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Wall projection axis bounded fraction",
+        "output": "",
+        "to": "Wall projection axis square",
+        "input": "A"
+      },
+      {
+        "from": "Wall projection axis bounded fraction",
+        "output": "",
+        "to": "Wall projection axis square",
+        "input": "B"
+      },
+      {
+        "from": "Wall projection axis bounded fraction",
+        "output": "",
+        "to": "Wall projection axis doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Wall projection axis doubled fraction",
+        "output": "",
+        "to": "Wall projection axis cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Wall projection axis square",
+        "output": "",
+        "to": "Wall projection axis smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Wall projection axis cubic factor",
+        "output": "",
+        "to": "Wall projection axis smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Architecture world X",
+        "output": "",
+        "to": "Wall horizontal metric coordinate",
+        "input": "A"
+      },
+      {
+        "from": "Architecture world Y",
+        "output": "",
+        "to": "Wall horizontal metric coordinate",
+        "input": "B"
+      },
+      {
+        "from": "Wall projection axis smooth transition",
+        "output": "",
+        "to": "Wall horizontal metric coordinate",
+        "input": "Alpha"
+      },
+      {
+        "from": "Wall horizontal metric coordinate",
+        "output": "",
+        "to": "Wall horizontal and vertical metric coordinates",
+        "input": "A"
+      },
+      {
+        "from": "Architecture world Z",
+        "output": "",
+        "to": "Wall horizontal and vertical metric coordinates",
+        "input": "B"
+      },
+      {
+        "from": "Wall horizontal and vertical metric coordinates",
+        "output": "",
+        "to": "Wall panels 160 by 80 cm",
+        "input": "A"
+      },
+      {
+        "from": "Wall panel reciprocal dimensions",
+        "output": "",
+        "to": "Wall panels 160 by 80 cm",
+        "input": "B"
+      },
+      {
+        "from": "Architecture world position",
+        "output": "",
+        "to": "Architecture top metric coordinates",
+        "input": ""
+      },
+      {
+        "from": "Architecture top metric coordinates",
+        "output": "",
+        "to": "Top panels 120 by 90 cm",
+        "input": "A"
+      },
+      {
+        "from": "Top panel reciprocal dimensions",
+        "output": "",
+        "to": "Top panels 120 by 90 cm",
+        "input": "B"
+      },
+      {
+        "from": "Architecture up facing",
+        "output": "",
+        "to": "Top facing panels threshold",
+        "input": "A"
+      },
+      {
+        "from": "Top facing panels threshold",
+        "output": "",
+        "to": "Top facing panels span",
+        "input": "A"
+      },
+      {
+        "from": "Top facing panels span",
+        "output": "",
+        "to": "Top facing panels bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Top facing panels bounded fraction",
+        "output": "",
+        "to": "Top facing panels square",
+        "input": "A"
+      },
+      {
+        "from": "Top facing panels bounded fraction",
+        "output": "",
+        "to": "Top facing panels square",
+        "input": "B"
+      },
+      {
+        "from": "Top facing panels bounded fraction",
+        "output": "",
+        "to": "Top facing panels doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Top facing panels doubled fraction",
+        "output": "",
+        "to": "Top facing panels cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Top facing panels square",
+        "output": "",
+        "to": "Top facing panels smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Top facing panels cubic factor",
+        "output": "",
+        "to": "Top facing panels smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Wall panels 160 by 80 cm",
+        "output": "",
+        "to": "World aligned structural panel coordinates",
+        "input": "A"
+      },
+      {
+        "from": "Top panels 120 by 90 cm",
+        "output": "",
+        "to": "World aligned structural panel coordinates",
+        "input": "B"
+      },
+      {
+        "from": "Top facing panels smooth transition",
+        "output": "",
+        "to": "World aligned structural panel coordinates",
+        "input": "Alpha"
+      },
+      {
+        "from": "World aligned structural panel coordinates",
+        "output": "",
+        "to": "Structure panel index",
+        "input": ""
+      },
+      {
+        "from": "Structure panel index",
+        "output": "",
+        "to": "Structure panel index tone",
+        "input": "A"
+      },
+      {
+        "from": "Structure tone basis",
+        "output": "",
+        "to": "Structure panel index tone",
+        "input": "B"
+      },
+      {
+        "from": "Structure panel index tone",
+        "output": "",
+        "to": "Structure individual panel tone",
+        "input": ""
+      },
+      {
+        "from": "Structure individual panel tone",
+        "output": "",
+        "to": "Structure centered panel tone",
+        "input": "A"
+      },
+      {
+        "from": "PanelVariation",
+        "output": "",
+        "to": "Structure bounded panel variation",
+        "input": ""
+      },
+      {
+        "from": "Structure centered panel tone",
+        "output": "",
+        "to": "Structure quiet panel variation",
+        "input": "A"
+      },
+      {
+        "from": "Structure bounded panel variation",
+        "output": "",
+        "to": "Structure quiet panel variation",
+        "input": "B"
+      },
+      {
+        "from": "Structure quiet panel variation",
+        "output": "",
+        "to": "Structure panel tone near unity",
+        "input": "A"
+      },
+      {
+        "from": "ArchitectureTint",
+        "output": "RGB",
+        "to": "Structure tinted panels",
+        "input": "A"
+      },
+      {
+        "from": "Structure panel tone near unity",
+        "output": "",
+        "to": "Structure tinted panels",
+        "input": "B"
+      },
+      {
+        "from": "World aligned structural panel coordinates",
+        "output": "",
+        "to": "Structure panel interior",
+        "input": ""
+      },
+      {
+        "from": "Structure panel interior",
+        "output": "",
+        "to": "Structure opposite panel edge",
+        "input": ""
+      },
+      {
+        "from": "Structure panel interior",
+        "output": "",
+        "to": "Structure nearest panel edges",
+        "input": "A"
+      },
+      {
+        "from": "Structure opposite panel edge",
+        "output": "",
+        "to": "Structure nearest panel edges",
+        "input": "B"
+      },
+      {
+        "from": "Structure nearest panel edges",
+        "output": "",
+        "to": "Structure horizontal edge distance",
+        "input": ""
+      },
+      {
+        "from": "Structure nearest panel edges",
+        "output": "",
+        "to": "Structure vertical edge distance",
+        "input": ""
+      },
+      {
+        "from": "Structure horizontal edge distance",
+        "output": "",
+        "to": "Structure nearest joint distance",
+        "input": "A"
+      },
+      {
+        "from": "Structure vertical edge distance",
+        "output": "",
+        "to": "Structure nearest joint distance",
+        "input": "B"
+      },
+      {
+        "from": "Structure nearest joint distance",
+        "output": "",
+        "to": "Structure clean interior threshold",
+        "input": "A"
+      },
+      {
+        "from": "Structure clean interior threshold",
+        "output": "",
+        "to": "Structure clean interior span",
+        "input": "A"
+      },
+      {
+        "from": "Structure clean interior span",
+        "output": "",
+        "to": "Structure clean interior bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Structure clean interior bounded fraction",
+        "output": "",
+        "to": "Structure clean interior square",
+        "input": "A"
+      },
+      {
+        "from": "Structure clean interior bounded fraction",
+        "output": "",
+        "to": "Structure clean interior square",
+        "input": "B"
+      },
+      {
+        "from": "Structure clean interior bounded fraction",
+        "output": "",
+        "to": "Structure clean interior doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Structure clean interior doubled fraction",
+        "output": "",
+        "to": "Structure clean interior cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Structure clean interior square",
+        "output": "",
+        "to": "Structure clean interior smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Structure clean interior cubic factor",
+        "output": "",
+        "to": "Structure clean interior smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Structure clean interior smooth transition",
+        "output": "",
+        "to": "Structure accumulated edge grime",
+        "input": ""
+      },
+      {
+        "from": "EdgeWear",
+        "output": "",
+        "to": "Structure bounded edge wear",
+        "input": ""
+      },
+      {
+        "from": "Structure individual panel tone",
+        "output": "",
+        "to": "Structure variable panel weathering",
+        "input": "Alpha"
+      },
+      {
+        "from": "Structure variable panel weathering",
+        "output": "",
+        "to": "Structure authored panel wear amount",
+        "input": "A"
+      },
+      {
+        "from": "Structure bounded edge wear",
+        "output": "",
+        "to": "Structure authored panel wear amount",
+        "input": "B"
+      },
+      {
+        "from": "Structure accumulated edge grime",
+        "output": "",
+        "to": "Structure weathering at slab edges",
+        "input": "A"
+      },
+      {
+        "from": "Structure authored panel wear amount",
+        "output": "",
+        "to": "Structure weathering at slab edges",
+        "input": "B"
+      },
+      {
+        "from": "Structure weathering at slab edges",
+        "output": "",
+        "to": "Structure mild edge grime tone",
+        "input": ""
+      },
+      {
+        "from": "Structure tinted panels",
+        "output": "",
+        "to": "Structure weathered panel surface",
+        "input": "A"
+      },
+      {
+        "from": "Structure mild edge grime tone",
+        "output": "",
+        "to": "Structure weathered panel surface",
+        "input": "B"
+      },
+      {
+        "from": "Structure nearest joint distance",
+        "output": "",
+        "to": "Structure joint feather threshold",
+        "input": "A"
+      },
+      {
+        "from": "Structure joint feather threshold",
+        "output": "",
+        "to": "Structure joint feather span",
+        "input": "A"
+      },
+      {
+        "from": "Structure joint feather span",
+        "output": "",
+        "to": "Structure joint feather bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Structure joint feather bounded fraction",
+        "output": "",
+        "to": "Structure joint feather square",
+        "input": "A"
+      },
+      {
+        "from": "Structure joint feather bounded fraction",
+        "output": "",
+        "to": "Structure joint feather square",
+        "input": "B"
+      },
+      {
+        "from": "Structure joint feather bounded fraction",
+        "output": "",
+        "to": "Structure joint feather doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Structure joint feather doubled fraction",
+        "output": "",
+        "to": "Structure joint feather cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Structure joint feather square",
+        "output": "",
+        "to": "Structure joint feather smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Structure joint feather cubic factor",
+        "output": "",
+        "to": "Structure joint feather smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Structure joint feather smooth transition",
+        "output": "",
+        "to": "Structure recessed panel joint",
+        "input": ""
+      },
+      {
+        "from": "ArchitectureTint",
+        "output": "RGB",
+        "to": "Structure restrained joint albedo",
+        "input": "A"
+      },
+      {
+        "from": "Structure weathered panel surface",
+        "output": "",
+        "to": "Structure panels with dark joints",
+        "input": "A"
+      },
+      {
+        "from": "Structure restrained joint albedo",
+        "output": "",
+        "to": "Structure panels with dark joints",
+        "input": "B"
+      },
+      {
+        "from": "Structure recessed panel joint",
+        "output": "",
+        "to": "Structure panels with dark joints",
+        "input": "Alpha"
+      },
+      {
+        "from": "Structure panel interior",
+        "output": "",
+        "to": "Structure slab local U",
+        "input": ""
+      },
+      {
+        "from": "Structure panel interior",
+        "output": "",
+        "to": "Structure slab local V",
+        "input": ""
+      },
+      {
+        "from": "Structure slab local U",
+        "output": "",
+        "to": "Structure hairline direction",
+        "input": "A"
+      },
+      {
+        "from": "Structure hairline direction",
+        "output": "",
+        "to": "Structure hairline start",
+        "input": "A"
+      },
+      {
+        "from": "Structure slab local U",
+        "output": "",
+        "to": "Structure hairline kink phase",
+        "input": "A"
+      },
+      {
+        "from": "Structure hairline kink phase",
+        "output": "",
+        "to": "Structure hairline kink",
+        "input": ""
+      },
+      {
+        "from": "Structure hairline kink",
+        "output": "",
+        "to": "Structure slight fracture irregularity",
+        "input": "A"
+      },
+      {
+        "from": "Structure hairline start",
+        "output": "",
+        "to": "Structure hairline curve",
+        "input": "A"
+      },
+      {
+        "from": "Structure slight fracture irregularity",
+        "output": "",
+        "to": "Structure hairline curve",
+        "input": "B"
+      },
+      {
+        "from": "Structure slab local V",
+        "output": "",
+        "to": "Structure signed hairline distance",
+        "input": "A"
+      },
+      {
+        "from": "Structure hairline curve",
+        "output": "",
+        "to": "Structure signed hairline distance",
+        "input": "B"
+      },
+      {
+        "from": "Structure signed hairline distance",
+        "output": "",
+        "to": "Structure hairline distance",
+        "input": ""
+      },
+      {
+        "from": "Structure hairline distance",
+        "output": "",
+        "to": "Structure hairline feather",
+        "input": "A"
+      },
+      {
+        "from": "Structure hairline feather",
+        "output": "",
+        "to": "Structure outside hairline",
+        "input": ""
+      },
+      {
+        "from": "Structure outside hairline",
+        "output": "",
+        "to": "Structure hairline fracture",
+        "input": ""
+      },
+      {
+        "from": "Structure individual panel tone",
+        "output": "",
+        "to": "Structure occasional cracked slab threshold",
+        "input": "A"
+      },
+      {
+        "from": "Structure occasional cracked slab threshold",
+        "output": "",
+        "to": "Structure occasional cracked slab span",
+        "input": "A"
+      },
+      {
+        "from": "Structure occasional cracked slab span",
+        "output": "",
+        "to": "Structure occasional cracked slab bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Structure occasional cracked slab bounded fraction",
+        "output": "",
+        "to": "Structure occasional cracked slab square",
+        "input": "A"
+      },
+      {
+        "from": "Structure occasional cracked slab bounded fraction",
+        "output": "",
+        "to": "Structure occasional cracked slab square",
+        "input": "B"
+      },
+      {
+        "from": "Structure occasional cracked slab bounded fraction",
+        "output": "",
+        "to": "Structure occasional cracked slab doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Structure occasional cracked slab doubled fraction",
+        "output": "",
+        "to": "Structure occasional cracked slab cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Structure occasional cracked slab square",
+        "output": "",
+        "to": "Structure occasional cracked slab smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Structure occasional cracked slab cubic factor",
+        "output": "",
+        "to": "Structure occasional cracked slab smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Structure hairline fracture",
+        "output": "",
+        "to": "Structure sparse slab fractures",
+        "input": "A"
+      },
+      {
+        "from": "Structure occasional cracked slab smooth transition",
+        "output": "",
+        "to": "Structure sparse slab fractures",
+        "input": "B"
+      },
+      {
+        "from": "CrackStrength",
+        "output": "",
+        "to": "Structure bounded crack contrast",
+        "input": ""
+      },
+      {
+        "from": "Structure sparse slab fractures",
+        "output": "",
+        "to": "Structure restrained fracture contrast",
+        "input": "A"
+      },
+      {
+        "from": "Structure bounded crack contrast",
+        "output": "",
+        "to": "Structure restrained fracture contrast",
+        "input": "B"
+      },
+      {
+        "from": "Structure restrained fracture contrast",
+        "output": "",
+        "to": "Structure hairline albedo modulation",
+        "input": ""
+      },
+      {
+        "from": "Structure panels with dark joints",
+        "output": "",
+        "to": "Structure worn slab finish",
+        "input": "A"
+      },
+      {
+        "from": "Structure hairline albedo modulation",
+        "output": "",
+        "to": "Structure worn slab finish",
+        "input": "B"
+      },
+      {
+        "from": "Architecture fog Absolute world position",
+        "output": "",
+        "to": "Architecture fog World XY",
+        "input": ""
+      },
+      {
+        "from": "Architecture fog World XY",
+        "output": "",
+        "to": "Architecture fog World centimeters to texture UV",
+        "input": "A"
+      },
+      {
+        "from": "CinderWorldSizeInverse",
+        "output": "",
+        "to": "Architecture fog World centimeters to texture UV",
+        "input": "B"
+      },
+      {
+        "from": "Architecture fog World centimeters to texture UV",
+        "output": "",
+        "to": "FogMask",
+        "input": "UVs"
+      },
+      {
+        "from": "FogMask",
+        "output": "R",
+        "to": "Static architecture visible fraction",
+        "input": ""
+      },
+      {
+        "from": "FogMask",
+        "output": "R",
+        "to": "Static architecture previously explored fog",
+        "input": "A"
+      },
+      {
+        "from": "FogMask",
+        "output": "G",
+        "to": "Static architecture previously explored fog",
+        "input": "B"
+      },
+      {
+        "from": "Static architecture previously explored fog",
+        "output": "",
+        "to": "Static architecture dim remembered detail",
+        "input": "A"
+      },
+      {
+        "from": "Static architecture visible fraction",
+        "output": "",
+        "to": "Static architecture visible or remembered detail",
+        "input": "A"
+      },
+      {
+        "from": "Static architecture dim remembered detail",
+        "output": "",
+        "to": "Static architecture visible or remembered detail",
+        "input": "B"
+      },
+      {
+        "from": "Structure worn slab finish",
+        "output": "",
+        "to": "Fog gated architecture diffuse",
+        "input": "A"
+      },
+      {
+        "from": "Static architecture visible or remembered detail",
+        "output": "",
+        "to": "Fog gated architecture diffuse",
+        "input": "B"
+      },
+      {
+        "from": "UnknownFog",
+        "output": "RGB",
+        "to": "Unknown and explored architecture fog",
+        "input": "A"
+      },
+      {
+        "from": "ExploredFog",
+        "output": "RGB",
+        "to": "Unknown and explored architecture fog",
+        "input": "B"
+      },
+      {
+        "from": "FogMask",
+        "output": "G",
+        "to": "Unknown and explored architecture fog",
+        "input": "Alpha"
+      },
+      {
+        "from": "Unknown and explored architecture fog",
+        "output": "",
+        "to": "Architecture fog independent of lighting",
+        "input": "A"
+      },
+      {
+        "from": "FogMask",
+        "output": "R",
+        "to": "Architecture fog independent of lighting",
+        "input": "B"
+      },
+      {
+        "from": "Architecture fog World centimeters to texture UV",
+        "output": "",
+        "to": "ArchitectureHeightFog",
+        "input": "UVs"
+      },
+      {
+        "from": "ArchitectureHeightFog",
+        "output": "G",
+        "to": "Unexplored architecture height fraction",
+        "input": ""
+      },
+      {
+        "from": "Architecture world Z",
+        "output": "",
+        "to": "Architecture hidden baseline below terrain",
+        "input": "A"
+      },
+      {
+        "from": "Architecture hidden baseline below terrain",
+        "output": "",
+        "to": "Unknown architecture height",
+        "input": "A"
+      },
+      {
+        "from": "Unexplored architecture height fraction",
+        "output": "",
+        "to": "Unknown architecture height",
+        "input": "B"
+      },
+      {
+        "from": "Unknown architecture height",
+        "output": "",
+        "to": "Flatten unexplored architecture",
+        "input": "A"
+      },
+      {
+        "from": "Architecture downward offset",
+        "output": "",
+        "to": "Flatten unexplored architecture",
+        "input": "B"
+      },
+      {
+        "from": "Roughness",
+        "output": "",
+        "to": "Matte structural surface roughness",
+        "input": ""
+      },
+      {
+        "from": "Matte structural surface roughness",
+        "output": "",
+        "to": "Dry structural joints",
+        "input": "A"
+      },
+      {
+        "from": "Structure recessed panel joint",
+        "output": "",
+        "to": "Dry structural joints",
+        "input": "Alpha"
+      },
+      {
+        "from": "Structure recessed panel joint",
+        "output": "",
+        "to": "Restrained structural joint cavity",
+        "input": "Alpha"
+      }
+    ],
+    "outputs": {
+      "BASE_COLOR": {
+        "node": "Fog gated architecture diffuse",
+        "output": ""
+      },
+      "EMISSIVE_COLOR": {
+        "node": "Architecture fog independent of lighting",
+        "output": ""
+      },
+      "WORLD_POSITION_OFFSET": {
+        "node": "Flatten unexplored architecture",
+        "output": ""
+      },
+      "NORMAL": {
+        "node": "Architecture geometric surface normals",
+        "output": ""
+      },
+      "ROUGHNESS": {
+        "node": "Dry structural joints",
+        "output": ""
+      },
+      "AMBIENT_OCCLUSION": {
+        "node": "Restrained structural joint cavity",
+        "output": ""
+      },
+      "METALLIC": {
+        "node": "Nonmetal structural concrete",
+        "output": ""
+      },
+      "SPECULAR": {
+        "node": "Restrained structural specular",
+        "output": ""
+      }
+    },
+    "shader_errors": []
+  },
+  "runtime_parameters": {
+    "ArchitectureTint": [
+      0.09,
+      0.095,
+      0.082
+    ],
+    "Roughness": 0.9,
+    "PanelVariation": 0.24,
+    "EdgeWear": 0.22,
+    "CrackStrength": 0.24,
+    "FogMask": "linear clamped RG visibility/exploration",
+    "CinderWorldSizeInverse": "1 / world size cm"
+  },
+  "texture_samples": {
+    "pixel": 1,
+    "vertex": 1
+  },
+  "surface": {
+    "projection": "world XY tops; world horizontal/Z walls",
+    "top_panel_cm": [
+      120,
+      90
+    ],
+    "wall_panel_cm": [
+      160,
+      80
+    ],
+    "panel_tone_bounds": [
+      0.88,
+      1.12
+    ],
+    "unknown_baseline_world_z": -32.0,
+    "normal_textures": false
+  }
+}

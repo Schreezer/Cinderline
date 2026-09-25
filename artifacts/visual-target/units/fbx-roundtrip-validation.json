@@ -69,7 +69,7 @@
       ],
       "bounds_min_cm": [
         -1.50073,
-        3.78824,
+        4.02758,
         0.0
       ],
       "bounds_max_cm": [
@@ -101,7 +101,7 @@
       ],
       "bounds_max_cm": [
         10.91585,
-        -3.78824,
+        -4.02758,
         17.07234
       ],
       "maximum_vertex_error_cm": 2.7e-06,
@@ -123,7 +123,7 @@
       ],
       "bounds_min_cm": [
         -12.76612,
-        3.78976,
+        4.02965,
         0.0
       ],
       "bounds_max_cm": [
@@ -155,7 +155,7 @@
       ],
       "bounds_max_cm": [
         -4.97212,
-        -3.78976,
+        -4.02964,
         17.07234
       ],
       "maximum_vertex_error_cm": 2.7e-06,
@@ -216,7 +216,7 @@
         48.0
       ],
       "maximum_vertex_error_cm": 3.4e-06,
-      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "minimum_triangle_area_cm2": 0.00832021508929729,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -240,12 +240,12 @@
         19.41177
       ],
       "bounds_max_cm": [
-        7.71707,
+        7.63345,
         15.427,
         48.0
       ],
       "maximum_vertex_error_cm": 3.4e-06,
-      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "minimum_triangle_area_cm2": 0.00832021508929729,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -263,17 +263,17 @@
         "TeamPanel"
       ],
       "bounds_min_cm": [
-        -13.96325,
+        -13.98147,
         4.57896,
         0.0
       ],
       "bounds_max_cm": [
-        2.60754,
+        2.53934,
         11.20274,
         22.99765
       ],
       "maximum_vertex_error_cm": 2.7e-06,
-      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "minimum_triangle_area_cm2": 0.016049662942422913,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -291,17 +291,17 @@
         "TeamPanel"
       ],
       "bounds_min_cm": [
-        -13.96325,
+        -13.98147,
         -11.20274,
         0.0
       ],
       "bounds_max_cm": [
-        2.60754,
+        2.53934,
         -4.57896,
         22.99765
       ],
       "maximum_vertex_error_cm": 2.7e-06,
-      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "minimum_triangle_area_cm2": 0.016049662942422913,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -320,17 +320,17 @@
         "CoreGlow"
       ],
       "bounds_min_cm": [
-        -4.73701,
-        -12.56704,
-        31.39361
+        -5.45117,
+        -13.15967,
+        30.68773
       ],
       "bounds_max_cm": [
         20.0,
-        -5.89194,
+        -5.29931,
         38.25076
       ],
       "maximum_vertex_error_cm": 3.4e-06,
-      "minimum_triangle_area_cm2": 0.010280047173083295,
+      "minimum_triangle_area_cm2": 0.010271748084012553,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -359,7 +359,7 @@
         47.0
       ],
       "maximum_vertex_error_cm": 3.8e-06,
-      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "minimum_triangle_area_cm2": 0.007133889409895655,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -383,12 +383,12 @@
         19.00735
       ],
       "bounds_max_cm": [
-        6.44206,
+        6.36398,
         11.9035,
         47.0
       ],
       "maximum_vertex_error_cm": 3.8e-06,
-      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "minimum_triangle_area_cm2": 0.007133889409895655,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -406,17 +406,17 @@
         "TeamPanel"
       ],
       "bounds_min_cm": [
-        -15.98909,
+        -16.00335,
         2.37978,
         0.0
       ],
       "bounds_max_cm": [
-        0.41729,
+        0.35635,
         8.05684,
         20.88242
       ],
       "maximum_vertex_error_cm": 2.6e-06,
-      "minimum_triangle_area_cm2": 0.013772927233871864,
+      "minimum_triangle_area_cm2": 0.013761242938400649,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -434,17 +434,17 @@
         "TeamPanel"
       ],
       "bounds_min_cm": [
-        -15.9891,
+        -16.00335,
         -8.05684,
         0.0
       ],
       "bounds_max_cm": [
-        0.41729,
+        0.35635,
         -2.37978,
         20.88242
       ],
       "maximum_vertex_error_cm": 2.6e-06,
-      "minimum_triangle_area_cm2": 0.013772928092326319,
+      "minimum_triangle_area_cm2": 0.013761242013126215,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -463,17 +463,17 @@
         "CoreGlow"
       ],
       "bounds_min_cm": [
-        -11.08488,
-        -3.47948,
-        33.19326
+        -11.77469,
+        -3.9831,
+        32.50208
       ],
       "bounds_max_cm": [
         21.0,
-        3.47949,
+        3.98309,
         39.90754
       ],
       "maximum_vertex_error_cm": 3.2e-06,
-      "minimum_triangle_area_cm2": 0.00881478709855401,
+      "minimum_triangle_area_cm2": 0.008807285682059202,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -617,7 +617,7 @@
         38.0
       ],
       "maximum_vertex_error_cm": 5.4e-06,
-      "minimum_triangle_area_cm2": 0.00039138190891145044,
+      "minimum_triangle_area_cm2": 0.0003830388744605705,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -641,12 +641,12 @@
         0.0
       ],
       "bounds_max_cm": [
-        24.96942,
+        24.72791,
         20.923,
-        30.79344
+        30.0992
       ],
       "maximum_vertex_error_cm": 5.4e-06,
-      "minimum_triangle_area_cm2": 0.00039138190891145044,
+      "minimum_triangle_area_cm2": 0.0003830388744605705,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,
@@ -664,9 +664,9 @@
         "TeamPanel"
       ],
       "bounds_min_cm": [
-        -19.45866,
+        -19.50497,
         -9.97178,
-        21.41358
+        20.93081
       ],
       "bounds_max_cm": [
         30.0,
@@ -674,7 +674,7 @@
         38.0
       ],
       "maximum_vertex_error_cm": 4.7e-06,
-      "minimum_triangle_area_cm2": 0.013944113535373297,
+      "minimum_triangle_area_cm2": 0.013625930718385058,
       "triangles_below_unreal_threshold": 0,
       "vertex_color_alpha_range": [
         0.2784,

@@ -1,0 +1,190 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll Cinderline IOS Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -SkipDeploy -Architecture=arm64 -MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Executing up to 2 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for Cinderline (ispc deleted)
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling against OS Version 15.0 [minimum allowed at runtime]
+Compiling with IOS SDK 27.0, minimum Target OS version 15.0
+Arguments: "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Launch/Private/Apple/SwiftMain.swift", -target arm64-apple-ios15.0, -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk, -plugin-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins", -plugin-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins", -plugin-path "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins", -plugin-path "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins", -swift-version 5, -g, -module-name LaunchSwift, -import-objc-header "Runtime/Launch/Private/Apple/LaunchCPPToSwift.h", -DPLATFORM_IOS, -Xcc -DPLATFORM_IOS=1
+Arguments: "/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Launch/Private/Apple/SwiftMain.swift", -target arm64-apple-ios15.0, -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk, -plugin-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins", -plugin-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins", -plugin-path "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins", -plugin-path "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins", -swift-version 5, -g, -module-name LaunchSwift, -import-objc-header "Runtime/Launch/Private/Apple/LaunchCPPToSwift.h", -DPLATFORM_IOS, -Xcc -DPLATFORM_IOS=1
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/ApplicationCore/Module.ApplicationCore.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/MiMalloc.c.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/PCH.Core.h.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.10.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.11.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.12.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.13.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.14.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.15.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.16.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.17.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.18.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.19.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.2.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.20.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.21.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.3.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.4.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.5.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.6.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.7.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.8.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Core/Module.Core.9.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/Launch/Module.Launch.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/MetalRHI/Module.MetalRHI.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/MetalRHI/Module.MetalRHI.2.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/IOS/arm64/UnrealGame/Development/MetalRHI/Module.MetalRHI.3.cpp.d!
+Building Cinderline...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.2.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.2.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from Cinderline unity file: CinderCameraBoundaryTests.cpp, CinderCampaignHUDTests.cpp, CinderCampaignGuidanceTests.cpp, CinderMobileHUDLayoutTests.cpp, CinderWorldIntegrationTests.cpp, CinderFormationTests.cpp, CinderCampaignTests.cpp, CinderMapSceneryTests.cpp, CinderTacticalOrderTests.cpp, CinderAuthoredTerrainFallbackTests.cpp, CinderCampaignLifecycleTests.cpp, CinderTerrainPickingTests.cpp, CinderFogMaskTests.cpp, CinderUnitInfoTests.cpp, CinderWorldEffectsTests.cpp, CinderArmyControlTests.cpp, CinderPatrolEscortTests.cpp, CinderSceneryTests.cpp, CinderLandscapeTerrainTests.cpp, CinderCampaignSaveTests.cpp, CinderOnlineIntegrationTests.cpp, CinderHUDInputTests.cpp, CinderProductionControlTests.cpp, CinderOnboardingTests.cpp, Network.cpp, MapDefinition.cpp, SimulationMovement.cpp, Navigation.cpp, SimulationProduction.cpp, SimulationAI.cpp, SimulationTactics.cpp, SimulationJobs.cpp, Simulation.cpp, SimulationWorkerPlans.cpp, CinderHUD.cpp, CinderBattlefieldCampaign.cpp, CinderTutorial.cpp, CinderHelpContent.cpp, CinderCampaignSave.cpp, CinderEntityMotion.cpp, CinderCampaign.cpp, CinderCampaignGuidance.cpp, CinderBattlefield.cpp, CinderFogMask.cpp, CinderPlayerController.cpp, CinderHUDCampaign.cpp, CinderWorldEffects.cpp, CinderHUDStyle.cpp, CinderQualityDiagnostics.cpp, CinderArtPreview.cpp, CinderCanyonPreview.cpp, CinderPlayerControllerCampaign.cpp, CinderGroundPalette.cpp, CinderCommandPreview.cpp, CinderCampaignPreview.cpp, CinderGameEngine.cpp, CinderUnitInfo.cpp, CinderLandscapeTerrain.cpp, CinderTerrainSurface.cpp, CinderCameraPreview.cpp, CinderCamera.cpp, CinderScenery.cpp, CinderLANDiscovery.cpp, CinderOnlineSubsystem.cpp, CinderMobileHUDPreview.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 124 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 28.12 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/124] Compile [arm64] PCH.Core.h
+[2/124] Compile [arm64] SharedPCH.Engine.Project.ValApi.ValExpApi.Cpp20.h
+[3/124] Compile [arm64] SharedPCH.Engine.Plat.Cpp20.h
+[4/124] Compile [arm64] MiMalloc.c
+[5/124] Compile [arm64] SharedPCH.CoreUObject.Plat.Cpp20.h
+[6/124] Compile [arm64] Module.Core.1.cpp
+[7/124] Compile [arm64] Module.ApplicationCore.cpp
+[8/124] Compile [arm64] Module.Core.11.cpp
+[9/124] Compile [arm64] Module.Core.10.cpp
+[10/124] Compile [arm64] Module.Core.12.cpp
+[11/124] Compile [arm64] Module.Core.13.cpp
+[12/124] Compile [arm64] Module.Core.14.cpp
+[13/124] Compile [arm64] Module.Core.15.cpp
+[14/124] Compile [arm64] Module.Core.16.cpp
+[15/124] Compile [arm64] Module.Core.18.cpp
+[16/124] Compile [arm64] Module.Core.17.cpp
+[17/124] Compile [arm64] Module.Core.19.cpp
+[18/124] Compile [arm64] Module.Core.20.cpp
+[19/124] Compile [arm64] Module.Core.21.cpp
+[20/124] Compile [arm64] Module.Core.3.cpp
+[21/124] Compile [arm64] Module.Core.2.cpp
+[22/124] Compile [arm64] Module.Core.4.cpp
+[23/124] Compile [arm64] Module.Core.5.cpp
+[24/124] Compile [arm64] Module.Core.6.cpp
+[25/124] Compile [arm64] Module.Core.7.cpp
+[26/124] Compile [arm64] Module.Core.8.cpp
+[27/124] Compile [arm64] Module.Core.9.cpp
+[28/124] Compile [arm64] Module.MetalRHI.1.cpp
+[29/124] Compile [arm64] Module.Launch.cpp
+[30/124] Compile [arm64] Module.MetalRHI.3.cpp
+[31/124] Compile [arm64] Module.MetalRHI.2.cpp
+[32/124] Compile [arm64] CinderArmyControlTests.cpp
+[33/124] Compile [arm64] CinderArtPreview.cpp
+[34/124] Compile [arm64] CinderAudioSubsystem.cpp
+[35/124] Compile [arm64] CinderAuthoredTerrainFallbackTests.cpp
+[36/124] Compile [arm64] CinderBattlefield.cpp
+[37/124] Compile [arm64] CinderBattlefieldCampaign.cpp
+[38/124] Compile [arm64] CinderCamera.cpp
+[39/124] Compile [arm64] CinderCameraBoundaryTests.cpp
+[40/124] Compile [arm64] CinderCameraPreview.cpp
+[41/124] Compile [arm64] CinderCampaign.cpp
+[42/124] Compile [arm64] CinderCampaignGuidance.cpp
+[43/124] Compile [arm64] CinderCampaignGuidanceTests.cpp
+[44/124] Compile [arm64] CinderCampaignHUDTests.cpp
+[45/124] Compile [arm64] CinderCampaignLifecycleTests.cpp
+[46/124] Compile [arm64] CinderCampaignPreview.cpp
+[47/124] Compile [arm64] CinderCampaignSave.cpp
+[48/124] Compile [arm64] CinderCampaignSaveTests.cpp
+[49/124] Compile [arm64] CinderCampaignTests.cpp
+[50/124] Compile [arm64] CinderCanyonPreview.cpp
+[51/124] Compile [arm64] CinderCombatPreview.cpp
+[52/124] Compile [arm64] CinderCommandPreview.cpp
+[53/124] Compile [arm64] CinderDifficultyPreview.cpp
+[54/124] Compile [arm64] CinderDifficultyTests.cpp
+[55/124] Compile [arm64] CinderEntityMotion.cpp
+[56/124] Compile [arm64] CinderFogMask.cpp
+[57/124] Compile [arm64] CinderFogMaskTests.cpp
+[58/124] Compile [arm64] CinderFormationTests.cpp
+[59/124] Compile [arm64] CinderFourPlayerPreview.cpp
+[60/124] Compile [arm64] CinderGameEngine.cpp
+[61/124] Compile [arm64] CinderGameMode.cpp
+[62/124] Compile [arm64] CinderGroundPalette.cpp
+[63/124] Compile [arm64] CinderGuidedPreview.cpp
+[64/124] Compile [arm64] CinderHUDCampaign.cpp
+[65/124] Compile [arm64] CinderHUD.cpp
+[66/124] Compile [arm64] CinderHUDInputTests.cpp
+[67/124] Compile [arm64] CinderHUDStyle.cpp
+[68/124] Compile [arm64] CinderHelpContent.cpp
+[69/124] Compile [arm64] CinderIOSPerformancePolicy.cpp
+[70/124] Compile [arm64] CinderIOSPerformancePolicyTests.cpp
+[71/124] Compile [arm64] CinderLANDiscovery.cpp
+[72/124] Compile [arm64] CinderLANDiscoveryApple.mm
+[73/124] Compile [arm64] CinderLandscapeTerrainTests.cpp
+[74/124] Compile [arm64] CinderLandscapeTerrain.cpp
+[75/124] Compile [arm64] CinderMapSceneryTests.cpp
+[76/124] Compile [arm64] CinderMatchLengthPreview.cpp
+[77/124] Compile [arm64] CinderMetalFXResolutionTests.cpp
+[78/124] Compile [arm64] CinderMetalFXPreview.cpp
+[79/124] Compile [arm64] CinderMobileHUDLayoutTests.cpp
+[80/124] Compile [arm64] CinderMobileHUDPreview.cpp
+[81/124] Compile [arm64] CinderMotionPreview.cpp
+[82/124] Compile [arm64] CinderOnboardingTests.cpp
+[83/124] Compile [arm64] CinderOnlineIntegrationTests.cpp
+[84/124] Compile [arm64] CinderOnlinePanel.cpp
+[85/124] Compile [arm64] CinderOnlinePreview.cpp
+[86/124] Compile [arm64] CinderOnlineRecoveryTests.cpp
+[87/124] Compile [arm64] CinderOnlineSubsystem.cpp
+[88/124] Compile [arm64] CinderPatrolEscortTests.cpp
+[89/124] Compile [arm64] CinderPlayerControllerCampaign.cpp
+[90/124] Compile [arm64] CinderPlayerController.cpp
+[91/124] Compile [arm64] CinderProductionControlTests.cpp
+[92/124] Compile [arm64] CinderQualityDiagnostics.cpp
+[93/124] Compile [arm64] CinderScenery.cpp
+[94/124] Compile [arm64] CinderSceneryTests.cpp
+[95/124] Compile [arm64] CinderTacticalOrderTests.cpp
+[96/124] Compile [arm64] CinderTerrainPickingTests.cpp
+[97/124] Compile [arm64] CinderTerrainSurface.cpp
+[98/124] Compile [arm64] CinderTutorial.cpp
+[99/124] Compile [arm64] CinderTutorialCoachPreview.cpp
+[100/124] Compile [arm64] CinderTutorialGuidanceTests.cpp
+[101/124] Compile [arm64] CinderTutorialTests.cpp
+[102/124] Compile [arm64] CinderUnitInfo.cpp
+[103/124] Compile [arm64] CinderUnitInfoTests.cpp
+[104/124] Compile [arm64] CinderVisualPreview.cpp
+[105/124] Compile [arm64] CinderWorldEffects.cpp
+[106/124] Compile [arm64] CinderWorldEffectsTests.cpp
+[107/124] Compile [arm64] Cinderline.cpp
+[108/124] Compile [arm64] CinderWorldIntegrationTests.cpp
+[109/124] Compile [arm64] MapDefinition.cpp
+[110/124] Compile [arm64] Module.Cinderline.gen.cpp
+[111/124] Compile [arm64] Navigation.cpp
+[112/124] Compile [arm64] Network.cpp
+[113/124] Compile [arm64] Simulation.cpp
+[114/124] Compile [arm64] SimulationAI.cpp
+[115/124] Compile [arm64] SimulationMovement.cpp
+[116/124] Compile [arm64] SimulationJobs.cpp
+[117/124] Compile [arm64] SimulationProduction.cpp
+[118/124] Compile [arm64] SimulationTactics.cpp
+[119/124] Compile [arm64] SimulationWorkerPlans.cpp
+[120/124] Compile [arm64] CinderMetalFXModule.mm
+[121/124] Link [arm64] Cinderline
+ld: warning: ignoring duplicate libraries: 'ThirdParty/Vorbis/libvorbis-1.3.2/lib/IOS/libvorbis.a', 'ThirdParty/Vorbis/libvorbis-1.3.2/lib/IOS/libvorbisenc.a', 'ThirdParty/Vorbis/libvorbis-1.3.2/lib/IOS/libvorbisfile.a'
+[122/124] Updating version file: /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Versions.xcconfig [NoUba]
+[123/124] ApplePostBuildSync Executing PostBuildSync [/Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline] [NoUba]
+[124/124] WriteMetadata Cinderline.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 311.84 seconds
+Output binary: /Users/chirag13/Documents/ChatGPT/starCraft/Binaries/IOS/Cinderline
+
+Result: Succeeded
+Total execution time: 317.82 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 45.9kb
+Physical-device iOS binary and target receipt are ready.
+Next run: ./scripts/unreal.sh package-ios -skipbuild

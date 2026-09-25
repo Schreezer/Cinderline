@@ -1,0 +1,56 @@
+{
+  "build": "delivery-build.log",
+  "build_result": "Succeeded",
+  "material_import": "material-import.json",
+  "height_profile_version": 4,
+  "automation_report": "final-automation/index.json",
+  "tests_passed": 7,
+  "test_errors": 0,
+  "test_warnings": 0,
+  "visual_platform": "Mac Unreal Development",
+  "physical_mobile_verified": false,
+  "shadow_bias": 0.7,
+  "shadow_slope_bias": 1.0,
+  "captures": {
+    "map0": {
+      "image": "map0.png",
+      "log": "delivery/run-20260922T080309Z-JJZ5rq/map0.log",
+      "sha256": "a1e31e6a2dcde4ac54c87c0787cf8e93580bcffb32b35b283f1546be58ae8462",
+      "marker": "CINDERLINE_CANYON_PREVIEW_READY state=map0 map=0 canonical=1 obstacles=4 explored_obstacles=4 fog_unknown=0 fog_explored=0 fog_visible=4096 landscape_matching=1 landscape_visible=1 raised_samples=3637 height_cm=-38.2..437.6 tick=4 file=../../../../starCraft/Saved/CanyonPreview/map0.png",
+      "visually_inspected": true
+    },
+    "map1": {
+      "image": "map1.png",
+      "log": "delivery/run-20260922T080309Z-JJZ5rq/map1.log",
+      "sha256": "046675b413622fb128c4e7a1344eaacc4ea4cf40e41676ac360d553d9d0dff83",
+      "marker": "CINDERLINE_CANYON_PREVIEW_READY state=map1 map=1 canonical=1 obstacles=5 explored_obstacles=5 fog_unknown=0 fog_explored=0 fog_visible=4096 landscape_matching=1 landscape_visible=1 raised_samples=2601 height_cm=-42.8..476.7 tick=4 file=../../../../starCraft/Saved/CanyonPreview/map1.png",
+      "visually_inspected": true
+    },
+    "map2": {
+      "image": "map2.png",
+      "log": "delivery/run-20260922T080309Z-JJZ5rq/map2.log",
+      "sha256": "90b94e0b3cc1691ab67369583258f6abdc23b59514442dcf0c79c5af811f8c83",
+      "marker": "CINDERLINE_CANYON_PREVIEW_READY state=map2 map=2 canonical=1 obstacles=6 explored_obstacles=6 fog_unknown=0 fog_explored=0 fog_visible=4096 landscape_matching=1 landscape_visible=1 raised_samples=4832 height_cm=-36.9..359.9 tick=4 file=../../../../starCraft/Saved/CanyonPreview/map2.png",
+      "visually_inspected": true
+    },
+    "fog": {
+      "image": "fog.png",
+      "log": "delivery/run-20260922T080309Z-JJZ5rq/fog.log",
+      "sha256": "55ee90f491e0f34118a179aaebfc5b0988178647b82193bc5d3aea4aedf52283",
+      "marker": "CINDERLINE_CANYON_PREVIEW_READY state=fog map=0 canonical=1 obstacles=4 explored_obstacles=1 fog_unknown=3050 fog_explored=0 fog_visible=1046 landscape_matching=1 landscape_visible=1 raised_samples=3637 height_cm=-38.2..437.6 tick=4 file=../../../../starCraft/Saved/CanyonPreview/fog.png",
+      "visually_inspected": true
+    },
+    "gameplay_base": {
+      "image": "delivery-base/mac-base.png",
+      "log": "delivery-base/mac-capture.log",
+      "sha256": "e7daa77cb54570a4aff51c9a75d0bd78be43ee2980221f6f019d537bd01b5704",
+      "visually_inspected": true
+    },
+    "gameplay_battle": {
+      "image": "delivery-base/mac-battle.png",
+      "log": "delivery-base/mac-capture.log",
+      "sha256": "9422ba6e2cf44dfda584128668ec25895b6e87756b7934340bd13141ff2f3729",
+      "visually_inspected": true
+    }
+  }
+}

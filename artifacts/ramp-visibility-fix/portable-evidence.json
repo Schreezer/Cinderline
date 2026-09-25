@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "simulation_tests": "full MapTerrainSimulationTests suite passed",
+  "baseline_new_regressions_failed": [
+    "adjacent Anchor ramp visibility",
+    "moving ground observer own-cell visibility",
+    "save/reload moving observer visibility"
+  ],
+  "unchanged_existing_privacy_baseline": "passed",
+  "before": {
+    "44": {
+      "unknown": 3150,
+      "explored": 0,
+      "visible": 946
+    },
+    "104": {
+      "unknown": 3149,
+      "explored": 13,
+      "visible": 934
+    }
+  },
+  "after": {
+    "44": {
+      "unknown": 3150,
+      "explored": 0,
+      "visible": 946
+    },
+    "104": {
+      "unknown": 3149,
+      "explored": 0,
+      "visible": 947
+    }
+  },
+  "cells_losing_current_vision_before": 13,
+  "cells_losing_current_vision_after": 0,
+  "own_cell_hidden_during_ticks_44_to_104_after": false,
+  "adjacent_anchor_supports_ramp_cell_26_16_at_tick104": true,
+  "isolated_anchor_regression_samples": [
+    [
+      1537.5,
+      1237.5
+    ],
+    [
+      1770,
+      1230
+    ],
+    [
+      1950,
+      1230
+    ],
+    [
+      1987.5,
+      1237.5
+    ],
+    [
+      2020,
+      1230
+    ]
+  ],
+  "mirrored_cases_passed": true,
+  "actual_upper_plateau_sample_hidden_in_isolated_anchor_test": [
+    1490,
+    950
+  ],
+  "mixed_upper_edge_privacy": "unchanged test passed",
+  "limitations": [
+    "Cells containing both a ramp crest and an actual upper plateau remain conservatively gated.",
+    "Portable authoritative simulation proof; rendered and device verification belong to the root task."
+  ]
+}

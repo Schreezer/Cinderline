@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "scope": "M_VT_Dust source only; Unreal shader compile/runtime review pending",
+  "other_functions_unchanged": true,
+  "emissive_effect_body_unchanged": true,
+  "node_count": 12,
+  "texture_samples": 0,
+  "uv_radius": 0.48,
+  "max_opacity_over_404_quad_edge_samples": 0.0,
+  "center_opacity": 0.22,
+  "radial_opacity_monotonic": true,
+  "depth_fade_preserved": true,
+  "parameter_names": [
+    "Tint",
+    "Opacity",
+    "FadeDistance"
+  ],
+  "checks": [
+    "Python compile",
+    "graph source execution against recording stub",
+    "radial edge and monotonicity sampling",
+    "other functions AST unchanged",
+    "emissive function prefix byte-for-byte unchanged",
+    "git diff --check"
+  ]
+}

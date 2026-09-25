@@ -1,0 +1,13 @@
+Test project /tmp/cinderline-map-protocol-build
+    Start  9: ai_difficulty_regressions
+1/2 Test  #9: ai_difficulty_regressions ........   Passed  116.82 sec
+    Start 12: ai_economy_regressions
+2/2 Test #12: ai_economy_regressions ...........   Passed   81.59 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Label Time Summary:
+ai         = 198.41 sec*proc (2 tests)
+economy    =  81.59 sec*proc (1 test)
+
+Total Test time (real) = 198.42 sec

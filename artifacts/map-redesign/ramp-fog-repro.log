@@ -1,0 +1,93 @@
+SPAWN 33 Skim 2240.000,1350.000
+SPAWN 34 Anchor 2260.000,950.000
+SPAWN 35 Kiln 1180.000,820.000
+SPAWN 36 Siphon 1180.000,500.000
+SPAWN 37 Ward 1300.000,1350.000
+SPAWN 38 Ember 1360.000,1190.000
+SPAWN 39 Needle 1770.000,1230.000
+SPAWN 40 Anvil 2140.000,1200.000
+SPAWN 41 Mend 1250.000,1160.000
+SPAWN 42 Drudge 1908.000,756.000
+SPAWN 43 Drudge 2222.000,666.000
+SPAWN 44 Drudge 2402.000,716.000
+COUNTS tick=44 unknown=3150 explored=0 visible=946
+CELL tick=44 x=26 y=16 center=1987.500,1237.500 requiredHeight=32.119 state=2
+  observer=33 kind=Skim xy=2240.000,1350.000 height=0.000 distance=276.428 radius=817.500 heightAllows=0
+  observer=34 kind=Anchor xy=2260.000,950.000 height=0.000 distance=396.122 radius=817.500 heightAllows=0
+  observer=38 kind=Ember xy=1675.847,1285.603 height=120.263 distance=315.343 radius=547.500 heightAllows=1
+  observer=39 kind=Needle xy=2020.116,1344.317 height=9.606 distance=111.685 radius=587.500 heightAllows=0
+  observer=40 kind=Anvil xy=2140.000,1200.000 height=0.000 distance=157.043 radius=567.500 heightAllows=0
+CELL tick=44 x=25 y=17 center=1912.500,1312.500 requiredHeight=56.226 state=2
+  observer=33 kind=Skim xy=2240.000,1350.000 height=0.000 distance=329.640 radius=817.500 heightAllows=0
+  observer=34 kind=Anchor xy=2260.000,950.000 height=0.000 distance=502.158 radius=817.500 heightAllows=0
+  observer=37 kind=Ward xy=1300.000,1350.000 height=180.000 distance=613.647 radius=677.500 heightAllows=1
+  observer=38 kind=Ember xy=1675.847,1285.603 height=120.263 distance=238.176 radius=547.500 heightAllows=1
+  observer=39 kind=Needle xy=2020.116,1344.317 height=9.606 distance=112.221 radius=587.500 heightAllows=0
+  observer=40 kind=Anvil xy=2140.000,1200.000 height=0.000 distance=253.796 radius=567.500 heightAllows=0
+UNIT tick=44 id=1 kind=Anchor xy=720.000,680.000 height=180.000 ownCell=9,9 required=180.000 state=2
+UNIT tick=44 id=6 kind=Drudge xy=636.284,814.418 height=180.000 ownCell=8,10 required=180.000 state=2
+UNIT tick=44 id=7 kind=Drudge xy=667.276,886.700 height=180.000 ownCell=8,11 required=180.000 state=2
+UNIT tick=44 id=8 kind=Drudge xy=714.334,941.341 height=180.000 ownCell=9,12 required=180.000 state=2
+UNIT tick=44 id=9 kind=Drudge xy=824.139,1005.527 height=180.000 ownCell=10,13 required=180.000 state=2
+UNIT tick=44 id=10 kind=Drudge xy=728.831,820.828 height=180.000 ownCell=9,10 required=180.000 state=2
+UNIT tick=44 id=33 kind=Skim xy=2240.000,1350.000 height=0.000 ownCell=29,18 required=0.000 state=2
+UNIT tick=44 id=34 kind=Anchor xy=2260.000,950.000 height=0.000 ownCell=30,12 required=0.000 state=2
+UNIT tick=44 id=35 kind=Kiln xy=1180.000,820.000 height=180.000 ownCell=15,10 required=180.000 state=2
+UNIT tick=44 id=36 kind=Siphon xy=1180.000,500.000 height=180.000 ownCell=15,6 required=180.000 state=2
+UNIT tick=44 id=37 kind=Ward xy=1300.000,1350.000 height=180.000 ownCell=17,18 required=180.000 state=2
+UNIT tick=44 id=38 kind=Ember xy=1675.847,1285.603 height=120.263 ownCell=22,17 required=128.547 state=2
+UNIT tick=44 id=39 kind=Needle xy=2020.116,1344.317 height=9.606 ownCell=26,17 required=32.119 state=2
+UNIT tick=44 id=40 kind=Anvil xy=2140.000,1200.000 height=0.000 ownCell=28,16 required=0.000 state=2
+UNIT tick=44 id=41 kind=Mend xy=1250.000,1160.000 height=180.000 ownCell=16,15 required=180.000 state=2
+UNIT tick=44 id=42 kind=Drudge xy=1923.480,741.810 height=0.000 ownCell=25,9 required=0.000 state=2
+UNIT tick=44 id=43 kind=Drudge xy=2206.520,651.810 height=0.000 ownCell=29,8 required=0.000 state=2
+UNIT tick=44 id=44 kind=Drudge xy=2386.520,701.810 height=0.000 ownCell=31,9 required=0.000 state=2
+UNIT tick=83 id=38 kind=Ember xy=1955.803,1370.341 height=30.278 ownCell=26,18 required=32.119 state=1
+UNIT tick=93 id=38 kind=Ember xy=2027.586,1392.069 height=7.204 ownCell=27,18 required=8.012 state=2
+UNIT tick=94 id=38 kind=Ember xy=2034.764,1394.242 height=4.897 ownCell=27,18 required=8.012 state=1
+UNIT tick=104 id=1 kind=Anchor xy=720.000,680.000 height=180.000 ownCell=9,9 required=180.000 state=2
+UNIT tick=104 id=6 kind=Drudge xy=475.886,800.510 height=180.000 ownCell=6,10 required=180.000 state=2
+UNIT tick=104 id=7 kind=Drudge xy=528.444,953.346 height=180.000 ownCell=7,12 required=180.000 state=2
+UNIT tick=104 id=8 kind=Drudge xy=662.364,988.236 height=180.000 ownCell=8,13 required=180.000 state=2
+UNIT tick=104 id=9 kind=Drudge xy=820.748,1011.651 height=180.000 ownCell=10,13 required=180.000 state=2
+UNIT tick=104 id=10 kind=Drudge xy=463.422,838.542 height=180.000 ownCell=6,11 required=180.000 state=2
+UNIT tick=104 id=33 kind=Skim xy=2240.000,1350.000 height=0.000 ownCell=29,18 required=0.000 state=2
+UNIT tick=104 id=34 kind=Anchor xy=2260.000,950.000 height=0.000 ownCell=30,12 required=0.000 state=2
+UNIT tick=104 id=35 kind=Kiln xy=1180.000,820.000 height=180.000 ownCell=15,10 required=180.000 state=2
+UNIT tick=104 id=36 kind=Siphon xy=1180.000,500.000 height=180.000 ownCell=15,6 required=180.000 state=2
+UNIT tick=104 id=37 kind=Ward xy=1300.000,1350.000 height=180.000 ownCell=17,18 required=180.000 state=2
+UNIT tick=104 id=38 kind=Ember xy=2103.622,1420.824 height=0.000 ownCell=28,18 required=0.000 state=2
+UNIT tick=104 id=39 kind=Needle xy=2361.176,1500.200 height=0.000 ownCell=31,20 required=0.000 state=2
+UNIT tick=104 id=40 kind=Anvil xy=2140.000,1200.000 height=0.000 ownCell=28,16 required=0.000 state=2
+UNIT tick=104 id=41 kind=Mend xy=1250.000,1160.000 height=180.000 ownCell=16,15 required=180.000 state=2
+UNIT tick=104 id=42 kind=Drudge xy=2060.396,826.514 height=0.000 ownCell=27,11 required=0.000 state=2
+UNIT tick=104 id=43 kind=Drudge xy=2225.721,776.742 height=0.000 ownCell=29,10 required=0.000 state=2
+UNIT tick=104 id=44 kind=Drudge xy=2331.926,772.834 height=0.000 ownCell=31,10 required=0.000 state=2
+COUNTS tick=104 unknown=3149 explored=13 visible=934
+CELL tick=104 x=26 y=16 center=1987.500,1237.500 requiredHeight=32.119 state=1
+  observer=33 kind=Skim xy=2240.000,1350.000 height=0.000 distance=276.428 radius=817.500 heightAllows=0
+  observer=34 kind=Anchor xy=2260.000,950.000 height=0.000 distance=396.122 radius=817.500 heightAllows=0
+  observer=38 kind=Ember xy=2103.622,1420.824 height=0.000 distance=217.007 radius=547.500 heightAllows=0
+  observer=39 kind=Needle xy=2361.176,1500.200 height=0.000 distance=456.777 radius=587.500 heightAllows=0
+  observer=40 kind=Anvil xy=2140.000,1200.000 height=0.000 distance=157.043 radius=567.500 heightAllows=0
+  observer=42 kind=Drudge xy=2060.396,826.514 height=0.000 distance=417.401 radius=497.500 heightAllows=0
+CELL tick=104 x=25 y=17 center=1912.500,1312.500 requiredHeight=56.226 state=2
+  observer=33 kind=Skim xy=2240.000,1350.000 height=0.000 distance=329.640 radius=817.500 heightAllows=0
+  observer=34 kind=Anchor xy=2260.000,950.000 height=0.000 distance=502.158 radius=817.500 heightAllows=0
+  observer=37 kind=Ward xy=1300.000,1350.000 height=180.000 distance=613.647 radius=677.500 heightAllows=1
+  observer=38 kind=Ember xy=2103.622,1420.824 height=0.000 distance=219.686 radius=547.500 heightAllows=0
+  observer=39 kind=Needle xy=2361.176,1500.200 height=0.000 distance=486.355 radius=587.500 heightAllows=0
+  observer=40 kind=Anvil xy=2140.000,1200.000 height=0.000 distance=253.796 radius=567.500 heightAllows=0
+LOST x=25 y=13 old=2 new=1 firstLost=73 onRamp=0 required=56.226
+LOST x=26 y=13 old=2 new=1 firstLost=83 onRamp=0 required=32.119
+LOST x=27 y=13 old=2 new=1 firstLost=94 onRamp=0 required=8.012
+LOST x=26 y=14 old=2 new=1 firstLost=83 onRamp=1 required=32.119
+LOST x=27 y=14 old=2 new=1 firstLost=94 onRamp=0 required=8.012
+LOST x=26 y=15 old=2 new=1 firstLost=83 onRamp=1 required=32.119
+LOST x=27 y=15 old=2 new=1 firstLost=94 onRamp=0 required=8.012
+LOST x=26 y=16 old=2 new=1 firstLost=83 onRamp=1 required=32.119
+LOST x=27 y=16 old=2 new=1 firstLost=94 onRamp=0 required=8.012
+LOST x=26 y=17 old=2 new=1 firstLost=83 onRamp=1 required=32.119
+LOST x=27 y=17 old=2 new=1 firstLost=94 onRamp=0 required=8.012
+LOST x=26 y=18 old=2 new=1 firstLost=83 onRamp=1 required=32.119
+LOST x=27 y=18 old=2 new=1 firstLost=94 onRamp=0 required=8.012

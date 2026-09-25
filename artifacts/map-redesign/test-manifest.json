@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "suites": {
+    "terrain": {
+      "filter": "Cinderline.Integration.FogMaskPrivacy+Cinderline.Integration.WorldLifecycle+Cinderline.Presentation.LandscapeHeightGeometry+Cinderline.Presentation.SceneryGroundRoadFallback+Cinderline.Presentation.SceneryObservedState+Cinderline.Presentation.SceneryObstacleBounds+Cinderline.Presentation.SceneryAmbientScatter+Cinderline.Integration.WorldTapSelection+Cinderline.Presentation.WorldEffects.Initialization+Cinderline.Presentation.WorldEffects.FourTeamRouting+Cinderline.Presentation.WorldEffects.HiddenTargetDirection+Cinderline.Presentation.WorldEffects.FogResetAndStableFrame+Cinderline.Presentation.WorldEffects.InstanceBudget+Cinderline.Presentation.EntityMotion.DisplayCadence+Cinderline.Presentation.EntityMotion.WorkCadence+Cinderline.Presentation.SceneryFoliage+Cinderline.Presentation.AuthoredMapScenery+Cinderline.Online.LANDiscoveryValues+Cinderline.Presentation.TerrainPicking+Cinderline.Presentation.AuthoredTerrainFallback.Geometry+Cinderline.Presentation.AuthoredTerrainFallback.Lifecycle+Cinderline.Campaign.CheckpointSimulationVersion+Cinderline.Campaign.CheckpointPersistence",
+      "expected_paths": [
+        "Cinderline.Integration.FogMaskPrivacy",
+        "Cinderline.Integration.WorldLifecycle",
+        "Cinderline.Presentation.LandscapeHeightGeometry",
+        "Cinderline.Presentation.SceneryGroundRoadFallback",
+        "Cinderline.Presentation.SceneryObservedState",
+        "Cinderline.Presentation.SceneryObstacleBounds",
+        "Cinderline.Presentation.SceneryAmbientScatter",
+        "Cinderline.Integration.WorldTapSelection",
+        "Cinderline.Presentation.WorldEffects.Initialization",
+        "Cinderline.Presentation.WorldEffects.FourTeamRouting",
+        "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+        "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+        "Cinderline.Presentation.WorldEffects.InstanceBudget",
+        "Cinderline.Presentation.EntityMotion.DisplayCadence",
+        "Cinderline.Presentation.EntityMotion.WorkCadence",
+        "Cinderline.Presentation.SceneryFoliage",
+        "Cinderline.Presentation.AuthoredMapScenery",
+        "Cinderline.Online.LANDiscoveryValues",
+        "Cinderline.Presentation.TerrainPicking",
+        "Cinderline.Presentation.AuthoredTerrainFallback.Geometry",
+        "Cinderline.Presentation.AuthoredTerrainFallback.Lifecycle",
+        "Cinderline.Campaign.CheckpointSimulationVersion",
+        "Cinderline.Campaign.CheckpointPersistence"
+      ]
+    }
+  }
+}

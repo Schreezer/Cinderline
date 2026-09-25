@@ -1,0 +1,1287 @@
+{
+  "success": true,
+  "textures": [
+    {
+      "path": "/Game/Art/Canyon/Textures/T_CinderCanyonLayersDefault.T_CinderCanyonLayersDefault",
+      "source": "Intermediate/Canyon/T_CinderCanyonLayersDefault.png",
+      "sha256": "6fa466e21df6bf014ed03517399a711777f572b1f0be6a561b947790cda9f634",
+      "role": "FogMask",
+      "dimensions": [
+        4,
+        4
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+      "settings": {
+        "compression_settings": "<TextureCompressionSettings.TC_VECTOR_DISPLACEMENTMAP: 5>",
+        "srgb": "False",
+        "lod_group": "<TextureGroup.TEXTUREGROUP_WORLD: 0>",
+        "max_texture_size": "4",
+        "mip_gen_settings": "<TextureMipGenSettings.TMGS_NO_MIPMAPS: 13>",
+        "never_stream": "True",
+        "virtual_texture_streaming": "False",
+        "address_x": "<TextureAddress.TA_CLAMP: 1>",
+        "address_y": "<TextureAddress.TA_CLAMP: 1>",
+        "filter": "<TextureFilter.TF_BILINEAR: 1>"
+      }
+    }
+  ],
+  "source_sha256": "925af56d5ec012ba7a8146f707377f9511a8d8ddee5e655750d79e7377371793",
+  "material": {
+    "path": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround",
+    "version": "canyon-ground-v3",
+    "nodes": 158,
+    "graph_replacement": {
+      "method": "snapshot of expressions, delete each through engine API",
+      "before_count": 156,
+      "remaining_after_delete": 0
+    },
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+    "two_sided": false,
+    "depth_test_enabled": true,
+    "connections": [
+      {
+        "from": "Absolute world position",
+        "output": "",
+        "to": "World XY",
+        "input": ""
+      },
+      {
+        "from": "World XY",
+        "output": "",
+        "to": "World centimeters to texture UV",
+        "input": "A"
+      },
+      {
+        "from": "Map Absolute world position",
+        "output": "",
+        "to": "Map World XY",
+        "input": ""
+      },
+      {
+        "from": "Map World XY",
+        "output": "",
+        "to": "Map World centimeters to texture UV",
+        "input": "A"
+      },
+      {
+        "from": "CinderWorldSizeInverse",
+        "output": "",
+        "to": "Map World centimeters to texture UV",
+        "input": "B"
+      },
+      {
+        "from": "Map World centimeters to texture UV",
+        "output": "",
+        "to": "TerrainLayers",
+        "input": "UVs"
+      },
+      {
+        "from": "Terrain world normal",
+        "output": "",
+        "to": "Terrain up facing",
+        "input": ""
+      },
+      {
+        "from": "Terrain up facing",
+        "output": "",
+        "to": "Slope below flat",
+        "input": "B"
+      },
+      {
+        "from": "Slope below flat",
+        "output": "",
+        "to": "Sharpened cliff slope",
+        "input": "A"
+      },
+      {
+        "from": "Sharpened cliff slope",
+        "output": "",
+        "to": "Saturated cliff slope",
+        "input": ""
+      },
+      {
+        "from": "Saturated cliff slope",
+        "output": "",
+        "to": "Explored cliff face",
+        "input": "A"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Explored cliff face",
+        "input": "B"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "GroundColor",
+        "input": "UVs"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "Primary sand U",
+        "input": ""
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "Primary sand V",
+        "input": ""
+      },
+      {
+        "from": "Primary sand U",
+        "output": "",
+        "to": "Rotated sand U cosine",
+        "input": "A"
+      },
+      {
+        "from": "Primary sand V",
+        "output": "",
+        "to": "Rotated sand U negative sine",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand U cosine",
+        "output": "",
+        "to": "Sand U rotated 37 degrees",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand U negative sine",
+        "output": "",
+        "to": "Sand U rotated 37 degrees",
+        "input": "B"
+      },
+      {
+        "from": "Primary sand U",
+        "output": "",
+        "to": "Rotated sand V sine",
+        "input": "A"
+      },
+      {
+        "from": "Primary sand V",
+        "output": "",
+        "to": "Rotated sand V cosine",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand V sine",
+        "output": "",
+        "to": "Sand V rotated 37 degrees",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand V cosine",
+        "output": "",
+        "to": "Sand V rotated 37 degrees",
+        "input": "B"
+      },
+      {
+        "from": "Sand U rotated 37 degrees",
+        "output": "",
+        "to": "Golden ratio sand U",
+        "input": "A"
+      },
+      {
+        "from": "Sand V rotated 37 degrees",
+        "output": "",
+        "to": "Golden ratio sand V",
+        "input": "A"
+      },
+      {
+        "from": "Golden ratio sand U",
+        "output": "",
+        "to": "Rotated sand detail UV",
+        "input": "A"
+      },
+      {
+        "from": "Golden ratio sand V",
+        "output": "",
+        "to": "Rotated sand detail UV",
+        "input": "B"
+      },
+      {
+        "from": "Rotated sand detail UV",
+        "output": "",
+        "to": "GroundDetail",
+        "input": "UVs"
+      },
+      {
+        "from": "GroundDetail",
+        "output": "RGB",
+        "to": "Coarse ground gain",
+        "input": "A"
+      },
+      {
+        "from": "Coarse ground gain",
+        "output": "",
+        "to": "Coarse ground floor",
+        "input": "A"
+      },
+      {
+        "from": "Coarse ground floor",
+        "output": "",
+        "to": "Bounded coarse ground",
+        "input": ""
+      },
+      {
+        "from": "GroundColor",
+        "output": "RGB",
+        "to": "Anti-tiled sand albedo",
+        "input": "A"
+      },
+      {
+        "from": "Bounded coarse ground",
+        "output": "",
+        "to": "Anti-tiled sand albedo",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "A",
+        "to": "Outside worn service routes",
+        "input": ""
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Cliff toe coarse ground gain",
+        "input": "A"
+      },
+      {
+        "from": "Cliff toe coarse ground gain",
+        "output": "",
+        "to": "Natural coarse ground strength",
+        "input": "A"
+      },
+      {
+        "from": "Natural coarse ground strength",
+        "output": "",
+        "to": "Untraveled coarse ground weight",
+        "input": "A"
+      },
+      {
+        "from": "Outside worn service routes",
+        "output": "",
+        "to": "Untraveled coarse ground weight",
+        "input": "B"
+      },
+      {
+        "from": "GroundColor",
+        "output": "RGB",
+        "to": "Worn routes against rocky soil",
+        "input": "A"
+      },
+      {
+        "from": "Anti-tiled sand albedo",
+        "output": "",
+        "to": "Worn routes against rocky soil",
+        "input": "B"
+      },
+      {
+        "from": "Untraveled coarse ground weight",
+        "output": "",
+        "to": "Worn routes against rocky soil",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cliff world position",
+        "output": "",
+        "to": "Cliff world X",
+        "input": ""
+      },
+      {
+        "from": "Cliff world position",
+        "output": "",
+        "to": "Cliff world Y",
+        "input": ""
+      },
+      {
+        "from": "Cliff world position",
+        "output": "",
+        "to": "Cliff world Z",
+        "input": ""
+      },
+      {
+        "from": "Terrain world normal",
+        "output": "",
+        "to": "Cliff normal magnitude",
+        "input": ""
+      },
+      {
+        "from": "Cliff normal magnitude",
+        "output": "",
+        "to": "Cliff normal X magnitude",
+        "input": ""
+      },
+      {
+        "from": "Cliff normal magnitude",
+        "output": "",
+        "to": "Cliff normal Y magnitude",
+        "input": ""
+      },
+      {
+        "from": "Cliff normal X magnitude",
+        "output": "",
+        "to": "Cliff facing difference",
+        "input": "A"
+      },
+      {
+        "from": "Cliff normal Y magnitude",
+        "output": "",
+        "to": "Cliff facing difference",
+        "input": "B"
+      },
+      {
+        "from": "Cliff facing difference",
+        "output": "",
+        "to": "Sharpened cliff facing",
+        "input": "A"
+      },
+      {
+        "from": "Sharpened cliff facing",
+        "output": "",
+        "to": "Biased cliff facing",
+        "input": "A"
+      },
+      {
+        "from": "Biased cliff facing",
+        "output": "",
+        "to": "Saturated cliff facing",
+        "input": ""
+      },
+      {
+        "from": "Cliff world X",
+        "output": "",
+        "to": "Cliff horizontal coordinate",
+        "input": "A"
+      },
+      {
+        "from": "Cliff world Y",
+        "output": "",
+        "to": "Cliff horizontal coordinate",
+        "input": "B"
+      },
+      {
+        "from": "Saturated cliff facing",
+        "output": "",
+        "to": "Cliff horizontal coordinate",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cliff horizontal coordinate",
+        "output": "",
+        "to": "Cliff side coordinates",
+        "input": "A"
+      },
+      {
+        "from": "Cliff world Z",
+        "output": "",
+        "to": "Cliff side coordinates",
+        "input": "B"
+      },
+      {
+        "from": "Cliff side coordinates",
+        "output": "",
+        "to": "Cliff side projection at 360 cm",
+        "input": "A"
+      },
+      {
+        "from": "Cliff side projection at 360 cm",
+        "output": "",
+        "to": "CliffGrain",
+        "input": "UVs"
+      },
+      {
+        "from": "Worn routes against rocky soil",
+        "output": "",
+        "to": "Cliff face grain",
+        "input": "A"
+      },
+      {
+        "from": "CliffGrain",
+        "output": "RGB",
+        "to": "Cliff face grain",
+        "input": "B"
+      },
+      {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Cliff face grain",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cliff face grain",
+        "output": "",
+        "to": "Neutral sand grain",
+        "input": ""
+      },
+      {
+        "from": "Desaturation",
+        "output": "",
+        "to": "Neutral sand grain",
+        "input": "Fraction"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Warm sediment",
+        "input": "A"
+      },
+      {
+        "from": "SandTint",
+        "output": "RGB",
+        "to": "Warm sediment",
+        "input": "B"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Windblown dust grain",
+        "input": "A"
+      },
+      {
+        "from": "Windblown dust tint",
+        "output": "RGB",
+        "to": "Windblown dust grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "B",
+        "to": "Windblown dust weight",
+        "input": "A"
+      },
+      {
+        "from": "Warm sediment",
+        "output": "",
+        "to": "Windblown dust blend",
+        "input": "A"
+      },
+      {
+        "from": "Windblown dust grain",
+        "output": "",
+        "to": "Windblown dust blend",
+        "input": "B"
+      },
+      {
+        "from": "Windblown dust weight",
+        "output": "",
+        "to": "Windblown dust blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Exposed sandstone grain",
+        "input": "A"
+      },
+      {
+        "from": "Exposed sandstone tint",
+        "output": "RGB",
+        "to": "Exposed sandstone grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Exposed sandstone weight",
+        "input": "A"
+      },
+      {
+        "from": "Windblown dust blend",
+        "output": "",
+        "to": "Exposed sandstone blend",
+        "input": "A"
+      },
+      {
+        "from": "Exposed sandstone grain",
+        "output": "",
+        "to": "Exposed sandstone blend",
+        "input": "B"
+      },
+      {
+        "from": "Exposed sandstone weight",
+        "output": "",
+        "to": "Exposed sandstone blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Mineral staining grain",
+        "input": "A"
+      },
+      {
+        "from": "Mineral staining tint",
+        "output": "RGB",
+        "to": "Mineral staining grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "G",
+        "to": "Mineral staining weight",
+        "input": "A"
+      },
+      {
+        "from": "Exposed sandstone blend",
+        "output": "",
+        "to": "Mineral staining blend",
+        "input": "A"
+      },
+      {
+        "from": "Mineral staining grain",
+        "output": "",
+        "to": "Mineral staining blend",
+        "input": "B"
+      },
+      {
+        "from": "Mineral staining weight",
+        "output": "",
+        "to": "Mineral staining blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Packed service ground grain",
+        "input": "A"
+      },
+      {
+        "from": "Packed service ground tint",
+        "output": "RGB",
+        "to": "Packed service ground grain",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "A",
+        "to": "Packed service ground weight",
+        "input": "A"
+      },
+      {
+        "from": "Mineral staining blend",
+        "output": "",
+        "to": "Packed service ground blend",
+        "input": "A"
+      },
+      {
+        "from": "Packed service ground grain",
+        "output": "",
+        "to": "Packed service ground blend",
+        "input": "B"
+      },
+      {
+        "from": "Packed service ground weight",
+        "output": "",
+        "to": "Packed service ground blend",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cliff horizontal coordinate",
+        "output": "",
+        "to": "Broad sediment fold scale",
+        "input": "A"
+      },
+      {
+        "from": "Broad sediment fold scale",
+        "output": "",
+        "to": "Broad sediment fold period",
+        "input": ""
+      },
+      {
+        "from": "Broad sediment fold period",
+        "output": "",
+        "to": "Broad sediment fold centered",
+        "input": "A"
+      },
+      {
+        "from": "Broad sediment fold centered",
+        "output": "",
+        "to": "Broad sediment fold folded",
+        "input": ""
+      },
+      {
+        "from": "Cliff world X",
+        "output": "",
+        "to": "Cross sediment fold scale",
+        "input": "A"
+      },
+      {
+        "from": "Cross sediment fold scale",
+        "output": "",
+        "to": "Cross sediment fold period",
+        "input": ""
+      },
+      {
+        "from": "Cross sediment fold period",
+        "output": "",
+        "to": "Cross sediment fold centered",
+        "input": "A"
+      },
+      {
+        "from": "Cross sediment fold centered",
+        "output": "",
+        "to": "Cross sediment fold folded",
+        "input": ""
+      },
+      {
+        "from": "Cross sediment fold folded",
+        "output": "",
+        "to": "Cross sediment fold amplitude",
+        "input": "A"
+      },
+      {
+        "from": "Broad sediment fold folded",
+        "output": "",
+        "to": "Angular sediment folds",
+        "input": "A"
+      },
+      {
+        "from": "Cross sediment fold amplitude",
+        "output": "",
+        "to": "Angular sediment folds",
+        "input": "B"
+      },
+      {
+        "from": "Angular sediment folds",
+        "output": "",
+        "to": "Sediment fold amplitude",
+        "input": "A"
+      },
+      {
+        "from": "CliffGrain",
+        "output": "R",
+        "to": "Weathered sediment edge",
+        "input": "A"
+      },
+      {
+        "from": "Cliff world Z",
+        "output": "",
+        "to": "Cliff bedding at 112 cm",
+        "input": "A"
+      },
+      {
+        "from": "Cliff bedding at 112 cm",
+        "output": "",
+        "to": "Folded sediment height",
+        "input": "A"
+      },
+      {
+        "from": "Sediment fold amplitude",
+        "output": "",
+        "to": "Folded sediment height",
+        "input": "B"
+      },
+      {
+        "from": "Folded sediment height",
+        "output": "",
+        "to": "Weathered sediment height",
+        "input": "A"
+      },
+      {
+        "from": "Weathered sediment edge",
+        "output": "",
+        "to": "Weathered sediment height",
+        "input": "B"
+      },
+      {
+        "from": "Weathered sediment height",
+        "output": "",
+        "to": "Cliff bedding wave",
+        "input": ""
+      },
+      {
+        "from": "Cliff bedding wave",
+        "output": "",
+        "to": "Cliff bedding amplitude",
+        "input": "A"
+      },
+      {
+        "from": "Cliff bedding amplitude",
+        "output": "",
+        "to": "Cliff bedding bias",
+        "input": "A"
+      },
+      {
+        "from": "Cliff bedding bias",
+        "output": "",
+        "to": "Cliff bedding fraction",
+        "input": ""
+      },
+      {
+        "from": "CanyonShadow",
+        "output": "RGB",
+        "to": "Cliff strata tint",
+        "input": "A"
+      },
+      {
+        "from": "CanyonSandstone",
+        "output": "RGB",
+        "to": "Cliff strata tint",
+        "input": "B"
+      },
+      {
+        "from": "Cliff bedding fraction",
+        "output": "",
+        "to": "Cliff strata tint",
+        "input": "Alpha"
+      },
+      {
+        "from": "Neutral sand grain",
+        "output": "",
+        "to": "Cliff grain gain",
+        "input": "A"
+      },
+      {
+        "from": "Cliff grain gain",
+        "output": "",
+        "to": "Cliff grain bias",
+        "input": "A"
+      },
+      {
+        "from": "Cliff grain bias",
+        "output": "",
+        "to": "Bounded cliff grain",
+        "input": ""
+      },
+      {
+        "from": "Cliff strata tint",
+        "output": "",
+        "to": "Cliff face rock",
+        "input": "A"
+      },
+      {
+        "from": "Bounded cliff grain",
+        "output": "",
+        "to": "Cliff face rock",
+        "input": "B"
+      },
+      {
+        "from": "Cliff horizontal coordinate",
+        "output": "",
+        "to": "Vertical joint spacing",
+        "input": "A"
+      },
+      {
+        "from": "Vertical joint spacing",
+        "output": "",
+        "to": "Uneven vertical joint phase",
+        "input": "A"
+      },
+      {
+        "from": "Sediment fold amplitude",
+        "output": "",
+        "to": "Uneven vertical joint phase",
+        "input": "B"
+      },
+      {
+        "from": "Uneven vertical joint phase",
+        "output": "",
+        "to": "Vertical joint period",
+        "input": ""
+      },
+      {
+        "from": "Vertical joint period",
+        "output": "",
+        "to": "Centered vertical joints",
+        "input": "A"
+      },
+      {
+        "from": "Centered vertical joints",
+        "output": "",
+        "to": "Folded vertical joints",
+        "input": ""
+      },
+      {
+        "from": "Folded vertical joints",
+        "output": "",
+        "to": "Narrow vertical joints",
+        "input": "A"
+      },
+      {
+        "from": "Narrow vertical joints",
+        "output": "",
+        "to": "Vertical joint threshold",
+        "input": "A"
+      },
+      {
+        "from": "Vertical joint threshold",
+        "output": "",
+        "to": "Clamped vertical joints",
+        "input": ""
+      },
+      {
+        "from": "Clamped vertical joints",
+        "output": "",
+        "to": "Weathered vertical joints",
+        "input": "A"
+      },
+      {
+        "from": "CliffGrain",
+        "output": "R",
+        "to": "Weathered vertical joints",
+        "input": "B"
+      },
+      {
+        "from": "Weathered vertical joints",
+        "output": "",
+        "to": "Restrained vertical joint shade",
+        "input": "A"
+      },
+      {
+        "from": "Restrained vertical joint shade",
+        "output": "",
+        "to": "Vertical joint light",
+        "input": ""
+      },
+      {
+        "from": "Cliff face rock",
+        "output": "",
+        "to": "Jointed cliff face rock",
+        "input": "A"
+      },
+      {
+        "from": "Vertical joint light",
+        "output": "",
+        "to": "Jointed cliff face rock",
+        "input": "B"
+      },
+      {
+        "from": "Packed service ground blend",
+        "output": "",
+        "to": "Ground against cliff face",
+        "input": "A"
+      },
+      {
+        "from": "Jointed cliff face rock",
+        "output": "",
+        "to": "Ground against cliff face",
+        "input": "B"
+      },
+      {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Ground against cliff face",
+        "input": "Alpha"
+      },
+      {
+        "from": "Terrain up facing",
+        "output": "",
+        "to": "Cap shoulder below flat",
+        "input": "B"
+      },
+      {
+        "from": "Cap shoulder below flat",
+        "output": "",
+        "to": "Cap shoulder width",
+        "input": "A"
+      },
+      {
+        "from": "Cap shoulder width",
+        "output": "",
+        "to": "Saturated cap shoulder",
+        "input": ""
+      },
+      {
+        "from": "Saturated cliff slope",
+        "output": "",
+        "to": "Above cliff face",
+        "input": ""
+      },
+      {
+        "from": "Saturated cap shoulder",
+        "output": "",
+        "to": "Weathered cap shoulder band",
+        "input": "A"
+      },
+      {
+        "from": "Above cliff face",
+        "output": "",
+        "to": "Weathered cap shoulder band",
+        "input": "B"
+      },
+      {
+        "from": "Weathered cap shoulder band",
+        "output": "",
+        "to": "Known stone cap shoulder",
+        "input": "A"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Known stone cap shoulder",
+        "input": "B"
+      },
+      {
+        "from": "Known stone cap shoulder",
+        "output": "",
+        "to": "Cap shoulder blend weight",
+        "input": "A"
+      },
+      {
+        "from": "CanyonSandstone",
+        "output": "RGB",
+        "to": "Sun weathered cap lip",
+        "input": "A"
+      },
+      {
+        "from": "Sun weathered cap lip",
+        "output": "",
+        "to": "Weathered cap lip grain",
+        "input": "A"
+      },
+      {
+        "from": "Bounded cliff grain",
+        "output": "",
+        "to": "Weathered cap lip grain",
+        "input": "B"
+      },
+      {
+        "from": "Ground against cliff face",
+        "output": "",
+        "to": "Cliff cap lip separation",
+        "input": "A"
+      },
+      {
+        "from": "Weathered cap lip grain",
+        "output": "",
+        "to": "Cliff cap lip separation",
+        "input": "B"
+      },
+      {
+        "from": "Cap shoulder blend weight",
+        "output": "",
+        "to": "Cliff cap lip separation",
+        "input": "Alpha"
+      },
+      {
+        "from": "Landscape world position",
+        "output": "",
+        "to": "Landscape altitude",
+        "input": ""
+      },
+      {
+        "from": "Landscape altitude",
+        "output": "",
+        "to": "Trough floor altitude",
+        "input": "A"
+      },
+      {
+        "from": "Trough floor altitude",
+        "output": "",
+        "to": "Walkable altitude fraction",
+        "input": "A"
+      },
+      {
+        "from": "Walkable altitude fraction",
+        "output": "",
+        "to": "Saturated altitude",
+        "input": ""
+      },
+      {
+        "from": "ValleyShade",
+        "output": "RGB",
+        "to": "Valley to crest tint",
+        "input": "A"
+      },
+      {
+        "from": "CrestShade",
+        "output": "RGB",
+        "to": "Cap against face",
+        "input": "A"
+      },
+      {
+        "from": "CliffFaceShade",
+        "output": "RGB",
+        "to": "Cap against face",
+        "input": "B"
+      },
+      {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Cap against face",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cap against face",
+        "output": "",
+        "to": "Valley to crest tint",
+        "input": "B"
+      },
+      {
+        "from": "Saturated altitude",
+        "output": "",
+        "to": "Valley to crest tint",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cliff cap lip separation",
+        "output": "",
+        "to": "Relief shaded ground",
+        "input": "A"
+      },
+      {
+        "from": "Valley to crest tint",
+        "output": "",
+        "to": "Relief shaded ground",
+        "input": "B"
+      },
+      {
+        "from": "Map World centimeters to texture UV",
+        "output": "",
+        "to": "FogMask",
+        "input": "UVs"
+      },
+      {
+        "from": "FogMask",
+        "output": "R",
+        "to": "Known visible fraction",
+        "input": ""
+      },
+      {
+        "from": "Relief shaded ground",
+        "output": "",
+        "to": "Fog gated diffuse",
+        "input": "A"
+      },
+      {
+        "from": "Known visible fraction",
+        "output": "",
+        "to": "Fog gated diffuse",
+        "input": "B"
+      },
+      {
+        "from": "UnknownFog",
+        "output": "RGB",
+        "to": "Unknown and explored fog",
+        "input": "A"
+      },
+      {
+        "from": "ExploredFog",
+        "output": "RGB",
+        "to": "Unknown and explored fog",
+        "input": "B"
+      },
+      {
+        "from": "FogMask",
+        "output": "G",
+        "to": "Unknown and explored fog",
+        "input": "Alpha"
+      },
+      {
+        "from": "Unknown and explored fog",
+        "output": "",
+        "to": "Fog independent of lighting",
+        "input": "A"
+      },
+      {
+        "from": "FogMask",
+        "output": "R",
+        "to": "Fog independent of lighting",
+        "input": "B"
+      },
+      {
+        "from": "Map World centimeters to texture UV",
+        "output": "",
+        "to": "HeightFog",
+        "input": "UVs"
+      },
+      {
+        "from": "HeightFog",
+        "output": "G",
+        "to": "Unexplored height fraction",
+        "input": ""
+      },
+      {
+        "from": "Original terrain position",
+        "output": "",
+        "to": "Terrain height above baseline",
+        "input": ""
+      },
+      {
+        "from": "Terrain height above baseline",
+        "output": "",
+        "to": "Baseline at minus one",
+        "input": "A"
+      },
+      {
+        "from": "Baseline at minus one",
+        "output": "",
+        "to": "Unknown relief",
+        "input": "A"
+      },
+      {
+        "from": "Unexplored height fraction",
+        "output": "",
+        "to": "Unknown relief",
+        "input": "B"
+      },
+      {
+        "from": "Unknown relief",
+        "output": "",
+        "to": "Flatten unknown vertices",
+        "input": "A"
+      },
+      {
+        "from": "Downward offset",
+        "output": "RGB",
+        "to": "Flatten unknown vertices",
+        "input": "B"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "GroundNormal",
+        "input": "UVs"
+      },
+      {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Ground normal outside cliff faces",
+        "input": ""
+      },
+      {
+        "from": "NormalStrength",
+        "output": "",
+        "to": "Slope gated normal strength",
+        "input": "A"
+      },
+      {
+        "from": "Ground normal outside cliff faces",
+        "output": "",
+        "to": "Slope gated normal strength",
+        "input": "B"
+      },
+      {
+        "from": "Flat tangent normal",
+        "output": "",
+        "to": "Restrained normal detail",
+        "input": "A"
+      },
+      {
+        "from": "GroundNormal",
+        "output": "RGB",
+        "to": "Restrained normal detail",
+        "input": "B"
+      },
+      {
+        "from": "Slope gated normal strength",
+        "output": "",
+        "to": "Restrained normal detail",
+        "input": "Alpha"
+      },
+      {
+        "from": "Restrained normal detail",
+        "output": "",
+        "to": "Normalized tangent normal",
+        "input": "VectorInput"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "GroundRoughness",
+        "input": "UVs"
+      },
+      {
+        "from": "GroundRoughness",
+        "output": "R",
+        "to": "Dry ground roughness",
+        "input": "A"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Contact occlusion",
+        "input": "Alpha"
+      }
+    ],
+    "outputs": {
+      "BASE_COLOR": {
+        "node": "Fog gated diffuse",
+        "output": ""
+      },
+      "EMISSIVE_COLOR": {
+        "node": "Fog independent of lighting",
+        "output": ""
+      },
+      "WORLD_POSITION_OFFSET": {
+        "node": "Flatten unknown vertices",
+        "output": ""
+      },
+      "NORMAL": {
+        "node": "Normalized tangent normal",
+        "output": ""
+      },
+      "ROUGHNESS": {
+        "node": "Dry ground roughness",
+        "output": ""
+      },
+      "METALLIC": {
+        "node": "Nonmetal canyon ground",
+        "output": ""
+      },
+      "AMBIENT_OCCLUSION": {
+        "node": "Contact occlusion",
+        "output": ""
+      }
+    },
+    "shader_errors": []
+  },
+  "texture_samples": {
+    "pixel": 7,
+    "vertex": 1
+  },
+  "albedo_anti_tiling": {
+    "base_tile_width_cm": 420.0,
+    "second_octave_rotation_degrees": 37.0,
+    "second_octave_tiling_ratio": 0.61803399,
+    "combine": "bounded coarse per-channel minimum, service-mask blend",
+    "coarse_albedo": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Color.T_VT_DryGroundRocks_Color",
+    "coarse_albedo_fallback": false,
+    "coarse_albedo_bounds": [
+      0.12,
+      0.9
+    ],
+    "coarse_weight": "(0.70 + 0.30 * known stone R) * (1 - service A)",
+    "added_fetches": 0
+  },
+  "cliff_surface": {
+    "bedding_period_cm": 112.0,
+    "bedding_sine_period": 1.0,
+    "bedding_warp": "390/670 cm triangular folds plus existing side albedo",
+    "bedding_fraction_bounds": [
+      0.08,
+      0.96
+    ],
+    "vertical_joint_spacing_cm": 156.0,
+    "vertical_joint_max_darkening": 0.18,
+    "cap_shoulder_normal_z_start": 0.96,
+    "cap_shoulder_max_weight": 0.72,
+    "mask": "known-stone R times slope; full fog gate remains downstream",
+    "walkable_normal_z_floor": 0.965,
+    "side_albedo": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Color.T_VT_DryGroundRocks_Color",
+    "side_albedo_tile_cm": 360.0,
+    "normal_detail": "NormalStrength * (1 - known cliff face); neutral tangent normal on full face",
+    "added_fetches": 0,
+    "geometry_displacement": false
+  },
+  "ambient_occlusion": {
+    "source": "TerrainLayers R",
+    "floor": 0.62,
+    "added_fetches": 0
+  },
+  "specular": "engine default 0.5; no longer driven to zero",
+  "channels": {
+    "R": "known stone",
+    "G": "observed minerals",
+    "B": "macro dust",
+    "A": "level service pads and roads"
+  },
+  "authoring": "Authored three canonical collisionless 127x127 Cinderline Landscapes in /Game/Maps/Frontier.",
+  "shader_validation": "Finalized 3 owned Landscapes, 12 components and 12 renderable component materials."
+}

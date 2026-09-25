@@ -26,14 +26,14 @@
       }
     }
   ],
-  "source_sha256": "0ccae6d3a3b99e63e3680d3cd2dad9cea599e9cc38e096e564eeb4f92ff19010",
+  "source_sha256": "909b56700469cb12b0bc7bd205685ffb87d1e104588ec7e12b51ef17b5a99508",
   "material": {
     "path": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround",
-    "version": "canyon-ground-v1",
-    "nodes": 60,
+    "version": "canyon-ground-v5.2-explored-paving",
+    "nodes": 214,
     "graph_replacement": {
       "method": "snapshot of expressions, delete each through engine API",
-      "before_count": 60,
+      "before_count": 210,
       "remaining_after_delete": 0
     },
     "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
@@ -54,90 +54,6 @@
         "input": "A"
       },
       {
-        "from": "World centimeters to texture UV",
-        "output": "",
-        "to": "GroundColor",
-        "input": "UVs"
-      },
-      {
-        "from": "GroundColor",
-        "output": "RGB",
-        "to": "Neutral sand grain",
-        "input": ""
-      },
-      {
-        "from": "Desaturation",
-        "output": "",
-        "to": "Neutral sand grain",
-        "input": "Fraction"
-      },
-      {
-        "from": "Neutral sand grain",
-        "output": "",
-        "to": "Warm sediment",
-        "input": "A"
-      },
-      {
-        "from": "SandTint",
-        "output": "RGB",
-        "to": "Warm sediment",
-        "input": "B"
-      },
-      {
-        "from": "Macro Absolute world position",
-        "output": "",
-        "to": "Macro World XY",
-        "input": ""
-      },
-      {
-        "from": "Macro World XY",
-        "output": "",
-        "to": "Macro World centimeters to texture UV",
-        "input": "A"
-      },
-      {
-        "from": "Macro World centimeters to texture UV",
-        "output": "",
-        "to": "MacroGrain",
-        "input": "UVs"
-      },
-      {
-        "from": "MacroGrain",
-        "output": "RGB",
-        "to": "Broad ground variation",
-        "input": ""
-      },
-      {
-        "from": "Macro neutral",
-        "output": "",
-        "to": "Broad ground variation",
-        "input": "Fraction"
-      },
-      {
-        "from": "Broad ground variation",
-        "output": "",
-        "to": "Restrained macro gain",
-        "input": "A"
-      },
-      {
-        "from": "Restrained macro gain",
-        "output": "",
-        "to": "Macro minimum",
-        "input": "A"
-      },
-      {
-        "from": "Warm sediment",
-        "output": "",
-        "to": "Varied sand",
-        "input": "A"
-      },
-      {
-        "from": "Macro minimum",
-        "output": "",
-        "to": "Varied sand",
-        "input": "B"
-      },
-      {
         "from": "Map Absolute world position",
         "output": "",
         "to": "Map World XY",
@@ -150,13 +66,355 @@
         "input": "A"
       },
       {
+        "from": "CinderWorldSizeInverse",
+        "output": "",
+        "to": "Map World centimeters to texture UV",
+        "input": "B"
+      },
+      {
         "from": "Map World centimeters to texture UV",
         "output": "",
         "to": "TerrainLayers",
         "input": "UVs"
       },
       {
-        "from": "Neutral sand grain",
+        "from": "Terrain world normal",
+        "output": "",
+        "to": "Terrain up facing",
+        "input": ""
+      },
+      {
+        "from": "Terrain up facing",
+        "output": "",
+        "to": "Slope below flat",
+        "input": "B"
+      },
+      {
+        "from": "Slope below flat",
+        "output": "",
+        "to": "Sharpened cliff slope",
+        "input": "A"
+      },
+      {
+        "from": "Sharpened cliff slope",
+        "output": "",
+        "to": "Saturated cliff slope",
+        "input": ""
+      },
+      {
+        "from": "Saturated cliff slope",
+        "output": "",
+        "to": "Explored cliff face",
+        "input": "A"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Explored cliff face",
+        "input": "B"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "GroundColor",
+        "input": "UVs"
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "Primary sand U",
+        "input": ""
+      },
+      {
+        "from": "World centimeters to texture UV",
+        "output": "",
+        "to": "Primary sand V",
+        "input": ""
+      },
+      {
+        "from": "Primary sand U",
+        "output": "",
+        "to": "Rotated sand U cosine",
+        "input": "A"
+      },
+      {
+        "from": "Primary sand V",
+        "output": "",
+        "to": "Rotated sand U negative sine",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand U cosine",
+        "output": "",
+        "to": "Sand U rotated 37 degrees",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand U negative sine",
+        "output": "",
+        "to": "Sand U rotated 37 degrees",
+        "input": "B"
+      },
+      {
+        "from": "Primary sand U",
+        "output": "",
+        "to": "Rotated sand V sine",
+        "input": "A"
+      },
+      {
+        "from": "Primary sand V",
+        "output": "",
+        "to": "Rotated sand V cosine",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand V sine",
+        "output": "",
+        "to": "Sand V rotated 37 degrees",
+        "input": "A"
+      },
+      {
+        "from": "Rotated sand V cosine",
+        "output": "",
+        "to": "Sand V rotated 37 degrees",
+        "input": "B"
+      },
+      {
+        "from": "Sand U rotated 37 degrees",
+        "output": "",
+        "to": "Golden ratio sand U",
+        "input": "A"
+      },
+      {
+        "from": "Sand V rotated 37 degrees",
+        "output": "",
+        "to": "Golden ratio sand V",
+        "input": "A"
+      },
+      {
+        "from": "Golden ratio sand U",
+        "output": "",
+        "to": "Rotated sand detail UV",
+        "input": "A"
+      },
+      {
+        "from": "Golden ratio sand V",
+        "output": "",
+        "to": "Rotated sand detail UV",
+        "input": "B"
+      },
+      {
+        "from": "Rotated sand detail UV",
+        "output": "",
+        "to": "GroundDetail",
+        "input": "UVs"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "A",
+        "to": "Worn service route smoothing",
+        "input": "A"
+      },
+      {
+        "from": "Worn service route smoothing",
+        "output": "",
+        "to": "Outside worn service routes",
+        "input": ""
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Cliff toe coarse ground gain",
+        "input": "A"
+      },
+      {
+        "from": "Cliff toe coarse ground gain",
+        "output": "",
+        "to": "Natural coarse ground strength",
+        "input": "A"
+      },
+      {
+        "from": "Natural coarse ground strength",
+        "output": "",
+        "to": "Untraveled coarse ground weight",
+        "input": "A"
+      },
+      {
+        "from": "Outside worn service routes",
+        "output": "",
+        "to": "Untraveled coarse ground weight",
+        "input": "B"
+      },
+      {
+        "from": "GroundColor",
+        "output": "RGB",
+        "to": "Worn routes against rocky soil",
+        "input": "A"
+      },
+      {
+        "from": "GroundDetail",
+        "output": "RGB",
+        "to": "Worn routes against rocky soil",
+        "input": "B"
+      },
+      {
+        "from": "Untraveled coarse ground weight",
+        "output": "",
+        "to": "Worn routes against rocky soil",
+        "input": "Alpha"
+      },
+      {
+        "from": "Worn routes against rocky soil",
+        "output": "",
+        "to": "Neutral soil grain",
+        "input": ""
+      },
+      {
+        "from": "Desaturation",
+        "output": "",
+        "to": "Neutral soil grain",
+        "input": "Fraction"
+      },
+      {
+        "from": "Neutral soil grain",
+        "output": "",
+        "to": "Quiet soil grain gain",
+        "input": "A"
+      },
+      {
+        "from": "Quiet soil grain gain",
+        "output": "",
+        "to": "Quiet soil grain center",
+        "input": "A"
+      },
+      {
+        "from": "Quiet soil grain center",
+        "output": "",
+        "to": "Bounded soil grain",
+        "input": ""
+      },
+      {
+        "from": "Cliff world position",
+        "output": "",
+        "to": "Cliff world X",
+        "input": ""
+      },
+      {
+        "from": "Cliff world position",
+        "output": "",
+        "to": "Cliff world Y",
+        "input": ""
+      },
+      {
+        "from": "Cliff world position",
+        "output": "",
+        "to": "Cliff world Z",
+        "input": ""
+      },
+      {
+        "from": "Terrain world normal",
+        "output": "",
+        "to": "Cliff normal magnitude",
+        "input": ""
+      },
+      {
+        "from": "Cliff normal magnitude",
+        "output": "",
+        "to": "Cliff normal X magnitude",
+        "input": ""
+      },
+      {
+        "from": "Cliff normal magnitude",
+        "output": "",
+        "to": "Cliff normal Y magnitude",
+        "input": ""
+      },
+      {
+        "from": "Cliff normal X magnitude",
+        "output": "",
+        "to": "Cliff facing difference",
+        "input": "A"
+      },
+      {
+        "from": "Cliff normal Y magnitude",
+        "output": "",
+        "to": "Cliff facing difference",
+        "input": "B"
+      },
+      {
+        "from": "Cliff facing difference",
+        "output": "",
+        "to": "Sharpened cliff facing",
+        "input": "A"
+      },
+      {
+        "from": "Sharpened cliff facing",
+        "output": "",
+        "to": "Biased cliff facing",
+        "input": "A"
+      },
+      {
+        "from": "Biased cliff facing",
+        "output": "",
+        "to": "Saturated cliff facing",
+        "input": ""
+      },
+      {
+        "from": "Cliff world X",
+        "output": "",
+        "to": "Cliff horizontal coordinate",
+        "input": "A"
+      },
+      {
+        "from": "Cliff world Y",
+        "output": "",
+        "to": "Cliff horizontal coordinate",
+        "input": "B"
+      },
+      {
+        "from": "Saturated cliff facing",
+        "output": "",
+        "to": "Cliff horizontal coordinate",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cliff horizontal coordinate",
+        "output": "",
+        "to": "Cliff side coordinates",
+        "input": "A"
+      },
+      {
+        "from": "Cliff world Z",
+        "output": "",
+        "to": "Cliff side coordinates",
+        "input": "B"
+      },
+      {
+        "from": "Cliff side coordinates",
+        "output": "",
+        "to": "Cliff side projection at 360 cm",
+        "input": "A"
+      },
+      {
+        "from": "Cliff side projection at 360 cm",
+        "output": "",
+        "to": "CliffGrain",
+        "input": "UVs"
+      },
+      {
+        "from": "Bounded soil grain",
+        "output": "",
+        "to": "Muted olive soil",
+        "input": "A"
+      },
+      {
+        "from": "SandTint",
+        "output": "RGB",
+        "to": "Muted olive soil",
+        "input": "B"
+      },
+      {
+        "from": "Bounded soil grain",
         "output": "",
         "to": "Windblown dust grain",
         "input": "A"
@@ -174,7 +432,7 @@
         "input": "A"
       },
       {
-        "from": "Varied sand",
+        "from": "Muted olive soil",
         "output": "",
         "to": "Windblown dust blend",
         "input": "A"
@@ -192,7 +450,7 @@
         "input": "Alpha"
       },
       {
-        "from": "Neutral sand grain",
+        "from": "Bounded soil grain",
         "output": "",
         "to": "Exposed sandstone grain",
         "input": "A"
@@ -228,7 +486,7 @@
         "input": "Alpha"
       },
       {
-        "from": "Neutral sand grain",
+        "from": "Bounded soil grain",
         "output": "",
         "to": "Mineral staining grain",
         "input": "A"
@@ -264,7 +522,7 @@
         "input": "Alpha"
       },
       {
-        "from": "Neutral sand grain",
+        "from": "Bounded soil grain",
         "output": "",
         "to": "Packed service ground grain",
         "input": "A"
@@ -300,6 +558,810 @@
         "input": "Alpha"
       },
       {
+        "from": "CliffGrain",
+        "output": "RGB",
+        "to": "Neutral slate grain",
+        "input": ""
+      },
+      {
+        "from": "SlateDesaturation",
+        "output": "",
+        "to": "Neutral slate grain",
+        "input": "Fraction"
+      },
+      {
+        "from": "CanyonShadow",
+        "output": "RGB",
+        "to": "Warm slate face tint",
+        "input": "A"
+      },
+      {
+        "from": "CanyonSandstone",
+        "output": "RGB",
+        "to": "Warm slate face tint",
+        "input": "B"
+      },
+      {
+        "from": "Neutral slate grain",
+        "output": "",
+        "to": "Slate grain gain",
+        "input": "A"
+      },
+      {
+        "from": "Slate grain gain",
+        "output": "",
+        "to": "Slate grain center",
+        "input": "A"
+      },
+      {
+        "from": "Slate grain center",
+        "output": "",
+        "to": "Bounded slate grain",
+        "input": ""
+      },
+      {
+        "from": "Warm slate face tint",
+        "output": "",
+        "to": "Textured slate face",
+        "input": "A"
+      },
+      {
+        "from": "Bounded slate grain",
+        "output": "",
+        "to": "Textured slate face",
+        "input": "B"
+      },
+      {
+        "from": "Packed service ground blend",
+        "output": "",
+        "to": "Ground against cliff face",
+        "input": "A"
+      },
+      {
+        "from": "Textured slate face",
+        "output": "",
+        "to": "Ground against cliff face",
+        "input": "B"
+      },
+      {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Ground against cliff face",
+        "input": "Alpha"
+      },
+      {
+        "from": "Landscape world position",
+        "output": "",
+        "to": "Landscape altitude",
+        "input": ""
+      },
+      {
+        "from": "Landscape altitude",
+        "output": "",
+        "to": "Trough floor altitude",
+        "input": "A"
+      },
+      {
+        "from": "Trough floor altitude",
+        "output": "",
+        "to": "Walkable altitude fraction",
+        "input": "A"
+      },
+      {
+        "from": "Walkable altitude fraction",
+        "output": "",
+        "to": "Saturated altitude",
+        "input": ""
+      },
+      {
+        "from": "ValleyShade",
+        "output": "RGB",
+        "to": "Valley to crest tint",
+        "input": "A"
+      },
+      {
+        "from": "CrestShade",
+        "output": "RGB",
+        "to": "Cap against face",
+        "input": "A"
+      },
+      {
+        "from": "CliffFaceShade",
+        "output": "RGB",
+        "to": "Cap against face",
+        "input": "B"
+      },
+      {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Cap against face",
+        "input": "Alpha"
+      },
+      {
+        "from": "Cap against face",
+        "output": "",
+        "to": "Valley to crest tint",
+        "input": "B"
+      },
+      {
+        "from": "Saturated altitude",
+        "output": "",
+        "to": "Valley to crest tint",
+        "input": "Alpha"
+      },
+      {
+        "from": "Ground against cliff face",
+        "output": "",
+        "to": "Relief shaded ground",
+        "input": "A"
+      },
+      {
+        "from": "Valley to crest tint",
+        "output": "",
+        "to": "Relief shaded ground",
+        "input": "B"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "A",
+        "to": "Authored paving mask threshold",
+        "input": "A"
+      },
+      {
+        "from": "Authored paving mask threshold",
+        "output": "",
+        "to": "Authored paving mask span",
+        "input": "A"
+      },
+      {
+        "from": "Authored paving mask span",
+        "output": "",
+        "to": "Authored paving mask bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Authored paving mask bounded fraction",
+        "output": "",
+        "to": "Authored paving mask square",
+        "input": "A"
+      },
+      {
+        "from": "Authored paving mask bounded fraction",
+        "output": "",
+        "to": "Authored paving mask square",
+        "input": "B"
+      },
+      {
+        "from": "Authored paving mask bounded fraction",
+        "output": "",
+        "to": "Authored paving mask doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Authored paving mask doubled fraction",
+        "output": "",
+        "to": "Authored paving mask cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Authored paving mask square",
+        "output": "",
+        "to": "Authored paving mask smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Authored paving mask cubic factor",
+        "output": "",
+        "to": "Authored paving mask smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "AuthoredMap",
+        "output": "",
+        "to": "Bounded authored map enable",
+        "input": ""
+      },
+      {
+        "from": "Authored paving mask smooth transition",
+        "output": "",
+        "to": "Authored map paving only",
+        "input": "A"
+      },
+      {
+        "from": "Bounded authored map enable",
+        "output": "",
+        "to": "Authored map paving only",
+        "input": "B"
+      },
+      {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Paving outside steep rock",
+        "input": ""
+      },
+      {
+        "from": "Authored map paving only",
+        "output": "",
+        "to": "Walkable authored paving",
+        "input": "A"
+      },
+      {
+        "from": "Paving outside steep rock",
+        "output": "",
+        "to": "Walkable authored paving",
+        "input": "B"
+      },
+      {
+        "from": "Landscape world position",
+        "output": "",
+        "to": "Paving metric world XY",
+        "input": ""
+      },
+      {
+        "from": "Paving metric world XY",
+        "output": "",
+        "to": "Paving slabs 120 by 90 cm",
+        "input": "A"
+      },
+      {
+        "from": "Paving reciprocal slab dimensions",
+        "output": "",
+        "to": "Paving slabs 120 by 90 cm",
+        "input": "B"
+      },
+      {
+        "from": "Paving slabs 120 by 90 cm",
+        "output": "",
+        "to": "Paving panel index",
+        "input": ""
+      },
+      {
+        "from": "Paving panel index",
+        "output": "",
+        "to": "Paving panel index tone",
+        "input": "A"
+      },
+      {
+        "from": "Paving tone basis",
+        "output": "",
+        "to": "Paving panel index tone",
+        "input": "B"
+      },
+      {
+        "from": "Paving panel index tone",
+        "output": "",
+        "to": "Paving individual panel tone",
+        "input": ""
+      },
+      {
+        "from": "Paving individual panel tone",
+        "output": "",
+        "to": "Paving centered panel tone",
+        "input": "A"
+      },
+      {
+        "from": "PanelVariation",
+        "output": "",
+        "to": "Paving bounded panel variation",
+        "input": ""
+      },
+      {
+        "from": "Paving centered panel tone",
+        "output": "",
+        "to": "Paving quiet panel variation",
+        "input": "A"
+      },
+      {
+        "from": "Paving bounded panel variation",
+        "output": "",
+        "to": "Paving quiet panel variation",
+        "input": "B"
+      },
+      {
+        "from": "Paving quiet panel variation",
+        "output": "",
+        "to": "Paving panel tone near unity",
+        "input": "A"
+      },
+      {
+        "from": "PavingTint",
+        "output": "RGB",
+        "to": "Paving tinted panels",
+        "input": "A"
+      },
+      {
+        "from": "Paving panel tone near unity",
+        "output": "",
+        "to": "Paving tinted panels",
+        "input": "B"
+      },
+      {
+        "from": "Bounded soil grain",
+        "output": "",
+        "to": "Paving fine aggregate contrast",
+        "input": "A"
+      },
+      {
+        "from": "Paving fine aggregate contrast",
+        "output": "",
+        "to": "Paving fine aggregate near unity",
+        "input": "A"
+      },
+      {
+        "from": "Paving fine aggregate near unity",
+        "output": "",
+        "to": "Paving bounded fine aggregate",
+        "input": ""
+      },
+      {
+        "from": "Paving tinted panels",
+        "output": "",
+        "to": "Paving fine concrete aggregate",
+        "input": "A"
+      },
+      {
+        "from": "Paving bounded fine aggregate",
+        "output": "",
+        "to": "Paving fine concrete aggregate",
+        "input": "B"
+      },
+      {
+        "from": "Paving slabs 120 by 90 cm",
+        "output": "",
+        "to": "Paving panel interior",
+        "input": ""
+      },
+      {
+        "from": "Paving panel interior",
+        "output": "",
+        "to": "Paving opposite panel edge",
+        "input": ""
+      },
+      {
+        "from": "Paving panel interior",
+        "output": "",
+        "to": "Paving nearest panel edges",
+        "input": "A"
+      },
+      {
+        "from": "Paving opposite panel edge",
+        "output": "",
+        "to": "Paving nearest panel edges",
+        "input": "B"
+      },
+      {
+        "from": "Paving nearest panel edges",
+        "output": "",
+        "to": "Paving horizontal edge distance",
+        "input": ""
+      },
+      {
+        "from": "Paving nearest panel edges",
+        "output": "",
+        "to": "Paving vertical edge distance",
+        "input": ""
+      },
+      {
+        "from": "Paving horizontal edge distance",
+        "output": "",
+        "to": "Paving nearest joint distance",
+        "input": "A"
+      },
+      {
+        "from": "Paving vertical edge distance",
+        "output": "",
+        "to": "Paving nearest joint distance",
+        "input": "B"
+      },
+      {
+        "from": "Paving nearest joint distance",
+        "output": "",
+        "to": "Paving clean interior threshold",
+        "input": "A"
+      },
+      {
+        "from": "Paving clean interior threshold",
+        "output": "",
+        "to": "Paving clean interior span",
+        "input": "A"
+      },
+      {
+        "from": "Paving clean interior span",
+        "output": "",
+        "to": "Paving clean interior bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Paving clean interior bounded fraction",
+        "output": "",
+        "to": "Paving clean interior square",
+        "input": "A"
+      },
+      {
+        "from": "Paving clean interior bounded fraction",
+        "output": "",
+        "to": "Paving clean interior square",
+        "input": "B"
+      },
+      {
+        "from": "Paving clean interior bounded fraction",
+        "output": "",
+        "to": "Paving clean interior doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Paving clean interior doubled fraction",
+        "output": "",
+        "to": "Paving clean interior cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Paving clean interior square",
+        "output": "",
+        "to": "Paving clean interior smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Paving clean interior cubic factor",
+        "output": "",
+        "to": "Paving clean interior smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Paving clean interior smooth transition",
+        "output": "",
+        "to": "Paving accumulated edge grime",
+        "input": ""
+      },
+      {
+        "from": "EdgeWear",
+        "output": "",
+        "to": "Paving bounded edge wear",
+        "input": ""
+      },
+      {
+        "from": "Paving individual panel tone",
+        "output": "",
+        "to": "Paving variable panel weathering",
+        "input": "Alpha"
+      },
+      {
+        "from": "Paving variable panel weathering",
+        "output": "",
+        "to": "Paving authored panel wear amount",
+        "input": "A"
+      },
+      {
+        "from": "Paving bounded edge wear",
+        "output": "",
+        "to": "Paving authored panel wear amount",
+        "input": "B"
+      },
+      {
+        "from": "Paving accumulated edge grime",
+        "output": "",
+        "to": "Paving weathering at slab edges",
+        "input": "A"
+      },
+      {
+        "from": "Paving authored panel wear amount",
+        "output": "",
+        "to": "Paving weathering at slab edges",
+        "input": "B"
+      },
+      {
+        "from": "Paving weathering at slab edges",
+        "output": "",
+        "to": "Paving mild edge grime tone",
+        "input": ""
+      },
+      {
+        "from": "Paving fine concrete aggregate",
+        "output": "",
+        "to": "Paving weathered panel surface",
+        "input": "A"
+      },
+      {
+        "from": "Paving mild edge grime tone",
+        "output": "",
+        "to": "Paving weathered panel surface",
+        "input": "B"
+      },
+      {
+        "from": "Paving nearest joint distance",
+        "output": "",
+        "to": "Paving joint feather threshold",
+        "input": "A"
+      },
+      {
+        "from": "Paving joint feather threshold",
+        "output": "",
+        "to": "Paving joint feather span",
+        "input": "A"
+      },
+      {
+        "from": "Paving joint feather span",
+        "output": "",
+        "to": "Paving joint feather bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Paving joint feather bounded fraction",
+        "output": "",
+        "to": "Paving joint feather square",
+        "input": "A"
+      },
+      {
+        "from": "Paving joint feather bounded fraction",
+        "output": "",
+        "to": "Paving joint feather square",
+        "input": "B"
+      },
+      {
+        "from": "Paving joint feather bounded fraction",
+        "output": "",
+        "to": "Paving joint feather doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Paving joint feather doubled fraction",
+        "output": "",
+        "to": "Paving joint feather cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Paving joint feather square",
+        "output": "",
+        "to": "Paving joint feather smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Paving joint feather cubic factor",
+        "output": "",
+        "to": "Paving joint feather smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Paving joint feather smooth transition",
+        "output": "",
+        "to": "Paving recessed panel joint",
+        "input": ""
+      },
+      {
+        "from": "PavingTint",
+        "output": "RGB",
+        "to": "Paving restrained joint albedo",
+        "input": "A"
+      },
+      {
+        "from": "Paving weathered panel surface",
+        "output": "",
+        "to": "Paving panels with dark joints",
+        "input": "A"
+      },
+      {
+        "from": "Paving restrained joint albedo",
+        "output": "",
+        "to": "Paving panels with dark joints",
+        "input": "B"
+      },
+      {
+        "from": "Paving recessed panel joint",
+        "output": "",
+        "to": "Paving panels with dark joints",
+        "input": "Alpha"
+      },
+      {
+        "from": "Paving panel interior",
+        "output": "",
+        "to": "Paving slab local U",
+        "input": ""
+      },
+      {
+        "from": "Paving panel interior",
+        "output": "",
+        "to": "Paving slab local V",
+        "input": ""
+      },
+      {
+        "from": "Paving slab local U",
+        "output": "",
+        "to": "Paving hairline direction",
+        "input": "A"
+      },
+      {
+        "from": "Paving hairline direction",
+        "output": "",
+        "to": "Paving hairline start",
+        "input": "A"
+      },
+      {
+        "from": "Paving slab local U",
+        "output": "",
+        "to": "Paving hairline kink phase",
+        "input": "A"
+      },
+      {
+        "from": "Paving hairline kink phase",
+        "output": "",
+        "to": "Paving hairline kink",
+        "input": ""
+      },
+      {
+        "from": "Paving hairline kink",
+        "output": "",
+        "to": "Paving slight fracture irregularity",
+        "input": "A"
+      },
+      {
+        "from": "Paving hairline start",
+        "output": "",
+        "to": "Paving hairline curve",
+        "input": "A"
+      },
+      {
+        "from": "Paving slight fracture irregularity",
+        "output": "",
+        "to": "Paving hairline curve",
+        "input": "B"
+      },
+      {
+        "from": "Paving slab local V",
+        "output": "",
+        "to": "Paving signed hairline distance",
+        "input": "A"
+      },
+      {
+        "from": "Paving hairline curve",
+        "output": "",
+        "to": "Paving signed hairline distance",
+        "input": "B"
+      },
+      {
+        "from": "Paving signed hairline distance",
+        "output": "",
+        "to": "Paving hairline distance",
+        "input": ""
+      },
+      {
+        "from": "Paving hairline distance",
+        "output": "",
+        "to": "Paving hairline feather",
+        "input": "A"
+      },
+      {
+        "from": "Paving hairline feather",
+        "output": "",
+        "to": "Paving outside hairline",
+        "input": ""
+      },
+      {
+        "from": "Paving outside hairline",
+        "output": "",
+        "to": "Paving hairline fracture",
+        "input": ""
+      },
+      {
+        "from": "Paving individual panel tone",
+        "output": "",
+        "to": "Paving occasional cracked slab threshold",
+        "input": "A"
+      },
+      {
+        "from": "Paving occasional cracked slab threshold",
+        "output": "",
+        "to": "Paving occasional cracked slab span",
+        "input": "A"
+      },
+      {
+        "from": "Paving occasional cracked slab span",
+        "output": "",
+        "to": "Paving occasional cracked slab bounded fraction",
+        "input": ""
+      },
+      {
+        "from": "Paving occasional cracked slab bounded fraction",
+        "output": "",
+        "to": "Paving occasional cracked slab square",
+        "input": "A"
+      },
+      {
+        "from": "Paving occasional cracked slab bounded fraction",
+        "output": "",
+        "to": "Paving occasional cracked slab square",
+        "input": "B"
+      },
+      {
+        "from": "Paving occasional cracked slab bounded fraction",
+        "output": "",
+        "to": "Paving occasional cracked slab doubled fraction",
+        "input": "A"
+      },
+      {
+        "from": "Paving occasional cracked slab doubled fraction",
+        "output": "",
+        "to": "Paving occasional cracked slab cubic factor",
+        "input": "B"
+      },
+      {
+        "from": "Paving occasional cracked slab square",
+        "output": "",
+        "to": "Paving occasional cracked slab smooth transition",
+        "input": "A"
+      },
+      {
+        "from": "Paving occasional cracked slab cubic factor",
+        "output": "",
+        "to": "Paving occasional cracked slab smooth transition",
+        "input": "B"
+      },
+      {
+        "from": "Paving hairline fracture",
+        "output": "",
+        "to": "Paving sparse slab fractures",
+        "input": "A"
+      },
+      {
+        "from": "Paving occasional cracked slab smooth transition",
+        "output": "",
+        "to": "Paving sparse slab fractures",
+        "input": "B"
+      },
+      {
+        "from": "CrackStrength",
+        "output": "",
+        "to": "Paving bounded crack contrast",
+        "input": ""
+      },
+      {
+        "from": "Paving sparse slab fractures",
+        "output": "",
+        "to": "Paving restrained fracture contrast",
+        "input": "A"
+      },
+      {
+        "from": "Paving bounded crack contrast",
+        "output": "",
+        "to": "Paving restrained fracture contrast",
+        "input": "B"
+      },
+      {
+        "from": "Paving restrained fracture contrast",
+        "output": "",
+        "to": "Paving hairline albedo modulation",
+        "input": ""
+      },
+      {
+        "from": "Paving panels with dark joints",
+        "output": "",
+        "to": "Paving worn slab finish",
+        "input": "A"
+      },
+      {
+        "from": "Paving hairline albedo modulation",
+        "output": "",
+        "to": "Paving worn slab finish",
+        "input": "B"
+      },
+      {
+        "from": "Relief shaded ground",
+        "output": "",
+        "to": "Earth against constructed pavement",
+        "input": "A"
+      },
+      {
+        "from": "Paving worn slab finish",
+        "output": "",
+        "to": "Earth against constructed pavement",
+        "input": "B"
+      },
+      {
+        "from": "Walkable authored paving",
+        "output": "",
+        "to": "Earth against constructed pavement",
+        "input": "Alpha"
+      },
+      {
         "from": "Map World centimeters to texture UV",
         "output": "",
         "to": "FogMask",
@@ -308,17 +1370,59 @@
       {
         "from": "FogMask",
         "output": "R",
-        "to": "Known visible fraction",
+        "to": "Authored paving visible fraction",
         "input": ""
       },
       {
-        "from": "Packed service ground blend",
+        "from": "FogMask",
+        "output": "R",
+        "to": "Authored paving previously explored fog",
+        "input": "A"
+      },
+      {
+        "from": "FogMask",
+        "output": "G",
+        "to": "Authored paving previously explored fog",
+        "input": "B"
+      },
+      {
+        "from": "Authored paving previously explored fog",
+        "output": "",
+        "to": "Authored paving authored static surface only",
+        "input": "A"
+      },
+      {
+        "from": "Walkable authored paving",
+        "output": "",
+        "to": "Authored paving authored static surface only",
+        "input": "B"
+      },
+      {
+        "from": "Authored paving authored static surface only",
+        "output": "",
+        "to": "Authored paving dim remembered detail",
+        "input": "A"
+      },
+      {
+        "from": "Authored paving visible fraction",
+        "output": "",
+        "to": "Authored paving visible or remembered detail",
+        "input": "A"
+      },
+      {
+        "from": "Authored paving dim remembered detail",
+        "output": "",
+        "to": "Authored paving visible or remembered detail",
+        "input": "B"
+      },
+      {
+        "from": "Earth against constructed pavement",
         "output": "",
         "to": "Fog gated diffuse",
         "input": "A"
       },
       {
-        "from": "Known visible fraction",
+        "from": "Authored paving visible or remembered detail",
         "output": "",
         "to": "Fog gated diffuse",
         "input": "B"
@@ -408,6 +1512,42 @@
         "input": "UVs"
       },
       {
+        "from": "Explored cliff face",
+        "output": "",
+        "to": "Ground normal outside cliff faces",
+        "input": ""
+      },
+      {
+        "from": "NormalStrength",
+        "output": "",
+        "to": "Slope gated normal strength",
+        "input": "A"
+      },
+      {
+        "from": "Ground normal outside cliff faces",
+        "output": "",
+        "to": "Slope gated normal strength",
+        "input": "B"
+      },
+      {
+        "from": "Walkable authored paving",
+        "output": "",
+        "to": "Soil normals outside constructed pavement",
+        "input": ""
+      },
+      {
+        "from": "Slope gated normal strength",
+        "output": "",
+        "to": "Natural surface normal strength",
+        "input": "A"
+      },
+      {
+        "from": "Soil normals outside constructed pavement",
+        "output": "",
+        "to": "Natural surface normal strength",
+        "input": "B"
+      },
+      {
         "from": "Flat tangent normal",
         "output": "",
         "to": "Restrained normal detail",
@@ -420,7 +1560,7 @@
         "input": "B"
       },
       {
-        "from": "NormalStrength",
+        "from": "Natural surface normal strength",
         "output": "",
         "to": "Restrained normal detail",
         "input": "Alpha"
@@ -442,6 +1582,36 @@
         "output": "R",
         "to": "Dry ground roughness",
         "input": "A"
+      },
+      {
+        "from": "Paving recessed panel joint",
+        "output": "",
+        "to": "Concrete and dry recessed joint roughness",
+        "input": "Alpha"
+      },
+      {
+        "from": "Dry ground roughness",
+        "output": "",
+        "to": "Ground and pavement roughness",
+        "input": "A"
+      },
+      {
+        "from": "Concrete and dry recessed joint roughness",
+        "output": "",
+        "to": "Ground and pavement roughness",
+        "input": "B"
+      },
+      {
+        "from": "Walkable authored paving",
+        "output": "",
+        "to": "Ground and pavement roughness",
+        "input": "Alpha"
+      },
+      {
+        "from": "TerrainLayers",
+        "output": "R",
+        "to": "Contact occlusion",
+        "input": "Alpha"
       }
     ],
     "outputs": {
@@ -462,24 +1632,97 @@
         "output": ""
       },
       "ROUGHNESS": {
-        "node": "Dry ground roughness",
+        "node": "Ground and pavement roughness",
         "output": ""
       },
       "METALLIC": {
-        "node": "No metallic or specular reflection",
+        "node": "Nonmetal canyon ground",
         "output": ""
       },
-      "SPECULAR": {
-        "node": "No metallic or specular reflection",
+      "AMBIENT_OCCLUSION": {
+        "node": "Contact occlusion",
         "output": ""
       }
     },
     "shader_errors": []
   },
   "texture_samples": {
-    "pixel": 6,
+    "pixel": 7,
     "vertex": 1
   },
+  "authored_paving": {
+    "enable_parameter": "AuthoredMap",
+    "default": 0.0,
+    "mask": "AuthoredMap * smoothstep(0.72, 0.90, TerrainLayers A) * (1 - cliff)",
+    "slab_size_cm": [
+      120,
+      90
+    ],
+    "tint_linear_rgb": [
+      0.078,
+      0.082,
+      0.071
+    ],
+    "weathering_parameters": {
+      "PanelVariation": 0.24,
+      "EdgeWear": 0.22,
+      "CrackStrength": 0.24
+    },
+    "roughness_bounds": [
+      0.87,
+      0.96
+    ],
+    "normal_detail_on_full_paving": 0.0,
+    "added_texture_fetches": 0,
+    "legacy_maps": "AuthoredMap=0 preserves their existing service masks"
+  },
+  "albedo_anti_tiling": {
+    "base_tile_width_cm": 420.0,
+    "second_octave_rotation_degrees": 37.0,
+    "second_octave_tiling_ratio": 0.61803399,
+    "combine": "linear fine/coarse blend, desaturation, compressed bounded soil grain",
+    "coarse_albedo": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Color.T_VT_DryGroundRocks_Color",
+    "coarse_albedo_fallback": false,
+    "soil_grain": "clamp(0.03 + 0.85 * desaturated blended albedo, 0.10, 0.33)",
+    "soil_grain_bounds": [
+      0.1,
+      0.33
+    ],
+    "coarse_weight": "(0.22 + 0.50 * known stone R) * (1 - 0.82 * service A)",
+    "added_fetches": 0
+  },
+  "cliff_surface": {
+    "style": "restrained warm slate; fractures and ledges supplied by mesh geometry",
+    "procedural_bedding": false,
+    "procedural_vertical_joints": false,
+    "bright_cap_shoulder": false,
+    "face_tint": "lerp(CanyonShadow, CanyonSandstone, 0.68)",
+    "grain": "clamp(0.82 + 0.40 * desaturated side albedo, 0.84, 1.08)",
+    "grain_bounds": [
+      0.84,
+      1.08
+    ],
+    "mask": "known-stone R times slope; full fog gate remains downstream",
+    "walkable_normal_z_floor": 0.965,
+    "side_albedo": "/Game/Art/VisualTarget/Materials/T_VT_DryGroundRocks_Color.T_VT_DryGroundRocks_Color",
+    "side_albedo_tile_cm": 360.0,
+    "normal_detail": "NormalStrength * (1 - known cliff face); neutral tangent normal on full face",
+    "ground_normal_strength_default": 0.4,
+    "added_fetches": 0,
+    "geometry_displacement": false
+  },
+  "layer_tint_strengths": {
+    "dust": 0.45,
+    "stone": 0.8,
+    "mineral": 0.36,
+    "service": 0.68
+  },
+  "ambient_occlusion": {
+    "source": "TerrainLayers R",
+    "floor": 0.8,
+    "added_fetches": 0
+  },
+  "specular": "engine default 0.5; no longer driven to zero",
   "channels": {
     "R": "known stone",
     "G": "observed minerals",

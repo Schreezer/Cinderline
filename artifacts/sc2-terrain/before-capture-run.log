@@ -1,0 +1,60 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Engine: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Mode: shot
+Framebuffer: 1440x900
+Log: /Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/before/mac-capture.log
+ExecCmds: t.MaxFPS 30,cinder.quality,cinder.models,cinder.artpreview sweep
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Wait until we know the daemon has started.
+Parent received signal 30
+Daemon signalled successful start
+Forked complete (ret=0)
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll -Mode=ValidatePlatforms -OutputSDKs -AllPlatforms -project=/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -log=/Users/chirag13/Library/Logs/Cinderline/AutoSDKInfo.txt -verbose -timestamps
+Log file: /Users/chirag13/Library/Logs/Cinderline/AutoSDKInfo.txt
+##PlatformValidate: Win64 INVALID <UNKNOWN>
+##PlatformValidate: Mac VALID 26.1.1
+##PlatformValidate: IOS VALID 26.1.1
+##PlatformValidate: Android INVALID r27c
+##PlatformValidate: Linux INVALID <UNKNOWN>
+##PlatformValidate: LinuxArm64 INVALID <UNKNOWN>
+##PlatformValidate: TVOS VALID 26.1.1
+##PlatformValidate: VisionOS VALID 26.1.1
+Unable to find required SDK version 'MainVersion' for platform Win64. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform Linux. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform LinuxArm64. Check your SDK.json files
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 325b
+2026-09-22 12:46:26.337 UnrealEditor-Cmd[86172:17772170] [UE4] Shutdown handler: initialize.
+*** Recognized (0x69) family*** (30 cols X 22 rows)
+2026-09-22 12:46:49.027 UnrealEditor-Cmd[86172:17771656] [UE4] Shutdown handler: cleanup.
+Captured base: /Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/before/mac-base.png
+Captured battle: /Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/before/mac-battle.png
+Visual capture complete: /Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/before
+Opening shared memory
+Shared memory doesn't exist, checking legacy lock file
+Checking for a '/tmp/UnrealTraceServer.pid' lock file
+Forking process
+Opening shared memory
+Starting the store
+Reading settings from '/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini'
+
+Unable to open settings file /Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini.
+
+Store settings (/Users/chirag13/UnrealEngine/UnrealTrace/Settings.ini):
+ - Store port: 1989
+ - Recorder port: 1981
+ - Thread count: 0
+ - Sponsored mode: 1
+ - Directory: '/Users/chirag13/UnrealEngine/UnrealTrace/Store/001'
+Watcher enabled on /Users/chirag13/UnrealEngine/UnrealTrace/Store/001
+Signalling parent 86556
+Terminating server, no sponsors or connections active.
+Received signal 15
+Daemon is exiting without errors.
+Listening cancelled, closing port...
+Listening cancelled, closing port...

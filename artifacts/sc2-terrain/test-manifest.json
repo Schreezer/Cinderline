@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "suites": {
+    "terrain": {
+      "filter": "Cinderline.Integration.FogMaskPrivacy+Cinderline.Integration.WorldLifecycle+Cinderline.Presentation.LandscapeHeightGeometry+Cinderline.Presentation.SceneryGroundRoadFallback+Cinderline.Presentation.SceneryObservedState+Cinderline.Presentation.SceneryObstacleBounds+Cinderline.Presentation.SceneryAmbientScatter",
+      "expected_paths": [
+        "Cinderline.Integration.FogMaskPrivacy",
+        "Cinderline.Integration.WorldLifecycle",
+        "Cinderline.Presentation.LandscapeHeightGeometry",
+        "Cinderline.Presentation.SceneryGroundRoadFallback",
+        "Cinderline.Presentation.SceneryObservedState",
+        "Cinderline.Presentation.SceneryObstacleBounds",
+        "Cinderline.Presentation.SceneryAmbientScatter"
+      ]
+    }
+  }
+}

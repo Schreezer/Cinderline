@@ -1,0 +1,54 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "info",
+      "apps",
+      "--device",
+      "00008150-00060CE12684401C",
+      "--bundle-id",
+      "com.cinderline.game",
+      "--require-container-access",
+      "--include-container-paths",
+      "--json-output",
+      "artifacts/terrain-overhaul/aeon/installed-app.json"
+    ],
+    "commandType" : "devicectl.device.info.apps",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "apps" : [
+      {
+        "appClip" : false,
+        "builtByDeveloper" : true,
+        "bundleContainerPath" : "/private/var/containers/Bundle/Application/402E75E8-BA2A-4525-90F2-F868F2CF03C2",
+        "bundleIdentifier" : "com.cinderline.game",
+        "bundleVersion" : "56702186.0.36",
+        "containerAccessible" : true,
+        "dataContainerPath" : "/private/var/mobile/Containers/Data/Application/C44A4F27-2779-471E-AAEE-5010E7079289",
+        "defaultApp" : false,
+        "groupContainerPaths" : {
+
+        },
+        "hidden" : false,
+        "internalApp" : false,
+        "name" : "Cinderline",
+        "removable" : true,
+        "url" : "file:///private/var/containers/Bundle/Application/402E75E8-BA2A-4525-90F2-F868F2CF03C2/Cinderline.app/",
+        "version" : "1.0"
+      }
+    ],
+    "defaultAppsIncluded" : false,
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "hiddenAppsIncluded" : false,
+    "internalAppsIncluded" : false,
+    "matchingBundleIdentifier" : "com.cinderline.game",
+    "removableAppsIncluded" : true
+  }
+}

@@ -72,7 +72,7 @@
       "asset_type": "motion",
       "bounds_max_cm": [
         10.915852546691895,
-        -3.7882394790649414,
+        -4.027580261230469,
         17.07234001159668
       ],
       "bounds_min_cm": [
@@ -111,7 +111,7 @@
       ],
       "bounds_min_cm": [
         -1.5007343292236328,
-        3.788240432739258,
+        4.027581214904785,
         0.0
       ],
       "imported": true,
@@ -140,7 +140,7 @@
       "asset_type": "motion",
       "bounds_max_cm": [
         -4.972113609313965,
-        -3.789762020111084,
+        -4.029646396636963,
         17.07234001159668
       ],
       "bounds_min_cm": [
@@ -179,7 +179,7 @@
       ],
       "bounds_min_cm": [
         -12.766122817993164,
-        3.789759397506714,
+        4.02964448928833,
         0.0
       ],
       "imported": true,
@@ -242,12 +242,12 @@
       "asset": "/Game/Art/VisualTarget/Models/SM_Ember.SM_Ember",
       "asset_type": "model",
       "bounds_max_cm": [
-        19.999998092651367,
+        19.999996185302734,
         15.42699909210205,
         48.0
       ],
       "bounds_min_cm": [
-        -20.000001907348633,
+        -20.0,
         -15.427000999450684,
         0.0
       ],
@@ -274,12 +274,12 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_Body.SM_Ember_Body",
       "asset_type": "motion",
       "bounds_max_cm": [
-        7.717073917388916,
+        7.633450984954834,
         15.42699909210205,
         48.0
       ],
       "bounds_min_cm": [
-        -20.000001907348633,
+        -20.0,
         -15.427000999450684,
         19.411766052246094
       ],
@@ -310,12 +310,12 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_LegL.SM_Ember_LegL",
       "asset_type": "motion",
       "bounds_max_cm": [
-        2.6075446605682373,
+        2.539337396621704,
         -4.578956604003906,
         22.997648239135742
       ],
       "bounds_min_cm": [
-        -13.963253021240234,
+        -13.981465339660645,
         -11.202739715576172,
         0.0
       ],
@@ -345,12 +345,12 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_LegR.SM_Ember_LegR",
       "asset_type": "motion",
       "bounds_max_cm": [
-        2.6075422763824463,
+        2.539335012435913,
         11.202737808227539,
         22.997648239135742
       ],
       "bounds_min_cm": [
-        -13.963254928588867,
+        -13.981467247009277,
         4.57895565032959,
         0.0
       ],
@@ -380,14 +380,14 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Ember_Weapon.SM_Ember_Weapon",
       "asset_type": "motion",
       "bounds_max_cm": [
-        19.999998092651367,
-        12.56704044342041,
+        19.999996185302734,
+        13.159671783447266,
         38.25075912475586
       ],
       "bounds_min_cm": [
-        -4.737007141113281,
-        5.891943454742432,
-        31.393613815307617
+        -5.451168537139893,
+        5.29931116104126,
+        30.68773078918457
       ],
       "imported": true,
       "joint_pivot_cm": [
@@ -416,12 +416,12 @@
       "asset": "/Game/Art/VisualTarget/Models/SM_Needle.SM_Needle",
       "asset_type": "model",
       "bounds_max_cm": [
-        21.0,
+        20.999998092651367,
         11.903498649597168,
         47.0
       ],
       "bounds_min_cm": [
-        -21.0,
+        -20.999998092651367,
         -11.9035005569458,
         0.0
       ],
@@ -448,12 +448,12 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_Body.SM_Needle_Body",
       "asset_type": "motion",
       "bounds_max_cm": [
-        6.442063808441162,
+        6.3639817237854,
         11.903498649597168,
         47.0
       ],
       "bounds_min_cm": [
-        -21.0,
+        -20.999998092651367,
         -11.9035005569458,
         19.007352828979492
       ],
@@ -484,12 +484,12 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_LegL.SM_Needle_LegL",
       "asset_type": "motion",
       "bounds_max_cm": [
-        0.4172877371311188,
+        0.3563486337661743,
         -2.3797848224639893,
         20.882417678833008
       ],
       "bounds_min_cm": [
-        -15.989094734191895,
+        -16.00335121154785,
         -8.056838989257812,
         0.0
       ],
@@ -519,12 +519,12 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_LegR.SM_Needle_LegR",
       "asset_type": "motion",
       "bounds_max_cm": [
-        0.4172861874103546,
+        0.35634708404541016,
         8.056838035583496,
         20.882417678833008
       ],
       "bounds_min_cm": [
-        -15.989096641540527,
+        -16.00335121154785,
         2.3797831535339355,
         0.0
       ],
@@ -554,14 +554,14 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Needle_Weapon.SM_Needle_Weapon",
       "asset_type": "motion",
       "bounds_max_cm": [
-        21.0,
-        3.479483127593994,
+        20.999998092651367,
+        3.9830968379974365,
         39.90754318237305
       ],
       "bounds_min_cm": [
-        -11.084883689880371,
-        -3.4794867038726807,
-        33.19325637817383
+        -11.774694442749023,
+        -3.9830920696258545,
+        32.502079010009766
       ],
       "imported": true,
       "joint_pivot_cm": [
@@ -757,9 +757,9 @@
       "asset": "/Game/Art/VisualTarget/Motion/SM_Cinderthrow_Body.SM_Cinderthrow_Body",
       "asset_type": "motion",
       "bounds_max_cm": [
-        24.969417572021484,
+        24.727914810180664,
         20.923002243041992,
-        30.793441772460938
+        30.099201202392578
       ],
       "bounds_min_cm": [
         -30.000003814697266,
@@ -798,9 +798,9 @@
         38.0
       ],
       "bounds_min_cm": [
-        -19.45865821838379,
+        -19.50497055053711,
         -9.971780776977539,
-        21.41358184814453
+        20.930809020996094
       ],
       "imported": true,
       "joint_pivot_cm": [
@@ -896,5 +896,5 @@
   ],
   "owner": "scripts/unreal_visual_target_units.py",
   "success": true,
-  "utc": "2026-09-12T10:04:27.557307+00:00"
+  "utc": "2026-09-15T18:06:16.992291+00:00"
 }

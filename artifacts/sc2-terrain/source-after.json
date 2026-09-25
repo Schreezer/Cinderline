@@ -1,0 +1,18 @@
+{
+  "Source/Cinderline/Private/Presentation/CinderBattlefield.cpp": "3688aba82610a0bb98e3d12c2b6a8fb24ecc5b1c2b0c2c7032f47632c283bddf",
+  "Source/Cinderline/Private/Presentation/CinderCanyonPreview.cpp": "de35bda663170bc837a074f3c2ca3c414f28bc57e59237a89ef2881d4f35366e",
+  "Source/Cinderline/Private/Presentation/CinderLandscapeTerrain.cpp": "5a3be55ac5ff8762226c0b64c48ea522248328e057ea61619221c7b1a12e7bb0",
+  "Source/Cinderline/Private/Presentation/CinderScenery.cpp": "aa89cff483c1ac2e91bdaa3b8b7171e9e9e450e5715cb8c418f6e9f839e5875d",
+  "Source/Cinderline/Private/Presentation/CinderTerrainSurface.cpp": "6378a3404554661a71d90d9b13f3940352207aa96a4ee70a3589676df927a24d",
+  "Source/Cinderline/Private/Tests/CinderSceneryTests.cpp": "3b87c1b49b2d53c343b9d94abd327a7144d5fee7fbb4c833340644525351f7c7",
+  "Source/Cinderline/Private/Tests/CinderWorldIntegrationTests.cpp": "14e9f6f1a0fc68cba3a0958fd73bd74c689e3108715c1e4ecb31e743659cc676",
+  "Source/Cinderline/Public/Presentation/CinderGroundPalette.h": "ec6ec0703226fce4a8733da1d395985e03969b40181ed9a6a01357334d6c9ace",
+  "Source/Cinderline/Public/Presentation/CinderLandscapeTerrain.h": "2d69f20b2e9a172da5576214f110da6d3577f79ce0418ebb95d7ad499ebc645d",
+  "Source/Cinderline/Public/Presentation/CinderTerrainSurface.h": "7bee828390feb0b4562b4d5410eb62e3f7d150c739d8181e9d7db83440516645",
+  "scripts/unreal_canyon_surface.py": "925af56d5ec012ba7a8146f707377f9511a8d8ddee5e655750d79e7377371793",
+  "Source/Cinderline/Private/Tests/CinderLandscapeTerrainTests.cpp": "272596830933d2cc570def7702b0add11a03a0e6e35e17b93a85142233659707",
+  "scripts/capture-terrain.sh": "185ba2208ee0af232dcb6f91625fd59bb87b6c8e7c3dcf135c35b6dde25e6053",
+  "docs/SC2_TERRAIN_PASS.md": "befac71934b54368e89efb414ee83934a41fea2178c275399180f8aa2a08b3ec",
+  "Content/Maps/Frontier.umap": "4667ec7c02ae1f20965b127b3fcd3aa4ddde2be08c54f5a05af5049568b5e38b",
+  "Content/Art/Canyon/Materials/M_CinderCanyonGround.uasset": "c24ff1c28d3f162705ad556a2a2e11e2077a2e525a07c7d103786852058a900c"
+}

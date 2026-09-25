@@ -1,0 +1,81 @@
+✔ LAN address selection keeps only reachable private addresses and formats WebSocket URLs (27.136917ms)
+✔ host configuration makes LAN binding explicit and rejects ambiguous environment values (0.97475ms)
+✔ Bonjour instance labels stay within the 63-byte DNS label limit (0.15725ms)
+✔ Bonjour advertises the actual bound port and stops the service before destroying its socket (0.793959ms)
+✔ Bonjour failure leaves manual LAN URLs available (0.329708ms)
+✔ configured startup forwards mode and name, advertises only LAN, and closes once (0.482ms)
+✔ health and lobby controls reject stale, malformed, repeated, and excessive input (72.877166ms)
+✔ rooms accept only two or four players and a four-player worker waits for every ready seat (54.153875ms)
+✔ four simultaneous disconnects preserve seats through grace and finish through the worker (50.764083ms)
+✔ multiple four-player disconnects can reconnect independently within grace (18.385417ms)
+✔ worker result byte 255 is exposed as a draw (7.064208ms)
+✔ Node command admission rejects the previous wire protocol before worker IPC (8.61475ms)
+✔ worker backpressure preserves a prioritized forfeit until drain (2.862542ms)
+✔ commands queued during worker backpressure receive and cache one authoritative acknowledgement (11.526084ms)
+✔ active worker progress timeout closes a hung room independently of socket pong (11.237708ms)
+✔ sustained snapshot backpressure disconnects a slow client for normal recovery (15.405208ms)
+✔ draining fails readiness and new room creation while keeping the listener observable (4.337083ms)
+✔ origin, per-address connections, room creation, and public metadata are bounded (17.334333ms)
+✔ forwarded addresses are trusted only from an explicitly configured proxy (4.04175ms)
+✔ active worker capacity queues a ready room and starts it when capacity returns (8.487417ms)
+✔ real clients create, join, reject a third seat, ready, and receive private snapshots (522.997833ms)
+✔ both seats command only their view handles and command sequences survive reconnect (1302.783709ms)
+✔ append commands acknowledge and publish the queued tactical order (1354.686875ms)
+✔ queued mining publishes its private opaque target in the current protocol (3941.70475ms)
+✖ queued construction stays unpaid and private until its preceding move completes (2035.427417ms)
+✔ a rejected append leaves the authoritative queue and opaque handle intact (3382.7005ms)
+✖ patrol and escort acknowledge and publish private sustained state (2479.951084ms)
+✖ automatic batches and stable queue cancellation remain authoritative online (2320.275833ms)
+✔ four authoritative clients keep private ownership through nonfinal eliminations and one final winner (1643.637375ms)
+✔ surrender keeps the socket for the authoritative result (21.080375ms)
+✔ disconnect grace expires into a canonical result (2404.46075ms)
+✔ a simultaneous outage preserves the active room for reconnect, then expires through the worker (2306.746375ms)
+✖ ordinary attack-move play can finish a complete authoritative match (27291.348042ms)
+✔ WorkerBridge decodes fragmented and coalesced worker frames (1.374458ms)
+✔ WorkerBridge rejects malformed framing once and ignores later child output (0.32225ms)
+✔ WorkerBridge preserves queue bounds, collapsing, and write priority across backpressure (0.410791ms)
+✔ WorkerBridge owns handshake and progress timeouts and suppresses callbacks after stop (0.205666ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 33
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51442.957916
+
+✖ failing tests:
+
+test at test/server.test.js:857:1
+✖ queued construction stays unpaid and private until its preceding move completes (2035.427417ms)
+  Error: Timed out waiting for matching authoritative snapshot
+      at snapshotUntil (file:///Users/chirag13/Documents/ChatGPT/starCraft/Server/test/server.test.js:354:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async TestContext.<anonymous> (file:///Users/chirag13/Documents/ChatGPT/starCraft/Server/test/server.test.js:878:18)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+test at test/server.test.js:952:1
+✖ patrol and escort acknowledge and publish private sustained state (2479.951084ms)
+  Error: Timed out waiting for matching authoritative snapshot
+      at snapshotUntil (file:///Users/chirag13/Documents/ChatGPT/starCraft/Server/test/server.test.js:354:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async TestContext.<anonymous> (file:///Users/chirag13/Documents/ChatGPT/starCraft/Server/test/server.test.js:981:21)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+test at test/server.test.js:1019:1
+✖ automatic batches and stable queue cancellation remain authoritative online (2320.275833ms)
+  Error: Timed out waiting for matching authoritative snapshot
+      at snapshotUntil (file:///Users/chirag13/Documents/ChatGPT/starCraft/Server/test/server.test.js:354:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async TestContext.<anonymous> (file:///Users/chirag13/Documents/ChatGPT/starCraft/Server/test/server.test.js:1049:29)
+      at async Test.run (node:internal/test_runner/test:1054:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+
+test at test/server.test.js:1175:1
+✖ ordinary attack-move play can finish a complete authoritative match (27291.348042ms)
+  Error: Timed out waiting for WebSocket message
+      at Timeout._onTimeout (file:///Users/chirag13/Documents/ChatGPT/starCraft/Server/test/server.test.js:135:22)
+      at listOnTimeout (node:internal/timers:611:17)
+      at process.processTimers (node:internal/timers:546:7)

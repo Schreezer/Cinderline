@@ -1,0 +1,30 @@
+{
+  "scope": "Shattered Rift, Standard, 2 players, map revision 1",
+  "portableSuitesPassed": 30,
+  "realWorkerTestsPassed": 37,
+  "unrealTestsPassed": 63,
+  "unrealWarnings": 0,
+  "unrealFailures": 0,
+  "renderedFallbackLifecyclePassed": true,
+  "motion": {
+    "frame_count": 90,
+    "fps": 30,
+    "width": 1170,
+    "height": 540,
+    "duration": 3.0,
+    "tick_start": 44,
+    "tick_end": 104
+  },
+  "motionIsFixedStepNotPerformance": true,
+  "iosArchiveBuild": "56702186.0.37",
+  "iosArchiveStrictlyVerified": true,
+  "installedOnDevice": false,
+  "devicePerformanceVerified": false,
+  "remaining": [
+    "M5 richer landmarks and surface/edge composition",
+    "M7 other maps, match lengths and four-player authored layouts",
+    "M6 physical-device rendering and foreground frame timing",
+    "coordinated online protocol12 rollout",
+    "finer ramp-fog sampling"
+  ]
+}

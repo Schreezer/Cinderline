@@ -1,0 +1,121 @@
+{
+  "success": true,
+  "scope": "/Game/Art/VisualTarget/Materials/M_VT_Dust",
+  "source_sha256": "23221451913d9d56fc527e2c0dd103c1bc7100e1a836f148f03ab6fdc3cce1b7",
+  "material": {
+    "path": "/Game/Art/VisualTarget/Materials/M_VT_Dust.M_VT_Dust",
+    "version": "cinematic-visual-target-materials-v1.6.1",
+    "nodes": 12,
+    "graph_replacement": {
+      "method": "snapshot of expressions, delete each through engine API",
+      "before_count": 4,
+      "remaining_after_delete": 0
+    },
+    "blend_mode": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+    "shading_model": "<MaterialShadingModel.MSM_UNLIT: 0>",
+    "two_sided": true,
+    "depth_test_enabled": true,
+    "connections": [
+      {
+        "from": "Authored UV0",
+        "output": "",
+        "to": "Cloud centered UV",
+        "input": "A"
+      },
+      {
+        "from": "Cloud centered UV",
+        "output": "",
+        "to": "Cloud radius squared",
+        "input": "A"
+      },
+      {
+        "from": "Cloud centered UV",
+        "output": "",
+        "to": "Cloud radius squared",
+        "input": "B"
+      },
+      {
+        "from": "Cloud radius squared",
+        "output": "",
+        "to": "Cloud normalized squared radius",
+        "input": "A"
+      },
+      {
+        "from": "Cloud normalized squared radius",
+        "output": "",
+        "to": "Cloud radial falloff",
+        "input": ""
+      },
+      {
+        "from": "Cloud radial falloff",
+        "output": "",
+        "to": "Cloud disc bounds",
+        "input": ""
+      },
+      {
+        "from": "Cloud disc bounds",
+        "output": "",
+        "to": "Cloud soft edge",
+        "input": "A"
+      },
+      {
+        "from": "Cloud disc bounds",
+        "output": "",
+        "to": "Cloud soft edge",
+        "input": "B"
+      },
+      {
+        "from": "Cloud soft edge",
+        "output": "",
+        "to": "Cloud opacity",
+        "input": "A"
+      },
+      {
+        "from": "Opacity",
+        "output": "",
+        "to": "Cloud opacity",
+        "input": "B"
+      },
+      {
+        "from": "Cloud opacity",
+        "output": "",
+        "to": "Soft intersection fade",
+        "input": "Opacity"
+      },
+      {
+        "from": "FadeDistance",
+        "output": "",
+        "to": "Soft intersection fade",
+        "input": "FadeDistance"
+      }
+    ],
+    "outputs": {
+      "EMISSIVE_COLOR": {
+        "node": "Tint",
+        "output": "RGB"
+      },
+      "OPACITY": {
+        "node": "Soft intersection fade",
+        "output": ""
+      }
+    },
+    "shader_errors": [],
+    "parameters": {
+      "Tint": [
+        0.38,
+        0.2,
+        0.085
+      ],
+      "Opacity": 0.22,
+      "FadeDistance": 42.0
+    },
+    "usage": "two-sided unlit translucent cloud with soft radial and intersection fades",
+    "opacity_shape": {
+      "uv_channel": 0,
+      "radius": 0.48,
+      "formula": "Opacity * clamp(1 - dot(UV0 - 0.5, UV0 - 0.5) / 0.48^2, 0, 1)^2 * depth fade",
+      "texture_samples": 0,
+      "edge_opacity": 0.0
+    }
+  }
+}

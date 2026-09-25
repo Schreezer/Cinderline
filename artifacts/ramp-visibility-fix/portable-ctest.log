@@ -1,0 +1,85 @@
+Test project /tmp/cinderline-map-protocol-build
+      Start  9: ai_difficulty_regressions
+      Start 12: ai_economy_regressions
+ 1/30 Test  #9: ai_difficulty_regressions ...................***Timeout 120.05 sec
+
+      Start 15: match_length_regressions
+ 2/30 Test #12: ai_economy_regressions ......................***Timeout 120.05 sec
+
+      Start  2: simulation_rules
+ 3/30 Test  #2: simulation_rules ............................   Passed   45.48 sec
+      Start 30: production_traffic_regressions
+ 4/30 Test #15: match_length_regressions ....................   Passed   52.40 sec
+      Start 10: ai_progression_regressions
+ 5/30 Test #30: production_traffic_regressions ..............   Passed   29.68 sec
+      Start 14: production_allocation_regressions
+ 6/30 Test #10: ai_progression_regressions ..................   Passed   29.44 sec
+      Start 16: four_player_regressions
+ 7/30 Test #14: production_allocation_regressions ...........   Passed   17.70 sec
+      Start 24: simulation_profiling_regressions
+ 8/30 Test #16: four_player_regressions .....................   Passed   11.93 sec
+      Start 13: ai_resource_control_regressions
+ 9/30 Test #13: ai_resource_control_regressions .............   Passed    9.90 sec
+      Start 29: production_exit_regressions
+10/30 Test #24: simulation_profiling_regressions ............   Passed   16.75 sec
+      Start  1: map_terrain_simulation
+11/30 Test #29: production_exit_regressions .................   Passed    7.83 sec
+      Start 18: tactical_order_regressions
+12/30 Test #18: tactical_order_regressions ..................   Passed    4.70 sec
+      Start  4: navigation_regressions
+13/30 Test  #4: navigation_regressions ......................   Passed    3.15 sec
+      Start  3: map_definition_regressions
+14/30 Test  #1: map_terrain_simulation ......................   Passed   11.73 sec
+      Start  7: network_protocol
+15/30 Test  #7: network_protocol ............................   Passed    2.22 sec
+      Start 28: navigation_terrain_visibility_regressions
+16/30 Test #28: navigation_terrain_visibility_regressions ...   Passed    2.61 sec
+      Start 23: builder_queue_regressions
+17/30 Test  #3: map_definition_regressions ..................   Passed    7.94 sec
+      Start 20: formation_order_regressions
+18/30 Test #23: builder_queue_regressions ...................   Passed    1.84 sec
+      Start 19: patrol_escort_regressions
+19/30 Test #20: formation_order_regressions .................   Passed    1.22 sec
+      Start 25: navigation_attachment_cache_regressions
+20/30 Test #19: patrol_escort_regressions ...................   Passed    1.24 sec
+      Start  8: defense_regressions
+21/30 Test #25: navigation_attachment_cache_regressions .....   Passed    1.80 sec
+      Start 11: ai_tactics_regressions
+22/30 Test  #8: defense_regressions .........................   Passed    1.87 sec
+      Start  5: movement_following_regressions
+23/30 Test #11: ai_tactics_regressions ......................   Passed    1.06 sec
+      Start 17: order_completion_regressions
+24/30 Test #17: order_completion_regressions ................   Passed    0.63 sec
+      Start  6: navigation_route_quality_regressions
+25/30 Test  #5: movement_following_regressions ..............   Passed    0.91 sec
+      Start 26: navigation_multi_source_regressions
+26/30 Test #26: navigation_multi_source_regressions .........   Passed    0.62 sec
+      Start 22: worker_order_completion_regressions
+27/30 Test  #6: navigation_route_quality_regressions ........   Passed    0.75 sec
+      Start 27: navigation_predicate_parity_regressions
+28/30 Test #22: worker_order_completion_regressions .........   Passed    0.59 sec
+      Start 21: tactical_interruption_regressions
+29/30 Test #27: navigation_predicate_parity_regressions .....   Passed    0.64 sec
+30/30 Test #21: tactical_interruption_regressions ...........   Passed    0.52 sec
+
+93% tests passed, 2 tests failed out of 30
+
+Label Time Summary:
+ai              = 280.51 sec*proc (5 tests)
+defense         =   1.87 sec*proc (1 test)
+economy         = 132.90 sec*proc (5 tests)
+four-player     =  11.93 sec*proc (1 test)
+maps            =  19.66 sec*proc (2 tests)
+match-length    =  52.40 sec*proc (1 test)
+navigation      = 128.56 sec*proc (17 tests)
+network         =  31.47 sec*proc (3 tests)
+orders          =  10.74 sec*proc (7 tests)
+production      =  55.82 sec*proc (4 tests)
+profiling       =  21.81 sec*proc (4 tests)
+
+Total Test time (real) = 253.83 sec
+
+The following tests FAILED:
+	  9 - ai_difficulty_regressions (Timeout)               ai
+	 12 - ai_economy_regressions (Timeout)                  ai economy
+Errors while running CTest

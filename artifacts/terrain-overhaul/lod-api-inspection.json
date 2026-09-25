@@ -1,0 +1,66 @@
+{
+  "docs": {
+    "check_static_mesh_has_available_lod": "X.check_static_mesh_has_available_lod(static_mesh_asset, requested_lod, debug=None) -> GeometryScriptSearchOutcomePins or None\nCheck if a Static Mesh Asset has the RequestedLOD available, ie if CopyMeshFromStaticMesh will be able to\nsucceed for the given LODType and LODIndex.\n\nArgs:\n    static_mesh_asset (StaticMesh): \n    requested_lod (GeometryScriptMeshReadLOD): \n    debug (GeometryScriptDebug): \n\nReturns:\n    GeometryScriptSearchOutcomePins or None: \n\n    outcome (GeometryScriptSearchOutcomePins):",
+    "copy_mesh_from_static_mesh": "X.copy_mesh_from_static_mesh(from_static_mesh_asset, to_dynamic_mesh, asset_options, requested_lod, debug=None) -> (DynamicMesh, outcome=GeometryScriptOutcomePins)\nExtracts a Dynamic Mesh from a Static Mesh Asset, using section indices for the material IDs -- use GetSectionMaterialListFromStaticMesh to get the corresponding materials.\n\nNote that the LOD Index in RequestedLOD will be silently clamped to the available number of LODs (SourceModel or RenderData)\n\nArgs:\n    from_static_mesh_asset (StaticMesh): \n    to_dynamic_mesh (DynamicMesh): \n    asset_options (GeometryScriptCopyMeshFromAssetOptions): \n    requested_lod (GeometryScriptMeshReadLOD): \n    debug (GeometryScriptDebug): \n\nReturns:\n    GeometryScriptOutcomePins: \n\n    outcome (GeometryScriptOutcomePins):",
+    "copy_mesh_from_static_mesh_v2": "X.copy_mesh_from_static_mesh_v2(from_static_mesh_asset, to_dynamic_mesh, asset_options, requested_lod, use_section_materials=True, debug=None) -> (DynamicMesh, outcome=GeometryScriptOutcomePins)\nExtracts a Dynamic Mesh from a Static Mesh Asset.\n\nNote that the LOD Index in RequestedLOD will be silently clamped to the available number of LODs (SourceModel or RenderData)\n\nArgs:\n    from_static_mesh_asset (StaticMesh): \n    to_dynamic_mesh (DynamicMesh): \n    asset_options (GeometryScriptCopyMeshFromAssetOptions): \n    requested_lod (GeometryScriptMeshReadLOD): \n    use_section_materials (bool): Whether to use the mesh section indices as material IDs. If true, use GetSectionMaterialListFromStaticMesh to get the corresponding materials. If false, use GetMaterialListFromStaticMesh to get the materials instead.\n    debug (GeometryScriptDebug): \n\nReturns:\n    GeometryScriptOutcomePins: \n\n    outcome (GeometryScriptOutcomePins):",
+    "get_has_triangle_id_gaps": "X.get_has_triangle_id_gaps(target_mesh) -> bool\nReturns true if there are gaps in the Triangle ID list, such that Get Num Triangle IDs is greater than Get Triangle Count.\n\nArgs:\n    target_mesh (DynamicMesh): \n\nReturns:\n    bool:",
+    "get_has_vertex_colors": "X.get_has_vertex_colors(target_mesh) -> bool\n\n\nArgs:\n    target_mesh (DynamicMesh): \n\nReturns:\n    bool: true if the TargetMesh has the Vertex Colors attribute enabled",
+    "get_interpolated_triangle_vertex_color": "X.get_interpolated_triangle_vertex_color(target_mesh, triangle_id, barycentric_coords, default_color) -> (DynamicMesh, tri_has_valid_vertex_colors=bool, interpolated_color=LinearColor)\nCompute the interpolated Vertex Color (A*Color1 + B*Color2 + C*Color3), where (A,B,C)=BarycentricCoords and the Colors are taken\nfrom the specified TriangleID in the Vertex Color layer of the TargetMesh.\n\nArgs:\n    target_mesh (DynamicMesh): \n    triangle_id (int32): \n    barycentric_coords (Vector): \n    default_color (LinearColor): \n\nReturns:\n    tuple: \n\n    tri_has_valid_vertex_colors (bool): will be returned true if TriangleID exists in TargetMesh and has Colors set, and otherwise will be returned false\n\n    interpolated_color (LinearColor):",
+    "get_num_triangle_i_ds": "X.get_num_triangle_i_ds(target_mesh) -> int32\nGets the number of Triangle IDs in the mesh. This may be larger than the Triangle Count if the mesh is not dense, even after deleting triangles.\n\nArgs:\n    target_mesh (DynamicMesh): \n\nReturns:\n    int32:",
+    "get_triangle_vertex_colors": "X.get_triangle_vertex_colors(target_mesh, triangle_id) -> (DynamicMesh, color1=LinearColor, color2=LinearColor, color3=LinearColor, tri_has_valid_vertex_colors=bool)\nFor the specified TriangleID of the TargetMesh, get the Vertex Colors at each vertex of the Triangle.\nThese Colors will be taken from the Vertex Color Attribute, ie they will potentially be split-colors.\n\nArgs:\n    target_mesh (DynamicMesh): \n    triangle_id (int32): \n\nReturns:\n    tuple: \n\n    color1 (LinearColor): \n\n    color2 (LinearColor): \n\n    color3 (LinearColor): \n\n    tri_has_valid_vertex_colors (bool): will be returned true if TriangleID exists in TargetMesh and has Vertex Colors set",
+    "is_valid_triangle_id": "X.is_valid_triangle_id(target_mesh, triangle_id) -> bool\nReturns true if Triangle ID refers to a valid Triangle in the Target Mesh.\n\nArgs:\n    target_mesh (DynamicMesh): \n    triangle_id (int32): \n\nReturns:\n    bool:",
+    "CopyOptions": "Geometry Script Copy Mesh from Asset Options\n\n**C++ Source:**\n\n- **Plugin**: GeometryScripting\n- **Module**: GeometryScriptingCore\n- **File**: MeshAssetFunctions.h\n\n**Editor Properties:** (see get_editor_property/set_editor_property)\n\n- ``apply_build_settings`` (bool):  [Read-Write] Whether to apply Build Settings during the mesh copy.\n- ``ignore_remove_degenerates`` (bool):  [Read-Write] Whether to ignore the 'remove degenerates' option from Build Settings. Note: Only applies if 'Apply Build Settings' is enabled.\n- ``request_tangents`` (bool):  [Read-Write] Whether to request tangents on the copied mesh. If tangents are not requested, tangent-related build settings will also be ignored.\n- ``use_build_scale`` (bool):  [Read-Write] Whether to scale the copied mesh by the Build Setting's 'Build Scale'. Note: This is considered separately from the 'Apply Build Settings' option.",
+    "SearchEnum": "['__doc__', 'FOUND', 'NOT_FOUND', '_wrapper_meta_data']",
+    "OutcomeEnum": "['__doc__', 'FAILURE', 'SUCCESS', '_wrapper_meta_data']"
+  },
+  "calls": {
+    "source_available": {
+      "type": "GeometryScriptSearchOutcomePins",
+      "repr": "<GeometryScriptSearchOutcomePins.FOUND: 0>"
+    },
+    "source_copy": {
+      "type": "tuple",
+      "repr": "(<Object '/Engine/Transient.DynamicMesh_0' (0x492f3673aa0) Class 'DynamicMesh'>, <GeometryScriptOutcomePins.SUCCESS: 1>)"
+    },
+    "source_has_colors": {
+      "type": "bool",
+      "repr": "True"
+    },
+    "source_valid_triangle": {
+      "type": "bool",
+      "repr": "True"
+    },
+    "source_corner_colors": {
+      "type": "tuple",
+      "repr": "(<Object '/Engine/Transient.DynamicMesh_0' (0x492f3673aa0) Class 'DynamicMesh'>, <Struct 'LinearColor' (0x70af6c6520) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>, <Struct 'LinearColor' (0x70af6793a0) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>, <Struct 'LinearColor' (0x70af735aa0) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>, True)"
+    },
+    "render_available": {
+      "type": "GeometryScriptSearchOutcomePins",
+      "repr": "<GeometryScriptSearchOutcomePins.FOUND: 0>"
+    },
+    "render_copy": {
+      "type": "tuple",
+      "repr": "(<Object '/Engine/Transient.DynamicMesh_1' (0x492f3671ce0) Class 'DynamicMesh'>, <GeometryScriptOutcomePins.SUCCESS: 1>)"
+    },
+    "render_has_colors": {
+      "type": "bool",
+      "repr": "False"
+    },
+    "render_valid_triangle": {
+      "type": "bool",
+      "repr": "True"
+    },
+    "render_corner_colors": {
+      "type": "tuple",
+      "repr": "(<Object '/Engine/Transient.DynamicMesh_1' (0x492f3671ce0) Class 'DynamicMesh'>, <Struct 'LinearColor' (0x70af735ce0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 0.000000}>, <Struct 'LinearColor' (0x70af7360a0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 0.000000}>, <Struct 'LinearColor' (0x70af735fe0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 0.000000}>, False)"
+    }
+  },
+  "errors": [
+    {
+      "source_triangle_ids": "Traceback (most recent call last):\n  File \"/tmp/cinder-inspect-lod-colors.py\", line 7, in inspect\n    value = call()\n            ^^^^^^\n  File \"/tmp/cinder-inspect-lod-colors.py\", line 33, in <lambda>\n    inspect(label+'_triangle_ids',lambda:q.get_num_triangle_ids(dm))\n                                         ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: type object 'GeometryScript_MeshQueries' has no attribute 'get_num_triangle_ids'\n"
+    },
+    {
+      "render_triangle_ids": "Traceback (most recent call last):\n  File \"/tmp/cinder-inspect-lod-colors.py\", line 7, in inspect\n    value = call()\n            ^^^^^^\n  File \"/tmp/cinder-inspect-lod-colors.py\", line 33, in <lambda>\n    inspect(label+'_triangle_ids',lambda:q.get_num_triangle_ids(dm))\n                                         ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: type object 'GeometryScript_MeshQueries' has no attribute 'get_num_triangle_ids'\n"
+    }
+  ]
+}

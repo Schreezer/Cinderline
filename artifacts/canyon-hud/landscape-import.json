@@ -7,30 +7,30 @@
       "label": "CinderLandscapeMap0",
       "tags": [
         "CinderLandscapeMap0",
-        "CinderLandscapeGeometry_118BA617280B3B2A"
+        "CinderLandscapeGeometry_9AAECBB5BDBD2781"
       ],
       "components": 4,
-      "scale": "<Struct 'Vector' (0x70fe3bb7b0) {x: 38.095238, y: 38.095238, z: 1.000000}>",
+      "scale": "<Struct 'Vector' (0x15d45ff80) {x: 38.095238, y: 38.095238, z: 2.000000}>",
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround"
     },
     {
       "label": "CinderLandscapeMap1",
       "tags": [
         "CinderLandscapeMap1",
-        "CinderLandscapeGeometry_2A5ED9CDFC910B28"
+        "CinderLandscapeGeometry_148ED71E8230933F"
       ],
       "components": 4,
-      "scale": "<Struct 'Vector' (0x70f1fe9820) {x: 38.095238, y: 38.095238, z: 1.000000}>",
+      "scale": "<Struct 'Vector' (0x15d45fdf0) {x: 38.095238, y: 38.095238, z: 2.000000}>",
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround"
     },
     {
       "label": "CinderLandscapeMap2",
       "tags": [
         "CinderLandscapeMap2",
-        "CinderLandscapeGeometry_5CB345890272150C"
+        "CinderLandscapeGeometry_C1C4926F39EBDDAF"
       ],
       "components": 4,
-      "scale": "<Struct 'Vector' (0x70f1fe9910) {x: 38.095238, y: 38.095238, z: 1.000000}>",
+      "scale": "<Struct 'Vector' (0x15d45fd00) {x: 38.095238, y: 38.095238, z: 2.000000}>",
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonGround.M_CinderCanyonGround"
     }
   ],
@@ -48,7 +48,7 @@
           384
         ],
         "army_ribbon": false,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Striker",
@@ -60,7 +60,7 @@
           384
         ],
         "army_ribbon": true,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Lancer",
@@ -72,7 +72,7 @@
           384
         ],
         "army_ribbon": true,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Scout",
@@ -84,7 +84,7 @@
           384
         ],
         "army_ribbon": true,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Bastion",
@@ -96,7 +96,7 @@
           384
         ],
         "army_ribbon": true,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Mortar",
@@ -108,7 +108,7 @@
           384
         ],
         "army_ribbon": true,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Mender",
@@ -120,7 +120,7 @@
           384
         ],
         "army_ribbon": true,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Kite",
@@ -132,7 +132,7 @@
           384
         ],
         "army_ribbon": true,
-        "operation": "updated"
+        "operation": "preserved"
       },
       {
         "kind": "Turret",
@@ -144,7 +144,7 @@
           384
         ],
         "army_ribbon": false,
-        "operation": "updated"
+        "operation": "preserved"
       }
     ]
   }

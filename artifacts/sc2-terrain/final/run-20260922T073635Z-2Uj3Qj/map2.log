@@ -1,0 +1,1506 @@
+﻿Log file open, 09/22/26 13:07:15
+LogInit: Running DelayedAutoRegister Phase StartOfEnginePreInit
+LogInit: Display: Running engine for game: Cinderline
+LogCore: UTS: Unreal Trace Server launched successfully
+LogTrace: Initializing trace...
+LogCore: Display: Requested channels: 'cpu,gpu,frame,log,bookmark,screenshot,region'
+LogCore: No trace connection. Tracing to in-memory cache.
+LogTrace: Finished trace initialization.
+LogCsvProfiler: Display: Metadata set : platform="Mac"
+LogCsvProfiler: Display: Metadata set : config="Development"
+LogTrace: Display: Control listening on port 1985
+LogCsvProfiler: Display: Metadata set : buildversion="++UE5+Release-5.8-CL-56702186"
+LogCsvProfiler: Display: Metadata set : engineversion="5.8.2-56702186+++UE5+Release-5.8"
+LogCsvProfiler: Display: Metadata set : enginereleaseversion="5.8.2"
+LogCsvProfiler: Display: Metadata set : os="macOS 27.0 26A428"
+LogCsvProfiler: Display: Metadata set : cpu="Apple|Apple M1 Max"
+LogCsvProfiler: Display: Metadata set : pgoenabled="0"
+LogCsvProfiler: Display: Metadata set : pgoprofilingenabled="0"
+LogCsvProfiler: Display: Metadata set : ltoenabled="0"
+LogCsvProfiler: Display: Metadata set : asan="0"
+LogCsvProfiler: Display: Metadata set : mergedmodules="0"
+LogCsvProfiler: Display: Metadata set : compacttset="0"
+LogCsvProfiler: Display: Metadata set : commandline="" /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -game -unattended -windowed -ForceRes -ResX=1440 -ResY=900 -nosound -nosplash -mobilehud -ExecCmds="t.MaxFPS 30,cinder.quality,cinder.canyonpreview map2" -AssetRegistryCacheRootFolder=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/final/run-20260922T073635Z-2Uj3Qj/map2-registry -abslog=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/final/run-20260922T073635Z-2Uj3Qj/map2.log""
+LogCsvProfiler: Display: Metadata set : loginid="e153dc515844b7ef936fddb6789fe54e"
+LogCsvProfiler: Display: Metadata set : llm="0"
+LogModuleManager: InternalLoadLibrary: 'StorageServerClient' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-StorageServerClient.dylib')
+LogModuleManager: InternalLoadLibrary: 'CookOnTheFly' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-CookOnTheFly.dylib')
+LogModuleManager: InternalLoadLibrary: 'StreamingFile' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-StreamingFile.dylib')
+LogModuleManager: InternalLoadLibrary: 'NetworkFile' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-NetworkFile.dylib')
+LogModuleManager: InternalLoadLibrary: 'PakFile' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-PakFile.dylib')
+LogModuleManager: InternalLoadLibrary: 'RSA' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-RSA.dylib')
+LogModuleManager: InternalLoadLibrary: 'SandboxFile' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SandboxFile.dylib')
+LogCsvProfiler: Display: Metadata set : zenstreaming="0"
+LogInit: Running DelayedAutoRegister Phase FileSystemReady
+LogModuleManager: InternalLoadLibrary: 'DesktopPlatform' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-DesktopPlatform.dylib')
+Launching UnrealBuildTool... [/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Build/BatchFiles/Mac/Build.sh -Mode=ValidatePlatforms -OutputSDKs  -AllPlatforms  -project="/Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject" -log="/Users/chirag13/Library/Logs/Cinderline/AutoSDKInfo.txt" -verbose -timestamps]
+LogInit: Running DelayedAutoRegister Phase TaskGraphSystemReady
+LogStats: Stats thread started at 0.261030
+LogInit: Running DelayedAutoRegister Phase StatSystemReady
+LogModuleManager: InternalLoadLibrary: 'CoreUObject' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-CoreUObject.dylib')
+LogCsvProfiler: Display: Metadata set : systemresolution.resx="1280"
+LogCsvProfiler: Display: Metadata set : systemresolution.resy="720"
+LogModuleManager: InternalLoadLibrary: 'Engine' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Engine.dylib')
+LogModuleManager: InternalLoadLibrary: 'UniversalObjectLocator' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-UniversalObjectLocator.dylib')
+LogModuleManager: InternalLoadLibrary: 'Renderer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Renderer.dylib')
+LogModuleManager: InternalLoadLibrary: 'AnimGraphRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AnimGraphRuntime.dylib')
+LogModuleManager: InternalLoadLibrary: 'AudioMixerCoreAudio' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioMixerCoreAudio.dylib')
+LogModuleManager: InternalLoadLibrary: 'AudioMixerCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioMixerCore.dylib')
+LogModuleManager: InternalLoadLibrary: 'SignalProcessing' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SignalProcessing.dylib')
+LogModuleManager: InternalLoadLibrary: 'SlateRHIRenderer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SlateRHIRenderer.dylib')
+LogModuleManager: InternalLoadLibrary: 'Landscape' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Landscape.dylib')
+LogModuleManager: InternalLoadLibrary: 'RHICore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-RHICore.dylib')
+LogModuleManager: InternalLoadLibrary: 'RenderCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-RenderCore.dylib')
+LogModuleManager: InternalLoadLibrary: 'TextureCompressor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureCompressor.dylib')
+LogModuleManager: InternalLoadLibrary: 'OpenColorIOWrapper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-OpenColorIOWrapper.dylib')
+LogModuleManager: InternalLoadLibrary: 'Virtualization' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Virtualization.dylib')
+LogModuleManager: InternalLoadLibrary: 'MessageLog' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MessageLog.dylib')
+LogModuleManager: InternalLoadLibrary: 'AudioEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioEditor.dylib')
+LogModuleManager: InternalLoadLibrary: 'PropertyEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-PropertyEditor.dylib')
+LogModuleManager: InternalLoadLibrary: 'AudioExtensions' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioExtensions.dylib')
+LogModuleManager: InternalLoadLibrary: 'AnimationModifiers' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AnimationModifiers.dylib')
+LogICUInternationalization: ICU TimeZone Detection - Raw Offset: +5:30, Platform Override: ''
+LogInit: Session CrashGUID >====================================================
+         Session CrashGUID >   UECC-Mac-EDA5009B4D414066C99467A3F19DEFDB
+         Session CrashGUID >====================================================
+LogConfig: No local boot hotfix file found at: [../../../../starCraft/Saved/PersistentDownloadDir/HotfixForNextBoot.txt]
+LogInit: Running DelayedAutoRegister Phase IniSystemReady
+LogAudio: Display: Audio Device Manager not initializing due to all audio being disabled. If this is not intentional, please check command line arguments for "-nosound".
+LogModuleManager: InternalLoadLibrary: 'TelemetryUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TelemetryUtils.dylib')
+LogPluginManager: Looking for build plugins target receipt
+LogPluginManager: Found matching target receipt: ../../../../starCraft/Binaries/Mac/CinderlineEditor.target
+LogConfig: Display: Loading VulkanPC ini files took 0.01 seconds
+LogPluginManager: Looking for enabled plugins target receipt
+LogConfig: Display: Loading LinuxArm64 ini files took 0.02 seconds
+LogPluginManager: Found matching target receipt: ../../../../starCraft/Binaries/Mac/CinderlineEditor.target
+LogConfig: Display: Loading IOS ini files took 0.01 seconds
+LogPluginManager: Mounting Engine plugin EnhancedInput
+LogPluginManager: Mounting Engine plugin Dataflow
+LogPluginManager: Mounting Engine plugin ChaosCloth
+LogPluginManager: Mounting Engine plugin Mutable
+LogPluginManager: Mounting Engine plugin CmdLinkServer
+LogPluginManager: Mounting Engine plugin PCG
+LogPluginManager: Mounting Engine plugin AudioInsights
+LogPluginManager: Mounting Engine plugin MeshPainting
+LogPluginManager: Mounting Engine plugin TraceUtilities
+LogPluginManager: Mounting Engine plugin IoStoreInsights
+LogPluginManager: Mounting Engine plugin AudioInsightsRuntime
+LogPluginManager: Mounting Engine plugin Bridge
+LogPluginManager: Mounting Engine plugin Fab
+LogPluginManager: Mounting Engine plugin UbaController
+LogPluginManager: Mounting Engine plugin XGEController
+LogPluginManager: Mounting Engine plugin RenderGraphInsights
+LogPluginManager: Mounting Engine plugin BaseMaterial
+LogPluginManager: Mounting Engine plugin MassInsights
+LogPluginManager: Mounting Engine plugin WorldMetrics
+LogPluginManager: Mounting Engine plugin AudioModulationInsights
+LogPluginManager: Mounting Engine plugin ChaosVD
+LogPluginManager: Mounting Engine plugin ChaosInsights
+LogPluginManager: Mounting Engine plugin RenderTraceInsights
+LogConfig: Display: Loading Mac ini files took 0.01 seconds
+LogPluginManager: Mounting Engine plugin DerivedDataBuildController
+LogPluginManager: Mounting Engine plugin AnimationSharing
+LogPluginManager: Mounting Engine plugin GPUReshape
+LogPluginManager: Mounting Engine plugin CodeLiteSourceCodeAccess
+LogPluginManager: Mounting Engine plugin PropertyAccessNode
+LogPluginManager: Mounting Engine plugin RiderSourceCodeAccess
+LogPluginManager: Mounting Engine plugin KDevelopSourceCodeAccess
+LogPluginManager: Mounting Engine plugin PlasticSourceControl
+LogPluginManager: Mounting Engine plugin ProjectLauncher
+LogPluginManager: Mounting Engine plugin RenderDocPlugin
+LogPluginManager: Mounting Engine plugin UObjectPlugin
+LogPluginManager: Mounting Engine plugin VisualStudioCodeSourceCodeAccess
+LogPluginManager: Mounting Engine plugin VisualStudioSourceCodeAccess
+LogPluginManager: Mounting Engine plugin PixWinPlugin
+LogPluginManager: Mounting Engine plugin SubversionSourceControl
+LogPluginManager: Mounting Engine plugin CLionSourceCodeAccess
+LogPluginManager: Mounting Engine plugin N10XSourceCodeAccess
+LogPluginManager: Mounting Engine plugin XCodeSourceCodeAccess
+LogPluginManager: Mounting Engine plugin PerforceSourceControl
+LogPluginManager: Mounting Engine plugin NullSourceCodeAccess
+LogPluginManager: Mounting Engine plugin NamingTokens
+LogPluginManager: Mounting Engine plugin DumpGPUServices
+LogPluginManager: Mounting Engine plugin GitSourceControl
+LogPluginManager: Mounting Engine plugin PluginUtils
+LogPluginManager: Mounting Engine plugin GLTFExporter
+LogPluginManager: Mounting Engine plugin VariantManager
+LogPluginManager: Mounting Engine plugin DatasmithContent
+LogPluginManager: Mounting Engine plugin VariantManagerContent
+LogPluginManager: Mounting Engine plugin NiagaraSimCaching
+LogPluginManager: Mounting Engine plugin Cascade
+LogPluginManager: Mounting Engine plugin Niagara
+LogPluginManager: Mounting Engine plugin NiagaraPreviewContent
+LogPluginManager: Mounting Engine plugin NiagaraInsights
+LogPluginManager: Mounting Engine plugin CableComponent
+LogPluginManager: Mounting Engine plugin SoundFields
+LogPluginManager: Mounting Engine plugin InputDebugging
+LogPluginManager: Mounting Engine plugin ProceduralMeshComponent
+LogPluginManager: Mounting Engine plugin ResonanceAudio
+LogPluginManager: Mounting Engine plugin ModelViewViewModel
+LogPluginManager: Mounting Engine plugin WebMMoviePlayer
+LogPluginManager: Mounting Engine plugin AssetTags
+LogPluginManager: Mounting Engine plugin RigVM
+LogPluginManager: Mounting Engine plugin WindowsDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin AudioWidgets
+LogPluginManager: Mounting Engine plugin ActorLayerUtilities
+LogPluginManager: Mounting Engine plugin AndroidMoviePlayer
+LogPluginManager: Mounting Engine plugin PropertyBindingUtils
+LogPluginManager: Mounting Engine plugin CustomMeshComponent
+LogPluginManager: Mounting Engine plugin AndroidPermission
+LogPluginManager: Mounting Engine plugin Synthesis
+LogPluginManager: Mounting Engine plugin PropertyAccessEditor
+LogPluginManager: Mounting Engine plugin GooglePAD
+LogPluginManager: Mounting Engine plugin MobilePatchingUtils
+LogPluginManager: Mounting Engine plugin WindowsMoviePlayer
+LogPluginManager: Mounting Engine plugin HairStrands
+LogPluginManager: Mounting Engine plugin ComputeFramework
+LogPluginManager: Mounting Engine plugin GeometryScripting
+LogPluginManager: Mounting Engine plugin MsQuic
+LogPluginManager: Mounting Engine plugin AudioCapture
+LogPluginManager: Mounting Engine plugin SignificanceManager
+LogPluginManager: Mounting Engine plugin MeshModelingToolset
+LogPluginManager: Mounting Engine plugin ChunkDownloader
+LogPluginManager: Mounting Engine plugin ExampleDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin AudioSynesthesia
+LogPluginManager: Mounting Engine plugin WaveTable
+LogPluginManager: Mounting Engine plugin AppleImageUtils
+LogPluginManager: Mounting Engine plugin IOSDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin StateTree
+LogPluginManager: Mounting Engine plugin AppleMoviePlayer
+LogPluginManager: Mounting Engine plugin GeometryCache
+LogPluginManager: Mounting Engine plugin SkeletalMerging
+LogPluginManager: Mounting Engine plugin AndroidDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin GeometryProcessing
+LogPluginManager: Mounting Engine plugin LinuxDeviceProfileSelector
+LogPluginManager: Mounting Engine plugin ArchVisCharacter
+LogPluginManager: Mounting Engine plugin LocationServicesBPLibrary
+LogPluginManager: Mounting Engine plugin Metasound
+LogConfig: Display: Loading Unix ini files took 0.02 seconds
+LogPluginManager: Mounting Engine plugin GoogleCloudMessaging
+LogPluginManager: Mounting Engine plugin CompositeCore
+LogPluginManager: Mounting Engine plugin OnlineSubsystem
+LogPluginManager: Mounting Engine plugin OnlineBase
+LogPluginManager: Mounting Engine plugin EOSShared
+LogPluginManager: Mounting Engine plugin OnlineServices
+LogPluginManager: Mounting Engine plugin OnlineSubsystemNull
+LogPluginManager: Mounting Engine plugin OnlineSubsystemUtils
+LogPluginManager: Mounting Engine plugin MetaHumanSDK
+LogPluginManager: Mounting Engine plugin LauncherChunkInstaller
+LogPluginManager: Mounting Engine plugin Takes
+LogPluginManager: Mounting Engine plugin EaseCurveTool
+LogPluginManager: Mounting Engine plugin BlendSpaceMotionAnalysis
+LogPluginManager: Mounting Engine plugin GameplayInsights
+LogPluginManager: Mounting Engine plugin ControlRigSpline
+LogPluginManager: Mounting Engine plugin ACLPlugin
+LogPluginManager: Mounting Engine plugin TweeningUtils
+LogPluginManager: Mounting Engine plugin SkeletalMeshModelingTools
+LogPluginManager: Mounting Engine plugin ControlRig
+LogPluginManager: Mounting Engine plugin AnimatorKit
+LogPluginManager: Mounting Engine plugin DeformerGraph
+LogPluginManager: Mounting Engine plugin RigLogic
+LogPluginManager: Mounting Engine plugin IKRig
+LogConfig: Display: Loading TVOS ini files took 0.02 seconds
+LogPluginManager: Mounting Engine plugin AnimationModifierLibrary
+LogPluginManager: Mounting Engine plugin AnimationData
+LogPluginManager: Mounting Engine plugin ControlRigModules
+LogPluginManager: Mounting Engine plugin PhysicsControl
+LogPluginManager: Mounting Engine plugin AISupport
+LogPluginManager: Mounting Engine plugin EnvironmentQueryEditor
+LogPluginManager: Mounting Engine plugin AutomatedPerfTestTools
+LogPluginManager: Mounting Engine plugin TemplateSequence
+LogPluginManager: Mounting Engine plugin ActorSequence
+LogPluginManager: Mounting Engine plugin SequencerScripting
+LogPluginManager: Mounting Engine plugin SequenceValidator
+LogPluginManager: Mounting Engine plugin LevelSequenceEditor
+LogPluginManager: Mounting Engine plugin AlembicImporter
+LogPluginManager: Mounting Engine plugin NNERuntimeORT
+LogPluginManager: Mounting Engine plugin NNEDenoiser
+LogPluginManager: Mounting Engine plugin InterchangeAssets
+LogPluginManager: Mounting Engine plugin Interchange
+LogPluginManager: Mounting Engine plugin InterchangeEditor
+LogPluginManager: Mounting Engine plugin GameplayCameras
+LogPluginManager: Mounting Engine plugin EngineCameras
+LogPluginManager: Mounting Engine plugin CameraShakePreviewer
+LogPluginManager: Mounting Engine plugin OodleNetwork
+LogPluginManager: Mounting Engine plugin Paper2D
+LogPluginManager: Mounting Engine plugin FacialAnimation
+LogPluginManager: Mounting Engine plugin MeshLODToolset
+LogPluginManager: Mounting Engine plugin EditorDebugTools
+LogPluginManager: Mounting Engine plugin MaterialAnalyzer
+LogPluginManager: Mounting Engine plugin BlueprintMaterialTextureNodes
+LogPluginManager: Mounting Engine plugin MobileLauncherProfileWizard
+LogPluginManager: Mounting Engine plugin AssetManagerEditor
+LogPluginManager: Mounting Engine plugin BlueprintHeaderView
+LogPluginManager: Mounting Engine plugin SequencerAnimTools
+LogPluginManager: Mounting Engine plugin GameplayTagsEditor
+LogPluginManager: Mounting Engine plugin EditorScriptingUtilities
+LogPluginManager: Mounting Engine plugin ConsoleVariables
+LogPluginManager: Mounting Engine plugin CurveEditorTools
+LogPluginManager: Mounting Engine plugin ChangelistReview
+LogPluginManager: Mounting Engine plugin CryptoKeys
+LogPluginManager: Mounting Engine plugin StylusInput
+LogPluginManager: Mounting Engine plugin UVEditor
+LogPluginManager: Mounting Engine plugin MaterialAssetWizard
+LogPluginManager: Mounting Engine plugin ProxyLODPlugin
+LogPluginManager: Mounting Engine plugin WorldPartitionHLODUtilities
+LogPluginManager: Mounting Engine plugin MacGraphicsSwitching
+LogPluginManager: Mounting Engine plugin GeometryMode
+LogPluginManager: Mounting Engine plugin PluginBrowser
+LogPluginManager: Mounting Engine plugin ModelingToolsEditorMode
+LogPluginManager: Mounting Engine plugin ColorGrading
+LogPluginManager: Mounting Engine plugin EngineAssetDefinitions
+LogPluginManager: Mounting Engine plugin SpeedTreeImporter
+LogPluginManager: Mounting Engine plugin UMGWidgetPreview
+LogPluginManager: Mounting Engine plugin DataValidation
+LogPluginManager: Mounting Engine plugin InterchangeTests
+LogPluginManager: Mounting Engine plugin LocalizableMessage
+LogPluginManager: Mounting Engine plugin EditorTelemetry
+LogPluginManager: Mounting Engine plugin AutomationUtils
+LogPluginManager: Mounting Engine plugin RuntimeTelemetry
+LogPluginManager: Mounting Engine plugin EditorTRSGizmo
+LogPluginManager: Mounting Engine plugin BackChannel
+LogPluginManager: Mounting Engine plugin Water
+LogPluginManager: Mounting Engine plugin LevelSequenceNavigatorBridge
+LogPluginManager: Mounting Engine plugin SkeletalReduction
+LogPluginManager: Mounting Engine plugin Buoyancy
+LogPluginManager: Mounting Engine plugin PythonScriptPlugin
+LogPluginManager: Mounting Engine plugin LowLevelNetTrace
+LogPluginManager: Mounting Engine plugin SequenceNavigator
+LogPluginManager: Mounting Engine plugin ChaosNiagara
+LogPluginManager: Mounting Engine plugin ChaosUserDataPT
+LogPluginManager: Mounting Engine plugin ToolPresets
+LogPluginManager: Mounting Engine plugin Landmass
+LogPluginManager: Mounting Engine plugin GeometryFlow
+LogPluginManager: Mounting Engine plugin EditorDataStorageFeatures
+LogPluginManager: Mounting Engine plugin ChaosSolverPlugin
+LogPluginManager: Mounting Engine plugin MutableAssetUserData
+LogPluginManager: Mounting Engine plugin AdvancedRenamer
+LogPluginManager: Mounting Engine plugin ChaosEditor
+LogPluginManager: Mounting Engine plugin HttpInsights
+LogPluginManager: Mounting Engine plugin ControlRigPhysics
+LogPluginManager: Mounting Engine plugin GizmoFramework
+LogPluginManager: Mounting Engine plugin MeshModelingToolsetExp
+LogPluginManager: Mounting Engine plugin EditorPerformance
+LogPluginManager: Mounting Engine plugin PlatformCrypto
+LogPluginManager: Mounting Engine plugin ChaosCaching
+LogPluginManager: Mounting Engine plugin EditorDataStorage
+LogPluginManager: Mounting Engine plugin FullBodyIK
+LogPluginManager: Mounting Engine plugin CharacterAI
+LogPluginManager: Mounting Engine plugin NFORDenoise
+LogPluginManager: Mounting Engine plugin GlobalConfigurationData
+LogPluginManager: Mounting Engine plugin PlanarCut
+LogPluginManager: Mounting Engine plugin GeometryCollectionPlugin
+LogPluginManager: Mounting Engine plugin GeometryDataflow
+LogPluginManager: Mounting Engine plugin Fracture
+LogPluginManager: Mounting Engine plugin TcpMessaging
+LogPluginManager: Mounting Engine plugin UdpMessaging
+LogPluginManager: Mounting Engine plugin MediaPlate
+LogPluginManager: Mounting Engine plugin AndroidMedia
+LogPluginManager: Mounting Engine plugin MediaCompositing
+LogConfig: Display: Loading Linux ini files took 0.02 seconds
+LogPluginManager: Mounting Engine plugin MediaPlayerEditor
+LogConfig: Display: Loading Android ini files took 0.01 seconds
+LogPluginManager: Mounting Engine plugin MP4Utilities
+LogPluginManager: Mounting Engine plugin ImgMedia
+LogPluginManager: Mounting Engine plugin AvfMedia
+LogPluginManager: Mounting Engine plugin TmvMedia
+LogPluginManager: Mounting Engine plugin WmfMedia
+LogPluginManager: Mounting Engine plugin WebMMedia
+LogPluginManager: Mounting Engine plugin ConcertMain
+LogPluginManager: Mounting Engine plugin FileSandbox
+LogPluginManager: Mounting Engine plugin SQLiteCore
+LogPluginManager: Mounting Engine plugin PortableObjectFileDataSource
+LogPluginManager: Mounting Engine plugin XInputDevice
+LogPluginManager: Mounting Engine plugin OnlineSubsystemGooglePlay
+LogPluginManager: Mounting Engine plugin BaseCharacterFXEditor
+LogPluginManager: Mounting Engine plugin OnlineSubsystemIOS
+LogPluginManager: Mounting Engine plugin LightMixer
+LogPluginManager: Mounting Engine plugin ObjectMixer
+LogPluginManager: Mounting Engine plugin InterchangeAxfAssets
+LogPluginManager: Mounting Engine plugin ContentBrowserFileDataSource
+LogPluginManager: Mounting Engine plugin ContentBrowserAssetDataSource
+LogPluginManager: Mounting Engine plugin ContentBrowserClassDataSource
+LogPluginManager: Mounting Engine plugin Scribble
+LogPluginManager: Mounting Engine plugin ConcertSharedSlate
+LogPluginManager: Mounting Engine plugin ConcertSyncCore
+LogPluginManager: Mounting Engine plugin ConcertSyncClient
+LogPluginManager: Mounting Project plugin CinderMetalFX
+LogConfig: Display: Loading Windows ini files took 0.02 seconds
+LogConfig: Display: Loading VisionOS ini files took 0.02 seconds
+LogModuleManager: InternalLoadLibrary: 'PerforceSourceControl' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/PerforceSourceControl/Binaries/Mac/libUnrealEditor-PerforceSourceControl.dylib')
+LogModuleManager: InternalLoadLibrary: 'SourceControl' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SourceControl.dylib')
+SourceControl: Revision control is disabled
+SourceControl: Revision control is disabled
+LogModuleManager: InternalLoadLibrary: 'PythonScriptPluginPreload' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/PythonScriptPlugin/Binaries/Mac/libUnrealEditor-PythonScriptPluginPreload.dylib')
+LogModuleManager: InternalLoadLibrary: 'PlatformCrypto' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/PlatformCrypto/Binaries/Mac/libUnrealEditor-PlatformCrypto.dylib')
+LogModuleManager: InternalLoadLibrary: 'PlatformCryptoTypes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/PlatformCrypto/Binaries/Mac/libUnrealEditor-PlatformCryptoTypes.dylib')
+LogModuleManager: InternalLoadLibrary: 'PlatformCryptoContext' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/PlatformCrypto/Binaries/Mac/libUnrealEditor-PlatformCryptoContext.dylib')
+LogInit: Running DelayedAutoRegister Phase EarliestPossiblePluginsLoaded
+LogModuleManager: InternalLoadLibrary: 'ChaosCloth' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/ChaosCloth/Binaries/Mac/libUnrealEditor-ChaosCloth.dylib')
+LogModuleManager: InternalLoadLibrary: 'PCGCompute' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/PCG/Binaries/Mac/libUnrealEditor-PCGCompute.dylib')
+LogModuleManager: InternalLoadLibrary: 'GLTFExporter' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Enterprise/GLTFExporter/Binaries/Mac/libUnrealEditor-GLTFExporter.dylib')
+LogModuleManager: InternalLoadLibrary: 'DatasmithContent' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Enterprise/DatasmithContent/Binaries/Mac/libUnrealEditor-DatasmithContent.dylib')
+LogModuleManager: InternalLoadLibrary: 'VariantManagerContent' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Enterprise/VariantManagerContent/Binaries/Mac/libUnrealEditor-VariantManagerContent.dylib')
+LogModuleManager: InternalLoadLibrary: 'NiagaraShader' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/Niagara/Binaries/Mac/libUnrealEditor-NiagaraShader.dylib')
+LogModuleManager: InternalLoadLibrary: 'NiagaraVertexFactories' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/Niagara/Binaries/Mac/libUnrealEditor-NiagaraVertexFactories.dylib')
+LogModuleManager: InternalLoadLibrary: 'HairStrandsCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/HairStrands/Binaries/Mac/libUnrealEditor-HairStrandsCore.dylib')
+LogAsyncCompilation: Display: MemorySharingInfo: UsedMemory=480893MiB, MaxMemoryAvailable=44032MiB
+LogModuleManager: InternalLoadLibrary: 'ComputeFramework' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ComputeFramework/Binaries/Mac/libUnrealEditor-ComputeFramework.dylib')
+LogModuleManager: InternalLoadLibrary: 'ChunkDownloader' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ChunkDownloader/Binaries/Mac/libUnrealEditor-ChunkDownloader.dylib')
+LogModuleManager: InternalLoadLibrary: 'ExampleDeviceProfileSelector' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ExampleDeviceProfileSelector/Binaries/Mac/libUnrealEditor-ExampleDeviceProfileSelector.dylib')
+LogModuleManager: InternalLoadLibrary: 'CompositeCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Compositing/CompositeCore/Binaries/Mac/libUnrealEditor-CompositeCore.dylib')
+LogConfig: Applying CVar settings from Section [/Script/CompositeCore.CompositeCorePluginSettings] File [Engine]
+LogModuleManager: InternalLoadLibrary: 'OnlineSubsystem' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineSubsystem/Binaries/Mac/libUnrealEditor-OnlineSubsystem.dylib')
+LogModuleManager: InternalLoadLibrary: 'HTTP' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-HTTP.dylib')
+LogInit: Creating http thread with maximum 256 concurrent requests
+LogModuleManager: InternalLoadLibrary: 'XMPP' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-XMPP.dylib')
+LogModuleManager: InternalLoadLibrary: 'WebSockets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-WebSockets.dylib')
+LogModuleManager: InternalLoadLibrary: 'SSL' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SSL.dylib')
+LogModuleManager: InternalLoadLibrary: 'OnlineSubsystemNULL' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineSubsystemNull/Binaries/Mac/libUnrealEditor-OnlineSubsystemNull.dylib')
+LogModuleManager: InternalLoadLibrary: 'Sockets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Sockets.dylib')
+LogOnline: OSS: Created online subsystem instance for: NULL
+LogOnline: OSS: TryLoadSubsystemAndSetDefault: Loaded subsystem for type [NULL]
+LogModuleManager: InternalLoadLibrary: 'EOSShared' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/EOSShared/Binaries/Mac/libUnrealEditor-EOSShared.dylib')
+LogEOSShared: Loaded "libEOSSDK-Mac-Shipping.dylib"
+LogEOSShared: Initialize Initializing EOSSDK Version:1.19.1.2-53289219
+LogModuleManager: InternalLoadLibrary: 'OnlineServicesInterface' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineServices/Binaries/Mac/libUnrealEditor-OnlineServicesInterface.dylib')
+LogModuleManager: InternalLoadLibrary: 'OnlineServicesCommon' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineServices/Binaries/Mac/libUnrealEditor-OnlineServicesCommon.dylib')
+LogModuleManager: InternalLoadLibrary: 'OnlineServicesCommonEngineUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineServices/Binaries/Mac/libUnrealEditor-OnlineServicesCommonEngineUtils.dylib')
+LogModuleManager: InternalLoadLibrary: 'OnlineSubsystemUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineSubsystemUtils/Binaries/Mac/libUnrealEditor-OnlineSubsystemUtils.dylib')
+LogModuleManager: InternalLoadLibrary: 'OnlineBlueprintSupport' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineSubsystemUtils/Binaries/Mac/libUnrealEditor-OnlineBlueprintSupport.dylib')
+LogModuleManager: InternalLoadLibrary: 'LauncherChunkInstaller' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Portal/LauncherChunkInstaller/Binaries/Mac/libUnrealEditor-LauncherChunkInstaller.dylib')
+LogModuleManager: InternalLoadLibrary: 'ACLPlugin' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/ACLPlugin/Binaries/Mac/libUnrealEditor-ACLPlugin.dylib')
+LogModuleManager: InternalLoadLibrary: 'OptimusSettings' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/DeformerGraph/Binaries/Mac/libUnrealEditor-OptimusSettings.dylib')
+LogModuleManager: InternalLoadLibrary: 'AISupportModule' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/AI/AISupport/Binaries/Mac/libUnrealEditor-AISupportModule.dylib')
+LogModuleManager: InternalLoadLibrary: 'NNEDenoiserShaders' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/NNE/NNEDenoiser/Binaries/Mac/libUnrealEditor-NNEDenoiserShaders.dylib')
+LogModuleManager: InternalLoadLibrary: 'InterchangeAssets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Assets/Binaries/Mac/libUnrealEditor-InterchangeAssets.dylib')
+LogModuleManager: InternalLoadLibrary: 'RuntimeTelemetry' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/RuntimeTelemetry/Binaries/Mac/libUnrealEditor-RuntimeTelemetry.dylib')
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+LogModuleManager: InternalLoadLibrary: 'Analytics' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Analytics.dylib')
+LogStudioTelemetry: Started StudioTelemetry Session
+LogModuleManager: InternalLoadLibrary: 'Water' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/Water/Binaries/Mac/libUnrealEditor-Water.dylib')
+LogModuleManager: InternalLoadLibrary: 'Buoyancy' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/Buoyancy/Binaries/Mac/libUnrealEditor-Buoyancy.dylib')
+LogModuleManager: InternalLoadLibrary: 'TmvMediaShaders' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/TmvMedia/Binaries/Mac/libUnrealEditor-TmvMediaShaders.dylib')
+LogModuleManager: InternalLoadLibrary: 'InterchangeAxFAssets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/InterchangeAxF/Assets/Binaries/Mac/libUnrealEditor-InterchangeAxFAssets.dylib')
+LogModuleManager: InternalLoadLibrary: 'CinderMetalFX' ('/Users/chirag13/Documents/ChatGPT/starCraft/Plugins/CinderMetalFX/Binaries/Mac/libUnrealEditor-CinderMetalFX.dylib')
+LogInit: ExecutableName: UnrealEditor-Cmd
+LogInit: Build: ++UE5+Release-5.8-CL-56702186
+LogInit: Platform=MacEditor
+LogInit: MachineId=e153dc515844b7ef936fddb6789fe54e
+LogInit: DeviceId=
+LogInit: Engine Version: 5.8.2-56702186+++UE5+Release-5.8
+LogInit: Compatible Engine Version: 5.8.0-55116800+++UE5+Release-5.8
+LogInit: Net CL: 55116800
+LogInit: OS: macOS 27.0 (26A428), CPU: Apple M1 Max, GPU: Apple M1 Max
+LogInit: CPU Model ID: 0, microcode revision: 0
+LogInit: Compiled (64-bit): Aug  7 2026 11:08:04
+LogInit: Architecture: arm64
+LogInit: Compiled with Clang: 17.0.0 (clang-1700.4.4.1)
+LogInit: Build Configuration: Development
+LogInit: Branch Name: ++UE5+Release-5.8
+LogInit: Command Line: -unattended -windowed -ForceRes -ResX=1440 -ResY=900 -nosound -nosplash -mobilehud -ExecCmds="t.MaxFPS 30,cinder.quality,cinder.canyonpreview map2" -AssetRegistryCacheRootFolder=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/final/run-20260922T073635Z-2Uj3Qj/map2-registry -abslog=/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/final/run-20260922T073635Z-2Uj3Qj/map2.log -game
+LogInit: Base Directory: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/
+LogInit: Allocator: Mimalloc
+LogInit: Installed Engine Build: 1
+LogInit: This binary is optimized with LTO: no, PGO: no, instrumented for PGO data collection: no
+LogDevObjectVersion: Number of dev versions registered: 36
+LogDevObjectVersion:   Dev-Blueprints (B0D832E4-1F89-4F0D-ACCF-7EB736FD4AA2): 10
+LogDevObjectVersion:   Dev-Build (E1C64328-A22C-4D53-A36C-8E866417BD8C): 0
+LogDevObjectVersion:   Dev-Core (375EC13C-06E4-48FB-B500-84F0262A717E): 4
+LogDevObjectVersion:   Dev-Editor (E4B068ED-F494-42E9-A231-DA0B2E46BB41): 40
+LogDevObjectVersion:   Dev-Framework (CFFC743F-43B0-4480-9391-14DF171D2073): 37
+LogDevObjectVersion:   Dev-Mobile (B02B49B5-BB20-44E9-A304-32B752E40360): 3
+LogDevObjectVersion:   Dev-Networking (A4E4105C-59A1-49B5-A7C5-40C4547EDFEE): 0
+LogDevObjectVersion:   Dev-Online (39C831C9-5AE6-47DC-9A44-9C173E1C8E7C): 0
+LogDevObjectVersion:   Dev-Physics (78F01B33-EBEA-4F98-B9B4-84EACCB95AA2): 20
+LogDevObjectVersion:   Dev-Platform (6631380F-2D4D-43E0-8009-CF276956A95A): 0
+LogDevObjectVersion:   Dev-Rendering (12F88B9F-8875-4AFC-A67C-D90C383ABD29): 49
+LogDevObjectVersion:   Dev-Sequencer (7B5AE74C-D270-4C10-A958-57980B212A5A): 13
+LogDevObjectVersion:   Dev-VR (D7296918-1DD6-4BDD-9DE2-64A83CC13884): 3
+LogDevObjectVersion:   Dev-LoadTimes (C2A15278-BFE7-4AFE-6C17-90FF531DF755): 1
+LogDevObjectVersion:   Private-Geometry (6EACA3D4-40EC-4CC1-B786-8BED09428FC5): 3
+LogDevObjectVersion:   Dev-AnimPhys (29E575DD-E0A3-4627-9D10-D276232CDCEA): 17
+LogDevObjectVersion:   Dev-Anim (AF43A65D-7FD3-4947-9873-3E8ED9C1BB05): 15
+LogDevObjectVersion:   Dev-ReflectionCapture (6B266CEC-1EC7-4B8F-A30B-E4D90942FC07): 1
+LogDevObjectVersion:   Dev-Automation (0DF73D61-A23F-47EA-B727-89E90C41499A): 1
+LogDevObjectVersion:   FortniteMain (601D1886-AC64-4F84-AA16-D3DE0DEAC7D6): 268
+LogDevObjectVersion:   FortniteValkyrie (8DBC2C5B-54A7-43E0-A768-FCBB7DA29060): 8
+LogDevObjectVersion:   FortniteSeason (5B4C06B7-2463-4AF8-805B-BF70CDF5D0DD): 15
+LogDevObjectVersion:   FortniteRelease (E7086368-6B23-4C58-8439-1B7016265E91): 20
+LogDevObjectVersion:   Dev-Enterprise (9DFFBCD6-494F-0158-E221-12823C92A888): 11
+LogDevObjectVersion:   Dev-Niagara (F2AED0AC-9AFE-416F-8664-AA7FFA26D6FC): 1
+LogDevObjectVersion:   Dev-Destruction (174F1F0B-B4C6-45A5-B13F-2EE8D0FB917D): 10
+LogDevObjectVersion:   Dev-Physics-Ext (35F94A83-E258-406C-A318-09F59610247C): 41
+LogDevObjectVersion:   Dev-PhysicsMaterial-Chaos (B68FC16E-8B1B-42E2-B453-215C058844FE): 1
+LogDevObjectVersion:   Dev-CineCamera (B2E18506-4273-CFC2-A54E-F4BB758BBA07): 1
+LogDevObjectVersion:   Dev-VirtualProduction (64F58936-FD1B-42BA-BA96-7289D5D0FA4E): 1
+LogDevObjectVersion:   UE5-Main (697DD581-E64F-41AB-AA4A-51ECBEB7B628): 123
+LogDevObjectVersion:   UE5-Release (D89B5E42-24BD-4D46-8412-ACA8DF641779): 68
+LogDevObjectVersion:   UE5-SpecialProject (59DA5D52-1232-4948-B878-597870B8E98B): 9
+LogDevObjectVersion:   Dev-MediaFramework (6F0ED827-A609-4895-9C91-998D90180EA4): 2
+LogDevObjectVersion:   Dev-NaniteResearch (30D58BE3-95EA-4282-A6E3-B159D8EBB06A): 1
+LogDevObjectVersion:   Dev-ComputeFramework (6304A3E7-0059-4F59-8CFC-21BD7721FD4E): 0
+LogInit: Presizing for max 25165824 objects, including 0 objects not considered by GC.
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogInit: Object subsystem initialized
+LogConfig: Set CVar [[con.DebugEarlyDefault:1]]
+LogConfig: CVar [[con.DebugLateDefault:1]] deferred - dummy variable created
+LogConfig: CVar [[con.DebugLateCheat:1]] deferred - dummy variable created
+LogConfig: CVar [[LogNamedEventFilters:Frame *]] deferred - dummy variable created
+LogConfig: Set CVar [[r.setres:1280x720]]
+LogConfig: Set CVar [[g.TimeoutForBlockOnRenderFence:300000]]
+LogConfig: CVar [[framepro.ScopeMinTimeMicroseconds:10]] deferred - dummy variable created
+LogConfig: Set CVar [[fx.NiagaraAllowRuntimeScalabilityChanges:1]]
+LogConfig: CVar [[QualityLevelMapping:high]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[con.DebugLateDefault:1]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[con.DebugLateCheat:1]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[LogNamedEventFilters:Frame *]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[framepro.ScopeMinTimeMicroseconds:10]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[QualityLevelMapping:high]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.RendererSettings] File [Engine]
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VisualizeCalibrationColorMaterialPath:/Engine/EngineMaterials/PPM_DefaultCalibrationColor.PPM_DefaultCalibrationColor]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VisualizeCalibrationGrayscaleMaterialPath:/Engine/EngineMaterials/PPM_DefaultCalibrationGrayscale.PPM_DefaultCalibrationGrayscale]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.GPUCrashDebugging:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[MaxSkinBones:(Default=65536,PerPlatform=(("Mobile", 256)))]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Substrate.RoughDiffuse:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Substrate.ShadingQuality:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Substrate.TileCoord8bits:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Substrate.Glints:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Substrate.ClosuresPerPixel:4]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Refraction.Blur:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.MobileHDR:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.DefaultFeature.MotionBlur:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.DefaultFeature.Bloom:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.DefaultFeature.AutoExposure:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.AntiAliasingMethod:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Mobile.AntiAliasing:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.DynamicGlobalIlluminationMethod:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.ReflectionMethod:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Shadow.Virtual.Enable:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.Nanite.ProjectEnabled:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.GenerateMeshDistanceFields:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[r.AllowStaticLighting:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.RendererOverrideSettings] File [Engine]
+[2026.09.22-07.37.16:239][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.StreamingSettings] File [Engine]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.MinBulkDataSizeForAsyncLoading:131072]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.AsyncLoadingThreadEnabled:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.EventDrivenLoaderEnabled:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.WarnIfTimeLimitExceeded:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.TimeLimitExceededMultiplier:1.5]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.TimeLimitExceededMinTime:0.005]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.UseBackgroundLevelStreaming:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.PriorityAsyncLoadingExtraTime:15.0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.LevelStreamingActorsUpdateTimeLimit:5.0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.PriorityLevelStreamingActorsUpdateExtraTime:5.0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.LevelStreamingComponentsRegistrationGranularity:10]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.UnregisterComponentsTimeLimit:1.0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.LevelStreamingComponentsUnregistrationGranularity:5]]
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[s.MaxPackageSummarySize:16384]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[s.FlushStreamingOnExit:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[FixedBootOrder:/Script/Engine/Default__SoundBase]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[FixedBootOrder:/Script/Engine/Default__MaterialInterface]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[FixedBootOrder:/Script/Engine/Default__DeviceProfileManager]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.GarbageCollectionSettings] File [Engine]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.MaxObjectsNotConsideredByGC:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.NumRetriesBeforeForcingGC:10]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.AllowParallelGC:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.TimeBetweenPurgingPendingKillObjects:61.1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.MaxObjectsInEditor:25165824]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.IncrementalBeginDestroyEnabled:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.CreateGCClusters:1]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.MinGCClusterSize:5]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.AssetClustreringEnabled:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.ActorClusteringEnabled:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Set CVar [[gc.VerifyUObjectsAreNotFGCObjects:0]]
+[2026.09.22-07.37.16:239][  0]LogConfig: Applying CVar settings from Section [/Script/Engine.NetworkSettings] File [Engine]
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[NetworkEmulationProfiles:(ProfileName="Average",ToolTip="Simulates average internet conditions")]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[NetworkEmulationProfiles:(ProfileName="Bad",ToolTip="Simulates laggy internet conditions")]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[NetworkEmulationProfiles:(ProfileName="BufferBloat",ToolTip="Simulates a connection affected by buffer bloat (in and out)")]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: Applying CVar settings from Section [/Script/UnrealEd.CookerSettings] File [Engine]
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[DefaultASTCQualityBySpeed:2]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[DefaultASTCQualityBySize:3]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[DefaultASTCQualityBySizeHQ:4]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:WidgetBlueprint]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:GroupActor]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:MetaData]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:ObjectRedirector]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:NavMeshRenderingComponent]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:ReflectionCaptureComponent]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:TextRenderComponent]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:Font]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:InterpCurveEdSetup]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:MaterialExpression]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:NiagaraEmitter]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:NiagaraScript]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:ParticleEmitter]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:ParticleLODLevel]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:ParticleModule]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:SubUVAnimation]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:SoundNode]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:GameplayEffectUIData]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedServer:AmbientSound]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedClient:WidgetBlueprint]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedClient:GroupActor]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedClient:MetaData]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedClient:ObjectRedirector]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[ClassesExcludedOnDedicatedClient:InterpCurveEdSetup]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.AllowStaticLighting]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.MaterialEditor.LWCTruncateMode]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.VelocityOutputPass]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.SelectiveBasePassOutputs]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.DBuffer]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.Mobile.DBuffer]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.Shaders.Symbols]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.Shaders.GenerateSymbols]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.Shaders.WriteSymbols]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.Shaders.AllowUniqueSymbols]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.Shaders.ExtraData]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.Shaders.Optimize]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.CompileShadersForDevelopment]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.MobileHDR]] deferred - dummy variable created
+[2026.09.22-07.37.16:239][  0]LogConfig: CVar [[VersionedIntRValues:r.UsePreExposure]] deferred - dummy variable created
+[2026.09.22-07.37.16:241][  0]LogCsvProfiler: Display: Metadata set : systemresolution.resx="1440"
+[2026.09.22-07.37.16:241][  0]LogCsvProfiler: Display: Metadata set : systemresolution.resy="900"
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [ViewDistanceQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkeletalMeshLODBias:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.ViewDistanceScale:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [AntiAliasingQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.FXAA.Quality:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TemporalAA.Quality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TSR.History.R11G11B10:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TSR.History.ScreenPercentage:200]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TSR.History.UpdateQuality:3]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TSR.ShadingRejection.Flickering:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TSR.RejectionAntiAliasingQuality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TSR.ReprojectionField:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TSR.Resurrection:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [ShadowQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LightFunctionQuality:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.ShadowQuality:5]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.CSM.MaxCascades:10]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.MaxResolution:2048]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.MaxCSMResolution:2048]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.RadiusThreshold:0.01]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.DistanceScale:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.CSM.TransitionScale:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.PreShadowResolutionFactor:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DistanceFieldShadowing:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.VolumetricFog:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.VolumetricFog.GridPixelSize:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.VolumetricFog.GridSizeZ:128]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.VolumetricFog.HistoryMissSupersampleCount:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LightMaxDrawDistanceScale:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.CapsuleShadows:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.MaxPhysicalPages:4096]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.ResolutionLodBiasDirectional:-1.5]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.ResolutionLodBiasDirectionalMoving:-1.5]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.ResolutionLodBiasLocal:0.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.ResolutionLodBiasLocalMoving:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.SMRT.RayCountDirectional:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.SMRT.SamplesPerRayDirectional:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.SMRT.RayCountLocal:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.SMRT.SamplesPerRayLocal:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Shadow.Virtual.MarkCoarsePagesLocal:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.NumSamplesPerPixel:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.DownsampleMode:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.ScreenTraces.Quality:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.FrontLayerTranslucency.Allow:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.FrontLayerTranslucency.SpecularOnly:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.FrontLayerTranslucency.SoftShadows:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.FrontLayerTranslucency.TexturedRectLights:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.Spatial.UseHistorySpatialVariance:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.Volume.GridPixelSize:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MegaLights.Volume.GridSizeZ:128]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [GlobalIlluminationQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DistanceFieldAO:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkylightIntensityMultiplier:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.AOQuality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.DiffuseIndirect.Allow:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.FinalGatherMethod:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.SurfaceCache.AtlasSize:4096]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.SurfaceCache.CardTexelDensityScale:100]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.SurfaceCache.CardMinResolution:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.SurfaceCache.CardMaxResolution:512]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.DirectLighting.MaxLightsPerTile:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.DirectLighting.UpdateFactor:32]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.Radiosity.UpdateFactor:64]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.Radiosity.ProbeSpacing:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LumenScene.Radiosity.HemisphereProbeResolution:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TraceMeshSDFs.Allow:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.RadianceCache.ProbeResolution:32]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.RadianceCache.NumProbesToTraceBudget:150]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.DownsampleFactor:16]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.NumAdaptiveProbes:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.TracingOctahedronResolution:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.IrradianceFormat:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.StochasticInterpolation:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.FullResolutionJitterWidth:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.TwoSidedFoliageBackfaceDiffuse:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.ScreenTraces.HZBTraversal.FullResDepth:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.ShortRangeAO.DownsampleFactor:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.ShortRangeAO.HorizonSearch.SliceCount:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.ShortRangeAO.BentNormal:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.ShortRangeAO.HorizonSearch.HZB:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.ShortRangeAO.HorizonSearch.ForegroundSampleRejectPower:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.ShortRangeAO.FoliageOcclusionStrength:.7]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.GridPixelSize:32]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.TraceFromVolume:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.ShareRadianceCacheWithOpaque:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.SpatialFilter:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.TracingOctahedronResolution:3]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.RadianceCache.ProbeResolution:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.RadianceCache.GridResolution:24]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyVolume.RadianceCache.NumProbesToTraceBudget:100]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.HardwareRayTracing.HitLighting.Allowed:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.RayTracing.Scene.BuildMode:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.RayTracing.Geometry.SkeletalMeshes:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MeshCardRepresentation.SkeletalMesh:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.RayTracing.DynamicGeometry.MaxUpdatePrimitivesPerFrame:-1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [ReflectionQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SSR.Quality:3]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SSR.HalfResSceneColor:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.Reflections.Allow:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.Reflections.DownsampleFactor:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.Reflections.MaxRoughnessToTraceForFoliage:0.4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.ScreenProbeGather.MaxRoughnessToEvaluateRoughSpecularForFoliage:0.8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.Reflections.ScreenSpaceReconstruction.NumSamples:5]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.Reflections.ScreenSpaceReconstruction.MinWeight:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyReflections.FrontLayer.Allow:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Lumen.TranslucencyReflections.FrontLayer.Enable:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [PostProcessQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MotionBlurQuality:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MotionBlur.HalfResGather:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.AmbientOcclusionMipLevelFactor:0.4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.AmbientOcclusionMaxQuality:100]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.AmbientOcclusionLevels:-1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.AmbientOcclusionRadiusScale:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DepthOfFieldQuality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.RenderTargetPoolMin:400]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LensFlareQuality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SceneColorFringeQuality:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.EyeAdaptationQuality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.BloomQuality:5]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Bloom.ScreenPercentage:50.000]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.FastBlurThreshold:100]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Upscale.Quality:3]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LightShaftQuality:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Filter.SizeScale:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LUT.Shaper:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.LUT.Size:32]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Tonemapper.Quality:5]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Gather.ResolutionDivisor:2         ; lower gathering resolution]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Gather.AccumulatorQuality:1        ; higher gathering accumulator quality]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Gather.PostfilterMethod:1          ; Median3x3 postfilering method]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Gather.EnableBokehSettings:0       ; no bokeh simulation when gathering]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Gather.RingCount:4                 ; medium number of samples when gathering]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Scatter.ForegroundCompositing:1    ; additive foreground scattering]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Scatter.BackgroundCompositing:2    ; additive background scattering]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Scatter.EnableBokehSettings:1      ; bokeh simulation when scattering]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Scatter.MaxSpriteRatio:0.1         ; only a maximum of 10% of scattered bokeh]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Recombine.Quality:1                ; cheap slight out of focus]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Recombine.EnableBokehSettings:0    ; no bokeh simulation on slight out of focus]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.TemporalAAQuality:1                ; more stable temporal accumulation]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Kernel.MaxForegroundRadius:0.025]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DOF.Kernel.MaxBackgroundRadius:0.025]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [TextureQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Streaming.MipBias:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Streaming.AmortizeCPUToGPUCopy:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Streaming.MaxNumTexturesToStreamPerFrame:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Streaming.Boost:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MaxAnisotropy:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.VT.MaxAnisotropy:8]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Streaming.LimitPoolSizeToVRAM:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Streaming.PoolSize:1000]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Streaming.MaxEffectiveScreenSize:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [EffectsQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TranslucencyLightingVolume.Dim:64]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.RefractionQuality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SceneColorFormat:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.DetailMode:3]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.TranslucencyLightingVolume.Blur:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.MaterialQualityLevel:1 ; High quality]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SSS.Scale:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SSS.SampleSet:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SSS.Quality:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SSS.HalfRes:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SSGI.Quality:3]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.EmitterSpawnRateScale:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.ParticleLightQuality:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.FastApplyOnOpaque:1 ; Always have FastSkyLUT 1 in this case to avoid wrong sky]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.SampleCountMaxPerSlice:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.AerialPerspectiveLUT.DepthResolution:16.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.FastSkyLUT:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.FastSkyLUT.SampleCountMin:4.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.FastSkyLUT.SampleCountMax:128.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.SampleCountMin:4.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.SampleCountMax:128.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.TransmittanceLUT.UseSmallFormat:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.TransmittanceLUT.SampleCount:10.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.SkyAtmosphere.MultiScatteringLUT.SampleCount:15.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Fog.SeparateComposition:-1	; Allow fog separate composition when FSSS is enabled.]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[fx.Niagara.QualityLevel:3]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.Refraction.OffsetQuality:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HeterogeneousVolumes.Allowed:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HeterogeneousVolumes.DownsampleFactor:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HeterogeneousVolumes.MaxStepCount:256]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HeterogeneousVolumes.Shadows.Resolution:512]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HeterogeneousVolumes.Shadows.Precision:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HeterogeneousVolumes.UseExistenceMask:0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [FoliageQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[foliage.DensityScale:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[grass.DensityScale:1.0]]
+[2026.09.22-07.37.16:242][  0]LogConfig: CVar [[pcg.Quality:3]] deferred - dummy variable created
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [ShadingQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HairStrands.SkyLighting.IntegrationType:2]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HairStrands.SkyAO.SampleCount:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.HairStrands.Visibility.MSAA.SamplePerPixel:4]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Set CVar [[r.AnisotropicMaterials:1]]
+[2026.09.22-07.37.16:242][  0]LogConfig: Applying CVar settings from Section [LandscapeQuality@3] File [Scalability]
+[2026.09.22-07.37.16:242][  0]LogInit: Selected Device Profile: [MacEditor]
+[2026.09.22-07.37.16:242][  0]LogInit: Selected Device Profile: [MacEditor]
+[2026.09.22-07.37.16:242][  0]LogHAL: Display: Platform has ~ 32 GB [34359738368 / 34359738368 / 32], which maps to Largest [LargestMinGB=32, LargerMinGB=12, DefaultMinGB=8, SmallerMinGB=6, SmallestMinGB=0)
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Going up to parent DeviceProfile [Mac]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Going up to parent DeviceProfile []
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.Shaders.ZeroInitialise:1 -> 1]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.Shaders.BoundsChecking:1 -> 1]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[UI.SlateSDFText.RasterizationMode:Bitmap -> Msdf]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[UI.SlateSDFText.ResolutionLevel:2 -> 2]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.TranslucencyLightingVolume:1 -> 0]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.AntiAliasingMethod:1 -> 2]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.TemporalAA.Quality:2 -> 2]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.TemporalAA.Upsampling:1 -> 0]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.CinderMetalFX.Enabled:1 -> 1]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.CinderMetalFX.ScreenPercentage:80 -> 80]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.ScreenPercentage:0 -> 100]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.SecondaryScreenPercentage.GameViewport:0 -> 100]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.DynamicRes.OperationMode:0 -> 0]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.TSR.History.ScreenPercentage:200 -> 100]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.ReflectionMethod:0 -> 2]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.SSR.Quality:3 -> 3]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.SSR.HalfResSceneColor:0 -> 0]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.DefaultFeature.Bloom:1 -> 1]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.BloomQuality:5 -> 5]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.DefaultFeature.AmbientOcclusion:1 -> 1]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.AmbientOcclusionLevels:-1 -> -1]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.AmbientOcclusionMaxQuality:100 -> 100]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.MaxAnisotropy:8 -> 16]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.ShadowQuality:5 -> 5]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.Shadow.MaxResolution:2048 -> 2048]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.Shadow.MaxCSMResolution:2048 -> 2048]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.Shadow.CSM.MaxCascades:10 -> 4]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.Tonemapper.Sharpen:-1 -> 0.25]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.MotionBlurQuality:4 -> 0]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.DepthOfFieldQuality:2 -> 0]]
+[2026.09.22-07.37.16:243][  0]LogDeviceProfileManager: Pushing Device Profile CVar: [[r.SceneColorFringeQuality:1 -> 0]]
+[2026.09.22-07.37.16:243][  0]LogConfig: Applying CVar settings from Section [Startup] File [../../../Engine/Config/ConsoleVariables.ini]
+[2026.09.22-07.37.16:243][  0]LogConfig: Set CVar [[p.chaos.AllowCreatePhysxBodies:1]]
+[2026.09.22-07.37.16:243][  0]LogConfig: Set CVar [[fx.SkipVectorVMBackendOptimizations:1]]
+[2026.09.22-07.37.16:243][  0]LogConfig: Applying CVar settings from Section [Startup_Mac] File [../../../Engine/Config/ConsoleVariables.ini]
+[2026.09.22-07.37.16:243][  0]LogConfig: Applying CVar settings from Section [ConsoleVariables] File [Engine]
+[2026.09.22-07.37.16:243][  0]LogConfig: Set CVar [[r.HairStrands.Visibility.MSAA.SamplePerPixel:1]]
+[2026.09.22-07.37.16:243][  0]LogConfig: CVar [[r.SceneCulling.ExplicitCellBounds:1]] deferred - dummy variable created
+[2026.09.22-07.37.16:243][  0]LogConfig: Set CVar [[Slate.NoAnimationOnTabForegroundedEvent:1]]
+[2026.09.22-07.37.16:243][  0]LogConfig: CVar [[EnhancedInput.bEnableAutoUpgrade:0]] deferred - dummy variable created
+[2026.09.22-07.37.16:243][  0]LogConfig: Applying CVar settings from Section [ConsoleVariables] File [/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Config/MacEditor/Editor.ini]
+[2026.09.22-07.37.16:243][  0]LogConfig: Set CVar [[SplineComponent.OnlyUpdateActiveSpline:0]]
+[2026.09.22-07.37.16:243][  0]LogInit: macOS 27.0 (26A428)
+[2026.09.22-07.37.16:243][  0]LogInit: Model: MacBookPro18,2
+[2026.09.22-07.37.16:243][  0]LogInit: CPU: Apple M1 Max
+[2026.09.22-07.37.16:243][  0]LogInit: CPU Page size=16384, Cores=10, HT=10
+[2026.09.22-07.37.16:243][  0]LogInit: Computer: MacBook-Pro-10.local
+[2026.09.22-07.37.16:243][  0]LogInit: User: chirag2
+[2026.09.22-07.37.16:243][  0]LogInit: High frequency timer resolution =24.000000 MHz
+[2026.09.22-07.37.16:243][  0]LogInit: Power Source: AC Power
+[2026.09.22-07.37.16:243][  0]LogInit: Xcode developer folder path: /Applications/Xcode.app/Contents/Developer, version 27.0.0
+[2026.09.22-07.37.16:244][  0]LogInit: Memory total: Physical=32.0GB (32GB approx) Pagefile=11.0GB Virtual=43.0GB
+[2026.09.22-07.37.16:244][  0]LogCsvProfiler: Display: Metadata set : extradevelopmentmemorymb="0"
+[2026.09.22-07.37.16:244][  0]LogApplePlatformMisc: Network path changed (IsConstrained=0, IsExpensive=0)
+[2026.09.22-07.37.16:244][  0]LogModuleManager: InternalLoadLibrary: 'IoStoreOnDemandCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-IoStoreOnDemandCore.dylib')
+[2026.09.22-07.37.16:245][  0]LogModuleManager: InternalLoadLibrary: 'BandwidthDebugDelegates' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-BandwidthDebugDelegates.dylib')
+[2026.09.22-07.37.16:245][  0]LogModuleManager: InternalLoadLibrary: 'ClientBandwidthDebugVisualizer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ClientBandwidthDebugVisualizer.dylib')
+[2026.09.22-07.37.16:255][  0]LogModuleManager: InternalLoadLibrary: 'BandwidthMeasurementTool' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-BandwidthMeasurementTool.dylib')
+[2026.09.22-07.37.16:255][  0]LogModuleManager: InternalLoadLibrary: 'DownlinkBandwidthManager' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-DownlinkBandwidthManager.dylib')
+[2026.09.22-07.37.16:255][  0]LogObj: Display: Attempting to load config data for Default__DownlinkBandwidthManagerConfig before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+[2026.09.22-07.37.16:255][  0]LogModuleManager: InternalLoadLibrary: 'Chaos' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Chaos.dylib')
+[2026.09.22-07.37.16:256][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-GeometryCore.dylib')
+[2026.09.22-07.37.16:256][  0]LogSpline: Registered spline type: TypeId=0x54E3AD22, Impl=MultiSpline, Value=Vector
+[2026.09.22-07.37.16:256][  0]LogModuleManager: InternalLoadLibrary: 'ChaosSolverEngine' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ChaosSolverEngine.dylib')
+[2026.09.22-07.37.16:256][  0]LogChaosDD: Chaos Debug Draw Startup
+[2026.09.22-07.37.16:256][  0]LogInit: Physics initialised using underlying interface: Chaos
+[2026.09.22-07.37.16:256][  0]LogInit: Using OS detected language (en-US).
+[2026.09.22-07.37.16:256][  0]LogInit: Using OS detected locale (en-US).
+[2026.09.22-07.37.16:258][  0]LogTextLocalizationManager: No specific localization for 'en-US' exists, so 'en' will be used for the language.
+[2026.09.22-07.37.16:594][  0]LogAppleController: [HandleMouseConnected] Handling physical mouse connection...
+[2026.09.22-07.37.16:596][  0]LogObj: Display: Attempting to load config data for Default__SlateThemeManager before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+[2026.09.22-07.37.16:597][  0]LogModuleManager: InternalLoadLibrary: 'Settings' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Settings.dylib')
+[2026.09.22-07.37.16:597][  0]LogModuleManager: InternalLoadLibrary: 'InputCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-InputCore.dylib')
+[2026.09.22-07.37.16:598][  0]LogSlate: New Slate User Created. Platform User Id 0, User Index 0, Is Virtual User: 0
+[2026.09.22-07.37.16:598][  0]LogSlate: Slate User Registered.  User Index 0, Is Virtual User: 0
+[2026.09.22-07.37.16:620][  0]LogInit: Running DelayedAutoRegister Phase PreRHIInit
+[2026.09.22-07.37.16:622][  0]LogModuleManager: InternalLoadLibrary: 'MetalRHI' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MetalRHI.dylib')
+[2026.09.22-07.37.17:330][  0]LogMetal: Warning: To use SM6 on this system, please ensure you are running Mac OS 15. Falling back to SM5
+[2026.09.22-07.37.17:331][  0]LogRHI: Texture pool is 17203 MB (70% of 24576 MB)
+[2026.09.22-07.37.17:331][  0]LogMetal: Display:       Vendor ID: 4203
+[2026.09.22-07.37.17:331][  0]LogMetal: Display:       Device ID: 909194058
+[2026.09.22-07.37.17:331][  0]LogMetal: Display:       VRAM (MB): 24576
+[2026.09.22-07.37.17:331][  0]LogMac: Attached monitors:
+[2026.09.22-07.37.17:331][  0]LogMac: Screen: Built-in Retina Display, Resolution: 1496x967, Points: 1496x967, WorkArea: (0, 0) -> (1496, 939), Scale: 2.00
+[2026.09.22-07.37.17:331][  0]LogMac: Found 1 attached monitors.
+[2026.09.22-07.37.17:341][  0]LogRHI: RHI Adapter Info:
+[2026.09.22-07.37.17:341][  0]LogRHI:             Name: Apple M1 Max
+[2026.09.22-07.37.17:341][  0]LogRHI:   Driver Version:  (internal:360.34.5, unified:360.34.5)
+[2026.09.22-07.37.17:341][  0]LogRHI:      Driver Date: 1-1-1970
+[2026.09.22-07.37.17:344][  0]LogVRS: Current RHI does not support Variable Rate Shading
+[2026.09.22-07.37.17:345][  0]LogRHI: Render tracing channels set: 'Submission' -> 0xf
+[2026.09.22-07.37.17:345][  0]LogCsvProfiler: Display: Metadata set : verbatimrhiname="Metal"
+[2026.09.22-07.37.17:345][  0]LogCsvProfiler: Display: Metadata set : rhiname="Metal"
+[2026.09.22-07.37.17:345][  0]LogCsvProfiler: Display: Metadata set : rhifeaturelevel="SM5"
+[2026.09.22-07.37.17:345][  0]LogCsvProfiler: Display: Metadata set : shaderplatform="METAL_SM5"
+[2026.09.22-07.37.17:345][  0]LogCsvProfiler: Display: Metadata set : gpu="Apple M1 Max"
+[2026.09.22-07.37.17:345][  0]LogCsvProfiler: Display: Metadata set : gpudriver=""
+[2026.09.22-07.37.17:345][  0]LogInit: Initializing FReadOnlyCVARCache
+[2026.09.22-07.37.17:345][  0]LogModuleManager: InternalLoadLibrary: 'TargetPlatform' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TargetPlatform.dylib')
+[2026.09.22-07.37.17:346][  0]LogModuleManager: InternalLoadLibrary: 'TurnkeySupport' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TurnkeySupport.dylib')
+[2026.09.22-07.37.17:356][  0]LogTargetPlatformManager: UBT AutoSDK ReturnCode: 0
+[2026.09.22-07.37.17:356][  0]LogModuleManager: InternalLoadLibrary: 'TextureFormat' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureFormat.dylib')
+[2026.09.22-07.37.17:357][  0]LogModuleManager: InternalLoadLibrary: 'TextureFormatASTC' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureFormatASTC.dylib')
+[2026.09.22-07.37.17:367][  0]LogModuleManager: InternalLoadLibrary: 'TextureFormatDXT' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureFormatDXT.dylib')
+[2026.09.22-07.37.17:386][  0]LogModuleManager: InternalLoadLibrary: 'TextureFormatETC2' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureFormatETC2.dylib')
+[2026.09.22-07.37.17:395][  0]LogModuleManager: InternalLoadLibrary: 'TextureFormatIntelISPCTexComp' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureFormatIntelISPCTexComp.dylib')
+[2026.09.22-07.37.17:406][  0]LogModuleManager: InternalLoadLibrary: 'TextureFormatOodle' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureFormatOodle.dylib')
+[2026.09.22-07.37.17:416][  0]LogModuleManager: InternalLoadLibrary: 'TextureFormatUncompressed' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TextureFormatUncompressed.dylib')
+[2026.09.22-07.37.17:436][  0]LogTextureFormatASTC: Display: ASTCEnc version 5.0.1 library loaded
+[2026.09.22-07.37.17:436][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatASTC
+[2026.09.22-07.37.17:436][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatDXT
+[2026.09.22-07.37.17:436][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatETC2
+[2026.09.22-07.37.17:436][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatIntelISPCTexComp
+[2026.09.22-07.37.17:436][  0]LogTextureFormatOodle: Display: Oodle Texture TFO init; latest sdk version = 2.9.16
+[2026.09.22-07.37.17:436][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.16.dylib
+[2026.09.22-07.37.17:447][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatOodle
+[2026.09.22-07.37.17:447][  0]LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatUncompressed
+[2026.09.22-07.37.17:460][  0]LogModuleManager: InternalLoadLibrary: 'MacTargetPlatform' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MacTargetPlatform.dylib')
+[2026.09.22-07.37.17:472][  0]LogModuleManager: InternalLoadLibrary: 'MacTargetPlatformSettings' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MacTargetPlatformSettings.dylib')
+[2026.09.22-07.37.17:490][  0]LogModuleManager: InternalLoadLibrary: 'MacTargetPlatformControls' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MacTargetPlatformControls.dylib')
+[2026.09.22-07.37.17:490][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'Mac'
+[2026.09.22-07.37.17:490][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacEditor'
+[2026.09.22-07.37.17:490][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacServer'
+[2026.09.22-07.37.17:490][  0]LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacClient'
+[2026.09.22-07.37.17:490][  0]LogTargetPlatformManager: Display: Building Assets For MacEditor
+[2026.09.22-07.37.17:490][  0]LogModuleManager: InternalLoadLibrary: 'AudioFormatOPUS' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioFormatOpus.dylib')
+[2026.09.22-07.37.17:502][  0]LogModuleManager: InternalLoadLibrary: 'AudioFormatOGG' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioFormatOgg.dylib')
+[2026.09.22-07.37.17:511][  0]LogModuleManager: InternalLoadLibrary: 'AudioFormatADPCM' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioFormatADPCM.dylib')
+[2026.09.22-07.37.17:521][  0]LogModuleManager: InternalLoadLibrary: 'AudioFormatBINK' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioFormatBink.dylib')
+[2026.09.22-07.37.17:531][  0]LogModuleManager: InternalLoadLibrary: 'AudioFormatRAD' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioFormatRad.dylib')
+[2026.09.22-07.37.17:540][  0]LogModuleManager: InternalLoadLibrary: 'ShaderFormatVectorVM' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ShaderFormatVectorVM.dylib')
+[2026.09.22-07.37.17:564][  0]LogTargetPlatformManager: Unable to find shader format SF_METAL_SM5 from hinted modules, loading all potential format modules to find it
+[2026.09.22-07.37.17:564][  0]LogModuleManager: InternalLoadLibrary: 'MetalShaderFormat' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MetalShaderFormat.dylib')
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager: Loaded format module MetalShaderFormat
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_ES3_1_IOS
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_SM5_IOS
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_SM6_IOS
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_ES3_1_TVOS
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_SM5_TVOS
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_SM5
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_SM6
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_SIM
+[2026.09.22-07.37.17:626][  0]LogTargetPlatformManager:   SF_METAL_ES3_1
+[2026.09.22-07.37.17:626][  0]LogModuleManager: InternalLoadLibrary: 'ShaderFormatOpenGL' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ShaderFormatOpenGL.dylib')
+[2026.09.22-07.37.17:637][  0]LogTargetPlatformManager: Loaded format module ShaderFormatOpenGL
+[2026.09.22-07.37.17:637][  0]LogTargetPlatformManager:   GLSL_150_ES31
+[2026.09.22-07.37.17:637][  0]LogTargetPlatformManager:   GLSL_ES3_1_ANDROID
+[2026.09.22-07.37.17:637][  0]LogTargetPlatformManager: Loaded format module ShaderFormatVectorVM
+[2026.09.22-07.37.17:637][  0]LogTargetPlatformManager:   VVM_1_0
+[2026.09.22-07.37.17:637][  0]LogModuleManager: InternalLoadLibrary: 'VulkanShaderFormat' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-VulkanShaderFormat.dylib')
+[2026.09.22-07.37.17:646][  0]LogTargetPlatformManager: Loaded format module VulkanShaderFormat
+[2026.09.22-07.37.17:646][  0]LogTargetPlatformManager:   SF_VULKAN_SM5
+[2026.09.22-07.37.17:646][  0]LogTargetPlatformManager:   SF_VULKAN_ES31_ANDROID
+[2026.09.22-07.37.17:646][  0]LogTargetPlatformManager:   SF_VULKAN_ES31
+[2026.09.22-07.37.17:646][  0]LogTargetPlatformManager:   SF_VULKAN_SM5_ANDROID
+[2026.09.22-07.37.17:646][  0]LogTargetPlatformManager:   SF_VULKAN_SM6
+[2026.09.22-07.37.17:647][  0]LogRendererCore: Ray tracing is disabled. Reason: disabled through project setting (r.RayTracing=0).
+[2026.09.22-07.37.17:647][  0]LogModuleManager: InternalLoadLibrary: 'DerivedDataCache' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-DerivedDataCache.dylib')
+[2026.09.22-07.37.17:647][  0]LogDerivedDataCache: ProjectPak: Pak cache file ../../../../starCraft/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2026.09.22-07.37.17:647][  0]LogDerivedDataCache: InstalledProjectPak: Pak cache file ../../../../starCraft/DerivedDataCache/Compressed.ddp not found, will not use a pak cache.
+[2026.09.22-07.37.17:992][  0]LogDerivedDataCache: Display: ../../../Engine/DerivedDataCache/Compressed.ddp: Opened pak cache for reading. (2978 MiB)
+[2026.09.22-07.37.17:992][  0]LogDerivedDataCache: EnterprisePak: Pak cache file ../../../Enterprise/DerivedDataCache/Compressed.ddp not found, will not use a pak cache.
+[2026.09.22-07.37.17:992][  0]LogZenServiceInstance: Found Zen config default=/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data
+[2026.09.22-07.37.17:992][  0]LogZenServiceInstance: Display: Launching zen utility '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/zen service status'.
+[2026.09.22-07.37.18:400][  0]LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+[2026.09.22-07.37.18:401][  0]LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.22-07.37.18:401][  0]LogZenServiceInstance: InTree version at '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/zenserver' is '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.22-07.37.18:401][  0]LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.22-07.37.18:401][  0]LogZenServiceInstance: Installed version at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is '5.8.13-202605190511-macosx-arm64-release-094f62c'
+[2026.09.22-07.37.18:401][  0]LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+[2026.09.22-07.37.18:402][  0]LogZenServiceInstance: No current process using the data dir found, launching a new instance
+[2026.09.22-07.37.18:402][  0]LogZenServiceInstance: Display: Launching executable '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver', working dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install', data dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data', args '--port 8558 --data-dir "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data" --http asio --gc-cache-duration-seconds 1209600 --gc-interval-seconds 21600 --gc-low-diskspace-threshold 2147483648 --cache-bucket-limit-overwrites --quiet --restrict-content-types --allow-external-oidctoken-exe=false --plugins-config "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugins_v1.json" --security-config-path "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/security-config.json" --owner-pid 24251  --child-id Zen_24251_Startup --detach'
+[2026.09.22-07.37.18:668][  0]LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+[2026.09.22-07.37.18:668][  0]LogZenServiceInstance: Local ZenServer AutoLaunch initialization completed in 0.268 seconds
+[2026.09.22-07.37.18:669][  0]LogDerivedDataCache: Display: ZenLocal: Using ZenServer HTTP service at [::1] with namespace ue.ddc. Status: OK!.
+[2026.09.22-07.37.18:685][  0]LogDerivedDataCache: /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/DerivedDataCache: Speed tests took 0.02 seconds.
+[2026.09.22-07.37.18:685][  0]LogDerivedDataCache: Display: /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/DerivedDataCache: Performance: Latency=0.00ms. RandomReadSpeed=448.00MBs, RandomWriteSpeed=71.51MBs. Assigned SpeedClass 'Local'
+[2026.09.22-07.37.18:685][  0]LogDerivedDataCache: Local: Using data cache path /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/DerivedDataCache: Writable
+[2026.09.22-07.37.18:685][  0]LogDerivedDataCache: ZenShared: Disabled because Host is set to 'None'
+[2026.09.22-07.37.18:685][  0]LogDerivedDataCache: Shared: Disabled because no path is configured.
+[2026.09.22-07.37.18:685][  0]LogDerivedDataCache: Cloud: Disabled because Host is set to 'None'
+[2026.09.22-07.37.18:685][  0]LogModuleManager: InternalLoadLibrary: 'ShaderPreprocessor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ShaderPreprocessor.dylib')
+[2026.09.22-07.37.18:686][  0]LogShaderCompilers: Guid format shader working directory is 14 characters bigger than the processId version (../../../../starCraft/Intermediate/Shaders/WorkingDirectory/24251/).
+[2026.09.22-07.37.18:686][  0]LogShaderCompilers: Cleaned the shader compiler working directory '../../../../starCraft/Intermediate/Shaders/tmp/199A106EAC4E039B38349E829042DC01/'.
+[2026.09.22-07.37.18:686][  0]LogShaderCompilers: Display: No distributed shader compiler controller found
+[2026.09.22-07.37.18:686][  0]LogShaderCompilers: Display: Using 7 local workers for shader compilation
+[2026.09.22-07.37.18:686][  0]LogShaderCompilers: Display: Compiling shader autogen file: ../../../../starCraft/Intermediate/ShaderAutogen/METAL_SM5/AutogenShaderHeaders.ush
+[2026.09.22-07.37.18:687][  0]LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+[2026.09.22-07.37.19:610][  0]LogInit: Running DelayedAutoRegister Phase ShaderTypesReady
+[2026.09.22-07.37.20:120][  0]LogSlate: Using FreeType 2.14.1
+[2026.09.22-07.37.20:121][  0]LogSlate: SlateFontServices - WITH_FREETYPE: 1, WITH_HARFBUZZ: 1
+[2026.09.22-07.37.20:121][  0]LogModuleManager: InternalLoadLibrary: 'ImageWrapper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ImageWrapper.dylib')
+[2026.09.22-07.37.20:203][  0]LogMetal: Display: Creating NativeLayer -2147483648 in Metal Viewport 0x55470770600
+[2026.09.22-07.37.20:232][  0]LogModuleManager: InternalLoadLibrary: 'NullInstallBundleManager' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-NullInstallBundleManager.dylib')
+[2026.09.22-07.37.20:245][  0]LogInit: Using OS detected language (en-US).
+[2026.09.22-07.37.20:245][  0]LogInit: Using OS detected locale (en-US).
+[2026.09.22-07.37.20:245][  0]LogTextLocalizationManager: No localization for 'en-US' exists, so 'en' will be used for the language.
+[2026.09.22-07.37.20:245][  0]LogTextLocalizationManager: No localization for 'en-US' exists, so 'en' will be used for the locale.
+[2026.09.22-07.37.20:245][  0]LogSlate: FontCache flush requested. Reason: Culture for localization was changed
+[2026.09.22-07.37.20:245][  0]LogSlate: FontCache flush requested. Reason: Culture for localization was changed
+[2026.09.22-07.37.20:245][  0]LogModuleManager: InternalLoadLibrary: 'AssetRegistry' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AssetRegistry.dylib')
+[2026.09.22-07.37.20:246][  0]LogAssetRegistry: ActiveMountsLoading is disabled.
+[2026.09.22-07.37.20:246][  0]LogAssetRegistry: FAssetRegistry took 0.0003 seconds to start up
+[2026.09.22-07.37.20:248][  0]LogInit: Running DelayedAutoRegister Phase PreObjectSystemReady
+[2026.09.22-07.37.20:465][  0]LogDeviceProfileManager: Display: Deviceprofile LinuxArm64Editor not found.
+[2026.09.22-07.37.20:465][  0]LogDeviceProfileManager: Display: Deviceprofile LinuxArm64 not found.
+[2026.09.22-07.37.20:504][  0]LogInit: Selected Device Profile: [MacEditor]
+[2026.09.22-07.37.20:504][  0]LogDeviceProfileManager: Active device profile: [0x5547b274600][0x5547b2b2800 82] MacEditor
+[2026.09.22-07.37.20:504][  0]LogCsvProfiler: Display: Metadata set : deviceprofile="MacEditor"
+[2026.09.22-07.37.20:504][  0]LogInit: Running DelayedAutoRegister Phase DeviceProfileManagerReady
+[2026.09.22-07.37.20:506][  0]LogStreaming: Display: FlushAsyncLoading(1): 1 QueuedPackages, 0 AsyncPackages
+[2026.09.22-07.37.20:508][  0]LogPackageLocalizationCache: Processed 89 localized package path(s) for 1 prioritized culture(s) in 0.001838 seconds
+[2026.09.22-07.37.20:509][  0]LogTextureEncodingSettings: Display: Texture Encode Speed: Final (cook).
+[2026.09.22-07.37.20:509][  0]LogTextureEncodingSettings: Display: Oodle Texture Encode Speed settings: Fast: RDO Off Lambda=0, Effort=Normal Final: RDO Off Lambda=0, Effort=Normal
+[2026.09.22-07.37.20:509][  0]LogTextureEncodingSettings: Display: Shared linear texture encoding: Disabled
+[2026.09.22-07.37.20:598][  0]LogModuleManager: InternalLoadLibrary: 'DirectoryWatcher' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-DirectoryWatcher.dylib')
+[2026.09.22-07.37.20:666][  0]LogModuleManager: InternalLoadLibrary: 'MeshUtilities' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MeshUtilities.dylib')
+[2026.09.22-07.37.20:666][  0]LogModuleManager: InternalLoadLibrary: 'MaterialBaking' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MaterialBaking.dylib')
+[2026.09.22-07.37.20:666][  0]LogModuleManager: InternalLoadLibrary: 'MeshMergeUtilities' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MeshMergeUtilities.dylib')
+[2026.09.22-07.37.20:667][  0]LogModuleManager: InternalLoadLibrary: 'MeshReductionInterface' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MeshReductionInterface.dylib')
+[2026.09.22-07.37.20:667][  0]LogMeshReduction: Display: HLOD mesh reduction module (r.ProxyLODMeshReductionModule) set to "ProxyLODMeshReduction" which doesn't exist.
+[2026.09.22-07.37.20:667][  0]LogModuleManager: InternalLoadLibrary: 'QuadricMeshReduction' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-QuadricMeshReduction.dylib')
+[2026.09.22-07.37.20:668][  0]LogModuleManager: InternalLoadLibrary: 'SkeletalMeshReduction' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/SkeletalReduction/Binaries/Mac/libUnrealEditor-SkeletalMeshReduction.dylib')
+[2026.09.22-07.37.20:678][  0]LogModuleManager: InternalLoadLibrary: 'MeshBoneReduction' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MeshBoneReduction.dylib')
+[2026.09.22-07.37.20:678][  0]LogMeshReduction: Display: Using QuadricMeshReduction for automatic static mesh reduction
+[2026.09.22-07.37.20:678][  0]LogMeshReduction: Display: Using SkeletalMeshReduction for automatic skeletal mesh reduction
+[2026.09.22-07.37.20:678][  0]LogMeshReduction: Display: No automatic mesh merging module available
+[2026.09.22-07.37.20:678][  0]LogMeshReduction: Display: No distributed automatic mesh merging module available
+[2026.09.22-07.37.20:678][  0]LogMeshMerging: No automatic mesh merging module available
+[2026.09.22-07.37.20:678][  0]LogMeshMerging: No distributed automatic mesh merging module available
+[2026.09.22-07.37.20:678][  0]LogModuleManager: InternalLoadLibrary: 'StaticMeshDescription' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-StaticMeshDescription.dylib')
+[2026.09.22-07.37.20:679][  0]LogModuleManager: InternalLoadLibrary: 'GeometryProcessingInterfaces' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-GeometryProcessingInterfaces.dylib')
+[2026.09.22-07.37.20:689][  0]LogModuleManager: InternalLoadLibrary: 'NaniteBuilder' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-NaniteBuilder.dylib')
+[2026.09.22-07.37.20:689][  0]LogModuleManager: InternalLoadLibrary: 'MeshBuilder' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MeshBuilder.dylib')
+[2026.09.22-07.37.20:712][  0]LogModuleManager: InternalLoadLibrary: 'KismetCompiler' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-KismetCompiler.dylib')
+[2026.09.22-07.37.20:713][  0]LogModuleManager: InternalLoadLibrary: 'MovieSceneTools' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MovieSceneTools.dylib')
+[2026.09.22-07.37.20:713][  0]LogModuleManager: InternalLoadLibrary: 'Sequencer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Sequencer.dylib')
+[2026.09.22-07.37.20:724][  0]LogModuleManager: InternalLoadLibrary: 'AssetDefinition' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AssetDefinition.dylib')
+[2026.09.22-07.37.20:765][  0]LogModuleManager: InternalLoadLibrary: 'Media' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Media.dylib')
+[2026.09.22-07.37.20:834][  0]LogConfig: Applying CVar settings from Section [/Script/CQTest.CQTestSettings] File [Engine]
+[2026.09.22-07.37.20:853][  0]LogShaderCompilers: Display: Compiling shader autogen file: ../../../../starCraft/Intermediate/ShaderAutogen/METAL_SM6/AutogenShaderHeaders.ush
+[2026.09.22-07.37.20:853][  0]LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+[2026.09.22-07.37.20:853][  0]LogVirtualization: Display: VirtualizationSystem name found in ini file: None
+[2026.09.22-07.37.20:853][  0]LogVirtualization: Display: FNullVirtualizationSystem mounted, virtualization will be disabled
+[2026.09.22-07.37.20:853][  0]LogInit: Running DelayedAutoRegister Phase ObjectSystemReady
+[2026.09.22-07.37.20:853][  0]LogModuleManager: StartProcessingNewlyLoadedObjects
+[2026.09.22-07.37.20:854][  0]LogModuleManager: InternalLoadLibrary: 'Core' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Core.dylib')
+[2026.09.22-07.37.20:854][  0]LogModuleManager: InternalLoadLibrary: 'Networking' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Networking.dylib')
+[2026.09.22-07.37.20:854][  0]LogModuleManager: InternalLoadLibrary: 'Messaging' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Messaging.dylib')
+[2026.09.22-07.37.20:854][  0]LogModuleManager: InternalLoadLibrary: 'MRMesh' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MRMesh.dylib')
+[2026.09.22-07.37.20:854][  0]LogModuleManager: InternalLoadLibrary: 'UnrealEd' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-UnrealEd.dylib')
+[2026.09.22-07.37.20:855][  0]LogModuleManager: InternalLoadLibrary: 'LandscapeEditorUtilities' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-LandscapeEditorUtilities.dylib')
+[2026.09.22-07.37.20:865][  0]LogModuleManager: InternalLoadLibrary: 'SubobjectDataInterface' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SubobjectDataInterface.dylib')
+[2026.09.22-07.37.20:865][  0]LogModuleManager: InternalLoadLibrary: 'SlateCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SlateCore.dylib')
+[2026.09.22-07.37.20:866][  0]LogModuleManager: InternalLoadLibrary: 'Slate' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Slate.dylib')
+[2026.09.22-07.37.20:866][  0]LogModuleManager: InternalLoadLibrary: 'MacMenu' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MacMenu.dylib')
+[2026.09.22-07.37.20:877][  0]LogModuleManager: InternalLoadLibrary: 'SlateReflector' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SlateReflector.dylib')
+[2026.09.22-07.37.20:878][  0]LogModuleManager: InternalLoadLibrary: 'EditorStyle' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-EditorStyle.dylib')
+[2026.09.22-07.37.20:878][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.09.22-07.37.20:879][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.09.22-07.37.20:885][  0]LogModuleManager: InternalLoadLibrary: 'UMG' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-UMG.dylib')
+[2026.09.22-07.37.20:885][  0]LogModuleManager: InternalLoadLibrary: 'UMGEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-UMGEditor.dylib')
+[2026.09.22-07.37.20:886][  0]LogModuleManager: InternalLoadLibrary: 'ScriptableEditorWidgets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ScriptableEditorWidgets.dylib')
+[2026.09.22-07.37.20:896][  0]LogModuleManager: InternalLoadLibrary: 'CollisionAnalyzer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-CollisionAnalyzer.dylib')
+[2026.09.22-07.37.20:897][  0]LogModuleManager: InternalLoadLibrary: 'WorkspaceMenuStructure' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-WorkspaceMenuStructure.dylib')
+[2026.09.22-07.37.20:897][  0]LogModuleManager: InternalLoadLibrary: 'FunctionalTesting' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-FunctionalTesting.dylib')
+[2026.09.22-07.37.20:898][  0]LogModuleManager: InternalLoadLibrary: 'BehaviorTreeEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-BehaviorTreeEditor.dylib')
+[2026.09.22-07.37.20:911][  0]LogModuleManager: InternalLoadLibrary: 'GameplayTasksEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-GameplayTasksEditor.dylib')
+[2026.09.22-07.37.20:923][  0]LogModuleManager: InternalLoadLibrary: 'StringTableEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-StringTableEditor.dylib')
+[2026.09.22-07.37.20:933][  0]LogModuleManager: InternalLoadLibrary: 'AssetTools' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AssetTools.dylib')
+[2026.09.22-07.37.20:934][  0]LogModuleManager: InternalLoadLibrary: 'VREditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-VREditor.dylib')
+[2026.09.22-07.37.20:935][  0]LogModuleManager: InternalLoadLibrary: 'MaterialEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MaterialEditor.dylib')
+[2026.09.22-07.37.20:937][  0]LogModuleManager: InternalLoadLibrary: 'Overlay' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Overlay.dylib')
+[2026.09.22-07.37.20:937][  0]LogModuleManager: InternalLoadLibrary: 'OverlayEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-OverlayEditor.dylib')
+[2026.09.22-07.37.20:947][  0]LogModuleManager: InternalLoadLibrary: 'MediaAssets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MediaAssets.dylib')
+[2026.09.22-07.37.20:948][  0]LogModuleManager: InternalLoadLibrary: 'ClothingSystemRuntimeNv' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ClothingSystemRuntimeNv.dylib')
+[2026.09.22-07.37.20:948][  0]LogModuleManager: InternalLoadLibrary: 'ClothingSystemEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ClothingSystemEditor.dylib')
+[2026.09.22-07.37.20:948][  0]LogModuleManager: InternalLoadLibrary: 'AnimationDataController' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AnimationDataController.dylib')
+[2026.09.22-07.37.20:958][  0]LogModuleManager: InternalLoadLibrary: 'TimeManagement' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TimeManagement.dylib')
+[2026.09.22-07.37.20:959][  0]LogModuleManager: InternalLoadLibrary: 'AnimGraph' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AnimGraph.dylib')
+[2026.09.22-07.37.20:959][  0]LogModuleManager: InternalLoadLibrary: 'WorldBookmark' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-WorldBookmark.dylib')
+[2026.09.22-07.37.20:973][  0]LogModuleManager: InternalLoadLibrary: 'WorldPartitionEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-WorldPartitionEditor.dylib')
+[2026.09.22-07.37.20:995][  0]LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize started...
+[2026.09.22-07.37.20:997][  0]LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize took 1.347 ms
+[2026.09.22-07.37.20:997][  0]LogModuleManager: InternalLoadLibrary: 'SceneOutliner' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SceneOutliner.dylib')
+[2026.09.22-07.37.20:997][  0]LogModuleManager: InternalLoadLibrary: 'PacketHandler' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-PacketHandler.dylib')
+[2026.09.22-07.37.20:997][  0]LogModuleManager: InternalLoadLibrary: 'NetworkReplayStreaming' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-NetworkReplayStreaming.dylib')
+[2026.09.22-07.37.20:998][  0]LogModuleManager: InternalLoadLibrary: 'MassEntity' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MassEntity.dylib')
+[2026.09.22-07.37.21:013][  0]LogModuleManager: InternalLoadLibrary: 'MassEntityTestSuite' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MassEntityTestSuite.dylib')
+[2026.09.22-07.37.21:026][  0]LogModuleManager: InternalLoadLibrary: 'WebMMoviePlayer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/WebMMoviePlayer/Binaries/Mac/libUnrealEditor-WebMMoviePlayer.dylib')
+[2026.09.22-07.37.21:039][  0]LogModuleManager: InternalLoadLibrary: 'AppleMoviePlayer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AppleMoviePlayer/Binaries/Mac/libUnrealEditor-AppleMoviePlayer.dylib')
+[2026.09.22-07.37.21:050][  0]LogMoviePlayer: FAVMoviePlayer ctor...
+[2026.09.22-07.37.21:050][  0]LogModuleManager: InternalLoadLibrary: 'BlueprintMaterialTextureNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Editor/BlueprintMaterialTextureNodes/Binaries/Mac/libUnrealEditor-BlueprintMaterialTextureNodes.dylib')
+[2026.09.22-07.37.21:061][  0]LogModuleManager: InternalLoadLibrary: 'AvfMedia' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/AvfMedia/Binaries/Mac/libUnrealEditor-AvfMedia.dylib')
+[2026.09.22-07.37.21:074][  0]LogMoviePlayer: Initializing movie player
+[2026.09.22-07.37.21:074][  0]LogInit: XR: Instanced Stereo Rendering is Disabled
+[2026.09.22-07.37.21:074][  0]LogInit: XR: Mobile Multiview is Disabled
+[2026.09.22-07.37.21:075][  0]LogModuleManager: InternalLoadLibrary: 'EnhancedInput' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/EnhancedInput/Binaries/Mac/libUnrealEditor-EnhancedInput.dylib')
+[2026.09.22-07.37.21:090][  0]LogStats: UGameplayTagsManager::InitializeManager -  0.000 s
+[2026.09.22-07.37.21:090][  0]LogModuleManager: InternalLoadLibrary: 'InputBlueprintNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/EnhancedInput/Binaries/Mac/libUnrealEditor-InputBlueprintNodes.dylib')
+[2026.09.22-07.37.21:109][  0]LogModuleManager: InternalLoadLibrary: 'BlueprintGraph' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-BlueprintGraph.dylib')
+[2026.09.22-07.37.21:109][  0]LogModuleManager: InternalLoadLibrary: 'MutableRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Mutable/Binaries/Mac/libUnrealEditor-MutableRuntime.dylib')
+[2026.09.22-07.37.21:122][  0]LogModuleManager: InternalLoadLibrary: 'CustomizableObject' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Mutable/Binaries/Mac/libUnrealEditor-CustomizableObject.dylib')
+[2026.09.22-07.37.21:142][  0]LogModuleManager: InternalLoadLibrary: 'MutableTools' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Mutable/Binaries/Mac/libUnrealEditor-MutableTools.dylib')
+[2026.09.22-07.37.21:143][  0]LogModuleManager: InternalLoadLibrary: 'AnimationSharing' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/AnimationSharing/Binaries/Mac/libUnrealEditor-AnimationSharing.dylib')
+[2026.09.22-07.37.21:156][  0]LogModuleManager: InternalLoadLibrary: 'PropertyAccessNode' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/PropertyAccessNode/Binaries/Mac/libUnrealEditor-PropertyAccessNode.dylib')
+[2026.09.22-07.37.21:170][  0]LogModuleManager: InternalLoadLibrary: 'NiagaraSimCaching' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/NiagaraSimCaching/Binaries/Mac/libUnrealEditor-NiagaraSimCaching.dylib')
+[2026.09.22-07.37.21:223][  0]LogModuleManager: InternalLoadLibrary: 'NiagaraCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/Niagara/Binaries/Mac/libUnrealEditor-NiagaraCore.dylib')
+[2026.09.22-07.37.21:223][  0]LogModuleManager: InternalLoadLibrary: 'Niagara' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/Niagara/Binaries/Mac/libUnrealEditor-Niagara.dylib')
+[2026.09.22-07.37.21:224][  0]LogNiagaraDebuggerClient: Niagara Debugger Client Initialized | Session: 8317C40AE38444B88000000000009400 | Instance: 1D1B8F2E7240BA3DBCD58C909C0C575A (MacBook-Pro-10.local-24251).
+[2026.09.22-07.37.21:224][  0]LogModuleManager: InternalLoadLibrary: 'NiagaraEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/Niagara/Binaries/Mac/libUnrealEditor-NiagaraEditor.dylib')
+[2026.09.22-07.37.21:257][  0]LogModuleManager: InternalLoadLibrary: 'ContentBrowser' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ContentBrowser.dylib')
+[2026.09.22-07.37.21:257][  0]LogModuleManager: InternalLoadLibrary: 'ContentBrowserData' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ContentBrowserData.dylib')
+[2026.09.22-07.37.21:258][  0]LogModuleManager: InternalLoadLibrary: 'CollectionManager' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-CollectionManager.dylib')
+[2026.09.22-07.37.21:260][  0]LogCollectionManager: Loaded 0 collections in 0.001950 seconds
+[2026.09.22-07.37.21:260][  0]LogFileCache: Scanning file cache for directory '/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Collections/' took 0.00s
+[2026.09.22-07.37.21:262][  0]LogFileCache: Scanning file cache for directory '/Users/chirag13/Documents/ChatGPT/starCraft/Content/Developers/chirag2/Collections/' took 0.00s
+[2026.09.22-07.37.21:264][  0]LogFileCache: Scanning file cache for directory '/Users/chirag13/Documents/ChatGPT/starCraft/Content/Collections/' took 0.00s
+[2026.09.22-07.37.21:266][  0]LogCollectionManager: Fixed up redirectors for 0 collections in 0.000000 seconds (updated 0 objects)
+[2026.09.22-07.37.21:268][  0]LogModuleManager: InternalLoadLibrary: 'ToolMenus' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ToolMenus.dylib')
+[2026.09.22-07.37.21:272][  0]LogModuleManager: InternalLoadLibrary: 'LevelSequence' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-LevelSequence.dylib')
+[2026.09.22-07.37.21:273][  0]LogModuleManager: InternalLoadLibrary: 'NiagaraAnimNotifies' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/Niagara/Binaries/Mac/libUnrealEditor-NiagaraAnimNotifies.dylib')
+[2026.09.22-07.37.21:284][  0]LogModuleManager: InternalLoadLibrary: 'CableComponent' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/CableComponent/Binaries/Mac/libUnrealEditor-CableComponent.dylib')
+[2026.09.22-07.37.21:296][  0]LogModuleManager: InternalLoadLibrary: 'SoundFields' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/SoundFields/Binaries/Mac/libUnrealEditor-SoundFields.dylib')
+[2026.09.22-07.37.21:308][  0]LogModuleManager: InternalLoadLibrary: 'ProceduralMeshComponent' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ProceduralMeshComponent/Binaries/Mac/libUnrealEditor-ProceduralMeshComponent.dylib')
+[2026.09.22-07.37.21:321][  0]LogModuleManager: InternalLoadLibrary: 'ResonanceAudio' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ResonanceAudio/Binaries/Mac/libUnrealEditor-ResonanceAudio.dylib')
+[2026.09.22-07.37.21:333][  0]LogModuleManager: InternalLoadLibrary: 'RigVM' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/RigVM/Binaries/Mac/libUnrealEditor-RigVM.dylib')
+[2026.09.22-07.37.21:359][  0]LogModuleManager: InternalLoadLibrary: 'RigVMDeveloper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/RigVM/Binaries/Mac/libUnrealEditor-RigVMDeveloper.dylib')
+[2026.09.22-07.37.21:382][  0]LogModuleManager: InternalLoadLibrary: 'PropertyBindingUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/PropertyBindingUtils/Binaries/Mac/libUnrealEditor-PropertyBindingUtils.dylib')
+[2026.09.22-07.37.21:394][  0]LogModuleManager: InternalLoadLibrary: 'PropertyBindingUtilsTestSuite' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/PropertyBindingUtils/Binaries/Mac/libUnrealEditor-PropertyBindingUtilsTestSuite.dylib')
+[2026.09.22-07.37.21:407][  0]LogModuleManager: InternalLoadLibrary: 'CustomMeshComponent' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/CustomMeshComponent/Binaries/Mac/libUnrealEditor-CustomMeshComponent.dylib')
+[2026.09.22-07.37.21:419][  0]LogModuleManager: InternalLoadLibrary: 'Synthesis' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Synthesis/Binaries/Mac/libUnrealEditor-Synthesis.dylib')
+[2026.09.22-07.37.21:437][  0]LogModuleManager: InternalLoadLibrary: 'PropertyAccessEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/PropertyAccess/Binaries/Mac/libUnrealEditor-PropertyAccessEditor.dylib')
+[2026.09.22-07.37.21:438][  0]LogModuleManager: InternalLoadLibrary: 'HairStrandsDeformer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/HairStrands/Binaries/Mac/libUnrealEditor-HairStrandsDeformer.dylib')
+[2026.09.22-07.37.21:485][  0]LogModuleManager: InternalLoadLibrary: 'HairStrandsSolver' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/HairStrands/Binaries/Mac/libUnrealEditor-HairStrandsSolver.dylib')
+[2026.09.22-07.37.21:488][  0]LogModuleManager: InternalLoadLibrary: 'GeometryScriptingCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryScripting/Binaries/Mac/libUnrealEditor-GeometryScriptingCore.dylib')
+[2026.09.22-07.37.21:537][  0]LogModuleManager: InternalLoadLibrary: 'MsQuicRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/MsQuic/Binaries/Mac/libUnrealEditor-MsQuicRuntime.dylib')
+[2026.09.22-07.37.21:547][  0]LogModuleManager: InternalLoadLibrary: 'SignificanceManager' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/SignificanceManager/Binaries/Mac/libUnrealEditor-SignificanceManager.dylib')
+[2026.09.22-07.37.21:548][  0]LogModuleManager: InternalLoadLibrary: 'AudioSynesthesiaCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AudioSynesthesia/Binaries/Mac/libUnrealEditor-AudioSynesthesiaCore.dylib')
+[2026.09.22-07.37.21:548][  0]LogModuleManager: InternalLoadLibrary: 'AudioSynesthesia' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AudioSynesthesia/Binaries/Mac/libUnrealEditor-AudioSynesthesia.dylib')
+[2026.09.22-07.37.21:562][  0]LogModuleManager: InternalLoadLibrary: 'AudioAnalyzer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioAnalyzer.dylib')
+[2026.09.22-07.37.21:563][  0]LogModuleManager: InternalLoadLibrary: 'StateTreeModule' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/StateTree/Binaries/Mac/libUnrealEditor-StateTreeModule.dylib')
+[2026.09.22-07.37.21:581][  0]LogModuleManager: InternalLoadLibrary: 'TraceServices' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TraceServices.dylib')
+[2026.09.22-07.37.21:581][  0]LogModuleManager: InternalLoadLibrary: 'TraceAnalysis' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TraceAnalysis.dylib')
+[2026.09.22-07.37.21:582][  0]LogModuleManager: InternalLoadLibrary: 'StateTreeTestSuite' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/StateTree/Binaries/Mac/libUnrealEditor-StateTreeTestSuite.dylib')
+[2026.09.22-07.37.21:626][  0]LogModuleManager: InternalLoadLibrary: 'LocationServicesBPLibrary' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/LocationServicesBPLibrary/Binaries/Mac/libUnrealEditor-LocationServicesBPLibrary.dylib')
+[2026.09.22-07.37.21:639][  0]LogModuleManager: InternalLoadLibrary: 'MetasoundGraphCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Metasound/Binaries/Mac/libUnrealEditor-MetasoundGraphCore.dylib')
+[2026.09.22-07.37.21:651][  0]LogModuleManager: InternalLoadLibrary: 'MetasoundGenerator' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Metasound/Binaries/Mac/libUnrealEditor-MetasoundGenerator.dylib')
+[2026.09.22-07.37.21:677][  0]LogModuleManager: InternalLoadLibrary: 'MetasoundFrontend' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Metasound/Binaries/Mac/libUnrealEditor-MetasoundFrontend.dylib')
+[2026.09.22-07.37.21:681][  0]LogModuleManager: InternalLoadLibrary: 'AudioChannelAgnosticCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioChannelAgnosticCore.dylib')
+[2026.09.22-07.37.21:681][  0]LogModuleManager: InternalLoadLibrary: 'MetasoundStandardNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Metasound/Binaries/Mac/libUnrealEditor-MetasoundStandardNodes.dylib')
+[2026.09.22-07.37.21:692][  0]LogModuleManager: InternalLoadLibrary: 'MetasoundEngine' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Metasound/Binaries/Mac/libUnrealEditor-MetasoundEngine.dylib')
+[2026.09.22-07.37.21:711][  0]LogMetaSound: Display: MetaSound Page Target Initialized to 'Default'
+[2026.09.22-07.37.21:711][  0]LogModuleManager: InternalLoadLibrary: 'WaveTable' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/WaveTable/Binaries/Mac/libUnrealEditor-WaveTable.dylib')
+[2026.09.22-07.37.21:714][  0]LogAudio: Display: Registering Engine Module Parameter Interfaces...
+[2026.09.22-07.37.21:715][  0]LogMetaSound: MetaSound Engine Initialized
+[2026.09.22-07.37.21:715][  0]LogModuleManager: InternalLoadLibrary: 'MetasoundEngineTest' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Metasound/Binaries/Mac/libUnrealEditor-MetasoundEngineTest.dylib')
+[2026.09.22-07.37.21:758][  0]LogModuleManager: InternalLoadLibrary: 'AudioWidgets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AudioWidgets/Binaries/Mac/libUnrealEditor-AudioWidgets.dylib')
+[2026.09.22-07.37.21:758][  0]LogModuleManager: InternalLoadLibrary: 'AdvancedWidgets' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AdvancedWidgets.dylib')
+[2026.09.22-07.37.21:759][  0]LogModuleManager: InternalLoadLibrary: 'MetasoundEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Metasound/Binaries/Mac/libUnrealEditor-MetasoundEditor.dylib')
+[2026.09.22-07.37.21:761][  0]LogModuleManager: InternalLoadLibrary: 'ControlRig' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/ControlRig/Binaries/Mac/libUnrealEditor-ControlRig.dylib')
+[2026.09.22-07.37.21:765][  0]LogModuleManager: InternalLoadLibrary: 'Constraints' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Constraints.dylib')
+[2026.09.22-07.37.21:766][  0]LogModuleManager: InternalLoadLibrary: 'ControlRigDeveloper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/ControlRig/Binaries/Mac/libUnrealEditor-ControlRigDeveloper.dylib')
+[2026.09.22-07.37.21:795][  0]LogModuleManager: InternalLoadLibrary: 'OptimusCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/DeformerGraph/Binaries/Mac/libUnrealEditor-OptimusCore.dylib')
+[2026.09.22-07.37.21:796][  0]LogModuleManager: InternalLoadLibrary: 'OptimusDeveloper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/DeformerGraph/Binaries/Mac/libUnrealEditor-OptimusDeveloper.dylib')
+[2026.09.22-07.37.21:810][  0]LogModuleManager: InternalLoadLibrary: 'RigLogicLib' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/RigLogic/Binaries/Mac/libUnrealEditor-RigLogicLib.dylib')
+[2026.09.22-07.37.21:823][  0]LogModuleManager: InternalLoadLibrary: 'RigLogicDeveloper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/RigLogic/Binaries/Mac/libUnrealEditor-RigLogicDeveloper.dylib')
+[2026.09.22-07.37.21:839][  0]LogModuleManager: InternalLoadLibrary: 'AnimationModifierLibrary' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/AnimationModifierLibrary/Binaries/Mac/libUnrealEditor-AnimationModifierLibrary.dylib')
+[2026.09.22-07.37.21:854][  0]LogModuleManager: InternalLoadLibrary: 'AnimationData' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/AnimationData/Binaries/Mac/libUnrealEditor-AnimationData.dylib')
+[2026.09.22-07.37.21:873][  0]LogModuleManager: InternalLoadLibrary: 'EnvironmentQueryEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/AI/EnvironmentQueryEditor/Binaries/Mac/libUnrealEditor-EnvironmentQueryEditor.dylib')
+[2026.09.22-07.37.21:887][  0]LogModuleManager: InternalLoadLibrary: 'ActorSequence' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/MovieScene/ActorSequence/Binaries/Mac/libUnrealEditor-ActorSequence.dylib')
+[2026.09.22-07.37.21:901][  0]LogModuleManager: InternalLoadLibrary: 'NNERuntimeORT' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/NNE/NNERuntimeORT/Binaries/Mac/libUnrealEditor-NNERuntimeORT.dylib')
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT: MakeRuntimeORTDml:
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT:   DirectML:  no
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT:   RHI D3D12: no
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT:   D3D12:     n/a (checked in CanCreateModelGPU)
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT: Interface availability:
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT:   GPU: n/a (checked in CanCreateModelGPU)
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT:   RDG: no
+[2026.09.22-07.37.21:932][  0]LogNNERuntimeORT: NNERuntimeORTDml can only cook!
+[2026.09.22-07.37.21:932][  0]LogModuleManager: InternalLoadLibrary: 'NNEEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-NNEEditor.dylib')
+[2026.09.22-07.37.22:076][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeNodes.dylib')
+[2026.09.22-07.37.22:077][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeFactoryNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeFactoryNodes.dylib')
+[2026.09.22-07.37.22:077][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeImport' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeImport.dylib')
+[2026.09.22-07.37.22:323][  0]LogModuleManager: InternalLoadLibrary: 'InterchangePipelines' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangePipelines.dylib')
+[2026.09.22-07.37.22:397][  0]LogModuleManager: InternalLoadLibrary: 'GameplayCameras' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Cameras/GameplayCameras/Binaries/Mac/libUnrealEditor-GameplayCameras.dylib')
+[2026.09.22-07.37.22:423][  0]LogModuleManager: InternalLoadLibrary: 'EngineCameras' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Cameras/EngineCameras/Binaries/Mac/libUnrealEditor-EngineCameras.dylib')
+[2026.09.22-07.37.22:439][  0]LogModuleManager: InternalLoadLibrary: 'Paper2D' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/2D/Paper2D/Binaries/Mac/libUnrealEditor-Paper2D.dylib')
+[2026.09.22-07.37.22:464][  0]LogModuleManager: InternalLoadLibrary: 'FacialAnimation' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Editor/FacialAnimation/Binaries/Mac/libUnrealEditor-FacialAnimation.dylib')
+[2026.09.22-07.37.22:480][  0]LogModuleManager: InternalLoadLibrary: 'AssetManagerEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Editor/AssetManagerEditor/Binaries/Mac/libUnrealEditor-AssetManagerEditor.dylib')
+[2026.09.22-07.37.22:501][  0]LogModuleManager: InternalLoadLibrary: 'TreeMap' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TreeMap.dylib')
+[2026.09.22-07.37.22:502][  0]LogModuleManager: InternalLoadLibrary: 'GameplayTagsEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Editor/GameplayTagsEditor/Binaries/Mac/libUnrealEditor-GameplayTagsEditor.dylib')
+[2026.09.22-07.37.22:519][  0]LogModuleManager: InternalLoadLibrary: 'PythonScriptPlugin' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/PythonScriptPlugin/Binaries/Mac/libUnrealEditor-PythonScriptPlugin.dylib')
+[2026.09.22-07.37.22:520][  0]LogModuleManager: InternalLoadLibrary: 'ChaosCaching' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/ChaosCaching/Binaries/Mac/libUnrealEditor-ChaosCaching.dylib')
+[2026.09.22-07.37.22:521][  0]LogModuleManager: InternalLoadLibrary: 'FullBodyIK' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/FullBodyIK/Binaries/Mac/libUnrealEditor-FullBodyIK.dylib')
+[2026.09.22-07.37.22:537][  0]LogModuleManager: InternalLoadLibrary: 'PBIK' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/FullBodyIK/Binaries/Mac/libUnrealEditor-PBIK.dylib')
+[2026.09.22-07.37.22:583][  0]LogModuleManager: InternalLoadLibrary: 'TcpMessaging' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Messaging/TcpMessaging/Binaries/Mac/libUnrealEditor-TcpMessaging.dylib')
+[2026.09.22-07.37.22:597][  0]LogModuleManager: InternalLoadLibrary: 'UdpMessaging' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Messaging/UdpMessaging/Binaries/Mac/libUnrealEditor-UdpMessaging.dylib')
+[2026.09.22-07.37.22:612][  0]LogModuleManager: InternalLoadLibrary: 'ImgMediaEngine' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/ImgMedia/Binaries/Mac/libUnrealEditor-ImgMediaEngine.dylib')
+[2026.09.22-07.37.22:626][  0]LogModuleManager: InternalLoadLibrary: 'Concert' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Concert/ConcertMain/Binaries/Mac/libUnrealEditor-Concert.dylib')
+[2026.09.22-07.37.22:642][  0]LogModuleManager: InternalLoadLibrary: 'ConcertClient' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Concert/ConcertMain/Binaries/Mac/libUnrealEditor-ConcertClient.dylib')
+[2026.09.22-07.37.22:660][  0]LogModuleManager: InternalLoadLibrary: 'ConcertTransport' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Concert/ConcertMain/Binaries/Mac/libUnrealEditor-ConcertTransport.dylib')
+[2026.09.22-07.37.22:661][  0]LogModuleManager: InternalLoadLibrary: 'ConcertServer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Concert/ConcertMain/Binaries/Mac/libUnrealEditor-ConcertServer.dylib')
+[2026.09.22-07.37.22:676][  0]LogModuleManager: InternalLoadLibrary: 'SQLiteCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/Database/SQLiteCore/Binaries/Mac/libUnrealEditor-SQLiteCore.dylib')
+[2026.09.22-07.37.22:692][  0]LogModuleManager: InternalLoadLibrary: 'Scribble' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/Animation/Scribble/Binaries/Mac/libUnrealEditor-Scribble.dylib')
+[2026.09.22-07.37.22:692][  0]LogModuleManager: InternalLoadLibrary: 'ConcertSyncCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Concert/ConcertSync/ConcertSyncCore/Binaries/Mac/libUnrealEditor-ConcertSyncCore.dylib')
+[2026.09.22-07.37.22:710][  0]LogModuleManager: InternalLoadLibrary: 'Cinderline' ('/Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Mac/libUnrealEditor-Cinderline.dylib')
+[2026.09.22-07.37.22:738][  0]LogModuleManager: InternalLoadLibrary: 'DataflowEnginePlugin' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Dataflow/Binaries/Mac/libUnrealEditor-DataflowEnginePlugin.dylib')
+[2026.09.22-07.37.22:739][  0]LogModuleManager: InternalLoadLibrary: 'DataflowEngine' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-DataflowEngine.dylib')
+[2026.09.22-07.37.22:740][  0]LogModuleManager: InternalLoadLibrary: 'DataflowSimulation' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-DataflowSimulation.dylib')
+[2026.09.22-07.37.22:740][  0]LogModuleManager: InternalLoadLibrary: 'DataflowNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Dataflow/Binaries/Mac/libUnrealEditor-DataflowNodes.dylib')
+[2026.09.22-07.37.22:744][  0]LogModuleManager: InternalLoadLibrary: 'CustomizableObjectEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Mutable/Binaries/Mac/libUnrealEditor-CustomizableObjectEditor.dylib')
+[2026.09.22-07.37.22:770][  0]LogMutable: Creating Mutable Customizable Object System.
+[2026.09.22-07.37.22:770][  0]LogModuleManager: InternalLoadLibrary: 'PCG' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/PCG/Binaries/Mac/libUnrealEditor-PCG.dylib')
+[2026.09.22-07.37.22:811][  0]LogConfig: Applying CVar settings from Section [/Script/PCG.PCGEngineSettings] File [Engine]
+[2026.09.22-07.37.22:817][  0]LogModuleManager: InternalLoadLibrary: 'TraceUtilities' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/TraceUtilities/Binaries/Mac/libUnrealEditor-TraceUtilities.dylib')
+[2026.09.22-07.37.22:831][  0]LogModuleManager: InternalLoadLibrary: 'AudioInsightsRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/AudioInsightsRuntime/Binaries/Mac/libUnrealEditor-AudioInsightsRuntime.dylib')
+[2026.09.22-07.37.22:846][  0]LogModuleManager: InternalLoadLibrary: 'WorldMetricsCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/WorldMetrics/Binaries/Mac/libUnrealEditor-WorldMetricsCore.dylib')
+[2026.09.22-07.37.22:861][  0]LogModuleManager: InternalLoadLibrary: 'WorldMetricsTest' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/WorldMetrics/Binaries/Mac/libUnrealEditor-WorldMetricsTest.dylib')
+[2026.09.22-07.37.22:877][  0]LogModuleManager: InternalLoadLibrary: 'CsvMetrics' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/WorldMetrics/Binaries/Mac/libUnrealEditor-CsvMetrics.dylib')
+[2026.09.22-07.37.22:892][  0]LogModuleManager: InternalLoadLibrary: 'ChaosVDBlueprint' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/ChaosVD/Binaries/Mac/libUnrealEditor-ChaosVDBlueprint.dylib')
+[2026.09.22-07.37.22:908][  0]LogModuleManager: InternalLoadLibrary: 'UObjectPlugin' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/UObjectPlugin/Binaries/Mac/libUnrealEditor-UObjectPlugin.dylib')
+[2026.09.22-07.37.22:922][  0]LogModuleManager: InternalLoadLibrary: 'VisualStudioCodeSourceCodeAccess' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/VisualStudioCodeSourceCodeAccess/Binaries/Mac/libUnrealEditor-VisualStudioCodeSourceCodeAccess.dylib')
+[2026.09.22-07.37.22:938][  0]LogModuleManager: InternalLoadLibrary: 'SubversionSourceControl' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/SubversionSourceControl/Binaries/Mac/libUnrealEditor-SubversionSourceControl.dylib')
+[2026.09.22-07.37.22:953][  0]SourceControl: Revision control is disabled
+[2026.09.22-07.37.22:953][  0]LogModuleManager: InternalLoadLibrary: 'CLionSourceCodeAccess' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/CLionSourceCodeAccess/Binaries/Mac/libUnrealEditor-CLionSourceCodeAccess.dylib')
+[2026.09.22-07.37.22:969][  0]LogModuleManager: InternalLoadLibrary: 'XCodeSourceCodeAccess' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/XCodeSourceCodeAccess/Binaries/Mac/libUnrealEditor-XCodeSourceCodeAccess.dylib')
+[2026.09.22-07.37.22:984][  0]LogModuleManager: InternalLoadLibrary: 'NamingTokens' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/NamingTokens/Binaries/Mac/libUnrealEditor-NamingTokens.dylib')
+[2026.09.22-07.37.22:985][  0]LogModuleManager: InternalLoadLibrary: 'NamingTokensUI' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/NamingTokens/Binaries/Mac/libUnrealEditor-NamingTokensUI.dylib')
+[2026.09.22-07.37.22:986][  0]LogModuleManager: InternalLoadLibrary: 'NamingTokensUncookedOnly' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/NamingTokens/Binaries/Mac/libUnrealEditor-NamingTokensUncookedOnly.dylib')
+[2026.09.22-07.37.23:002][  0]LogModuleManager: InternalLoadLibrary: 'DumpGPUServices' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/DumpGPUServices/Binaries/Mac/libUnrealEditor-DumpGPUServices.dylib')
+[2026.09.22-07.37.23:017][  0]LogModuleManager: InternalLoadLibrary: 'NiagaraBlueprintNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/FX/Niagara/Binaries/Mac/libUnrealEditor-NiagaraBlueprintNodes.dylib')
+[2026.09.22-07.37.23:035][  0]LogModuleManager: InternalLoadLibrary: 'InputDebugging' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/InputDebugging/Binaries/Mac/libUnrealEditor-InputDebugging.dylib')
+[2026.09.22-07.37.23:050][  0]LogModuleManager: InternalLoadLibrary: 'ModelViewViewModel' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ModelViewViewModel/Binaries/Mac/libUnrealEditor-ModelViewViewModel.dylib')
+[2026.09.22-07.37.23:051][  0]LogModuleManager: InternalLoadLibrary: 'ModelViewViewModelBlueprint' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ModelViewViewModel/Binaries/Mac/libUnrealEditor-ModelViewViewModelBlueprint.dylib')
+[2026.09.22-07.37.23:070][  0]LogModuleManager: InternalLoadLibrary: 'ModelViewViewModelDebugger' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ModelViewViewModel/Binaries/Mac/libUnrealEditor-ModelViewViewModelDebugger.dylib')
+[2026.09.22-07.37.23:087][  0]LogModuleManager: InternalLoadLibrary: 'AssetTags' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AssetTags/Binaries/Mac/libUnrealEditor-AssetTags.dylib')
+[2026.09.22-07.37.23:103][  0]LogModuleManager: InternalLoadLibrary: 'AudioWidgetsCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AudioWidgets/Binaries/Mac/libUnrealEditor-AudioWidgetsCore.dylib')
+[2026.09.22-07.37.23:104][  0]LogModuleManager: InternalLoadLibrary: 'ActorLayerUtilities' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ActorLayerUtilities/Binaries/Mac/libUnrealEditor-ActorLayerUtilities.dylib')
+[2026.09.22-07.37.23:119][  0]LogModuleManager: InternalLoadLibrary: 'AndroidPermission' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AndroidPermission/Binaries/Mac/libUnrealEditor-AndroidPermission.dylib')
+[2026.09.22-07.37.23:135][  0]LogAndroidPermission: UAndroidPermissionCallbackProxy::GetInstance
+[2026.09.22-07.37.23:135][  0]LogModuleManager: InternalLoadLibrary: 'GooglePAD' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GooglePAD/Binaries/Mac/libUnrealEditor-GooglePAD.dylib')
+[2026.09.22-07.37.23:150][  0]LogModuleManager: InternalLoadLibrary: 'MobilePatchingUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/MobilePatchingUtils/Binaries/Mac/libUnrealEditor-MobilePatchingUtils.dylib')
+[2026.09.22-07.37.23:166][  0]LogModuleManager: InternalLoadLibrary: 'HairStrandsRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/HairStrands/Binaries/Mac/libUnrealEditor-HairStrandsRuntime.dylib')
+[2026.09.22-07.37.23:181][  0]LogModuleManager: InternalLoadLibrary: 'ComputeDataInterface' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ComputeFramework/Binaries/Mac/libUnrealEditor-ComputeDataInterface.dylib')
+[2026.09.22-07.37.23:199][  0]LogModuleManager: InternalLoadLibrary: 'EditableComputeGraph' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ComputeFramework/Binaries/Mac/libUnrealEditor-EditableComputeGraph.dylib')
+[2026.09.22-07.37.23:214][  0]LogModuleManager: InternalLoadLibrary: 'AudioCapture' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AudioCapture/Binaries/Mac/libUnrealEditor-AudioCapture.dylib')
+[2026.09.22-07.37.23:234][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.09.22-07.37.23:234][  0]LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+[2026.09.22-07.37.23:234][  0]LogModuleManager: InternalLoadLibrary: 'AudioCaptureRtAudio' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AudioCaptureRtAudio.dylib')
+[2026.09.22-07.37.23:235][  0]LogModuleManager: InternalLoadLibrary: 'MeshModelingTools' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/MeshModelingToolset/Binaries/Mac/libUnrealEditor-MeshModelingTools.dylib')
+[2026.09.22-07.37.23:236][  0]LogModuleManager: InternalLoadLibrary: 'ModelingComponents' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/MeshModelingToolset/Binaries/Mac/libUnrealEditor-ModelingComponents.dylib')
+[2026.09.22-07.37.23:237][  0]LogModuleManager: InternalLoadLibrary: 'GeometryFramework' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-GeometryFramework.dylib')
+[2026.09.22-07.37.23:237][  0]LogModuleManager: InternalLoadLibrary: 'ModelingOperators' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/MeshModelingToolset/Binaries/Mac/libUnrealEditor-ModelingOperators.dylib')
+[2026.09.22-07.37.23:238][  0]LogModuleManager: InternalLoadLibrary: 'AppleImageUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AppleImageUtils/Binaries/Mac/libUnrealEditor-AppleImageUtils.dylib')
+[2026.09.22-07.37.23:253][  0]LogModuleManager: InternalLoadLibrary: 'AppleImageUtilsBlueprintSupport' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/AppleImageUtils/Binaries/Mac/libUnrealEditor-AppleImageUtilsBlueprintSupport.dylib')
+[2026.09.22-07.37.23:270][  0]LogModuleManager: InternalLoadLibrary: 'StateTreeDeveloper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/StateTree/Binaries/Mac/libUnrealEditor-StateTreeDeveloper.dylib')
+[2026.09.22-07.37.23:271][  0]LogModuleManager: InternalLoadLibrary: 'StateTreeEditorModule' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/StateTree/Binaries/Mac/libUnrealEditor-StateTreeEditorModule.dylib')
+[2026.09.22-07.37.23:272][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCache' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryCache/Binaries/Mac/libUnrealEditor-GeometryCache.dylib')
+[2026.09.22-07.37.23:273][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCacheEd' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryCache/Binaries/Mac/libUnrealEditor-GeometryCacheEd.dylib')
+[2026.09.22-07.37.23:274][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCacheTracks' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryCache/Binaries/Mac/libUnrealEditor-GeometryCacheTracks.dylib')
+[2026.09.22-07.37.23:290][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCacheSequencer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryCache/Binaries/Mac/libUnrealEditor-GeometryCacheSequencer.dylib')
+[2026.09.22-07.37.23:308][  0]LogModuleManager: InternalLoadLibrary: 'SkeletalMerging' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/SkeletalMerging/Binaries/Mac/libUnrealEditor-SkeletalMerging.dylib')
+[2026.09.22-07.37.23:308][  0]LogModuleManager: InternalLoadLibrary: 'GeometryAlgorithms' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryProcessing/Binaries/Mac/libUnrealEditor-GeometryAlgorithms.dylib')
+[2026.09.22-07.37.23:309][  0]LogModuleManager: InternalLoadLibrary: 'DynamicMesh' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryProcessing/Binaries/Mac/libUnrealEditor-DynamicMesh.dylib')
+[2026.09.22-07.37.23:309][  0]LogModuleManager: InternalLoadLibrary: 'MeshFileUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/GeometryProcessing/Binaries/Mac/libUnrealEditor-MeshFileUtils.dylib')
+[2026.09.22-07.37.23:325][  0]LogModuleManager: InternalLoadLibrary: 'ArchVisCharacter' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Runtime/ArchVisCharacter/Binaries/Mac/libUnrealEditor-ArchVisCharacter.dylib')
+[2026.09.22-07.37.23:342][  0]LogModuleManager: InternalLoadLibrary: 'OnlineBase' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Online/OnlineBase/Binaries/Mac/libUnrealEditor-OnlineBase.dylib')
+[2026.09.22-07.37.23:343][  0]LogModuleManager: InternalLoadLibrary: 'MetaHumanSDKRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/MetaHuman/MetaHumanSDK/Binaries/Mac/libUnrealEditor-MetaHumanSDKRuntime.dylib')
+[2026.09.22-07.37.23:359][  0]LogModuleManager: InternalLoadLibrary: 'TakeMovieScene' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-TakeMovieScene.dylib')
+[2026.09.22-07.37.23:360][  0]LogModuleManager: InternalLoadLibrary: 'RewindDebuggerRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/GameplayInsights/Binaries/Mac/libUnrealEditor-RewindDebuggerRuntime.dylib')
+[2026.09.22-07.37.23:378][  0]LogModuleManager: InternalLoadLibrary: 'RewindDebuggerVLogRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/GameplayInsights/Binaries/Mac/libUnrealEditor-RewindDebuggerVLogRuntime.dylib')
+[2026.09.22-07.37.23:394][  0]LogModuleManager: InternalLoadLibrary: 'ControlRigSpline' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/ControlRigSpline/Binaries/Mac/libUnrealEditor-ControlRigSpline.dylib')
+[2026.09.22-07.37.23:411][  0]LogModuleManager: InternalLoadLibrary: 'TweeningUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/TweeningUtils/Binaries/Mac/libUnrealEditor-TweeningUtils.dylib')
+[2026.09.22-07.37.23:412][  0]LogModuleManager: InternalLoadLibrary: 'RigLogicModule' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/RigLogic/Binaries/Mac/libUnrealEditor-RigLogicModule.dylib')
+[2026.09.22-07.37.23:413][  0]LogModuleManager: InternalLoadLibrary: 'IKRig' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/IKRig/Binaries/Mac/libUnrealEditor-IKRig.dylib')
+[2026.09.22-07.37.23:433][  0]LogModuleManager: InternalLoadLibrary: 'IKRigDeveloper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/IKRig/Binaries/Mac/libUnrealEditor-IKRigDeveloper.dylib')
+[2026.09.22-07.37.23:451][  0]LogModuleManager: InternalLoadLibrary: 'PhysicsControl' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/PhysicsControl/Binaries/Mac/libUnrealEditor-PhysicsControl.dylib')
+[2026.09.22-07.37.23:470][  0]LogModuleManager: InternalLoadLibrary: 'PhysicsControlUncookedOnly' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/PhysicsControl/Binaries/Mac/libUnrealEditor-PhysicsControlUncookedOnly.dylib')
+[2026.09.22-07.37.23:489][  0]LogModuleManager: InternalLoadLibrary: 'TemplateSequence' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/MovieScene/TemplateSequence/Binaries/Mac/libUnrealEditor-TemplateSequence.dylib')
+[2026.09.22-07.37.23:490][  0]LogModuleManager: InternalLoadLibrary: 'SequencerScripting' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/MovieScene/SequencerScripting/Binaries/Mac/libUnrealEditor-SequencerScripting.dylib')
+[2026.09.22-07.37.23:490][  0]LogModuleManager: InternalLoadLibrary: 'NNEDenoiser' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/NNE/NNEDenoiser/Binaries/Mac/libUnrealEditor-NNEDenoiser.dylib')
+[2026.09.22-07.37.23:507][  0]LogConfig: Applying CVar settings from Section [/Script/NNEDenoiser.NNEDenoiserSettings] File [Engine]
+[2026.09.22-07.37.23:507][  0]LogModuleManager: InternalLoadLibrary: 'GLTFCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-GLTFCore.dylib')
+[2026.09.22-07.37.23:508][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeMessages' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeMessages.dylib')
+[2026.09.22-07.37.23:509][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeExport' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeExport.dylib')
+[2026.09.22-07.37.23:527][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeDispatcher' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeDispatcher.dylib')
+[2026.09.22-07.37.23:528][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeCommon' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeCommon.dylib')
+[2026.09.22-07.37.23:529][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeAnalytics' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeAnalytics.dylib')
+[2026.09.22-07.37.23:545][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeCommonParser' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeCommonParser.dylib')
+[2026.09.22-07.37.23:546][  0]LogModuleManager: InternalLoadLibrary: 'InterchangeFbxParser' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Interchange/Runtime/Binaries/Mac/libUnrealEditor-InterchangeFbxParser.dylib')
+[2026.09.22-07.37.23:547][  0]LogModuleManager: InternalLoadLibrary: 'GameplayCamerasUncookedOnly' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Cameras/GameplayCameras/Binaries/Mac/libUnrealEditor-GameplayCamerasUncookedOnly.dylib')
+[2026.09.22-07.37.23:564][  0]LogModuleManager: InternalLoadLibrary: 'OodleNetworkHandlerComponent' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Compression/OodleNetwork/Binaries/Mac/libUnrealEditor-OodleNetworkHandlerComponent.dylib')
+[2026.09.22-07.37.23:581][  0]LogModuleManager: InternalLoadLibrary: 'ConsoleVariablesEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Editor/ConsoleVariablesEditor/Binaries/Mac/libUnrealEditor-ConsoleVariablesEditor.dylib')
+[2026.09.22-07.37.23:618][  0]LogModuleManager: InternalLoadLibrary: 'ConsoleVariablesEditorRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Editor/ConsoleVariablesEditor/Binaries/Mac/libUnrealEditor-ConsoleVariablesEditorRuntime.dylib')
+[2026.09.22-07.37.23:620][  0]LogModuleManager: InternalLoadLibrary: 'LocalizableMessage' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/LocalizableMessage/Binaries/Mac/libUnrealEditor-LocalizableMessage.dylib')
+[2026.09.22-07.37.23:637][  0]LogModuleManager: InternalLoadLibrary: 'LocalizableMessageBlueprint' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/LocalizableMessage/Binaries/Mac/libUnrealEditor-LocalizableMessageBlueprint.dylib')
+[2026.09.22-07.37.23:654][  0]LogModuleManager: InternalLoadLibrary: 'AutomationUtils' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/AutomationUtils/Binaries/Mac/libUnrealEditor-AutomationUtils.dylib')
+[2026.09.22-07.37.23:671][  0]LogModuleManager: InternalLoadLibrary: 'BackChannel' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/BackChannel/Binaries/Mac/libUnrealEditor-BackChannel.dylib')
+[2026.09.22-07.37.23:689][  0]LogModuleManager: InternalLoadLibrary: 'ChaosNiagara' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/ChaosNiagara/Binaries/Mac/libUnrealEditor-ChaosNiagara.dylib')
+[2026.09.22-07.37.23:707][  0]LogModuleManager: InternalLoadLibrary: 'ChaosUserDataPT' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/ChaosUserDataPT/Binaries/Mac/libUnrealEditor-ChaosUserDataPT.dylib')
+[2026.09.22-07.37.23:708][  0]LogModuleManager: InternalLoadLibrary: 'Landmass' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/Landmass/Binaries/Mac/libUnrealEditor-Landmass.dylib')
+[2026.09.22-07.37.23:709][  0]LogModuleManager: InternalLoadLibrary: 'GeometryFlowCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryFlow/Binaries/Mac/libUnrealEditor-GeometryFlowCore.dylib')
+[2026.09.22-07.37.23:709][  0]LogModuleManager: InternalLoadLibrary: 'GeometryFlowMeshProcessing' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryFlow/Binaries/Mac/libUnrealEditor-GeometryFlowMeshProcessing.dylib')
+[2026.09.22-07.37.23:710][  0]LogModuleManager: InternalLoadLibrary: 'MutableAssetUserData' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/MutableAssetUserData/Binaries/Mac/libUnrealEditor-MutableAssetUserData.dylib')
+[2026.09.22-07.37.23:726][  0]LogModuleManager: InternalLoadLibrary: 'ControlRigPhysics' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/ControlRigPhysics/Binaries/Mac/libUnrealEditor-ControlRigPhysics.dylib')
+[2026.09.22-07.37.23:747][  0]LogModuleManager: InternalLoadLibrary: 'MeshModelingToolsExp' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/MeshModelingToolsetExp/Binaries/Mac/libUnrealEditor-MeshModelingToolsExp.dylib')
+[2026.09.22-07.37.23:748][  0]LogModuleManager: InternalLoadLibrary: 'ModelingUI' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/MeshModelingToolsetExp/Binaries/Mac/libUnrealEditor-ModelingUI.dylib')
+[2026.09.22-07.37.23:749][  0]LogModuleManager: InternalLoadLibrary: 'TedsCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/EditorDataStorage/Binaries/Mac/libUnrealEditor-TedsCore.dylib')
+[2026.09.22-07.37.23:775][  0]LogModuleManager: InternalLoadLibrary: 'TypedElementFramework' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TypedElementFramework.dylib')
+[2026.09.22-07.37.23:776][  0]LogModuleManager: InternalLoadLibrary: 'MassEntityEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MassEntityEditor.dylib')
+[2026.09.22-07.37.23:777][  0]LogModuleManager: InternalLoadLibrary: 'MassEntityDebugger' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MassEntityDebugger.dylib')
+[2026.09.22-07.37.23:797][  0]LogModuleManager: InternalLoadLibrary: 'GlobalConfigurationData' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GlobalConfigurationData/Binaries/Mac/libUnrealEditor-GlobalConfigurationData.dylib')
+[2026.09.22-07.37.23:815][  0]LogModuleManager: InternalLoadLibrary: 'GlobalConfigurationDataCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GlobalConfigurationData/Binaries/Mac/libUnrealEditor-GlobalConfigurationDataCore.dylib')
+[2026.09.22-07.37.23:816][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCollectionTracks' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryCollectionPlugin/Binaries/Mac/libUnrealEditor-GeometryCollectionTracks.dylib')
+[2026.09.22-07.37.23:832][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCollectionSequencer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryCollectionPlugin/Binaries/Mac/libUnrealEditor-GeometryCollectionSequencer.dylib')
+[2026.09.22-07.37.23:850][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCollectionEngine' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-GeometryCollectionEngine.dylib')
+[2026.09.22-07.37.23:851][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCollectionNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryCollectionPlugin/Binaries/Mac/libUnrealEditor-GeometryCollectionNodes.dylib')
+[2026.09.22-07.37.23:906][  0]LogModuleManager: InternalLoadLibrary: 'GeometryCollectionDepNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryCollectionPlugin/Binaries/Mac/libUnrealEditor-GeometryCollectionDepNodes.dylib')
+[2026.09.22-07.37.23:924][  0]LogModuleManager: InternalLoadLibrary: 'GeometryDataflowNodes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryDataflow/Binaries/Mac/libUnrealEditor-GeometryDataflowNodes.dylib')
+[2026.09.22-07.37.23:926][  0]LogModuleManager: InternalLoadLibrary: 'DataflowMedialSkeleton' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/GeometryDataflow/Binaries/Mac/libUnrealEditor-DataflowMedialSkeleton.dylib')
+[2026.09.22-07.37.23:926][  0]LogModuleManager: InternalLoadLibrary: 'MediaPlate' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/MediaPlate/Binaries/Mac/libUnrealEditor-MediaPlate.dylib')
+[2026.09.22-07.37.23:944][  0]LogModuleManager: InternalLoadLibrary: 'MediaCompositing' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/MediaCompositing/Binaries/Mac/libUnrealEditor-MediaCompositing.dylib')
+[2026.09.22-07.37.23:963][  0]LogModuleManager: InternalLoadLibrary: 'ImgMedia' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/ImgMedia/Binaries/Mac/libUnrealEditor-ImgMedia.dylib')
+[2026.09.22-07.37.24:035][  0]LogModuleManager: InternalLoadLibrary: 'AvfMediaCapture' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/AvfMedia/Binaries/Mac/libUnrealEditor-AvfMediaCapture.dylib')
+[2026.09.22-07.37.24:053][  0]LogModuleManager: InternalLoadLibrary: 'FileSandboxCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Sandbox/FileSandbox/Binaries/Mac/libUnrealEditor-FileSandboxCore.dylib')
+[2026.09.22-07.37.24:056][  0]LogModuleManager: InternalLoadLibrary: 'ConcertSharedSlate' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Concert/ConcertUI/ConcertSharedSlate/Binaries/Mac/libUnrealEditor-ConcertSharedSlate.dylib')
+[2026.09.22-07.37.24:057][  0]LogModuleManager: InternalLoadLibrary: 'ConcertSyncClient' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Developer/Concert/ConcertSync/ConcertSyncClient/Binaries/Mac/libUnrealEditor-ConcertSyncClient.dylib')
+[2026.09.22-07.37.24:058][  0]LogModuleManager: InternalLoadLibrary: 'TakesCore' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-TakesCore.dylib')
+[2026.09.22-07.37.24:059][  0]LogModuleManager: InternalLoadLibrary: 'TakeTrackRecorders' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-TakeTrackRecorders.dylib')
+[2026.09.22-07.37.24:059][  0]LogModuleManager: InternalLoadLibrary: 'TakeRecorderSources' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-TakeRecorderSources.dylib')
+[2026.09.22-07.37.24:083][  0]LogModuleManager: InternalLoadLibrary: 'TakeRecorder' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-TakeRecorder.dylib')
+[2026.09.22-07.37.24:084][  0]LogModuleManager: InternalLoadLibrary: 'TakeRecorderEditor' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-TakeRecorderEditor.dylib')
+[2026.09.22-07.37.24:118][  0]LogModuleManager: InternalLoadLibrary: 'CacheTrackRecorder' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-CacheTrackRecorder.dylib')
+[2026.09.22-07.37.24:137][  0]LogModuleManager: InternalLoadLibrary: 'TakeRecorderNamingTokens' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/VirtualProduction/Takes/Binaries/Mac/libUnrealEditor-TakeRecorderNamingTokens.dylib')
+[2026.09.22-07.37.24:169][  0]LogUObjectArray: 48780 objects as part of root set at end of initial load.
+[2026.09.22-07.37.24:169][  0]LogUObjectArray: CloseDisregardForGC: 0/0 objects in disregard for GC pool
+[2026.09.22-07.37.24:181][  0]LogModuleManager: InternalLoadLibrary: 'ProfileVisualizer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ProfileVisualizer.dylib')
+[2026.09.22-07.37.24:199][  0]LogModuleManager: InternalLoadLibrary: 'ImageWriteQueue' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ImageWriteQueue.dylib')
+[2026.09.22-07.37.24:289][  0]LogTemp: Error test: UE::UnifiedErrorTest::Empty: [Empty error]
+[2026.09.22-07.37.24:289][  0]LogTemp: Error with param: UE::UnifiedErrorTest::WithInt: [Error with int -7]
+[2026.09.22-07.37.24:289][  0]LogTemp: Error with context: UE::UnifiedErrorTest::Empty: [Empty error]
+[2026.09.22-07.37.24:289][  0]LogTemp: FError that has been invalidated: ::: []
+[2026.09.22-07.37.24:289][  0]LogTemp: FError that has been moved from: ::: []
+[2026.09.22-07.37.24:322][  0]LogEngine: Initializing Engine...
+[2026.09.22-07.37.24:322][  0]LogModuleManager: InternalLoadLibrary: 'TypedElementRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-TypedElementRuntime.dylib')
+[2026.09.22-07.37.24:463][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.12.dylib
+[2026.09.22-07.37.24:486][  0]LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.15.dylib
+[2026.09.22-07.37.24:515][  0]LogNetVersion: Set ProjectVersion to 0.1.0. Version Checksum will be recalculated on next use.
+[2026.09.22-07.37.24:515][  0]LogInit: Texture streaming: Enabled
+[2026.09.22-07.37.24:543][  0]LogModuleManager: InternalLoadLibrary: 'MessagingRpc' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MessagingRpc.dylib')
+[2026.09.22-07.37.24:544][  0]LogModuleManager: InternalLoadLibrary: 'PortalRpc' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-PortalRpc.dylib')
+[2026.09.22-07.37.24:544][  0]LogModuleManager: InternalLoadLibrary: 'PortalServices' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-PortalServices.dylib')
+[2026.09.22-07.37.24:545][  0]LogModuleManager: InternalLoadLibrary: 'StreamingPauseRendering' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-StreamingPauseRendering.dylib')
+[2026.09.22-07.37.24:563][  0]LogModuleManager: InternalLoadLibrary: 'MovieScene' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MovieScene.dylib')
+[2026.09.22-07.37.24:564][  0]LogModuleManager: InternalLoadLibrary: 'MovieSceneTracks' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MovieSceneTracks.dylib')
+[2026.09.22-07.37.24:564][  0]LogModuleManager: InternalLoadLibrary: 'CinematicCamera' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-CinematicCamera.dylib')
+[2026.09.22-07.37.24:565][  0]LogModuleManager: InternalLoadLibrary: 'SparseVolumeTexture' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SparseVolumeTexture.dylib')
+[2026.09.22-07.37.24:565][  0]LogCsvProfiler: Display: Metadata set : largeworldcoordinates="1"
+[2026.09.22-07.37.24:568][  0]LogChaosDD: Creating Chaos Debug Draw Scene for world Untitled
+[2026.09.22-07.37.24:569][  0]LogModuleManager: InternalLoadLibrary: 'ChaosVDRuntime' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-ChaosVDRuntime.dylib')
+[2026.09.22-07.37.24:571][  0]LogModuleManager: InternalLoadLibrary: 'MovieSceneCapture' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-MovieSceneCapture.dylib')
+[2026.09.22-07.37.24:572][  0]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2026.09.22-07.37.24:572][  0]LogInit: Display: Game Engine Initialized.
+[2026.09.22-07.37.24:572][  0]LogNNEDenoiser: Ray Tracing is not enabled, therefore NNEDenoiser is not registered!
+[2026.09.22-07.37.24:576][  0]LogPython: Python enabled via CVar 'Engine.Python.IsEnabledByDefault'
+[2026.09.22-07.37.24:576][  0]LogPython: Using Python 3.11.8
+[2026.09.22-07.37.24:801][  0]LogPython: Display: No pip-enabled plugins with python dependencies found, skipping
+[2026.09.22-07.37.25:122][  0]LogNiagaraEditor: GEditor isn't valid! Particle reset commands will not work for Niagara components!
+[2026.09.22-07.37.25:122][  0]LogModuleManager: InternalLoadLibrary: 'SessionServices' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SessionServices.dylib')
+[2026.09.22-07.37.25:128][  0]LogCsvProfiler: Display: Metadata set : raytracing="0"
+[2026.09.22-07.37.25:128][  0]LogModuleManager: InternalLoadLibrary: 'CharacterAI' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/CharacterAI/Binaries/Mac/libUnrealEditor-CharacterAI.dylib')
+[2026.09.22-07.37.25:146][  0]LogModuleManager: InternalLoadLibrary: 'PlanarCut' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/PlanarCutPlugin/Binaries/Mac/libUnrealEditor-PlanarCut.dylib')
+[2026.09.22-07.37.25:147][  0]LogModuleManager: InternalLoadLibrary: 'FractureEngine' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/Fracture/Binaries/Mac/libUnrealEditor-FractureEngine.dylib')
+[2026.09.22-07.37.25:148][  0]LogModuleManager: InternalLoadLibrary: 'MP4Utilities' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/MP4Utilities/Binaries/Mac/libUnrealEditor-MP4Utilities.dylib')
+[2026.09.22-07.37.25:165][  0]LogModuleManager: InternalLoadLibrary: 'MP4Boxes' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/MP4Utilities/Binaries/Mac/libUnrealEditor-MP4Boxes.dylib')
+[2026.09.22-07.37.25:184][  0]LogModuleManager: InternalLoadLibrary: 'MP4Muxer' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/MP4Utilities/Binaries/Mac/libUnrealEditor-MP4Muxer.dylib')
+[2026.09.22-07.37.25:203][  0]LogModuleManager: InternalLoadLibrary: 'ImgMediaFactory' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/ImgMedia/Binaries/Mac/libUnrealEditor-ImgMediaFactory.dylib')
+[2026.09.22-07.37.25:204][  0]LogModuleManager: InternalLoadLibrary: 'OpenExrWrapper' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/ImgMedia/Binaries/Mac/libUnrealEditor-OpenExrWrapper.dylib')
+[2026.09.22-07.37.25:205][  0]LogModuleManager: InternalLoadLibrary: 'TmvMedia' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/TmvMedia/Binaries/Mac/libUnrealEditor-TmvMedia.dylib')
+[2026.09.22-07.37.25:206][  0]LogModuleManager: InternalLoadLibrary: 'AvfMediaFactory' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/AvfMedia/Binaries/Mac/libUnrealEditor-AvfMediaFactory.dylib')
+[2026.09.22-07.37.25:207][  0]LogModuleManager: InternalLoadLibrary: 'WmfMediaFactory' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/WmfMedia/Binaries/Mac/libUnrealEditor-WmfMediaFactory.dylib')
+[2026.09.22-07.37.25:224][  0]LogModuleManager: InternalLoadLibrary: 'WebMMedia' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/WebMMedia/Binaries/Mac/libUnrealEditor-WebMMedia.dylib')
+[2026.09.22-07.37.25:225][  0]LogModuleManager: InternalLoadLibrary: 'WebMMediaFactory' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Media/WebMMedia/Binaries/Mac/libUnrealEditor-WebMMediaFactory.dylib')
+[2026.09.22-07.37.25:237][  0]LogEditorDataStorage: Initializing
+[2026.09.22-07.37.25:237][  0]LogEditorDataStorage: Initializing TEDS Core.
+[2026.09.22-07.37.25:237][  0]LogEditorDataStorage: Initialized TEDS Core.
+[2026.09.22-07.37.25:237][  0]LogEditorDataStorage: Initializing TEDS Compatibility.
+[2026.09.22-07.37.25:237][  0]LogEditorDataStorage: Initialized TEDS Compatibility.
+[2026.09.22-07.37.25:238][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'ActorLayersWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AlertWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AlertHeaderWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'UObjectLabelWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'FolderCompatibilityWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DiskSizeWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetDataItemTypeWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetDataLabelWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetDataVirtualPathWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'AssetNameWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'DynamicAssetDataColumnBaseWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'StaticMeshTrianglesWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:239][  0]LogModuleManager: InternalLoadLibrary: 'TedsTypeInfo' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Experimental/EditorDataStorageFeatures/Binaries/Mac/libUnrealEditor-TedsTypeInfo.dylib')
+[2026.09.22-07.37.25:241][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'OutlinerUnsavedWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:241][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'OutlinerUnsavedHeaderConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:241][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'SocketWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:241][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'TypeInfoWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:241][  0]LogEditorDataStorageUI: Warning: Unable to register widget factory 'VisibilityWidgetConstructor' as purpose '0' isn't registered.
+[2026.09.22-07.37.25:241][  0]LogEditorDataStorage: Initialized
+[2026.09.22-07.37.25:241][  0]LogInit: Display: Starting Game.
+[2026.09.22-07.37.25:241][  0]LogGlobalStatus: Browse Started Browse: "/Game/Maps/Frontier?Name=Player"
+[2026.09.22-07.37.25:241][  0]LogNet: Browse: /Game/Maps/Frontier?Name=Player
+[2026.09.22-07.37.25:241][  0]LogLoad: LoadMap: /Game/Maps/Frontier?Name=Player
+[2026.09.22-07.37.25:241][  0]LogWorld: BeginTearingDown for /Temp/Untitled_0
+[2026.09.22-07.37.25:242][  0]LogWorld: UWorld::CleanupWorld for Untitled, bSessionEnded=true, bCleanupResources=true
+[2026.09.22-07.37.25:242][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.09.22-07.37.25:256][  0]LogUObjectHash: Compacting FUObjectHashTables data took   0.42ms
+[2026.09.22-07.37.25:271][  0]LogChaosDD: Creating Chaos Debug Draw Scene for world Frontier
+[2026.09.22-07.37.25:273][  0]LogModuleManager: InternalLoadLibrary: 'AIModule' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AIModule.dylib')
+[2026.09.22-07.37.25:274][  0]LogModuleManager: InternalLoadLibrary: 'NavigationSystem' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-NavigationSystem.dylib')
+[2026.09.22-07.37.25:275][  0]LogModuleManager: InternalLoadLibrary: 'AITestSuite' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AITestSuite.dylib')
+[2026.09.22-07.37.25:275][  0]LogModuleManager: InternalLoadLibrary: 'GameplayDebugger' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-GameplayDebugger.dylib')
+[2026.09.22-07.37.25:277][  0]LogLoad: Game class is 'CinderGameMode'
+[2026.09.22-07.37.25:286][  0]LogCinderFramePacing: Display: CINDERLINE_FRAME_PACING state=bypass effective_fps=0.00 engine_fps=0.00
+[2026.09.22-07.37.25:286][  0]LogWorld: Bringing World /Game/Maps/Frontier.Frontier up for play (max tick rate 0) at 2026.09.22-13.07.25
+[2026.09.22-07.37.25:286][  0]LogWorld: Bringing up level for play took: 0.001476
+[2026.09.22-07.37.25:287][  0]LogGameMode: FindPlayerStart: PATHS NOT DEFINED or NO PLAYERSTART with positive rating
+[2026.09.22-07.37.25:287][  0]LogEnhancedInput: Warning: UEnhancedInputLocalPlayerSubsystem for Local Player 'LocalPlayer_0' does not have a valid PlayerInput object. Failed to load user settings.
+[2026.09.22-07.37.25:287][  0]LogModuleManager: InternalLoadLibrary: 'Voice' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-Voice.dylib')
+[2026.09.22-07.37.25:289][  0]LogViewport: Display: Viewport MouseCaptureMode Changed, NoCapture -> CaptureDuringMouseDown
+[2026.09.22-07.37.25:575][  0]LogLoad: Took 0.333799 seconds to LoadMap(/Game/Maps/Frontier)
+[2026.09.22-07.37.25:575][  0]LogGlobalStatus: LoadMap Load map complete /Game/Maps/Frontier
+[2026.09.22-07.37.25:579][  0]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' with subface index 0 in Game thread.
+[2026.09.22-07.37.25:579][  0]LogSlate: Display: Took 0.000068 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' (160K) on Game thread.
+[2026.09.22-07.37.25:579][  0]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface 0 in Game thread.
+[2026.09.22-07.37.25:579][  0]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.22-07.37.25:580][  0]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' with subface index 0 in Game thread.
+[2026.09.22-07.37.25:580][  0]LogSlate: Display: Took 0.000066 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K) on Game thread.
+[2026.09.22-07.37.25:580][  0]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface 0 in Game thread.
+[2026.09.22-07.37.25:580][  0]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.22-07.37.25:583][  0]LogModuleManager: InternalLoadLibrary: 'AutomationWorker' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AutomationWorker.dylib')
+[2026.09.22-07.37.25:584][  0]LogModuleManager: InternalLoadLibrary: 'AutomationController' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-AutomationController.dylib')
+[2026.09.22-07.37.25:585][  0]LogModuleManager: InternalLoadLibrary: 'SequenceRecorder' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SequenceRecorder.dylib')
+[2026.09.22-07.37.25:587][  0]LogModuleManager: InternalLoadLibrary: 'SequenceRecorderSections' ('/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/libUnrealEditor-SequenceRecorderSections.dylib')
+[2026.09.22-07.37.25:774][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PreLoad): 0 .ref files found, 0 referenced binaries
+[2026.09.22-07.37.25:774][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 0 total binaries, 0 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+[2026.09.22-07.37.25:774][  0]LogAssetRegistry: Display: FindShardedCacheFiles: 0 via .ref, 0 via migration fallback, 0 total
+[2026.09.22-07.37.25:774][  0]LogAssetRegistry: Display: AssetDataGatherer spent 0.000s loading caches from /Users/chirag13/Documents/ChatGPT/starCraft/artifacts/sc2-terrain/final/run-20260922T073635Z-2Uj3Qj/map2-registry/CachedAssetRegistry.
+[2026.09.22-07.37.26:792][  0]LogAssetRegistry: AssetRegistryGather time 0.9591s: AssetDataDiscovery 0.0000s, AssetDataGather 0.9299s, StoreResults 0.0293s. Wall time 6.5460s.
+	NumCachedDirectories 0. NumUncachedDirectories 1831. NumCachedFiles 0. NumUncachedFiles 9085.
+	BackgroundTickInterruptions 0.
+[2026.09.22-07.37.26:793][  0]LogAssetRegistry: Display: Starting OnFilesLoaded.Broadcast
+[2026.09.22-07.37.26:794][  0]LogAssetRegistry: Display: Completed OnFilesLoaded.Broadcast: 0.002s
+[2026.09.22-07.37.26:794][  0]LogInit: Running DelayedAutoRegister Phase EndOfEngineInit
+[2026.09.22-07.37.26:860][  0]LogInit: Display: Engine is initialized. Leaving FEngineLoop::Init()
+[2026.09.22-07.37.26:860][  0]LogLoad: (Engine Initialization) Total time: 11.58 seconds
+[2026.09.22-07.37.26:860][  0]LogCinderFramePacing: Display: CINDERLINE_METALFX_RESOLUTION eligible=1 requested=80.00 previous=100.00 effective=80.00
+[2026.09.22-07.37.26:862][  0]LogContentStreaming: Texture pool size now 1000 MB
+[2026.09.22-07.37.26:862][  0]LogCsvProfiler: Display: Metadata set : streamingpoolsizemb="1000"
+[2026.09.22-07.37.26:865][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_A.SM_BasaltCliff_A being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_B.SM_BasaltCliff_B being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_C.SM_BasaltCliff_C being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Environment/SM_BasaltCliff_D.SM_BasaltCliff_D being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_A.SM_CinderCanyon_Rock_A being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_B.SM_CinderCanyon_Rock_B being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_C.SM_CinderCanyon_Rock_C being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_D.SM_CinderCanyon_Rock_D being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_E.SM_CinderCanyon_Rock_E being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_F.SM_CinderCanyon_Rock_F being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_CliffMass.SM_CinderCanyon_CliffMass being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/VisualTarget/Scenery/SM_CinderScenery_Pad.SM_CinderScenery_Pad being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/VisualTarget/Scenery/SM_CinderScenery_Road.SM_CinderScenery_Road being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/VisualTarget/Scenery/SM_CinderScenery_Pipe.SM_CinderScenery_Pipe being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/VisualTarget/Scenery/SM_CinderScenery_Crate.SM_CinderScenery_Crate being ready before playing
+[2026.09.22-07.37.26:866][  0]LogStaticMesh: Display: Waiting on static mesh StaticMesh /Game/Art/Canyon/Meshes/SM_CinderCanyon_Debris.SM_CinderCanyon_Debris being ready before playing
+[2026.09.22-07.37.26:867][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.09.22-07.37.26:867][  0]LogSlate: Display: Flushing composite font cache on Game thread. Clearing 1 entries in composite font map and 2 entries in font face map.
+[2026.09.22-07.37.26:919][  0]LogAutomationController: Ignoring very large delta of 17436312.24 seconds in calls to FAutomationControllerManager::Tick() and not penalizing unresponsive tests
+[2026.09.22-07.37.26:920][  0]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.09.22-07.37.26:920][  0]LogPython: Display: Running start-up script /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... started...
+[2026.09.22-07.37.26:948][  0]LogPython: Display: Running start-up script /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... took 28.569 ms
+[2026.09.22-07.37.26:948][  0]LogPython: Display: Running start-up script /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... started...
+[2026.09.22-07.37.26:956][  0]LogPython: registering <class 'ControlRigWorkflows.workflow_deformation_rig_preset.provider'>
+
+[2026.09.22-07.37.26:965][  0]LogPython: Display: Running start-up script /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... took 16.404 ms (total: 44.973 ms)
+[2026.09.22-07.37.26:965][  0]t.MaxFPS = "30"
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY map=Frontier viewport_px=1440x900 render_target_px=1440x900 dpi_scale=2.000 high_dpi_active=1 foreground=0 rendered_viewport_available=0
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_FRAME_LIMIT engine=CinderGameEngine state=0 effective_fps=30.00; limit is not measured cadence or GPU utilization
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_IOS_POLICY actual_thermal=0 raw_platform_thermal=-1 device_temperature_c=unavailable effective_thermal=0 low_power=0 effective_low_power=0 requested_frame_pace=0 actual_frame_pace=0 quality=0 stable_seconds=17436312.3 source=physical world_rendering_disabled=0
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=EnableHighDPIAwareness value=1 set_by=Code
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AntiAliasingMethod value=2 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Quality value=2 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.HistoryScreenPercentage value=100 set_by=Constructor
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.AsyncCompute value=2 set_by=Constructor
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.UpdateQuality value=3 set_by=Scalability
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ScreenPercentage value=80 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SecondaryScreenPercentage.GameViewport value=100 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DynamicRes.OperationMode value=0 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TSR.History.ScreenPercentage value=100 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ReflectionMethod value=2 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.Quality value=3 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SSR.HalfResSceneColor value=0 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.Bloom value=1 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.BloomQuality value=5 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DefaultFeature.AmbientOcclusion value=1 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionLevels value=-1 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.AmbientOcclusionMaxQuality value=100 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MaxAnisotropy value=16 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.ShadowQuality value=5 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxCSMResolution value=2048 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.MaxResolution value=2048 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Shadow.CSM.MaxCascades value=4 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.Tonemapper.Sharpen value=0.25 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.VSync value=0 set_by=GameSetting
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=rhi.SyncInterval value=1 set_by=Constructor
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=t.MaxFPS value=30 set_by=Console
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.MotionBlurQuality value=0 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.DepthOfFieldQuality value=0 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.SceneColorFringeQuality value=0 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TranslucencyLightingVolume value=0 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.CinderMetalFX.Enabled value=1 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.CinderMetalFX.ScreenPercentage value=80 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderQuality: Display: CINDERLINE_QUALITY_CVAR name=r.TemporalAA.Upsampling value=0 set_by=DeviceProfile
+[2026.09.22-07.37.26:965][  0]LogCinderMetalFX: Display: CINDER_METALFX_STATUS requested=1 metal_rhi=1 os_supported=1 device_supported=1 bridge_available=1 interface_active=1 requested_percent=80.00 effective_fraction=1.0000 registered_frames=2 encoded_frames=0 scaler_creations=1 validation_probes=1 fallbacks=0 last_input=0x0 last_output=0x0 fallback_reason=none
+[2026.09.22-07.37.27:010][  0]LogCinderCanyonPreview: Display: CINDERLINE_CANYON_PREVIEW_COMPILED state=map2 shader_jobs=0->0 static_meshes=0->0
+[2026.09.22-07.37.27:010][  0]LogCinderCanyonPreview: Display: CINDERLINE_CANYON_PREVIEW state=map2 map=2 capture=scheduled delay=2.0 focus=(2000.0,2250.0) distance=2900.0 no_save=1
+[2026.09.22-07.37.27:010][  0]LogEngine: Warning: UEngine::TickDeferredCommands took 45.46ms to execute 3 commands!
+[2026.09.22-07.37.27:010][  0]LogEngine: Warning: 	t.MaxFPS 30
+[2026.09.22-07.37.27:010][  0]LogEngine: Warning: 	cinder.quality
+[2026.09.22-07.37.27:010][  0]LogEngine: Warning: 	cinder.canyonpreview map2
+[2026.09.22-07.37.27:074][  1]LogSlate: Display: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' with subface index 0 in Game thread.
+[2026.09.22-07.37.27:074][  1]LogSlate: Display: Took 0.000123 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' (155K) on Game thread.
+[2026.09.22-07.37.27:074][  1]LogSlate: Display: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface 0 in Game thread.
+[2026.09.22-07.37.27:074][  1]LogSlate: Display: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Regular.ttf' subface index 0 successfully added to font face map in Game thread.
+[2026.09.22-07.37.28:886][ 56]LogCinderCanyonPreview: Display: CINDERLINE_CANYON_PREVIEW_READY state=map2 map=2 canonical=1 obstacles=6 explored_obstacles=6 fog_unknown=0 fog_explored=0 fog_visible=4096 landscape_matching=1 landscape_visible=1 raised_samples=4832 height_cm=-36.9..359.9 tick=4 file=../../../../starCraft/Saved/CanyonPreview/map2.png
+[2026.09.22-07.37.29:706][ 56]LogCore: Display: Tracing Screenshot "map2" taken with size: 1440 x 900
+[2026.09.22-07.37.30:034][ 63]LogCore: Engine exit requested (reason: Mac GracefulTerminationHandler)
+[2026.09.22-07.37.30:356][ 64]Log file closed, 09/22/26 13:07:30

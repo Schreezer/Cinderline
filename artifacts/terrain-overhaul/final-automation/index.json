@@ -1,0 +1,343 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "48C47750C74A609B859F4EB75360DF7D",
+			"instanceName": "MacBook-Pro-10.local-37571",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.0 26A428",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.22-11.17.34",
+	"succeeded": 16,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 1.0909006595611572,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "FogMaskPrivacy",
+			"fullTestPath": "Cinderline.Integration.FogMaskPrivacy",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.0084733329713344574,
+			"dateTime": "2026.09.22-11.17.33",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorldLifecycle",
+			"fullTestPath": "Cinderline.Integration.WorldLifecycle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.62489628791809082,
+			"dateTime": "2026.09.22-11.17.33",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_GESTURES_PASS: ordinary mouse rectangle selection, nine desktop-pan mode/distance cases, plain placement drag/cancel/pause, Tier 2 Crucible rejection, touch drag/hold/placement/multi-touch, app background pause, player-pause preservation and reset; real gesture methods with explicit pan intent and starting worker selection. NullRHI does not prove viewport targeting, camera movement, physical modifier routing, or internal TapWorld non-invocation when deprojection is unavailable.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-11.17.34"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INSTANCE_UPDATES_PASS: actual component transforms/counts through movement, growth, same-count death/replacement, removal, and unchanged repeat render.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-11.17.34"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_IDLE_WORK_POLICY_PASS: production state classifier/cap helpers, 120/30/10 transitions, stricter/unlimited engine limits, automation scope bypass, one pause-transition flush of actual pending movement, frozen menu/pause/results upload counters, final combat death rendered on a short tick, and new-match render recovery. This does not measure native focus delivery, presented FPS, GPU load or thermal behavior.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-11.17.34"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_HELP_TUTORIAL_LIFECYCLE_PASS: modal input isolation, explicit help resume, tutorial start/action tracking, rejected command, save/load routing, restart confirmation and normal-match restoration. No player save or completion preference was written.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-11.17.34"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_UE_INTEGRATION_LIFECYCLE_PASS: transient world, real BeginPlay, controller transitions, paused adapter tick, paid queue reset.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-11.17.34"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorldTapSelection",
+			"fullTestPath": "Cinderline.Integration.WorldTapSelection",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.10954378545284271,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "CINDERLINE_WORLD_TAP_PASS controller_pointer_mixed_drag_move=1 friendly_touch=1 friendly_desktop=1 destination_modes=3 toggles=3 rejected_modes=9 minimap_attack_move=1 moving_latch=1 empty_ground_latch=1 dead_latch=1 gesture_latches=4 deselect_preserves_jobs=1 elimination_clears_mode=1",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.09.22-11.17.34"
+				}
+			],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "DisplayCadence",
+			"fullTestPath": "Cinderline.Presentation.EntityMotion.DisplayCadence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.0063310824334621429,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "WorkCadence",
+			"fullTestPath": "Cinderline.Presentation.EntityMotion.WorkCadence",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.0083031244575977325,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "FogResetAndStableFrame",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.015762750059366226,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "FourTeamRouting",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.FourTeamRouting",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.015351042151451111,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "HiddenTargetDirection",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.HiddenTargetDirection",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.015069957822561264,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "Initialization",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.Initialization",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.014372918754816055,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "InstanceBudget",
+			"fullTestPath": "Cinderline.Presentation.WorldEffects.InstanceBudget",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.014932788908481598,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LandscapeHeightGeometry",
+			"fullTestPath": "Cinderline.Presentation.LandscapeHeightGeometry",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.1252758800983429,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryAmbientScatter",
+			"fullTestPath": "Cinderline.Presentation.SceneryAmbientScatter",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.010067291557788849,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryFoliage",
+			"fullTestPath": "Cinderline.Presentation.SceneryFoliage",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.012371167540550232,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryGroundRoadFallback",
+			"fullTestPath": "Cinderline.Presentation.SceneryGroundRoadFallback",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.009350169450044632,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryObservedState",
+			"fullTestPath": "Cinderline.Presentation.SceneryObservedState",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.029312707483768463,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SceneryObstacleBounds",
+			"fullTestPath": "Cinderline.Presentation.SceneryObstacleBounds",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"48C47750C74A609B859F4EB75360DF7D"
+			],
+			"duration": 0.071486413478851318,
+			"dateTime": "2026.09.22-11.17.34",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

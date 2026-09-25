@@ -1,0 +1,117 @@
+/Users/chirag13/Documents/ChatGPT/starCraft/scripts/create_canyon_assets.py:55: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  material.use_nodes = True
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_A.fbx'
+export finished in 0.0103 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_A_LOD1.fbx'
+export finished in 0.0041 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_A_LOD2.fbx'
+export finished in 0.0024 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_B.fbx'
+export finished in 0.0044 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_B_LOD1.fbx'
+export finished in 0.0037 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_B_LOD2.fbx'
+export finished in 0.0026 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_C.fbx'
+export finished in 0.0041 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_C_LOD1.fbx'
+export finished in 0.0038 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_C_LOD2.fbx'
+export finished in 0.0026 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_D.fbx'
+export finished in 0.0045 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_D_LOD1.fbx'
+export finished in 0.0041 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_D_LOD2.fbx'
+export finished in 0.0024 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_E.fbx'
+export finished in 0.0048 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_E_LOD1.fbx'
+export finished in 0.0036 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_E_LOD2.fbx'
+export finished in 0.0024 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_F.fbx'
+export finished in 0.0041 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_F_LOD1.fbx'
+export finished in 0.0036 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_F_LOD2.fbx'
+export finished in 0.0026 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_CliffMass.fbx'
+export finished in 0.0035 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_CliffMass_LOD1.fbx'
+export finished in 0.0034 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_CliffMass_LOD2.fbx'
+export finished in 0.0024 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Debris.fbx'
+export finished in 0.0024 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Debris_LOD1.fbx'
+export finished in 0.0022 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Debris_LOD2.fbx'
+export finished in 0.0020 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_A.fbx'
+export finished in 0.0022 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_B.fbx'
+export finished in 0.0022 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_C.fbx'
+export finished in 0.0020 sec.
+
+FBX export starting... '/Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_D.fbx'
+export finished in 0.0020 sec.
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+FBX version: 7400
+Info: Saved as "CinderCanyonAssets.blend"
+CINDER_CANYON_READY_NO_RENDER /Users/chirag13/Documents/ChatGPT/starCraft/RawAssets/Canyon
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 01:35:57)

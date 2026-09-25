@@ -1,0 +1,9 @@
+{
+  "app": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+  "bundle_id": "com.cinderline.game",
+  "version": "1.0",
+  "build": "56702186.0.36",
+  "binary_sha256": "1f211dd1e994713e6746787a8f1a32c58750482896fdf49f82a6c0b7ca7944f0",
+  "build_platform": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app/Cinderline:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform IOS\n    minos 15.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n",
+  "signature_verified": true
+}

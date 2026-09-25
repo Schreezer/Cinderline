@@ -1,0 +1,12 @@
+✔ queued construction stays unpaid and private until its preceding move completes (2522.607542ms)
+✔ patrol and escort acknowledge and publish private sustained state (1364.635917ms)
+✔ automatic batches and stable queue cancellation remain authoritative online (1412.472208ms)
+✔ ordinary attack-move play can finish a complete authoritative match (16560.406125ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22981.910167
