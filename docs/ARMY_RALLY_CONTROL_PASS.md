@@ -12,9 +12,9 @@ A normal ground tap with a building selected now deselects it. Changing a produc
 
 ## Shared army rally
 
-The ARMY palette includes a RALLY tab. SET FLAG places the player's shared army rally, and FIND FLAG focuses it. The simulation stores this rally in player state and applies it to current and future completed combat producers. Anchors are excluded because they produce workers.
+The ARMY palette includes a RALLY tab. SET RALLY places the player's shared army rally, and FIND RALLY focuses it. The simulation stores this rally in player state and applies it to current and future completed combat producers. Anchors are excluded because they produce workers.
 
-A combat producer can retain a building-specific rally override. USE DEFAULT removes that override and returns the producer to the shared army rally. Existing queues, paid production and explicit unit orders remain authoritative. On a pinned Anchor, JOBS > AUTO MINE clears its local worker-rally override without changing the shared army flag.
+A combat producer can retain a building-specific rally override. USE DEFAULT removes that override and returns the producer to the shared army rally. Existing queues, paid production and explicit unit orders remain authoritative. On a pinned Anchor, JOBS > AUTO MINE clears its local worker-rally override without changing the shared army rally.
 
 Required save version 8 stores the shared rally, producer overrides and deferred worker plan in a tagged tail. The legacy reader migrates earlier saves. Network protocol 5 carries the state and validates its private rally and worker-planning invariants.
 

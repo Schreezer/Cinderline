@@ -11,15 +11,23 @@
       "expected_paths": [
         "Cinderline.Integration.AIKnowledgeAndPersistence",
         "Cinderline.Integration.ArmyControl",
+        "Cinderline.Integration.CampaignHUDTouch",
+        "Cinderline.Integration.CampaignLifecycle",
         "Cinderline.Integration.CombatFeedback",
         "Cinderline.Integration.EconomyAndProduction",
         "Cinderline.Integration.FirstRunTutorialOffer",
+        "Cinderline.Integration.FogMaskPrivacy",
+        "Cinderline.Integration.FormationPointerPaths",
+        "Cinderline.Integration.HUDTouchSafeZone",
         "Cinderline.Integration.OnlineEndpointPolicy",
         "Cinderline.Integration.OnlineRecovery",
+        "Cinderline.Integration.PatrolEscortPointerPaths",
         "Cinderline.Integration.ProductionControls",
         "Cinderline.Integration.SoloAIDifficulty",
+        "Cinderline.Integration.TacticalOrderPointerPaths",
         "Cinderline.Integration.WorldLifecycle",
-        "Cinderline.Integration.WorldTapSelection"
+        "Cinderline.Integration.WorldTapSelection",
+        "Cinderline.Integration.VoiceCommanderBoundary"
       ]
     },
     "tutorials": {
@@ -39,17 +47,34 @@
       ]
     },
     "local-all": {
-      "filter": "Cinderline.Integration+Cinderline.Tutorial+Cinderline.Presentation+Cinderline.UI+Cinderline.Online.LANDiscoveryValues",
+      "filter": "Cinderline.Integration+Cinderline.Tutorial+Cinderline.Presentation+Cinderline.UI+Cinderline.Online.LANDiscoveryValues+Cinderline.Campaign+Cinderline.Voice",
       "expected_paths": [
+        "Cinderline.Campaign.AuthoredMissionsEndToEnd",
+        "Cinderline.Campaign.CheckpointPersistence",
+        "Cinderline.Campaign.CommandAndReplacementGates",
+        "Cinderline.Campaign.Guidance.Fade",
+        "Cinderline.Campaign.Guidance.MissionCoverage",
+        "Cinderline.Campaign.Guidance.SharedContract",
+        "Cinderline.Campaign.PaidWaveBudget",
+        "Cinderline.Campaign.ProgressPersistence",
+        "Cinderline.Campaign.ScenarioDeterminism",
+        "Cinderline.Campaign.TransactionalLifecycle",
         "Cinderline.Integration.AIKnowledgeAndPersistence",
         "Cinderline.Integration.ArmyControl",
+        "Cinderline.Integration.CampaignHUDTouch",
+        "Cinderline.Integration.CampaignLifecycle",
         "Cinderline.Integration.CombatFeedback",
         "Cinderline.Integration.EconomyAndProduction",
         "Cinderline.Integration.FirstRunTutorialOffer",
+        "Cinderline.Integration.FogMaskPrivacy",
+        "Cinderline.Integration.FormationPointerPaths",
+        "Cinderline.Integration.HUDTouchSafeZone",
         "Cinderline.Integration.OnlineEndpointPolicy",
         "Cinderline.Integration.OnlineRecovery",
+        "Cinderline.Integration.PatrolEscortPointerPaths",
         "Cinderline.Integration.ProductionControls",
         "Cinderline.Integration.SoloAIDifficulty",
+        "Cinderline.Integration.TacticalOrderPointerPaths",
         "Cinderline.Integration.WorldLifecycle",
         "Cinderline.Integration.WorldTapSelection",
         "Cinderline.Online.LANDiscoveryValues",
@@ -58,8 +83,10 @@
         "Cinderline.Presentation.LandscapeHeightGeometry",
         "Cinderline.Presentation.MetalFXResolutionOwnership",
         "Cinderline.Presentation.SceneryGroundRoadFallback",
-        "Cinderline.Presentation.SceneryObstacleBounds",
         "Cinderline.Presentation.SceneryObservedState",
+        "Cinderline.Presentation.SceneryObstacleBounds",
+        "Cinderline.Presentation.SceneryAmbientScatter",
+        "Cinderline.Presentation.SceneryFoliage",
         "Cinderline.Presentation.UnitInfo",
         "Cinderline.Presentation.WorldEffects.FogResetAndStableFrame",
         "Cinderline.Presentation.WorldEffects.FourTeamRouting",
@@ -77,7 +104,11 @@
         "Cinderline.Tutorial.Guidance.RemainingBatch",
         "Cinderline.Tutorial.LateCancellationRecovery",
         "Cinderline.Tutorial.WaitsForLearner",
-        "Cinderline.UI.MobileHUDLayout"
+        "Cinderline.UI.MobileHUDLayout",
+        "Cinderline.Presentation.EntityMotion.DisplayCadence",
+        "Cinderline.Presentation.EntityMotion.WorkCadence",
+        "Cinderline.Integration.VoiceCommanderBoundary",
+        "Cinderline.Voice.EndpointBoundary"
       ]
     },
     "multiplayer": {
@@ -85,6 +116,31 @@
       "expected_paths": [
         "Cinderline.Online.FourPlayerTransport",
         "Cinderline.Online.Transport"
+      ]
+    },
+    "campaign": {
+      "filter": "Cinderline.Campaign+Cinderline.Integration.CampaignLifecycle+Cinderline.Integration.CampaignHUDTouch",
+      "expected_paths": [
+        "Cinderline.Campaign.AuthoredMissionsEndToEnd",
+        "Cinderline.Campaign.CheckpointPersistence",
+        "Cinderline.Campaign.CommandAndReplacementGates",
+        "Cinderline.Campaign.Guidance.Fade",
+        "Cinderline.Campaign.Guidance.MissionCoverage",
+        "Cinderline.Campaign.Guidance.SharedContract",
+        "Cinderline.Campaign.PaidWaveBudget",
+        "Cinderline.Campaign.ProgressPersistence",
+        "Cinderline.Campaign.ScenarioDeterminism",
+        "Cinderline.Campaign.TransactionalLifecycle",
+        "Cinderline.Integration.CampaignHUDTouch",
+        "Cinderline.Integration.CampaignLifecycle"
+      ]
+    },
+    "voice": {
+      "filter": "Cinderline.Integration.VoiceCommanderBoundary+Cinderline.Voice+Cinderline.UI.MobileHUDLayout",
+      "expected_paths": [
+        "Cinderline.Integration.VoiceCommanderBoundary",
+        "Cinderline.Voice.EndpointBoundary",
+        "Cinderline.UI.MobileHUDLayout"
       ]
     }
   }

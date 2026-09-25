@@ -12,3 +12,7 @@ __pycache__/
 *.pyc
 Server/node_modules/
 Server/.env
+Server/.env.local
+
+# gflow-cli browser profile (contains Google session cookies)
+.gflow/

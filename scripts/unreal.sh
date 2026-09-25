@@ -7,6 +7,8 @@ project_file="$project_root/Cinderline.uproject"
 prepared_ios_engine="$(dirname "$project_root")/CinderlineEngineIOS27"
 ios_engine_preparer="$project_root/scripts/prepare-ios27-engine.py"
 ios_app_archiver="$project_root/scripts/archive-ios-app.py"
+linux_package_archiver="$project_root/scripts/archive-unreal-linux.sh"
+android_package_archiver="$project_root/scripts/archive-unreal-android.sh"
 ue_root_is_explicit=false
 [[ -n "${UE_ROOT:-}" ]] && ue_root_is_explicit=true
 using_prepared_ios_engine=false
@@ -91,10 +93,41 @@ find_physical_ios_engine() {
   fi
 }
 
+# UnrealBuildTool's default action count for the editor build. The former fixed
+# 2 was chosen for the 32 GB memory-pressure case, where a full rebuild's clang
+# and link steps swap; it also made every incremental one-module edit take
+# minutes. Physical cores (not logical: the efficiency/SMT siblings only add
+# resident compiler processes and memory) is the right width, capped at 10
+# because that is the measured knee here - an incremental editor module build
+# finishes in about 20 s at 10 actions. CINDERLINE_UE_JOBS restores a low value
+# on memory-constrained machines; an explicit -MaxParallelActions= still wins.
+resolve_build_jobs() {
+  local requested="${CINDERLINE_UE_JOBS:-}"
+  if [[ -n "$requested" ]]; then
+    if [[ ! "$requested" =~ ^[1-9][0-9]*$ ]] || (( requested > 64 )); then
+      printf '%s\n' 'CINDERLINE_UE_JOBS must be an integer from 1 to 64.' >&2
+      exit 2
+    fi
+    build_jobs="$requested"
+    return
+  fi
+  local physical_cpu_count=""
+  case "$(uname -s)" in
+    Darwin) physical_cpu_count="$(sysctl -n hw.physicalcpu 2>/dev/null || true)" ;;
+    Linux) physical_cpu_count="$(getconf _NPROCESSORS_ONLN 2>/dev/null || true)" ;;
+  esac
+  # Failed CPU discovery must not raise the load: keep the historical default.
+  build_jobs=2
+  if [[ "$physical_cpu_count" =~ ^[1-9][0-9]*$ ]]; then
+    build_jobs=$(( physical_cpu_count < 10 ? physical_cpu_count : 10 ))
+  fi
+}
+
 build() {
   # Bash 3.2 treats an empty array expansion as unbound with set -u. Keep
   # one nonempty argv array, and fold explicit parallel flags into one value.
-  local parallel_arg=-MaxParallelActions=2
+  resolve_build_jobs
+  local parallel_arg="-MaxParallelActions=$build_jobs"
   local build_arg
   for build_arg in "$@"; do
     if [[ "$build_arg" == -MaxParallelActions=* ]]; then parallel_arg="$build_arg"; fi
@@ -219,6 +252,20 @@ run_mobile_uat() {
   run_mobile_command "$engine_root/Engine/Build/BatchFiles/RunUAT.sh" "$@"
 }
 
+prepare_linux_uat_args() {
+  linux_uat_args=()
+  local argument has_ubt_args=false
+  for argument in "$@"; do
+    case "$argument" in
+      -[Uu][Bb][Tt][Aa][Rr][Gg][Ss]=*) has_ubt_args=true ;;
+    esac
+    linux_uat_args+=("$argument")
+  done
+  if [[ "$has_ubt_args" == false ]]; then
+    linux_uat_args+=("-ubtargs=-MaxParallelActions=${CINDERLINE_LINUX_BUILD_JOBS:-4}")
+  fi
+}
+
 quarantine_existing_ios_app() {
   local source_app="$project_root/Binaries/IOS/Cinderline.app"
   local quarantine_root="$project_root/Saved/IOSDevice/Archives"
@@ -295,6 +342,13 @@ case "$action" in
       '  ./scripts/unreal.sh package-ios  Cook/package development iOS for a physical device (requires signing)' \
       '  ./scripts/unreal.sh package-ios-on-mac' \
       '                               Cook/package Designed for iPad on Apple Silicon Mac; does not launch it' \
+      '  ./scripts/unreal.sh package-linux' \
+      '                               Build/cook/archive the full Unreal game for Linux x86_64 (run on Linux)' \
+      '  ./scripts/unreal.sh package-android' \
+      '                               Build/cook an ARM64 development APK with all game data included' \
+      '    Editor builds default to one compile action per physical core, capped at 10.' \
+      '    Set CINDERLINE_UE_JOBS=N to lower that on memory-constrained machines;' \
+      '    an explicit -MaxParallelActions=N argument still overrides both.' \
       '    Mobile builds default to two parallel compile actions; pass -ubtargs=... to override.' \
       '    Mobile packaging defaults to one cook process and one local shader worker on this Mac.' \
       '    Pass -AdditionalCookerOptions=... to override the cooker and shader-worker defaults.' \
@@ -428,6 +482,54 @@ case "$action" in
       -noP4 -platform=IOS -clientconfig=Development -build -cook -stage -pak -package -archive \
       -target=Cinderline "${mobile_archive_args[@]}" -deploy -macnative \
       "-cmdline=-fulltouchcontrols" "${mobile_uat_args[@]}"
+    ;;
+  package-linux)
+    find_engine
+    if [[ "$platform" != Linux ]]; then
+      printf '%s\n' \
+        'A full Cinderline Linux package must be built on Linux.' \
+        'Epic does not support macOS-to-Linux cross-compilation. Run this action on an x86_64 Linux host with UE 5.8.' >&2
+      exit 2
+    fi
+    [[ "$(uname -m)" == x86_64 ]] || {
+      printf '%s\n' 'The distributable Ubuntu build requires an x86_64 Linux host.' >&2
+      exit 2
+    }
+    [[ -f "$project_root/Content/Maps/Frontier.umap" ]] || {
+      printf '%s\n' 'Frontier.umap is missing. Run ./scripts/unreal.sh setup before packaging.' >&2
+      exit 2
+    }
+    cinder_require_engine_tool "$engine_root/Engine/Build/BatchFiles/RunUAT.sh"
+    cinder_require_engine_tool "$linux_package_archiver"
+    resolve_archive_directory "$project_root/Saved/Packages/Linux" "$@"
+    prepare_linux_uat_args "$@"
+    "$engine_root/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun "-project=$project_file" \
+      -noP4 -platform=Linux -clientconfig=Shipping -build -cook -stage -pak -iostore \
+      -package -archive -target=Cinderline "${mobile_archive_args[@]}" "${linux_uat_args[@]}"
+    "$linux_package_archiver" "$mobile_archive_directory"
+    ;;
+  package-android)
+    find_engine
+    [[ -f "$engine_root/Engine/Intermediate/Build/Android/UnrealGame/Development/Launch/Launch.precompiled" ]] || {
+      printf '%s\n' \
+        'Unreal Android target files are missing.' \
+        'In Epic Games Launcher, open UE 5.8 Options, enable Android, and apply the update.' >&2
+      exit 2
+    }
+    [[ -f "$project_root/Content/Maps/Frontier.umap" ]] || {
+      printf '%s\n' 'Frontier.umap is missing. Run ./scripts/unreal.sh setup before packaging.' >&2
+      exit 2
+    }
+    cinder_require_engine_tool "$engine_root/Engine/Build/BatchFiles/RunUAT.sh"
+    cinder_require_engine_tool "$android_package_archiver"
+    resolve_archive_directory "$project_root/Saved/Packages/Android" "$@"
+    prepare_mobile_uat_args "$@"
+    "$engine_root/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun "-project=$project_file" \
+      -noP4 -platform=Android -cookflavor=Multi -clientconfig=Development \
+      -build -cook -stage -pak -iostore -compressed -package -archive \
+      -target=Cinderline "${mobile_archive_args[@]}" "${mobile_uat_args[@]}"
+    "$android_package_archiver" "$mobile_archive_directory" \
+      "${CINDERLINE_ANDROID_ARTIFACT_DIR:-$project_root/artifacts}"
     ;;
   *) printf 'Unknown action: %s\n' "$action" >&2; exit 2 ;;
 esac

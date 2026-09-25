@@ -1,0 +1,32 @@
+CINDERLINE — FULL UNREAL UBUNTU PLAYTEST
+
+This is the complete Unreal Engine build. It includes the cooked models,
+materials, textures, terrain, audio, gameplay code, shaders, and required
+Unreal runtime files used by the Frontier map.
+
+Requirements
+  - Ubuntu 22.04 or newer
+  - 64-bit Intel or AMD processor
+  - Vulkan-capable graphics card with current drivers
+
+Run
+  1. Extract the entire archive. Do not move individual files out of it.
+  2. Open a terminal in the extracted folder.
+  3. Run the included Cinderline.sh launcher. Depending on the package layout:
+
+       ./Cinderline.sh
+
+     or:
+
+       ./Linux/Cinderline.sh
+
+  4. If needed, restore executable permission first:
+
+       chmod +x Cinderline.sh
+
+The first launch can take longer while the graphics driver initializes its
+shader cache. Keep every extracted directory beside the launcher; the game
+will not run if its Engine or Cinderline content folders are removed.
+
+This package is for playtesting. It is unsigned and does not install system
+files. To remove it, delete the extracted folder.

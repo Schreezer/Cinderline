@@ -92,7 +92,7 @@ build and live verification status. `cinder.quality` logs the effective limit
 separately from the stored `t.MaxFPS` value.
 
 - Touch commands: tap a friendly unit or structure to select it; tap terrain, enemy or ore to issue
-  a contextual command. Tap terrain with production structures selected to rally.
+  a contextual command. A ground tap with a structure selected deselects it; use RALLY to set a destination.
 - Touch: drag to pan; use two fingers to pan and pinch; hold still for 0.42 seconds,
   then drag to select. SELECT BOX arms selection without needing a hold. Double-tap
   a unit to select its visible type. The camera remains bounded to the battlefield.
@@ -104,12 +104,20 @@ separately from the stored `t.MaxFPS` value.
   Arrow keys pan, including short taps. Enter starts, resumes or rematches.
   A attack-move, S stop, H hold, B build, F focus, Space home. Esc cancels an active
   command mode before pausing; the PAUSE button always pauses immediately.
-- Build with a Drudge selected. Build buttons show the ore cost, required tier and
+- Plan a route with Shift + Move/Attack-move destinations on desktop. For touch,
+  choose MOVE or ATTACK, open ORDERS, choose QUEUE MOVE or QUEUE ATTACK, then tap
+  one destination. Repeat for up to 16 future steps per unit. CLEAR QUEUED preserves
+  the current order; STOP clears all. Online targeting waits for the matching server
+  acknowledgement. See [tactical order behavior and evidence](TACTICAL_ORDERS_PASS.md).
+- Open global BUILD and choose a structure; a reachable available Drudge is assigned
+  automatically. Selecting a Drudge first remains an optional manual override.
+  Build buttons show the ore cost, required tier and
   READY/LOCKED status. Select a locked button to see the blocking requirement.
   The placement preview checks the full construction rules without spending ore:
-  operational buildings, technology, funds, selected worker and its 700 cm range,
+  operational buildings, technology, funds, a reachable available worker,
   current vision, terrain and occupancy. Click clear ground to confirm; right-click
   or the trackpad's secondary click cancels placement. Touch uses a tap to confirm.
+- For one Drudge's construction plan, hold Shift while placing sites or right-clicking ore/an unfinished friendly foundation. On touch, select one Drudge, use ORDERS > QUEUE WORK, then BUILD WITH THIS DRUDGE, or tap ore/a foundation. Planned sites are numbered and spend ore when work starts. Cancel closes repeated placement. CLEAR QUEUED preserves the active job; STOP pauses its foundation and clears the plan. See [builder queues](BUILDER_QUEUE_PASS.md).
 - To unlock the Crucible, complete a Kiln, then build and complete a Resonator.
   Select the Resonator and choose TECH TIER: the first upgrade costs 500 ore and
   takes 100 seconds of research. Wait for T2, select a Drudge, then choose the
@@ -194,6 +202,10 @@ cinder.profile 120
 cinder.profile 600
 cinder.profile 1200
 cinder.profile cancel
+cinder.gpuprofile
+cinder.simprofile status
+cinder.simprofile on
+cinder.simprofile off
 ```
 
 `cinder.quality` logs `CINDERLINE_QUALITY` with the actual viewport and render-target
@@ -215,12 +227,24 @@ these values; compare runs at the same viewport size and scene.
 
 `CINDERLINE_FRAME_PROFILE_TIMING` adds mean/median/p95 game, render, RHI and GPU timings with availability and sample counts. CPU values are raw engine counters and can include waits; they are not CPU utilization. GPU values come from fresh completed engine frames in `FRHIGPUFrameTimeHistory`, not repeated copies of the latest value. They can arrive late and are not paired with individual viewport frames. The scope line records missing completions and disjoint history. Zero/missing values are reported as unavailable.
 
+`cinder.simprofile on` enables offline authoritative simulation profiling; `status`
+reports the seven phase durations and total for the last completed simulation step,
+and `off` disables profiling and clears that sample. Status marks a sample as
+historical while the match is paused, finished, in the menu or has advanced beyond its sample
+tick. These are local wall-clock durations, not live CPU/GPU utilization or coverage
+of every rendered frame. This command is separate from `cinder.profile`, which
+samples rendered viewport cadence, and `cinder.gpuprofile`, which requests Unreal's
+single-frame GPU pass capture after a warmup delay. Simulation profiling is rejected
+for online matches and replicas and is disabled by default. Resetting a simulation
+keeps the opt-in but clears its sample; loading a save or applying a network snapshot
+clears the sample and disables profiling.
+
 See [METAL_PERFORMANCE_PASS.md](METAL_PERFORMANCE_PASS.md) for the measured Mac AA choice, quality tradeoff and instance/HUD optimizations. To compare anti-aliasing at the same camera, use `r.AntiAliasingMethod 4` for TSR and `r.AntiAliasingMethod 2` to restore native TAA; allow history to settle before sampling. These console overrides last for the process and do not save a preference.
 
-Only one sample runs at a time. `cancel` detaches the active sample. Profiling
+Only one viewport sample runs at a time. `cancel` detaches the active sample. Viewport profiling
 requires a visible game viewport and excludes unattended/headless runs. It also
 stops on viewport resize, world cleanup, loss of the visible viewport, engine exit
-or a 120-second timeout. Both commands are Development-only and leave gameplay
+or a 720-second timeout. These commands are Development-only and leave gameplay
 and saves unchanged. Record actual command output before claiming that a quality
 setting or frame-rate target has been verified.
 

@@ -2,11 +2,17 @@
 
 An original touch-first sci-fi RTS for Unreal Engine 5, targeting iPhone and iPad. Its C++ simulation is also built as a standalone library so economy, combat and movement can be tested without launching the editor.
 
-**Current status:** UE 5.8.2 builds and runs Cinderline on macOS, and the player has confirmed skirmishes are playable. Private online 1v1 rooms are implemented with an authoritative server, reconnects and server-confirmed results. The game also includes a nine-step guided practice mission and an in-game field guide for controls, economy, construction, army tactics, scouting, technology and troubleshooting. The reference covers all units and buildings using their current gameplay definitions. See [help and training](docs/HELP_TUTORIAL_PASS.md), [animation and terrain](docs/ANIMATION_TERRAIN_PASS.md) and [the task board](docs/TASKBOARD.md) for evidence and remaining work. iOS touch, lifecycle and safe-area preparation is saved; the ARM64 simulator build and the separate device-signing requirements are tracked in [iOS readiness](docs/IOS_READINESS.md). The native macOS runner is a development tool; it is not the iOS product.
+**Current status:** The [gameplay roadmap](docs/SC2_GAMEPLAY_ROADMAP.md) tracks implemented capabilities, tested builds, device evidence and remaining work. Cinderline includes solo play, a six-mission campaign, quick training, global production controls, private 1v1 and four-player FFA, and LAN support. The [task board](docs/TASKBOARD.md) links the implementation and verification reports; [iOS readiness](docs/IOS_READINESS.md) tracks device packaging separately.
 
 ## Learning to play
 
-Choose **GUIDED TRAINING** from the Unreal main menu, or press **T** on desktop. Practice has no attacking AI and walks through mining, production, building, scouting and attack-move. The current objective offers **FIND** and **HELP**; the compact layout has **MORE** for extra context.
+Choose **CAMPAIGN** from the Unreal main menu. The six-mission [Emberline campaign](docs/CAMPAIGN_DESIGN.md) teaches worker commands, expansion, scouting, rallying and defense, research and army composition, then asks you to win a normal AI match. Early lessons point to one action at a time; later missions give a goal with optional **HINT** and **SHOW** controls. Every mission is available for practice. **CONTINUE RECOMMENDED** picks the first unfinished mission, and **RESUME CHECKPOINT** restores the last saved objective boundary.
+
+The original **QUICK TRAINING** match remains available from Campaign, or press **T** on desktop. Open the field guide for additional explanations. Campaign progress and checkpoints are separate from the skirmish save; using a hint records an assisted attempt without blocking completion.
+
+For queued movement, hold **Shift** when issuing desktop Move/Attack-move destinations. On touch, choose **MOVE** or **ATTACK**, open **ORDERS**, then choose **QUEUE MOVE** or **QUEUE ATTACK** and tap a waypoint. **CLEAR QUEUED** keeps the current order; **STOP** clears all. See [tactical orders](docs/TACTICAL_ORDERS_PASS.md) for limits, worker behavior and verification.
+
+For a single builder's plan, select one **Drudge**. On desktop, hold **Shift** when placing buildings or right-clicking ore/an unfinished friendly building. On touch, open **ORDERS → QUEUE WORK**, then **BUILD WITH THIS DRUDGE** for repeated sites, or tap ore/a foundation. Numbered sites spend ore when construction starts; blocked or unaffordable jobs are skipped with feedback. See [construction queues](docs/BUILDER_QUEUE_PASS.md) for behavior and validation status.
 
 Open **FIELD GUIDE** from the menu or pause screen, or press **F1** during play. It pauses offline matches while you read. Online matches keep running on the server. Choose desktop or touch instructions, then close the guide and explicitly resume. Training does not overwrite your saved skirmish.
 

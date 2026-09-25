@@ -1,0 +1,17 @@
+CINDERLINE — ANDROID PLAYTEST
+
+This APK contains the complete cooked Unreal game, including its models,
+materials, textures, terrain, audio, shaders, and gameplay code.
+
+Requirements
+  - Android 8.0 or newer
+  - 64-bit ARM processor
+  - OpenGL ES 3.1 or Vulkan 1.1 compatible graphics
+
+Install
+  1. Copy Cinderline-Android-arm64.apk to the Android device.
+  2. Open it and allow installation from that source if Android asks.
+  3. Tap Install, then open Cinderline.
+
+This is a private development-signed playtest APK, not a Play Store release.
+Android may warn that the source is unknown because the APK was shared directly.

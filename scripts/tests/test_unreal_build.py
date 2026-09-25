@@ -18,6 +18,25 @@ import unittest
 SCRIPTS = Path(__file__).resolve().parents[1]
 
 
+def expected_default_parallel():
+    """Mirror of the shell rule in scripts/unreal.sh: physical cores, capped at 10.
+
+    The default used to be the constant 2, chosen for a 32 GB machine under cook
+    memory pressure. Editor builds are not that case, so the default now follows
+    the host and CINDERLINE_UE_JOBS restores a ceiling when memory is tight. The
+    expectation is derived rather than hardcoded so this fixture keeps testing
+    the rule instead of one machine's answer to it.
+    """
+    count = 0
+    if platform.system() == "Darwin":
+        probe = subprocess.run(["sysctl", "-n", "hw.physicalcpu"], text=True, capture_output=True)
+        stdout = probe.stdout.strip()
+        count = int(stdout) if stdout.isdigit() else 0
+    elif platform.system() == "Linux":
+        count = os.sysconf("SC_NPROCESSORS_ONLN")
+    return min(count, 10) if count > 0 else 2
+
+
 @unittest.skipUnless(Path("/bin/bash").is_file(), "Requires the system /bin/bash")
 class UnrealBuildArgumentTests(unittest.TestCase):
     def setUp(self):
@@ -74,7 +93,8 @@ class UnrealBuildArgumentTests(unittest.TestCase):
         environment = os.environ.copy()
         # Shell startup hooks are unrelated to this fixture and could launch
         # commands before the copied runner. Preserve the user's other values.
-        for key in ("BASH_ENV", "ENV", "SHELLOPTS", "BASHOPTS", "CINDERLINE_BUILD_JOBS"):
+        for key in ("BASH_ENV", "ENV", "SHELLOPTS", "BASHOPTS", "CINDERLINE_BUILD_JOBS",
+                    "CINDERLINE_UE_JOBS"):
             environment.pop(key, None)
         environment.update({
             "UE_ROOT": str(root),
@@ -117,12 +137,13 @@ class UnrealBuildArgumentTests(unittest.TestCase):
             self.assertFalse(self.preparer_capture.exists(), "Stock engine must not run the preparer")
         return args
 
-    def test_default_parallel_two_with_zero_user_arguments(self):
+    def test_default_parallel_from_physical_cores_with_zero_user_arguments(self):
         # This is the original Bash 3.2 failure path: empty optional arrays and
         # empty "$@" must still produce a valid build invocation under nounset.
         for prepared in (False, True):
             with self.subTest(prepared=prepared):
-                self.capture_build(prepared=prepared, user_args=[], expected_parallel=2)
+                self.capture_build(prepared=prepared, user_args=[],
+                                   expected_parallel=expected_default_parallel())
 
     def test_explicit_parallel_one_as_only_user_argument(self):
         for prepared in (False, True):
@@ -138,7 +159,7 @@ class UnrealBuildArgumentTests(unittest.TestCase):
                 with self.subTest(prepared=prepared, override=override):
                     args = spaced[:1] + (["-MaxParallelActions=1"] if override else []) + spaced[1:]
                     self.capture_build(
-                        prepared=prepared, user_args=args, expected_parallel=1 if override else 2,
+                        prepared=prepared, user_args=args, expected_parallel=1 if override else expected_default_parallel(),
                     )
 
     def test_last_parallel_override_is_emitted_exactly_once(self):
