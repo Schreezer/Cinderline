@@ -1,0 +1,18 @@
+{
+  "times": [
+    0,
+    5.07,
+    8.73,
+    12.04,
+    15.51,
+    20.47,
+    23.31,
+    27.0
+  ],
+  "audio_start": 0.5,
+  "audio_duration": 24.08,
+  "total": 27.0,
+  "gain_db": 4.5,
+  "take": "question-s42",
+  "script_words": 65
+}

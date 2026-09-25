@@ -1,0 +1,18 @@
+{
+  "times": [
+    0,
+    5.55,
+    10.85,
+    15.09,
+    18.2,
+    26.26,
+    30.3,
+    35.0
+  ],
+  "audio_start": 0.5,
+  "audio_duration": 30.96,
+  "total": 35.0,
+  "gain_db": 4.0,
+  "take": "review-s42",
+  "script_words": 72
+}

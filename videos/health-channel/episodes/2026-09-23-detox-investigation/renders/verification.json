@@ -1,0 +1,62 @@
+{
+  "video": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/renders/detox-investigation.en.mp4",
+  "duration_seconds": 27.0,
+  "width": 1080,
+  "height": 1920,
+  "fps": "30/1",
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "audio_rate": "48000",
+  "checks": {
+    "size_1080x1920": true,
+    "fps_30": true,
+    "h264": true,
+    "aac": true,
+    "duration_27": true
+  },
+  "decode_errors": "",
+  "sample_times": [
+    1.0,
+    3.5,
+    6.5,
+    10.0,
+    12.8,
+    14.6,
+    16.5,
+    18.0,
+    19.6,
+    20.3,
+    22.2,
+    22.9,
+    24.5,
+    26.5
+  ],
+  "encoded_asr": {
+    "expected_words": 65,
+    "asr_words": 65,
+    "differences": [],
+    "last_word": "required.",
+    "last_word_end": 24.55
+  },
+  "visual_review": "Automated only: frames extracted and OCR-checked. Human visual review of composition still required (Claude could not view images this session).",
+  "sha256": "61853ff7715b7033ecda7635415b033ee8b5feaae6fdae23326b3d8118f458bb",
+  "voice": {
+    "times": [
+      0,
+      5.07,
+      8.73,
+      12.04,
+      15.51,
+      20.47,
+      23.31,
+      27.0
+    ],
+    "audio_start": 0.5,
+    "audio_duration": 24.08,
+    "total": 27.0,
+    "gain_db": 4.5,
+    "take": "question-s42",
+    "script_words": 65
+  },
+  "publishing": "local draft only"
+}

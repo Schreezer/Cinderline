@@ -1,0 +1,13 @@
+{
+  "jobId": "04-evidence",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Expressive simple faces, hand-drawn perspective, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Tea character: green rectangular carton, cream DETOX TEA label, coral leaf, thin black limbs, cream gloves, ochre shoes, raised eyebrow, coral briefcase. Overhead cream office desk: tea applicant slides a paper CV under a magnifying glass held by an organ worker. Large upper headline CLAIMS NEED EVIDENCE. Paper reads DETOX CLEANSES then claim REMOVES TOXINS. A dominant coral stamp across the claim reads NOT PROVEN and clearly qualifies it. Tea carton partially visible left. A pencil and paperclips. Text must be exact. ",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T10:20:30.854Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/a23d3483-2a77-4564-870d-951aae9ea2e9/edit/de3f1b69-3b6b-47f8-8759-fe5e7f34b790",
+  "status": "downloaded"
+}

@@ -1,0 +1,380 @@
+[
+  {
+    "text": "In",
+    "start": 0.16,
+    "end": 0.27,
+    "id": "w0"
+  },
+  {
+    "text": "2009,",
+    "start": 0.27,
+    "end": 1.33,
+    "id": "w1"
+  },
+  {
+    "text": "some",
+    "start": 1.33,
+    "end": 1.66,
+    "id": "w2"
+  },
+  {
+    "text": "young",
+    "start": 1.72,
+    "end": 2.08,
+    "id": "w3"
+  },
+  {
+    "text": "scientists",
+    "start": 2.08,
+    "end": 2.95,
+    "id": "w4"
+  },
+  {
+    "text": "called",
+    "start": 3.01,
+    "end": 3.23,
+    "id": "w5"
+  },
+  {
+    "text": "15",
+    "start": 3.42,
+    "end": 3.88,
+    "id": "w6"
+  },
+  {
+    "text": "detox",
+    "start": 3.88,
+    "end": 4.32,
+    "id": "w7"
+  },
+  {
+    "text": "brands",
+    "start": 4.38,
+    "end": 4.97,
+    "id": "w8"
+  },
+  {
+    "text": "two",
+    "start": 5.5,
+    "end": 5.63,
+    "id": "w9"
+  },
+  {
+    "text": "questions.",
+    "start": 5.67,
+    "end": 6.84,
+    "id": "w10"
+  },
+  {
+    "text": "What",
+    "start": 7.11,
+    "end": 7.14,
+    "id": "w11"
+  },
+  {
+    "text": "does",
+    "start": 7.14,
+    "end": 7.44,
+    "id": "w12"
+  },
+  {
+    "text": "detox",
+    "start": 7.44,
+    "end": 7.81,
+    "id": "w13"
+  },
+  {
+    "text": "mean",
+    "start": 7.81,
+    "end": 8.11,
+    "id": "w14"
+  },
+  {
+    "text": "and",
+    "start": 8.11,
+    "end": 8.32,
+    "id": "w15"
+  },
+  {
+    "text": "where's",
+    "start": 8.33,
+    "end": 8.85,
+    "id": "w16"
+  },
+  {
+    "text": "the",
+    "start": 8.85,
+    "end": 9.02,
+    "id": "w17"
+  },
+  {
+    "text": "proof?",
+    "start": 9.06,
+    "end": 9.64,
+    "id": "w18"
+  },
+  {
+    "text": "No",
+    "start": 9.64,
+    "end": 9.99,
+    "id": "w19"
+  },
+  {
+    "text": "two",
+    "start": 9.99,
+    "end": 10.11,
+    "id": "w20"
+  },
+  {
+    "text": "brands",
+    "start": 10.18,
+    "end": 10.6,
+    "id": "w21"
+  },
+  {
+    "text": "meant",
+    "start": 10.6,
+    "end": 11,
+    "id": "w22"
+  },
+  {
+    "text": "the",
+    "start": 11,
+    "end": 11.24,
+    "id": "w23"
+  },
+  {
+    "text": "same",
+    "start": 11.24,
+    "end": 11.56,
+    "id": "w24"
+  },
+  {
+    "text": "thing.",
+    "start": 11.56,
+    "end": 12.24,
+    "id": "w25"
+  },
+  {
+    "text": "Most",
+    "start": 12.51,
+    "end": 12.54,
+    "id": "w26"
+  },
+  {
+    "text": "had",
+    "start": 12.54,
+    "end": 12.74,
+    "id": "w27"
+  },
+  {
+    "text": "no",
+    "start": 12.76,
+    "end": 12.85,
+    "id": "w28"
+  },
+  {
+    "text": "proof,",
+    "start": 12.95,
+    "end": 13.43,
+    "id": "w29"
+  },
+  {
+    "text": "and",
+    "start": 13.43,
+    "end": 13.64,
+    "id": "w30"
+  },
+  {
+    "text": "one",
+    "start": 13.64,
+    "end": 13.87,
+    "id": "w31"
+  },
+  {
+    "text": "of",
+    "start": 13.87,
+    "end": 14.02,
+    "id": "w32"
+  },
+  {
+    "text": "them",
+    "start": 14.02,
+    "end": 14.32,
+    "id": "w33"
+  },
+  {
+    "text": "was",
+    "start": 14.32,
+    "end": 14.42,
+    "id": "w34"
+  },
+  {
+    "text": "a",
+    "start": 14.54,
+    "end": 14.61,
+    "id": "w35"
+  },
+  {
+    "text": "hair",
+    "start": 14.61,
+    "end": 14.91,
+    "id": "w36"
+  },
+  {
+    "text": "straightener.",
+    "start": 14.91,
+    "end": 16.08,
+    "id": "w37"
+  },
+  {
+    "text": "Detox",
+    "start": 16.28,
+    "end": 16.41,
+    "id": "w38"
+  },
+  {
+    "text": "teas",
+    "start": 16.41,
+    "end": 16.67,
+    "id": "w39"
+  },
+  {
+    "text": "are",
+    "start": 16.67,
+    "end": 16.87,
+    "id": "w40"
+  },
+  {
+    "text": "no",
+    "start": 16.87,
+    "end": 16.96,
+    "id": "w41"
+  },
+  {
+    "text": "different.",
+    "start": 17.02,
+    "end": 17.88,
+    "id": "w42"
+  },
+  {
+    "text": "Often",
+    "start": 18.15,
+    "end": 18.33,
+    "id": "w43"
+  },
+  {
+    "text": "it's",
+    "start": 18.33,
+    "end": 18.68,
+    "id": "w44"
+  },
+  {
+    "text": "Senna,",
+    "start": 18.68,
+    "end": 19.28,
+    "id": "w45"
+  },
+  {
+    "text": "a",
+    "start": 19.28,
+    "end": 19.38,
+    "id": "w46"
+  },
+  {
+    "text": "laxative.",
+    "start": 19.38,
+    "end": 20.39,
+    "id": "w47"
+  },
+  {
+    "text": "You",
+    "start": 20.39,
+    "end": 20.67,
+    "id": "w48"
+  },
+  {
+    "text": "lose",
+    "start": 20.67,
+    "end": 20.9,
+    "id": "w49"
+  },
+  {
+    "text": "water,",
+    "start": 20.92,
+    "end": 21.4,
+    "id": "w50"
+  },
+  {
+    "text": "not",
+    "start": 21.4,
+    "end": 21.61,
+    "id": "w51"
+  },
+  {
+    "text": "toxins.",
+    "start": 21.61,
+    "end": 22.3,
+    "id": "w52"
+  },
+  {
+    "text": "The",
+    "start": 22.3,
+    "end": 22.57,
+    "id": "w53"
+  },
+  {
+    "text": "real",
+    "start": 22.57,
+    "end": 22.88,
+    "id": "w54"
+  },
+  {
+    "text": "detox?",
+    "start": 22.88,
+    "end": 23.56,
+    "id": "w55"
+  },
+  {
+    "text": "Your",
+    "start": 23.83,
+    "end": 23.84,
+    "id": "w56"
+  },
+  {
+    "text": "liver",
+    "start": 23.84,
+    "end": 24.17,
+    "id": "w57"
+  },
+  {
+    "text": "and",
+    "start": 24.27,
+    "end": 24.4,
+    "id": "w58"
+  },
+  {
+    "text": "kidneys?",
+    "start": 24.4,
+    "end": 25.1,
+    "id": "w59"
+  },
+  {
+    "text": "No",
+    "start": 25.1,
+    "end": 25.37,
+    "id": "w60"
+  },
+  {
+    "text": "straightener",
+    "start": 25.37,
+    "end": 25.69,
+    "id": "w61"
+  },
+  {
+    "text": "required.",
+    "start": 25.69,
+    "end": 26.04,
+    "id": "w62"
+  }
+]

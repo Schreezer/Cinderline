@@ -1,0 +1,22 @@
+{
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16",
+  "reference": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/public/audio/voice-examples-v3/qwen-designed-raw.wav",
+  "reference_origin": "User-approved original synthetic Qwen VoiceDesign",
+  "reference_text": "No added sugar. Sounds like sugar-free... right? Well... not quite. Fruit juice can still contain sugar from the fruit. So turn the pack over. Check total sugars, then compare similar drinks per hundred millilitres. Small flip. Better information.",
+  "script": [
+    "In 2009, young scientists investigated fifteen detox products.",
+    "Two questions for their makers. What does detox mean? And where's the proof?",
+    "No two companies defined it the same way. Most offered no evidence.",
+    "Oh, and one product? A hair straightener.",
+    "So before buying a cleanse, ask what it's actually meant to remove.",
+    "Detox diets lack convincing evidence for removing toxins.",
+    "Your liver processes harmful substances; your kidneys filter waste.",
+    "No straightener required."
+  ],
+  "seed": 42,
+  "temperature": 0.9,
+  "speed": 1,
+  "duration": 30.96,
+  "sample_rate": 24000,
+  "generation_seconds": 21.168723916984163
+}

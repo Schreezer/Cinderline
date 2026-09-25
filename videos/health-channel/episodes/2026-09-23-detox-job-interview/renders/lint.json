@@ -1,0 +1,36 @@
+{
+  "ok": false,
+  "errorCount": 1,
+  "warningCount": 2,
+  "infoCount": 0,
+  "findings": [
+    {
+      "code": "nested_structure_needs_subcomposition",
+      "severity": "warning",
+      "message": "<div id=\"caption-layer\"> is a timeline element that contains nested <div id=\"cap-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+      "elementId": "caption-layer",
+      "fixHint": "Move <div id=\"caption-layer\"> and its contents into a sub-composition file and mount it with data-composition-src.",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-job-interview/index.html"
+    },
+    {
+      "code": "nested_structure_needs_subcomposition",
+      "severity": "warning",
+      "message": "<div id=\"brand-layer\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+      "elementId": "brand-layer",
+      "fixHint": "Move <div id=\"brand-layer\"> and its contents into a sub-composition file and mount it with data-composition-src.",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-job-interview/index.html"
+    },
+    {
+      "code": "missing_local_asset",
+      "severity": "error",
+      "message": "<img> element references local file(s) not found in the project: public/art/03-infographic.jpeg, public/art/04-evidence.jpeg, public/art/05-brew.jpeg. The renderer will silently skip these and produce a video with missing visuals.",
+      "fixHint": "Add the missing files to the project directory, or update the src attributes to point to existing files. Captured asset filenames are unreliable — verify against capture/contact-sheets/ and capture/extracted/asset-descriptions.md."
+    }
+  ],
+  "filesScanned": 7,
+  "_meta": {
+    "version": "0.8.63",
+    "latestVersion": "0.8.61",
+    "updateAvailable": false
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "jobId": "05-brew-revised",
+  "type": "image",
+  "prompt": "Portrait 9:16 original hand-inked editorial illustration, cream paper, dark forest-green outlines, coral and ochre accents. ONE single cozy kitchen scene, no panels. Large ordinary cream mug of amber tea at the center, small kettle behind right, a single green leaf beside it. Gentle drawn steam. NO characters, NO packages, NO cartons, NO people. Large perfectly readable upper heading FOR THE TASTE. Below it a secondary line NOT A CLEANSE. Mug and kettle should occupy middle 50% and all essential content must end above 76% image height. Bottom 20% quiet blank cream for captions. Warm adult storybook aesthetic, subtle paper texture, bold confident linework, not photorealistic. Only text: FOR THE TASTE. NOT A CLEANSE.",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T10:24:46.727Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/94af2088-a164-4e0b-bb7c-d5d8b013cb6e/edit/5b0583d4-4ad0-4c85-b74e-86ccee251805",
+  "status": "downloaded"
+}

@@ -1,0 +1,35 @@
+◆  Checking 2026-09-23-detox-investigation
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)")
+
+Lint
+  ⚠ nested_structure_needs_subcomposition: <div id="caption-layer"> is a timeline element that contains nested <div id="cap-0">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.
+    /Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/index.html #caption-layer t=0s
+    Fix: Move <div id="caption-layer"> and its contents into a sub-composition file and mount it with data-composition-src.
+  ⚠ nested_structure_needs_subcomposition: <div id="brand-layer"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.
+    /Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/index.html #brand-layer t=0s
+    Fix: Move <div id="brand-layer"> and its contents into a sub-composition file and mount it with data-composition-src.
+  ⚠ overlapping_gsap_tweens: GSAP tweens overlap on "#frame-04-camera" for scale between 2.07s and 2.07s.
+    /Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/compositions/frames/04.html #frame-04-camera t=0s
+    Fix: Shorten the earlier tween, move the later tween, or add `overwrite: "auto"`.
+  0 error(s), 3 warning(s), 0 info(s)
+
+Runtime
+  ◇ 0 errors, 0 warnings
+
+Layout
+  ◇ 0 issues across 9 sample(s)
+
+Motion
+  ◇ 0 errors, 0 warnings
+
+Contrast
+  ◇ 15/15 text checks pass WCAG AA
+
+Snapshots
+  ◇ disabled
+
+◇  Check passed
+
+  This project pins hyperframes@0.8.63 (latest 0.8.65).
+  Bump it: npx hyperframes@latest upgrade --project
+

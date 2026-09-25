@@ -1,0 +1,13 @@
+{
+  "jobId": "05-brew",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Expressive simple faces, hand-drawn perspective, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Tea character: green rectangular carton, cream DETOX TEA label, coral leaf, thin black limbs, cream gloves, ochre shoes, raised eyebrow, coral briefcase. Cozy closing illustration: inviting plain cream ceramic mug of amber ordinary tea, small kettle, curling steam. Sheepish green tea carton small at far left with closed coral briefcase. A large propped paper sign behind mug reads FOR THE TASTE. and underneath NOT A CLEANSE. Gentle warm editorial illustration. Only other text is DETOX TEA on carton. ",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T10:21:32.855Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/6c3d3177-27bc-418d-940c-e310448c4266/edit/928f5fc6-876d-4dc9-a302-008dd7134b63",
+  "status": "downloaded"
+}

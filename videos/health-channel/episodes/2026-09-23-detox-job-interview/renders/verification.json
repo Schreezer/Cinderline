@@ -1,0 +1,62 @@
+{
+  "video": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-job-interview/renders/detox-job-interview.en.mp4",
+  "duration_seconds": 30.0,
+  "width": 1080,
+  "height": 1920,
+  "fps": "30/1",
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "audio_rate": "48000",
+  "audio_channels": 2,
+  "decode_errors": 0,
+  "sample_times": [
+    0.8,
+    3.8,
+    6.4,
+    8.8,
+    11.5,
+    16.6,
+    21.5,
+    25.8,
+    29.5
+  ],
+  "sha256": "9bdc138e7b03ebd982916d09282313139a17fe2ea2555dd38d7ed9c519f8b768",
+  "voice_audit": {
+    "times": [
+      0,
+      4.4,
+      7.4,
+      13.4,
+      18.79,
+      24.4,
+      30
+    ],
+    "audio_start": 0.4,
+    "audio_duration": 26.32,
+    "gain_db": 1.48,
+    "script_words": 65,
+    "asr_differences": [
+      {
+        "index": 4,
+        "expected": "tea.",
+        "asr": "T."
+      }
+    ],
+    "audit": "All words present in sequence. ASR T. is the homophone tea; caption spelling restored. Final ASR phrase end clamped to physical audio endpoint; no audio edited or stretched."
+  },
+  "publishing": "local draft only",
+  "encoded_audio_audit": {
+    "expected_words": 65,
+    "recognized_words": 65,
+    "differences_after_case_punctuation_and_tea_homophone_normalization": [],
+    "complete": true
+  },
+  "encoded_frames_visually_reviewed": true,
+  "hyperframes_version": "0.8.63",
+  "render_capture": "drawelement, hardware GPU",
+  "validation": {
+    "errors": 0,
+    "warnings": 2,
+    "warning_note": "Caption and brand tracks are single grouped Studio rows; intentional, no layout/runtime/contrast failures."
+  }
+}

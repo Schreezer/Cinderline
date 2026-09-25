@@ -1,0 +1,434 @@
+[
+  {
+    "text": "In",
+    "asr": "In",
+    "start": 0.65,
+    "end": 0.76
+  },
+  {
+    "text": "2009,",
+    "asr": "2009,",
+    "start": 0.76,
+    "end": 1.71
+  },
+  {
+    "text": "young",
+    "asr": "young",
+    "start": 1.71,
+    "end": 1.88
+  },
+  {
+    "text": "scientists",
+    "asr": "scientists",
+    "start": 2.29,
+    "end": 2.85
+  },
+  {
+    "text": "investigated",
+    "asr": "investigated",
+    "start": 2.85,
+    "end": 3.78
+  },
+  {
+    "text": "fifteen",
+    "asr": "15",
+    "start": 3.78,
+    "end": 4.32
+  },
+  {
+    "text": "detox",
+    "asr": "detox",
+    "start": 4.32,
+    "end": 4.77
+  },
+  {
+    "text": "products.",
+    "asr": "products,",
+    "start": 4.77,
+    "end": 5.63
+  },
+  {
+    "text": "Two",
+    "asr": "two",
+    "start": 5.63,
+    "end": 5.75
+  },
+  {
+    "text": "questions",
+    "asr": "questions",
+    "start": 6.02,
+    "end": 6.5
+  },
+  {
+    "text": "for",
+    "asr": "for",
+    "start": 6.5,
+    "end": 6.74
+  },
+  {
+    "text": "their",
+    "asr": "their",
+    "start": 6.74,
+    "end": 6.86
+  },
+  {
+    "text": "makers.",
+    "asr": "makers.",
+    "start": 6.86,
+    "end": 8.06
+  },
+  {
+    "text": "What",
+    "asr": "What",
+    "start": 8.32,
+    "end": 8.38
+  },
+  {
+    "text": "does",
+    "asr": "does",
+    "start": 8.38,
+    "end": 8.68
+  },
+  {
+    "text": "detox",
+    "asr": "detox",
+    "start": 8.77,
+    "end": 9.1
+  },
+  {
+    "text": "mean?",
+    "asr": "mean?",
+    "start": 9.1,
+    "end": 9.45
+  },
+  {
+    "text": "And",
+    "asr": "And",
+    "start": 9.45,
+    "end": 9.94
+  },
+  {
+    "text": "where's",
+    "asr": "where's",
+    "start": 9.94,
+    "end": 10.27
+  },
+  {
+    "text": "the",
+    "asr": "the",
+    "start": 10.27,
+    "end": 10.45
+  },
+  {
+    "text": "proof?",
+    "asr": "proof?",
+    "start": 10.45,
+    "end": 10.93
+  },
+  {
+    "text": "No",
+    "asr": "No",
+    "start": 10.93,
+    "end": 11.2
+  },
+  {
+    "text": "two",
+    "asr": "two",
+    "start": 11.2,
+    "end": 11.3
+  },
+  {
+    "text": "companies",
+    "asr": "companies",
+    "start": 11.3,
+    "end": 11.95
+  },
+  {
+    "text": "defined",
+    "asr": "defined",
+    "start": 11.95,
+    "end": 12.3
+  },
+  {
+    "text": "it",
+    "asr": "it",
+    "start": 12.37,
+    "end": 12.6
+  },
+  {
+    "text": "the",
+    "asr": "the",
+    "start": 12.73,
+    "end": 12.82
+  },
+  {
+    "text": "same",
+    "asr": "same",
+    "start": 12.82,
+    "end": 12.99
+  },
+  {
+    "text": "way.",
+    "asr": "way.",
+    "start": 13.11,
+    "end": 13.57
+  },
+  {
+    "text": "Most",
+    "asr": "Most",
+    "start": 13.57,
+    "end": 13.84
+  },
+  {
+    "text": "offered",
+    "asr": "offered",
+    "start": 13.84,
+    "end": 14.2
+  },
+  {
+    "text": "no",
+    "asr": "no",
+    "start": 14.29,
+    "end": 14.34
+  },
+  {
+    "text": "evidence.",
+    "asr": "evidence.",
+    "start": 14.32,
+    "end": 14.95
+  },
+  {
+    "text": "Oh,",
+    "asr": "Oh,",
+    "start": 15.17,
+    "end": 15.36
+  },
+  {
+    "text": "and",
+    "asr": "and",
+    "start": 15.36,
+    "end": 15.6
+  },
+  {
+    "text": "one",
+    "asr": "one",
+    "start": 15.69,
+    "end": 15.92
+  },
+  {
+    "text": "product?",
+    "asr": "product?",
+    "start": 15.92,
+    "end": 16.9
+  },
+  {
+    "text": "A",
+    "asr": "A",
+    "start": 16.9,
+    "end": 17.16
+  },
+  {
+    "text": "hair",
+    "asr": "hair",
+    "start": 17.16,
+    "end": 17.28
+  },
+  {
+    "text": "straightener.",
+    "asr": "straightener.",
+    "start": 17.28,
+    "end": 18.28
+  },
+  {
+    "text": "So",
+    "asr": "So",
+    "start": 18.28,
+    "end": 18.72
+  },
+  {
+    "text": "before",
+    "asr": "before",
+    "start": 18.72,
+    "end": 19.07
+  },
+  {
+    "text": "buying",
+    "asr": "buying",
+    "start": 19.07,
+    "end": 19.53
+  },
+  {
+    "text": "a",
+    "asr": "a",
+    "start": 19.53,
+    "end": 19.6
+  },
+  {
+    "text": "cleanse,",
+    "asr": "cleanse,",
+    "start": 19.6,
+    "end": 20.28
+  },
+  {
+    "text": "ask",
+    "asr": "ask",
+    "start": 20.28,
+    "end": 20.51
+  },
+  {
+    "text": "what",
+    "asr": "what",
+    "start": 20.51,
+    "end": 20.81
+  },
+  {
+    "text": "it's",
+    "asr": "it's",
+    "start": 20.81,
+    "end": 21.1
+  },
+  {
+    "text": "actually",
+    "asr": "actually",
+    "start": 21.12,
+    "end": 21.72
+  },
+  {
+    "text": "meant",
+    "asr": "meant",
+    "start": 21.72,
+    "end": 22.02
+  },
+  {
+    "text": "to",
+    "asr": "to",
+    "start": 22.15,
+    "end": 22.25
+  },
+  {
+    "text": "remove.",
+    "asr": "remove.",
+    "start": 22.25,
+    "end": 23.02
+  },
+  {
+    "text": "Detox",
+    "asr": "Detox",
+    "start": 23.21,
+    "end": 23.34
+  },
+  {
+    "text": "diets",
+    "asr": "diets",
+    "start": 23.34,
+    "end": 23.64
+  },
+  {
+    "text": "lack",
+    "asr": "lack",
+    "start": 23.73,
+    "end": 23.92
+  },
+  {
+    "text": "convincing",
+    "asr": "convincing",
+    "start": 23.92,
+    "end": 24.37
+  },
+  {
+    "text": "evidence",
+    "asr": "evidence",
+    "start": 24.81,
+    "end": 25.09
+  },
+  {
+    "text": "for",
+    "asr": "for",
+    "start": 25.2,
+    "end": 25.28
+  },
+  {
+    "text": "removing",
+    "asr": "removing",
+    "start": 25.28,
+    "end": 25.8
+  },
+  {
+    "text": "toxins.",
+    "asr": "toxins.",
+    "start": 25.8,
+    "end": 26.34
+  },
+  {
+    "text": "Your",
+    "asr": "Your",
+    "start": 26.34,
+    "end": 26.7
+  },
+  {
+    "text": "liver",
+    "asr": "liver",
+    "start": 26.7,
+    "end": 27.0
+  },
+  {
+    "text": "processes",
+    "asr": "processes",
+    "start": 27.0,
+    "end": 27.57
+  },
+  {
+    "text": "harmful",
+    "asr": "harmful",
+    "start": 27.57,
+    "end": 27.81
+  },
+  {
+    "text": "substances;",
+    "asr": "substances,",
+    "start": 28.23,
+    "end": 28.76
+  },
+  {
+    "text": "your",
+    "asr": "your",
+    "start": 28.76,
+    "end": 28.99
+  },
+  {
+    "text": "kidneys",
+    "asr": "kidneys",
+    "start": 29.06,
+    "end": 29.38
+  },
+  {
+    "text": "filter",
+    "asr": "filter",
+    "start": 29.47,
+    "end": 29.76
+  },
+  {
+    "text": "waste.",
+    "asr": "waste.",
+    "start": 29.93,
+    "end": 30.38
+  },
+  {
+    "text": "No",
+    "asr": "No",
+    "start": 30.38,
+    "end": 30.64
+  },
+  {
+    "text": "straightener",
+    "asr": "straightener",
+    "start": 30.64,
+    "end": 30.95
+  },
+  {
+    "text": "required.",
+    "asr": "required.",
+    "start": 30.95,
+    "end": 31.44
+  }
+]

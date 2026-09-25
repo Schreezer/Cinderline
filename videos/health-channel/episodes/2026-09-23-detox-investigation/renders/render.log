@@ -1,0 +1,151 @@
+
+◆  Rendering 2026-09-23-detox-investigation → /Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/renders/detox-investigation.en.mp4
+   30fps · high · auto workers (10 cores detected)
+   GPU: browser GPU (auto-detect)
+
+[?25l│
+◒  Checking browser[1G[J◇  Browser: cache
+[?25h
+  Lint: 0 error(s), 3 warning(s) — run with --lint-verbose for full output.
+  Continuing render despite lint issues. Use --strict to block errors.
+
+[INFO] [Render] Pipeline started {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","platform":"darwin","arch":"arm64","nodeVersion":"v23.10.0","fps":{"num":30,"den":1},"format":"mp4","quality":"high","browserGpuMode":"auto","forceScreenshot":false,"protocolTimeout":300000,"browserTimeout":120000,"pageNavigationTimeout":60000,"playerReadyTimeout":45000}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"pipeline","status":"checkpoint","elapsedMs":2,"message":"started","format":"mp4","quality":"high","browserGpuMode":"auto","forceScreenshot":false,"protocolTimeoutMs":300000,"pageNavigationTimeoutMs":60000,"playerReadyTimeoutMs":45000,"requestedWorkers":"auto"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"compile","status":"start","elapsedMs":3,"needsAlpha":false}
+  █░░░░░░░░░░░░░░░░░░░░░░░░  5%  Compiling composition
+[INFO] [Compiler] Embedded local font file: public/fonts/SourceSerif4.ttf (1181 KB → data URI)
+[INFO] [Compiler] Embedded local font file: public/fonts/JetBrainsMono.ttf (183 KB → data URI)
+[INFO] Compiled composition metadata {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","entryFile":"index.html","staticDuration":27,"width":1080,"height":1920,"videoCount":0,"audioCount":7,"renderModeHints":{"recommendScreenshot":false,"reasons":[]}}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"compile","status":"end","elapsedMs":295,"durationMs":292,"needsAlpha":false}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"compile","status":"checkpoint","elapsedMs":296,"message":"composition metadata resolved","width":1080,"height":1920,"videoCount":0,"audioCount":7,"imageCount":7,"deviceScaleFactor":1,"forceScreenshot":false,"compositionHash":"48534acea724f897"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"browser_probe","status":"start","elapsedMs":296,"forceScreenshot":false,"stagePhase":"calibrating"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"browser_probe","status":"end","elapsedMs":527,"durationMs":230,"forceScreenshot":false,"stagePhase":"calibrating"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"browser_probe","status":"checkpoint","elapsedMs":528,"message":"duration resolved","durationSeconds":27,"totalFrames":810,"compositionHash":"48534acea724f897","beginFrameStalled":false}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"video_extract","status":"start","elapsedMs":528,"videoCount":0}
+  ██░░░░░░░░░░░░░░░░░░░░░░░  10%  Extracting video frames
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"video_extract","status":"end","elapsedMs":530,"durationMs":1,"videoCount":0}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"video_extract","status":"checkpoint","elapsedMs":532,"message":"frames resolved","videoCount":0,"extractedVideoCount":0,"totalFramesExtracted":0,"maxFramesPerVideo":0,"avgFramesPerExtractedVideo":null,"vfrPreflightCount":null,"vfrPreflightMs":null,"cacheHits":null,"cacheMisses":null,"transientRetries":null,"minVideoFrameCoverageRatio":null,"authoredTimedClipCount":23}
+[INFO] [Render] No HDR sources detected — rendering SDR {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"hdr_detection","status":"checkpoint","elapsedMs":533,"message":"resolved","requestedHdrMode":"auto","effectiveHdr":"sdr","nativeHdrVideoCount":0,"nativeHdrImageCount":0}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"audio_process","status":"start","elapsedMs":533,"audioCount":7}
+  █████░░░░░░░░░░░░░░░░░░░░  20%  Processing audio tracks
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"audio_process","status":"end","elapsedMs":1430,"durationMs":897,"audioCount":7}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"file_server","status":"start","elapsedMs":1430,"reused":false}
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting frame capture
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"file_server","status":"end","elapsedMs":1437,"durationMs":7}
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)")
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"capture_calibration","status":"checkpoint","elapsedMs":1639,"message":"skipped","requestedWorkers":"auto","totalFrames":810,"htmlInCanvasDetected":false,"lowMemoryMode":false,"deInversionEligible":false,"deParallelRouterEligible":true}
+[INFO] [Render] Fast capture: verified parallel drawElement streaming preferred over single-worker inversion (810 frames >= 700; benchmark-validated at 3 workers, pinned regardless of calibration). Set HF_DE_PARALLEL_ROUTER=false or --workers N to override. {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"worker_resolution","status":"checkpoint","elapsedMs":1639,"message":"resolved","workerCount":3}
+[INFO] streaming-encode gate {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","enabled":true,"reason":"parallel_forced","configFlag":true,"durationCapEnabled":false,"outputFormat":"mp4","workerCount":3,"durationSeconds":27,"maxDurationSeconds":240}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"capture_strategy","status":"checkpoint","elapsedMs":1640,"message":"resolved","workerCount":3,"forceScreenshot":false,"captureBeyondViewport":null,"useStreamingEncode":true,"useLayeredComposite":false,"usePageSideCompositing":false,"hasHdrContent":false,"hasShaderTransitions":false,"isPngSequence":false}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"capture_streaming","status":"start","elapsedMs":1640,"stagePhase":"capturing","workerCount":3,"forceScreenshot":false,"totalFrames":810,"framesCompleted":0,"captureMode":"drawelement","captureOperation":"drawElement"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":0,"phase":"browser_launch","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"unknown","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":1,"phase":"browser_launch","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"unknown","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":2,"phase":"browser_launch","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"unknown","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[BrowserManager] Browser launched (HeadlessChrome/152.0.7977.30, screenshot, gl=--use-gl=angle --use-angle=metal, headlessShell=true, platform=darwin)
+[BrowserManager] Browser launched (HeadlessChrome/152.0.7977.30, screenshot, gl=--use-gl=angle --use-angle=metal, headlessShell=true, platform=darwin)
+[BrowserManager] Browser launched (HeadlessChrome/152.0.7977.30, screenshot, gl=--use-gl=angle --use-angle=metal, headlessShell=true, platform=darwin)
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":1,"phase":"browser_probe","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"unknown","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":1,"phase":"session_init","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[initSession:screenshot] page.goto start (0ms)
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":2,"phase":"browser_probe","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"unknown","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":2,"phase":"session_init","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[initSession:screenshot] page.goto start (0ms)
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":0,"phase":"browser_probe","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"unknown","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":0,"phase":"session_init","browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":"unknown","gpuBackend":"unknown"}
+[initSession:screenshot] page.goto start (0ms)
+[HyperFrames] render runtime fps [object Object]
+[HyperFrames] render runtime fps [object Object]
+[HyperFrames] render runtime fps [object Object]
+[initSession:screenshot] page.goto complete (427ms)
+[initSession:screenshot] page.goto complete (429ms)
+[initSession:screenshot] page.goto complete (422ms)
+[initSession:screenshot] GSAP proxy flush complete (446ms)
+[initSession:screenshot] GSAP proxy flush complete (439ms)
+[initSession:screenshot] pollHfReady complete (447ms)
+[initSession:screenshot] GSAP proxy flush complete (450ms)
+[initSession:screenshot] pollHfReady complete (440ms)
+[initSession:screenshot] pollHfReady complete (451ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (449ms)
+[initSession:screenshot] applyVideoMetadataHints complete (450ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (444ms)
+[initSession:screenshot] applyVideoMetadataHints complete (444ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (455ms)
+[initSession:screenshot] applyVideoMetadataHints complete (455ms)
+[initSession:screenshot] media + fonts + tailwind ready (447ms)
+[initSession:screenshot] media + fonts + tailwind ready (454ms)
+[initSession:screenshot] media + fonts + tailwind ready (457ms)
+[initSession:screenshot] timeline at-risk predictor: 0/810 frames (0%) (539ms)
+[initSession:screenshot] timeline at-risk predictor: 0/810 frames (0%) (547ms)
+[initSession:screenshot] timeline at-risk predictor: 0/810 frames (0%) (550ms)
+[initSession:screenshot] static-frame dedup: disabled (eligible) (544ms)
+[initSession:screenshot] static-frame dedup: disabled (eligible) (552ms)
+[initSession:screenshot] static-frame dedup: disabled (eligible) (555ms)
+[initSession:screenshot] drawElement self-verify armed: 8 ground-truth frame(s) @ [101, 203, 304, 405, 506, 608, 713, 770] of 810 (1400ms)
+[initSession:screenshot] drawElement self-verify armed: 8 ground-truth frame(s) @ [101, 203, 304, 405, 506, 608, 713, 770] of 810 (1409ms)
+[initSession:drawelement] drawElement canvas injected (1402ms)
+[initSession:drawelement] screenshot fallback: 69 clip-boundary frame(s) (1403ms)
+[initSession:drawelement] drawElement canvas injected (1410ms)
+[initSession:screenshot] drawElement self-verify armed: 8 ground-truth frame(s) @ [101, 203, 304, 405, 506, 608, 713, 770] of 810 (1414ms)
+[initSession:drawelement] screenshot fallback: 69 clip-boundary frame(s) (1411ms)
+[initSession:drawelement] drawElement canvas injected (1415ms)
+[initSession:drawelement] drawElement worker encode initialized (1405ms)
+[initSession:drawelement] screenshot fallback: 69 clip-boundary frame(s) (1416ms)
+[initSession:drawelement] drawElement worker encode initialized (1413ms)
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":2,"phase":"frame_capture","frameIndex":2,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[initSession:drawelement] drawElement worker encode initialized (1419ms)
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":1,"phase":"frame_capture","frameIndex":1,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":0,"phase":"frame_capture","frameIndex":0,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":1,"phase":"frame_capture","frameIndex":4,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":0,"phase":"frame_capture","frameIndex":3,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":1,"phase":"frame_encode","frameIndex":1,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":2,"phase":"frame_capture","frameIndex":5,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":0,"phase":"frame_encode","frameIndex":0,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+[INFO] [Render] Parallel capture worker phase {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","workerId":2,"phase":"frame_encode","frameIndex":2,"browserExecutable":"/Users/chirag13/.cache/hyperframes/chrome/chrome-headless-shell/mac_arm-152.0.7977.30/chrome-headless-shell-mac-arm64/chrome-headless-shell","browserVersion":"HeadlessChrome/152.0.7977.30","canvasDrawElement":true,"gpuBackend":"metal/apple"}
+  ██████░░░░░░░░░░░░░░░░░░░  27%  Streaming frame 30/810 (3 workers)
+  ███████░░░░░░░░░░░░░░░░░░  29%  Streaming frame 60/810 (3 workers)
+  ███████░░░░░░░░░░░░░░░░░░  31%  Streaming frame 90/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":101,"psnrDb":49.1}
+  ████████░░░░░░░░░░░░░░░░░  33%  Streaming frame 120/810 (3 workers)
+  ████████░░░░░░░░░░░░░░░░░  35%  Streaming frame 150/810 (3 workers)
+  █████████░░░░░░░░░░░░░░░░  37%  Streaming frame 180/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":203,"psnrDb":49.3}
+  █████████░░░░░░░░░░░░░░░░  39%  Streaming frame 210/810 (3 workers)
+  ██████████░░░░░░░░░░░░░░░  41%  Streaming frame 240/810 (3 workers)
+  ██████████░░░░░░░░░░░░░░░  43%  Streaming frame 270/810 (3 workers)
+  ███████████░░░░░░░░░░░░░░  45%  Streaming frame 300/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":304,"psnrDb":49.1}
+  ███████████░░░░░░░░░░░░░░  47%  Streaming frame 330/810 (3 workers)
+  ████████████░░░░░░░░░░░░░  49%  Streaming frame 360/810 (3 workers)
+  ████████████░░░░░░░░░░░░░  51%  Streaming frame 390/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":405,"psnrDb":51.5}
+  █████████████░░░░░░░░░░░░  54%  Streaming frame 420/810 (3 workers)
+  ██████████████░░░░░░░░░░░  56%  Streaming frame 450/810 (3 workers)
+  ██████████████░░░░░░░░░░░  58%  Streaming frame 480/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":506,"psnrDb":51.9}
+  ███████████████░░░░░░░░░░  60%  Streaming frame 510/810 (3 workers)
+  ███████████████░░░░░░░░░░  62%  Streaming frame 540/810 (3 workers)
+  ████████████████░░░░░░░░░  64%  Streaming frame 570/810 (3 workers)
+  ████████████████░░░░░░░░░  66%  Streaming frame 600/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":608,"psnrDb":52.5}
+  █████████████████░░░░░░░░  68%  Streaming frame 630/810 (3 workers)
+  █████████████████░░░░░░░░  70%  Streaming frame 660/810 (3 workers)
+  ██████████████████░░░░░░░  72%  Streaming frame 690/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":713,"psnrDb":49.9}
+  ██████████████████░░░░░░░  74%  Streaming frame 720/810 (3 workers)
+  ███████████████████░░░░░░  76%  Streaming frame 750/810 (3 workers)
+[INFO] [Render] drawElement self-verify passed {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","frame":770,"psnrDb":50.1}
+  ███████████████████░░░░░░  78%  Streaming frame 780/810 (3 workers)
+  ████████████████████░░░░░  80%  Streaming frame 810/810 (3 workers)
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"capture_streaming","status":"end","elapsedMs":25194,"durationMs":23554,"stagePhase":"capturing","workerCount":3,"forceScreenshot":false,"totalFrames":810,"framesCompleted":810,"captureMode":"drawelement","captureOperation":"encode"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"assemble","status":"start","elapsedMs":25194,"stagePhase":"capturing","hasAudio":true,"workerCount":3,"forceScreenshot":false,"totalFrames":810,"framesCompleted":810,"captureMode":"drawelement","captureOperation":"encode"}
+  ██████████████████████░░░  90%  Assembling final video
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"assemble","status":"end","elapsedMs":26332,"durationMs":1137,"stagePhase":"capturing","hasAudio":true,"workerCount":3,"forceScreenshot":false,"totalFrames":810,"framesCompleted":810,"captureMode":"drawelement","captureOperation":"encode"}
+[INFO] [Render:trace] {"renderJobId":"44623994-c8a0-476c-b842-c78df813fe70","phase":"pipeline","status":"checkpoint","elapsedMs":26423,"message":"artifact validated","totalElapsedMs":26422}
+  █████████████████████████  100%  Render complete
+
+◇  /Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/renders/detox-investigation.en.mp4
+   37.1 MB · 27.0s video · rendered in 26.4s
+   drawelement capture · hardware gpu · compile 0.5s · extract 0.0s · audio 0.9s · probe 0.2s · setup 0.2s · capture 23.6s · encode (during capture) 23.6s · assemble 1.1s
+EXIT 0

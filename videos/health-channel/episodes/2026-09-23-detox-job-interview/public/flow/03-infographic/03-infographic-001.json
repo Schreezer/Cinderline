@@ -1,0 +1,13 @@
+{
+  "jobId": "03-infographic",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Expressive simple faces, hand-drawn perspective, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Beautiful clear infographic with TWO large vertically stacked rows and generous spacing. Top title YOUR BUILT-IN TEAM. Upper row: coral liver icon wearing glasses, label LIVER, explanation PROCESSES SUBSTANCES. Lower row: a PAIR of coral kidney icons, label KIDNEYS, explanation FILTER WASTE + EXTRA WATER. Small red blood droplet enters kidney pair and pale blue droplet exits on simple arrows. No torso, no extra text. Large readable lettering, all text within top 74%. ",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T10:19:27.074Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/2816a7c1-7e8f-4fca-b1aa-87eec9cfb488/edit/635c41cb-8a22-4d47-a383-be5c1be29ed1",
+  "status": "downloaded"
+}

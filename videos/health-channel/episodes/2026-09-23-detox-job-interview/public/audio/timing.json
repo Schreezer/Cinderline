@@ -1,0 +1,23 @@
+{
+  "times": [
+    0,
+    4.4,
+    7.4,
+    13.4,
+    18.79,
+    24.4,
+    30
+  ],
+  "audio_start": 0.4,
+  "audio_duration": 26.32,
+  "gain_db": 1.48,
+  "script_words": 65,
+  "asr_differences": [
+    {
+      "index": 4,
+      "expected": "tea.",
+      "asr": "T."
+    }
+  ],
+  "audit": "All words present in sequence. ASR T. is the homophone tea; caption spelling restored. Final ASR phrase end clamped to physical audio endpoint; no audio edited or stretched."
+}

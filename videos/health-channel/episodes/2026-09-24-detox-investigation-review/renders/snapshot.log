@@ -1,0 +1,17 @@
+◆  Capturing 8 frames at [2s, 7s, 12s, 17.5s, 21s, 24.8s, 28s, 33s] from 2026-09-24-detox-investigation-review
+
+   Fonts: 2 loaded
+   Note: added an end-of-timeline frame at 33.95s. Short beats between your --at times may still be skipped — pass them explicitly.
+
+◇  9 snapshots saved to snapshots/
+   snapshots/frame-00-at-2s.png
+   snapshots/frame-01-at-7s.png
+   snapshots/frame-02-at-12s.png
+   snapshots/frame-03-at-17.5s.png
+   snapshots/frame-04-at-21s.png
+   snapshots/frame-05-at-24.8s.png
+   snapshots/frame-06-at-28s.png
+   snapshots/frame-07-at-33s.png
+   snapshots/frame-08-at-33.95s.png
+   contact-sheet.jpg (grid view for AI review)
+   --describe: GEMINI_API_KEY not set, skipping

@@ -1,0 +1,13 @@
+{
+  "jobId": "04-straightener-v1",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Simple expressive faces, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Scientist: young woman, short black bob, round tortoiseshell glasses, forest-green cardigan, cream shirt, coral lanyard, calm deadpan face. Close-up: one product card on the corkboard is a sleek coral hair straightener with a big shiny sticker reading DETOX. The scientist leans into frame at right, phone receiver at her ear, eyebrows flat, completely deadpan, staring at it. Comic, understated. Only lettering: DETOX.",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T16:01:59.308Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/7e4ef711-a160-4cbd-8e9b-9963c5ee2ef8/edit/b2076d8e-d371-4133-8f99-e9e35a18e5cf",
+  "status": "downloaded"
+}

@@ -1,0 +1,13 @@
+{
+  "jobId": "02-team",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Expressive simple faces, hand-drawn perspective, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Tea character: green rectangular carton, cream DETOX TEA label, coral leaf, thin black limbs, cream gloves, ochre shoes, raised eyebrow, coral briefcase. Office reverse shot: tea applicant smaller in left foreground faces a busy coral liver-shaped character wearing round glasses and green tie, plus TWO bean-shaped kidney characters behind a curved desk. Organs glance amused at applicant while sorting folders. Preserve organ silhouettes. Large title POSITION FILLED. Desk nameplates LIVER and KIDNEYS. No other text except DETOX TEA on carton. ",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T10:18:16.307Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/cbdf9763-8c30-4b0e-81b3-e4e3a6cd8a9f/edit/1447479d-2a1f-44b2-bcab-8f86f7101ea4",
+  "status": "downloaded"
+}

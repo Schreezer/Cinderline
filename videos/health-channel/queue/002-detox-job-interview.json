@@ -1,0 +1,34 @@
+{
+  "id": "detox-job-interview-en-v1",
+  "topic": "Commercial detox cleanses and normal organ functions",
+  "language": "English",
+  "video": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-job-interview/renders/detox-job-interview.en.mp4",
+  "sha256": "9bdc138e7b03ebd982916d09282313139a17fe2ea2555dd38d7ed9c519f8b768",
+  "duration_seconds": 30,
+  "status": "superseded",
+  "created_at": "2026-09-23T15:57:34.658593+05:30",
+  "planned_date": null,
+  "caption": "Your detox tea just applied for a job. The position was already filled. \u2615\n\nYour liver processes substances, and healthy kidneys filter waste and extra water from your blood. Commercial detox cleanses lack convincing evidence that they remove toxins. Ordinary tea can be a drink you enjoy; a cleansing promise is a different claim.\n\nSources:\nNIH: https://newsinhealth.nih.gov/2021/12/do-detox-diets-cleanses-work\nNIDDK: https://www.niddk.nih.gov/health-information/kidney-disease/kidneys-how-they-work\nNHS: https://www.cuh.nhs.uk/patient-information/alcohol-and-the-liver/\n\nGeneral education about commercial wellness cleanses, not medical detoxification or treatment. Fictional product and metaphorical illustrations. AI-generated artwork and synthetic narration.\n\n#HealthMyths #ScienceBasedHealth #Detox #FitSnap\n",
+  "sources_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-job-interview/SOURCES.md",
+  "verification_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-job-interview/renders/verification.json",
+  "platforms": {
+    "instagram": {
+      "status": "held",
+      "handle": "fitsnap.fun",
+      "post_url": null
+    },
+    "youtube": {
+      "status": "held",
+      "channel_id": "UCeL6Mq1UW4eW8pscVuYCVXw",
+      "title": "Your detox tea just applied for a job. Position filled.",
+      "description": "Your detox tea just applied for a job. The position was already filled. \u2615\n\nYour liver processes substances, and healthy kidneys filter waste and extra water from your blood. Commercial detox cleanses lack convincing evidence that they remove toxins. Ordinary tea can be a drink you enjoy; a cleansing promise is a different claim.\n\nSources:\nNIH: https://newsinhealth.nih.gov/2021/12/do-detox-diets-cleanses-work\nNIDDK: https://www.niddk.nih.gov/health-information/kidney-disease/kidneys-how-they-work\nNHS: https://www.cuh.nhs.uk/patient-information/alcohol-and-the-liver/\n\nGeneral education about commercial wellness cleanses, not medical detoxification or treatment. Fictional product and metaphorical illustrations. AI-generated artwork and synthetic narration.\n\n#HealthMyths #ScienceBasedHealth #Detox #FitSnap\n",
+      "post_url": null,
+      "made_for_kids": false
+    }
+  },
+  "ai_generated_media": true,
+  "publish_now_authorized": false,
+  "hold_reason": "Local draft requested; future posting remains disabled.",
+  "superseded_by": "detox-investigation-en-v3",
+  "superseded_at": "2026-09-24T18:09:59.348000+05:30"
+}

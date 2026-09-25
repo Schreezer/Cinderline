@@ -1,0 +1,37 @@
+{
+  "timezone": "Asia/Kolkata",
+  "language": "English",
+  "generation_time": "18:00",
+  "publication_time": "19:00",
+  "daily_video_count": 1,
+  "platforms": {
+    "instagram": {
+      "handle": "fitsnap.fun",
+      "access": "signed_in_iab",
+      "format": "Reels",
+      "requested_account": "fitsnap",
+      "identity_verified": true,
+      "profile_url": "https://www.instagram.com/fitsnap.fun/",
+      "visibility": "public",
+      "visibility_verified_at": "2026-09-22T22:06:25+05:30"
+    },
+    "youtube": {
+      "handle": null,
+      "channel_id": "UCeL6Mq1UW4eW8pscVuYCVXw",
+      "access": "signed_in_iab",
+      "format": "Shorts",
+      "requested_account": "chirag",
+      "identity_verified": true,
+      "display_name": "Chirag Aggarwal",
+      "studio_url": "https://studio.youtube.com/channel/UCeL6Mq1UW4eW8pscVuYCVXw"
+    }
+  },
+  "approved_reference_project": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective",
+  "queue_limit_unpublished": 3,
+  "first_planned_publication": null,
+  "automation_id": "generate-daily-health-explainer",
+  "publishing_browser": "iab",
+  "publishing_enabled": false,
+  "publishing_hold_reason": "Future automatic posting held; user subsequently said just upload, authorizing the current episode.",
+  "first_publication_completed_at": "2026-09-22T22:07:25+05:30"
+}

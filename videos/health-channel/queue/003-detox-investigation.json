@@ -1,0 +1,35 @@
+{
+  "id": "detox-investigation-en-v2",
+  "topic": "Commercial detox products and teas vs normal organ function",
+  "language": "English",
+  "video": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/renders/detox-investigation.en.mp4",
+  "sha256": "61853ff7715b7033ecda7635415b033ee8b5feaae6fdae23326b3d8118f458bb",
+  "duration_seconds": 27,
+  "status": "superseded",
+  "created_at": "2026-09-23T22:00:00+05:30",
+  "planned_date": null,
+  "supersedes_writing_of": "detox-job-interview-en-v1",
+  "caption": "In 2009, scientists asked 15 detox brands two questions: what does \"detox\" mean, and where's the proof? No two gave the same answer. One of the products was a hair straightener. \ud83e\uddea\n\nMany detox teas contain senna, a stimulant laxative. The scale drop is water and gut contents, not toxins, and it comes back. Your liver and kidneys handle detoxification every day. Ordinary tea is fine to enjoy; the cleansing promise is the part without evidence.\n\nSources:\nSense about Science, Detox Dossier (2009): https://senseaboutscience.org/activities/debunking-detox/\nNCCIH: https://www.nccih.nih.gov/health/detoxes-and-cleanses-what-you-need-to-know\nNIDDK: https://www.niddk.nih.gov/health-information/kidney-disease/kidneys-how-they-work\n\nGeneral education about commercial detox products, not medical detoxification or treatment. Fictional products, illustrative numbers. AI-generated artwork and synthetic narration.\n\n#HealthMyths #ScienceBasedHealth #Detox #FitSnap\n",
+  "sources_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/SOURCES.md",
+  "verification_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-23-detox-investigation/renders/verification.json",
+  "platforms": {
+    "instagram": {
+      "status": "held",
+      "handle": "fitsnap.fun",
+      "post_url": null
+    },
+    "youtube": {
+      "status": "held",
+      "channel_id": "UCeL6Mq1UW4eW8pscVuYCVXw",
+      "title": "Scientists asked 15 detox brands for proof. One was a hair straightener.",
+      "description": "In 2009, scientists asked 15 detox brands two questions: what does \"detox\" mean, and where's the proof? No two gave the same answer. One of the products was a hair straightener. \ud83e\uddea\n\nMany detox teas contain senna, a stimulant laxative. The scale drop is water and gut contents, not toxins, and it comes back. Your liver and kidneys handle detoxification every day. Ordinary tea is fine to enjoy; the cleansing promise is the part without evidence.\n\nSources:\nSense about Science, Detox Dossier (2009): https://senseaboutscience.org/activities/debunking-detox/\nNCCIH: https://www.nccih.nih.gov/health/detoxes-and-cleanses-what-you-need-to-know\nNIDDK: https://www.niddk.nih.gov/health-information/kidney-disease/kidneys-how-they-work\n\nGeneral education about commercial detox products, not medical detoxification or treatment. Fictional products, illustrative numbers. AI-generated artwork and synthetic narration.\n\n#HealthMyths #ScienceBasedHealth #Detox #FitSnap\n",
+      "post_url": null,
+      "made_for_kids": false
+    }
+  },
+  "ai_generated_media": true,
+  "publish_now_authorized": false,
+  "hold_reason": "Local draft; human visual review pending; publishing disabled.",
+  "superseded_by": "detox-investigation-en-v3",
+  "superseded_at": "2026-09-24T18:09:59.348000+05:30"
+}

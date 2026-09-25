@@ -1,0 +1,8 @@
+{
+  "script_word_count": 72,
+  "asr_word_count": 72,
+  "differences_after_case_punctuation_and_numeric_normalization": [],
+  "last_word_end": 30.94,
+  "physical_audio_duration": 30.96,
+  "method": "Whisper small.en full-script comparison; no human listening claimed"
+}

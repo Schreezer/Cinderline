@@ -1,0 +1,13 @@
+{
+  "jobId": "04-evidence-revised",
+  "type": "image",
+  "prompt": "Portrait 9:16 hand-inked adult editorial illustration, cream paper, dark forest-green outlines and large lettering, coral stamp, ochre pencil. Flat overhead close-up of a single application document on an office desk. NO humans, NO characters, NO packages. Text at top: CLAIMS NEED EVIDENCE. Center document heading: DETOX CLEANSES. Its quoted claim: REMOVES TOXINS. A huge coral rubber stamp across that claim clearly reads NOT PROVEN. Magnifying glass at right, paperclip and pencil left. Strong hierarchy: NOT PROVEN is the central dominant focal point, all letters perfectly spelled. Keep all content inside central 80% width and top 76% height. Bottom 20% quiet blank cream for subtitles. Warm textured printed cartoon aesthetic, crisp legible typography, not photorealistic. No other text.",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T10:23:02.069Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/c805596b-7c79-4895-8a82-9135b642cc84/edit/7bb19471-a2ad-4980-ba40-e0b07f3aba92",
+  "status": "downloaded"
+}

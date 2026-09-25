@@ -1,0 +1,45 @@
+{
+  "id": "flip-it-then-pick-it-en-v2",
+  "topic": "Reading front-of-pack food claims",
+  "language": "English",
+  "video": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/renders/flip-it-then-pick-it.qwen-v2.en.mp4",
+  "sha256": "b9f4ccd180d40ee5b9cfb23c57d330ad16083ffbbedcd9b6d396a508da2da4bc",
+  "duration_seconds": 38.7,
+  "status": "published",
+  "planned_date": "2026-09-23",
+  "caption": "The front catches your eye. The back gives you the details. \ud83d\udd0e\n\n\u201cNatural,\u201d \u201cmultigrain,\u201d and \u201cno added sugar\u201d each tell you only part of the story. Check the ingredients and nutrition information, compare similar foods using the same amount, then consider your actual portion.\n\nSave this for your next grocery shop.\n\nFictional packs and illustrative numbers. AI-generated imagery and narration.\n\nSources:\nFDA: https://www.fda.gov/food/nutrition-food-labeling-and-critical-foods/use-term-natural-food-labeling\nNDSU Extension: https://www.ndsu.edu/agriculture/sites/default/files/2022-03/fn726.pdf\nAmerican Heart Association: https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/sugar/difference-between-sugar-free-and-no-added-sugar\nFDA label guide: https://www.fda.gov/food/nutrition-facts-label/how-understand-and-use-nutrition-facts-label\n\n#FoodLabels #NutritionExplained #HealthyHabits",
+  "sources_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/SOURCES.md",
+  "verification_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/renders/qwen-v2-verification.json",
+  "platforms": {
+    "instagram": {
+      "status": "published",
+      "handle": "fitsnap.fun",
+      "post_url": "https://www.instagram.com/fitsnap.fun/reel/DdmLaS8o7Og/",
+      "post_id": "DdmLaS8o7Og",
+      "last_attempt_at": "2026-09-22T22:06:25+05:30",
+      "note": "Composer prepared, Share was never clicked.",
+      "ai_label": true,
+      "published_at": "2026-09-22T22:06:57+05:30",
+      "verification": "Instagram confirmation: Your reel has been shared. Profile shows 46 posts; new Reel permalink and full caption confirmed, with AI content label.",
+      "verified_at": "2026-09-22T22:07:25+05:30"
+    },
+    "youtube": {
+      "status": "published",
+      "handle": null,
+      "channel_id": "UCeL6Mq1UW4eW8pscVuYCVXw",
+      "post_url": "https://www.youtube.com/shorts/tpG8E2sj5lk",
+      "post_id": "tpG8E2sj5lk",
+      "last_attempt_at": "2026-09-22T22:00:52+05:30",
+      "title": "Natural? Multigrain? Read the label before you buy",
+      "description": "The front catches your eye. The back gives you the details. \ud83d\udd0e\n\n\u201cNatural,\u201d \u201cmultigrain,\u201d and \u201cno added sugar\u201d each tell you only part of the story. Check the ingredients and nutrition information, compare similar foods using the same amount, then consider your actual portion.\n\nSave this for your next grocery shop.\n\nFictional packs and illustrative numbers. AI-generated imagery and narration.\n\nSources:\nFDA: https://www.fda.gov/food/nutrition-food-labeling-and-critical-foods/use-term-natural-food-labeling\nNDSU Extension: https://www.ndsu.edu/agriculture/sites/default/files/2022-03/fn726.pdf\nAmerican Heart Association: https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/sugar/difference-between-sugar-free-and-no-added-sugar\nFDA label guide: https://www.fda.gov/food/nutrition-facts-label/how-understand-and-use-nutrition-facts-label\n\n#FoodLabels #NutritionExplained #HealthyHabits",
+      "made_for_kids": false,
+      "requested_account": "chirag",
+      "scheduled_at": null,
+      "verified_at": "2026-09-22T22:06:25+05:30",
+      "verification": "YouTube Studio Shorts row shows Public, 22 Sept 2026, Published; exact video tpG8E2sj5lk.",
+      "published_at": "2026-09-22T22:06:25+05:30"
+    }
+  },
+  "ai_generated_media": true,
+  "publish_now_authorized": true
+}

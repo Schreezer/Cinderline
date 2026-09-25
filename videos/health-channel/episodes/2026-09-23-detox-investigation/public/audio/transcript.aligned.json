@@ -1,0 +1,392 @@
+[
+  {
+    "text": "In",
+    "asr": "In",
+    "start": 0.64,
+    "end": 0.77
+  },
+  {
+    "text": "2009,",
+    "asr": "2009,",
+    "start": 0.77,
+    "end": 1.63
+  },
+  {
+    "text": "some",
+    "asr": "some",
+    "start": 1.63,
+    "end": 1.87
+  },
+  {
+    "text": "young",
+    "asr": "young",
+    "start": 1.99,
+    "end": 2.26
+  },
+  {
+    "text": "scientists",
+    "asr": "scientists",
+    "start": 2.26,
+    "end": 2.89
+  },
+  {
+    "text": "called",
+    "asr": "called",
+    "start": 2.99,
+    "end": 3.26
+  },
+  {
+    "text": "fifteen",
+    "asr": "15",
+    "start": 3.4,
+    "end": 3.83
+  },
+  {
+    "text": "detox",
+    "asr": "detox",
+    "start": 3.83,
+    "end": 4.22
+  },
+  {
+    "text": "brands.",
+    "asr": "brands.",
+    "start": 4.3,
+    "end": 5.22
+  },
+  {
+    "text": "Two",
+    "asr": "Two",
+    "start": 5.22,
+    "end": 5.49
+  },
+  {
+    "text": "questions.",
+    "asr": "questions.",
+    "start": 5.49,
+    "end": 6.46
+  },
+  {
+    "text": "What",
+    "asr": "What",
+    "start": 6.46,
+    "end": 6.73
+  },
+  {
+    "text": "does",
+    "asr": "does",
+    "start": 6.73,
+    "end": 6.94
+  },
+  {
+    "text": "detox",
+    "asr": "detox",
+    "start": 6.94,
+    "end": 7.24
+  },
+  {
+    "text": "mean?",
+    "asr": "mean,",
+    "start": 7.24,
+    "end": 7.59
+  },
+  {
+    "text": "And",
+    "asr": "and",
+    "start": 7.59,
+    "end": 7.78
+  },
+  {
+    "text": "where's",
+    "asr": "where's",
+    "start": 7.78,
+    "end": 8.2
+  },
+  {
+    "text": "the",
+    "asr": "the",
+    "start": 8.2,
+    "end": 8.37
+  },
+  {
+    "text": "proof?",
+    "asr": "proof?",
+    "start": 8.37,
+    "end": 8.88
+  },
+  {
+    "text": "No",
+    "asr": "No",
+    "start": 8.88,
+    "end": 9.16
+  },
+  {
+    "text": "two",
+    "asr": "two",
+    "start": 9.16,
+    "end": 9.23
+  },
+  {
+    "text": "brands",
+    "asr": "brands",
+    "start": 9.23,
+    "end": 9.64
+  },
+  {
+    "text": "meant",
+    "asr": "meant",
+    "start": 9.64,
+    "end": 9.98
+  },
+  {
+    "text": "the",
+    "asr": "the",
+    "start": 9.98,
+    "end": 10.17
+  },
+  {
+    "text": "same",
+    "asr": "same",
+    "start": 10.17,
+    "end": 10.43
+  },
+  {
+    "text": "thing.",
+    "asr": "thing.",
+    "start": 10.45,
+    "end": 11.02
+  },
+  {
+    "text": "Most",
+    "asr": "Most",
+    "start": 11.02,
+    "end": 11.29
+  },
+  {
+    "text": "had",
+    "asr": "had",
+    "start": 11.29,
+    "end": 11.42
+  },
+  {
+    "text": "no",
+    "asr": "no",
+    "start": 11.47,
+    "end": 11.52
+  },
+  {
+    "text": "proof.",
+    "asr": "proof.",
+    "start": 11.55,
+    "end": 12.02
+  },
+  {
+    "text": "Oh,",
+    "asr": "Oh,",
+    "start": 12.19,
+    "end": 12.36
+  },
+  {
+    "text": "and",
+    "asr": "and",
+    "start": 12.36,
+    "end": 12.61
+  },
+  {
+    "text": "one",
+    "asr": "one",
+    "start": 12.61,
+    "end": 12.86
+  },
+  {
+    "text": "of",
+    "asr": "of",
+    "start": 12.86,
+    "end": 13.03
+  },
+  {
+    "text": "them?",
+    "asr": "them?",
+    "start": 13.03,
+    "end": 13.66
+  },
+  {
+    "text": "It",
+    "asr": "It",
+    "start": 13.66,
+    "end": 13.92
+  },
+  {
+    "text": "was",
+    "asr": "was",
+    "start": 13.92,
+    "end": 14.01
+  },
+  {
+    "text": "a",
+    "asr": "a",
+    "start": 14.01,
+    "end": 14.06
+  },
+  {
+    "text": "hair",
+    "asr": "hair",
+    "start": 14.11,
+    "end": 14.36
+  },
+  {
+    "text": "straightener.",
+    "asr": "straightener.",
+    "start": 14.36,
+    "end": 15.46
+  },
+  {
+    "text": "Detox",
+    "asr": "Detox",
+    "start": 15.66,
+    "end": 15.79
+  },
+  {
+    "text": "teas",
+    "asr": "teas",
+    "start": 15.79,
+    "end": 16.05
+  },
+  {
+    "text": "are",
+    "asr": "are",
+    "start": 16.05,
+    "end": 16.25
+  },
+  {
+    "text": "no",
+    "asr": "no",
+    "start": 16.25,
+    "end": 16.38
+  },
+  {
+    "text": "different.",
+    "asr": "different,",
+    "start": 16.38,
+    "end": 17.12
+  },
+  {
+    "text": "Often,",
+    "asr": "often",
+    "start": 17.12,
+    "end": 17.38
+  },
+  {
+    "text": "it's",
+    "asr": "it's",
+    "start": 17.47,
+    "end": 17.68
+  },
+  {
+    "text": "senna.",
+    "asr": "Senna,",
+    "start": 17.73,
+    "end": 18.18
+  },
+  {
+    "text": "A",
+    "asr": "a",
+    "start": 18.18,
+    "end": 18.23
+  },
+  {
+    "text": "laxative.",
+    "asr": "laxative.",
+    "start": 18.36,
+    "end": 19.09
+  },
+  {
+    "text": "You",
+    "asr": "You",
+    "start": 19.09,
+    "end": 19.36
+  },
+  {
+    "text": "lose",
+    "asr": "lose",
+    "start": 19.36,
+    "end": 19.5
+  },
+  {
+    "text": "water,",
+    "asr": "water,",
+    "start": 19.55,
+    "end": 19.9
+  },
+  {
+    "text": "not",
+    "asr": "not",
+    "start": 19.9,
+    "end": 20.07
+  },
+  {
+    "text": "toxins.",
+    "asr": "toxins.",
+    "start": 20.07,
+    "end": 20.62
+  },
+  {
+    "text": "The",
+    "asr": "The",
+    "start": 20.62,
+    "end": 20.89
+  },
+  {
+    "text": "real",
+    "asr": "real",
+    "start": 20.89,
+    "end": 21.2
+  },
+  {
+    "text": "detox?",
+    "asr": "detox?",
+    "start": 21.2,
+    "end": 21.87
+  },
+  {
+    "text": "Your",
+    "asr": "Your",
+    "start": 22.14,
+    "end": 22.19
+  },
+  {
+    "text": "liver",
+    "asr": "liver",
+    "start": 22.16,
+    "end": 22.49
+  },
+  {
+    "text": "and",
+    "asr": "and",
+    "start": 22.56,
+    "end": 22.71
+  },
+  {
+    "text": "kidneys.",
+    "asr": "kidneys.",
+    "start": 22.71,
+    "end": 23.41
+  },
+  {
+    "text": "No",
+    "asr": "No",
+    "start": 23.41,
+    "end": 23.69
+  },
+  {
+    "text": "straightener",
+    "asr": "straightener",
+    "start": 23.69,
+    "end": 24.03
+  },
+  {
+    "text": "required.",
+    "asr": "required.",
+    "start": 24.1,
+    "end": 24.5
+  }
+]

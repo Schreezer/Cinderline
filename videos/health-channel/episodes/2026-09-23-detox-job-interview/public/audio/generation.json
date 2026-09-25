@@ -1,0 +1,19 @@
+{
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16",
+  "reference": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/public/audio/voice-examples-v3/qwen-designed-raw.wav",
+  "reference_origin": "User-approved original synthetic Qwen VoiceDesign",
+  "reference_text": "No added sugar. Sounds like sugar-free... right? Well... not quite. Fruit juice can still contain sugar from the fruit. So turn the pack over. Check total sugars, then compare similar drinks per hundred millilitres. Small flip. Better information.",
+  "script": [
+    "You bought a detox tea. Your organs weren't informed.",
+    "This box just applied for a job... that's already taken.",
+    "Your liver processes harmful substances. Your kidneys filter waste and extra water from your blood.",
+    "Those commercial detox cleanses? There's no convincing evidence they remove toxins.",
+    "Like tea? Choose an ordinary brew for the taste. Skip the cleansing promise. The real team? Already on the job."
+  ],
+  "seed": 2026,
+  "temperature": 0.9,
+  "speed": 1,
+  "duration": 26.32,
+  "sample_rate": 24000,
+  "generation_seconds": 18.73434329200245
+}

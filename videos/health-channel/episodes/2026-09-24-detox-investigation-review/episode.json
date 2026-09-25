@@ -1,0 +1,36 @@
+{
+  "id": "detox-investigation-en-v3",
+  "topic": "Commercial detox claims: investigation and evidence",
+  "language": "English",
+  "status": "ready",
+  "generation_date": "2026-09-24",
+  "created_at": "2026-09-24T18:03:55.810214+05:30",
+  "revision_of": "detox-investigation-en-v2",
+  "planned_date": null,
+  "publish_now_authorized": false,
+  "platforms": {
+    "instagram": {
+      "status": "held",
+      "post_url": null,
+      "handle": "fitsnap.fun"
+    },
+    "youtube": {
+      "status": "held",
+      "post_url": null,
+      "channel_id": "UCeL6Mq1UW4eW8pscVuYCVXw",
+      "title": "A detox hair straightener? Follow the evidence.",
+      "description": "A detox hair straightener? That really appeared in a 2009 investigation.\n\nYoung scientists examined 15 detox products and asked their makers what their claims meant and what evidence supported them. The definitions varied, and most offered no evidence.\n\nBefore buying a commercial cleanse, ask what it is meant to remove and what reliable research supports that claim. NCCIH reports a lack of compelling research supporting detox diets for toxin removal. The liver and healthy kidneys already process substances and remove waste, though that does not make us immune to poisoning or replace medical care.\n\nSources:\nSense about Science: https://senseaboutscience.org/activities/debunking-detox/\nNCCIH: https://www.nccih.nih.gov/health/detoxes-and-cleanses-what-you-need-to-know\nNIDDK: https://www.niddk.nih.gov/health-information/kidney-disease/kidneys-how-they-work\nNHS: https://www.cuh.nhs.uk/patient-information/alcohol-and-the-liver/\n\nGeneral education about commercial wellness claims, not clinical detoxification. Fictional illustrations, AI-generated artwork and synthetic narration.\n\n#HealthMyths #ScienceBasedHealth #Detox #FitSnap\n",
+      "made_for_kids": false
+    }
+  },
+  "video": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-24-detox-investigation-review/renders/detox-investigation.reviewed.en.mp4",
+  "sha256": "bbce6da3bfff2be4e1fe94402f4b58c75b4f46e751afb90b245e6356e15e7384",
+  "duration_seconds": 35,
+  "caption": "A detox hair straightener? That really appeared in a 2009 investigation.\n\nYoung scientists examined 15 detox products and asked their makers what their claims meant and what evidence supported them. The definitions varied, and most offered no evidence.\n\nBefore buying a commercial cleanse, ask what it is meant to remove and what reliable research supports that claim. NCCIH reports a lack of compelling research supporting detox diets for toxin removal. The liver and healthy kidneys already process substances and remove waste, though that does not make us immune to poisoning or replace medical care.\n\nSources:\nSense about Science: https://senseaboutscience.org/activities/debunking-detox/\nNCCIH: https://www.nccih.nih.gov/health/detoxes-and-cleanses-what-you-need-to-know\nNIDDK: https://www.niddk.nih.gov/health-information/kidney-disease/kidneys-how-they-work\nNHS: https://www.cuh.nhs.uk/patient-information/alcohol-and-the-liver/\n\nGeneral education about commercial wellness claims, not clinical detoxification. Fictional illustrations, AI-generated artwork and synthetic narration.\n\n#HealthMyths #ScienceBasedHealth #Detox #FitSnap\n",
+  "sources_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-24-detox-investigation-review/SOURCES.md",
+  "verification_file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-24-detox-investigation-review/renders/verification.json",
+  "verified_at": "2026-09-24T18:09:59.348000+05:30",
+  "ai_generated_media": true,
+  "editorial_approval": "pending_user_review",
+  "hold_reason": "Local draft only; external publication disabled."
+}

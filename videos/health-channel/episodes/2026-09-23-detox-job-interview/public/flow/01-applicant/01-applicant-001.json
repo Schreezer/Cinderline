@@ -1,0 +1,13 @@
+{
+  "jobId": "01-applicant",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Expressive simple faces, hand-drawn perspective, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Tea character: green rectangular carton, cream DETOX TEA label, coral leaf, thin black limbs, cream gloves, ochre shoes, raised eyebrow, coral briefcase. A low-angle office doorway marked BODY HQ. Tea character struts in confidently holding a CV, applying for a job. Large character dominates center. Warm illustrated office in background. Big headline HERE FOR THE JOB. Only lettering: HERE FOR THE JOB., BODY HQ, DETOX TEA, CV. ",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T10:17:15.301Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/5e760956-7933-4e3f-bc38-9524657eb9df/edit/595e77c4-d0be-44e2-a678-d2ef82df2857",
+  "status": "downloaded"
+}

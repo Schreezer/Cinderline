@@ -1,0 +1,13 @@
+{
+  "jobId": "03-answers-v1",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Simple expressive faces, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Same corkboard, wider: fifteen small fictional product cards, each with a different wordless scribbled speech bubble in a different shape and colour, none matching. Big headline across the top: NO TWO DEFINITIONS MATCHED. A dominant coral rubber stamp across the lower board reads EVIDENCE: LITTLE TO NONE. Only lettering: NO TWO DEFINITIONS MATCHED. and EVIDENCE: LITTLE TO NONE.",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T16:00:56.531Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/9b8c7e46-8d77-4d77-9db6-2d315be635bd/edit/8ed02f74-8fd0-4a76-be37-4ac3c7b719c5",
+  "status": "downloaded"
+}

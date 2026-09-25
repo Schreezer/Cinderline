@@ -1,0 +1,48 @@
+{
+  "last_checked_at": "2026-09-24T18:09:59.348000+05:30",
+  "automation_status": "ACTIVE_DRAFTS_ONLY",
+  "publishing_enabled": false,
+  "phase": "new_draft_ready",
+  "published_posts": [
+    {
+      "platform": "instagram",
+      "url": "https://www.instagram.com/fitsnap.fun/reel/DdmLaS8o7Og/",
+      "id": "DdmLaS8o7Og",
+      "published_at": "2026-09-22T22:06:57+05:30"
+    },
+    {
+      "platform": "youtube",
+      "url": "https://www.youtube.com/shorts/tpG8E2sj5lk",
+      "id": "tpG8E2sj5lk",
+      "published_at": "2026-09-22T22:06:25+05:30"
+    }
+  ],
+  "blockers": [],
+  "next_action": "Review the corrected 35-second detox investigation revision. Publishing remains disabled.",
+  "latest_draft": {
+    "id": "detox-investigation-en-v3",
+    "video": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/health-channel/episodes/2026-09-24-detox-investigation-review/renders/detox-investigation.reviewed.en.mp4",
+    "verified_at": "2026-09-24T18:09:59.348000+05:30"
+  },
+  "last_generation_date": "2026-09-24",
+  "daily_runs": {
+    "2026-09-23": {
+      "status": "satisfied_by_existing_verified_draft",
+      "episode_id": "detox-job-interview-en-v1",
+      "ready_unpublished_count": 1,
+      "daily_video_count": 1,
+      "artifact_sha256_verified": true,
+      "checked_at": "2026-09-23T18:03:40.034513+05:30",
+      "notification": "none; completed draft already delivered earlier today"
+    },
+    "2026-09-24": {
+      "status": "completed_revision_of_incomplete_draft",
+      "episode_id": "detox-investigation-en-v3",
+      "revision_of": "detox-investigation-en-v2",
+      "ready_unpublished_count": 1,
+      "retained_unpublished_exports": 3,
+      "verified_at": "2026-09-24T18:09:59.348000+05:30",
+      "notification": "newly completed corrected revision"
+    }
+  }
+}

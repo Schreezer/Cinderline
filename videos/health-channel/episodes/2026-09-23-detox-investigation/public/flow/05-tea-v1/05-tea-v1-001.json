@@ -1,0 +1,13 @@
+{
+  "jobId": "05-tea-v1",
+  "type": "image",
+  "prompt": "Portrait 9:16 original adult editorial cartoon. Bold forest-green ink, cream paper, coral and ochre. Simple expressive faces, polished illustrated storytelling. Large perfectly spelled text. Essential art in upper 77%; bottom 18% quiet cream for captions. Scientist: young woman, short black bob, round tortoiseshell glasses, forest-green cardigan, cream shirt, coral lanyard, calm deadpan face. Present day grocery aisle, same scientist, now with a modern tote bag. She holds a fictional green tea box turned to its back panel toward us. Front edge shows DETOX TEA. Back panel reads INGREDIENTS: GREEN TEA, SENNA LEAF, PEPPERMINT with SENNA LEAF clearly legible. Her expression: one eyebrow raised. Only lettering: DETOX TEA and the ingredients line.",
+  "model": "Nano Banana 2",
+  "ratio": "9:16",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-23T16:02:55.725Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/ebb3ed2c-89ef-4dac-b680-f2bfaa7d24d1/edit/b6446fd5-ed85-4f9a-9f51-127601328259",
+  "status": "downloaded"
+}
