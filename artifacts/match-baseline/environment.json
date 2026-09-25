@@ -1,0 +1,26 @@
+{
+  "host": "MacBookPro18,2",
+  "soc": "Apple M1 Max",
+  "memory_bytes": 34359738368,
+  "logical_cpus": 10,
+  "physical_cpus": 10,
+  "os": "macOS 27.0 (26A428)",
+  "compiler": "Apple clang 21.0.0 (clang-2100.3.34.2)",
+  "architecture": "arm64",
+  "build_type": "Release",
+  "flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=c++17",
+    "-arch",
+    "arm64",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "native_presentation_built": false,
+  "before_navigation_sha256": "84e85262077ecd5a209c8ba19da9edc7af81fc9cb1c77452e4c6509fd78de65b",
+  "optimized_navigation_sha256": "245a956522b0eaf6b8a9aa1df7e97e71f0b63d52348339f1cb4777f52dd933ab",
+  "cache_patch": "navigation-cache.diff",
+  "timing_scope": "Portable shared simulation CPU wall time and fog-filtered snapshot preparation; no renderer or device utilization."
+}

@@ -1,0 +1,28 @@
+{
+  "baseline": "After Hard/Expert rework, before all-level progression changes",
+  "control": "Identical current common sources, headers and benchmark; only SimulationAI.cpp is replaced",
+  "common_sources": {
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "a36ff6303b173ba84f542d9aecf4947bc1976153ff753e6b216a4b2ff0161d43",
+    "Source/Cinderline/Private/Sim/Network.cpp": "8ca55e0802f4e0153741dd4f33e68bdf61ec7f2cb587f328a99ed37d86f78b2d",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "f31b90cc2d83faa421de220cdbf388279ab12e41e0bb2a0bb660c0efb2ff80f3",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "5197c2e30300af2e541fce888e9368e8bd555d1fa38a684ffda3dce6295e96ba",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "0855046e471dc89e1bdc371500675ab215b2fd670c09a8b5bf4f584606d654bc",
+    "Source/Cinderline/Private/Sim/SimulationProduction.cpp": "d0a158d47cdb228b74c8865cc1015b9e0b705a0d518d66fb5438d3170f16f438",
+    "Source/Cinderline/Private/Sim/SimulationTactics.cpp": "882cb5e1ee091d0a8f2e37cfdc9157e48c0363e1648a14616edf2980cac2a002",
+    "Source/Cinderline/Private/Sim/SimulationWorkerPlans.cpp": "59499d84919d0fb8deb118b1a60372fe7002da7f7a753bb27966c99a5b3eb7ae"
+  },
+  "headers": {
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "c68b5dd4b7f289a190bd2b6e332fe933a185d1f6fe6e569b80e25e3cbb4a8937",
+    "Source/Cinderline/Public/Sim/FormationRules.h": "1949d15de0431f7294efe68836cd32853fef8553f78b7e3fef4b8c355e920b8c",
+    "Source/Cinderline/Public/Sim/MatchLength.h": "5c39350635561f976f8467b98f64dbcc0518fea785040f820d1bb5eca304bf62",
+    "Source/Cinderline/Public/Sim/Navigation.h": "401dcd52f6bfed4e252dee614872487b0b209510b369501c00a90db1fe9bd0ec",
+    "Source/Cinderline/Public/Sim/Network.h": "3d02e666ffcdfe416d93ac0269a9359466db378454dcae68d4d8142a5516de1e",
+    "Source/Cinderline/Public/Sim/Simulation.h": "4ebb7554ee2aa2696c3c3ade9b09099ddea51cc39bda5af0092cf9281f6cb7d7",
+    "Source/Cinderline/Public/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563",
+    "Source/Cinderline/Public/Sim/SustainedOrderRules.h": "6c8f7b9960f516542cd541cd251fdf555df2f7bdb123a418b695f2220071befb"
+  },
+  "benchmark_sha256": "2326956214dc0eb4257f7af422e13bc529063ad62ae5e246bf8dac47f2a931ca",
+  "before_ai_sha256": "e6ac96572eb460605aeb18f2ce075098c52d492d36df142baf2891e5fb7a3258",
+  "after_ai_sha256": "b2216ace49e23336bb3cf54510e8712ed1a3cdc09e8f1d84c136cb5f19b6ee54",
+  "temporary_build": "/var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/cinder-levels-controlled-6xetiy98"
+}

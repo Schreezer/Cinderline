@@ -1,0 +1,78 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild
+      Start  1: simulation_rules
+ 1/21 Test  #1: simulation_rules ............................   Passed    3.40 sec
+      Start  2: navigation_regressions
+ 2/21 Test  #2: navigation_regressions ......................   Passed    0.79 sec
+      Start  3: network_protocol
+ 3/21 Test  #3: network_protocol ............................   Passed    0.49 sec
+      Start  4: defense_regressions
+ 4/21 Test  #4: defense_regressions .........................   Passed    0.78 sec
+      Start  5: ai_difficulty_regressions
+ 5/21 Test  #5: ai_difficulty_regressions ...................   Passed    3.08 sec
+      Start  6: production_allocation_regressions
+ 6/21 Test  #6: production_allocation_regressions ...........   Passed    1.16 sec
+      Start  7: match_length_regressions
+ 7/21 Test  #7: match_length_regressions ....................   Passed    2.65 sec
+      Start  8: four_player_regressions
+ 8/21 Test  #8: four_player_regressions .....................   Passed    1.58 sec
+      Start  9: order_completion_regressions
+ 9/21 Test  #9: order_completion_regressions ................   Passed    0.68 sec
+      Start 10: tactical_order_regressions
+10/21 Test #10: tactical_order_regressions ..................   Passed    0.52 sec
+      Start 11: patrol_escort_regressions
+11/21 Test #11: patrol_escort_regressions ...................   Passed    0.49 sec
+      Start 12: formation_order_regressions
+12/21 Test #12: formation_order_regressions .................***Failed    0.52 sec
+FAIL spacing presets and legacy Standard: open square formation remains centered on the requested point
+PASS rotated centroid sorting and arrival facing
+PASS mixed footprints adapt and arrive
+PASS Hold footprint reservations and layers
+FAIL mixed constrained turn around Hold: ground recipient crossed the wall outside its radius-valid opening
+PASS impossible layout and invalid modifiers
+PASS Move withdrawal from real combat
+PASS AttackMove combat and queued facing
+PASS Defend combat return facing
+PASS formation clear stop and replacement
+PASS save-load replay and continuation
+PASS genuine save-twelve migration
+PASS save-thirteen formation corruption
+RESULT passed=11 failed=2
+
+      Start 13: tactical_interruption_regressions
+13/21 Test #13: tactical_interruption_regressions ...........   Passed    0.41 sec
+      Start 14: worker_order_completion_regressions
+14/21 Test #14: worker_order_completion_regressions .........   Passed    0.43 sec
+      Start 15: simulation_profiling_regressions
+15/21 Test #15: simulation_profiling_regressions ............   Passed    0.58 sec
+      Start 16: navigation_attachment_cache_regressions
+16/21 Test #16: navigation_attachment_cache_regressions .....   Passed    0.42 sec
+      Start 17: navigation_multi_source_regressions
+17/21 Test #17: navigation_multi_source_regressions .........   Passed    0.42 sec
+      Start 18: navigation_predicate_parity_regressions
+18/21 Test #18: navigation_predicate_parity_regressions .....   Passed    0.43 sec
+      Start 19: navigation_terrain_visibility_regressions
+19/21 Test #19: navigation_terrain_visibility_regressions ...   Passed    0.58 sec
+      Start 20: production_exit_regressions
+20/21 Test #20: production_exit_regressions .................   Passed    0.80 sec
+      Start 21: production_traffic_regressions
+21/21 Test #21: production_traffic_regressions ..............   Passed    2.51 sec
+
+95% tests passed, 1 tests failed out of 21
+
+Label Time Summary:
+ai              =   3.08 sec*proc (1 test)
+defense         =   0.78 sec*proc (1 test)
+economy         =   0.83 sec*proc (2 tests)
+four-player     =   1.58 sec*proc (1 test)
+match-length    =   2.65 sec*proc (1 test)
+navigation      =  12.79 sec*proc (14 tests)
+network         =   2.74 sec*proc (2 tests)
+orders          =   3.05 sec*proc (6 tests)
+production      =   4.89 sec*proc (4 tests)
+profiling       =   2.01 sec*proc (4 tests)
+
+Total Test time (real) =  22.73 sec
+
+The following tests FAILED:
+	 12 - formation_order_regressions (Failed)              navigation orders
+Errors while running CTest

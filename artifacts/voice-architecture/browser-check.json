@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-09-24T13:50:57.868Z",
+  "errors": [],
+  "externalRequests": [],
+  "layouts": [
+    {
+      "width": 1440,
+      "overflow": false,
+      "labelsOutsideSvg": [],
+      "labelsOutsideNode": []
+    },
+    {
+      "width": 1024,
+      "overflow": false,
+      "labelsOutsideSvg": [],
+      "labelsOutsideNode": []
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "labelsOutsideSvg": [],
+      "labelsOutsideNode": []
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "labelsOutsideSvg": [],
+      "labelsOutsideNode": []
+    },
+    {
+      "width": 320,
+      "overflow": false,
+      "labelsOutsideSvg": [],
+      "labelsOutsideNode": []
+    }
+  ],
+  "simpleSkipsLuna": true,
+  "toolResultShown": true,
+  "clarificationNoExecution": true,
+  "accepted": "OPERATION 42 · ACCEPTED · 8/8",
+  "themeToggle": true,
+  "stepButtons": true
+}

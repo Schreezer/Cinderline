@@ -1,0 +1,54 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+[ 22%] Built target CinderlineSimulation
+[ 35%] Built target CinderlineMatchWorker
+[ 35%] Built target CinderlineGameplayBaseline
+[ 48%] Built target CinderlineNavigationTests
+[ 48%] Built target CinderlineTests
+[ 54%] Built target CinderlineDefenseTests
+[ 61%] Built target CinderlineNetworkTests
+[ 70%] Built target CinderlineProductionAllocationTests
+[ 74%] Built target CinderlineAIDifficultyTests
+[ 87%] Built target CinderlineFourPlayerTests
+[ 87%] Built target CinderlineMatchLengthTests
+[ 93%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 96%] Built target CinderlineWorkerOrderCompletionTests
+[100%] Linking CXX executable CinderlineOrderCompletionTests
+[100%] Built target CinderlineOrderCompletionTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+      Start  1: simulation_rules
+ 1/10 Test  #1: simulation_rules ......................   Passed    6.26 sec
+      Start  2: navigation_regressions
+ 2/10 Test  #2: navigation_regressions ................   Passed    0.44 sec
+      Start  3: network_protocol
+ 3/10 Test  #3: network_protocol ......................   Passed    0.15 sec
+      Start  4: defense_regressions
+ 4/10 Test  #4: defense_regressions ...................   Passed    0.09 sec
+      Start  5: ai_difficulty_regressions
+ 5/10 Test  #5: ai_difficulty_regressions .............   Passed    4.13 sec
+      Start  6: production_allocation_regressions
+ 6/10 Test  #6: production_allocation_regressions .....   Passed    0.38 sec
+      Start  7: match_length_regressions
+ 7/10 Test  #7: match_length_regressions ..............   Passed    3.43 sec
+      Start  8: four_player_regressions
+ 8/10 Test  #8: four_player_regressions ...............   Passed    1.01 sec
+      Start  9: order_completion_regressions
+ 9/10 Test  #9: order_completion_regressions ..........   Passed    0.60 sec
+      Start 10: worker_order_completion_regressions
+10/10 Test #10: worker_order_completion_regressions ...   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 10
+
+Label Time Summary:
+ai              =   4.13 sec*proc (1 test)
+defense         =   0.09 sec*proc (1 test)
+economy         =   0.02 sec*proc (1 test)
+four-player     =   1.01 sec*proc (1 test)
+match-length    =   3.43 sec*proc (1 test)
+navigation      =   5.49 sec*proc (4 tests)
+network         =   1.40 sec*proc (2 tests)
+orders          =   0.62 sec*proc (2 tests)
+production      =   0.38 sec*proc (1 test)
+
+Total Test time (real) =  16.52 sec

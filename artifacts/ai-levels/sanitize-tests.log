@@ -1,0 +1,71 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/ai-upgrade-sanitize
+      Start  1: simulation_rules
+ 1/27 Test  #1: simulation_rules ............................   Passed   12.48 sec
+      Start  2: navigation_regressions
+ 2/27 Test  #2: navigation_regressions ......................   Passed    1.45 sec
+      Start  3: movement_following_regressions
+ 3/27 Test  #3: movement_following_regressions ..............   Passed    0.65 sec
+      Start  4: navigation_route_quality_regressions
+ 4/27 Test  #4: navigation_route_quality_regressions ........   Passed    0.66 sec
+      Start  5: network_protocol
+ 5/27 Test  #5: network_protocol ............................   Passed    0.89 sec
+      Start  6: defense_regressions
+ 6/27 Test  #6: defense_regressions .........................   Passed    0.69 sec
+      Start  7: ai_difficulty_regressions
+ 7/27 Test  #7: ai_difficulty_regressions ...................   Passed   11.51 sec
+      Start  8: ai_progression_regressions
+ 8/27 Test  #8: ai_progression_regressions ..................   Passed    2.90 sec
+      Start  9: ai_tactics_regressions
+ 9/27 Test  #9: ai_tactics_regressions ......................   Passed    0.60 sec
+      Start 10: ai_economy_regressions
+10/27 Test #10: ai_economy_regressions ......................   Passed    5.18 sec
+      Start 11: production_allocation_regressions
+11/27 Test #11: production_allocation_regressions ...........   Passed    1.35 sec
+      Start 12: match_length_regressions
+12/27 Test #12: match_length_regressions ....................   Passed   10.85 sec
+      Start 13: four_player_regressions
+13/27 Test #13: four_player_regressions .....................   Passed    2.86 sec
+      Start 14: order_completion_regressions
+14/27 Test #14: order_completion_regressions ................   Passed    0.51 sec
+      Start 15: tactical_order_regressions
+15/27 Test #15: tactical_order_regressions ..................   Passed    0.78 sec
+      Start 16: patrol_escort_regressions
+16/27 Test #16: patrol_escort_regressions ...................   Passed    0.71 sec
+      Start 17: formation_order_regressions
+17/27 Test #17: formation_order_regressions .................   Passed    0.83 sec
+      Start 18: tactical_interruption_regressions
+18/27 Test #18: tactical_interruption_regressions ...........   Passed    0.49 sec
+      Start 19: worker_order_completion_regressions
+19/27 Test #19: worker_order_completion_regressions .........   Passed    0.51 sec
+      Start 20: builder_queue_regressions
+20/27 Test #20: builder_queue_regressions ...................   Passed    1.11 sec
+      Start 21: simulation_profiling_regressions
+21/27 Test #21: simulation_profiling_regressions ............   Passed    1.33 sec
+      Start 22: navigation_attachment_cache_regressions
+22/27 Test #22: navigation_attachment_cache_regressions .....   Passed    0.51 sec
+      Start 23: navigation_multi_source_regressions
+23/27 Test #23: navigation_multi_source_regressions .........   Passed    0.52 sec
+      Start 24: navigation_predicate_parity_regressions
+24/27 Test #24: navigation_predicate_parity_regressions .....   Passed    0.47 sec
+      Start 25: navigation_terrain_visibility_regressions
+25/27 Test #25: navigation_terrain_visibility_regressions ...   Passed    1.03 sec
+      Start 26: production_exit_regressions
+26/27 Test #26: production_exit_regressions .................   Passed    3.56 sec
+      Start 27: production_traffic_regressions
+27/27 Test #27: production_traffic_regressions ..............   Passed    8.90 sec
+
+100% tests passed, 0 tests failed out of 27
+
+Label Time Summary:
+ai              =  20.18 sec*proc (4 tests)
+defense         =   0.69 sec*proc (1 test)
+economy         =   7.29 sec*proc (4 tests)
+four-player     =   2.86 sec*proc (1 test)
+match-length    =  10.85 sec*proc (1 test)
+navigation      =  34.78 sec*proc (16 tests)
+network         =   5.32 sec*proc (3 tests)
+orders          =   4.94 sec*proc (7 tests)
+production      =  14.32 sec*proc (4 tests)
+profiling       =   3.34 sec*proc (4 tests)
+
+Total Test time (real) =  73.34 sec

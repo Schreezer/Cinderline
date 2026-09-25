@@ -1,0 +1,435 @@
+elapsed=100 id=262 pos=889.772,1093.96 goal=1614,1422 goal_distance=795.059 minimum_goal_distance=795.059 envelope=791.697,1083.08:889.772,1144.45 maximum_step=5.63922 order=1 path=2/4 waypoint=904,1128 stalled=0.35 failures=1 side=-1 yield=0 exhausted=0
+ mobile id=132 kind=0 team=0 pos=935.696,1106.51 gap=1.60996 forward=29.2941 lateral=-37.5308 route_gap=-8.46913 order=0 own_goal_distance=30.0629 failures=1 yield=0.2
+ mobile id=8 kind=0 team=0 pos=913.881,1135.48 gap=2.01218 forward=47.6058 lateral=-6.23345 route_gap=-33.6092 order=0 own_goal_distance=30.9739 failures=0 yield=0.1
+ mobile id=186 kind=4 team=0 pos=892.74,1027.46 gap=2.55995 forward=-60.207 lateral=-28.3786 route_gap=2.55995 order=1 own_goal_distance=709.249 failures=3 yield=0
+ mobile id=6 kind=0 team=0 pos=859.685,1135.83 gap=5.56242 forward=27.0341 lateral=43.9072 route_gap=-2.09283 order=0 own_goal_distance=25.2692 failures=0 yield=0
+ mobile id=101 kind=0 team=0 pos=947.267,1136.77 gap=25.6849 forward=61.6735 lateral=-36.5391 route_gap=-1.85284 order=0 own_goal_distance=2.90927 failures=0 yield=0.2
+ mobile id=7 kind=0 team=0 pos=928.038,1161.09 gap=31.2753 forward=76.6992 lateral=-9.41807 route_gap=-5.09882 order=0 own_goal_distance=36.0731 failures=1 yield=0.15
+ mobile id=57 kind=0 team=0 pos=969.465,1110.42 gap=35.3758 forward=45.9215 lateral=-67.1806 route_gap=21.784 order=0 own_goal_distance=34.8876 failures=1 yield=0.15
+ mobile id=10 kind=0 team=0 pos=960.107,1167.23 gap=55.5687 forward=94.7296 lateral=-36.6403 route_gap=22.4624 order=0 own_goal_distance=35.5256 failures=0 yield=0.05
+ mobile id=116 kind=0 team=0 pos=980.496,1141.82 gap=56.5756 forward=79.1455 lateral=-65.2514 route_gap=31.7346 order=0 own_goal_distance=36.2627 failures=0 yield=0.1
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=31.494 route_gap=3.37979
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=39.2443 route_gap=39.2443
+ static id=5 kind=14 team=-1 pos=665,1000 gap=168.619 route_gap=168.619
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=172.323 route_gap=172.323
+ static id=159 kind=9 team=0 pos=600,1280 gap=238.355 route_gap=233.882
+ static id=4 kind=14 team=-1 pos=500,970 gap=334.008 route_gap=334.008
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=365.368 route_gap=360.247
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=402.95 route_gap=402.95
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=795.059 fresh_expanded=0 fresh_points=1
+elapsed=200 id=262 pos=879.43,1112.37 goal=1614,1422 goal_distance=797.16 minimum_goal_distance=764.78 envelope=791.697,1039.93:929.454,1144.45 maximum_step=5.63922 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=3 side=-1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-15.5744 forward=-8.13269 lateral=29.3186 route_gap=-15.5744 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=101 kind=0 team=0 pos=916.429,1145.79 gap=3.85801 forward=47.0748 lateral=16.4252 route_gap=-29.5748 order=0 own_goal_distance=30.3502 failures=0 yield=0.15
+ mobile id=7 kind=0 team=0 pos=930.702,1107.62 gap=5.49128 forward=45.4007 lateral=-24.2925 route_gap=-21.7075 order=0 own_goal_distance=29.7713 failures=3 yield=0.35
+ mobile id=186 kind=4 team=0 pos=895.087,1034.7 gap=15.228 forward=-15.7397 lateral=-77.6488 route_gap=15.228 order=1 own_goal_distance=704.377 failures=4 yield=0
+ mobile id=116 kind=0 team=0 pos=946.122,1135.51 gap=24.5938 forward=70.4452 lateral=-4.57725 route_gap=-41.4227 order=0 own_goal_distance=1.32102 failures=1 yield=0.2
+ mobile id=10 kind=0 team=0 pos=937.993,1172.29 gap=37.7893 forward=77.2405 lateral=32.4739 route_gap=-13.5262 order=0 own_goal_distance=37.7745 failures=1 yield=0
+ mobile id=8 kind=0 team=0 pos=965.102,1108.56 gap=39.7563 forward=77.4648 lateral=-36.7878 route_gap=-9.21224 order=0 own_goal_distance=33.4224 failures=0 yield=0.1
+ mobile id=57 kind=0 team=0 pos=965.434,1166.15 gap=55.4341 forward=100.14 lateral=16.1523 route_gap=-29.8477 order=0 own_goal_distance=37.2106 failures=4 yield=0.05
+ mobile id=132 kind=0 team=0 pos=979.342,1137.52 gap=57.0281 forward=101.835 lateral=-15.633 route_gap=-30.367 order=0 own_goal_distance=34.5705 failures=2 yield=0
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=11.4511 route_gap=8.23237
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=59.0218 route_gap=42.7502
+ static id=5 kind=14 team=-1 pos=665,1000 gap=167.089 route_gap=167.089
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=187.686 route_gap=187.686
+ static id=159 kind=9 team=0 pos=600,1280 gap=219.856 route_gap=219.856
+ static id=4 kind=14 team=-1 pos=500,970 gap=330.26 route_gap=330.26
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=379.674 route_gap=199.671
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=391.764 route_gap=391.764
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=797.16 fresh_expanded=0 fresh_points=1
+elapsed=300 id=262 pos=884.905,1119.35 goal=1614,1422 goal_distance=789.415 minimum_goal_distance=764.78 envelope=791.697,1039.93:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-16.3685 forward=-16.0255 lateral=24.924 route_gap=-16.3685 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=915.45,1154.33 gap=0.440975 forward=41.6226 lateral=20.5992 route_gap=-25.4008 order=0 own_goal_distance=35.1087 failures=1 yield=0.2
+ mobile id=116 kind=0 team=0 pos=941.901,1132.11 gap=12.407 forward=57.5328 lateral=-10.0675 route_gap=-35.9325 order=0 own_goal_distance=4.23592 failures=1 yield=0.2
+ mobile id=101 kind=0 team=0 pos=945.927,1099.07 gap=18.3024 forward=48.5853 lateral=-42.1221 route_gap=-3.87794 order=0 own_goal_distance=36.09 failures=0 yield=0.15
+ mobile id=57 kind=0 team=0 pos=940.997,1157.83 gap=22.0237 forward=66.5594 lateral=14.0379 route_gap=-31.9621 order=0 own_goal_distance=23.0112 failures=5 yield=0.2
+ mobile id=132 kind=0 team=0 pos=943.74,1175.69 gap=35.4574 forward=75.9376 lateral=29.475 route_gap=-16.525 order=0 own_goal_distance=40.5541 failures=5 yield=0
+ mobile id=186 kind=4 team=0 pos=781.414,1142.71 gap=42.094 forward=-86.628 lateral=61.2496 route_gap=42.094 order=1 own_goal_distance=783.335 failures=5 yield=0
+ mobile id=8 kind=0 team=0 pos=969.268,1150.53 gap=43.9413 forward=89.8714 lateral=-3.54326 route_gap=-42.4568 order=0 own_goal_distance=28.8582 failures=1 yield=0.2
+ mobile id=7 kind=0 team=0 pos=976.833,1113.2 gap=46.1337 forward=82.544 lateral=-40.9282 route_gap=-5.07183 order=0 own_goal_distance=33.6368 failures=3 yield=0.05
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=5.65012 route_gap=4.02987
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=59.7827 route_gap=46.7079
+ static id=5 kind=14 team=-1 pos=665,1000 gap=175.205 route_gap=175.205
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=195.719 route_gap=195.719
+ static id=159 kind=9 team=0 pos=600,1280 gap=221.077 route_gap=221.077
+ static id=4 kind=14 team=-1 pos=500,970 gap=337.865 route_gap=337.865
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=376.167 route_gap=202.039
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=397.087 route_gap=397.087
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=789.415 fresh_expanded=0 fresh_points=1
+elapsed=400 id=262 pos=881.508,1084.66 goal=1614,1422 goal_distance=806.44 minimum_goal_distance=764.78 envelope=791.697,1038.86:929.454,1144.45 maximum_step=5.6528 order=1 path=0/2 waypoint=935.355,1153.11 stalled=0.05 failures=5 side=1 yield=0 exhausted=0
+ mobile id=10 kind=0 team=0 pos=921.221,1108.88 gap=0.519707 forward=43.5951 lateral=-16.2343 route_gap=-29.7656 order=0 own_goal_distance=35.3309 failures=2 yield=0.2
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=9.66618 forward=27.5733 lateral=48.3574 route_gap=2.35741 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=57 kind=0 team=0 pos=906.172,1138.05 gap=12.8136 forward=57.2134 lateral=13.6255 route_gap=-32.3744 order=0 own_goal_distance=38.7893 failures=5 yield=7.45058e-09
+ mobile id=132 kind=0 team=0 pos=954.194,1104.46 gap=29.3363 forward=60.5057 lateral=-44.8844 route_gap=-1.11565 order=0 own_goal_distance=32.0769 failures=5 yield=0.15
+ mobile id=116 kind=0 team=0 pos=942.605,1135.66 gap=33.5868 forward=77.8603 lateral=-16.4875 route_gap=-29.5125 order=0 own_goal_distance=2.30481 failures=1 yield=0.2
+ mobile id=8 kind=0 team=0 pos=927.595,1163.58 gap=45.3922 forward=90.5234 lateral=12.5713 route_gap=-32.969 order=0 own_goal_distance=33.2574 failures=3 yield=0.15
+ mobile id=101 kind=0 team=0 pos=977.636,1128.2 gap=59.5306 forward=93.6573 lateral=-48.6314 route_gap=3.07244 order=0 own_goal_distance=33.5113 failures=0 yield=0.05
+ mobile id=7 kind=0 team=0 pos=960.137,1163.35 gap=65.243 forward=110.463 lateral=-13.1466 route_gap=-19.1855 order=0 own_goal_distance=33.9486 failures=4 yield=0.1
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=39.151 route_gap=0.250046
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=40.3969 route_gap=39.9825
+ static id=5 kind=14 team=-1 pos=665,1000 gap=157.47 route_gap=157.47
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=161.216 route_gap=161.216
+ static id=159 kind=9 team=0 pos=600,1280 gap=236.646 route_gap=236.646
+ static id=4 kind=14 team=-1 pos=500,970 gap=323.365 route_gap=323.365
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=371.589 route_gap=338.997
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=395.396 route_gap=395.396
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=806.44 fresh_expanded=0 fresh_points=1
+elapsed=500 id=262 pos=895.262,1030.39 goal=1614,1422 goal_distance=818.498 minimum_goal_distance=764.78 envelope=791.697,1030.39:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=10 kind=0 team=0 pos=944.778,1093.27 gap=34.036 forward=73.5657 lateral=31.5254 route_gap=-14.4745 order=0 own_goal_distance=41.8726 failures=3 yield=0.2
+ mobile id=57 kind=0 team=0 pos=919.802,1115.24 gap=42.319 forward=62.1406 lateral=62.7598 route_gap=16.7598 order=0 own_goal_distance=32.0002 failures=5 yield=0
+ mobile id=132 kind=0 team=0 pos=970.78,1110.9 gap=64.3823 forward=104.831 lateral=34.5631 route_gap=-11.4369 order=0 own_goal_distance=35.4979 failures=5 yield=0.1
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=65.3788 forward=20.1514 lateral=109.541 route_gap=63.5406 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=116 kind=0 team=0 pos=944.16,1133.18 gap=67.8197 forward=92.1129 lateral=66.8592 route_gap=20.8593 order=0 own_goal_distance=2.08982 failures=1 yield=0.2
+ mobile id=8 kind=0 team=0 pos=914.344,1148.24 gap=73.3807 forward=73.1388 lateral=94.3529 route_gap=48.3529 order=0 own_goal_distance=33.1996 failures=4 yield=7.45058e-09
+ mobile id=101 kind=0 team=0 pos=976.969,1143.6 gap=93.6123 forward=125.911 lateral=60.3158 route_gap=14.3158 order=0 own_goal_distance=33.2103 failures=1 yield=0.15
+ mobile id=7 kind=0 team=0 pos=945.212,1164.42 gap=97.0296 forward=107.985 lateral=93.7906 route_gap=47.7906 order=0 own_goal_distance=33.1574 failures=5 yield=0.1
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=5.20282 route_gap=-30.4181
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=94.9221 route_gap=84.4935
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=113.558 route_gap=113.558
+ static id=5 kind=14 team=-1 pos=665,1000 gap=157.26 route_gap=157.26
+ static id=159 kind=9 team=0 pos=600,1280 gap=280.63 route_gap=280.63
+ static id=4 kind=14 team=-1 pos=500,970 gap=324.85 route_gap=324.85
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=350.824 route_gap=154.903
+ static id=1 kind=8 team=0 pos=600,600 gap=366.938 route_gap=366.938
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=859.071 fresh_expanded=4 fresh_points=2
+elapsed=600 id=262 pos=858.621,1085.66 goal=1614,1422 goal_distance=826.874 minimum_goal_distance=764.78 envelope=791.697,1030.39:929.454,1144.45 maximum_step=5.6528 order=1 path=0/1 waypoint=1614,1422 stalled=0.05 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=4.59936 forward=22.3278 lateral=45.4067 route_gap=-0.59338 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=908.886,1106.49 gap=8.41083 forward=54.3924 lateral=-1.41549 route_gap=-44.5845 order=0 own_goal_distance=45.9849 failures=5 yield=0
+ mobile id=8 kind=0 team=0 pos=917.382,1129.9 gap=27.5509 forward=71.674 lateral=16.5099 route_gap=-29.4901 order=0 own_goal_distance=27.9677 failures=5 yield=0.2
+ mobile id=57 kind=0 team=0 pos=941.186,1101.5 gap=38.0708 forward=81.8695 lateral=-19.1126 route_gap=-26.8874 order=0 own_goal_distance=33.8427 failures=5 yield=7.45058e-09
+ mobile id=7 kind=0 team=0 pos=923.711,1157.63 gap=51.0379 forward=88.7367 lateral=39.2704 route_gap=-6.72966 order=0 own_goal_distance=36.1158 failures=5 yield=0.05
+ mobile id=116 kind=0 team=0 pos=943.905,1133.2 gap=51.6365 forward=97.2452 lateral=8.73324 route_gap=-37.2667 order=0 own_goal_distance=2.16893 failures=1 yield=0.2
+ mobile id=132 kind=0 team=0 pos=972.827,1107.24 gap=70.226 forward=113.106 lateral=-26.7472 route_gap=-19.2528 order=0 own_goal_distance=39.5176 failures=5 yield=7.45058e-09
+ mobile id=101 kind=0 team=0 pos=977.377,1140.2 gap=84.6816 forward=130.673 lateral=1.519 route_gap=-44.481 order=0 own_goal_distance=32.9149 failures=2 yield=0
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=36.5842 route_gap=23.5952
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=60.3875 route_gap=28.2171
+ static id=5 kind=14 team=-1 pos=665,1000 gap=136.724 route_gap=136.724
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=157.453 route_gap=157.453
+ static id=159 kind=9 team=0 pos=600,1280 gap=217.499 route_gap=217.499
+ static id=4 kind=14 team=-1 pos=500,970 gap=301.811 route_gap=301.811
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=372.506 route_gap=372.506
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=394.264 route_gap=190.926
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=826.874 fresh_expanded=0 fresh_points=1
+elapsed=700 id=262 pos=874.304,1120.15 goal=1614,1422 goal_distance=798.914 minimum_goal_distance=764.78 envelope=791.697,1027.5:929.454,1144.45 maximum_step=5.6528 order=1 path=0/2 waypoint=935.355,1153.11 stalled=0.5 failures=5 side=1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-24.8414 forward=-4.46724 lateral=20.6816 route_gap=-24.8414 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=916.702,1139.49 gap=0.602917 forward=46.4985 lateral=-3.11809 route_gap=-42.8819 order=0 own_goal_distance=28.4843 failures=5 yield=0.2
+ mobile id=116 kind=0 team=0 pos=928.426,1108.12 gap=9.44137 forward=41.9123 lateral=-36.2919 route_gap=-9.70815 order=0 own_goal_distance=31.6239 failures=1 yield=7.45058e-09
+ mobile id=7 kind=0 team=0 pos=924.164,1153.13 gap=13.7797 forward=59.5413 lateral=5.33332 route_gap=-40.6666 order=0 own_goal_distance=32.6539 failures=5 yield=0.2
+ mobile id=101 kind=0 team=0 pos=948.125,1135.2 gap=29.34 forward=72.111 lateral=-21.8201 route_gap=-24.0095 order=0 own_goal_distance=3.27224 failures=3 yield=0.2
+ mobile id=132 kind=0 team=0 pos=953.853,1168.17 gap=46.9172 forward=92.8099 lateral=4.46327 route_gap=-22.1479 order=0 own_goal_distance=34.2237 failures=5 yield=0.05
+ mobile id=8 kind=0 team=0 pos=968.072,1109.14 gap=48.4117 forward=77.2797 lateral=-54.2348 route_gap=8.80724 order=0 own_goal_distance=34.8661 failures=5 yield=0.05
+ mobile id=57 kind=0 team=0 pos=979.537,1146.2 gap=62.4085 forward=104.974 lateral=-27.0718 route_gap=-1.28006 order=0 own_goal_distance=36.4017 failures=5 yield=0.2
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=3.00238 route_gap=-4.19778
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=68.0333 route_gap=58.203
+ static id=5 kind=14 team=-1 pos=665,1000 gap=166.338 route_gap=166.338
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=194.229 route_gap=194.229
+ static id=159 kind=9 team=0 pos=600,1280 gap=211.483 route_gap=211.483
+ static id=4 kind=14 team=-1 pos=500,970 gap=328.297 route_gap=328.297
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=386.476 route_gap=386.476
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=386.606 route_gap=338.997
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=814.789 fresh_expanded=2 fresh_points=2
+elapsed=800 id=262 pos=895.321,1023.46 goal=1614,1422 goal_distance=821.787 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=7 kind=0 team=0 pos=945.932,1091.7 gap=38.9638 forward=77.3575 lateral=35.1379 route_gap=-10.8621 order=0 own_goal_distance=39.8149 failures=5 yield=0.25
+ mobile id=132 kind=0 team=0 pos=921.667,1113.98 gap=48.2797 forward=66.9415 lateral=66.3891 route_gap=20.3891 order=0 own_goal_distance=31.3928 failures=5 yield=0.05
+ mobile id=116 kind=0 team=0 pos=970.358,1114.29 gap=71.8172 forward=109.672 lateral=43.0451 route_gap=-2.9549 order=0 own_goal_distance=32.9468 failures=3 yield=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=72.0063 forward=24.2782 lateral=115.482 route_gap=69.4818 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=903.594,1141.93 gap=72.7574 forward=64.6884 lateral=99.5928 route_gap=53.5928 order=0 own_goal_distance=41.8122 failures=5 yield=0.05
+ mobile id=101 kind=0 team=0 pos=947.047,1138.04 gap=79.7177 forward=100.805 lateral=75.122 route_gap=29.122 order=0 own_goal_distance=3.63262 failures=3 yield=0.2
+ mobile id=57 kind=0 team=0 pos=918.699,1149.49 gap=82.1837 forward=81.5668 lateral=98.8834 route_gap=52.8834 order=0 own_goal_distance=29.83 failures=5 yield=0.2
+ mobile id=8 kind=0 team=0 pos=939.884,1168.56 gap=105.786 forward=109.339 lateral=105.28 route_gap=59.2803 order=0 own_goal_distance=33.7759 failures=5 yield=0.15
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=3.64535 route_gap=-35.9071
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=101.765 route_gap=90.1067
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=107.111 route_gap=107.111
+ static id=5 kind=14 team=-1 pos=665,1000 gap=156.513 route_gap=156.513
+ static id=159 kind=9 team=0 pos=600,1280 gap=285.188 route_gap=285.188
+ static id=4 kind=14 team=-1 pos=500,970 gap=323.92 route_gap=323.92
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=350.326 route_gap=151.471
+ static id=1 kind=8 team=0 pos=600,600 gap=361.268 route_gap=361.268
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=865.663 fresh_expanded=3 fresh_points=2
+elapsed=900 id=262 pos=907.614,1049.49 goal=1614,1422 goal_distance=798.589 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/1 waypoint=1614,1422 stalled=0.3 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=57 kind=0 team=0 pos=935.57,1109.27 gap=19.9976 forward=52.6149 lateral=39.8416 route_gap=-6.15842 order=0 own_goal_distance=27.4879 failures=5 yield=0.35
+ mobile id=10 kind=0 team=0 pos=913.082,1137.18 gap=41.8572 forward=45.739 lateral=75.0122 route_gap=29.0122 order=0 own_goal_distance=31.8355 failures=5 yield=0.2
+ mobile id=132 kind=0 team=0 pos=969.638,1115.29 gap=44.4236 forward=85.5552 lateral=29.2699 route_gap=-16.7301 order=0 own_goal_distance=31.7597 failures=5 yield=0.2
+ mobile id=101 kind=0 team=0 pos=943.533,1134.98 gap=46.7275 forward=71.6486 lateral=58.8632 route_gap=12.8631 order=0 own_goal_distance=1.33055 failures=3 yield=0.2
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=52.6824 forward=-1.17299 lateral=98.6755 route_gap=52.6824 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=8 kind=0 team=0 pos=928,1166.02 gap=72.3024 forward=72.3896 lateral=93.5693 route_gap=47.5693 order=0 own_goal_distance=35.1758 failures=5 yield=7.45058e-09
+ mobile id=7 kind=0 team=0 pos=987.396,1141.98 gap=76.149 forward=113.715 lateral=44.6001 route_gap=-1.3999 order=0 own_goal_distance=40.2362 failures=5 yield=0.1
+ mobile id=116 kind=0 team=0 pos=961.532,1162.97 gap=79.6386 forward=100.627 lateral=75.2282 route_gap=29.2282 order=0 own_goal_distance=32.44 failures=5 yield=0.15
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=0.135513 route_gap=-20.4052
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=78.9233 route_gap=74.2155
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=135.843 route_gap=135.843
+ static id=5 kind=14 team=-1 pos=665,1000 gap=172.61 route_gap=172.61
+ static id=159 kind=9 team=0 pos=600,1280 gap=278.397 route_gap=278.397
+ static id=4 kind=14 team=-1 pos=500,970 gap=340.293 route_gap=340.293
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=340.345 route_gap=161.138
+ static id=1 kind=8 team=0 pos=600,600 gap=389.672 route_gap=389.672
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=837.241 fresh_expanded=2 fresh_points=2
+elapsed=1000 id=262 pos=877.361,1097.28 goal=1614,1422 goal_distance=805.034 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-3.58082 forward=0.324592 lateral=42.4179 route_gap=-3.58212 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=926.815,1107.35 gap=4.4692 forward=49.3156 lateral=-10.7292 route_gap=-35.2708 order=0 own_goal_distance=33.133 failures=5 yield=0
+ mobile id=8 kind=0 team=0 pos=911.168,1136.28 gap=5.61119 forward=46.6645 lateral=22.0485 route_gap=-23.9515 order=0 own_goal_distance=33.7042 failures=5 yield=0.15
+ mobile id=101 kind=0 team=0 pos=945.695,1133.35 gap=31.2688 forward=77.0769 lateral=5.44127 route_gap=-40.5587 order=0 own_goal_distance=1.98541 failures=3 yield=0.2
+ mobile id=116 kind=0 team=0 pos=931.002,1163.21 gap=38.9942 forward=75.6767 lateral=38.6917 route_gap=-7.30824 order=0 own_goal_distance=31.2949 failures=5 yield=0
+ mobile id=57 kind=0 team=0 pos=970.257,1111.02 gap=47.9059 forward=90.5449 lateral=-24.8988 route_gap=-21.1012 order=0 own_goal_distance=35.0358 failures=5 yield=0.15
+ mobile id=132 kind=0 team=0 pos=977.043,1143.82 gap=64.0125 forward=109.987 lateral=2.38125 route_gap=-43.6187 order=0 own_goal_distance=33.339 failures=5 yield=0.05
+ mobile id=7 kind=0 team=0 pos=961.913,1172.8 gap=67.365 forward=107.828 lateral=34.9954 route_gap=-11.0046 order=0 own_goal_distance=43.464 failures=5 yield=0.1
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=26.0741 route_gap=20.7438
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=51.0894 route_gap=30.9222
+ static id=5 kind=14 team=-1 pos=665,1000 gap=158.582 route_gap=158.582
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=172.514 route_gap=172.514
+ static id=159 kind=9 team=0 pos=600,1280 gap=226.138 route_gap=226.138
+ static id=4 kind=14 team=-1 pos=500,970 gap=323.248 route_gap=323.248
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=378.203 route_gap=192.559
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=390.358 route_gap=390.358
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=805.034 fresh_expanded=0 fresh_points=1
+elapsed=1100 id=262 pos=881.107,1117.55 goal=1614,1422 goal_distance=793.615 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/2 waypoint=935.355,1153.11 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-18.2221 forward=-6.95226 lateral=26.8938 route_gap=-18.2221 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=7 kind=0 team=0 pos=920.494,1129.73 gap=-4.77236 forward=39.619 lateral=-11.4042 route_gap=-34.5958 order=0 own_goal_distance=28.1265 failures=5 yield=0.2
+ mobile id=8 kind=0 team=0 pos=923.476,1097.05 gap=1.0651 forward=24.198 lateral=-40.368 route_gap=-5.632 order=0 own_goal_distance=43.6831 failures=5 yield=0.2
+ mobile id=116 kind=0 team=0 pos=924.63,1162.02 gap=16.2268 forward=60.7818 lateral=13.3324 route_gap=-32.6676 order=0 own_goal_distance=33.6312 failures=5 yield=0.05
+ mobile id=101 kind=0 team=0 pos=952.419,1134.91 gap=27.396 forward=69.1601 lateral=-24.5735 route_gap=-21.054 order=0 own_goal_distance=7.57014 failures=3 yield=0.2
+ mobile id=10 kind=0 team=0 pos=953.98,1106.32 gap=27.7324 forward=54.7905 lateral=-49.3404 route_gap=3.34044 order=0 own_goal_distance=30.2373 failures=5 yield=0.2
+ mobile id=132 kind=0 team=0 pos=941.8,1165.69 gap=31.4673 forward=77.1516 lateral=6.98677 route_gap=-31.8659 order=0 own_goal_distance=30.6922 failures=5 yield=0.15
+ mobile id=57 kind=0 team=0 pos=971.195,1163.57 gap=55.1655 forward=100.577 lateral=-10.8967 route_gap=-8.66272 order=0 own_goal_distance=38.7557 failures=5 yield=0.05
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=6.6452 route_gap=-1.97744
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=61.2699 route_gap=56.6091
+ static id=5 kind=14 team=-1 pos=665,1000 gap=171.007 route_gap=171.007
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=193.105 route_gap=193.105
+ static id=159 kind=9 team=0 pos=600,1280 gap=218.673 route_gap=218.673
+ static id=4 kind=14 team=-1 pos=500,970 gap=333.672 route_gap=333.672
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=379.361 route_gap=338.997
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=393.319 route_gap=393.319
+ waypoint_clear=0 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=793.615 fresh_expanded=0 fresh_points=1
+elapsed=1200 id=262 pos=900.214,1031.19 goal=1614,1422 goal_distance=813.773 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=7 kind=0 team=0 pos=921.888,1112.21 gap=37.8775 forward=57.9249 lateral=60.6642 route_gap=14.6643 order=0 own_goal_distance=32.8809 failures=5 yield=0.2
+ mobile id=8 kind=0 team=0 pos=953.54,1103.26 gap=43.6531 forward=81.3853 lateral=37.6046 route_gap=-8.39547 order=0 own_goal_distance=33.0541 failures=5 yield=0.15
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=66.2796 forward=15.6535 lateral=111.183 route_gap=65.1831 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=132 kind=0 team=0 pos=946.474,1134.45 gap=67.1497 forward=90.1674 lateral=68.3571 route_gap=22.3572 order=0 own_goal_distance=1.76617 failures=5 yield=0.2
+ mobile id=116 kind=0 team=0 pos=914.897,1144.96 gap=68.7131 forward=67.5165 lateral=92.7394 route_gap=46.7394 order=0 own_goal_distance=31.5208 failures=5 yield=0.1
+ mobile id=10 kind=0 team=0 pos=979.457,1124.4 gap=76.3446 forward=114.272 lateral=43.7044 route_gap=-2.29551 order=0 own_goal_distance=36.2345 failures=5 yield=0.05
+ mobile id=57 kind=0 team=0 pos=938.935,1168.69 gap=96.8505 forward=99.9993 lateral=102.012 route_gap=56.0118 order=0 own_goal_distance=34.0589 failures=5 yield=7.45058e-09
+ mobile id=101 kind=0 team=0 pos=970.449,1156.68 gap=97.8147 forward=121.876 lateral=76.3479 route_gap=30.3479 order=0 own_goal_distance=33.4511 failures=3 yield=0.05
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=0.616074 route_gap=-31.9347
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=95.0691 route_gap=86.0457
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=116.099 route_gap=116.099
+ static id=5 kind=14 team=-1 pos=665,1000 gap=162.272 route_gap=162.272
+ static id=159 kind=9 team=0 pos=600,1280 gap=283.919 route_gap=283.919
+ static id=4 kind=14 team=-1 pos=500,970 gap=329.864 route_gap=329.864
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=345.943 route_gap=153.956
+ static id=1 kind=8 team=0 pos=600,600 gap=370.404 route_gap=370.404
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=856.86 fresh_expanded=2 fresh_points=2
+elapsed=1300 id=262 pos=908.577,1055.32 goal=1614,1422 goal_distance=795.033 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/1 waypoint=1614,1422 stalled=0.35 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=132 kind=0 team=0 pos=927.381,1107.35 gap=9.3284 forward=40.6841 lateral=37.4972 route_gap=-8.50288 order=0 own_goal_distance=32.8291 failures=5 yield=0.05
+ mobile id=7 kind=0 team=0 pos=959.306,1100.81 gap=22.136 forward=65.9908 lateral=16.9623 route_gap=-29.0376 order=0 own_goal_distance=32.454 failures=5 yield=0.2
+ mobile id=116 kind=0 team=0 pos=907.667,1134.17 gap=32.8533 forward=35.5592 lateral=70.3802 route_gap=24.3802 order=0 own_goal_distance=37.1983 failures=5 yield=0.1
+ mobile id=101 kind=0 team=0 pos=947.223,1134.4 gap=42.0227 forward=70.7655 lateral=52.3474 route_gap=6.3474 order=0 own_goal_distance=2.48345 failures=4 yield=0.2
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=48.0881 forward=-5.29941 lateral=93.9388 route_gap=48.0881 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=978.076,1128.31 gap=54.7835 forward=95.3287 lateral=32.7071 route_gap=-13.2929 order=0 own_goal_distance=33.9197 failures=5 yield=0.1
+ mobile id=57 kind=0 team=0 pos=924.306,1159.78 gap=59.6376 forward=62.1353 lateral=85.4313 route_gap=39.4314 order=0 own_goal_distance=32.0761 failures=5 yield=0.2
+ mobile id=8 kind=0 team=0 pos=954.765,1168.39 gap=76.1438 forward=93.1336 lateral=79.0268 route_gap=33.0269 order=0 own_goal_distance=34.6919 failures=5 yield=0.05
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=1.96915 route_gap=-16.0503
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=73.5521 route_gap=69.7298
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=141.613 route_gap=141.613
+ static id=5 kind=14 team=-1 pos=665,1000 gap=174.779 route_gap=174.779
+ static id=159 kind=9 team=0 pos=600,1280 gap=275.708 route_gap=275.708
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=340.126 route_gap=163.838
+ static id=4 kind=14 team=-1 pos=500,970 gap=342.39 route_gap=342.39
+ static id=1 kind=8 team=0 pos=600,600 gap=395.032 route_gap=395.032
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=831.363 fresh_expanded=2 fresh_points=2
+elapsed=1400 id=262 pos=876.205,1092.25 goal=1614,1422 goal_distance=808.13 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=0.677921 forward=3.64882 lateral=46.5351 route_gap=0.535057 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=57 kind=0 team=0 pos=911.572,1133.28 gap=8.17005 forward=49.0309 lateral=23.0296 route_gap=-22.9703 order=0 own_goal_distance=33.3332 failures=5 yield=0
+ mobile id=116 kind=0 team=0 pos=929.353,1105.37 gap=8.74286 forward=53.8751 lateral=-9.70833 route_gap=-36.2916 order=0 own_goal_distance=33.5686 failures=5 yield=0.1
+ mobile id=101 kind=0 team=0 pos=946.289,1135.75 gap=36.4834 forward=81.7316 lateral=11.1114 route_gap=-34.8886 order=0 own_goal_distance=1.55628 failures=4 yield=0.2
+ mobile id=132 kind=0 team=0 pos=962.616,1106.42 gap=41.5653 forward=84.6727 lateral=-22.3208 route_gap=-23.6793 order=0 own_goal_distance=33.7727 failures=5 yield=7.45058e-09
+ mobile id=8 kind=0 team=0 pos=928.698,1163 gap=42.0928 forward=76.7909 lateral=43.1683 route_gap=-2.8317 order=0 own_goal_distance=32.1955 failures=5 yield=0.15
+ mobile id=10 kind=0 team=0 pos=962.35,1161.67 gap=64.6352 forward=106.974 lateral=28.2279 route_gap=-17.7721 order=0 own_goal_distance=31.7763 failures=5 yield=0.2
+ mobile id=7 kind=0 team=0 pos=981.067,1133.68 gap=66.749 forward=112.64 lateral=-4.96376 route_gap=-41.0362 order=0 own_goal_distance=32.576 failures=5 yield=0.05
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=30.9221 route_gap=24.6715
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=49.0696 route_gap=27.1951
+ static id=5 kind=14 team=-1 pos=665,1000 gap=155.474 route_gap=155.474
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=167.354 route_gap=167.354
+ static id=159 kind=9 team=0 pos=600,1280 gap=227.974 route_gap=227.974
+ static id=4 kind=14 team=-1 pos=500,970 gap=320.57 route_gap=320.57
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=378.281 route_gap=190.308
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=389.528 route_gap=389.528
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=808.13 fresh_expanded=0 fresh_points=1
+elapsed=1500 id=262 pos=881.412,1119.48 goal=1614,1422 goal_distance=792.591 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/2 waypoint=935.355,1153.11 stalled=0.05 failures=5 side=1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-19.2494 forward=-8.84939 lateral=25.2445 route_gap=-19.2494 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=8 kind=0 team=0 pos=914.743,1148.9 gap=-1.5464 forward=43.8451 lateral=7.33009 route_gap=-38.6699 order=0 own_goal_distance=33.1008 failures=5 yield=0.2
+ mobile id=57 kind=0 team=0 pos=931.365,1092.82 gap=10.6248 forward=28.2859 lateral=-49.0538 route_gap=3.05387 order=0 own_goal_distance=44.4264 failures=5 yield=0.35
+ mobile id=101 kind=0 team=0 pos=943.771,1136.66 gap=18.6823 forward=62.0082 lateral=-18.4063 route_gap=-27.5937 order=0 own_goal_distance=1.86362 failures=4 yield=0.2
+ mobile id=10 kind=0 team=0 pos=938.288,1172.42 gap=31.6972 forward=76.2677 lateral=14.8356 route_gap=-26.4686 order=0 own_goal_distance=37.8444 failures=5 yield=0
+ mobile id=116 kind=0 team=0 pos=960.853,1106.25 gap=34.5363 forward=60.4132 lateral=-53.2573 route_gap=7.25732 order=0 own_goal_distance=33.0353 failures=5 yield=0.15
+ mobile id=132 kind=0 team=0 pos=977.498,1135.06 gap=51.3407 forward=89.7831 lateral=-37.606 route_gap=-0.156342 order=0 own_goal_distance=32.6453 failures=5 yield=0.15
+ mobile id=7 kind=0 team=0 pos=968.937,1164.81 gap=52.5647 forward=98.253 lateral=-7.83356 route_gap=-10.4377 order=0 own_goal_distance=39.1022 failures=5 yield=0.05
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=4.79929 route_gap=-2.49953
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=62.3819 route_gap=57.1533
+ static id=5 kind=14 team=-1 pos=665,1000 gap=172.206 route_gap=172.206
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=195.063 route_gap=195.063
+ static id=159 kind=9 team=0 pos=600,1280 gap=217.973 route_gap=217.973
+ static id=4 kind=14 team=-1 pos=500,970 gap=334.659 route_gap=334.659
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=379.572 route_gap=338.997
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=393.593 route_gap=393.593
+ waypoint_clear=0 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=792.591 fresh_expanded=0 fresh_points=1
+elapsed=1600 id=262 pos=896.023,1034.59 goal=1614,1422 goal_distance=815.83 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=8 kind=0 team=0 pos=923.837,1109.95 gap=34.3296 forward=60.2645 lateral=53.1134 route_gap=7.11338 order=0 own_goal_distance=32.8116 failures=5 yield=0.1
+ mobile id=57 kind=0 team=0 pos=954.872,1104.13 gap=45.1022 forward=84.8148 lateral=33.2575 route_gap=-12.7425 order=0 own_goal_distance=32.5924 failures=5 yield=0.1
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=61.6498 forward=17.0445 lateral=106.292 route_gap=60.2919 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=912.569,1144.87 gap=65.5164 forward=66.9312 lateral=89.1971 route_gap=43.1971 order=0 own_goal_distance=33.716 failures=5 yield=0
+ mobile id=101 kind=0 team=0 pos=944.043,1136.04 gap=66.2453 forward=90.438 lateral=66.4829 route_gap=20.4828 order=0 own_goal_distance=1.20795 failures=4 yield=0.2
+ mobile id=116 kind=0 team=0 pos=982.969,1121.97 gap=77.2674 forward=118.011 lateral=35.6113 route_gap=-10.3887 order=0 own_goal_distance=40.3302 failures=5 yield=0
+ mobile id=7 kind=0 team=0 pos=938.868,1165.87 gap=92.0924 forward=100.045 lateral=95.1863 route_gap=49.1863 order=0 own_goal_distance=35.7752 failures=5 yield=0
+ mobile id=132 kind=0 team=0 pos=971.643,1154.64 gap=95.8821 forward=123.558 lateral=69.742 route_gap=23.742 order=0 own_goal_distance=33.1307 failures=5 yield=0.1
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=5.57784 route_gap=-27.4209
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=90.9305 route_gap=81.4219
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=117.749 route_gap=117.749
+ static id=5 kind=14 team=-1 pos=665,1000 gap=158.598 route_gap=158.598
+ static id=159 kind=9 team=0 pos=600,1280 gap=278.521 route_gap=278.521
+ static id=4 kind=14 team=-1 pos=500,970 gap=326.255 route_gap=326.255
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=350.386 route_gap=156.773
+ static id=1 kind=8 team=0 pos=600,600 gap=370.83 route_gap=370.83
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=854.849 fresh_expanded=3 fresh_points=2
+elapsed=1700 id=262 pos=909.881,1061.24 goal=1614,1422 goal_distance=791.159 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/1 waypoint=1614,1422 stalled=0 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=10 kind=0 team=0 pos=928.103,1106.39 gap=2.68481 forward=36.8034 lateral=31.8703 route_gap=-14.1296 order=0 own_goal_distance=33.2837 failures=5 yield=0.15
+ mobile id=8 kind=0 team=0 pos=961.291,1106.36 gap=22.4036 forward=66.3296 lateral=16.7163 route_gap=-29.2836 order=0 own_goal_distance=33.1479 failures=5 yield=0.1
+ mobile id=7 kind=0 team=0 pos=914.724,1136.09 gap=29.0081 forward=38.4423 lateral=64.4081 route_gap=18.4081 order=0 own_goal_distance=34.1633 failures=5 yield=0
+ mobile id=101 kind=0 team=0 pos=947.617,1135.23 gap=37.0595 forward=67.3245 lateral=48.6445 route_gap=2.6445 order=0 own_goal_distance=2.76563 failures=4 yield=0.2
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=43.7587 forward=-9.71209 lateral=89.2317 route_gap=43.7587 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=57 kind=0 team=0 pos=980.641,1133.65 gap=55.2431 forward=95.9935 lateral=32.178 route_gap=-13.822 order=0 own_goal_distance=35.8192 failures=5 yield=0.05
+ mobile id=132 kind=0 team=0 pos=932.095,1164.67 gap=59.789 forward=66.9332 lateral=81.9222 route_gap=35.9222 order=0 own_goal_distance=32.1613 failures=5 yield=0.2
+ mobile id=116 kind=0 team=0 pos=966.038,1163.68 gap=70.8203 forward=96.6894 lateral=65.5602 route_gap=19.5602 order=0 own_goal_distance=35.5348 failures=5 yield=7.45058e-09
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=3.84779 route_gap=-11.7286
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=68.2249 route_gap=65.2691
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=147.599 route_gap=147.599
+ static id=5 kind=14 team=-1 pos=665,1000 gap=177.422 route_gap=177.422
+ static id=159 kind=9 team=0 pos=600,1280 gap=273.318 route_gap=273.318
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=339.666 route_gap=166.512
+ static id=4 kind=14 team=-1 pos=500,970 gap=344.913 route_gap=344.913
+ static id=1 kind=8 team=0 pos=600,600 gap=400.669 route_gap=400.669
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=825.309 fresh_expanded=3 fresh_points=2
+elapsed=1800 id=262 pos=864.679,1098.45 goal=1614,1422 goal_distance=816.189 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-8.00088 forward=11.1817 lateral=36.3167 route_gap=-9.68334 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=132 kind=0 team=0 pos=912.568,1131.06 gap=11.9351 forward=56.8908 lateral=10.9503 route_gap=-35.0496 order=0 own_goal_distance=32.5426 failures=5 yield=0.15
+ mobile id=7 kind=0 team=0 pos=929.729,1102.85 gap=19.1983 forward=61.4643 lateral=-21.7476 route_gap=-24.2524 order=0 own_goal_distance=34.2312 failures=5 yield=0.05
+ mobile id=116 kind=0 team=0 pos=926.898,1161.09 gap=42.2909 forward=81.954 lateral=32.8455 route_gap=-13.1545 order=0 own_goal_distance=31.5528 failures=5 yield=0.2
+ mobile id=101 kind=0 team=0 pos=947.821,1134.85 gap=44.7586 forward=90.7574 lateral=0.454144 route_gap=-45.5458 order=0 own_goal_distance=2.98351 failures=4 yield=0.2
+ mobile id=10 kind=0 team=0 pos=962.445,1109.33 gap=52.3696 forward=94.0694 lateral=-28.7668 route_gap=-17.2332 order=0 own_goal_distance=31.2398 failures=5 yield=0.15
+ mobile id=57 kind=0 team=0 pos=958.463,1171.13 gap=72.6496 forward=114.911 lateral=29.5481 route_gap=-16.4519 order=0 own_goal_distance=38.4719 failures=5 yield=0.1
+ mobile id=8 kind=0 team=0 pos=977.322,1143.95 gap=75.4826 forward=121.448 lateral=-2.88669 route_gap=-43.1133 order=0 own_goal_distance=33.6398 failures=5 yield=7.45058e-09
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=23.8629 route_gap=14.9192
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=62.0714 route_gap=36.4371
+ static id=5 kind=14 team=-1 pos=665,1000 gap=147.631 route_gap=147.631
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=171.102 route_gap=171.102
+ static id=159 kind=9 team=0 pos=600,1280 gap=214.959 route_gap=214.959
+ static id=4 kind=14 team=-1 pos=500,970 gap=311.64 route_gap=311.64
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=377.629 route_gap=377.629
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=390.843 route_gap=195.881
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=816.189 fresh_expanded=0 fresh_points=1
+elapsed=1900 id=262 pos=877.716,1097.85 goal=1614,1422 goal_distance=804.478 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/2 waypoint=935.355,1153.11 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-3.96404 forward=14.1598 lateral=39.5793 route_gap=-6.42072 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=116 kind=0 team=0 pos=915.195,1126.58 gap=1.21959 forward=46.9323 lateral=-5.20105 route_gap=-40.7989 order=0 own_goal_distance=30.8711 failures=5 yield=0.2
+ mobile id=132 kind=0 team=0 pos=939.011,1103.33 gap=15.5394 forward=48.0387 lateral=-38.4627 route_gap=-7.5373 order=0 own_goal_distance=32.347 failures=5 yield=0.2
+ mobile id=57 kind=0 team=0 pos=917.19,1153.72 gap=22.4059 forward=67.1567 lateral=13.0133 route_gap=-32.9867 order=0 own_goal_distance=33.3202 failures=5 yield=0.2
+ mobile id=101 kind=0 team=0 pos=946.661,1136.17 gap=32.8784 forward=76.288 lateral=-20.0483 route_gap=-25.9517 order=0 own_goal_distance=2.0794 failures=4 yield=0.2
+ mobile id=7 kind=0 team=0 pos=972.244,1107.74 gap=49.0431 forward=75.0763 lateral=-58.2815 route_gap=12.2815 order=0 own_goal_distance=33.4968 failures=5 yield=0.05
+ mobile id=8 kind=0 team=0 pos=948.458,1168.29 gap=53.8243 forward=99.8065 lateral=1.88892 route_gap=-25.9489 order=0 own_goal_distance=33.3336 failures=5 yield=0.05
+ mobile id=10 kind=0 team=0 pos=977.073,1141.38 gap=62.4723 forward=101.844 lateral=-37.337 route_gap=-2.66381 order=0 own_goal_distance=32.8176 failures=5 yield=0.1
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=25.5512 route_gap=0.226288
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=51.1517 route_gap=49.1708
+ static id=5 kind=14 team=-1 pos=665,1000 gap=159.144 route_gap=159.144
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=173.153 route_gap=173.153
+ static id=159 kind=9 team=0 pos=600,1280 gap=226.119 route_gap=226.119
+ static id=4 kind=14 team=-1 pos=500,970 gap=323.768 route_gap=323.768
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=377.98 route_gap=338.997
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=390.679 route_gap=390.679
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=804.478 fresh_expanded=0 fresh_points=1
+elapsed=2000 id=262 pos=900.821,1033.93 goal=1614,1422 goal_distance=811.925 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=116 kind=0 team=0 pos=939.214,1102.25 gap=32.3709 forward=66.3787 lateral=41.6637 route_gap=-4.33631 order=0 own_goal_distance=33.3739 failures=5 yield=0.15
+ mobile id=57 kind=0 team=0 pos=916.626,1119.88 gap=41.389 forward=54.9625 lateral=67.9408 route_gap=21.9408 order=0 own_goal_distance=32.0919 failures=5 yield=0.2
+ mobile id=132 kind=0 team=0 pos=970.014,1114.86 gap=60.4753 forward=99.4581 lateral=38.0144 route_gap=-7.98557 order=0 own_goal_distance=32.3221 failures=5 yield=0.2
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=63.9376 forward=13.5184 lateral=109.103 route_gap=63.1032 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=101 kind=0 team=0 pos=945.853,1138.57 gap=67.9178 forward=89.5687 lateral=70.3897 route_gap=24.3897 order=0 own_goal_distance=3.56544 failures=4 yield=0.2
+ mobile id=8 kind=0 team=0 pos=918.567,1152.16 gap=73.5498 forward=72.0948 lateral=95.365 route_gap=49.365 order=0 own_goal_distance=31.3084 failures=5 yield=0.2
+ mobile id=7 kind=0 team=0 pos=978.464,1146.28 gap=90.5704 forward=121.9 lateral=61.5783 route_gap=15.5784 order=0 own_goal_distance=33.3809 failures=5 yield=0.05
+ mobile id=10 kind=0 team=0 pos=951.189,1165.93 gap=95.2853 forward=107.334 lateral=91.8745 route_gap=45.8745 order=0 own_goal_distance=31.4306 failures=5 yield=0.2
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=0.791245 route_gap=-30.0145
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=92.5036 route_gap=84.0799
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=118.873 route_gap=118.873
+ static id=5 kind=14 team=-1 pos=665,1000 gap=163.25 route_gap=163.25
+ static id=159 kind=9 team=0 pos=600,1280 gap=282.644 route_gap=282.644
+ static id=4 kind=14 team=-1 pos=500,970 gap=330.888 route_gap=330.888
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=345.549 route_gap=155.155
+ static id=1 kind=8 team=0 pos=600,600 gap=373.005 route_gap=373.005
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=854.054 fresh_expanded=2 fresh_points=2
+elapsed=2100 id=262 pos=866.263,1084.21 goal=1614,1422 goal_distance=820.494 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/1 waypoint=1614,1422 stalled=0 failures=5 side=-1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=6.32393 forward=16.2048 lateral=49.7514 route_gap=3.75138 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=8 kind=0 team=0 pos=910.615,1124.12 gap=13.6655 forward=56.8502 lateral=18.1115 route_gap=-27.8885 order=0 own_goal_distance=35.9682 failures=5 yield=0.15
+ mobile id=57 kind=0 team=0 pos=934.943,1099.12 gap=24.2804 forward=68.7287 lateral=-14.6867 route_gap=-31.3134 order=0 own_goal_distance=37.3607 failures=5 yield=7.45058e-09
+ mobile id=101 kind=0 team=0 pos=941.894,1134.56 gap=44.8582 forward=89.6532 lateral=14.7485 route_gap=-31.2515 order=0 own_goal_distance=3.01566 failures=4 yield=0.2
+ mobile id=10 kind=0 team=0 pos=920.279,1157.3 gap=44.8808 forward=79.3152 lateral=44.3668 route_gap=-1.63319 order=0 own_goal_distance=33.0849 failures=5 yield=0.15
+ mobile id=116 kind=0 team=0 pos=966.164,1111.79 gap=57.6386 forward=102.397 lateral=-15.9949 route_gap=-30.0051 order=0 own_goal_distance=31.6163 failures=5 yield=0.15
+ mobile id=7 kind=0 team=0 pos=952.544,1166.12 gap=72.9646 forward=112.349 lateral=39.1198 route_gap=-6.88022 order=0 own_goal_distance=34.9132 failures=5 yield=0.1
+ mobile id=132 kind=0 team=0 pos=975.876,1143.64 gap=78.6866 forward=124.359 lateral=9.03069 route_gap=-36.9694 order=0 own_goal_distance=32.1653 failures=5 yield=0.05
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=38.1501 route_gap=27.7381
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=53.0553 route_gap=24.2803
+ static id=5 kind=14 team=-1 pos=665,1000 gap=143.171 route_gap=143.171
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=157.415 route_gap=157.415
+ static id=159 kind=9 team=0 pos=600,1280 gap=224.496 route_gap=224.496
+ static id=4 kind=14 team=-1 pos=500,970 gap=308.658 route_gap=308.658
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=380.244 route_gap=380.244
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=386.487 route_gap=188.544
+ waypoint_clear=1 static_direct=1 fresh_reached=1 fresh_exhausted=0 fresh_cost=820.494 fresh_expanded=0 fresh_points=1
+elapsed=2200 id=262 pos=860.28,1114.19 goal=1614,1422 goal_distance=814.152 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/2 waypoint=935.355,1153.11 stalled=0.7 failures=5 side=1 yield=0 exhausted=0
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=-23.9595 forward=10.382 lateral=19.4421 route_gap=-26.5579 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=10 kind=0 team=0 pos=919.463,1110.14 gap=13.3214 forward=50.6772 lateral=-30.836 route_gap=-15.164 order=0 own_goal_distance=35.6406 failures=5 yield=0.1
+ mobile id=7 kind=0 team=0 pos=918.675,1143.72 gap=19.4379 forward=65.4345 lateral=-0.659807 route_gap=-45.3402 order=0 own_goal_distance=32.3195 failures=5 yield=0
+ mobile id=101 kind=0 team=0 pos=947.203,1133.12 gap=42.9604 forward=85.8818 lateral=-23.2007 route_gap=-22.7619 order=0 own_goal_distance=3.10545 failures=4 yield=0.2
+ mobile id=8 kind=0 team=0 pos=951.759,1101.05 gap=46.4173 forward=75.1691 lateral=-53.764 route_gap=7.764 order=0 own_goal_distance=34.7869 failures=5 yield=0.1
+ mobile id=132 kind=0 team=0 pos=944.371,1166.66 gap=53.1198 forward=98.806 lateral=7.8812 route_gap=-29.7231 order=0 own_goal_distance=31.516 failures=5 yield=0.15
+ mobile id=57 kind=0 team=0 pos=979.49,1121.05 gap=73.4079 forward=108.991 lateral=-48.7767 route_gap=8.55125 order=0 own_goal_distance=37.3975 failures=5 yield=0
+ mobile id=116 kind=0 team=0 pos=974.989,1153.62 gap=75.297 forward=119.985 lateral=-17.7896 route_gap=-6.36269 order=0 own_goal_distance=35.3458 failures=5 yield=0.1
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=8.05141 route_gap=-4.72145
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=74.9274 route_gap=58.3761
+ static id=5 kind=14 team=-1 pos=665,1000 gap=151.214 route_gap=151.214
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=185.868 route_gap=185.868
+ static id=159 kind=9 team=0 pos=600,1280 gap=202.609 route_gap=202.609
+ static id=4 kind=14 team=-1 pos=500,970 gap=313.061 route_gap=313.061
+ static id=131 kind=9 team=0 pos=381.87,1126.61 gap=372.571 route_gap=372.571
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=398.689 route_gap=338.997
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=828.098 fresh_expanded=3 fresh_points=2
+elapsed=2300 id=262 pos=890.692,1051.81 goal=1614,1422 goal_distance=812.535 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/2 waypoint=935.355,1153.11 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=7 kind=0 team=0 pos=917.968,1110.88 gap=19.0649 forward=65.0551 lateral=-1.12608 route_gap=-44.8739 order=0 own_goal_distance=36.8583 failures=5 yield=0.2
+ mobile id=10 kind=0 team=0 pos=950.747,1103.62 gap=33.3122 forward=71.6309 lateral=-34.0506 route_gap=-11.9494 order=0 own_goal_distance=32.0751 failures=5 yield=0.1
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=43.6324 forward=65.0759 lateral=61.6368 route_gap=15.6369 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=132 kind=0 team=0 pos=914.555,1144.28 gap=49.4946 forward=94.2334 lateral=15.4694 route_gap=-30.5307 order=0 own_goal_distance=31.6436 failures=5 yield=0.2
+ mobile id=101 kind=0 team=0 pos=946.466,1134.53 gap=53.7619 forward=98.1859 lateral=-17.6629 route_gap=-28.3371 order=0 own_goal_distance=1.7281 failures=4 yield=0.2
+ mobile id=8 kind=0 team=0 pos=976.344,1129.07 gap=69.3476 forward=105.247 lateral=-47.2034 route_gap=1.20337 order=0 own_goal_distance=32.0725 failures=5 yield=0.2
+ mobile id=116 kind=0 team=0 pos=938.058,1167.84 gap=79.3229 forward=125.275 lateral=3.47001 route_gap=-31.0216 order=0 own_goal_distance=33.3917 failures=5 yield=0
+ mobile id=57 kind=0 team=0 pos=970.275,1159.89 gap=88.2165 forward=130.998 lateral=-29.2158 route_gap=-10.4273 order=0 own_goal_distance=35.4753 failures=5 yield=0.15
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=16.4843 route_gap=16.4822
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=73.0358 route_gap=0.250046
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=132.228 route_gap=132.228
+ static id=5 kind=14 team=-1 pos=665,1000 gap=156.563 route_gap=156.563
+ static id=159 kind=9 team=0 pos=600,1280 gap=263.555 route_gap=252.045
+ static id=4 kind=14 team=-1 pos=500,970 gap=324.166 route_gap=324.166
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=357.424 route_gap=338.997
+ static id=1 kind=8 team=0 pos=600,600 gap=382.25 route_gap=382.25
+ waypoint_clear=1 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=840.678 fresh_expanded=4 fresh_points=2
+elapsed=2400 id=262 pos=901.424,1033.65 goal=1614,1422 goal_distance=811.531 minimum_goal_distance=764.78 envelope=791.697,1023.46:929.454,1144.45 maximum_step=5.6528 order=1 path=0/0 waypoint=1614,1422 stalled=0 failures=5 side=1 yield=0 exhausted=0
+ mobile id=132 kind=0 team=0 pos=932.669,1105.49 gap=32.3424 forward=61.8148 lateral=48.1296 route_gap=2.1296 order=0 own_goal_distance=32.0626 failures=5 yield=0
+ mobile id=7 kind=0 team=0 pos=966.036,1102.38 gap=48.333 forward=89.6246 lateral=29.4305 route_gap=-16.5695 order=0 own_goal_distance=33.8997 failures=5 yield=0
+ mobile id=57 kind=0 team=0 pos=911.05,1131.6 gap=52.4207 forward=55.3252 lateral=81.3988 route_gap=35.3988 order=0 own_goal_distance=33.9885 failures=5 yield=0.1
+ mobile id=6 kind=0 team=0 pos=860.548,1136.23 gap=64.422 forward=13.1964 lateral=109.631 route_gap=63.6306 order=0 own_goal_distance=24.4938 failures=0 yield=0
+ mobile id=101 kind=0 team=0 pos=945.738,1136.08 gap=65.6084 forward=87.9293 lateral=68.7377 route_gap=22.7377 order=0 own_goal_distance=1.28703 failures=4 yield=0.2
+ mobile id=10 kind=0 team=0 pos=978.011,1132.51 gap=79.0601 forward=114.56 lateral=50.1606 route_gap=4.16055 order=0 own_goal_distance=33.2625 failures=5 yield=0.1
+ mobile id=116 kind=0 team=0 pos=928.023,1164.26 gap=87.2884 forward=85.8566 lateral=101.953 route_gap=55.9531 order=0 own_goal_distance=33.6232 failures=5 yield=7.45058e-09
+ mobile id=8 kind=0 team=0 pos=961.294,1163.38 gap=96.8781 forward=114.651 lateral=85.26 route_gap=39.26 order=0 own_goal_distance=32.6687 failures=5 yield=0.15
+ static id=128 kind=9 team=0 pos=1003.05,1003.05 gap=0.132729 route_gap=-30.5012
+ static id=155 kind=9 team=0 pos=860.225,1228.24 gap=92.904 route_gap=84.5785
+ static id=53 kind=10 team=0 pos=812.132,812.132 gap=118.835 route_gap=118.835
+ static id=5 kind=14 team=-1 pos=665,1000 gap=163.806 route_gap=163.806
+ static id=159 kind=9 team=0 pos=600,1280 gap=283.289 route_gap=283.289
+ static id=4 kind=14 team=-1 pos=500,970 gap=331.439 route_gap=331.439
+ static id=41 kind=14 team=-1 pos=1320,1000 gap=344.926 route_gap=154.851
+ static id=1 kind=8 team=0 pos=600,600 gap=373.116 route_gap=373.116
+ waypoint_clear=0 static_direct=0 fresh_reached=1 fresh_exhausted=0 fresh_cost=854.16 fresh_expanded=2 fresh_points=2

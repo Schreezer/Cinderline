@@ -1,0 +1,11 @@
+FAIL exact Mortar alternate exit: Mortar does not use the reproduced unreachable first exit
+FAIL explicit ground worker alternate exit: explicit-rally worker uses an alternate exit and retains the requested goal
+FAIL ore and default worker alternate exits: explicit ore rally keeps its exact deposit
+PASS air unit ground-routing bypass
+PASS paid-ready no-local-exit persistence
+PASS unreachable-rally clear fallback
+FAIL paid-ready worker backoff save continuation: paid-ready worker remains queued through the first half-second of backoff
+FAIL worker backoff invalidation: manual rally clears the producer retry clock and geometry
+FAIL worker backoff replacement isolation: front cancellation clears the producer retry state
+FAIL simultaneous producer budget fairness: budget boundary produces an early subset and preserves later paid-ready jobs
+RESULT passed=3 failed=7

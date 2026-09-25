@@ -1,0 +1,195 @@
+--- artifacts/ai-ore-control/before-SimulationAI.cpp	2026-09-16 16:11:48
++++ Source/Cinderline/Private/Sim/SimulationAI.cpp	2026-09-16 16:17:59
+@@ -352,7 +352,7 @@
+             continue;
+         }
+         const Entity* liveWorker = find(worker.id);
+-        const bool rebalance = (tick_ / 40) % 8 == 0 && reassignedMiners < 2 &&
++        const bool rebalance = (tick_ / 40) % (advancedAI ? 4 : 8) == 0 && reassignedMiners < 2 &&
+             liveWorker->order == Order::Gather && !liveWorker->returning && liveWorker->carried == 0 &&
+             liveWorker->futureOrders.empty();
+         if (liveWorker->order != Order::Idle && liveWorker->order != Order::Hold && !rebalance) {
+@@ -472,24 +472,52 @@
+ 
+     Vec2 exposedHeadquarters{};
+     bool needsTurret = false;
++    float defensePriority = -1;
+     for (const AISnapshot& hq : own) {
+-        if (hq.kind != Kind::Headquarters) {
+-            continue;
++        if (hq.kind != Kind::Headquarters) continue;
++        Vec2 mineralLine = hq.pos;
++        float nearestOre = 900.0f * 900.0f;
++        for (const AISnapshot& node : resources) {
++            const float distance = distanceSquared(hq.pos, node.pos);
++            if (node.currentlyVisible && node.resourceRemaining > 0 && distance < nearestOre) {
++                nearestOre = distance;
++                mineralLine = node.pos;
++            }
+         }
++        const Vec2 defenseAnchor = advancedAI ?
++            Vec2{(hq.pos.x + mineralLine.x) * 0.5f, (hq.pos.y + mineralLine.y) * 0.5f} : hq.pos;
+         const bool covered = std::any_of(own.begin(), own.end(), [&](const AISnapshot& defense) {
+             return defense.kind == Kind::Turret &&
+-                   distanceSquared(defense.pos, hq.pos) <= 900.0f * 900.0f;
++                   distanceSquared(defense.pos, defenseAnchor) <= (advancedAI ? 500.0f * 500.0f : 900.0f * 900.0f);
+         });
+-        if (!covered) {
+-            exposedHeadquarters = hq.pos;
++        const bool threatened = std::any_of(visibleEnemies.begin(), visibleEnemies.end(), [&](const AISnapshot& enemy) {
++            return definition(enemy.kind).damage > 0 && distanceSquared(enemy.pos, hq.pos) < 1200.0f * 1200.0f;
++        });
++        // Protect the threatened or productive frontier before adding a Ward
++        // to a safe starting base. Foundations count as planned coverage.
++        const float priority = advancedAI ? (threatened ? 1.0e9f : 0) +
++            (nearestOre < 900.0f * 900.0f ? 1.0e8f : 0) + distanceSquared(hq.pos, authoredHome) : 0;
++        if (!covered && (!needsTurret || priority > defensePriority)) {
++            exposedHeadquarters = defenseAnchor;
+             needsTurret = true;
+-            break;
++            defensePriority = priority;
+         }
+     }
+ 
+-    const std::array<Vec2, 4> expansionSites{{
++    std::vector<Vec2> expansionSites{
+         mapPoint({2900.0f, 3800.0f}), mapPoint({3800.0f, 2000.0f}),
+-        mapPoint({1900.0f, 1000.0f}), mapPoint({1000.0f, 2800.0f})}};
++        mapPoint({1900.0f, 1000.0f}), mapPoint({1000.0f, 2800.0f})};
++    if (advancedAI) {
++        // A cleared enemy start or an off-landmark ore patch is usable territory.
++        // Only current scouting can establish that there is still ore to claim.
++        for (const AISnapshot& node : resources) {
++            if (!node.currentlyVisible || node.resourceRemaining <= 0) continue;
++            const bool represented = std::any_of(expansionSites.begin(), expansionSites.end(), [&](Vec2 site) {
++                return distanceSquared(site, node.pos) < 500.0f * 500.0f;
++            });
++            if (!represented) expansionSites.push_back(node.pos);
++        }
++    }
+     // These are public map landmarks, not coordinates read from hidden actors.
+     // Observation age makes a cleared start lose priority to unsearched sites.
+     const std::array<Vec2, 7> reconnaissanceSites{{
+@@ -582,6 +610,7 @@
+             ++productiveHeadquarters;
+         }
+     }
++    const int targetProductiveBases = difficulty == AIDifficulty::Expert ? 3 : 2;
+     Vec2 bestExpansion{};
+     float bestExpansionOre = 0;
+     for (Vec2 site : expansionSites) {
+@@ -603,11 +632,11 @@
+             bestExpansionOre = remainingOre;
+         }
+     }
+-    const bool richExpansionDiscovered = hqCount < 4 && productiveHeadquarters < 2 &&
++    const bool richExpansionDiscovered = hqCount < 4 && productiveHeadquarters < targetProductiveBases &&
+                                          bestExpansionOre >= 650.0f;
+     Vec2 expansionScoutTarget{};
+     bool needsExpansionScouting = false;
+-    if (hqCount < 4 && productiveHeadquarters < 2 && !richExpansionDiscovered) {
++    if (hqCount < 4 && productiveHeadquarters < targetProductiveBases && !richExpansionDiscovered) {
+         for (const AISnapshot& scout : own) {
+             if (scout.kind != Kind::Scout || scout.progress < 1.0f || scout.order != Order::Move) {
+                 continue;
+@@ -817,7 +846,10 @@
+         return accepted;
+     };
+ 
+-    const int desiredWorkers = hqCount >= 2 ? tuning.multipleBaseWorkers : tuning.oneBaseWorkers;
++    const int desiredWorkers = hqCount < 2 ? tuning.oneBaseWorkers :
++        (advancedAI ? std::min(difficulty == AIDifficulty::Expert ? 48 : 36,
++            std::max(tuning.multipleBaseWorkers, productiveHeadquarters *
++                (difficulty == AIDifficulty::Expert ? 10 : 9))) : tuning.multipleBaseWorkers);
+     int queuedWorkers = 0;
+     for (const AISnapshot& entity : own) {
+         if (entity.kind == Kind::Headquarters) {
+@@ -1008,6 +1040,53 @@
+             continue;
+         }
+         (unit.kind == Kind::Mender ? healers : soldiers).push_back(&unit);
++    }
++
++    // Productive forward bases keep a small standing guard. Reserve a full
++    // launch group for the main army and prefer nearby reserves; do not pull
++    // distant frontline units out of an ongoing fight to fill a sentry slot.
++    if (advancedAI && soldiers.size() > tuning.attackGroupSize) {
++        auto frontierBases = headquarters;
++        std::stable_sort(frontierBases.begin(), frontierBases.end(), [&](Vec2 a, Vec2 b) {
++            return distanceSquared(a, authoredHome) > distanceSquared(b, authoredHome);
++        });
++        int guardedBases = 0;
++        for (Vec2 base : frontierBases) {
++            if (guardedBases >= 2 || distanceSquared(base, authoredHome) < 1000.0f * 1000.0f ||
++                remainingOreNear(base, 900.0f) < 300) continue;
++            Vec2 guardPoint = base;
++            float nearestOre = 900.0f * 900.0f;
++            for (const AISnapshot& node : resources) {
++                const float distance = distanceSquared(base, node.pos);
++                if (node.currentlyVisible && node.resourceRemaining > 0 && distance < nearestOre) {
++                    nearestOre = distance;
++                    guardPoint = {(base.x + node.pos.x) * 0.5f, (base.y + node.pos.y) * 0.5f};
++                }
++            }
++            auto candidates = soldiers;
++            std::stable_sort(candidates.begin(), candidates.end(), [&](const AISnapshot* a, const AISnapshot* b) {
++                return distanceSquared(a->pos, guardPoint) < distanceSquared(b->pos, guardPoint);
++            });
++            std::vector<Id> guards;
++            const std::size_t budget = std::min<std::size_t>(difficulty == AIDifficulty::Expert ? 3 : 2,
++                soldiers.size() - tuning.attackGroupSize);
++            for (const AISnapshot* unit : candidates) {
++                if (guards.size() >= budget) break;
++                if ((unit->order == Order::Attack || unit->order == Order::AttackMove) &&
++                    distanceSquared(unit->pos, base) > 1200.0f * 1200.0f) continue;
++                guards.push_back(unit->id);
++                if (distanceSquared(unit->pos, guardPoint) > 260.0f * 260.0f) {
++                    if (!goingTo(*unit, Order::AttackMove, guardPoint, 180.0f))
++                        sendGroup(CommandType::AttackMove, {unit->id}, guardPoint, "guarding a productive ore line");
++                } else if (unit->order != Order::Hold) {
++                    sendGroup(CommandType::Hold, {unit->id}, unit->pos, "holding the captured mining line");
++                }
++            }
++            soldiers.erase(std::remove_if(soldiers.begin(), soldiers.end(), [&](const AISnapshot* unit) {
++                return std::find(guards.begin(), guards.end(), unit->id) != guards.end();
++            }), soldiers.end());
++            ++guardedBases;
++        }
+     }
+ 
+     // Unarmed economy structures cannot scare an army into retreating. Local
+@@ -1073,16 +1152,23 @@
+         const AISighting* raidSite = nullptr;
+         float bestRaidDistance = std::numeric_limits<float>::max();
+         for (const AISighting& site : aiSightings()) {
+-            if (site.kind != Kind::Headquarters ||
++            const bool workerReport = site.kind == Kind::Worker &&
++                tick_ - site.lastSeenTick <= static_cast<std::uint64_t>(20.0f / Step);
++            if ((!workerReport && site.kind != Kind::Headquarters && site.kind != Kind::Processor) ||
+                 distanceSquared(site.pos, strategicTarget) < 1200.0f * 1200.0f) continue;
+             int garrisonCost = 0;
++            int exposedMiners = 0;
+             for (const AISighting& report : aiSightings()) {
+                 const Definition& enemy = definition(report.kind);
++                if (report.kind == Kind::Worker &&
++                    tick_ - report.lastSeenTick <= static_cast<std::uint64_t>(20.0f / Step) &&
++                    distanceSquared(report.pos, site.pos) < 500.0f * 500.0f) ++exposedMiners;
+                 if (report.kind != Kind::Worker && enemy.damage > 0 &&
+                     (enemy.building || tick_ - report.lastSeenTick <= static_cast<std::uint64_t>(60.0f / Step)) &&
+                     distanceSquared(report.pos, site.pos) < 850.0f * 850.0f) garrisonCost += enemy.cost;
+             }
+-            const float distance = distanceSquared(home, site.pos);
++            if (workerReport && exposedMiners < 2) continue;
++            const float distance = distanceSquared(home, site.pos) / (1.0f + std::min(exposedMiners, 6));
+             if (garrisonCost <= 140 && distance < bestRaidDistance) {
+                 bestRaidDistance = distance;
+                 raidSite = &site;
+@@ -1112,7 +1198,7 @@
+                         !((*unit)->order == Order::Attack &&
+                           distanceSquared((*unit)->pos, raidSite->pos) < 850.0f * 850.0f)) toSend.push_back(id);
+                 }
+-                sendGroup(CommandType::AttackMove, toSend, raidSite->pos, "raiding a scouted expansion");
++                sendGroup(CommandType::AttackMove, toSend, raidSite->pos, "raiding a scouted economy");
+                 soldiers.erase(std::remove_if(soldiers.begin(), soldiers.end(), [&](const AISnapshot* unit) {
+                     return std::find(raiders.begin(), raiders.end(), unit->id) != raiders.end();
+                 }), soldiers.end());

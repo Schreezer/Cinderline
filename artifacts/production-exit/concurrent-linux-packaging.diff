@@ -1,0 +1,84 @@
+diff --git a/Cinderline.uproject b/Cinderline.uproject
+index 7ddf99c..4dadd32 100644
+--- a/Cinderline.uproject
++++ b/Cinderline.uproject
+@@ -13,5 +13,5 @@
+     { "Name": "EditorScriptingUtilities", "Enabled": true, "TargetAllowList": ["Editor"] },
+     { "Name": "AndroidFileServer", "Enabled": false }
+   ],
+-  "TargetPlatforms": ["Mac", "IOS", "Win64"]
++  "TargetPlatforms": ["Mac", "IOS", "Linux", "Win64"]
+ }
+diff --git a/scripts/unreal.sh b/scripts/unreal.sh
+index dee1812..d8c9259 100755
+--- a/scripts/unreal.sh
++++ b/scripts/unreal.sh
+@@ -7,6 +7,7 @@ project_file="$project_root/Cinderline.uproject"
+ prepared_ios_engine="$(dirname "$project_root")/CinderlineEngineIOS27"
+ ios_engine_preparer="$project_root/scripts/prepare-ios27-engine.py"
+ ios_app_archiver="$project_root/scripts/archive-ios-app.py"
++linux_package_archiver="$project_root/scripts/archive-unreal-linux.sh"
+ ue_root_is_explicit=false
+ [[ -n "${UE_ROOT:-}" ]] && ue_root_is_explicit=true
+ using_prepared_ios_engine=false
+@@ -219,6 +220,20 @@ run_mobile_uat() {
+   run_mobile_command "$engine_root/Engine/Build/BatchFiles/RunUAT.sh" "$@"
+ }
+ 
++prepare_linux_uat_args() {
++  linux_uat_args=()
++  local argument has_ubt_args=false
++  for argument in "$@"; do
++    case "$argument" in
++      -[Uu][Bb][Tt][Aa][Rr][Gg][Ss]=*) has_ubt_args=true ;;
++    esac
++    linux_uat_args+=("$argument")
++  done
++  if [[ "$has_ubt_args" == false ]]; then
++    linux_uat_args+=("-ubtargs=-MaxParallelActions=${CINDERLINE_LINUX_BUILD_JOBS:-4}")
++  fi
++}
++
+ quarantine_existing_ios_app() {
+   local source_app="$project_root/Binaries/IOS/Cinderline.app"
+   local quarantine_root="$project_root/Saved/IOSDevice/Archives"
+@@ -295,6 +310,8 @@ case "$action" in
+       '  ./scripts/unreal.sh package-ios  Cook/package development iOS for a physical device (requires signing)' \
+       '  ./scripts/unreal.sh package-ios-on-mac' \
+       '                               Cook/package Designed for iPad on Apple Silicon Mac; does not launch it' \
++      '  ./scripts/unreal.sh package-linux' \
++      '                               Build/cook/archive the full Unreal game for Linux x86_64 (run on Linux)' \
+       '    Mobile builds default to two parallel compile actions; pass -ubtargs=... to override.' \
+       '    Mobile packaging defaults to one cook process and one local shader worker on this Mac.' \
+       '    Pass -AdditionalCookerOptions=... to override the cooker and shader-worker defaults.' \
+@@ -429,5 +446,30 @@ case "$action" in
+       -target=Cinderline "${mobile_archive_args[@]}" -deploy -macnative \
+       "-cmdline=-fulltouchcontrols" "${mobile_uat_args[@]}"
+     ;;
++  package-linux)
++    find_engine
++    if [[ "$platform" != Linux ]]; then
++      printf '%s\n' \
++        'A full Cinderline Linux package must be built on Linux.' \
++        'Epic does not support macOS-to-Linux cross-compilation. Run this action on an x86_64 Linux host with UE 5.8.' >&2
++      exit 2
++    fi
++    [[ "$(uname -m)" == x86_64 ]] || {
++      printf '%s\n' 'The distributable Ubuntu build requires an x86_64 Linux host.' >&2
++      exit 2
++    }
++    [[ -f "$project_root/Content/Maps/Frontier.umap" ]] || {
++      printf '%s\n' 'Frontier.umap is missing. Run ./scripts/unreal.sh setup before packaging.' >&2
++      exit 2
++    }
++    cinder_require_engine_tool "$engine_root/Engine/Build/BatchFiles/RunUAT.sh"
++    cinder_require_engine_tool "$linux_package_archiver"
++    resolve_archive_directory "$project_root/Saved/Packages/Linux" "$@"
++    prepare_linux_uat_args "$@"
++    "$engine_root/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun "-project=$project_file" \
++      -noP4 -platform=Linux -clientconfig=Shipping -build -cook -stage -pak -iostore \
++      -package -archive -target=Cinderline "${mobile_archive_args[@]}" "${linux_uat_args[@]}"
++    "$linux_package_archiver" "$mobile_archive_directory"
++    ;;
+   *) printf 'Unknown action: %s\n' "$action" >&2; exit 2 ;;
+ esac

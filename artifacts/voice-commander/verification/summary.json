@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-24",
+  "macEditorBuild": "passed",
+  "iosArm64DevelopmentBuild": "passed",
+  "nodeTests": {
+    "passed": 103,
+    "failed": 0
+  },
+  "voiceNodeTests": {
+    "passed": 57,
+    "failed": 0
+  },
+  "unrealVoiceTests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "hudFrame": "../hud-authored/run-20260924T163036Z-IEQQPE/sectorbase.png",
+  "liveProviderCalls": false,
+  "credentialsWritten": true,
+  "microphoneTested": false,
+  "deviceInstalled": false,
+  "pending": [
+    "separate gateway access token configuration",
+    "TypeSafe configuration or explicit direct-Luna first check",
+    "live provider timing and microphone/device validation",
+    "production identity and deployment"
+  ],
+  "credentialStatus": {
+    "openai": "saved locally after confirmation",
+    "gateway": "not configured",
+    "typesafe": "not configured"
+  }
+}

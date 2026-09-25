@@ -1,0 +1,3 @@
+FAIL exhausted ore finishes at delivery point: exhausted lone ore finishes the Gather order instead of retaining a stale target
+FAIL pending cargo waits for replacement depot across save-load: cargo stays in a pending Gather return while no completed depot exists: order=0 returning=1 carried=3.000000
+RESULT passed=0 failed=2

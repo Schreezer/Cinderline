@@ -1,0 +1,5 @@
+[  9%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 18%] Linking CXX static library libCinderlineSimulation.a
+[ 81%] Built target CinderlineSimulation
+[ 90%] Linking CXX executable CinderlineSustainedOrderBaseline
+[100%] Built target CinderlineSustainedOrderBaseline

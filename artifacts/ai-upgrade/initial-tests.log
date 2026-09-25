@@ -1,0 +1,19 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/ai-upgrade
+    Start 1: simulation_rules
+1/4 Test #1: simulation_rules .................   Passed    3.58 sec
+    Start 4: defense_regressions
+2/4 Test #4: defense_regressions ..............   Passed    0.52 sec
+    Start 5: ai_difficulty_regressions
+3/4 Test #5: ai_difficulty_regressions ........   Passed    2.81 sec
+    Start 7: match_length_regressions
+4/4 Test #7: match_length_regressions .........   Passed    2.38 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+ai              =   2.81 sec*proc (1 test)
+defense         =   0.52 sec*proc (1 test)
+match-length    =   2.38 sec*proc (1 test)
+navigation      =   2.38 sec*proc (1 test)
+
+Total Test time (real) =   9.30 sec

@@ -1,0 +1,517 @@
+{
+  "method": "Both builds use the same frozen simulation sources and public headers, compiler flags, and benchmark. Only SimulationAI.cpp is swapped between the original AI and improved AI.",
+  "compiler_flags": [
+    "-std=c++17",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "command_arguments": [
+    "--seeds",
+    "1",
+    "--seconds",
+    "900"
+  ],
+  "difficulty": "Hard (aiAggression=1.5)",
+  "scenarios": [
+    "paid 3-Foundry infantry rush",
+    "paid 18-worker tier-2 macro",
+    "paid 5-turret tier-2 turtle"
+  ],
+  "maps": [
+    0,
+    1,
+    2
+  ],
+  "seeds": [
+    7300
+  ],
+  "independent_scenario_count": 9,
+  "matches_per_version": 9,
+  "pressure_definition": "At least 4 live AI combat units within 1000 world units of the opponent starting Headquarters.",
+  "caveats": [
+    "Fixed scripted opponents, not human playtests.",
+    "Winner -1 means unresolved at 900 seconds, not an adjudicated draw."
+  ],
+  "common_sources_sha256": {
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "a36ff6303b173ba84f542d9aecf4947bc1976153ff753e6b216a4b2ff0161d43",
+    "Source/Cinderline/Private/Sim/Network.cpp": "8ca55e0802f4e0153741dd4f33e68bdf61ec7f2cb587f328a99ed37d86f78b2d",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "f31b90cc2d83faa421de220cdbf388279ab12e41e0bb2a0bb660c0efb2ff80f3",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "5197c2e30300af2e541fce888e9368e8bd555d1fa38a684ffda3dce6295e96ba",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "0855046e471dc89e1bdc371500675ab215b2fd670c09a8b5bf4f584606d654bc",
+    "Source/Cinderline/Private/Sim/SimulationProduction.cpp": "d0a158d47cdb228b74c8865cc1015b9e0b705a0d518d66fb5438d3170f16f438",
+    "Source/Cinderline/Private/Sim/SimulationTactics.cpp": "882cb5e1ee091d0a8f2e37cfdc9157e48c0363e1648a14616edf2980cac2a002",
+    "Source/Cinderline/Private/Sim/SimulationWorkerPlans.cpp": "59499d84919d0fb8deb118b1a60372fe7002da7f7a753bb27966c99a5b3eb7ae",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "597924671e6b1a6366358573d1619f1842c32a1df6b2d3c874525e070c7bdad5",
+    "Source/Cinderline/Public/Sim/FormationRules.h": "1949d15de0431f7294efe68836cd32853fef8553f78b7e3fef4b8c355e920b8c",
+    "Source/Cinderline/Public/Sim/MatchLength.h": "5c39350635561f976f8467b98f64dbcc0518fea785040f820d1bb5eca304bf62",
+    "Source/Cinderline/Public/Sim/Navigation.h": "401dcd52f6bfed4e252dee614872487b0b209510b369501c00a90db1fe9bd0ec",
+    "Source/Cinderline/Public/Sim/Network.h": "3d02e666ffcdfe416d93ac0269a9359466db378454dcae68d4d8142a5516de1e",
+    "Source/Cinderline/Public/Sim/Simulation.h": "4ebb7554ee2aa2696c3c3ade9b09099ddea51cc39bda5af0092cf9281f6cb7d7",
+    "Source/Cinderline/Public/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563",
+    "Source/Cinderline/Public/Sim/SustainedOrderRules.h": "6c8f7b9960f516542cd541cd251fdf555df2f7bdb123a418b695f2220071befb"
+  },
+  "benchmark_sha256": "acd5d459af034bf61202effdbea255377d7ad0850fdd26d32bd96966f0545c1f",
+  "before_ai_sha256": "576d8b5acbce58d2c1b3ccad1523072a39a4c708a4885aa4e3e075774c8d8a2c",
+  "after_ai_sha256": "e6ac96572eb460605aeb18f2ce075098c52d492d36df142baf2891e5fb7a3258",
+  "summary": {
+    "before": {
+      "wins": 0,
+      "losses": 7,
+      "unresolved": 2,
+      "seed_pairs_identical_gameplay_metrics": null,
+      "opponent_rejected_commands": 0,
+      "median_army_at_180": 3,
+      "median_army_at_300": 7,
+      "scenarios_with_pressure": 2,
+      "total_enemy_buildings_destroyed": 0
+    },
+    "after": {
+      "wins": 9,
+      "losses": 0,
+      "unresolved": 0,
+      "seed_pairs_identical_gameplay_metrics": null,
+      "opponent_rejected_commands": 0,
+      "median_army_at_180": 5,
+      "median_army_at_300": 13,
+      "scenarios_with_pressure": 9,
+      "total_enemy_buildings_destroyed": 75
+    }
+  },
+  "scenarios_results": [
+    {
+      "scenario": "rush",
+      "map": 0,
+      "before": {
+        "winner": 0,
+        "seconds": 569.05,
+        "ai_first_pressure_seconds": -1.0,
+        "ai": {
+          "workers": 0,
+          "army": 0,
+          "army_value": 0,
+          "buildings": 0,
+          "foundries": 0,
+          "supply": 0,
+          "capacity": 0,
+          "ore": 27,
+          "gathered": 7867,
+          "produced": 53,
+          "killed": 39,
+          "lost": 58,
+          "buildings_destroyed": 0,
+          "tier": 2,
+          "damage": 5107.48
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 319.45,
+        "ai_first_pressure_seconds": 255.05,
+        "ai": {
+          "workers": 21,
+          "army": 19,
+          "army_value": 2130,
+          "buildings": 11,
+          "foundries": 4,
+          "supply": 58,
+          "capacity": 72,
+          "ore": 2264,
+          "gathered": 9934,
+          "produced": 40,
+          "killed": 33,
+          "lost": 5,
+          "buildings_destroyed": 7,
+          "tier": 1,
+          "damage": 9129.34
+        }
+      }
+    },
+    {
+      "scenario": "rush",
+      "map": 1,
+      "before": {
+        "winner": 0,
+        "seconds": 506.15,
+        "ai_first_pressure_seconds": -1.0,
+        "ai": {
+          "workers": 0,
+          "army": 0,
+          "army_value": 0,
+          "buildings": 0,
+          "foundries": 0,
+          "supply": 0,
+          "capacity": 0,
+          "ore": 176,
+          "gathered": 8236,
+          "produced": 50,
+          "killed": 30,
+          "lost": 52,
+          "buildings_destroyed": 0,
+          "tier": 2,
+          "damage": 3785.88
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 322.85,
+        "ai_first_pressure_seconds": 254.45,
+        "ai": {
+          "workers": 19,
+          "army": 19,
+          "army_value": 2130,
+          "buildings": 9,
+          "foundries": 4,
+          "supply": 58,
+          "capacity": 58,
+          "ore": 2521,
+          "gathered": 9901,
+          "produced": 37,
+          "killed": 33,
+          "lost": 4,
+          "buildings_destroyed": 6,
+          "tier": 1,
+          "damage": 9776.0
+        }
+      }
+    },
+    {
+      "scenario": "rush",
+      "map": 2,
+      "before": {
+        "winner": 0,
+        "seconds": 492.85,
+        "ai_first_pressure_seconds": -1.0,
+        "ai": {
+          "workers": 0,
+          "army": 0,
+          "army_value": 0,
+          "buildings": 0,
+          "foundries": 0,
+          "supply": 0,
+          "capacity": 0,
+          "ore": 2588,
+          "gathered": 8748,
+          "produced": 48,
+          "killed": 41,
+          "lost": 47,
+          "buildings_destroyed": 0,
+          "tier": 2,
+          "damage": 4517.0
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 313.8,
+        "ai_first_pressure_seconds": 267.65,
+        "ai": {
+          "workers": 17,
+          "army": 19,
+          "army_value": 2090,
+          "buildings": 11,
+          "foundries": 4,
+          "supply": 72,
+          "capacity": 72,
+          "ore": 1594,
+          "gathered": 9434,
+          "produced": 37,
+          "killed": 31,
+          "lost": 6,
+          "buildings_destroyed": 5,
+          "tier": 1,
+          "damage": 8585.0
+        }
+      }
+    },
+    {
+      "scenario": "macro",
+      "map": 0,
+      "before": {
+        "winner": 0,
+        "seconds": 568.25,
+        "ai_first_pressure_seconds": -1.0,
+        "ai": {
+          "workers": 0,
+          "army": 0,
+          "army_value": 0,
+          "buildings": 0,
+          "foundries": 0,
+          "supply": 0,
+          "capacity": 0,
+          "ore": 1,
+          "gathered": 10591,
+          "produced": 50,
+          "killed": 16,
+          "lost": 52,
+          "buildings_destroyed": 0,
+          "tier": 2,
+          "damage": 2607.57
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 408.0,
+        "ai_first_pressure_seconds": 253.25,
+        "ai": {
+          "workers": 21,
+          "army": 21,
+          "army_value": 2370,
+          "buildings": 15,
+          "foundries": 5,
+          "supply": 82,
+          "capacity": 116,
+          "ore": 738,
+          "gathered": 12748,
+          "produced": 56,
+          "killed": 42,
+          "lost": 19,
+          "buildings_destroyed": 5,
+          "tier": 2,
+          "damage": 10013.47
+        }
+      }
+    },
+    {
+      "scenario": "macro",
+      "map": 1,
+      "before": {
+        "winner": -1,
+        "seconds": 900.0,
+        "ai_first_pressure_seconds": -1.0,
+        "ai": {
+          "workers": 21,
+          "army": 17,
+          "army_value": 3060,
+          "buildings": 13,
+          "foundries": 1,
+          "supply": 81,
+          "capacity": 148,
+          "ore": 14037,
+          "gathered": 31117,
+          "produced": 89,
+          "killed": 83,
+          "lost": 56,
+          "buildings_destroyed": 0,
+          "tier": 3,
+          "damage": 16158.96
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 379.35,
+        "ai_first_pressure_seconds": 252.25,
+        "ai": {
+          "workers": 21,
+          "army": 20,
+          "army_value": 2230,
+          "buildings": 12,
+          "foundries": 4,
+          "supply": 76,
+          "capacity": 102,
+          "ore": 2244,
+          "gathered": 11464,
+          "produced": 48,
+          "killed": 38,
+          "lost": 12,
+          "buildings_destroyed": 5,
+          "tier": 1,
+          "damage": 10945.54
+        }
+      }
+    },
+    {
+      "scenario": "macro",
+      "map": 2,
+      "before": {
+        "winner": 0,
+        "seconds": 623.4,
+        "ai_first_pressure_seconds": 337.55,
+        "ai": {
+          "workers": 0,
+          "army": 0,
+          "army_value": 0,
+          "buildings": 0,
+          "foundries": 0,
+          "supply": 0,
+          "capacity": 0,
+          "ore": 473,
+          "gathered": 13813,
+          "produced": 61,
+          "killed": 46,
+          "lost": 65,
+          "buildings_destroyed": 0,
+          "tier": 2,
+          "damage": 5513.96
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 360.3,
+        "ai_first_pressure_seconds": 269.25,
+        "ai": {
+          "workers": 21,
+          "army": 19,
+          "army_value": 2130,
+          "buildings": 14,
+          "foundries": 5,
+          "supply": 76,
+          "capacity": 102,
+          "ore": 568,
+          "gathered": 10948,
+          "produced": 46,
+          "killed": 36,
+          "lost": 11,
+          "buildings_destroyed": 4,
+          "tier": 1,
+          "damage": 9341.89
+        }
+      }
+    },
+    {
+      "scenario": "turtle",
+      "map": 0,
+      "before": {
+        "winner": -1,
+        "seconds": 900.0,
+        "ai_first_pressure_seconds": -1.0,
+        "ai": {
+          "workers": 14,
+          "army": 13,
+          "army_value": 2050,
+          "buildings": 7,
+          "foundries": 1,
+          "supply": 55,
+          "capacity": 58,
+          "ore": 9528,
+          "gathered": 27028,
+          "produced": 68,
+          "killed": 36,
+          "lost": 46,
+          "buildings_destroyed": 0,
+          "tier": 2,
+          "damage": 4964.48
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 464.5,
+        "ai_first_pressure_seconds": 252.8,
+        "ai": {
+          "workers": 21,
+          "army": 20,
+          "army_value": 2310,
+          "buildings": 18,
+          "foundries": 6,
+          "supply": 92,
+          "capacity": 146,
+          "ore": 1420,
+          "gathered": 15460,
+          "produced": 66,
+          "killed": 51,
+          "lost": 30,
+          "buildings_destroyed": 16,
+          "tier": 2,
+          "damage": 16046.35
+        }
+      }
+    },
+    {
+      "scenario": "turtle",
+      "map": 1,
+      "before": {
+        "winner": 0,
+        "seconds": 826.2,
+        "ai_first_pressure_seconds": -1.0,
+        "ai": {
+          "workers": 0,
+          "army": 0,
+          "army_value": 0,
+          "buildings": 0,
+          "foundries": 0,
+          "supply": 0,
+          "capacity": 0,
+          "ore": 8065,
+          "gathered": 24595,
+          "produced": 66,
+          "killed": 48,
+          "lost": 71,
+          "buildings_destroyed": 0,
+          "tier": 3,
+          "damage": 5972.92
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 452.2,
+        "ai_first_pressure_seconds": 251.15,
+        "ai": {
+          "workers": 21,
+          "army": 17,
+          "army_value": 1930,
+          "buildings": 15,
+          "foundries": 6,
+          "supply": 78,
+          "capacity": 132,
+          "ore": 2217,
+          "gathered": 14587,
+          "produced": 61,
+          "killed": 49,
+          "lost": 28,
+          "buildings_destroyed": 13,
+          "tier": 2,
+          "damage": 14833.73
+        }
+      }
+    },
+    {
+      "scenario": "turtle",
+      "map": 2,
+      "before": {
+        "winner": 0,
+        "seconds": 762.5,
+        "ai_first_pressure_seconds": 409.0,
+        "ai": {
+          "workers": 0,
+          "army": 0,
+          "army_value": 0,
+          "buildings": 0,
+          "foundries": 0,
+          "supply": 0,
+          "capacity": 0,
+          "ore": 11222,
+          "gathered": 24532,
+          "produced": 61,
+          "killed": 52,
+          "lost": 63,
+          "buildings_destroyed": 0,
+          "tier": 3,
+          "damage": 8338.33
+        }
+      },
+      "after": {
+        "winner": 1,
+        "seconds": 506.25,
+        "ai_first_pressure_seconds": 315.4,
+        "ai": {
+          "workers": 21,
+          "army": 24,
+          "army_value": 2710,
+          "buildings": 19,
+          "foundries": 6,
+          "supply": 108,
+          "capacity": 146,
+          "ore": 2135,
+          "gathered": 18835,
+          "produced": 76,
+          "killed": 60,
+          "lost": 36,
+          "buildings_destroyed": 14,
+          "tier": 2,
+          "damage": 18843.45
+        }
+      }
+    }
+  ],
+  "workspace_source_changes_since_freeze": []
+}

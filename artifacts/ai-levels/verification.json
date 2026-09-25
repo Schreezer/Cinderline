@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-16",
+  "scope": "Local source, simulation regression tests, controlled scripted challenges, and Unreal Development Editor build/integration",
+  "source_sha256": {
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "b2216ace49e23336bb3cf54510e8712ed1a3cdc09e8f1d84c136cb5f19b6ee54",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "c68b5dd4b7f289a190bd2b6e332fe933a185d1f6fe6e569b80e25e3cbb4a8937",
+    "Tests/AIDifficultyProgressionTests.cpp": "c3be884ee824dfd1a7b2396bde509144126bce8f3a9a2c1ddd3237f413bce47c",
+    "Tests/SimulationTests.cpp": "8fec4146dd14148694fbd60b853c4533a8960c4b18efb0198284a1d5b7bc4983",
+    "Tools/AIChallengeBaseline.cpp": "2326956214dc0eb4257f7af422e13bc529063ad62ae5e246bf8dac47f2a931ca",
+    "CMakeLists.txt": "092f877d7197b0b4af5f7f86179f600938fd79ac8491bedbf663b2cfe6797fed"
+  },
+  "release": {
+    "passed": 27,
+    "failed": 0,
+    "native_client_enabled": false,
+    "log": "tests-final.log"
+  },
+  "address_undefined_sanitizers": {
+    "passed": 27,
+    "failed": 0,
+    "log": "sanitize-tests.log"
+  },
+  "unreal": {
+    "build": "succeeded",
+    "build_log": "unreal-build.log",
+    "integration_passed": 18,
+    "log": "unreal-tests.log",
+    "report": "Saved/Automation/Integration/20260916T102848Z-52870/index.json",
+    "warnings": 0,
+    "errors": 0
+  },
+  "benchmark": {
+    "control_manifest": "benchmark-control.json",
+    "control_hashes_match_final_workspace": true,
+    "macro_before": 15,
+    "macro_after": 15,
+    "practice_after": 5,
+    "expert_seed_trials": 3,
+    "comparison": "comparison.json"
+  },
+  "diff_check": "passed for full tracked working tree",
+  "limits": [
+    "Scripted opponents and regression fixtures are not human playtest or broad balance evidence.",
+    "Existing iOS, Android, and Linux distribution packages were not rebuilt or installed.",
+    "Unrelated dirty work remains in the shared checkout."
+  ]
+}

@@ -1,0 +1,61 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+      Start  1: simulation_rules
+ 1/22 Test  #1: simulation_rules ............................   Passed    3.43 sec
+      Start  2: navigation_regressions
+ 2/22 Test  #2: navigation_regressions ......................   Passed    0.80 sec
+      Start  3: network_protocol
+ 3/22 Test  #3: network_protocol ............................   Passed    0.46 sec
+      Start  4: defense_regressions
+ 4/22 Test  #4: defense_regressions .........................   Passed    0.49 sec
+      Start  5: ai_difficulty_regressions
+ 5/22 Test  #5: ai_difficulty_regressions ...................   Passed    2.51 sec
+      Start  6: production_allocation_regressions
+ 6/22 Test  #6: production_allocation_regressions ...........   Passed    1.27 sec
+      Start  7: match_length_regressions
+ 7/22 Test  #7: match_length_regressions ....................   Passed    4.78 sec
+      Start  8: four_player_regressions
+ 8/22 Test  #8: four_player_regressions .....................   Passed    0.54 sec
+      Start  9: order_completion_regressions
+ 9/22 Test  #9: order_completion_regressions ................   Passed    0.09 sec
+      Start 10: tactical_order_regressions
+10/22 Test #10: tactical_order_regressions ..................   Passed    0.14 sec
+      Start 11: patrol_escort_regressions
+11/22 Test #11: patrol_escort_regressions ...................   Passed    0.10 sec
+      Start 12: formation_order_regressions
+12/22 Test #12: formation_order_regressions .................   Passed    0.15 sec
+      Start 13: tactical_interruption_regressions
+13/22 Test #13: tactical_interruption_regressions ...........   Passed    1.21 sec
+      Start 14: worker_order_completion_regressions
+14/22 Test #14: worker_order_completion_regressions .........   Passed    0.39 sec
+      Start 15: builder_queue_regressions
+15/22 Test #15: builder_queue_regressions ...................   Passed    0.44 sec
+      Start 16: simulation_profiling_regressions
+16/22 Test #16: simulation_profiling_regressions ............   Passed    0.61 sec
+      Start 17: navigation_attachment_cache_regressions
+17/22 Test #17: navigation_attachment_cache_regressions .....   Passed    0.42 sec
+      Start 18: navigation_multi_source_regressions
+18/22 Test #18: navigation_multi_source_regressions .........   Passed    0.40 sec
+      Start 19: navigation_predicate_parity_regressions
+19/22 Test #19: navigation_predicate_parity_regressions .....   Passed    0.39 sec
+      Start 20: navigation_terrain_visibility_regressions
+20/22 Test #20: navigation_terrain_visibility_regressions ...   Passed    0.54 sec
+      Start 21: production_exit_regressions
+21/22 Test #21: production_exit_regressions .................   Passed    0.82 sec
+      Start 22: production_traffic_regressions
+22/22 Test #22: production_traffic_regressions ..............   Passed    2.52 sec
+
+100% tests passed, 0 tests failed out of 22
+
+Label Time Summary:
+ai              =   2.51 sec*proc (1 test)
+defense         =   0.49 sec*proc (1 test)
+economy         =   2.04 sec*proc (3 tests)
+four-player     =   0.54 sec*proc (1 test)
+match-length    =   4.78 sec*proc (1 test)
+navigation      =  12.90 sec*proc (14 tests)
+network         =   2.25 sec*proc (3 tests)
+orders          =   2.51 sec*proc (7 tests)
+production      =   5.01 sec*proc (4 tests)
+profiling       =   1.96 sec*proc (4 tests)
+
+Total Test time (real) =  22.51 sec

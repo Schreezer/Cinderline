@@ -1,0 +1,94 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+[  2%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[  4%] Linking CXX static library libCinderlineSimulation.a
+[ 17%] Built target CinderlineSimulation
+[ 21%] Linking CXX executable CinderlineGameplayBaseline
+[ 21%] Linking CXX executable CinderlineMatchBaseline
+[ 23%] Built target CinderlineMatchBaseline
+[ 26%] Built target CinderlineGameplayBaseline
+[ 30%] Linking CXX executable CinderlineTests
+[ 30%] Linking CXX executable CinderlineMatchWorker
+[ 32%] Built target CinderlineMatchWorker
+[ 34%] Built target CinderlineTests
+[ 36%] Linking CXX executable CinderlineNavigationTests
+[ 39%] Linking CXX executable CinderlineNetworkTests
+[ 41%] Built target CinderlineNavigationTests
+[ 43%] Built target CinderlineNetworkTests
+[ 45%] Linking CXX executable CinderlineDefenseTests
+[ 47%] Linking CXX executable CinderlineAIDifficultyTests
+[ 50%] Built target CinderlineDefenseTests
+[ 52%] Built target CinderlineAIDifficultyTests
+[ 54%] Linking CXX executable CinderlineProductionAllocationTests
+[ 56%] Linking CXX executable CinderlineMatchLengthTests
+[ 58%] Built target CinderlineProductionAllocationTests
+[ 60%] Built target CinderlineMatchLengthTests
+[ 63%] Linking CXX executable CinderlineFourPlayerTests
+[ 65%] Linking CXX executable CinderlineOrderCompletionTests
+[ 67%] Built target CinderlineFourPlayerTests
+[ 69%] Built target CinderlineOrderCompletionTests
+[ 71%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 73%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 76%] Built target CinderlineWorkerOrderCompletionTests
+[ 78%] Built target CinderlineSimulationProfilingTests
+[ 80%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 82%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 84%] Built target CinderlineNavigationAttachmentCacheTests
+[ 86%] Built target CinderlineNavigationMultiSourceTests
+[ 89%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 91%] Linking CXX executable CinderlineProductionExitTests
+[ 93%] Built target CinderlineProductionExitTests
+[ 95%] Linking CXX executable CinderlineProductionTrafficTests
+[ 97%] Built target CinderlineProductionTrafficTests
+[100%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[100%] Built target CinderlineNavigationPredicateParityTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+      Start  1: simulation_rules
+ 1/16 Test  #1: simulation_rules ..........................   Passed   10.20 sec
+      Start  2: navigation_regressions
+ 2/16 Test  #2: navigation_regressions ....................   Passed    1.43 sec
+      Start  3: network_protocol
+ 3/16 Test  #3: network_protocol ..........................   Passed    0.69 sec
+      Start  4: defense_regressions
+ 4/16 Test  #4: defense_regressions .......................   Passed    0.68 sec
+      Start  5: ai_difficulty_regressions
+ 5/16 Test  #5: ai_difficulty_regressions .................   Passed    9.59 sec
+      Start  6: production_allocation_regressions
+ 6/16 Test  #6: production_allocation_regressions .........   Passed    1.26 sec
+      Start  7: match_length_regressions
+ 7/16 Test  #7: match_length_regressions ..................   Passed    8.08 sec
+      Start  8: four_player_regressions
+ 8/16 Test  #8: four_player_regressions ...................   Passed    2.33 sec
+      Start  9: order_completion_regressions
+ 9/16 Test  #9: order_completion_regressions ..............   Passed    0.53 sec
+      Start 10: worker_order_completion_regressions
+10/16 Test #10: worker_order_completion_regressions .......   Passed    0.52 sec
+      Start 11: simulation_profiling_regressions
+11/16 Test #11: simulation_profiling_regressions ..........   Passed    1.22 sec
+      Start 12: navigation_attachment_cache_regressions
+12/16 Test #12: navigation_attachment_cache_regressions ...   Passed    0.51 sec
+      Start 13: navigation_multi_source_regressions
+13/16 Test #13: navigation_multi_source_regressions .......   Passed    0.52 sec
+      Start 14: navigation_predicate_parity_regressions
+14/16 Test #14: navigation_predicate_parity_regressions ...   Passed    0.50 sec
+      Start 15: production_exit_regressions
+15/16 Test #15: production_exit_regressions ...............   Passed    3.29 sec
+      Start 16: production_traffic_regressions
+16/16 Test #16: production_traffic_regressions ............   Passed    8.82 sec
+
+100% tests passed, 0 tests failed out of 16
+
+Label Time Summary:
+ai              =   9.59 sec*proc (1 test)
+defense         =   0.68 sec*proc (1 test)
+economy         =   0.52 sec*proc (1 test)
+four-player     =   2.33 sec*proc (1 test)
+match-length    =   8.08 sec*proc (1 test)
+navigation      =  26.01 sec*proc (9 tests)
+network         =   3.58 sec*proc (2 tests)
+orders          =   1.05 sec*proc (2 tests)
+production      =  13.88 sec*proc (4 tests)
+profiling       =   2.22 sec*proc (3 tests)
+
+Total Test time (real) =  50.18 sec

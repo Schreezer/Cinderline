@@ -1,0 +1,55 @@
+FILE artifacts/match-baseline/original-goals-march-end.save tick=46700 geom=15766954383378328459
+blocker id=31 kind=Anchor center=600,4200 radius=125
+blocker id=56 kind=Kiln center=600,4500 radius=90
+blocker id=80 kind=Siphon center=387.868,4412.13 radius=76
+blocker id=86 kind=Resonator center=300,4200 radius=85
+blocker id=95 kind=Siphon center=387.868,3987.87 radius=76
+blocker id=110 kind=Siphon center=600,3900 radius=76
+blocker id=118 kind=Siphon center=431.619,4606.51 radius=76
+blocker id=126 kind=Siphon center=193.493,4368.38 radius=76
+blocker id=135 kind=Siphon center=193.493,4031.62 radius=76
+blocker id=172 kind=Crucible center=196.949,4603.05 radius=104
+id=248 pos=311.5,4488.5 goal=1358,3122 order=1 navex=1 pathGeom=15766954383378328459
+goal c=0 point=1 direct=0 reached=1 exhausted=0 points=9 cost=1749.13 expanded=450 endpoint=1358,3122
+goal c=15 point=1 direct=0 reached=1 exhausted=0 points=9 cost=1763.68 expanded=481 endpoint=1358,3122
+goal c=20 point=1 direct=0 reached=1 exhausted=0 points=11 cost=1777.75 expanded=476 endpoint=1358,3122
+goal c=24 point=1 direct=0 reached=1 exhausted=0 points=10 cost=2220.26 expanded=1572 endpoint=1358,3122
+goal c=25 point=1 direct=0 reached=1 exhausted=0 points=11 cost=2221.63 expanded=1529 endpoint=1358,3122
+goal c=26 point=1 direct=0 reached=1 exhausted=0 points=11 cost=2225.29 expanded=1638 endpoint=1358,3122
+goal c=27 point=1 direct=0 reached=1 exhausted=0 points=12 cost=2227.54 expanded=1564 endpoint=1358,3122
+goal c=28 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=18
+goal c=29 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=17
+goal c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=17
+goal c=31 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=16
+goal c=34 point=0 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=0
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=0
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=17
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=17
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=0
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=17
+remove=80 reached=1 exhausted=0 expanded=574 cost=1754.43
+remove=118 reached=1 exhausted=0 expanded=377 cost=1852.08
+remove=126 reached=1 exhausted=0 expanded=418 cost=1803.31
+remove=172 reached=1 exhausted=0 expanded=1582 cost=2236.09
+id=264 pos=288.562,4504.56 goal=1614,3122 order=1 navex=1 pathGeom=15766954383378328459
+goal c=0 point=1 direct=0 reached=1 exhausted=0 points=6 cost=1942.6 expanded=247 endpoint=1614,3122
+goal c=15 point=1 direct=0 reached=1 exhausted=0 points=6 cost=1955.47 expanded=220 endpoint=1614,3122
+goal c=20 point=1 direct=0 reached=1 exhausted=0 points=8 cost=1961.54 expanded=263 endpoint=1614,3122
+goal c=24 point=1 direct=0 reached=1 exhausted=0 points=12 cost=2291.62 expanded=573 endpoint=1614,3122
+goal c=25 point=1 direct=0 reached=1 exhausted=0 points=12 cost=2308.05 expanded=559 endpoint=1614,3122
+goal c=26 point=1 direct=0 reached=1 exhausted=0 points=11 cost=2299.79 expanded=602 endpoint=1614,3122
+goal c=27 point=1 direct=0 reached=1 exhausted=0 points=14 cost=2318.2 expanded=599 endpoint=1614,3122
+goal c=28 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=20
+goal c=29 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=17
+goal c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=16
+goal c=31 point=0 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=0
+goal c=34 point=0 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=0
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=0
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=16
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=16
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=0
+local c=30 point=1 direct=0 reached=0 exhausted=0 points=0 cost=0 expanded=16
+remove=80 reached=1 exhausted=0 expanded=352 cost=1951.47
+remove=118 reached=1 exhausted=0 expanded=320 cost=2013.72
+remove=126 reached=1 exhausted=0 expanded=190 cost=1984.16
+remove=172 reached=1 exhausted=0 expanded=700 cost=2318.71

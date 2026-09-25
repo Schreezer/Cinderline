@@ -1,0 +1,651 @@
+{
+  "schema": "cinderline.match_latency_probe.v1",
+  "success": false,
+  "diagnostic_only": true,
+  "full_acceptance": false,
+  "repeat_run_performed": false,
+  "completed": false,
+  "diagnostic_interrupted_prefix": true,
+  "diagnostic_stop_after_ticks": 10000,
+  "measured_run_valid": false,
+  "players": 4,
+  "reference_mobile_units_per_team": 100,
+  "reference_crew_per_team": 184,
+  "supported_device_capacity_claim": false,
+  "economy_bypass": false,
+  "debug_spawn_used": false,
+  "script_uses_authored_map_knowledge": true,
+  "gather_requires_explored_resource": true,
+  "preparation_combat_suppression": "accepted Move orders between two own-corner waypoints",
+  "required_gathered_ore_per_team": 15220,
+  "reference_layout_minimum_static_gap_world_units": 72.0,
+  "workers_join_holding_pattern_after_required_ore_gathered": true,
+  "preparation_patrol_commands": 1889,
+  "preparation_patrol_command_limit": 576000,
+  "preparation_movement_scheduler_ms": {
+    "p50": 0.000833,
+    "p95": 0.007,
+    "p99": 0.020083,
+    "max": 0.110167
+  },
+  "preparation_limit_seconds": 3600,
+  "prepared": false,
+  "preparation_ticks": 10000,
+  "final_tick": 10000,
+  "winner": -1,
+  "early_end": false,
+  "profile_enabled": true,
+  "snapshots_enabled": true,
+  "state_hash": "0x459b9f9102dc2f71",
+  "repeat_state_hash": null,
+  "trajectory_hash": "0x15f41ac71631e7d6",
+  "repeat_trajectory_hash": null,
+  "recording_hash": "0xe3a85e0ed47f14df",
+  "repeat_recording_hash": null,
+  "recorded_commands": 2061,
+  "deterministic_repeat": null,
+  "commands": {
+    "accepted": 2061,
+    "rejected": 0,
+    "wall_total_ms": 11.263921,
+    "wall_max_ms": 0.092583,
+    "accepted_by_type": {
+      "AutoBuild": 56,
+      "AutoRally": 4,
+      "AutoResearch": 8,
+      "AutoTrain": 70,
+      "Gather": 30,
+      "Move": 1893
+    },
+    "wall_ms_by_type": {
+      "AutoBuild": {
+        "p50": 0.015167,
+        "p95": 0.02075,
+        "p99": 0.058583,
+        "max": 0.058583
+      },
+      "AutoRally": {
+        "p50": 0.000709,
+        "p95": 0.05625,
+        "p99": 0.05625,
+        "max": 0.05625
+      },
+      "AutoResearch": {
+        "p50": 0.0015,
+        "p95": 0.003083,
+        "p99": 0.003083,
+        "max": 0.003083
+      },
+      "AutoTrain": {
+        "p50": 0.000916,
+        "p95": 0.0055,
+        "p99": 0.014209,
+        "max": 0.014209
+      },
+      "Gather": {
+        "p50": 0.000417,
+        "p95": 0.0035,
+        "p99": 0.068958,
+        "max": 0.068958
+      },
+      "Move": {
+        "p50": 0.001833,
+        "p95": 0.017083,
+        "p99": 0.021792,
+        "max": 0.092583
+      }
+    }
+  },
+  "phases": [
+    {
+      "name": "preparation",
+      "ticks": 10000,
+      "step_ms": {
+        "p50": 0.2115,
+        "p95": 1.352333,
+        "p99": 15.746333,
+        "max": 265.844792
+      },
+      "profile_ms": {
+        "setup": {
+          "p50": 0.000125,
+          "p95": 0.000833,
+          "p99": 0.001042,
+          "max": 0.019875
+        },
+        "production": {
+          "p50": 0.004792,
+          "p95": 0.013125,
+          "p99": 0.018125,
+          "max": 10.021292
+        },
+        "movement_economy": {
+          "p50": 0.154583,
+          "p95": 1.282792,
+          "p99": 15.693791,
+          "max": 265.769084
+        },
+        "vision": {
+          "p50": 0.045625,
+          "p95": 0.066333,
+          "p99": 0.095708,
+          "max": 0.812125
+        },
+        "combat": {
+          "p50": 0.000792,
+          "p95": 0.001083,
+          "p99": 0.001292,
+          "max": 0.032875
+        },
+        "ai": {
+          "p50": 4.1e-05,
+          "p95": 4.2e-05,
+          "p99": 4.2e-05,
+          "max": 0.000208
+        },
+        "completion": {
+          "p50": 8.3e-05,
+          "p95": 0.00025,
+          "p99": 0.000375,
+          "max": 0.064458
+        },
+        "total": {
+          "p50": 0.2115,
+          "p95": 1.352333,
+          "p99": 15.746333,
+          "max": 265.844792
+        }
+      },
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 7,
+        "message_byte_limit": 1048576,
+        "batches": 5000,
+        "messages": 20000,
+        "build_ms": {
+          "mean": 0.039677,
+          "p50": 0.037125,
+          "p95": 0.047833,
+          "p99": 0.096458,
+          "max": 4.409042
+        },
+        "encode_ms": {
+          "mean": 0.010567,
+          "p50": 0.010625,
+          "p95": 0.014042,
+          "p99": 0.021709,
+          "max": 2.8935
+        },
+        "message_cpu_ms": {
+          "mean": 0.050244,
+          "p50": 0.047792,
+          "p95": 0.06275,
+          "p99": 0.120292,
+          "max": 4.427167
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.202553,
+          "p50": 0.194458,
+          "p95": 0.252083,
+          "p99": 0.443459,
+          "max": 4.588375
+        },
+        "message_bytes": {
+          "mean": 3686.83165,
+          "p50": 4228.0,
+          "p95": 4414.0,
+          "p99": 4441.0,
+          "max": 4960.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 14747.3266,
+          "p50": 16957.0,
+          "p95": 17389.0,
+          "p99": 17422.0,
+          "max": 18937.0
+        },
+        "visible_entities": {
+          "mean": 35.709,
+          "p50": 42.0,
+          "p95": 43.0,
+          "p99": 43.0,
+          "max": 43.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "name": "march",
+      "ticks": 0,
+      "step_ms": null,
+      "profile_ms": null,
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 7,
+        "message_byte_limit": 1048576,
+        "batches": 0,
+        "messages": 0,
+        "build_ms": null,
+        "encode_ms": null,
+        "message_cpu_ms": null,
+        "all_seats_batch_cpu_ms": null,
+        "message_bytes": null,
+        "all_seats_batch_bytes": null,
+        "visible_entities": null,
+        "visible_effects": null
+      }
+    },
+    {
+      "name": "combat",
+      "ticks": 0,
+      "step_ms": null,
+      "profile_ms": null,
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 7,
+        "message_byte_limit": 1048576,
+        "batches": 0,
+        "messages": 0,
+        "build_ms": null,
+        "encode_ms": null,
+        "message_cpu_ms": null,
+        "all_seats_batch_cpu_ms": null,
+        "message_bytes": null,
+        "all_seats_batch_bytes": null,
+        "visible_entities": null,
+        "visible_effects": null
+      }
+    }
+  ],
+  "navigation": {
+    "searches": 11010,
+    "expanded": 26919,
+    "failures": 59,
+    "budget_deferrals": 1142
+  },
+  "teams": [
+    {
+      "team": 0,
+      "supply": 86,
+      "capacity": 184,
+      "ore": 5306,
+      "gathered": 15226,
+      "produced": 16,
+      "built": 14,
+      "tier": 3,
+      "scheduler_ms": {
+        "p50": 0.004833,
+        "p95": 0.01275,
+        "p99": 35.420334,
+        "max": 50.233458
+      },
+      "march": {
+        "expected": 0,
+        "alive": 0,
+        "arrived": 0,
+        "pending_valid_order": 0,
+        "navigation_exhausted": 0,
+        "missing": 0,
+        "goal_changed": 0
+      },
+      "prepared_supply": 0,
+      "prepared_capacity": 0,
+      "combat_delta": {
+        "damage": 0.0,
+        "lost": 0,
+        "killed": 0
+      },
+      "prepared_units": {
+        "Drudge": 0,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 0,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      },
+      "final_units": {
+        "Drudge": 20,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 1,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      }
+    },
+    {
+      "team": 1,
+      "supply": 86,
+      "capacity": 184,
+      "ore": 5317,
+      "gathered": 15237,
+      "produced": 16,
+      "built": 14,
+      "tier": 3,
+      "scheduler_ms": {
+        "p50": 0.003292,
+        "p95": 0.008875,
+        "p99": 32.135541,
+        "max": 51.850209
+      },
+      "march": {
+        "expected": 0,
+        "alive": 0,
+        "arrived": 0,
+        "pending_valid_order": 0,
+        "navigation_exhausted": 0,
+        "missing": 0,
+        "goal_changed": 0
+      },
+      "prepared_supply": 0,
+      "prepared_capacity": 0,
+      "combat_delta": {
+        "damage": 0.0,
+        "lost": 0,
+        "killed": 0
+      },
+      "prepared_units": {
+        "Drudge": 0,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 0,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      },
+      "final_units": {
+        "Drudge": 20,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 1,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      }
+    },
+    {
+      "team": 2,
+      "supply": 86,
+      "capacity": 184,
+      "ore": 5307,
+      "gathered": 15227,
+      "produced": 16,
+      "built": 14,
+      "tier": 3,
+      "scheduler_ms": {
+        "p50": 0.003,
+        "p95": 0.006291,
+        "p99": 35.55875,
+        "max": 53.7025
+      },
+      "march": {
+        "expected": 0,
+        "alive": 0,
+        "arrived": 0,
+        "pending_valid_order": 0,
+        "navigation_exhausted": 0,
+        "missing": 0,
+        "goal_changed": 0
+      },
+      "prepared_supply": 0,
+      "prepared_capacity": 0,
+      "combat_delta": {
+        "damage": 0.0,
+        "lost": 0,
+        "killed": 0
+      },
+      "prepared_units": {
+        "Drudge": 0,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 0,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      },
+      "final_units": {
+        "Drudge": 20,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 1,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      }
+    },
+    {
+      "team": 3,
+      "supply": 21,
+      "capacity": 184,
+      "ore": 9812,
+      "gathered": 15222,
+      "produced": 16,
+      "built": 14,
+      "tier": 2,
+      "scheduler_ms": {
+        "p50": 0.003125,
+        "p95": 0.006833,
+        "p99": 36.28175,
+        "max": 50.285791
+      },
+      "march": {
+        "expected": 0,
+        "alive": 0,
+        "arrived": 0,
+        "pending_valid_order": 0,
+        "navigation_exhausted": 0,
+        "missing": 0,
+        "goal_changed": 0
+      },
+      "prepared_supply": 0,
+      "prepared_capacity": 0,
+      "combat_delta": {
+        "damage": 0.0,
+        "lost": 0,
+        "killed": 0
+      },
+      "prepared_units": {
+        "Drudge": 0,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 0,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      },
+      "final_units": {
+        "Drudge": 20,
+        "Ember": 0,
+        "Needle": 0,
+        "Skim": 1,
+        "Anvil": 0,
+        "Cinderthrow": 0,
+        "Mend": 0,
+        "Veil": 0
+      }
+    }
+  ],
+  "blocked_statuses": {
+    "build Resonator: Insufficient ore.": 59,
+    "build Siphon: Insufficient ore.": 626,
+    "place Kiln: A ground unit occupies this site.": 4,
+    "place Siphon: A ground unit occupies this site.": 8,
+    "reference layout Crucible: reserve full-army passage between static footprints": 16,
+    "reference layout Kiln: reserve full-army passage between static footprints": 10,
+    "reference layout Resonator: reserve full-army passage between static footprints": 16,
+    "reference layout Siphon: reserve full-army passage between static footprints": 317,
+    "research tier: Insufficient ore.": 154,
+    "train Drudge: Insufficient ore for the complete batch.": 148,
+    "train Ember: Not enough production queue space for the complete batch.": 3,
+    "train Needle: Not enough production queue space for the complete batch.": 6,
+    "train Skim: Build an operational Kiln first.": 273,
+    "train Skim: Insufficient ore for the complete batch.": 4
+  },
+  "dropped_blocked_statuses": 0,
+  "progress": [
+    {
+      "tick": 0,
+      "team": 0,
+      "ore": 10,
+      "gathered": 0,
+      "produced": 0,
+      "built": 0,
+      "tier": 1,
+      "supply": 9,
+      "capacity": 30,
+      "mobile": 5
+    },
+    {
+      "tick": 0,
+      "team": 1,
+      "ore": 10,
+      "gathered": 0,
+      "produced": 0,
+      "built": 0,
+      "tier": 1,
+      "supply": 9,
+      "capacity": 30,
+      "mobile": 5
+    },
+    {
+      "tick": 0,
+      "team": 2,
+      "ore": 10,
+      "gathered": 0,
+      "produced": 0,
+      "built": 0,
+      "tier": 1,
+      "supply": 9,
+      "capacity": 30,
+      "mobile": 5
+    },
+    {
+      "tick": 0,
+      "team": 3,
+      "ore": 10,
+      "gathered": 0,
+      "produced": 0,
+      "built": 0,
+      "tier": 1,
+      "supply": 9,
+      "capacity": 30,
+      "mobile": 5
+    },
+    {
+      "tick": 6000,
+      "team": 0,
+      "ore": 3482,
+      "gathered": 8892,
+      "produced": 16,
+      "built": 13,
+      "tier": 2,
+      "supply": 21,
+      "capacity": 184,
+      "mobile": 21
+    },
+    {
+      "tick": 6000,
+      "team": 1,
+      "ore": 3933,
+      "gathered": 9343,
+      "produced": 16,
+      "built": 13,
+      "tier": 2,
+      "supply": 21,
+      "capacity": 184,
+      "mobile": 21
+    },
+    {
+      "tick": 6000,
+      "team": 2,
+      "ore": 4401,
+      "gathered": 9811,
+      "produced": 16,
+      "built": 13,
+      "tier": 2,
+      "supply": 21,
+      "capacity": 184,
+      "mobile": 21
+    },
+    {
+      "tick": 6000,
+      "team": 3,
+      "ore": 4864,
+      "gathered": 8874,
+      "produced": 16,
+      "built": 13,
+      "tier": 1,
+      "supply": 21,
+      "capacity": 184,
+      "mobile": 21
+    },
+    {
+      "tick": 10000,
+      "team": 0,
+      "ore": 5306,
+      "gathered": 15226,
+      "produced": 16,
+      "built": 14,
+      "tier": 3,
+      "supply": 86,
+      "capacity": 184,
+      "mobile": 21
+    },
+    {
+      "tick": 10000,
+      "team": 1,
+      "ore": 5317,
+      "gathered": 15237,
+      "produced": 16,
+      "built": 14,
+      "tier": 3,
+      "supply": 86,
+      "capacity": 184,
+      "mobile": 21
+    },
+    {
+      "tick": 10000,
+      "team": 2,
+      "ore": 5307,
+      "gathered": 15227,
+      "produced": 16,
+      "built": 14,
+      "tier": 3,
+      "supply": 86,
+      "capacity": 184,
+      "mobile": 21
+    },
+    {
+      "tick": 10000,
+      "team": 3,
+      "ore": 9812,
+      "gathered": 15222,
+      "produced": 16,
+      "built": 14,
+      "tier": 2,
+      "supply": 21,
+      "capacity": 184,
+      "mobile": 21
+    }
+  ],
+  "errors": [
+    "diagnostic interrupted preparation prefix; full workload criteria and repeat not performed"
+  ]
+}

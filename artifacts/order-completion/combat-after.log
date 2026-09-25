@@ -1,0 +1,8 @@
+PASS explicit Attack target death
+PASS explicit Attack missing corpse
+PASS explicit Attack shared target death
+PASS explicit Attack visibility transition
+PASS AttackMove incidental target death
+PASS Idle automatic acquisition anchor
+PASS Mender leader death
+RESULT passed=7 failed=0

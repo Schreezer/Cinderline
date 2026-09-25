@@ -1,0 +1,8 @@
+PASS circle-only changes reuse terrain and remain exact
+PASS terrain changes reset but normalized reorder preserves
+PASS clearances use distinct pages
+PASS copies assignments and moves keep visibility ownership valid
+PASS FIFO page budget retains exact routes
+VISIBILITY_SATURATION shifts=1022 saturation_misses=4 resets=2 targets=52
+PASS saturated target registry resets at next page borrow
+RESULT passed=6 failed=0

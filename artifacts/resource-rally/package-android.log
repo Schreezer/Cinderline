@@ -1,0 +1,1216 @@
+Android build workspace synced to: /Volumes/Codex Storage/Cinderline/Android/workspace
+
+Running AutomationTool...
+
+Setting up bundled DotNet SDK
+/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Start UAT Interactively: dotnet AutomationTool.dll BuildCookRun -project=/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject -noP4 -platform=Android -cookflavor=Multi -clientconfig=Development -build -cook -stage -pak -iostore -compressed -package -archive -target=Cinderline -archivedirectory=/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Packages/Android -ubtargs=-MaxParallelActions=2 -AdditionalCookerOptions=-CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9
+/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64/dotnet
+Starting AutomationTool...
+Parsing command line: BuildCookRun -project="/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject" -noP4 -platform=Android -cookflavor=Multi -clientconfig=Development -build -cook -stage -pak -iostore -compressed -package -archive -target=Cinderline -archivedirectory="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Packages/Android" -ubtargs=-MaxParallelActions=2 -AdditionalCookerOptions="-CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9"
+Initializing script modules...
+Total script module initialization time: 0.45 s.
+Using /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64/dotnet
+Executing commands...
+Setting up ProjectParams for /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject
+********** BUILD COMMAND STARTED **********
+Running: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64/dotnet "/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll" -Target="CinderlineEditor Mac Development -Project=\"/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject\"" -Target="Cinderline Android Development -Project=\"/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject\"  -remoteini=\"/Volumes/Codex Storage/Cinderline/Android/workspace\"  -MaxParallelActions=2 -skipdeploy " -log="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/UBA-CinderlineEditor-Mac-Development.txt"
+Log file: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/UBA-CinderlineEditor-Mac-Development.txt
+Executing up to 2 actions based on MaxProcessorCount override
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for Cinderline (DefaultEngine.ini modified)
+Invalidating makefile for CinderlineEditor (DefaultEngine.ini modified)
+Android (12470979, +pgo, -bolt, +lto, -mlgo, based on r522817c) clang version 18.0.3 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262)
+Target: x86_64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin
+NDK toolchain: r27c, NDK version: 270300, ClangVersion: 18.0.3
+No ISPC compiler at /Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/Intel/ISPC/bin/Mac/ispc
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+Compiling Native 64-bit code with NDK API 'android-26'
+Link: /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --gcc-toolchain="/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64" --sysroot="/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/sysroot" -static-libstdc++ -no-canonical-prefixes -shared -Wl,-Bsymbolic -Wl,--no-undefined -Wl,--gc-sections -gz --target=aarch64-none-linux-android26 -DANDROID=1 -march=armv8-a -Wl,-no-pie -fuse-ld=lld -Wl,-soname,libUnreal.so -Wl,--version-script="/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/a/Cinderline/Development/ExportSymbols.ldscript" -Wl,--build-id=sha1 -Wl,--pack-dyn-relocs=android -Wl,--hash-style=gnu -z max-page-size=16384 -fdiagnostics-absolute-paths -fdiagnostics-color -o "/Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Android/Cinderline-arm64.so" @"/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/a/Cinderline/Development/Cinderline-arm64.so.rsp"
+Building Cinderline and CinderlineEditor...
+===== Toolchain Information =====
+Cinderline Android Development:
+  Using ISPC compiler (/Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/Intel/ISPC/bin/Mac/ispc)
+    -1
+  Using Clang compiler 18.0.3 (/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++)
+    Android (12470979, +pgo, -bolt, +lto, -mlgo, based on r522817c) clang version 18.0.3 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262) Target: x86_64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin
+  Using Clang archiver (/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar)
+    LLVM (http://llvm.org/):   LLVM version 18.0.3   Optimized build.
+CinderlineEditor Mac Development:
+  Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+    Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+  Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+    Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+=================================
+Using Unreal Build Accelerator local executor to run 15 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 27.1 GB/32 GB committed
+  UBA Storage capacity 40 GB
+** For CinderlineEditor-Mac-Development **
+[1/15] Compile [Apple] Module.CinderMetalFX.cpp
+[2/15] Compile [Apple] CinderMetalFXModule.mm
+[3/15] Link [Apple] libUnrealEditor-CinderMetalFX.dylib
+[4/15] Compile [Apple] CinderHUD.cpp
+[5/15] Compile [Apple] CinderHelpContent.cpp
+[6/15] Compile [Apple] CinderPlayerController.cpp
+[7/15] Compile [Apple] CinderProductionControlTests.cpp
+[8/15] Link [Apple] libUnrealEditor-Cinderline.dylib
+[9/15] WriteMetadata CinderlineEditor.target [NoUba]
+** For Cinderline-Android-Development **
+[10/15] Compile [arm64] CinderHelpContent.cpp
+ERROR: Process 21340 (CinderHelpContent.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[11/15] Compile [arm64] CinderHUD.cpp
+ERROR: Process 21301 (CinderHUD.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 8.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[12/15] Compile [arm64] CinderPlayerController.cpp
+ERROR: Process 21382 (CinderPlayerController.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[13/15] Compile [arm64] CinderProductionControlTests.cpp
+ERROR: Process 21393 (CinderProductionControlTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[14/15] clang++ Cinderline-arm64.so
+ERROR: Process 21442 (Cinderline-arm64.so) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 9.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[15/15] WriteMetadata Cinderline.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 41.37 seconds
+Output binary: /Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Android/Cinderline-arm64.so
+Output binary: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealEditor
+Deploying CinderlineEditor Mac Development...
+Deploying now!
+
+Result: Succeeded
+Total execution time: 44.90 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 9.0kb
+Took 45.31s to run dotnet, ExitCode=0
+No build products were made
+Build command time: 45.32 s
+********** BUILD COMMAND COMPLETED **********
+********** COOK COMMAND STARTED **********
+Running UnrealEditor Cook for project /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject
+Commandlet log file is /Users/Shared/Epic Games/UE_5.8/Engine/Programs/AutomationTool/Saved/Cook-2026.09.15-16.21.25.txt
+Running: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealEditor-Cmd "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject" -run=Cook  -TargetPlatform=Android_Multi  -unversioned -CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9 -fileopenlog -abslog="/Users/Shared/Epic Games/UE_5.8/Engine/Programs/AutomationTool/Saved/Cook-2026.09.15-16.21.25.txt" -stdout -CrashForUAT -unattended -NoLogTimes
+Opening shared memory
+Existing instance is the same age or newer
+LogInit: Display: Running engine for game: Cinderline
+LogCore: Display: Requested channels: 'cpu,gpu,frame,log,bookmark,screenshot,region'
+LogTrace: Display: Control listening on port 37749
+LogCsvProfiler: Display: Metadata set : platform="Mac"
+LogCsvProfiler: Display: Metadata set : config="Development"
+LogCsvProfiler: Display: Metadata set : buildversion="++UE5+Release-5.8-CL-56702186"
+LogCsvProfiler: Display: Metadata set : engineversion="5.8.2-56702186+++UE5+Release-5.8"
+LogCsvProfiler: Display: Metadata set : enginereleaseversion="5.8.2"
+LogCsvProfiler: Display: Metadata set : os="macOS 27.0 26A428"
+LogCsvProfiler: Display: Metadata set : cpu="Apple|Apple M1 Max"
+LogCsvProfiler: Display: Metadata set : pgoenabled="0"
+LogCsvProfiler: Display: Metadata set : pgoprofilingenabled="0"
+LogCsvProfiler: Display: Metadata set : ltoenabled="0"
+LogCsvProfiler: Display: Metadata set : asan="0"
+LogCsvProfiler: Display: Metadata set : mergedmodules="0"
+LogCsvProfiler: Display: Metadata set : compacttset="0"
+LogCsvProfiler: Display: Metadata set : commandline="" "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject" -run=Cook -TargetPlatform=Android_Multi -unversioned -CookProcessCount=1 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreads=9 -ini:Engine:[DevOptions.Shaders]:NumUnusedShaderCompilingThreadsDuringGame=9 -fileopenlog -abslog="/Users/Shared/Epic Games/UE_5.8/Engine/Programs/AutomationTool/Saved/Cook-2026.09.15-16.21.25.txt" -stdout -CrashForUAT -unattended -NoLogTimes""
+LogCsvProfiler: Display: Metadata set : loginid="e153dc515844b7ef936fddb6789fe54e"
+LogCsvProfiler: Display: Metadata set : llm="0"
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogCsvProfiler: Display: Metadata set : zenstreaming="0"
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll -Mode=ValidatePlatforms -OutputSDKs -AllPlatforms -project=/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject -log=/Users/chirag13/Library/Logs/Unreal Engine/CinderlineEditor/AutoSDKInfo.txt -verbose -timestamps
+LogCsvProfiler: Display: Metadata set : systemresolution.resx="1280"
+LogCsvProfiler: Display: Metadata set : systemresolution.resy="720"
+Log file: /Users/chirag13/Library/Logs/Unreal Engine/CinderlineEditor/AutoSDKInfo.txt
+LogAudio: Display: Audio Device Manager not initializing due to all audio being disabled. If this is not intentional, please check command line arguments for "-nosound".
+LogAssetRegistry: Display: FindShardedCacheFiles: 1 via .ref, 0 via migration fallback, 1 total
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PreLoad): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+LogAssetRegistry: Display: LoadCacheFiles: loading 1 cache files, memory-mapping=enabled
+LogConfig: Display: Loading Mac ini files took 0.05 seconds
+LogConfig: Display: Loading Android ini files took 0.01 seconds
+LogConfig: Display: Loading IOS ini files took 0.08 seconds
+LogConfig: Display: Loading Windows ini files took 0.02 seconds
+LogConfig: Display: Loading Linux ini files took 0.10 seconds
+LogConfig: Display: Loading VisionOS ini files took 0.02 seconds
+LogConfig: Display: Loading TVOS ini files took 0.11 seconds
+LogConfig: Display: Loading VulkanPC ini files took 0.12 seconds
+LogConfig: Display: Loading Unix ini files took 0.13 seconds
+LogConfig: Display: Loading LinuxArm64 ini files took 0.15 seconds
+LogAssetRegistry: Display: Asset registry cache read as 118.7 MiB from ../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/CachedAssetRegistry/CachedAssetRegistry_0_892557A44C43F65C2452FC834ADF432A.bin (memory-mapped=no, platform unsupported)
+##PlatformValidate: Win64 INVALID <UNKNOWN>
+##PlatformValidate: Mac VALID 26.1.1
+##PlatformValidate: IOS VALID 26.1.1
+##PlatformValidate: Android VALID r27c
+##PlatformValidate: Linux INVALID <UNKNOWN>
+##PlatformValidate: LinuxArm64 INVALID <UNKNOWN>
+##PlatformValidate: TVOS VALID 26.1.1
+##PlatformValidate: VisionOS VALID 26.1.1
+Unable to find required SDK version 'MainVersion' for platform Win64. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform Linux. Check your SDK.json files
+Unable to find required SDK version 'MainVersion' for platform LinuxArm64. Check your SDK.json files
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 324b
+2026-09-15 16:21:34.078 UnrealEditor-Cmd[21518:1246514] [UE4] Shutdown handler: initialize.
+LogAsyncCompilation: Display: MemorySharingInfo: UsedMemory=481206MiB, MaxMemoryAvailable=32768MiB
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Log is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.CSV is disabled for this application
+LogAnalytics: Display: Provider StudioTelemetry.Provider.Horde is disabled for this application
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogHAL: Display: Platform has ~ 32 GB [34359738368 / 34359738368 / 32], which maps to Largest [LargestMinGB=32, LargerMinGB=12, DefaultMinGB=8, SmallerMinGB=6, SmallestMinGB=0)
+LogCsvProfiler: Display: Metadata set : extradevelopmentmemorymb="0"
+LogObj: Display: Attempting to load config data for Default__DownlinkBandwidthManagerConfig before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+LogTextureFormatASTC: Display: ASTCEnc version 5.0.1 library loaded
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatASTC
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatDXT
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatETC2
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatIntelISPCTexComp
+LogTextureFormatOodle: Display: Oodle Texture TFO init; latest sdk version = 2.9.16
+LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.16.dylib
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatOodle
+LogTextureFormatManager: Display: Loaded Base TextureFormat: TextureFormatUncompressed
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'IOS'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'IOSClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Mac'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacEditor'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacServer'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'MacClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'TVOS'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'TVOSClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_ASTC'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_DXT'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_ETC2'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'AndroidClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_ASTCClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_DXTClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_ETC2Client'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_Multi'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'Android_MultiClient'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'VisionOS'
+LogTargetPlatformManager: Display: Loaded TargetPlatform 'VisionOSClient'
+LogTargetPlatformManager: Display: Building Assets For Android_Multi
+LogObj: Display: Attempting to load config data for Default__SlateThemeManager before the Class has been constructed/registered/linked (likely during module loading or early startup). This will result in the load silently failing and should be fixed.
+LogTemp: Display: /Applications/Xcode.app/Contents/Developer
+
+LogCsvProfiler: Display: Metadata set : verbatimrhiname="Null"
+LogCsvProfiler: Display: Metadata set : rhiname="Null"
+LogCsvProfiler: Display: Metadata set : rhifeaturelevel="SM6"
+LogCsvProfiler: Display: Metadata set : shaderplatform="METAL_SM6"
+LogCsvProfiler: Display: Metadata set : gpu=""
+LogCsvProfiler: Display: Metadata set : gpudriver=""
+LogDerivedDataCache: Display: ../../../Engine/DerivedDataCache/Compressed.ddp: Opened pak cache for reading. (2978 MiB)
+LogZenServiceInstance: Display: Launching zen utility '/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/zen service status'.
+LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+LogZenServiceInstance: Display: Launching executable '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver', working dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install', data dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data', args '--port 8558 --data-dir "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data" --http asio --gc-cache-duration-seconds 1209600 --gc-interval-seconds 21600 --gc-low-diskspace-threshold 2147483648 --cache-bucket-limit-overwrites --quiet --restrict-content-types --allow-external-oidctoken-exe=false --plugins-config "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugins_v1.json" --security-config-path "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/security-config.json" --owner-pid 21518  --child-id Zen_21518_Startup --detach'
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogDerivedDataCache: Display: ZenLocal: Using ZenServer HTTP service at [::1] with namespace ue.ddc. Status: OK!.
+LogDerivedDataCache: Display: /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/DerivedDataCache: Performance: Latency=0.00ms. RandomReadSpeed=407.92MBs, RandomWriteSpeed=472.24MBs. Assigned SpeedClass 'Local'
+LogUbaHorde: Display: UBA/Horde Configuration [Uba.Provider.Horde]: Not Enabled
+LogShaderCompilers: Display: No distributed shader compiler controller found
+LogShaderCompilers: Display: Using 1 local workers for shader compilation
+LogShaderCompilers: Display: Compiling shader autogen file: ../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/ShaderAutogen/METAL_SM6/AutogenShaderHeaders.ush
+LogShaderCompilers: Display: Autogen file is unchanged, skipping write.
+LogEditorDomain: Display: EditorDomain is Disabled
+LogAssetRegistry: Display: AssetDataGatherer spent 0.000s loading caches from ../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/CachedAssetRegistry.
+LogDeviceProfileManager: Display: Deviceprofile LinuxArm64Editor not found.
+LogDeviceProfileManager: Display: Deviceprofile LinuxArm64 not found.
+LogCsvProfiler: Display: Metadata set : deviceprofile="MacEditor"
+LogStreaming: Display: FlushAsyncLoading(1): 1 QueuedPackages, 0 AsyncPackages
+LogTextureEncodingSettings: Display: Texture Encode Speed: Final (cook).
+LogTextureEncodingSettings: Display: Oodle Texture Encode Speed settings: Fast: RDO Off Lambda=0, Effort=Normal Final: RDO Off Lambda=0, Effort=Normal
+LogTextureEncodingSettings: Display: Shared linear texture encoding: Disabled
+LogMeshReduction: Display: HLOD mesh reduction module (r.ProxyLODMeshReductionModule) set to "ProxyLODMeshReduction" which doesn't exist.
+LogMeshReduction: Display: Using QuadricMeshReduction for automatic static mesh reduction
+LogMeshReduction: Display: Using SkeletalMeshReduction for automatic skeletal mesh reduction
+LogMeshReduction: Display: No automatic mesh merging module available
+LogMeshReduction: Display: No distributed automatic mesh merging module available
+LogVirtualization: Display: VirtualizationSystem name found in ini file: None
+LogVirtualization: Display: FNullVirtualizationSystem mounted, virtualization will be disabled
+LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize started...
+LogWorldPartition: Display: FWorldPartitionClassDescRegistry::Initialize took 3.589 ms
+LogMetaSound: Display: MetaSound Page Target Initialized to 'Default'
+LogAudio: Display: Registering Engine Module Parameter Interfaces...
+LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+LogAudioCaptureCore: Display: No Audio Capture implementations found. Audio input will be silent.
+LogCsvProfiler: Display: Metadata set : largeworldcoordinates="1"
+LogCsvProfiler: Display: Metadata set : raytracing="0"
+LogCook: Display: CookProcessCount=1. CookMultiprocess is disabled and the cooker is running as a single process.
+LogCook: Display: CookSettings for Memory:
+	MemoryMaxUsedVirtual 0MiB
+	MemoryMaxUsedPhysical 0MiB
+	MemoryMinFreeVirtual 2048MiB
+	MemoryMinFreePhysical 2048MiB
+	MemoryTriggerGCAtPressureLevel None
+	SoftGCMemoryUseTrigger disabled
+	SoftGCTimeBudgetTrigger enabled (0.05 budget, 30s min period)
+LogCook: Display: SkipOnlyEditorOnly is enabled, unsolicited packages will not be cooked unless they are referenced from the cooked version of the instigator package.
+LogCook: Display: ---- Pre Content Initialisation: End ----
+LogCook: Display: ---- Post Content Initialisation: Start ----
+LogEditorDomain: Display: Cycle detected in parents of class /Script/RigVMDeveloper.RigVMUnitNode. Allow flags for editordomain and incremental cooking will be invalid.
+LogZenStore: Display: Establishing oplog 'Cinderline.01ce9256/EditorDomain'
+LogZenStore: Display: Zen project 'Cinderline.01ce9256' already exists
+LogZenStore: Display: Zen oplog 'Cinderline.01ce9256/EditorDomain' already exists
+LogCook: Display: Waiting for Asset Registry
+LogAssetRegistry: Display: Starting OnFilesLoaded.Broadcast
+LogAssetRegistry: Display: Completed OnFilesLoaded.Broadcast: 0.013s
+LogAssetRegistry: Display: Asset registry cache written as 118.7 MiB to ../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/CachedAssetRegistry/CachedAssetRegistry_*.ref
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display:   CachedAssetRegistry_0_892557A44C43F65C2452FC834ADF432A.bin: deleted (orphaned, unreferenced by any .ref)
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 2 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 1 orphans deleted, 0 orphans locked (kept)
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+LogCook: Display: INCREMENTAL COOK DEPENDENCIES: Enabled. Incremental Cook Dependencies are enabled in Editor.ini:[CookSettings]:LegacyIterative=false.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogZenStore: Display: Establishing oplog 'Cinderline.01ce9256/Android_Multi'
+LogZenStore: Display: Zen project 'Cinderline.01ce9256' already exists
+LogStorageServerPlatformFile: Display: Found '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/ue.projectstore'
+LogStorageServerPlatformFile: Display: Using connection settings from ue.projectstore: HostAddrs='[::1]+192.168.31.109' and HostPort='8558'
+LogStorageServerPlatformFile: Display: Found '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/ue.projectstore'
+LogStorageServerPlatformFile: Display: Using password authentication from ue.projectstore
+LogStorageServerPlatformFile: Display: Using settings from ue.projectstore: ServerProject='Cinderline.01ce9256' and ServerPlatform='Android_Multi'
+LogStorageServerConnection: Display: Creating zen store connection to [::1]:8558 ("::1").
+LogStorageServerConnection: Display: Zen store connection established to [::1]:8558.
+LogCook: Display: CalculateGlobalDependenciesHash(Android_Multi):
+LogCook: Display: 	FGuid CookIncrementalVersion = ffa12fdc-c822-1fe2-7757-627a12f1d3a7
+LogCook: Display: 	[Editor]:CookSettings.ProjectCookIncrementalVersion = 00000000-0000-0000-0000-000000000000
+LogCook: Display: 	[Engine]:Core.System.CanStripEditorOnlyExportsAndImports = True
+LogCook: Display: 	[Engine]:Core.System.CanSkipEditorReferencedPackagesWhenCooking = False
+LogCook: Display: 	CanUseUnversionedPropertySerialization = True
+LogCook: Display: 	[Editor]:CookSettings.AutomaticOptionalInclusionAssetType = /Script/Niagara.NiagaraScript, /Script/Niagara.NiagaraEmitter, /Script/Niagara.NiagaraSystem, /Script/NiagaraEditor.NiagaraParameterDefinitions, /Script/Niagara.NiagaraEffectType, /Script/Niagara.NiagaraValidationRuleSet, /Script/OptimusCore.OptimusDeformer
+LogCook: Display: 	IsCookFlagSet(ECookInitializationFlags::Unversioned) = True
+LogCook: Display: 	FCoreRedirects::AppendHashOfGlobalRedirects = 02c9fd35aac3c00095df0219fc925d7070b41f449d3b97578d818a4016ee6805
+LogCook: Display: 	GlobalDependenciesHash(Android_Multi) = 2de5b37f143f8e25d634acd39f60ca4c07ed1761ed763f60105e89ce30e27192
+LogCook: Display: FULL COOK: Incremental Cooks are disabled by default in Editor.ini:[CookSettings]:CookIncrementalDefaultIncremental=false, and commandline did not specify -forcerecook=false. Deleting previously cooked packages for platform Android_Multi and recooking all packages discovered in the current cook.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogZenStore: Display: Deleting oplog 'Cinderline.01ce9256/Android_Multi' if it exists
+LogZenStoreWriter: Display: Deleting /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/...
+LogZenStore: Display: Zen oplog 'Cinderline.01ce9256/Android_Multi' created
+LogCook: Display: Sandbox cleanup took 0.020 seconds for platforms Android_Multi
+LogCook: Display: Compiling global changed shaders for platform 'Android_Multi'
+LogShaderLibrary: Display:
+LogShaderLibrary: Display: Shader Library 'Global' (SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID) Stats:
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display: Assets: 1, Unique Shadermaps: 189 (18900.00%)
+LogShaderLibrary: Display: Total Shaders: 1828, Unique Shaders: 1821 (99.62%)
+LogShaderLibrary: Display: Total Shader Size: 6.46mb, Unique Shaders Size: 6.46mb (99.95%)
+LogShaderLibrary: Display: === Extended info:
+LogShaderLibrary: Display: Minimum number of shaders in shadermap: 1
+LogShaderLibrary: Display: Median number of shaders in shadermap: 2
+LogShaderLibrary: Display: Maximum number of shaders in shadermap: 205
+LogShaderLibrary: Display: Number of shadermaps referencing top 10 most shared shaders:
+LogShaderLibrary: Display:     3, 3, 2, 2, 2, 1, 1, 1, 1, 1
+LogShaderLibrary: Display: Unique shaders itemization (sorted by compressed size):
+LogShaderLibrary: Display: SF_Compute: 875 shaders (48.05%), compressed size: 3.61 MB (4.22 KB avg per shader), uncompressed size: 13.70 MB (16.03 KB avg per shader)
+LogShaderLibrary: Display: SF_Pixel: 862 shaders (47.34%), compressed size: 2.77 MB (3.29 KB avg per shader), uncompressed size: 9.13 MB (10.85 KB avg per shader)
+LogShaderLibrary: Display: SF_Vertex: 84 shaders (4.61%), compressed size: 0.08 MB (1.03 KB avg per shader), uncompressed size: 0.19 MB (2.33 KB avg per shader)
+LogShaderLibrary: Display: Textual dump saved to '../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Shaders/SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID/ShaderDebug-Global-SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID/Dump.txt'
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display:
+LogShaderLibrary: Display: Shader Library 'Global' (GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID) Stats:
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display: Assets: 1, Unique Shadermaps: 187 (18700.00%)
+LogShaderLibrary: Display: Total Shaders: 1761, Unique Shaders: 1761 (100.00%)
+LogShaderLibrary: Display: Total Shader Size: 4.87mb, Unique Shaders Size: 4.87mb (100.00%)
+LogShaderLibrary: Display: === Extended info:
+LogShaderLibrary: Display: Minimum number of shaders in shadermap: 1
+LogShaderLibrary: Display: Median number of shaders in shadermap: 2
+LogShaderLibrary: Display: Maximum number of shaders in shadermap: 205
+LogShaderLibrary: Display: Number of shadermaps referencing top 10 most shared shaders:
+LogShaderLibrary: Display:     1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+LogShaderLibrary: Display: Unique shaders itemization (sorted by compressed size):
+LogShaderLibrary: Display: SF_Compute: 816 shaders (46.34%), compressed size: 2.63 MB (3.30 KB avg per shader), uncompressed size: 12.44 MB (15.61 KB avg per shader)
+LogShaderLibrary: Display: SF_Pixel: 861 shaders (48.89%), compressed size: 2.17 MB (2.58 KB avg per shader), uncompressed size: 7.39 MB (8.79 KB avg per shader)
+LogShaderLibrary: Display: SF_Vertex: 84 shaders (4.77%), compressed size: 0.06 MB (0.79 KB avg per shader), uncompressed size: 0.13 MB (1.61 KB avg per shader)
+LogShaderLibrary: Display: Textual dump saved to '../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Shaders/GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID/ShaderDebug-Global-GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID/Dump.txt'
+LogShaderLibrary: Display: =================
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogCook: Display: Discovering localized assets for cultures: en
+LogCook: Display: Found 0 localized assets
+LogCook: Display: ---- Post Content Initialisation: End ----
+LogCook: Display: Cooked packages 0 Packages Remain 604 Total 604
+LogCook: Display: Cook Diagnostics: OpenFileHandles=192, VirtualMemory=483258MiB, VirtualMemoryAvailable=8904MiB
+LogCook: Display: Garbage collection triggered (Soft). Triggered by conditions:
+  CookSettings.SoftGCTimeTrigger: Periodic triggering of SoftGC: No duration data.
+LogCookCommandlet: Display: GarbageCollection... (Periodic GC)
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Blend but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Mask but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Transmission but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Opaque but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Mask but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Blend but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Opaque_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Mask_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Sheen_Blend_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_Transmission_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Opaque_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Mask_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: PreloadableFile was created for /InterchangeAssets/gltf/MaterialInstances/MI_SpecularGlossiness_Blend_DS but never used. This is wasteful and bad for cook performance.
+LogCook: Display: Cooked packages 256 Packages Remain 400 Total 656
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_HighQuality_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Fast_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm_small__dyn__fp16_opset11_DenoiseAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTIM_ColorAlbedoNormal_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDT_Oidn2-3_Balanced_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_calb_cnrm_large__dyn__fp16_opset11_ForwardAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_ColorAlbedoNormal_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDOM_Output_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm__dyn__fp16_opset11_ForwardAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDOM_Output_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_HighQuality_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_ColorAlbedoNormal_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDT_Oidn2-3_Balanced -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Fast -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTIM_ColorAlbedoNormal_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDIM_HighQuality_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm__dyn__fp16_opset11_DenoiseAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_HighQuality -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTOM_Output_Alpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Balanced -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_alb_nrm_small__dyn__fp16_opset11_ForwardAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNEDTOM_Output_Default -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNE_oidn2-3-0_rt_hdr_calb_cnrm_large__dyn__fp16_opset11_DenoiseAlpha -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /NNEDenoiser/NNED_Oidn2-3_Balanced_Alpha -> Rejected PlatformSpecificNeverCook
+LogTextureBuildUtilities: Display: Unexpected non-BC PixelFormat: 47.
+LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.11.dylib
+LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.12.dylib
+LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.15.dylib
+LogTextureFormatOodle: Display: Oodle Texture loading DLL: liboo2texmac64.2.9.13.dylib
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultMaterialXPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultGLTFAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultGLTFPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultFBXOBJAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultMaterialPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultTexturePipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultAudioPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultSceneAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultSceneLevelPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultGLTFSceneAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooking /Interchange/Pipelines/DefaultFBXOBJSceneAssetsPipeline -> Rejected PlatformSpecificNeverCook
+LogCook: Display: Cooked packages 656 Packages Remain 0 Total 656
+LogCook: Display: Cook Diagnostics: OpenFileHandles=193, VirtualMemory=483729MiB, VirtualMemoryAvailable=9283MiB
+LogCook: Display: ---- Finalisation: Start ----
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogCook: Display: CookArtifact '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/ValidationCookArtifact.json' saved.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogAssetRegistryGenerator: Display: Saving asset registry v24.
+LogConfig: Display: Branch Engine had commandline override(s), so override NoReplay mode. This will use a bit more memory, but is needed for plugin/GFP handling.
+LogAssetRegistryGenerator: Display: Generated development asset registry /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/DevelopmentAssetRegistry.bin num assets 658, size is 529.43kb, XxHash64[LE] = 0x34C4CDD6AEC01CBB, waited on hash 0.00 seconds
+LogAssetRegistryGenerator: Display: Generated asset registry num assets 615, size is 186.14kb
+LogShaderLibrary: Display:
+LogShaderLibrary: Display: Shader Library 'Cinderline' (SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID) Stats:
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display: Assets: 121, Unique Shadermaps: 118 (97.52%)
+LogShaderLibrary: Display: Total Shaders: 1033, Unique Shaders: 738 (71.44%)
+LogShaderLibrary: Display: Total Shader Size: 3.83mb, Unique Shaders Size: 2.98mb (77.77%)
+LogShaderLibrary: Display: === Extended info:
+LogShaderLibrary: Display: Minimum number of shaders in shadermap: 1
+LogShaderLibrary: Display: Median number of shaders in shadermap: 4
+LogShaderLibrary: Display: Maximum number of shaders in shadermap: 188
+LogShaderLibrary: Display: Number of shadermaps referencing top 10 most shared shaders:
+LogShaderLibrary: Display:     27, 16, 15, 15, 12, 11, 11, 9, 9, 9
+LogShaderLibrary: Display: Unique shaders itemization (sorted by compressed size):
+LogShaderLibrary: Display: SF_Pixel: 438 shaders (59.35%), compressed size: 1.84 MB (4.30 KB avg per shader), uncompressed size: 7.15 MB (16.72 KB avg per shader)
+LogShaderLibrary: Display: SF_Vertex: 251 shaders (34.01%), compressed size: 0.96 MB (3.93 KB avg per shader), uncompressed size: 3.40 MB (13.87 KB avg per shader)
+LogShaderLibrary: Display: SF_Compute: 49 shaders (6.64%), compressed size: 0.17 MB (3.59 KB avg per shader), uncompressed size: 0.63 MB (13.24 KB avg per shader)
+LogShaderLibrary: Display: Textual dump saved to '../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Shaders/SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID/ShaderDebug-Cinderline-SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID/Dump.txt'
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display:
+LogShaderLibrary: Display: Shader Library 'Cinderline' (GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID) Stats:
+LogShaderLibrary: Display: =================
+LogShaderLibrary: Display: Assets: 121, Unique Shadermaps: 118 (97.52%)
+LogShaderLibrary: Display: Total Shaders: 996, Unique Shaders: 713 (71.59%)
+LogShaderLibrary: Display: Total Shader Size: 3.04mb, Unique Shaders Size: 2.37mb (78.16%)
+LogShaderLibrary: Display: === Extended info:
+LogShaderLibrary: Display: Minimum number of shaders in shadermap: 1
+LogShaderLibrary: Display: Median number of shaders in shadermap: 4
+LogShaderLibrary: Display: Maximum number of shaders in shadermap: 177
+LogShaderLibrary: Display: Number of shadermaps referencing top 10 most shared shaders:
+LogShaderLibrary: Display:     27, 16, 15, 15, 13, 11, 11, 9, 9, 9
+LogShaderLibrary: Display: Unique shaders itemization (sorted by compressed size):
+LogShaderLibrary: Display: SF_Pixel: 413 shaders (57.92%), compressed size: 1.49 MB (3.69 KB avg per shader), uncompressed size: 6.16 MB (15.27 KB avg per shader)
+LogShaderLibrary: Display: SF_Vertex: 251 shaders (35.20%), compressed size: 0.76 MB (3.08 KB avg per shader), uncompressed size: 2.45 MB (10.00 KB avg per shader)
+LogShaderLibrary: Display: SF_Compute: 49 shaders (6.87%), compressed size: 0.13 MB (2.73 KB avg per shader), uncompressed size: 0.49 MB (10.29 KB avg per shader)
+LogShaderLibrary: Display: Textual dump saved to '../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Shaders/GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID/ShaderDebug-Cinderline-GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID/Dump.txt'
+LogShaderLibrary: Display: =================
+LogCook: Display: Dependent plugin "SteamShared" referenced by "EOS Shared" wasn't found in enabled plugins list when creating cook metadata file... skipping
+LogCook: Display: Dependent plugin "UAF" referenced by "IK Rig" wasn't found in enabled plugins list when creating cook metadata file... skipping
+LogCook: Display: Dependent plugin "UAFAnimGraph" referenced by "IK Rig" wasn't found in enabled plugins list when creating cook metadata file... skipping
+LogCook: Display: Finalize package store(s)...
+LogZenStoreWriter: Display: Flushing...
+LogZenStoreWriter: Display: Saving Zen filesystem manifest '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/zenfs.manifest'
+LogZenStoreWriter: Display: Output:	48779 Public runtime script objects
+LogCook: Display: Cook by the book total time in tick 4.164262s total time 6.945419
+LogCook: Display: Peak Used virtual 483800 MiB Peak Used physical 1822 MiB
+LogCook: Display: Packages Cooked: 613, Packages Incrementally Skipped: 0, Packages Skipped by Platform: 43, Total Packages: 656
+LogCookStats: Display: Hierarchy Timer Information:
+LogCookStats: Display:   Root: 0.000s (0)
+LogCookStats: Display:     CleanSandbox: 0.020s (1)
+LogCookStats: Display:     CollectFilesToCook: 0.006s (1)
+LogCookStats: Display:       CookModificationDelegate: 0.000s (1)
+LogCookStats: Display:     GenerateLongPackageName: 0.001s (1)
+LogCookStats: Display:     TickMainCookLoop: 4.164s (2)
+LogCookStats: Display:       PumpPollables: 0.000s (2)
+LogCookStats: Display:       PumpRequests: 0.017s (21)
+LogCookStats: Display:       LoadPackageForCooking: 1.034s (656)
+LogCookStats: Display:       ValidateSourcePackage: 0.000s (656)
+LogCookStats: Display:       SavingPackages: 3.030s (75)
+LogCookStats: Display:         PollPendingCookedPlatformDatas: 0.053s (1833)
+LogCookStats: Display:         PrepareSave: 1.199s (1242)
+LogCookStats: Display:         PrecachePlatformDataForNextPackage: 1.265s (655)
+LogCookStats: Display:           PrepareSave: 1.265s (816)
+LogCookStats: Display:         SaveCookedPackage: 0.501s (656)
+LogCookStats: Display:           GEditorSavePackage: 0.401s (620)
+LogCookStats: Display:             VerifyCanCookPackage: 0.001s (613)
+LogCookStats: Display:           TargetDomainDependencies: 0.069s (620)
+LogCookStats: Display:         ClearAllCachedCookedPlatformData: 0.007s (656)
+LogCookStats: Display:       PostLoadPackageFixup: 0.000s (2)
+LogCookStats: Display:       WaitForAsync: 0.054s (5)
+LogCookStats: Display:     CookByTheBookFinished: 0.192s (1)
+LogCookStats: Display:       SavingCurrentIniSettings: 0.015s (1)
+LogCookStats: Display:         ProcessingAccessedStrings: 0.002s (1)
+LogCookStats: Display:       ChunkGeneration: 0.010s (1)
+LogCookStats: Display:       FinishPopulateShaderLibrary: 0.001s (1)
+LogCookStats: Display:       CalculateReferencedSet: 0.000s (1)
+LogCookStats: Display:       CookArtifacts.UpdateOplogPackages: 0.003s (1)
+LogCookStats: Display:       PruneShaderLibrary: 0.000s (1)
+LogCookStats: Display:       GeneratorPreSave: 0.000s (1)
+LogCookStats: Display:       BuildChunkManifest: 0.008s (1)
+LogCookStats: Display:         FixupPackageDependenciesForChunks: 0.005s (1)
+LogCookStats: Display:       SaveManifests: 0.000s (1)
+LogCookStats: Display:       SaveAssetRegistry: 0.021s (1)
+LogCookStats: Display:       WriteCookerOpenOrder: 0.002s (1)
+LogCookStats: Display:       WriteCookMetadata: 0.001s (1)
+LogCookStats: Display:       WriteReferencedSet: 0.001s (1)
+LogCookStats: Display:       FinalizePackageStore: 0.080s (1)
+LogCookStats: Display: Misc Cook Stats
+LogCookStats: Display: ===============
+LogCookStats: Display: Validation
+LogCookStats: Display:     Stats=[]
+LogCookStats: Display: Niagara
+LogCookStats: Display:     NiagaraScriptTranslationCount=0
+LogCookStats: Display:     NiagaraCpuScriptCompileCount=0
+LogCookStats: Display:     NiagaraCpuScriptDdcCacheHitCount=0
+LogCookStats: Display:     NiagaraCpuScriptDdcCacheMissCount=0
+LogCookStats: Display:     NiagaraGpuScriptCompileCount=0
+LogCookStats: Display:     NiagaraGpuScriptDdcCacheHitCount=0
+LogCookStats: Display:     NiagaraGpuScriptDdcCacheMissCount=0
+LogCookStats: Display:     NiagaraSystemWaitForCompilationCompleteTime=0.000000
+LogCookStats: Display: ComputeKernelShader.Misc
+LogCookStats: Display:     ShadersCompiled=0
+LogCookStats: Display: NiagaraShader.Misc
+LogCookStats: Display:     ShadersCompiled=0
+LogCookStats: Display: ShaderCompiler
+LogCookStats: Display:     BlockingTimeSec=0.000091
+LogCookStats: Display:     AsyncCompileTimeSec=0.000000
+LogCookStats: Display:     GlobalBeginCompileShaderTimeSec=0.000000
+LogCookStats: Display:     GlobalBeginCompileShaderCalls=0
+LogCookStats: Display:     ProcessAsyncResultsTimeSec=0.000110
+LogCookStats: Display: GlobalShader.Misc
+LogCookStats: Display:     ShadersCompiled=0
+LogCookStats: Display: Material
+LogCookStats: Display:     FinishCacheShadersSec=0.247645
+LogCookStats: Display: Cook.Profile.Params
+LogCookStats: Display:     CookProject=Cinderline
+LogCookStats: Display:     CookCultures=
+LogCookStats: Display:     CookLabel=
+LogCookStats: Display:     TargetPlatforms=Android_Multi
+LogCookStats: Display:     IsCookAll=false
+LogCookStats: Display:     IsCookOnTheFly=false
+LogCookStats: Display:     IsIncrementalCook=false
+LogCookStats: Display:     IsIterativeCook=false
+LogCookStats: Display:     IsFastCook=false
+LogCookStats: Display:     IsUnversioned=true
+LogCookStats: Display: CookOnTheFlyServer.Package.Load
+LogCookStats: Display:     NumRequestedLoads=291
+LogCookStats: Display:     NumPackagesLoaded=3468
+LogCookStats: Display:     NumInlineLoads=3177
+LogCookStats: Display: CookOnTheFlyServer.Package.Save
+LogCookStats: Display:     NumPackagesIncrementallySkipped=0
+LogCookStats: Display: CookOnTheFlyServer.QueueSize
+LogCookStats: Display:     PeakRequest=655
+LogCookStats: Display:     PeakLoad=56
+LogCookStats: Display:     PeakSave=66
+LogCookStats: Display: Package.Load
+LogCookStats: Display:     LoadPackageTimeSec=1.212986
+LogCookStats: Display: Package.Save
+LogCookStats: Display:     NumPackagesSaved=620
+LogCookStats: Display:     SavePackageTimeSec=0.382306
+LogCookStats: Display:     TagPackageExportsPresaveTimeSec=0.000000
+LogCookStats: Display:     TagPackageExportsTimeSec=0.000000
+LogCookStats: Display:     FullyLoadLoadersTimeSec=0.000000
+LogCookStats: Display:     ResetLoadersTimeSec=0.000000
+LogCookStats: Display:     TagPackageExportsGetObjectsWithOuter=0.000000
+LogCookStats: Display:     TagPackageExportsGetObjectsWithMarks=0.000000
+LogCookStats: Display:     SerializeImportsTimeSec=0.000000
+LogCookStats: Display:     SortExportsSeekfreeInnerTimeSec=0.000000
+LogCookStats: Display:     SerializeExportsTimeSec=0.000000
+LogCookStats: Display:     SerializeBulkDataTimeSec=0.001957
+LogCookStats: Display:     AsyncWriteTimeSec=0.000000
+LogCookStats: Display:     MBWritten=0.000000
+LogCookStats: Display: Package.DifferentPackagesSizeMBPerAsset
+LogCookStats: Display: Package.NumberOfDifferencesInPackagesPerAsset
+LogCookStats: Display: Package.PackageDifferencesSizeMBPerAsset
+LogCookStats: Display: Package.DiffTotal
+LogCookStats: Display:     NumberOfDifferentPackages=0
+LogCookStats: Display:     DifferentPackagesSizeMB=0.000000
+LogCookStats: Display:     NumberOfDifferencesInPackages=0
+LogCookStats: Display:     PackageDifferencesSizeMB=0.000000
+LogCookStats: Display: UnversionedProperties
+LogCookStats: Display:     SavedStructs=0
+LogCookStats: Display:     SavedMB=0
+LogCookStats: Display:     EquivalentTaggedMB=0
+LogCookStats: Display:     CompressionRatio=nan
+LogCookStats: Display:     BitfieldWasteKB=0
+LogCookStats: Display:
+LogCookStats: Display: Cook Profile
+LogCookStats: Display: ============
+LogCookStats: Display:  0.CookWallTimeSec=31.717601
+LogCookStats: Display:  0. 0.StartupWallTimeSec=24.552758
+LogCookStats: Display:  0. 1.CookProcessingTime=7.164843
+LogCookStats: Display:  0. 1. 1.StartCookByTheBookTimeSec=2.784801
+LogCookStats: Display:  0. 1. 1. 0.BlockOnAssetRegistryTimeSec=1.030613
+LogCookStats: Display:  0. 1. 1. 1.GameCookModificationDelegateTimeSec=0.000046
+LogCookStats: Display:  0. 1. 2.TickCookOnTheSideTimeSec=0.315816
+LogCookStats: Display:  0. 1. 2. 0.TickCookOnTheSideLoadPackagesTimeSec=1.034153
+LogCookStats: Display:  0. 1. 2. 1.TickCookOnTheSideSaveCookedPackageTimeSec=0.501501
+LogCookStats: Display:  0. 1. 2. 1. 0.TickCookOnTheSideResolveRedirectorsTimeSec=0.000000
+LogCookStats: Display:  0. 1. 2. 2.TickCookOnTheSidePrepareSaveTimeSec=2.463991
+LogCookStats: Display:  0. 1. 3.TickLoopGCTimeSec=0.019223
+LogCookStats: Display:  0. 1. 4.TickLoopRecompileShaderRequestsTimeSec=0.000000
+LogCookStats: Display:  0. 1. 5.TickLoopShaderProcessAsyncResultsTimeSec=0.000002
+LogCookStats: Display:  0. 1. 6.TickLoopProcessDeferredCommandsTimeSec=0.000008
+LogCookStats: Display:  0. 1. 7.TickLoopTickCommandletStatsTimeSec=0.000000
+LogCookStats: Display:  0. 1. 8.TickLoopFlushRenderingCommandsTimeSec=0.000088
+LogCookStats: Display:  0. 1. 9.ShaderFlushTimeSec=0.000000
+LogCookStats: Display:  0. 1. 10.ValidationTimeSec=0.000062
+LogCookStats: Display:
+LogCookStats: Display: DDC Summary Stats
+LogCookStats: Display: =================
+LogCookStats: Display: BackEnd         = Installed
+LogCookStats: Display: HasLocalCache   =      true
+LogCookStats: Display: HasSharedCache  =     false
+LogCookStats: Display: HasCloudCache   =     false
+LogCookStats: Display: HasZenCache     =      true
+LogCookStats: Display: TotalGetHits    =      4995
+LogCookStats: Display: TotalGetMisses  =         0
+LogCookStats: Display: TotalGets       =      4995
+LogCookStats: Display: TotalGetHitPct  =  1.000000
+LogCookStats: Display: GetMissPct      =  0.000000
+LogCookStats: Display: TotalPutHits    =         0
+LogCookStats: Display: TotalPutMisses  =         0
+LogCookStats: Display: TotalPuts       =         0
+LogCookStats: Display: TotalPutHitPct  =  0.000000
+LogCookStats: Display: PutMissPct      =  0.000000
+LogCookStats: Display: LocalGetHits    =      4984
+LogCookStats: Display: LocalGetMisses  =         0
+LogCookStats: Display: LocalGetTotal   =      4984
+LogCookStats: Display: LocalGetHitPct  =  1.000000
+LogCookStats: Display: SharedGetHits   =         0
+LogCookStats: Display: SharedGetTotal  =         0
+LogCookStats: Display: SharedGetHitPct =  0.000000
+LogCookStats: Display: ZenLocalGetHits =      4984
+LogCookStats: Display: ZenLocalGetTotal=      4984
+LogCookStats: Display: ZenLocalGetHitPct=  1.000000
+LogCookStats: Display: ZenRemoteGetHits=         0
+LogCookStats: Display: ZenRemoteGetTotal=         0
+LogCookStats: Display: ZenRemoteGetHitPct=  0.000000
+LogCookStats: Display: ZenRemoteReadSpeed=  0.000000
+LogCookStats: Display: ZenRemoteWriteSpeed=  0.000000
+LogCookStats: Display: ZenRemoteLatency=  0.000000
+LogCookStats: Display: CloudGetHits    =         0
+LogCookStats: Display: CloudGetTotal   =         0
+LogCookStats: Display: CloudGetHitPct  =  0.000000
+LogCookStats: Display: LocalLatency    =  0.889172
+LogCookStats: Display: LocalReadSpeed  =167.384442
+LogCookStats: Display: LocalWriteSpeed =  0.000000
+LogCookStats: Display: SharedLatency   =  0.000000
+LogCookStats: Display: SharedReadSpeed =  0.000000
+LogCookStats: Display: SharedWriteSpeed=  0.000000
+LogCookStats: Display: CloudLatency    =  0.000000
+LogCookStats: Display: CloudReadSpeed  =  0.000000
+LogCookStats: Display: CloudWriteSpeed =  0.000000
+LogCookStats: Display:
+LogCookStats: Display: DDC Resource Stats
+LogCookStats: Display: =======================================================================================================
+LogCookStats: Display: Asset Type                          Total Time (Sec)  GameThread Time (Sec)  Assets Built  MB Processed
+LogCookStats: Display: ----------------------------------  ----------------  ---------------------  ------------  ------------
+LogCookStats: Display: BulkDataList                                    0.68                   0.00             0          0.57
+LogCookStats: Display: Texture                                         0.34                   0.00             0        114.76
+LogCookStats: Display: GlobalShader                                    0.24                   0.01             0         12.23
+LogCookStats: Display: MaterialShader                                  0.13                   0.08             0          8.48
+LogCookStats: Display: StaticMesh                                      0.07                   0.00             0         11.78
+LogCookStats: Display: CardRepresentation                              0.04                   0.00             0          0.04
+LogCookStats: Display: NavCollision                                    0.04                   0.00             0          0.08
+LogCookStats: Display: STREAMEDAUDIO                                   0.01                   0.00             0          0.12
+LogCookStats: Display: Audio                                           0.01                   0.00             0          0.11
+LogCookStats: Display: BodySetup                                       0.01                   0.00             0          2.60
+LogCookStats: Display: CKERSM                                          0.00                   0.00             0          0.19
+LogCookStats: Display:
+LogCookStats: Display: Accumulated DDC Resource Stats Per Asset Type
+LogCookStats: Display: =======================================================================================================
+LogCookStats: Display: AnimationSequence                               0.00                   0.00             0          0.00
+LogCookStats: Display: Audio                                           0.01                   0.00             0          0.11
+LogCookStats: Display: CardRepresentation                              0.04                   0.00             0          0.04
+LogCookStats: Display: DistanceField                                   0.00                   0.00             0          0.00
+LogCookStats: Display: MaterialShader                                  0.13                   0.08             0          8.48
+LogCookStats: Display: MaterialTranslation                             0.00                   0.00             0          0.00
+LogCookStats: Display: NiagaraScript                                   0.00                   0.00             0          0.00
+LogCookStats: Display: SkeletalMesh                                    0.00                   0.00             0          0.00
+LogCookStats: Display: StaticMesh                                      0.07                   0.00             0         11.78
+LogCookStats: Display: Texture                                         0.34                   0.00             0        114.76
+LogCookStats: Display: Other                                           0.98                   0.01             0         15.79
+LogPackageBuildDependencyTracker: Display: Package Accesses (338 referencing packages with a total of 2504 unique accesses)
+LogConfigBuildDependencyTracker: Display: Config Accesses (454 referencing packages with a total of 3228 unique accesses). 1726 unique accesses that were not associated with a package.
+LogCook: Display: ---- Finalisation: End ----
+LogCook: Display: Done!
+LogSavePackage: Display: Took 0.000326s to verify the EDL loading graph.
+LogInit: Display:
+LogInit: Display: Success - 0 error(s), 0 warning(s)
+LogInit: Display:
+Execution of commandlet took:  7.17 seconds, PeakPhysMemoryMB=1822 MB, PeakVirtMemoryMB=483800 MB
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 1 .ref files found, 1 referenced binaries
+LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 1 total binaries, 1 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+LogStreaming: Display: ============ Loader Stats ============
+LogStreaming: Display: Unique Partial Flushes: 0
+LogStreaming: Display: ============ Loader Stats End ============
+LogShaderCompilers: Display: Exiting ShaderCompilingThread
+2026-09-15 16:22:04.398 UnrealEditor-Cmd[21518:1246322] [UE4] Shutdown handler: cleanup.
+Took 38.83s to run UnrealEditor-Cmd, ExitCode=0
+Cook command time: 38.87 s
+********** COOK COMMAND COMPLETED **********
+********** STAGE COMMAND STARTED **********
+Creating UECommandLine.txt
+Creating Staging Manifest...
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/PortableObjectImport.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/RepairData.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseEditorSettings.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseEditorKeyBindings.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/Editor.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseLightmass.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/Category.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/Keywords.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/WordCount.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseEditor.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BasePakFileRules.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/PortableObjectExport.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/ToolTips.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/Engine.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Localization/PropertyNames.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseEditorPerProjectUserSettings.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseUnrealInsightsSettings.ini
+Excluding config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseSourceControlSettings.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/ConsoleVariables.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Android/BaseAndroidGame.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Android/BaseAndroidEngine.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Android/BaseAndroidInstallBundle.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Android/AndroidEngine.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Android/BaseAndroidInput.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Android/AndroidScalability.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseCompat.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseInstallBundle.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseInput.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/PluginBase.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseGameUserSettings.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseGame.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseDeviceProfiles.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseMaterialExpressions.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Base.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseScalability.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Android/DataDrivenPlatformInfo.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Layouts/UE4ClassicLayout.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/Layouts/DefaultLayout.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/VulkanPC/DataDrivenPlatformInfo.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseRuntimeOptions.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseHardware.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/BaseEngine.ini
+Including config file /Users/Shared/Epic Games/UE_5.8/Engine/Config/ConfigRedirects.ini
+The config file 'Cinderline/Config/UserEngine.ini' will be staged, but is not explicitly allowed or denied. Add +AllowedConfigFiles=Cinderline/Config/UserEngine.ini or +DisallowedConfigFiles=Cinderline/Config/UserEngine.ini to the [Staging] section of DefaultGame.ini
+Including config file /Volumes/Codex Storage/Cinderline/Android/workspace/Config/DefaultInput.ini
+Including config file /Volumes/Codex Storage/Cinderline/Android/workspace/Config/DefaultEngine.ini
+Including config file /Volumes/Codex Storage/Cinderline/Android/workspace/Config/DefaultDeviceProfiles.ini
+Including config file /Volumes/Codex Storage/Cinderline/Android/workspace/Config/UserEngine.ini
+Including config file /Volumes/Codex Storage/Cinderline/Android/workspace/Config/DefaultGame.ini
+Reading oplog from Zen...
+Reading oplog from http://[::1]:8558/prj/Cinderline.01ce9256/oplog/Android_Multi/entries?trim_by_referencedset=true
+Parsed 615 package entries from oplog.
+Cleaning Stage Directory: /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi
+Creating pak using staging manifest.
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PrePak_Android_Multi_NonUFSFiles.txt, NumItems: 4
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PrePak_Android_Multi_NonUFSFilesDebug.txt, NumItems: 5
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PrePak_Android_Multi_UFSFiles.txt, NumItems: 2579
+Excluding /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Engine/Content/EngineMaterials/DefaultCalibrationGrayscale.uasset from pak files
+Excluding /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Engine/Content/EngineMaterials/DefaultCalibrationColor.uasset from pak files
+Excluding /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Engine/Content/EngineMaterials/DefaultBloomKernel.uasset from pak files
+Excluding /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Engine/Content/EngineMaterials/PPM_DefaultCalibrationGrayscale.uasset from pak files
+Excluding /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Engine/Content/EngineMaterials/PPM_DefaultCalibrationColor.uasset from pak files
+Using 0 pak order files:
+Running UnrealPak with arguments: "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject"  -cryptokeys="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/Crypto.json" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid  -ProjectStore="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/ue.projectstore" -platform=Android  -CreateMultiple="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PakCommands.txt"
+Running: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealPak "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject"  -cryptokeys="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/Crypto.json" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid  -ProjectStore="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/ue.projectstore" -platform=Android  -CreateMultiple="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/PakCommands.txt"
+OodleDataCompression: Display: Oodle v2.9.16 format for pak/iostore with method=Mermaid, level=4=Normal
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogPakFile: Display: ProjectDir: ../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/
+LogPakFile: Display: Parsing crypto keys from a crypto key cache file
+LogPakFile: Display: CompressionFormats in priority order: Oodle, Zlib
+LogZenServiceInstance: Display: Launching zen utility '/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/zen service status'.
+LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+LogZenServiceInstance: Warning: Found locked valid lock file '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data/.lock' but can't find registered process (Pid: 21559), will attempt shut down
+LogZenServiceInstance: Warning: Found locked but invalid lock file at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data/.lock', attempting shut down of zenserver process with pid 21559
+LogZenServiceInstance: Display: No longer any active process with pid 21559
+LogZenServiceInstance: Display: Launching executable '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver', working dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install', data dir '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data', args '--port 8558 --data-dir "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Data" --http asio --gc-cache-duration-seconds 1209600 --gc-interval-seconds 21600 --gc-low-diskspace-threshold 2147483648 --cache-bucket-limit-overwrites --quiet --restrict-content-types --allow-external-oidctoken-exe=false --plugins-config "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugins_v1.json" --security-config-path "/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/security-config.json" --owner-pid 21631  --child-id Zen_21631_Startup --detach'
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogZenStore: Display: Opening oplog Cinderline.01ce9256 / Android_Multi
+LogIoStore: Display: Fetched 616 oplog items from Zen in 0.78 seconds
+LogIoStore: Display: Parsed 616 oplog items 0.01 seconds, 3621 chunks
+LogIoStore: Display: Loaded 845 chunk hashes from Zen in 0.01 seconds, 845 hashes updated in 0.00 seconds
+LogPakFile: Display: Oodle enabled on 'NoPluginCompression' files
+LogPakFile: Display: Loading response file /Users/Shared/Epic Games/UE_5.8/Engine/Programs/AutomationTool/Saved/ResponseFiles/PakList_Cinderline-Android_Multi.txt
+LogPakFile: Display: Added 1730 entries to add to pak file.
+LogPakFile: Display: Collecting files to add to pak file...
+LogPakFile: Display: Collected 1730 files in 0.01s.
+LogPakFile: Display: Creating pak /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi/Cinderline/Content/Paks/Cinderline-Android_Multi.pak.
+LogPakFile: Display: Created pak file: /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi/Cinderline/Content/Paks/Cinderline-Android_Multi.pak
+LogPakFile: Display: CompressionFormat 0 [Oodle] : 371 files, 23325166 -> 9552548 bytes
+LogPakFile: Display: CompressionFormat 2 [None] : 1359 files, 1199357 -> 1199357 bytes
+LogPakFile: Display: Added 1730 files, 10991530 bytes total
+LogPakFile: Display: PrimaryIndex size: 23686 bytes
+LogPakFile: Display: PathHashIndex size: 54183 bytes
+LogPakFile: Display: FullDirectoryIndex size: 57641 bytes
+LogPakFile: Display: Compression summary: 40.95% of original size. Compressed Size 9552548 bytes, Original Size 23325166 bytes.
+LogPakFile: Display: Encryption - DISABLED
+LogPakFile: Display:
+LogPakFile: Display: Writer and Compression Threads exited.
+LogPakFile: Display: UnrealPak executed in 0.926401 seconds
+Took 2.11s to run UnrealPak, ExitCode=0
+Running UnrealPak with arguments: "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject" /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject -CreateGlobalContainer="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi/Cinderline/Content/Paks/global.utoc" -ProjectStore="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/ue.projectstore" -CookedDirectory="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi" -Commands="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/IoStoreCommands.txt" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid   -cryptokeys="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/Crypto.json" -compressionMinBytesSaved=1024 -compressionMinPercentSaved=5 -WriteBackMetadataToAssetRegistry=Disabled -platform=Android 
+Running: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealPak "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject" /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject -CreateGlobalContainer="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi/Cinderline/Content/Paks/global.utoc" -ProjectStore="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/ue.projectstore" -CookedDirectory="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi" -Commands="/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/IoStoreCommands.txt" -patchpaddingalign=0 -AlignForMemoryMapping=16 -compressionformats=Oodle -compresslevel=4 -compressmethod=Mermaid   -cryptokeys="/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/Crypto.json" -compressionMinBytesSaved=1024 -compressionMinPercentSaved=5 -WriteBackMetadataToAssetRegistry=Disabled -platform=Android
+LogTrace: Display: Control listening on port 36708
+OodleDataCompression: Display: Oodle v2.9.16 format for pak/iostore with method=Mermaid, level=4=Normal
+LogStreaming: Display: AsyncLoading2 - Created: Async Loading Thread: false, Async Post Load: false, Multithreaded: false
+LogPakFile: Display: ProjectDir: ../../../../../../../Volumes/Codex Storage/Cinderline/Android/workspace/
+LogIoStore: Display: ==================== IoStore Utils ====================
+LogIoStore: Display: Parsing crypto keys from a crypto key cache file '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Metadata/Crypto.json'
+LogIoStore: Display: Container signing - DISABLED
+LogIoStore: Display: Directory index - ENABLED
+LogIoStore: Display: Using compression format 'Oodle'
+LogConfig: Display: Read in platform Android ini files took 0.01 seconds
+LogIoStore: Display: Using memory mapping alignment '16'
+LogIoStore: Display: Using compression block size '65536'
+LogIoStore: Display: Using compression block alignment '0'
+LogIoStore: Display: Using compression min bytes saved '1024'
+LogIoStore: Display: Using compression min percent saved '5'
+LogIoStore: Display: Using max partition size '0'
+LogIoStore: Display: Not using DDC for compression
+LogIoStore: Display: Container metadata disabled
+LogIoStore: Display: Using command list file: '/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/IoStoreCommands.txt'
+LogIoStore: Display: Selected Oodle level 4 (Normal) from command line for shaders
+LogZenServiceInstance: Display: Launching zen utility '/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/zen service status'.
+LogZenServiceInstance: Display: Writing plugin version info to '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen_plugin_versions.json'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/5.8/Saved/Zen/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Read zen version cache file from '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zen.version', version: '5.8.13-202605190511-macosx-arm64-release-094f62c'
+LogZenServiceInstance: Display: Installed service at '/Users/chirag13/Library/Application Support/Epic/UnrealEngine/Common/Zen/Install/zenserver' is up to date
+LogZenServiceInstance: Display: Unreal Zen Storage Server HTTP service at http://[::1]:8558 status: OK!.
+LogZenStore: Display: Opening oplog Cinderline.01ce9256 / Android_Multi
+LogIoStore: Display: Fetched 616 oplog items from Zen in 0.49 seconds
+LogIoStore: Display: Parsed 616 oplog items 0.01 seconds, 3621 chunks
+LogIoStore: Display: Loaded 845 chunk hashes from Zen in 0.00 seconds, 845 hashes updated in 0.00 seconds
+LogIoStore: Display: Searching for cooked assets in folder '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi'
+LogIoStore: Display: Found '8' files
+LogIoStore: Display: Creating container targets...
+LogIoStore: Display: Processing shader libraries, compressing with Oodle Mermaid, level 4 (Normal)
+LogIoStore: Display: Shader library chunk override is disabled
+LogShaderLibrary: Display: Created IoStoreShaderArchive header: shaders grouped in 169 groups (74 of them didn't need new indices), average uncompressed size 56464 bytes, min 201 bytes, max 676778 bytes (r.ShaderCodeLibrary.MaxShaderGroupSize=1048576)
+LogIoStore: Display: Cinderline-GLSL_ES3_1_ANDROID(OPENGL_ES3_1_ANDROID): Recompressed 713 shaders as 169 groups. Library size changed from 2430 KB (3.83 : 1 ratio) to 1295 KB (7.19 : 1 ratio), 53.31% of previous.
+LogIoStore: Display: Save IoStoreShaderCodeArchive 'Cinderline-GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID' with ChunkId '9ab7bfc67afe10f500000008' for target file '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Content/ShaderArchive-Cinderline-GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID.ushaderbytecode'
+LogShaderLibrary: Display: Created IoStoreShaderArchive header: shaders grouped in 170 groups (78 of them didn't need new indices), average uncompressed size 68987 bytes, min 325 bytes, max 972310 bytes (r.ShaderCodeLibrary.MaxShaderGroupSize=1048576)
+LogIoStore: Display: Cinderline-SF_VULKAN_ES31_ANDROID(VULKAN_ES3_1_ANDROID): Recompressed 738 shaders as 170 groups. Library size changed from 3047 KB (3.76 : 1 ratio) to 2433 KB (4.71 : 1 ratio), 79.85% of previous.
+LogIoStore: Display: Save IoStoreShaderCodeArchive 'Cinderline-SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID' with ChunkId '5e792c5e6978d58a00000008' for target file '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Content/ShaderArchive-Cinderline-SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID.ushaderbytecode'
+LogShaderLibrary: Display: Created IoStoreShaderArchive header: shaders grouped in 205 groups (96 of them didn't need new indices), average uncompressed size 117754 bytes, min 489 bytes, max 960139 bytes (r.ShaderCodeLibrary.MaxShaderGroupSize=1048576)
+LogIoStore: Display: Global-SF_VULKAN_ES31_ANDROID(VULKAN_ES3_1_ANDROID): Recompressed 1821 shaders as 205 groups. Library size changed from 6611 KB (3.57 : 1 ratio) to 4352 KB (5.42 : 1 ratio), 65.84% of previous.
+LogIoStore: Display: Save IoStoreShaderCodeArchive 'Global-SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID' with ChunkId '646fdc45f8f6945c00000008' for target file '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Content/ShaderArchive-Global-SF_VULKAN_ES31_ANDROID-VULKAN_ES3_1_ANDROID.ushaderbytecode'
+LogShaderLibrary: Display: Created IoStoreShaderArchive header: shaders grouped in 195 groups (88 of them didn't need new indices), average uncompressed size 107312 bytes, min 228 bytes, max 1029878 bytes (r.ShaderCodeLibrary.MaxShaderGroupSize=1048576)
+LogIoStore: Display: Global-GLSL_ES3_1_ANDROID(OPENGL_ES3_1_ANDROID): Recompressed 1761 shaders as 195 groups. Library size changed from 4982 KB (4.10 : 1 ratio) to 1806 KB (11.31 : 1 ratio), 36.25% of previous.
+LogIoStore: Display: Save IoStoreShaderCodeArchive 'Global-GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID' with ChunkId '0a6755d1ee6c5c4800000008' for target file '/Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Cooked/Android_Multi/Cinderline/Content/ShaderArchive-Global-GLSL_ES3_1_ANDROID-OPENGL_ES3_1_ANDROID.ushaderbytecode'
+LogIoStore: Display: Shaders processed in 0.15 seconds
+LogIoStore: Display: Initialized WriteRequestManager with MaxConcurrentSourceReads=5 (10 cores), MaxSourceBufferMemory=3072MiB
+LogIoStore: Display: Processing redirects...
+LogIoStore: Display: Creating disk layout...
+LogIoStore: Display: Ordered 608 packages using fallback bundle order
+LogIoStore: Display: Disabled WriteRequestManager memory throttling, MaxConcurrentSourceReads=5 (10 cores)
+LogIoStore: Display: Writing container(s)...
+LogIoStore: Display: Writing and compressing took 0.46 seconds, writes to disk took 0.12 seconds for 148,104,464 bytes @ 1,198,077,665 bytes per second.
+LogIoStore: Display: Cinderline-Android_Multi: Found perfect hashmap for 1584 items.
+LogIoStore: Display: global: Found perfect hashmap for 1 items.
+LogIoStore: Display: Finalize took 0.0 seconds for 2 writers to write 174,474 bytes, 10,250,666 bytes per second
+LogIoStore: Display: Writing tocs... [Physical: 734 MiB, Virtual: 481347 MiB]
+LogIoStore: Display: 840 / 1,585 hashes were loaded from the hash database, by type:
+LogIoStore: Display:     ExportBundleData           608
+LogIoStore: Display:     BulkData                   232
+LogIoStore: Display: 840 / 1,585 chunks attempted to compress, by type:
+LogIoStore: Display:     ExportBundleData           608 / 608
+LogIoStore: Display:     BulkData                   232 / 232
+LogIoStore: Display:     ScriptObjects              0 / 1
+LogIoStore: Display:     ContainerHeader            0 / 1
+LogIoStore: Display:     ShaderCodeLibrary          0 / 4
+LogIoStore: Display:     ShaderCode                 0 / 739
+LogIoStore: Display: Source bytes read:
+LogIoStore: Display:     Zen:                        224,385,424
+LogIoStore: Display:         ExportBundleData         94,524,242 bytes over 608 reads
+LogIoStore: Display:         BulkData                129,861,182 bytes over 232 reads
+LogIoStore: Display:     Loose File:                           0
+LogIoStore: Display:     Memory:                      20,555,060
+LogIoStore: Display:         ShaderCodeLibrary           304,096 bytes over 8 reads
+LogIoStore: Display:         ShaderCode               20,250,964 bytes over 1,478 reads
+LogIoStore: Display: Calculating stats...
+LogIoStore: Display:
+LogIoStore: Display: Container Summary
+LogIoStore: Display: ==================
+LogIoStore: Display:
+LogIoStore: Display:                      Container      Flags      Chunk(s) #       TOC (KiB)       Raw Size (MiB)           Size (MiB)
+LogIoStore: Display: -------------------------------------------------------------------------------------------------------------------
+LogIoStore: Display:                         global  -/-/-/-/-               1            0.78                 3.06                 3.06 -
+LogIoStore: Display:       Cinderline-Android_Multi  C/-/-/I/-            1584          169.61               223.81               138.18 (38.26% Oodle)
+LogIoStore: Display: -------------------------------------------------------------------------------------------------------------------
+LogIoStore: Display:                          Total                       1585          170.38               226.88               141.24
+LogIoStore: Display:
+LogIoStore: Display: ** Flags: (C)ompressed / (E)ncrypted / (S)igned) / (I)ndexed) / (O)nDemand **
+LogIoStore: Display:
+LogIoStore: Display: Compression block padding:     0.00 MiB
+LogIoStore: Display:
+LogIoStore: Display: Container Directory Index
+LogIoStore: Display: ==========================
+LogIoStore: Display:
+LogIoStore: Display:                      Container      Size (KiB)
+LogIoStore: Display: ----------------------------------------------
+LogIoStore: Display:                         global            0.00
+LogIoStore: Display:       Cinderline-Android_Multi           37.41
+LogIoStore: Display:
+LogIoStore: Display: Container Patch Report
+LogIoStore: Display: ========================
+LogIoStore: Display:
+LogIoStore: Display:                      Container          Total #       Modified #          Added #   Modified (MiB)      Added (MiB)
+LogIoStore: Display: -------------------------------------------------------------------------------------------------------------------
+LogIoStore: Display:                         global                1                0                0             0.00             0.00
+LogIoStore: Display:       Cinderline-Android_Multi             1584                0             1584             0.00           138.18
+LogIoStore: Display: -------------------------------------------------------------------------------------------------------------------
+LogIoStore: Display:
+LogIoStore: Display: PackageStore
+LogIoStore: Display: =============
+LogIoStore: Display:
+LogIoStore: Display:                      Container      Size (KiB)      Packages #     Localized #
+LogIoStore: Display: ------------------------------------------------------------------------------
+LogIoStore: Display:       Cinderline-Android_Multi              18             608               0
+LogIoStore: Display: ------------------------------------------------------------------------------
+LogIoStore: Display:                          Total              18             608               0
+LogIoStore: Display:
+LogIoStore: Display:
+LogIoStore: Display: Input:       608 Packages
+LogIoStore: Display: Input:         0   B UExp
+LogIoStore: Display: Input:     90.15 MiB UAsset
+LogIoStore: Display: Input:    123.85 MiB UBulk
+LogIoStore: Display: Input:      6.01 MiB for 400 Global shaders
+LogIoStore: Display: Input:    379.81 KiB for 111 Shared shaders
+LogIoStore: Display: Input:      6.72 KiB for 6 Unique shaders
+LogIoStore: Display: Input:      3.26 MiB for 222 Inline shaders
+LogIoStore: Display:
+LogIoStore: Display: Output:      859 Imported package entries
+LogIoStore: Display: Output:      313 Packages without imports
+LogIoStore: Display: Output:        0 Public runtime script objects
+LogIoStore: Display: Output:     3.06 MiB InitialLoadData
+LogIoStore: Display:
+LogIoStore: Display: Success
+LogPakFile: Display: UnrealPak executed in 1.201549 seconds
+Took 1.55s to run UnrealPak, ExitCode=0
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/FinalCopyAndroid_UFSFiles.txt, NumItems: 2580
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/FinalCopyAndroid_NonUFSFiles.txt, NumItems: 4
+DumpManifest: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/FinalCopyAndroid_NonUFSFilesDebug.txt, NumItems: 5
+Copying NonUFSFiles to staging directory: /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi
+Copying DebugFiles to staging directory: /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi
+Stage command time: 4.07 s
+********** STAGE COMMAND COMPLETED **********
+********** PACKAGE COMMAND STARTED **********
+GetDeploymentArchitectures: not UnrealGame
+BaseApkName = /Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Android/Cinderline.apk
+Creating /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi.obb from /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi
+[1/12] Adding Engine/Config/StagedBuild_Cinderline.ini to OBB
+[2/12] Adding Engine/Content/Renderer/TessellationTable.bin to OBB
+[3/12] Adding Engine/Content/SlateDebug/Fonts/LastResort.tps to OBB
+[4/12] Adding Engine/Content/SlateDebug/Fonts/LastResort.ttf to OBB
+[5/12] Adding Engine/Extras/GPUDumpViewer/OpenGPUDumpViewer.sh to OBB
+[6/12] Adding Engine/Extras/GPUDumpViewer/OpenGPUDumpViewer.bat to OBB
+[7/12] Adding Engine/Extras/GPUDumpViewer/GPUDumpViewer.html to OBB
+[8/12] Adding Cinderline/Content/Paks/Cinderline-Android_Multi.pak to OBB
+[9/12] Adding Cinderline/Content/Paks/Cinderline-Android_Multi.utoc to OBB
+[10/12] Adding Cinderline/Content/Paks/Cinderline-Android_Multi.ucas to OBB
+[11/12] Adding Cinderline/Content/Paks/global.ucas to OBB
+[12/12] Adding Cinderline/Content/Paks/global.utoc to OBB
+AndroidPlugin: Plugins/Runtime/AndroidPermission/Source/AndroidPermission/AndroidPermission_APL.xml
+AndroidPlugin: Plugins/Runtime/GoogleCloudMessaging/Source/GoogleCloudMessaging/GoogleCloudMessaging_UPL.xml
+AndroidPlugin: Plugins/Runtime/GooglePAD/Source/GooglePAD/GooglePAD_APL.xml
+AndroidPlugin: Plugins/Online/Android/OnlineSubsystemGooglePlay/Source/OnlineSubsystemGooglePlay_UPL.xml
+AndroidPlugin: Source/Runtime/Core/Core_APL.xml
+AndroidPlugin: Source/Runtime/Online/Voice/AndroidVoiceImpl_UPL.xml
+AndroidPlugin: Source/ThirdParty/vkquality/VKQuality_UPL.xml
+AndroidPlugin: Source/ThirdParty/libGPUCounters/libGPUCounters_UPL.xml
+AndroidPlugin: Source/ThirdParty/heapprofd/heapprofd_UPL.xml
+UPL: Engine/Plugins/Runtime/AndroidPermission/Source/AndroidPermission/AndroidPermission_APL.xml
+UPL: Engine/Plugins/Runtime/GoogleCloudMessaging/Source/GoogleCloudMessaging/GoogleCloudMessaging_UPL.xml
+UPL: Engine/Plugins/Runtime/GooglePAD/Source/GooglePAD/GooglePAD_APL.xml
+UPL: Engine/Plugins/Online/Android/OnlineSubsystemGooglePlay/Source/OnlineSubsystemGooglePlay_UPL.xml
+UPL: Engine/Source/Runtime/Core/Core_APL.xml
+UPL: Engine/Source/Runtime/Online/Voice/AndroidVoiceImpl_UPL.xml
+UPL: Engine/Source/ThirdParty/vkquality/VKQuality_UPL.xml
+UPL: Engine/Source/ThirdParty/libGPUCounters/libGPUCounters_UPL.xml
+UPL: Engine/Source/ThirdParty/heapprofd/heapprofd_UPL.xml
+Target SDK Version 35
+Android (12470979, +pgo, -bolt, +lto, -mlgo, based on r522817c) clang version 18.0.3 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262)
+Target: x86_64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin
+Using package name: 'com.cinderline.game'
+GotStoreVersion found v3. (bUseChangeListAsStoreVersion=False IsBuildMachine=False EngineChangeList=0)
+Writing packageInfo pkgName:com.cinderline.game storeVersion:3 versionDisplayName:0.1.2 to /Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Android/packageInfo.txt
+
+====9/15/2026 4:22:09 PM====PREPARING TO MAKE APK=================================================================
+bBuildForES31: true
+bSupportsVulkan: true
+Requires at least SDK API level 36, currently set to 'android-35'
+Gradle will attempt to download SDK API level 36
+Building Java with SDK API level 'android-36'
+Building with Build Tools version '35.0.1'
+On build machine.
+
+==== Writing to OBB data file /Volumes/Codex Storage/Cinderline/Android/workspace/Build/Android/src/com/cinderline/game/OBBData.java ====
+
+==== Writing to shim file /Volumes/Codex Storage/Cinderline/Android/workspace/Build/Android/src/com/epicgames/unreal/DownloadShim.java ====
+
+==== Writing to template target file /Volumes/Codex Storage/Cinderline/Android/workspace/Build/Android/src/com/cinderline/game/OBBDownloaderService.java ====
+
+==== Writing to template target file /Volumes/Codex Storage/Cinderline/Android/workspace/Build/Android/src/com/cinderline/game/AlarmReceiver.java ====
+
+==== Writing to template target file /Volumes/Codex Storage/Cinderline/Android/workspace/Build/Android/src/com/cinderline/game/DownloaderActivity.java ====
+Cleaning up files based on template dir /Volumes/Codex Storage/Cinderline/Android/workspace/Build/Android/src/com/cinderline/game
+bDontBundleLibrariesInAPK is set to false, due to an archive build.
+Previous .apk file(s) were made with different build settings, forcing repackage.
+UPL Init: arm64-v8a
+Android Permission Plugin Init
+Google Cloud Messaging init
+GCMClientSenderID set: false
+GooglePAD Plugin Init
+GooglePAD enabled: false
+Subsystem Google Play SDK Android init
+Context: 'Engine/Plugins/Online/Android/OnlineSubsystemGooglePlay/Source' using Architecture='arm64-v8a', NodeName='init', Input=''
+Variables:
+	bool bEnableGooglePlaySupport = false
+	bool bSupportsInAppPurchasing = true
+	int RequestCodeForPlayGamesActivities = 80002
+	string PluginDir = Engine/Plugins/Online/Android/OnlineSubsystemGooglePlay/Source
+	string AbsPluginDir = /Users/Shared/Epic Games/UE_5.8/Engine/Plugins/Online/Android/OnlineSubsystemGooglePlay/Source
+	string UnrealArch = arm64
+	string Architecture = arm64-v8a
+	string BuildDir = /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64
+	string AbsBuildDir = /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64
+
+Core UPL init
+Android Voice init
+VKQuality init
+libGPUCounters init
+heapprofd init
+
+====9/15/2026 4:22:09 PM====PREPARING NATIVE CODE=====arm64============================================================
+bPackageDataInsideApk = True
+Obb location /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi.obb
+Obb destination location /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/assets
+Obb file exists...
+Copying /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/StagedBuilds/Android_Multi.obb to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/assets/main.obb.png
+UnrealCommandLine.txt exists...
+AddRepositories: Directory /Volumes/Codex Storage/Cinderline/Android/sdk/extras not found; ignored
+AARImports: com.google.android.gms, play-services-auth, 20.7.0
+AARImports: com.google.android.gms, play-services-games-v2, 19.0.0
+Copying permission_library directory to staging before build
+
+Directory /Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/AndroidPermission/permission_library copied to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/JavaLibs/permission_library (True)
+
+==== Writing to OBB data file /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/src/com/cinderline/game/OBBData.java ====
+
+==== OBB data file up to date so not writing. ====
+Compile SDK is 35+, adding Android Profiler access.
+libVkLayer_khronos_validation.so vulkan layer not found at /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/ThirdParty/Vulkan/Android/arm64-v8a, skipping
+DebugVulkanLayerDirectory 
+File /Users/Shared/Epic Games/UE_5.8/Engine/Source/Runtime/Core/Private/Android/Java/ProfilerAccessor.java copied to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/src/com/epicgames/unreal/androidprofiling/ProfilerAccessor.java
+File /Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/vkquality/libs/arm64-v8a/libvkquality.so copied to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/libs/arm64-v8a/libvkquality.so
+Copying libvkquality.so
+File /Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/vkquality/vkq_library/vkquality/src/main/assets/vkqualitydata.vkq copied to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/assets/vkqualitydata.vkq
+Copying vkqualitydata.vkq
+File /Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/libGPUCounters/lib/arm64-v8a/libGPUCounters.so copied to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/libs/arm64-v8a/libGPUCounters.so
+Copying libGPUCounters.so
+File /Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/heapprofd/arm64-v8a/libheapprofd_standalone_client.so copied to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/libs/arm64-v8a/libheapprofd_standalone_client.so
+Copying heapprofd_standalone_client.so
+
+====9/15/2026 4:22:09 PM====PERFORMING FINAL APK PACKAGE OPERATION=====arm64===========================================
+Copying /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/AndroidManifest.xml to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/AndroidManifest.xml
+Copied file /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/assets/main.obb.png.
+Copied file /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/java/com/cinderline/game/DownloaderActivity.java.
+Copied file /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/java/com/cinderline/game/AlarmReceiver.java.
+Copied file /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/java/com/cinderline/game/OBBDownloaderService.java.
+Copied file /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/java/com/cinderline/game/OBBData.java.
+Copied file /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/java/com/epicgames/unreal/DownloadShim.java.
+Fix gradlew permissions
+Making .apk with Gradle...
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.13/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:generateDebugBuildConfig
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :downloader_library:preBuild UP-TO-DATE
+> Task :downloader_library:preDebugBuild UP-TO-DATE
+> Task :downloader_library:writeDebugAarMetadata UP-TO-DATE
+> Task :permission_library:preBuild UP-TO-DATE
+> Task :permission_library:preDebugBuild UP-TO-DATE
+> Task :permission_library:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :downloader_library:processDebugNavigationResources UP-TO-DATE
+> Task :permission_library:processDebugNavigationResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :downloader_library:generateDebugResValues UP-TO-DATE
+> Task :downloader_library:generateDebugResources UP-TO-DATE
+> Task :downloader_library:packageDebugResources UP-TO-DATE
+> Task :permission_library:generateDebugResValues UP-TO-DATE
+> Task :permission_library:generateDebugResources UP-TO-DATE
+> Task :permission_library:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :downloader_library:extractDeepLinksDebug UP-TO-DATE
+> Task :downloader_library:processDebugManifest UP-TO-DATE
+> Task :permission_library:extractDeepLinksDebug UP-TO-DATE
+> Task :permission_library:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :downloader_library:compileDebugLibraryResources UP-TO-DATE
+> Task :downloader_library:parseDebugLocalResources UP-TO-DATE
+> Task :downloader_library:generateDebugRFile UP-TO-DATE
+> Task :permission_library:compileDebugLibraryResources UP-TO-DATE
+> Task :permission_library:parseDebugLocalResources UP-TO-DATE
+> Task :permission_library:generateDebugRFile UP-TO-DATE
+> Task :downloader_library:javaPreCompileDebug UP-TO-DATE
+> Task :downloader_library:compileDebugJavaWithJavac UP-TO-DATE
+> Task :downloader_library:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :permission_library:javaPreCompileDebug UP-TO-DATE
+> Task :permission_library:compileDebugJavaWithJavac UP-TO-DATE
+> Task :permission_library:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :downloader_library:mergeDebugShaders UP-TO-DATE
+> Task :downloader_library:compileDebugShaders NO-SOURCE
+> Task :downloader_library:generateDebugAssets UP-TO-DATE
+> Task :downloader_library:mergeDebugAssets UP-TO-DATE
+> Task :permission_library:mergeDebugShaders UP-TO-DATE
+> Task :permission_library:compileDebugShaders NO-SOURCE
+> Task :permission_library:generateDebugAssets UP-TO-DATE
+> Task :permission_library:mergeDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets
+> Task :app:l8DexDesugarLibDebug UP-TO-DATE
+> Task :downloader_library:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :permission_library:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :downloader_library:processDebugJavaRes NO-SOURCE
+> Task :permission_library:processDebugJavaRes NO-SOURCE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :downloader_library:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :permission_library:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:compressDebugAssets
+> Task :app:mergeDebugJniLibFolders
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :downloader_library:mergeDebugJniLibFolders UP-TO-DATE
+> Task :downloader_library:mergeDebugNativeLibs NO-SOURCE
+> Task :downloader_library:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :permission_library:mergeDebugJniLibFolders UP-TO-DATE
+> Task :permission_library:mergeDebugNativeLibs NO-SOURCE
+> Task :permission_library:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:processDebugManifestForPackage
+> Task :app:processDebugResources
+> Task :app:mergeDebugNativeLibs
+
+> Task :app:compileDebugJavaWithJavac
+Note: /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/app/src/main/java/com/cinderline/game/DownloaderActivity.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:mergeProjectDexDebug
+> Task :app:stripDebugDebugSymbols
+> Task :app:ueCleanDebugAPK
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+> Task :app:ueCompleteDebug
+
+[Incubating] Problems report is available at: file:///Volumes/Codex%20Storage/Cinderline/Android/workspace/Intermediate/Android/arm64/gradle/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 23s
+80 actionable tasks: 18 executed, 62 up-to-date
+Writing symbols to /Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Android/Cinderline_Symbols_v3/Cinderlinearm64/libUnreal.so
+
+====9/15/2026 4:22:33 PM====COMPLETED MAKE APK=======================================================================
+Using this aapt: /Volumes/Codex Storage/Cinderline/Android/sdk/build-tools/35.0.1/aapt
+GetPackageInfo ReturnValue: com.cinderline.game
+Writing shell script for install with data in APK
+Writing shell script for uninstall with data in APK
+Writing shell script for symbolize with data in APK
+GetPackageInfo ReturnValue: 3
+Package command time: 25.11 s
+********** PACKAGE COMMAND COMPLETED **********
+********** ARCHIVE COMMAND STARTED **********
+Archiving to /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Packages/Android
+GetDeploymentArchitectures: not UnrealGame
+GetPackageInfo ReturnValue: com.cinderline.game
+GetPackageInfo ReturnValue: 3
+GetPackageInfo ReturnValue: com.cinderline.game
+GetPackageInfo ReturnValue: 3
+GetPackageInfo ReturnValue: 3
+Archive command time: 0.19 s
+********** ARCHIVE COMMAND COMPLETED **********
+BuildCookRun time: 114.41 s
+BUILD SUCCESSFUL
+AutomationTool executed for 0h 1m 55s
+AutomationTool exiting with ExitCode=0 (Success)
+Android playtest APK: /Volumes/Codex Storage/Cinderline/Android/packages/Cinderline-Android-arm64.apk
+Source package: /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/Packages/Android/Cinderline-arm64.apk
+262M	/Volumes/Codex Storage/Cinderline/Android/packages/Cinderline-Android-arm64.apk
+4.0K	/Volumes/Codex Storage/Cinderline/Android/packages/Cinderline-Android-arm64.apk.sha256

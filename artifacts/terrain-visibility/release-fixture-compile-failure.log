@@ -1,0 +1,182 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+[ 16%] Built target CinderlineSimulation
+[ 25%] Built target CinderlineMatchBaseline
+[ 25%] Built target CinderlineGameplayBaseline
+[ 27%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 29%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 31%] Linking CXX executable CinderlineMatchWorker
+[ 31%] Built target CinderlineMatchWorker
+[ 33%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 35%] Linking CXX executable CinderlineNavigationTests
+[ 35%] Built target CinderlineNavigationTests
+[ 37%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 39%] Linking CXX executable CinderlineTests
+[ 39%] Built target CinderlineTests
+[ 41%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 43%] Linking CXX executable CinderlineNetworkTests
+[ 43%] Built target CinderlineNetworkTests
+[ 45%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 47%] Linking CXX executable CinderlineDefenseTests
+[ 47%] Built target CinderlineDefenseTests
+[ 50%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 52%] Linking CXX executable CinderlineAIDifficultyTests
+[ 52%] Built target CinderlineAIDifficultyTests
+[ 54%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 56%] Linking CXX executable CinderlineProductionAllocationTests
+[ 56%] Built target CinderlineProductionAllocationTests
+[ 58%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 60%] Linking CXX executable CinderlineMatchLengthTests
+[ 60%] Built target CinderlineMatchLengthTests
+[ 62%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 64%] Linking CXX executable CinderlineFourPlayerTests
+[ 64%] Built target CinderlineFourPlayerTests
+[ 66%] Linking CXX executable CinderlineOrderCompletionTests
+[ 68%] Building CXX object CMakeFiles/CinderlineWorkerOrderCompletionTests.dir/Tests/WorkerOrderCompletionTests.cpp.o
+[ 68%] Built target CinderlineOrderCompletionTests
+[ 70%] Building CXX object CMakeFiles/CinderlineSimulationProfilingTests.dir/Tests/SimulationProfilingTests.cpp.o
+[ 72%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 72%] Built target CinderlineWorkerOrderCompletionTests
+[ 75%] Building CXX object CMakeFiles/CinderlineNavigationAttachmentCacheTests.dir/Tests/NavigationAttachmentCacheTests.cpp.o
+[ 77%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 77%] Built target CinderlineSimulationProfilingTests
+[ 79%] Building CXX object CMakeFiles/CinderlineNavigationMultiSourceTests.dir/Tests/NavigationMultiSourceTests.cpp.o
+[ 81%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 81%] Built target CinderlineNavigationAttachmentCacheTests
+[ 83%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 85%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 85%] Built target CinderlineNavigationMultiSourceTests
+[ 89%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 91%] Building CXX object CMakeFiles/CinderlineProductionExitTests.dir/Tests/ProductionExitTests.cpp.o
+/Users/chirag13/Documents/ChatGPT/starCraft/Tests/NavigationPredicateParityTests.cpp:489:9: error: no matching constructor for initialization of 'std::pair<cinder::Vec2, cinder::Vec2>'
+  489 |         {{{100,560.0001f},{1900,560.0002f}}},
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:107:25: note: candidate constructor not viable: cannot convert initializer list argument to 'const pair<cinder::Vec2, cinder::Vec2>'
+  107 |   _LIBCPP_HIDE_FROM_ABI pair(pair const&) = default;
+      |                         ^    ~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:108:25: note: candidate constructor not viable: cannot convert initializer list argument to 'pair<cinder::Vec2, cinder::Vec2>'
+  108 |   _LIBCPP_HIDE_FROM_ABI pair(pair&&)      = default;
+      |                         ^    ~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:185:7: note: candidate template ignored: couldn't infer template argument '_U1'
+  185 |       pair(pair<_U1, _U2> const& __p) noexcept(is_nothrow_constructible<first_type, _U1 const&>::value &&
+      |       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:194:7: note: candidate template ignored: couldn't infer template argument '_U1'
+  194 |       pair(pair<_U1, _U2>&& __p) noexcept(is_nothrow_constructible<first_type, _U1&&>::value &&
+      |       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:334:55: note: candidate template ignored: couldn't infer template argument '_U1'
+  334 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(tuple<_U1, _U2> const& __p)
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:342:64: note: candidate template ignored: couldn't infer template argument '_U1'
+  342 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(tuple<_U1, _U2> const& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:348:55: note: candidate template ignored: couldn't infer template argument '_U1'
+  348 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(tuple<_U1, _U2>&& __p)
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:355:64: note: candidate template ignored: couldn't infer template argument '_U1'
+  355 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(tuple<_U1, _U2>&& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:379:55: note: candidate template ignored: couldn't infer template argument '_Up'
+  379 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(array<_Up, 2> const& __p) : first(__p[0]), second(__p[1]) {}
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:385:64: note: candidate template ignored: couldn't infer template argument '_Up'
+  385 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(array<_Up, 2> const& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:389:55: note: candidate template ignored: couldn't infer template argument '_Up'
+  389 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(array<_Up, 2>&& __p)
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:396:64: note: candidate template ignored: couldn't infer template argument '_Up'
+  396 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(array<_Up, 2>&& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:140:89: note: candidate constructor template not viable: requires 0 arguments, but 1 was provided
+  140 |   explicit(!_CheckArgsDep::__enable_implicit_default()) _LIBCPP_HIDE_FROM_ABI constexpr pair() noexcept(
+      |                                                                                         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:148:7: note: candidate constructor template not viable: requires 2 arguments, but 1 was provided
+  148 |       pair(_T1 const& __t1, _T2 const& __t2) noexcept(is_nothrow_copy_constructible<first_type>::value &&
+      |       ^    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:163:7: note: candidate constructor template not viable: requires 2 arguments, but 1 was provided
+  163 |       pair(_U1&& __u1, _U2&& __u2) noexcept(is_nothrow_constructible<first_type, _U1>::value &&
+      |       ^    ~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:223:3: note: candidate constructor template not viable: requires 3 arguments, but 1 was provided
+  223 |   pair(piecewise_construct_t __pc, tuple<_Args1...> __first_args, tuple<_Args2...> __second_args) noexcept(
+      |   ^    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:436:3: note: candidate constructor template not viable: requires 5 arguments, but 1 was provided
+  436 |   pair(piecewise_construct_t,
+      |   ^    ~~~~~~~~~~~~~~~~~~~~~~
+  437 |        tuple<_Args1...>& __first_args,
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  438 |        tuple<_Args2...>& __second_args,
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  439 |        __index_sequence<_I1...>,
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~
+  440 |        __index_sequence<_I2...>)
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Tests/NavigationPredicateParityTests.cpp:490:9: error: no matching constructor for initialization of 'std::pair<cinder::Vec2, cinder::Vec2>'
+  490 |         {{{100,559.9999f},{1900,560.0001f}}}
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:107:25: note: candidate constructor not viable: cannot convert initializer list argument to 'const pair<cinder::Vec2, cinder::Vec2>'
+  107 |   _LIBCPP_HIDE_FROM_ABI pair(pair const&) = default;
+      |                         ^    ~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:108:25: note: candidate constructor not viable: cannot convert initializer list argument to 'pair<cinder::Vec2, cinder::Vec2>'
+  108 |   _LIBCPP_HIDE_FROM_ABI pair(pair&&)      = default;
+      |                         ^    ~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:185:7: note: candidate template ignored: couldn't infer template argument '_U1'
+  185 |       pair(pair<_U1, _U2> const& __p) noexcept(is_nothrow_constructible<first_type, _U1 const&>::value &&
+      |       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:194:7: note: candidate template ignored: couldn't infer template argument '_U1'
+  194 |       pair(pair<_U1, _U2>&& __p) noexcept(is_nothrow_constructible<first_type, _U1&&>::value &&
+      |       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:334:55: note: candidate template ignored: couldn't infer template argument '_U1'
+  334 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(tuple<_U1, _U2> const& __p)
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:342:64: note: candidate template ignored: couldn't infer template argument '_U1'
+  342 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(tuple<_U1, _U2> const& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:348:55: note: candidate template ignored: couldn't infer template argument '_U1'
+  348 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(tuple<_U1, _U2>&& __p)
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:355:64: note: candidate template ignored: couldn't infer template argument '_U1'
+  355 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(tuple<_U1, _U2>&& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:379:55: note: candidate template ignored: couldn't infer template argument '_Up'
+  379 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(array<_Up, 2> const& __p) : first(__p[0]), second(__p[1]) {}
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:385:64: note: candidate template ignored: couldn't infer template argument '_Up'
+  385 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(array<_Up, 2> const& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:389:55: note: candidate template ignored: couldn't infer template argument '_Up'
+  389 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 pair(array<_Up, 2>&& __p)
+      |                                                       ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:396:64: note: candidate template ignored: couldn't infer template argument '_Up'
+  396 |   _LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX14 explicit pair(array<_Up, 2>&& __p)
+      |                                                                ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:140:89: note: candidate constructor template not viable: requires 0 arguments, but 1 was provided
+  140 |   explicit(!_CheckArgsDep::__enable_implicit_default()) _LIBCPP_HIDE_FROM_ABI constexpr pair() noexcept(
+      |                                                                                         ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:148:7: note: candidate constructor template not viable: requires 2 arguments, but 1 was provided
+  148 |       pair(_T1 const& __t1, _T2 const& __t2) noexcept(is_nothrow_copy_constructible<first_type>::value &&
+      |       ^    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:163:7: note: candidate constructor template not viable: requires 2 arguments, but 1 was provided
+  163 |       pair(_U1&& __u1, _U2&& __u2) noexcept(is_nothrow_constructible<first_type, _U1>::value &&
+      |       ^    ~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:223:3: note: candidate constructor template not viable: requires 3 arguments, but 1 was provided
+  223 |   pair(piecewise_construct_t __pc, tuple<_Args1...> __first_args, tuple<_Args2...> __second_args) noexcept(
+      |   ^    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/pair.h:436:3: note: candidate constructor template not viable: requires 5 arguments, but 1 was provided
+  436 |   pair(piecewise_construct_t,
+      |   ^    ~~~~~~~~~~~~~~~~~~~~~~
+  437 |        tuple<_Args1...>& __first_args,
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  438 |        tuple<_Args2...>& __second_args,
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  439 |        __index_sequence<_I1...>,
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~~
+  440 |        __index_sequence<_I2...>)
+      |        ~~~~~~~~~~~~~~~~~~~~~~~~
+2 errors generated.
+make[2]: *** [CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o] Error 1
+make[1]: *** [CMakeFiles/CinderlineNavigationPredicateParityTests.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+[ 93%] Linking CXX executable CinderlineProductionExitTests
+[ 93%] Built target CinderlineProductionExitTests
+make: *** [all] Error 2

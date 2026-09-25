@@ -1,0 +1,4 @@
+PASS dense idle workers do not permanently block produced units
+TRAFFIC_FAILURE pos=1066.95,1199.86 goal=1500,1200 path=0/1 stalled=0 failures=0 side=0 yield=0
+FAIL Hold and Defend anchors remain fixed during recovery: moving unit did not pass fixed friendly anchors
+RESULT passed=1 failed=1

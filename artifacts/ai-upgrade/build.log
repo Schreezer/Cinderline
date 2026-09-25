@@ -1,0 +1,75 @@
+[  1%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[  2%] Linking CXX static library libCinderlineSimulation.a
+[ 13%] Built target CinderlineSimulation
+[ 14%] Linking CXX executable CinderlineTacticalOrderBaseline
+[ 15%] Linking CXX executable CinderlineSustainedOrderBaseline
+[ 17%] Linking CXX executable CinderlineMatchBaseline
+[ 18%] Linking CXX executable CinderlineGameplayBaseline
+[ 19%] Built target CinderlineTacticalOrderBaseline
+[ 21%] Built target CinderlineMatchBaseline
+[ 22%] Built target CinderlineSustainedOrderBaseline
+[ 23%] Built target CinderlineGameplayBaseline
+[ 27%] Linking CXX executable CinderlineFormationOrderBaseline
+[ 27%] Building CXX object CMakeFiles/CinderlineAIChallengeBaseline.dir/Tools/AIChallengeBaseline.cpp.o
+[ 27%] Linking CXX executable CinderlineMatchWorker
+[ 28%] Linking CXX executable CinderlineTests
+[ 31%] Built target CinderlineMatchWorker
+[ 31%] Built target CinderlineFormationOrderBaseline
+[ 32%] Built target CinderlineTests
+[ 35%] Building CXX object CMakeFiles/CinderlineNavigationRouteQualityTests.dir/Tests/NavigationRouteQualityTests.cpp.o
+[ 35%] Building CXX object CMakeFiles/CinderlineMovementFollowingTests.dir/Tests/MovementFollowingTests.cpp.o
+[ 36%] Linking CXX executable CinderlineNavigationTests
+[ 38%] Built target CinderlineNavigationTests
+[ 39%] Linking CXX executable CinderlineNetworkTests
+[ 40%] Built target CinderlineNetworkTests
+[ 42%] Linking CXX executable CinderlineDefenseTests
+[ 43%] Built target CinderlineDefenseTests
+[ 44%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 46%] Linking CXX executable CinderlineNavigationRouteQualityTests
+[ 46%] Built target CinderlineNavigationRouteQualityTests
+[ 47%] Building CXX object CMakeFiles/CinderlineAITacticsTests.dir/Tests/AITacticsTests.cpp.o
+[ 48%] Linking CXX executable CinderlineAIChallengeBaseline
+[ 50%] Linking CXX executable CinderlineMovementFollowingTests
+[ 50%] Built target CinderlineAIChallengeBaseline
+[ 50%] Built target CinderlineMovementFollowingTests
+[ 51%] Linking CXX executable CinderlineAIEconomyTests
+[ 52%] Linking CXX executable CinderlineProductionAllocationTests
+[ 53%] Built target CinderlineAIEconomyTests
+[ 55%] Built target CinderlineProductionAllocationTests
+[ 56%] Linking CXX executable CinderlineMatchLengthTests
+[ 57%] Linking CXX executable CinderlineFourPlayerTests
+[ 60%] Built target CinderlineFourPlayerTests
+[ 60%] Built target CinderlineMatchLengthTests
+[ 63%] Linking CXX executable CinderlineTacticalOrderTests
+[ 63%] Linking CXX executable CinderlineOrderCompletionTests
+[ 64%] Built target CinderlineOrderCompletionTests
+[ 65%] Built target CinderlineTacticalOrderTests
+[ 67%] Linking CXX executable CinderlineAIDifficultyTests
+[ 68%] Linking CXX executable CinderlinePatrolEscortTests
+[ 69%] Linking CXX executable CinderlineFormationOrderTests
+[ 69%] Built target CinderlineAIDifficultyTests
+[ 71%] Built target CinderlinePatrolEscortTests
+[ 72%] Built target CinderlineFormationOrderTests
+[ 73%] Linking CXX executable CinderlineTacticalInterruptionTests
+[ 75%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 76%] Linking CXX executable CinderlineBuilderQueueTests
+[ 77%] Built target CinderlineTacticalInterruptionTests
+[ 78%] Built target CinderlineWorkerOrderCompletionTests
+[ 80%] Built target CinderlineBuilderQueueTests
+[ 81%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 84%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 84%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 85%] Built target CinderlineSimulationProfilingTests
+[ 88%] Built target CinderlineNavigationMultiSourceTests
+[ 88%] Built target CinderlineNavigationAttachmentCacheTests
+[ 89%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 90%] Linking CXX executable CinderlineAITacticsTests
+[ 93%] Linking CXX executable CinderlineProductionExitTests
+[ 93%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 93%] Built target CinderlineAITacticsTests
+[ 94%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 96%] Built target CinderlineProductionExitTests
+[ 97%] Linking CXX executable CinderlineProductionTrafficTests
+[ 98%] Built target CinderlineProductionTrafficTests
+[100%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[100%] Built target CinderlineNavigationPredicateParityTests

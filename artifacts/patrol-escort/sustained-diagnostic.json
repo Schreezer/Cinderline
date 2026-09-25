@@ -1,0 +1,1 @@
+{"schema":"cinderline.sustained_order_baseline.v1","success":false,"error":"Patrol reversal outside sampled 32-unit endpoint tolerance: id=181 kind=3 tick=361 before=19.9393 after=32.171 displacement=12.25 speed_step=12.25"}

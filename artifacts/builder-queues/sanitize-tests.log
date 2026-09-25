@@ -1,0 +1,20 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/sanitize
+    Start  3: network_protocol
+1/4 Test  #3: network_protocol ....................   Passed    5.84 sec
+    Start  6: production_allocation_regressions
+2/4 Test  #6: production_allocation_regressions ...   Passed   11.18 sec
+    Start 10: tactical_order_regressions
+3/4 Test #10: tactical_order_regressions ..........   Passed    3.14 sec
+    Start 15: builder_queue_regressions
+4/4 Test #15: builder_queue_regressions ...........   Passed    4.53 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+economy       =   4.53 sec*proc (1 test)
+navigation    =   3.14 sec*proc (1 test)
+network       =  15.71 sec*proc (2 tests)
+orders        =   7.67 sec*proc (2 tests)
+production    =  11.18 sec*proc (1 test)
+
+Total Test time (real) =  24.68 sec

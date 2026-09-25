@@ -1,0 +1,4 @@
+compiler: clang++ -std=c++17 -O2 -ISource/Cinderline/Public -ITools artifacts/production-exit/crowd_stall_diagnostic.cpp Saved/P0ProductionExitIntermediate/libCinderlineSimulation.a -o artifacts/production-exit/CinderlineCrowdStallDiagnosticIntermediate
+run: artifacts/production-exit/CinderlineCrowdStallDiagnosticIntermediate --players4 --profile --snapshots --diagnostic-save-prefix artifacts/production-exit/crowd-stall-intermediate
+stdout: artifacts/production-exit/crowd-stall-intermediate.json
+stderr: artifacts/production-exit/crowd-stall-intermediate.stderr.log

@@ -1,0 +1,41 @@
+{
+  "verified_on": "2026-09-16",
+  "scope": "Hard and Expert AI strategy, economy and tactics",
+  "release": {
+    "passed": 28,
+    "failed": 0,
+    "log": "release-final.log",
+    "shared_with": "concurrent movement task"
+  },
+  "asan_ubsan": {
+    "passed": 26,
+    "failed": 0,
+    "build_type": "RelWithDebInfo",
+    "log": "sanitize-final.log",
+    "shared_with": "concurrent movement task"
+  },
+  "unreal": {
+    "build": "Succeeded",
+    "passed": 18,
+    "failed": 0,
+    "allowed_host_warning_count": 2,
+    "report": "Saved/Automation/Integration/20260916T075333Z-20126/index.json",
+    "build_log": "unreal-final-build.log",
+    "test_log": "unreal-tests.log"
+  },
+  "benchmark": "../ai-challenge/comparison.json",
+  "source_sha256": {
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "e6ac96572eb460605aeb18f2ce075098c52d492d36df142baf2891e5fb7a3258",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "597924671e6b1a6366358573d1619f1842c32a1df6b2d3c874525e070c7bdad5",
+    "Tests/AIEconomyTests.cpp": "cf975e85d3a4b58fd2a461cd7caef8c11567dbb58ef5fedf42bbcbee9a9bdda5",
+    "Tests/AITacticsTests.cpp": "50883a4956426b31d352769165296ab11e863dedfd7d722b116e5e4801a01027",
+    "Tests/AIDifficultyTests.cpp": "e32c1c1912bffcf18f1bb6f444a72c454f4c45ebaf4959b810901d57619618a6",
+    "Tools/AIChallengeBaseline.cpp": "acd5d459af034bf61202effdbea255377d7ad0850fdd26d32bd96966f0545c1f",
+    "CMakeLists.txt": "3dd28ad7ab3ed8342431fdf3bfbc7e32c6415e5c6a8cf29cc82265a4336c13b2"
+  },
+  "limits": [
+    "Paid scripted simulation trials; no human playtest claim.",
+    "Existing Android/iOS packages and installed devices were not updated."
+  ],
+  "initial_diagnostic_runs": "Earlier tests.log/initial-tests.log belong to concurrent in-progress source/test states. Final copied release and sanitizer receipts above supersede them."
+}

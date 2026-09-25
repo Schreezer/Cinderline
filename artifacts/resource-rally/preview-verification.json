@@ -1,0 +1,46 @@
+{
+  "schema": "cinderline.resource_rally_preview.v1",
+  "cases": [
+    {
+      "case": "mobile-producer",
+      "viewport": [
+        1600,
+        738
+      ],
+      "screenshot": "artifacts/resource-rally/mobile-producer.png",
+      "sha256": "20462ac3283ee6e77094ac41356eaa00654fd01e276bc4ea98ae270f82c1fde1",
+      "fixture_receipt": "[2026.09.15-10.49.36:679][ 57]LogCinderMobileHUDPreview: Display: CINDERLINE_MOBILE_HUD_CAPTURE state=producer file=../../../../starCraft/Saved/MobileHUD/producer.png; scripted fixture, not a native gesture test"
+    },
+    {
+      "case": "mobile-worker-rally",
+      "viewport": [
+        1600,
+        738
+      ],
+      "screenshot": "artifacts/resource-rally/mobile-worker-rally.png",
+      "sha256": "fd7612c66ebe0e7ff58b58f3222e0b0671ad8f6c941046f43e3d4a88105b1f7f",
+      "fixture_receipt": "[2026.09.15-10.49.56:144][108]LogCinderCommandPreview: Display: CINDERLINE_COMMAND_PREVIEW state=worker-rally selection=1 squad_a=4 squad_b=3 squad_c=2 tick=1"
+    }
+  ],
+  "complete": true,
+  "evidence": "scripted Mac rendering; no native gesture or iPhone acceptance",
+  "module": "Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+  "module_sha256": "9492b42882048a5846c6c64d9b220fcf29809f700f0872997a20e66a2c432b84",
+  "protected_unchanged": true,
+  "protected_before": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "protected_after": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "visual_review": "passed",
+  "visual_review_notes": [
+    "Viewed both original 1600x738 Mac images. Producer contextual controls and the pinned Anchor Jobs panel are legible and unclipped.",
+    "The Anchor Jobs capture shows Rally This, Auto Mine, and the Worker Rally marker. These are scripted previews with ground rally, not proof of a native touch gesture or the new action-bar button.",
+    "The separate Unreal ProductionControls regression verifies picked-deposit canonicalization and newborn gathering. Physical device acceptance remains pending."
+  ]
+}

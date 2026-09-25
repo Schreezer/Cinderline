@@ -1,0 +1,91 @@
+[  3%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[  3%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[  4%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[  6%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[  7%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[  9%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 11%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationProduction.cpp.o
+[ 12%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationTactics.cpp.o
+[ 14%] Linking CXX static library libCinderlineSimulation.a
+[ 14%] Built target CinderlineSimulation
+[ 17%] Building CXX object CMakeFiles/CinderlineGameplayBaseline.dir/Tools/GameplayBaseline.cpp.o
+[ 17%] Building CXX object CMakeFiles/CinderlineMatchBaseline.dir/Tools/MatchBaseline.cpp.o
+[ 19%] Linking CXX executable CinderlineGameplayBaseline
+[ 19%] Built target CinderlineGameplayBaseline
+[ 20%] Building CXX object CMakeFiles/CinderlineTacticalOrderBaseline.dir/Tools/TacticalOrderBaseline.cpp.o
+[ 22%] Linking CXX executable CinderlineMatchBaseline
+[ 22%] Built target CinderlineMatchBaseline
+[ 23%] Building CXX object CMakeFiles/CinderlineSustainedOrderBaseline.dir/Tools/SustainedOrderBaseline.cpp.o
+[ 25%] Linking CXX executable CinderlineTacticalOrderBaseline
+[ 25%] Built target CinderlineTacticalOrderBaseline
+[ 26%] Building CXX object CMakeFiles/CinderlineFormationOrderBaseline.dir/Tools/FormationOrderBaseline.cpp.o
+[ 28%] Linking CXX executable CinderlineSustainedOrderBaseline
+[ 28%] Built target CinderlineSustainedOrderBaseline
+[ 30%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 31%] Linking CXX executable CinderlineFormationOrderBaseline
+[ 31%] Built target CinderlineFormationOrderBaseline
+[ 33%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 34%] Linking CXX executable CinderlineMatchWorker
+[ 34%] Built target CinderlineMatchWorker
+[ 36%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 38%] Linking CXX executable CinderlineNavigationTests
+[ 38%] Built target CinderlineNavigationTests
+[ 39%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 41%] Linking CXX executable CinderlineTests
+[ 41%] Built target CinderlineTests
+[ 42%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 44%] Linking CXX executable CinderlineDefenseTests
+[ 44%] Built target CinderlineDefenseTests
+[ 46%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 47%] Linking CXX executable CinderlineNetworkTests
+[ 47%] Built target CinderlineNetworkTests
+[ 49%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 50%] Linking CXX executable CinderlineAIDifficultyTests
+[ 50%] Built target CinderlineAIDifficultyTests
+[ 52%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 53%] Linking CXX executable CinderlineProductionAllocationTests
+[ 53%] Built target CinderlineProductionAllocationTests
+[ 55%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 57%] Linking CXX executable CinderlineMatchLengthTests
+[ 57%] Built target CinderlineMatchLengthTests
+[ 58%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 60%] Linking CXX executable CinderlineOrderCompletionTests
+[ 60%] Built target CinderlineOrderCompletionTests
+[ 61%] Building CXX object CMakeFiles/CinderlineTacticalOrderTests.dir/Tests/TacticalOrderTests.cpp.o
+[ 63%] Linking CXX executable CinderlineFourPlayerTests
+[ 63%] Built target CinderlineFourPlayerTests
+[ 65%] Building CXX object CMakeFiles/CinderlinePatrolEscortTests.dir/Tests/PatrolEscortTests.cpp.o
+[ 66%] Linking CXX executable CinderlineTacticalOrderTests
+[ 66%] Built target CinderlineTacticalOrderTests
+[ 68%] Building CXX object CMakeFiles/CinderlineFormationOrderTests.dir/Tests/FormationOrderTests.cpp.o
+[ 69%] Linking CXX executable CinderlinePatrolEscortTests
+[ 69%] Built target CinderlinePatrolEscortTests
+[ 71%] Building CXX object CMakeFiles/CinderlineTacticalInterruptionTests.dir/Tests/TacticalInterruptionTests.cpp.o
+[ 73%] Linking CXX executable CinderlineTacticalInterruptionTests
+[ 73%] Built target CinderlineTacticalInterruptionTests
+[ 74%] Building CXX object CMakeFiles/CinderlineWorkerOrderCompletionTests.dir/Tests/WorkerOrderCompletionTests.cpp.o
+[ 76%] Linking CXX executable CinderlineFormationOrderTests
+[ 76%] Built target CinderlineFormationOrderTests
+[ 77%] Building CXX object CMakeFiles/CinderlineSimulationProfilingTests.dir/Tests/SimulationProfilingTests.cpp.o
+[ 79%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 79%] Built target CinderlineWorkerOrderCompletionTests
+[ 80%] Building CXX object CMakeFiles/CinderlineNavigationAttachmentCacheTests.dir/Tests/NavigationAttachmentCacheTests.cpp.o
+[ 82%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 82%] Built target CinderlineNavigationAttachmentCacheTests
+[ 84%] Building CXX object CMakeFiles/CinderlineNavigationMultiSourceTests.dir/Tests/NavigationMultiSourceTests.cpp.o
+[ 85%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 85%] Built target CinderlineSimulationProfilingTests
+[ 87%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 88%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 88%] Built target CinderlineNavigationMultiSourceTests
+[ 90%] Building CXX object CMakeFiles/CinderlineNavigationTerrainVisibilityTests.dir/Tests/NavigationTerrainVisibilityTests.cpp.o
+[ 92%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[ 92%] Built target CinderlineNavigationPredicateParityTests
+[ 93%] Building CXX object CMakeFiles/CinderlineProductionExitTests.dir/Tests/ProductionExitTests.cpp.o
+[ 95%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 95%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 96%] Building CXX object CMakeFiles/CinderlineProductionTrafficTests.dir/Tests/ProductionTrafficTests.cpp.o
+[ 98%] Linking CXX executable CinderlineProductionExitTests
+[ 98%] Built target CinderlineProductionExitTests
+[100%] Linking CXX executable CinderlineProductionTrafficTests
+[100%] Built target CinderlineProductionTrafficTests

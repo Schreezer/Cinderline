@@ -1,0 +1,25 @@
+{
+  "scope": "Terrain visibility cache and exact bounded cold box predicate",
+  "production_reviews": [
+    "Cache identity, invalidation and borrowed-page lifetime reviewed; no important issue found.",
+    "Two independent readers reviewed finite-domain and projection-envelope reasoning; no important issue found."
+  ],
+  "test_review": [
+    "Visibility tests cover actual changed-circle route obstruction, normalized terrain identity, clearance keys, ownership, FIFO eviction and registry saturation.",
+    "Final predicate reconstruction case requires both public endpoints clear, so comparisons reach segment interior logic.",
+    "Review noticed the earlier six-case receipt was stale; final seven-case run is required before acceptance."
+  ],
+  "documentation_correction": "Clarified that the cold predicate implementation changes; semantic parity is established by mathematical reasoning plus covered oracle/route/workload comparisons.",
+  "not_claimed": [
+    "exhaustive floating-point proof by testing",
+    "physical-device thermal improvement",
+    "full P0 acceptance"
+  ],
+  "fixture_repairs": [
+    "Removed an extra initializer brace in two nearly-parallel pair rows.",
+    "Moved the reconstructed-box fixture along Y so public pointClear accepts both endpoints even when large-coordinate X subtraction rounds to zero; retained both directions and original X threshold ULP cases.",
+    "Confirmed all seven final cases pass against the immutable pre-pass core before comparing optimized output."
+  ],
+  "final_predicate_sha256": "96725e4e5d1637c917c5016ef074e1fa7dbf6601224d3c67ff6859c8875a84f7",
+  "final_fixture_review": "Read-only reviewer confirmed authored left=32768 versus reverse-reconstructed left=0: tangent and adjacent ULP rows still exercise the envelope correction. New Y positions admit both endpoints and preserve the X condition."
+}

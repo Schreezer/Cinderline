@@ -1,0 +1,7 @@
+EVIDENCE Hard reclaimed_hq=1 ward=1 miners=21 income=1638
+EVIDENCE Expert reclaimed_hq=1 ward=1 miners=19 income=1170
+PASS captured ore becomes income and defense
+PASS bounded guards preserve main army and saves
+PASS Expert denies exposed income
+PASS Expert third base and workforce
+PASS hidden ore isolation

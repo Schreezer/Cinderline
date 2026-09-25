@@ -1,0 +1,6 @@
+compile: clang++ -std=c++17 -O2 -ISource/Cinderline/Public artifacts/production-exit/mortar_stall_current_diagnostic.cpp Saved/P0OrderCompletionBuild/libCinderlineSimulation.a -o Saved/P0OrderCompletionBuild/CinderlineMortarStallCurrentDiagnostic
+run: Saved/P0OrderCompletionBuild/CinderlineMortarStallCurrentDiagnostic artifacts/production-exit/crowd-stall-intermediate-march-end.save
+note: 100-tick trace was linked against the off-route repair archive before the current-stall gate; exact linked archive was not separately preserved
+112488b401dd9a16ded1572b248bae3bbf83fd457fb9de23d95323ad9a4dc9f3  artifacts/production-exit/mortar_stall_current_diagnostic.cpp
+3494fec49dfaf4fd9f8c4b1f6eae6411b8b334455855240a80f3d4c5be825787  artifacts/production-exit/mortar-stall-current-100tick.output.txt
+c803d88099a6f62106b6831784aed3fe04e90839865d9c00bbfe3aab0cd794be  artifacts/production-exit/crowd-stall-intermediate-march-end.save

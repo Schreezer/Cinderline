@@ -1,0 +1,148 @@
+{
+  "schema": "cinderline.formation_preview.v1",
+  "cases": [
+    {
+      "case": "desktop-formation-tight",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-tight.png",
+      "sha256": "0095bbe79042a0857018d62525504c70e8fbfda7d9e3f06e24630d0e509a344d",
+      "fixture_receipt": "[2026.09.14-20.33.26:108][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-tight spacing=0 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-formation-standard",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-standard.png",
+      "sha256": "7a5bb2ad1150c58bbd5e4a079e9879d4a0986f8d17d0c4c99fc6393c5e0d8dbf",
+      "fixture_receipt": "[2026.09.14-20.33.42:927][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-standard spacing=1 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-formation-wide",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-wide.png",
+      "sha256": "7dc885d5a05ca8a3167876fa154e83f0808b6ce7cf73bde0c2f4be2d90f6d251",
+      "fixture_receipt": "[2026.09.14-20.33.59:148][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-wide spacing=2 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-formation-facing",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-facing.png",
+      "sha256": "732edf7cb782a648f9136e02df8b1d0cbb9a409d6249d76b51719a2772280a08",
+      "fixture_receipt": "[2026.09.14-20.34.14:531][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-facing spacing=2 armed=1 dragging=1 pending=0 sheet=0"
+    },
+    {
+      "case": "desktop-formation-pending",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-pending.png",
+      "sha256": "9d5cbd10b4b065247151b6d05e98a6a267d620cd3ef0a5523397c6212ae0cef3",
+      "fixture_receipt": "[2026.09.14-20.34.30:931][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-pending spacing=1 armed=1 dragging=0 pending=1 sheet=4"
+    },
+    {
+      "case": "desktop-formation-accepted",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-accepted.png",
+      "sha256": "64259d87c6ac48020c059dea124056b55d4e050e70b9744ba4b80e50f503f689",
+      "fixture_receipt": "[2026.09.14-20.34.47:590][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-accepted spacing=1 armed=0 dragging=0 pending=0 sheet=0"
+    },
+    {
+      "case": "mobile-formation-tight",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-tight.png",
+      "sha256": "932786b35c2763c10b5f5c170b969b163d1f785f91348abc7a2c0fa6f50c20ca",
+      "fixture_receipt": "[2026.09.14-20.35.03:933][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-tight spacing=0 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-formation-standard",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-standard.png",
+      "sha256": "aa17dbf0a0b518c11161c86fd4ec2a027f5cca5c57013bf941b681db7d4de192",
+      "fixture_receipt": "[2026.09.14-20.35.19:933][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-standard spacing=1 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-formation-wide",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-wide.png",
+      "sha256": "25887a3ccead651ceea80e43dc8b72efced12c9dbc529e67812fd122f4f2441d",
+      "fixture_receipt": "[2026.09.14-20.35.35:520][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-wide spacing=2 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-formation-facing",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-facing.png",
+      "sha256": "8bfef4e5310459ef914a6d8de2d3ec9b4705588b274784c491beb30d221db322",
+      "fixture_receipt": "[2026.09.14-20.35.51:341][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-facing spacing=2 armed=1 dragging=1 pending=0 sheet=0"
+    },
+    {
+      "case": "mobile-formation-pending",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-pending.png",
+      "sha256": "fb31a82a6d9e14516bb4ab5d5c3b81960ae313676aa028a47b9155ccca3a74f6",
+      "fixture_receipt": "[2026.09.14-20.36.06:993][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-pending spacing=1 armed=1 dragging=0 pending=1 sheet=4"
+    },
+    {
+      "case": "mobile-formation-accepted",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-accepted.png",
+      "sha256": "facbc8d51e77b72bd75011053d8a96257d81be95911ff11d7865d5634886e93e",
+      "fixture_receipt": "[2026.09.14-20.36.22:095][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-accepted spacing=1 armed=0 dragging=0 pending=0 sheet=0"
+    }
+  ],
+  "complete": true,
+  "evidence": "scripted Mac rendering; no native gesture or iPhone acceptance",
+  "module": "Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+  "module_sha256": "90400e0f2a8d4aae463ff91b74557f810bdea6987c88cb510b85d126dc5adb91",
+  "protected_unchanged": true,
+  "protected_before": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "protected_after": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "visual_review": "passed",
+  "visual_review_notes": [
+    "All twelve original PNGs were viewed: six 1440x900 desktop and six 956x440 compact cases.",
+    "Spacing, armed and pending labels fit their controls. Cancel, selection and global production controls are visible.",
+    "Facing drag closes the Orders sheet and exposes its direction arrow and nominal slot dots. Accepted state displays authoritative route and facing marks.",
+    "The open compact Orders sheet covers the starting units in this fixture; closing or dragging exposes the battlefield. This is a temporary sheet, not a full-match HUD occlusion claim.",
+    "These are scripted Mac render fixtures and injected-controller tests, not native mouse or physical iPhone touch proof."
+  ]
+}

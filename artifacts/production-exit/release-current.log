@@ -1,0 +1,86 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+[ 18%] Built target CinderlineSimulation
+[ 27%] Built target CinderlineGameplayBaseline
+[ 27%] Built target CinderlineMatchBaseline
+[ 29%] Linking CXX executable CinderlineTests
+[ 31%] Linking CXX executable CinderlineMatchWorker
+[ 36%] Built target CinderlineMatchWorker
+[ 36%] Built target CinderlineTests
+[ 40%] Linking CXX executable CinderlineNetworkTests
+[ 40%] Linking CXX executable CinderlineNavigationTests
+[ 45%] Built target CinderlineNavigationTests
+[ 45%] Built target CinderlineNetworkTests
+[ 50%] Linking CXX executable CinderlineAIDifficultyTests
+[ 50%] Linking CXX executable CinderlineDefenseTests
+[ 54%] Built target CinderlineAIDifficultyTests
+[ 54%] Built target CinderlineDefenseTests
+[ 59%] Linking CXX executable CinderlineProductionAllocationTests
+[ 59%] Linking CXX executable CinderlineMatchLengthTests
+[ 61%] Built target CinderlineMatchLengthTests
+[ 63%] Built target CinderlineProductionAllocationTests
+[ 65%] Linking CXX executable CinderlineOrderCompletionTests
+[ 68%] Linking CXX executable CinderlineFourPlayerTests
+[ 70%] Built target CinderlineFourPlayerTests
+[ 72%] Built target CinderlineOrderCompletionTests
+[ 77%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 77%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 81%] Built target CinderlineWorkerOrderCompletionTests
+[ 81%] Built target CinderlineSimulationProfilingTests
+[ 84%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 86%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 90%] Built target CinderlineNavigationAttachmentCacheTests
+[ 90%] Built target CinderlineNavigationMultiSourceTests
+[ 95%] Building CXX object CMakeFiles/CinderlineProductionTrafficTests.dir/Tests/ProductionTrafficTests.cpp.o
+[ 95%] Linking CXX executable CinderlineProductionExitTests
+[ 97%] Built target CinderlineProductionExitTests
+[100%] Linking CXX executable CinderlineProductionTrafficTests
+[100%] Built target CinderlineProductionTrafficTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+      Start  1: simulation_rules
+ 1/15 Test  #1: simulation_rules ..........................   Passed    4.34 sec
+      Start  2: navigation_regressions
+ 2/15 Test  #2: navigation_regressions ....................   Passed    0.79 sec
+      Start  3: network_protocol
+ 3/15 Test  #3: network_protocol ..........................   Passed    0.57 sec
+      Start  4: defense_regressions
+ 4/15 Test  #4: defense_regressions .......................   Passed    0.51 sec
+      Start  5: ai_difficulty_regressions
+ 5/15 Test  #5: ai_difficulty_regressions .................   Passed    3.78 sec
+      Start  6: production_allocation_regressions
+ 6/15 Test  #6: production_allocation_regressions .........   Passed    0.72 sec
+      Start  7: match_length_regressions
+ 7/15 Test  #7: match_length_regressions ..................   Passed    3.34 sec
+      Start  8: four_player_regressions
+ 8/15 Test  #8: four_player_regressions ...................   Passed    1.35 sec
+      Start  9: order_completion_regressions
+ 9/15 Test  #9: order_completion_regressions ..............   Passed    0.44 sec
+      Start 10: worker_order_completion_regressions
+10/15 Test #10: worker_order_completion_regressions .......   Passed    0.42 sec
+      Start 11: simulation_profiling_regressions
+11/15 Test #11: simulation_profiling_regressions ..........   Passed    0.73 sec
+      Start 12: navigation_attachment_cache_regressions
+12/15 Test #12: navigation_attachment_cache_regressions ...   Passed    0.40 sec
+      Start 13: navigation_multi_source_regressions
+13/15 Test #13: navigation_multi_source_regressions .......   Passed    0.47 sec
+      Start 14: production_exit_regressions
+14/15 Test #14: production_exit_regressions ...............   Passed    1.03 sec
+      Start 15: production_traffic_regressions
+15/15 Test #15: production_traffic_regressions ............   Passed    2.56 sec
+
+100% tests passed, 0 tests failed out of 15
+
+Label Time Summary:
+ai              =   3.78 sec*proc (1 test)
+defense         =   0.51 sec*proc (1 test)
+economy         =   0.42 sec*proc (1 test)
+four-player     =   1.35 sec*proc (1 test)
+match-length    =   3.34 sec*proc (1 test)
+navigation      =  10.38 sec*proc (8 tests)
+network         =   2.07 sec*proc (2 tests)
+orders          =   0.86 sec*proc (2 tests)
+production      =   4.78 sec*proc (4 tests)
+profiling       =   1.14 sec*proc (2 tests)
+
+Total Test time (real) =  21.46 sec

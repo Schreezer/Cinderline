@@ -1,0 +1,31 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1SustainedBuild
+    Start 11: patrol_escort_regressions
+1/1 Test #11: patrol_escort_regressions ........***Failed    1.19 sec
+PASS mixed Patrol immutable laps
+PASS Patrol pursuit return suppression and kill
+PASS blocked and stationary Patrol recovery
+PASS Escort leader immutability and stable slots
+PASS Escort boundary reprojection and failed-route retry
+PASS sequential Escort assignment and reassignment
+FAIL Escort traversal around an Idle formation: crossing follower never traverses its leader's physical footprint
+PASS Escort projected cycles and atomic rejection
+PASS Escort leader death successors
+PASS worker cargo and construction Escort
+PASS Anchor cargo delivery with Escort traffic
+PASS sustained clear stop and replacement
+PASS save-load continuation and replay
+PASS save-twelve sustained corruption rejection
+RESULT passed=13 failed=1
+
+
+0% tests passed, 1 tests failed out of 1
+
+Label Time Summary:
+navigation    =   1.19 sec*proc (1 test)
+orders        =   1.19 sec*proc (1 test)
+
+Total Test time (real) =   1.19 sec
+
+The following tests FAILED:
+	 11 - patrol_escort_regressions (Failed)                navigation orders
+Errors while running CTest

@@ -1,0 +1,33 @@
+{
+  "note": "Frozen P1.2 Release core and benchmark inputs. Presentation and physical acceptance are separate.",
+  "files": {
+    "Saved/P1SustainedVerified/libCinderlineSimulation.a": "fc85f07ea4ccf0222b8dbce82b322c2633c7069ca7aa6ab0832274931ddb66ea",
+    "Saved/P1SustainedVerified/CinderlineGameplayBaseline": "07380a8904a7ab795e71b730de04a30b835e9dae0f811315745e9e7c8f6dcb79",
+    "Saved/P1SustainedVerified/CinderlineMatchBaseline": "7188cef66fc50b564116362160d6dc6aef95009294dea83fdea781c9de136f81",
+    "Saved/P1SustainedVerified/CinderlineTacticalOrderBaseline": "a3a6c744f451d23499ee9563a14384951613f2d7bf8f5cfa626de3c081326522",
+    "Saved/P1SustainedVerified/CinderlineSustainedOrderBaseline": "89adafb37860f6951c66eb3319e3d6c877b86cdaad4f3988adf402c73141e108",
+    "Saved/P1SustainedVerified/CinderlineMatchWorker": "6a1bb34eea068f6e505ecf330311af549046b1ab17586c970bc22c3c2981c800",
+    "Saved/P1SustainedVerified/Include/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1",
+    "Saved/P1SustainedVerified/Include/Sim/MatchLength.h": "5c39350635561f976f8467b98f64dbcc0518fea785040f820d1bb5eca304bf62",
+    "Saved/P1SustainedVerified/Include/Sim/Navigation.h": "401dcd52f6bfed4e252dee614872487b0b209510b369501c00a90db1fe9bd0ec",
+    "Saved/P1SustainedVerified/Include/Sim/Network.h": "98b55c8d18f48d3998707b74d987b211bf374705610ebfe33c3b6c28b7d513c0",
+    "Saved/P1SustainedVerified/Include/Sim/Simulation.h": "0453eb13dbba41660c323ba3ed73002c137d2faea166109486ec1862e9b53c5a",
+    "Saved/P1SustainedVerified/Include/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563",
+    "Saved/P1SustainedVerified/Include/Sim/SustainedOrderRules.h": "6c8f7b9960f516542cd541cd251fdf555df2f7bdb123a418b695f2220071befb"
+  },
+  "workload_correction": {
+    "path": "Saved/P1SustainedVerified/StagedWorkload/CinderlineMatchBaseline",
+    "sha256": "9bf3bae9b3b011985facdb8c2c753d5d53763b820892a783d08c5adcd802e10c",
+    "source_sha256": "9d8e4cf38c7997efc0c936a72b017200f1b1e7b91a0ddf03f7b6a710f1592f3a",
+    "reason": "Require all paid mobiles inside separated home staging circles, then keep only workers moving through measured army march. Original goals/rosters/tick limits/zero combat and all arrivals unchanged."
+  },
+  "source_archive": "Saved/P1SustainedReceiptSource",
+  "module_archive": "Saved/P1SustainedReceiptSource/Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+  "module_sha256": "a6f61a5073ff5d47e8d6c54695cfd5812b5d0338eb7da494342355bf88f31184",
+  "previous_workload_correction": {
+    "path": "Saved/P1SustainedVerified/WorkloadCorrection/CinderlineMatchBaseline",
+    "sha256": "a1c0364f8939a8e9e3fff56ff10a3213933d625197d38dd309269b651ea6be1e",
+    "source_sha256": "dd029fc8ee228659536d0aa4110dc1f914145ec3165d245caa9193611b2fc043",
+    "reason": "Worker-only holding Move during isolated march; original core and earlier executable preserved."
+  }
+}

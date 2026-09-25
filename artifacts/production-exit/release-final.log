@@ -1,0 +1,45 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+      Start  1: simulation_rules
+ 1/14 Test  #1: simulation_rules ..........................   Passed    4.14 sec
+      Start  2: navigation_regressions
+ 2/14 Test  #2: navigation_regressions ....................   Passed    0.79 sec
+      Start  3: network_protocol
+ 3/14 Test  #3: network_protocol ..........................   Passed    0.53 sec
+      Start  4: defense_regressions
+ 4/14 Test  #4: defense_regressions .......................   Passed    0.49 sec
+      Start  5: ai_difficulty_regressions
+ 5/14 Test  #5: ai_difficulty_regressions .................   Passed    3.62 sec
+      Start  6: production_allocation_regressions
+ 6/14 Test  #6: production_allocation_regressions .........   Passed    0.71 sec
+      Start  7: match_length_regressions
+ 7/14 Test  #7: match_length_regressions ..................   Passed    3.21 sec
+      Start  8: four_player_regressions
+ 8/14 Test  #8: four_player_regressions ...................   Passed    1.26 sec
+      Start  9: order_completion_regressions
+ 9/14 Test  #9: order_completion_regressions ..............   Passed    0.45 sec
+      Start 10: worker_order_completion_regressions
+10/14 Test #10: worker_order_completion_regressions .......   Passed    0.39 sec
+      Start 11: simulation_profiling_regressions
+11/14 Test #11: simulation_profiling_regressions ..........   Passed    0.73 sec
+      Start 12: navigation_attachment_cache_regressions
+12/14 Test #12: navigation_attachment_cache_regressions ...   Passed    0.42 sec
+      Start 13: navigation_multi_source_regressions
+13/14 Test #13: navigation_multi_source_regressions .......   Passed    0.42 sec
+      Start 14: production_exit_regressions
+14/14 Test #14: production_exit_regressions ...............   Passed    0.93 sec
+
+100% tests passed, 0 tests failed out of 14
+
+Label Time Summary:
+ai              =   3.62 sec*proc (1 test)
+defense         =   0.49 sec*proc (1 test)
+economy         =   0.39 sec*proc (1 test)
+four-player     =   1.26 sec*proc (1 test)
+match-length    =   3.21 sec*proc (1 test)
+navigation      =   7.47 sec*proc (7 tests)
+network         =   1.97 sec*proc (2 tests)
+orders          =   0.84 sec*proc (2 tests)
+production      =   2.06 sec*proc (3 tests)
+profiling       =   1.15 sec*proc (2 tests)
+
+Total Test time (real) =  18.10 sec

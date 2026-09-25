@@ -1,0 +1,40 @@
+{
+  "schema": "cinderline.campaign_preview.v1",
+  "cases": [
+    {
+      "case": "mobile-menu",
+      "viewport": [
+        1600,
+        738
+      ],
+      "screenshot": "artifacts/campaign/mobile-menu.png",
+      "sha256": "05cba19cee94425f726e5c089845a4b844486181cb907417b68f0723be38482a",
+      "fixture_receipt": "[2026.09.15-12.51.39:215][ 17]LogCinderCampaignPreview: Display: CINDERLINE_CAMPAIGN_PREVIEW state=menu fixture=1"
+    },
+    {
+      "case": "mobile-train",
+      "viewport": [
+        1600,
+        738
+      ],
+      "screenshot": "artifacts/campaign/mobile-train.png",
+      "sha256": "602196ea6ca4059a92fc37b7203efee1f4bb15494aba6c15ea16099bb01569ec",
+      "fixture_receipt": "[2026.09.15-12.51.55:713][ 17]LogCinderCampaignPreview: Display: CINDERLINE_CAMPAIGN_PREVIEW state=train fixture=1"
+    }
+  ],
+  "complete": false,
+  "evidence": "scripted Mac rendering; no native gesture or iPhone acceptance",
+  "module": "Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+  "module_sha256": "289035ffc9a9a3a0e88cd7896b6cbfb14fc29679d2cf493f9549faa0798d9a95",
+  "protected_unchanged": true,
+  "protected_before": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "protected_after": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  }
+}

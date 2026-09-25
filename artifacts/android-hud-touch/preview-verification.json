@@ -1,0 +1,45 @@
+{
+  "schema": "cinderline.android_hud_touch_preview.v1",
+  "cases": [
+    {
+      "case": "mobile-train-open",
+      "viewport": [
+        1600,
+        738
+      ],
+      "screenshot": "artifacts/android-hud-touch/mobile-train-open.png",
+      "sha256": "0a8b6747a8063314dccde659d291b22090bcba15d12aef50d86db2280d11942c",
+      "fixture_receipt": "[2026.09.15-06.58.17:870][ 20]LogCinderTutorialCoachPreview: Display: CINDERLINE_TUTORIAL_COACH_PREVIEW state=train-open step=3 micro=1/6 target=button selection=0 rally_producer=0 tick=100 frozen=1 file=../../../../starCraft/Saved/TutorialMicrosteps/train-open.png"
+    },
+    {
+      "case": "mobile-train-portrait",
+      "viewport": [
+        1600,
+        738
+      ],
+      "screenshot": "artifacts/android-hud-touch/mobile-train-portrait.png",
+      "sha256": "a63ce3c0d021ec4d11642b0d8d492538b2d15c12214634a1cbf01cbf67f96317",
+      "fixture_receipt": "[2026.09.15-06.58.34:862][ 28]LogCinderTutorialCoachPreview: Display: CINDERLINE_TUTORIAL_COACH_PREVIEW state=train-portrait step=3 micro=2/6 target=button selection=0 rally_producer=0 tick=100 frozen=1 file=../../../../starCraft/Saved/TutorialMicrosteps/train-portrait.png"
+    }
+  ],
+  "complete": true,
+  "evidence": "scripted Mac rendering; no native gesture or iPhone acceptance",
+  "module": "Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+  "module_sha256": "6fedb8a284b7e62e13e6eb87cfe8d6032b358d9b538c9d8e629dd5986a71de3f",
+  "protected_unchanged": true,
+  "protected_before": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "protected_after": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "visual_review": "passed",
+  "visual_review_notes": [
+    "Viewed both original 1600x738 PNGs. The highlighted Train control and the following training catalogue/Drudge portrait prompt are legible and unclipped.",
+    "Mac rendering uses a synthetic debug safe zone. Preview action routing alone is not touch proof; the separate raw-coordinate controller regression covers dispatch. No physical Android execution is claimed."
+  ]
+}

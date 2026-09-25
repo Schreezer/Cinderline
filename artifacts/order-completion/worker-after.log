@@ -1,0 +1,3 @@
+PASS exhausted ore finishes at delivery point
+PASS pending cargo waits for replacement depot across save-load
+RESULT passed=2 failed=0

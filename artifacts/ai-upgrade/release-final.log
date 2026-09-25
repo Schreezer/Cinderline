@@ -1,0 +1,75 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/native
+      Start  1: simulation_rules
+      Start  8: ai_tactics_regressions
+ 1/28 Test  #8: ai_tactics_regressions ......................   Passed    0.26 sec
+      Start  9: ai_economy_regressions
+ 2/28 Test  #9: ai_economy_regressions ......................   Passed    1.45 sec
+      Start 11: match_length_regressions
+ 3/28 Test  #1: simulation_rules ............................   Passed    4.31 sec
+      Start 28: native_render_stress
+ 4/28 Test #11: match_length_regressions ....................   Passed    2.98 sec
+      Start  3: movement_following_regressions
+ 5/28 Test  #3: movement_following_regressions ..............   Passed    0.42 sec
+      Start  4: navigation_route_quality_regressions
+ 6/28 Test  #4: navigation_route_quality_regressions ........   Passed    0.36 sec
+      Start  7: ai_difficulty_regressions
+ 7/28 Test  #7: ai_difficulty_regressions ...................   Passed    3.46 sec
+      Start 26: production_traffic_regressions
+ 8/28 Test #26: production_traffic_regressions ..............   Passed    2.68 sec
+      Start 25: production_exit_regressions
+ 9/28 Test #25: production_exit_regressions .................   Passed    0.94 sec
+      Start  2: navigation_regressions
+10/28 Test  #2: navigation_regressions ......................   Passed    0.76 sec
+      Start 12: four_player_regressions
+11/28 Test #12: four_player_regressions .....................   Passed    1.20 sec
+      Start 10: production_allocation_regressions
+12/28 Test #10: production_allocation_regressions ...........   Passed    0.70 sec
+      Start 20: simulation_profiling_regressions
+13/28 Test #20: simulation_profiling_regressions ............   Passed    0.67 sec
+      Start 19: builder_queue_regressions
+14/28 Test #19: builder_queue_regressions ...................   Passed    0.51 sec
+      Start 24: navigation_terrain_visibility_regressions
+15/28 Test #24: navigation_terrain_visibility_regressions ...   Passed    0.51 sec
+      Start 14: tactical_order_regressions
+16/28 Test #14: tactical_order_regressions ..................   Passed    0.49 sec
+      Start 16: formation_order_regressions
+17/28 Test #16: formation_order_regressions .................   Passed    0.48 sec
+      Start 15: patrol_escort_regressions
+18/28 Test #15: patrol_escort_regressions ...................   Passed    0.43 sec
+      Start 13: order_completion_regressions
+19/28 Test #13: order_completion_regressions ................   Passed    0.41 sec
+      Start  5: network_protocol
+20/28 Test  #5: network_protocol ............................   Passed    0.47 sec
+      Start  6: defense_regressions
+21/28 Test  #6: defense_regressions .........................   Passed    0.45 sec
+      Start 21: navigation_attachment_cache_regressions
+22/28 Test #21: navigation_attachment_cache_regressions .....   Passed    0.36 sec
+      Start 18: worker_order_completion_regressions
+23/28 Test #18: worker_order_completion_regressions .........   Passed    0.37 sec
+      Start 22: navigation_multi_source_regressions
+24/28 Test #22: navigation_multi_source_regressions .........   Passed    0.38 sec
+      Start 23: navigation_predicate_parity_regressions
+25/28 Test #23: navigation_predicate_parity_regressions .....   Passed    0.37 sec
+      Start 17: tactical_interruption_regressions
+26/28 Test #17: tactical_interruption_regressions ...........   Passed    0.36 sec
+      Start 27: native_smoke
+27/28 Test #27: native_smoke ................................   Passed    0.06 sec
+28/28 Test #28: native_render_stress ........................   Passed   17.63 sec
+
+100% tests passed, 0 tests failed out of 28
+
+Label Time Summary:
+ai              =   5.16 sec*proc (3 tests)
+defense         =   0.45 sec*proc (1 test)
+economy         =   2.68 sec*proc (4 tests)
+four-player     =   1.20 sec*proc (1 test)
+match-length    =   2.98 sec*proc (1 test)
+native          =  17.63 sec*proc (1 test)
+navigation      =  13.13 sec*proc (16 tests)
+network         =   2.40 sec*proc (3 tests)
+orders          =   3.04 sec*proc (7 tests)
+production      =   4.70 sec*proc (4 tests)
+profiling       =   1.91 sec*proc (4 tests)
+render          =  17.63 sec*proc (1 test)
+
+Total Test time (real) =  21.94 sec

@@ -1,0 +1,68 @@
+{
+  "schema": "cinderline.resource_rally.v1",
+  "created_at_utc": "2026-09-15T10:52:53.397109+00:00",
+  "source_sha256": {
+    "Source/Cinderline/Private/Presentation/CinderPlayerController.cpp": "fc18068fb5e14c1f6b431720508d2d26fee1da5284ca89d6516fd7a8a621a881",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "955a5601e508c2c5e4538a7b047920886f9a47f0083a1a711019a302ceb74e9a",
+    "Source/Cinderline/Private/Presentation/CinderHelpContent.cpp": "e460da4cb1c2617b0071baa6349bc9b48bd881e911a1ac5db84dc5cd9c395dc9",
+    "Source/Cinderline/Private/Sim/SimulationProduction.cpp": "d0a158d47cdb228b74c8865cc1015b9e0b705a0d518d66fb5438d3170f16f438",
+    "Source/Cinderline/Private/Tests/CinderProductionControlTests.cpp": "f8058d6e4db66d3bc1a416ffb01fabb83dca776c047c0af8cb75dd17b5242c0d",
+    "Tests/ProductionExitTests.cpp": "034a7a6c3c1d2e3a3dc8d074b6f7d9a18af8814d3807d37237ad1195cb29790d",
+    "Config/DefaultEngine.ini": "73dcab21edeeba1633a379af5085bd2670e646d1624b4cae9441db368c4f3262",
+    "Source/Cinderline/Public/Sim/Simulation.h": "d9b16a08633846d3481a024e21c4f57865053007a79c97bcace6a1654338a175",
+    "Source/Cinderline/Public/Sim/Network.h": "802221bb24b84cd90ebd63048faf362a281ca4946223c6d3c99965ebed08f549",
+    "Source/Cinderline/Private/Sim/Network.cpp": "a8c04ce71d3013bd3de71076f0acb9aac49450ac36740d3d2ebdf613dd351e43"
+  },
+  "packaged_workspace_source_matches": true,
+  "simulation_production_unchanged": true,
+  "save_version": 13,
+  "protocol_version": 10,
+  "unreal": {
+    "report": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Automation/Integration/20260915T104637Z-19855/index.json",
+    "report_sha256": "0f1eba2eae6b34d4b5f622bba615701db14f35a2c89cabd44e899236f0b21d70",
+    "passed": 41,
+    "failed": 0,
+    "warnings": 0,
+    "module_sha256": "9492b42882048a5846c6c64d9b220fcf29809f700f0872997a20e66a2c432b84"
+  },
+  "portable": {
+    "passed_suites": 4,
+    "report": "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/resource-rally/tests-portable.log",
+    "report_sha256": "db517635cca2a23a4092b1c4e9d0a0234d5919aaef29a7da5a3844f06431d294",
+    "production_exit_binary_sha256": "27d76a175ef9a3e43f1247911b3106df3e9e3c4e93f4dea41250c43c35d7a2b1"
+  },
+  "visual_review": {
+    "receipt": "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/resource-rally/preview-verification.json",
+    "sha256": "3d9341e4f324573683d759e1fa09058fcf51eb8404cf778585b6545196116f81",
+    "passed": true,
+    "cases": 2,
+    "native_touch_proof": false
+  },
+  "apk": {
+    "path": "/Volumes/Codex Storage/Cinderline/Android/packages/Cinderline-Android-arm64.apk",
+    "sha256": "dad37087f9fabaa080a63a417fbcee4b5b177c4edeeb3448bb41864e8040b48c",
+    "size_bytes": 274457418,
+    "package": "com.cinderline.game",
+    "version_code": 3,
+    "version_name": "0.1.2",
+    "signature_verified": true,
+    "development_signed": true,
+    "same_signer_as_previous": true,
+    "signer_certificate_sha256": "1430ffabfd20b590dc334486f80f8423a402369e60db88a4142734ce128d1541",
+    "zipalign_16kb_verified": true,
+    "unreal_library_sha256": "061ea0fc1e14e3a30d1ca1c049feca024b2345e2cab3ce03f94aaaa98f13a476",
+    "cooked_data_entries": [
+      "assets/main.obb.png"
+    ]
+  },
+  "physical_android_retest": false,
+  "installed_on_device": false,
+  "ios_package_updated": false,
+  "public_backend_deployed": false,
+  "p2_started": false,
+  "limitations": [
+    "Mac controller and simulation checks are not native device touch proof.",
+    "Scripted previews show producer controls and Anchor Jobs; the new action-bar Rally is not separately captured.",
+    "A depleted or unreachable selected mine retains the ground-rally fallback; Auto Mine restores automatic allocation."
+  ]
+}

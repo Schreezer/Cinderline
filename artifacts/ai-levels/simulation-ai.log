@@ -1,0 +1,20 @@
+AI_EXPANSION depleted_ore=0.000 gathered=22798 alternate_built=1
+AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+PASS AI expansion and local defense
+AI_SCOUT_AND_ARMY scout=0 attack_move=1
+AI_SCOUT_AND_ARMY scout=1 attack_move=1
+AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
+AI_ECONOMY seconds=306.750 ore=5153 gathered=8843 produced=21 built=7 paid_command_cost=3690
+PASS AI paid economy
+AI_CONSTRUCTION travelling_preserved=1 orphan_resumed=1 all_busy_orphan_paused=1
+PASS AI construction assignments
+AI_WITNESSED_DEATH tick=96 previous_decision_tick=80 cleanup_tick=100
+AI_KNOWLEDGE hidden_death_retained=1 hidden_movement_ignored=1 mobile_expired=1 empty_site_cleared=1 visible_death_immediate=1
+PASS AI observation lifecycle
+AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0
+PASS AI observed production
+AI_OBJECTIVES original_destroyed=1 empty_start_avoided=1 relocated_hq_discovered=1 remembered_hq_targeted=1
+PASS AI scouting objectives
+AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1
+PASS AI knowledge persistence
+RESULT passed=7 failed=0

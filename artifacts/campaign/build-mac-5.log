@@ -1,0 +1,87 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CinderlineEditor Mac Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Executing up to 2 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for CinderlineEditor (ispc deleted)
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.2.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.3.cpp.d!
+Building CinderlineEditor...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from Cinderline unity file: CinderCameraBoundaryTests.cpp, CinderCampaignHUDTests.cpp, CinderCampaignGuidanceTests.cpp, CinderFormationTests.cpp, CinderCampaignTests.cpp, CinderTacticalOrderTests.cpp, CinderCampaignLifecycleTests.cpp, CinderUnitInfoTests.cpp, CinderArmyControlTests.cpp, CinderPatrolEscortTests.cpp, CinderCampaignSaveTests.cpp, CinderOnlineIntegrationTests.cpp, CinderHUDInputTests.cpp, CinderProductionControlTests.cpp, CinderOnboardingTests.cpp, Network.cpp, SimulationMovement.cpp, Navigation.cpp, SimulationProduction.cpp, SimulationAI.cpp, SimulationTactics.cpp, SimulationJobs.cpp, Simulation.cpp, CinderHUD.cpp, CinderBattlefieldCampaign.cpp, CinderTutorial.cpp, CinderHelpContent.cpp, CinderCampaignSave.cpp, CinderCampaign.cpp, CinderCampaignGuidance.cpp, CinderBattlefield.cpp, CinderPlayerController.cpp, CinderHUDCampaign.cpp, CinderHUDStyle.cpp, CinderQualityDiagnostics.cpp, CinderPlayerControllerCampaign.cpp, CinderCampaignPreview.cpp, CinderGameEngine.cpp, CinderUnitInfo.cpp, CinderCameraPreview.cpp, CinderCamera.cpp, CinderLANDiscovery.cpp, CinderOnlineSubsystem.cpp, CinderMobileHUDPreview.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 51 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 30.58 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/51] Compile [Apple] Module.MetalRHI.1.cpp
+[2/51] Compile [Apple] Module.MetalRHI.2.cpp
+[3/51] Compile [Apple] CinderArmyControlTests.cpp
+[4/51] Compile [Apple] Module.MetalRHI.3.cpp
+[5/51] Link [Apple] libUnrealEditor-MetalRHI.dylib
+[6/51] Compile [Apple] CinderArtPreview.cpp
+[7/51] Compile [Apple] CinderBattlefieldCampaign.cpp
+[8/51] Compile [Apple] CinderBattlefield.cpp
+[9/51] Compile [Apple] CinderCameraBoundaryTests.cpp
+[10/51] Compile [Apple] CinderCameraPreview.cpp
+[11/51] Compile [Apple] CinderCampaignGuidance.cpp
+[12/51] Compile [Apple] CinderCampaign.cpp
+[13/51] Compile [Apple] CinderCampaignGuidanceTests.cpp
+[14/51] Compile [Apple] CinderCampaignHUDTests.cpp
+[15/51] Compile [Apple] CinderCampaignLifecycleTests.cpp
+[16/51] Compile [Apple] CinderCampaignPreview.cpp
+[17/51] Compile [Apple] CinderCampaignSaveTests.cpp
+[18/51] Compile [Apple] CinderCampaignSave.cpp
+[19/51] Compile [Apple] CinderCampaignTests.cpp
+[20/51] Compile [Apple] CinderCanyonPreview.cpp
+[21/51] Compile [Apple] CinderCombatPreview.cpp
+[22/51] Compile [Apple] CinderCommandPreview.cpp
+[23/51] Compile [Apple] CinderDifficultyPreview.cpp
+[24/51] Compile [Apple] CinderDifficultyTests.cpp
+[25/51] Compile [Apple] CinderFormationTests.cpp
+[26/51] Compile [Apple] CinderFourPlayerPreview.cpp
+[27/51] Compile [Apple] CinderGameEngine.cpp
+[28/51] Compile [Apple] CinderGameMode.cpp
+[29/51] Compile [Apple] CinderGuidedPreview.cpp
+[30/51] Compile [Apple] CinderHUD.cpp
+[31/51] Compile [Apple] CinderHUDCampaign.cpp
+[32/51] Compile [Apple] CinderHUDInputTests.cpp
+[33/51] Compile [Apple] CinderMatchLengthPreview.cpp
+[34/51] Compile [Apple] CinderMetalFXPreview.cpp
+[35/51] Compile [Apple] CinderMobileHUDPreview.cpp
+[36/51] Compile [Apple] CinderMotionPreview.cpp
+[37/51] Compile [Apple] CinderOnboardingTests.cpp
+[38/51] Compile [Apple] CinderOnlineIntegrationTests.cpp
+[39/51] Compile [Apple] CinderOnlinePreview.cpp
+[40/51] Compile [Apple] CinderOnlineRecoveryTests.cpp
+[41/51] Compile [Apple] CinderPatrolEscortTests.cpp
+[42/51] Compile [Apple] CinderPlayerControllerCampaign.cpp
+[43/51] Compile [Apple] CinderPlayerController.cpp
+[44/51] Compile [Apple] CinderProductionControlTests.cpp
+[45/51] Compile [Apple] CinderQualityDiagnostics.cpp
+[46/51] Compile [Apple] CinderTacticalOrderTests.cpp
+[47/51] Compile [Apple] CinderTutorialCoachPreview.cpp
+[48/51] Compile [Apple] CinderVisualPreview.cpp
+[49/51] Compile [Apple] CinderWorldIntegrationTests.cpp
+[50/51] Compile [Apple] Module.Cinderline.gen.cpp
+[51/51] Link [Apple] libUnrealEditor-Cinderline.dylib
+
+Total time in Unreal Build Accelerator local executor: 136.71 seconds
+Output binary: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor
+Deploying CinderlineEditor Mac Development...
+Deploying now!
+
+Result: Succeeded
+Total execution time: 140.29 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 21.6kb

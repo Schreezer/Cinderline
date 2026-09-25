@@ -1,0 +1,2 @@
+PASS displaced Idle yield recovery
+RESULT passed=1 failed=0

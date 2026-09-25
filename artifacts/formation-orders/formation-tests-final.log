@@ -1,0 +1,17 @@
+PASS spacing presets and legacy Standard
+PASS rotated centroid sorting and arrival facing
+PASS mixed footprints adapt and arrive
+PASS Hold footprint reservations and layers
+PASS air movement around held air footprint
+PASS held heavy closes and reopens corridor
+PASS mixed constrained turn around Hold
+PASS impossible layout and invalid modifiers
+PASS Move withdrawal from real combat
+PASS AttackMove combat and queued facing
+PASS Defend combat return facing
+PASS loaded Wide Defend jam recovery
+PASS formation clear stop and replacement
+PASS save-load replay and continuation
+PASS genuine save-twelve migration
+PASS save-thirteen formation corruption
+RESULT passed=16 failed=0

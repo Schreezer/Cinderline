@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-09-14T09:30:51.930943+00:00",
+  "scope": "P0 local movement reliability and synthetic portable simulation baseline; full P0 and gameplay parity remain open",
+  "git_head": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "source_files": {
+    "CMakeLists.txt": "4d6290e4f129bc6c0ae76e582a6098db6df4fda7a534da508e8b8a721c1340d0",
+    "Source/Cinderline/Cinderline.Build.cs": "84c79f9066ca431d79ca1c83aa3c4889e47964dce84cdd0562d7e140a5f3b9f1",
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "84e85262077ecd5a209c8ba19da9edc7af81fc9cb1c77452e4c6509fd78de65b",
+    "Source/Cinderline/Private/Sim/Network.cpp": "76d4ab1126c31db7fd35272cb624c1dbafccf9d12ea37dad98938577426408b5",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "024f627d7cb808a757964b3ac37cbeeed0e3229f6f2a6bc2e2aaf252dea61af6",
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "576d8b5acbce58d2c1b3ccad1523072a39a4c708a4885aa4e3e075774c8d8a2c",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "3243f08bf8ea0aa2bf4c074ad217b64ef2f470a30751c86774b1977a37956a04",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "c4840858d3d2e2312c78471661c64403f98e7ec8ed853bcf1d9739e0027a5a7a",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1",
+    "Source/Cinderline/Public/Sim/MatchLength.h": "5c39350635561f976f8467b98f64dbcc0518fea785040f820d1bb5eca304bf62",
+    "Source/Cinderline/Public/Sim/Navigation.h": "c1531f3006611568d80f952c3bd5d26a2af0fd066166deed0e010ea4b7488fe0",
+    "Source/Cinderline/Public/Sim/Network.h": "3584c3e406edc71c48d75fb3b9de9738065a30120fbcbddc26d860fddb52b0ff",
+    "Source/Cinderline/Public/Sim/Simulation.h": "82fb2b77b210cad25fd1bfa1998c2261b44c24c1b567be7cc23eabd4ca5046a5",
+    "Source/Cinderline/Public/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563",
+    "Tests/NavigationTests.cpp": "c59822569f73f15e4f53d74841f4b35cad529728c977773e9af7570bdb22d47e",
+    "Tools/GameplayBaseline.cpp": "59bd0cb9269cb9eb21aa1daa5a0c3cbb41d8e413c22c416b8fb70a3581a10613"
+  },
+  "compatibility": {
+    "network_protocol": 7,
+    "save_version": 10,
+    "new_persistence_fields": false
+  },
+  "fixes": [
+    "Bounded retry when pursuit approach changes without static geometry change",
+    "Displaced Idle units can reclaim goals without perpetual yield renewal",
+    "Stable separate-file compilation for the Cinderline Unreal module"
+  ],
+  "checks": {
+    "portable": {
+      "passed": 8,
+      "failed": 0
+    },
+    "asan_ubsan": {
+      "passed": 8,
+      "failed": 0,
+      "build_type": "RelWithDebInfo"
+    },
+    "node_server": {
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "worker": "Saved/P0RegressionBuild/CinderlineMatchWorker"
+    },
+    "unreal": {
+      "passed": 37,
+      "failed": 0,
+      "warnings": 0,
+      "mode": "NullRHI --all"
+    },
+    "stress": {
+      "before_expected_exit": 1,
+      "after_exit": 0,
+      "build_type": "Release",
+      "compiler_flags": "-O3 -DNDEBUG -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic",
+      "before_arrivals": [
+        154,
+        148,
+        301
+      ],
+      "after_arrivals": [
+        160,
+        200,
+        400
+      ],
+      "counts": [
+        160,
+        200,
+        400
+      ],
+      "note": "debugSpawn workload exceeds ordinary crew limits; synchronous command-call cost only; no GPU or phone timings"
+    }
+  },
+  "commands": {
+    "portable": "CINDERLINE_BUILD_DIR=\"$PWD/Saved/P0RegressionBuild\" CINDERLINE_BUILD_JOBS=1 ./scripts/test.sh -DCINDERLINE_BUILD_NATIVE=OFF",
+    "sanitizers": "CINDERLINE_BUILD_DIR=\"$PWD/Saved/P0SanitizeBuild\" CINDERLINE_BUILD_JOBS=2 ./scripts/test.sh -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCINDERLINE_SANITIZE=ON -DCINDERLINE_BUILD_NATIVE=OFF",
+    "server": "CINDERLINE_MATCH_WORKER=\"$PWD/Saved/P0RegressionBuild/CinderlineMatchWorker\" npm --prefix Server test",
+    "unreal_build": "./scripts/unreal.sh build -MaxParallelActions=2",
+    "unreal_checks": "./scripts/test-unreal.sh --all --allow-idevice-id-warning",
+    "stress_configure": "cmake -S . -B Saved/P0BaselineBuild -DCMAKE_BUILD_TYPE=Release -DCINDERLINE_BUILD_NATIVE=OFF -DCINDERLINE_BUILD_SERVER=OFF -DBUILD_TESTING=OFF",
+    "stress_build": "cmake --build Saved/P0BaselineBuild --target CinderlineGameplayBaseline --parallel 2",
+    "stress_before_link": "c++ -O3 -DNDEBUG -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic -I Source/Cinderline/Public Tools/GameplayBaseline.cpp Saved/P0BaselineBefore/libCinderlineSimulation.a -o Saved/P0BaselineBuild/CinderlineGameplayBaseline-release-before-fixes",
+    "stress_before": "Saved/P0BaselineBuild/CinderlineGameplayBaseline-release-before-fixes",
+    "stress_after": "Saved/P0BaselineBuild/CinderlineGameplayBaseline"
+  },
+  "binaries": {
+    "Saved/P0BaselineBefore/libCinderlineSimulation.a": "2492cdf9bcbb69d92c1ec8b7c743ee0474565dd1e1c3e77c78df63a4598f26c1",
+    "Saved/P0BaselineBuild/CinderlineGameplayBaseline-release-before-fixes": "a92d3b416a83a41251a79a68b781493c338a381220976e7f99dbef323dd7d315",
+    "Saved/P0BaselineBuild/CinderlineGameplayBaseline": "cf1767789831020b611706c1a50bb8ee5a3ecb4e6e8c30691869101fe436fba5",
+    "Binaries/Mac/libUnrealEditor-Cinderline.dylib": "20f60754a8d5763638d2dfcf1183ffe9cb59312129289032734e5234843120c4",
+    "Saved/P0RegressionBuild/CinderlineMatchWorker": "818be0423b4e15b61aa97b718f979da3dc97df8210a07715c67957178d711606"
+  },
+  "evidence_files": {
+    "environment.json": "90d44ea7ec997baec7b4358c2199763175f71ca26fff816518c4de62d36f36a3",
+    "idle-after.log": "2e38142f2df7de508356383130811f65b28d9056f1f264e93c08b535afd14399",
+    "idle-before.log": "00c4d345a03c205a422261ddaca250677d961f88b2aa02a57901a204d59eefcf",
+    "moving-target-before.log": "5cf1f222afef6439bcfe693029091957c533290a1590997bce311a096303ac68",
+    "moving-target-repro.cpp": "794813d1626b7da01f8445d712dd16a91d5e577acd6ffab8223439c130702964",
+    "order-abandonment-pending.log": "3b4fa91c5515304f3acd52a10c9a1fef2873fd0a1b18a768e5aa3d4f9e190fa1",
+    "order-abandonment-repro.cpp": "c77710d5ce9b36a864e9cad8cb8a77a9a77ab8d7397f067fff64128885e89fe1",
+    "portable-after.log": "286c09d874b22158a643216648fde890da818266a5cb20bca553cd7d51b20350",
+    "portable-before.log": "92dfa9b0c60fdd837aff038868d84857b79135b2e4dbbe2c35911f002e508e02",
+    "portable-detail.log": "c7772db6f5af228c1da7eba2190c2a622318c41d29d02b1b60842f9f01748a91",
+    "pursuit-after.log": "b248f22f67635ba8afcb25c52590d35d3c5dfe9e6e38a1d9f7f64b341fc74dc1",
+    "pursuit-before.log": "48c1859380d1de093b991b468da2165e30ebbc18616f6df064a2422eabb7121f",
+    "pursuit-build-before.log": "663fad2a79fed8676d2342797984c06d74f6cfa1664fc0ac59b3a0f9969c843c",
+    "recovery-build.log": "a861a7d00b5ae13c123d4e93cb24584135e56aaf4827a03940d7a326062f64c5",
+    "retreat-after-first.log": "95cc799582a5c5d2d9f7c829eb5e7321b3c2c64016f92fbc9bd731a6c72ef2aa",
+    "retreat-after.log": "cabcef3e938a2c11ba4b96cb98a29bd91858987df566dabf78d65681e3dfdc59",
+    "retreat-before.log": "95cc799582a5c5d2d9f7c829eb5e7321b3c2c64016f92fbc9bd731a6c72ef2aa",
+    "retreat-build.log": "84e69a841f88e63a3ea272207613ab8e4fe54cdaf84ed44fcfe44e4b5d8c54de",
+    "sanitize-after.log": "5470020d9214351037b2258a45732e6504b93c95f3fde7f38fd1358d00ac1bac",
+    "sanitize-detail.log": "db0d2373d2b3ed1fab6fe52c59bfc6db65fba68291f6fa87a81f1e5048f5c700",
+    "server-after.log": "73743945a479a7350595c9f775bd731204bba364abbcf3d62e386d8d49d35906",
+    "source-before.json": "53f55bff0a861358f70e05209b78bd07085af6644786b24a8a189b70a91d4346",
+    "stress-after.json": "374dbc6d9ffdc69c1151c921bc66b150661d698728447f320e13e3ed10acbbf8",
+    "stress-before.json": "d25d510dadc599f631f3cc5e2dc45210dd2f42c02a3fafbfaad28c2f244efb7b",
+    "stress-o0-after.json": "34e2ebf3e7662655b33ffd4fb355d3a6552d73807f4da8f6e4a3dde105279af6",
+    "stress-o0-before.json": "1ac532f6e8a0d5a4876fee32f59d32b8904d25552c89230123eb1f883fb8c65c",
+    "unreal-automation.json": "c4d7a083ba2c13a4a2eeaf4e082f3741c5e57068c471222df2eb4fd663a16daf",
+    "unreal-build-final.log": "20e3977ff284fcf81ca075bc58dc66bb61bc4a73fddf7818f761eee23b8877ef",
+    "unreal-build.log": "33d1e095494497de71a67b435ef1c8e8937d986daafb3acaa1297064ade1bfba",
+    "unreal-tests.log": "ea46855bdaa8e274000d51523f833e056a188137acdde68f425f6a3175ce68f2"
+  },
+  "remaining": [
+    "Natural order-abandonment stale goal after direct target death, and Gather exit investigation",
+    "Pointer-created mixed-selection coverage and actual input/network latency",
+    "Legal supported army, combat/rendering and sustained physical CPU/GPU/thermal acceptance",
+    "New iOS packaging and installation",
+    "Public deployment and multi-device multiplayer acceptance"
+  ],
+  "device_changed": false,
+  "public_service_deployed": false,
+  "goal_complete": false,
+  "pending_reproductions": {
+    "direct_attack_target_death": {
+      "expected_failure_exit": 1,
+      "drift_in_one_second": 142.5,
+      "unit": "world units",
+      "status": "reproduced; not fixed in this pass",
+      "evidence": "order-abandonment-pending.log"
+    }
+  }
+}

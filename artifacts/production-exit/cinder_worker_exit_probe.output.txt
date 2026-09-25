@@ -1,0 +1,5 @@
+first_clear 316.45 4483.55 raw 316.45 4483.55
+goals 1 clear 38 first_reach 0 later_reach 1 center_clear 1
+first_clear 316.45 4483.55 raw 316.45 4483.55
+goals 32 clear 38 first_reach 0 later_reach 1 center_clear 1
+exit=0

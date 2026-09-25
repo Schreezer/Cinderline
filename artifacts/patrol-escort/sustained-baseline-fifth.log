@@ -1,0 +1,12 @@
+Patrol 16 mobiles: primary and repeat
+Escort 16 mobiles: primary and repeat
+Escort convergence diagnostic: count=16 tick=9600 completed=14 leader=1818.09,3299.67 leader_order=0
+ follower=39 kind=4 pos=1882.54,3270.59 goal=1722.09,3299.67 offset=-96,0 exhausted=0 failures=0 path=0/1 yield=0.2
+  neighbor=35 kind=4 pos=1818.09,3299.67 goal=1800,3300 order=0 yield=0
+  neighbor=37 kind=2 pos=1818.09,3203.67 goal=1818.09,3203.67 order=9 yield=0
+  neighbor=38 kind=3 pos=1914.09,3203.67 goal=1914.09,3203.67 order=9 yield=0
+  neighbor=40 kind=5 pos=1931.57,3315.62 goal=1914.09,3299.67 order=9 yield=0.2
+  neighbor=42 kind=7 pos=1818.09,3395.67 goal=1818.09,3395.67 order=9 yield=0
+  neighbor=43 kind=0 pos=1914.09,3395.67 goal=1914.09,3395.67 order=9 yield=0
+  neighbor=50 kind=7 pos=2010.09,3203.67 goal=2010.09,3203.67 order=9 yield=0
+Sustained workload failed: Escort failed stable convergence at its accepted slots

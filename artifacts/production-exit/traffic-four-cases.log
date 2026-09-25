@@ -1,0 +1,9 @@
+DENSE_TRAFFIC_FAILURE id=45 kind=4 pos=1575.87,1165.34 distance=42.2342 path=0/1 stalled=0 failures=0 side=0 yield=0.15
+  NEIGHBOR id=46 kind=5 pos=1583.26,1231.49 distance=66.5599 order=0 goal_distance=35.6606 path=0/1 failures=5 yield=0
+DENSE_TRAFFIC_FAILURE id=46 kind=5 pos=1583.26,1231.49 distance=35.6606 path=0/1 stalled=0.15 failures=5 side=-1 yield=0
+  NEIGHBOR id=45 kind=4 pos=1575.87,1165.34 distance=66.5599 order=0 goal_distance=42.2342 path=0/1 failures=0 yield=0.15
+FAIL dense idle workers do not permanently block produced units: dense idle-worker traffic permanently blocked a produced unit
+PASS Hold and Defend anchors remain fixed during recovery
+PASS congested Gather retains its work intent
+PASS opposing friendly traffic moves at most once per tick
+RESULT passed=3 failed=1

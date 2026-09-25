@@ -1,0 +1,440 @@
+{
+  "count_semantics": {
+    "full_chain": "exact ordered frame sequence from leaf to root",
+    "inclusive": "samples whose backtrace contains the frame at least once",
+    "leaf": "samples whose first (leaf) frame is the frame"
+  },
+  "inputs": {
+    "signposts": {
+      "path": "artifacts/latency/signposts-prefix-before.xml",
+      "sha256": "6366ea0ccf2a15dfea1cb6343b97a64478b40fb3e02e6c768e44b301f2bc75b5"
+    },
+    "time_profile": {
+      "path": "Saved/Latency/time-profile-prefix-before.xml",
+      "sha256": "1b67d74e0e60dd902a7e5c86ef9eabb12e12ce08526e086941a6b481ba409d04"
+    }
+  },
+  "intervals": [
+    {
+      "category": "PointsOfInterest",
+      "dominant_full_chain": {
+        "frames_leaf_to_root": [
+          "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+          "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+          "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+          "cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const",
+          "cinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const",
+          "cinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "cinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "cinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)",
+          "cinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)",
+          "cinder::Simulation::updateEconomy(cinder::Entity&)",
+          "cinder::Simulation::step()",
+          "cinder::Simulation::update(float)",
+          "(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)",
+          "(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, unsigned long long)",
+          "main",
+          "start"
+        ],
+        "sample_count": 134,
+        "sample_percent": 42.40506329113924
+      },
+      "duration_ms": 318.548667,
+      "duration_ns": 318548667,
+      "end_ns_exclusive": 13055604208,
+      "inclusive_sample_counts": [
+        {
+          "frame": "(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, unsigned long long)",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Simulation::step()",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Simulation::update(float)",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "main",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "start",
+          "sample_count": 316,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)",
+          "sample_count": 315,
+          "sample_percent": 99.68354430379746
+        },
+        {
+          "frame": "cinder::Simulation::updateEconomy(cinder::Entity&)",
+          "sample_count": 315,
+          "sample_percent": 99.68354430379746
+        },
+        {
+          "frame": "cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const",
+          "sample_count": 313,
+          "sample_percent": 99.0506329113924
+        },
+        {
+          "frame": "cinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const",
+          "sample_count": 313,
+          "sample_percent": 99.0506329113924
+        },
+        {
+          "frame": "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+          "sample_count": 309,
+          "sample_percent": 97.78481012658227
+        },
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+          "sample_count": 148,
+          "sample_percent": 46.835443037974684
+        },
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+          "sample_count": 135,
+          "sample_percent": 42.721518987341774
+        },
+        {
+          "frame": "cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const",
+          "sample_count": 114,
+          "sample_percent": 36.075949367088604
+        },
+        {
+          "frame": "operator new(unsigned long)",
+          "sample_count": 2,
+          "sample_percent": 0.6329113924050633
+        },
+        {
+          "frame": "<deduplicated_symbol>",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "_xzm_xzone_malloc_small_freelist",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "cinder::Simulation::planPath(cinder::Entity&, cinder::Vec2)",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "cinder::Simulation::updateMovement(cinder::Entity&)",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "malloc_type_malloc",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "std::__1::__wrap_iter<cinder::Navigation::Impl::Attachment*> std::__1::vector<cinder::Navigation::Impl::Attachment, std::__1::allocator<cinder::Navigation::Impl::Attachment>>::__insert_with_size[abi:nqe220106]<std::__1::_ClassicAlgPolicy, std::__1::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__1::__wrap_iter<cinder::Navigation::Impl::Attachment*>>(std::__1::__wrap_iter<cinder::Navigation::Impl::Attachment const*>, std::__1::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__1::__wrap_iter<cinder::Navigation::Impl::Attachment*>, long)",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        }
+      ],
+      "leaf_sample_counts": [
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+          "sample_count": 135,
+          "sample_percent": 42.721518987341774
+        },
+        {
+          "frame": "cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const",
+          "sample_count": 114,
+          "sample_percent": 36.075949367088604
+        },
+        {
+          "frame": "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+          "sample_count": 51,
+          "sample_percent": 16.139240506329113
+        },
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+          "sample_count": 13,
+          "sample_percent": 4.113924050632911
+        },
+        {
+          "frame": "_xzm_xzone_malloc_small_freelist",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        },
+        {
+          "frame": "malloc_type_malloc",
+          "sample_count": 1,
+          "sample_percent": 0.31645569620253167
+        }
+      ],
+      "metadata": "tick=6,416 phase=preparation",
+      "phase": "preparation",
+      "process": {
+        "name": "CinderlineMatchLatencyPrefixProbe (3309)",
+        "pid": 3309
+      },
+      "sample_join": {
+        "first_sample_time_ns": 12737628125,
+        "identity_predicate": "sample PID and TID equal interval PID and TID",
+        "joined_sample_rows": 316,
+        "joined_samples_with_backtraces": 316,
+        "joined_samples_without_backtraces": 0,
+        "last_sample_time_ns": 13054628000,
+        "range_predicate": "start_ns <= sample_time_ns < end_ns_exclusive",
+        "sampled_weight_ms": 316.0,
+        "sampled_weight_ns": 316000000,
+        "samples_excluded_by_process_or_thread": 0,
+        "samples_in_time_range_all_threads": 316
+      },
+      "signpost_identifier": "0x1910",
+      "signpost_name": "simulation.update",
+      "start_ns": 12737055541,
+      "subsystem": "com.cinderline.simulation",
+      "thread": {
+        "name": "Main Thread (0x98a5d6) (CinderlineMatchLatencyPrefixProbe, pid: 3309)",
+        "tid": 10003926
+      },
+      "tick": 6416
+    },
+    {
+      "category": "PointsOfInterest",
+      "dominant_full_chain": {
+        "frames_leaf_to_root": [
+          "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+          "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+          "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+          "cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const",
+          "cinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const",
+          "cinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "cinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "cinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)",
+          "cinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)",
+          "cinder::Simulation::updateEconomy(cinder::Entity&)",
+          "cinder::Simulation::step()",
+          "cinder::Simulation::update(float)",
+          "(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)",
+          "(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, unsigned long long)",
+          "main",
+          "start"
+        ],
+        "sample_count": 120,
+        "sample_percent": 43.7956204379562
+      },
+      "duration_ms": 274.483334,
+      "duration_ns": 274483334,
+      "end_ns_exclusive": 16159389250,
+      "inclusive_sample_counts": [
+        {
+          "frame": "(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, unsigned long long)",
+          "sample_count": 274,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)",
+          "sample_count": 274,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Simulation::step()",
+          "sample_count": 274,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Simulation::update(float)",
+          "sample_count": 274,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "main",
+          "sample_count": 274,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "start",
+          "sample_count": 274,
+          "sample_percent": 100.0
+        },
+        {
+          "frame": "cinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "sample_count": 273,
+          "sample_percent": 99.63503649635037
+        },
+        {
+          "frame": "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+          "sample_count": 273,
+          "sample_percent": 99.63503649635037
+        },
+        {
+          "frame": "cinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+          "sample_count": 273,
+          "sample_percent": 99.63503649635037
+        },
+        {
+          "frame": "cinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)",
+          "sample_count": 273,
+          "sample_percent": 99.63503649635037
+        },
+        {
+          "frame": "cinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)",
+          "sample_count": 273,
+          "sample_percent": 99.63503649635037
+        },
+        {
+          "frame": "cinder::Simulation::updateEconomy(cinder::Entity&)",
+          "sample_count": 273,
+          "sample_percent": 99.63503649635037
+        },
+        {
+          "frame": "cinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const",
+          "sample_count": 272,
+          "sample_percent": 99.27007299270073
+        },
+        {
+          "frame": "cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const",
+          "sample_count": 270,
+          "sample_percent": 98.54014598540147
+        },
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+          "sample_count": 133,
+          "sample_percent": 48.54014598540146
+        },
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+          "sample_count": 122,
+          "sample_percent": 44.52554744525548
+        },
+        {
+          "frame": "cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const",
+          "sample_count": 94,
+          "sample_percent": 34.306569343065696
+        },
+        {
+          "frame": "cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)",
+          "sample_count": 1,
+          "sample_percent": 0.36496350364963503
+        },
+        {
+          "frame": "cinder::Simulation::planPath(cinder::Entity&, cinder::Vec2)",
+          "sample_count": 1,
+          "sample_percent": 0.36496350364963503
+        },
+        {
+          "frame": "cinder::Simulation::updateMovement(cinder::Entity&)",
+          "sample_count": 1,
+          "sample_percent": 0.36496350364963503
+        },
+        {
+          "frame": "cinder::Simulation::workPoints(cinder::Entity const&, cinder::Vec2, float, unsigned int, cinder::Navigation const&, bool) const",
+          "sample_count": 1,
+          "sample_percent": 0.36496350364963503
+        },
+        {
+          "frame": "cinder::Simulation::workPoints(cinder::Entity const&, cinder::Vec2, float, unsigned int, cinder::Navigation const&, bool) const::$_0::operator()(cinder::Vec2) const",
+          "sample_count": 1,
+          "sample_percent": 0.36496350364963503
+        }
+      ],
+      "leaf_sample_counts": [
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+          "sample_count": 122,
+          "sample_percent": 44.52554744525548
+        },
+        {
+          "frame": "cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const",
+          "sample_count": 94,
+          "sample_percent": 34.306569343065696
+        },
+        {
+          "frame": "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+          "sample_count": 47,
+          "sample_percent": 17.153284671532848
+        },
+        {
+          "frame": "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+          "sample_count": 11,
+          "sample_percent": 4.014598540145985
+        }
+      ],
+      "metadata": "tick=8,827 phase=preparation",
+      "phase": "preparation",
+      "process": {
+        "name": "CinderlineMatchLatencyPrefixProbe (3309)",
+        "pid": 3309
+      },
+      "sample_join": {
+        "first_sample_time_ns": 15885627791,
+        "identity_predicate": "sample PID and TID equal interval PID and TID",
+        "joined_sample_rows": 274,
+        "joined_samples_with_backtraces": 274,
+        "joined_samples_without_backtraces": 0,
+        "last_sample_time_ns": 16158628666,
+        "range_predicate": "start_ns <= sample_time_ns < end_ns_exclusive",
+        "sampled_weight_ms": 274.0,
+        "sampled_weight_ns": 274000000,
+        "samples_excluded_by_process_or_thread": 0,
+        "samples_in_time_range_all_threads": 274
+      },
+      "signpost_identifier": "0x227b",
+      "signpost_name": "simulation.update",
+      "start_ns": 15884905916,
+      "subsystem": "com.cinderline.simulation",
+      "thread": {
+        "name": "Main Thread (0x98a5d6) (CinderlineMatchLatencyPrefixProbe, pid: 3309)",
+        "tid": 10003926
+      },
+      "tick": 8827
+    }
+  ],
+  "sampling_note": "Counts are Time Profiler sample evidence (1 ms weights in this capture), not exact CPU duration, wall-clock utilization, or per-frame coverage.",
+  "schema_version": 1,
+  "selection": {
+    "interval_range": "half-open [start_ns, end_ns_exclusive)",
+    "sample_identity": "exact PID and TID match",
+    "signpost_name": "simulation.update",
+    "ticks": [
+      6416,
+      8827
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CinderlineEditor Mac Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Executing up to 2 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for CinderlineEditor (source file added)
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+UHT compiled-in object format Default
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.3.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.2.cpp.d!
+Building CinderlineEditor...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from Cinderline unity file: CinderTacticalOrderTests.cpp, CinderUnitInfoTests.cpp, CinderArmyControlTests.cpp, CinderPatrolEscortTests.cpp, CinderOnlineIntegrationTests.cpp, Network.cpp, SimulationMovement.cpp, Navigation.cpp, SimulationProduction.cpp, SimulationAI.cpp, SimulationTactics.cpp, SimulationJobs.cpp, Simulation.cpp, CinderHUD.cpp, CinderTutorial.cpp, CinderHelpContent.cpp, CinderBattlefield.cpp, CinderPlayerController.cpp, CinderQualityDiagnostics.cpp, CinderUnitInfo.cpp, CinderLANDiscovery.cpp, CinderOnlineSubsystem.cpp, CinderMobileHUDPreview.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 65 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 30.44 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/65] Compile [Apple] CinderArtPreview.cpp
+[2/65] Compile [Apple] CinderArmyControlTests.cpp
+[3/65] Compile [Apple] CinderCamera.cpp
+[4/65] Compile [Apple] CinderBattlefield.cpp
+[5/65] Compile [Apple] CinderCameraBoundaryTests.cpp
+[6/65] Compile [Apple] CinderCameraPreview.cpp
+[7/65] Compile [Apple] CinderCanyonPreview.cpp
+[8/65] Compile [Apple] CinderCombatPreview.cpp
+[9/65] Compile [Apple] CinderCommandPreview.cpp
+[10/65] Compile [Apple] CinderDifficultyPreview.cpp
+[11/65] Compile [Apple] CinderEntityMotion.cpp
+[12/65] Compile [Apple] CinderDifficultyTests.cpp
+[13/65] Compile [Apple] CinderGameEngine.cpp
+[14/65] Compile [Apple] CinderFourPlayerPreview.cpp
+[15/65] Compile [Apple] CinderGameMode.cpp
+[16/65] Compile [Apple] CinderGuidedPreview.cpp
+[17/65] Compile [Apple] CinderHUDStyle.cpp
+[18/65] Compile [Apple] CinderHUD.cpp
+[19/65] Compile [Apple] CinderHelpContent.cpp
+[20/65] Compile [Apple] CinderLANDiscovery.cpp
+[21/65] Compile [Apple] CinderLandscapeTerrain.cpp
+[22/65] Compile [Apple] CinderLandscapeTerrainTests.cpp
+[23/65] Compile [Apple] CinderMatchLengthPreview.cpp
+[24/65] Compile [Apple] CinderMetalFXPreview.cpp
+[25/65] Compile [Apple] CinderMobileHUDPreview.cpp
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderMobileHUDPreview.cpp:289:13: error: no matching constructor for initialization of 'TPair<cinder::CommandType, cinder::Vec2>' (aka 'TTuple<cinder::CommandType, cinder::Vec2>')
+  289 |             TPair<cinder::CommandType, cinder::Vec2>(cinder::CommandType::Move, {1380, 1080}),
+      |             ^                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:539:85: note: candidate template ignored: substitution failure: deduced incomplete pack <cinder::CommandType, (no value)> for template parameter 'ArgTypes'
+  537 |     template <UE::CNotCVRefTo<TTuple>... ArgTypes>
+      |                                          ~~~~~~~~
+  538 |         requires (std::is_constructible_v<Types, ArgTypes&&> && ...)
+  539 |     constexpr explicit(!std::conjunction_v<std::is_convertible<ArgTypes&&, Types>...>) TTuple(ArgTypes&&... Args)
+      |                                                                                        ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:559:2: note: candidate constructor not viable: requires 1 argument, but 2 were provided
+  559 |     TTuple(TTuple&&) = default;
+      |     ^      ~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:560:2: note: candidate constructor not viable: requires 1 argument, but 2 were provided
+  560 |     TTuple(const TTuple&) = default;
+      |     ^      ~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:546:2: note: candidate constructor template not viable: requires single argument 'Other', but 2 arguments were provided
+  546 |     TTuple(TTuple<OtherTypes...>&& Other)
+      |     ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:553:2: note: candidate constructor template not viable: requires single argument 'Other', but 2 arguments were provided
+  553 |     TTuple(const TTuple<OtherTypes...>& Other)
+      |     ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:558:12: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  558 |     constexpr TTuple() requires (std::is_default_constructible_v<Types> && ...) = default;
+      |               ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderMobileHUDPreview.cpp:290:13: error: no matching constructor for initialization of 'TPair<cinder::CommandType, cinder::Vec2>' (aka 'TTuple<cinder::CommandType, cinder::Vec2>')
+  290 |             TPair<cinder::CommandType, cinder::Vec2>(cinder::CommandType::AttackMove, {1460, 1040})})
+      |             ^                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:539:85: note: candidate template ignored: substitution failure: deduced incomplete pack <cinder::CommandType, (no value)> for template parameter 'ArgTypes'
+  537 |     template <UE::CNotCVRefTo<TTuple>... ArgTypes>
+      |                                          ~~~~~~~~
+  538 |         requires (std::is_constructible_v<Types, ArgTypes&&> && ...)
+  539 |     constexpr explicit(!std::conjunction_v<std::is_convertible<ArgTypes&&, Types>...>) TTuple(ArgTypes&&... Args)
+      |                                                                                        ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:559:2: note: candidate constructor not viable: requires 1 argument, but 2 were provided
+  559 |     TTuple(TTuple&&) = default;
+      |     ^      ~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:560:2: note: candidate constructor not viable: requires 1 argument, but 2 were provided
+  560 |     TTuple(const TTuple&) = default;
+      |     ^      ~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:546:2: note: candidate constructor template not viable: requires single argument 'Other', but 2 arguments were provided
+  546 |     TTuple(TTuple<OtherTypes...>&& Other)
+      |     ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:553:2: note: candidate constructor template not viable: requires single argument 'Other', but 2 arguments were provided
+  553 |     TTuple(const TTuple<OtherTypes...>& Other)
+      |     ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Templates/Tuple.h:558:12: note: candidate constructor not viable: requires 0 arguments, but 2 were provided
+  558 |     constexpr TTuple() requires (std::is_default_constructible_v<Types> && ...) = default;
+      |               ^
+2 errors generated.
+[26/65] Compile [Apple] CinderMotionPreview.cpp
+[27/65] Compile [Apple] CinderOnboardingTests.cpp
+[28/65] Compile [Apple] CinderOnlineIntegrationTests.cpp
+[29/65] Compile [Apple] CinderOnlinePanel.cpp
+[30/65] Compile [Apple] CinderOnlinePreview.cpp
+[31/65] Compile [Apple] CinderOnlineRecoveryTests.cpp
+[32/65] Compile [Apple] CinderOnlineSubsystem.cpp
+[33/65] Compile [Apple] CinderPatrolEscortTests.cpp
+[34/65] Compile [Apple] CinderPlayerController.cpp
+[35/65] Compile [Apple] CinderProductionControlTests.cpp
+[36/65] Compile [Apple] CinderQualityDiagnostics.cpp
+[37/65] Compile [Apple] CinderScenery.cpp
+[38/65] Compile [Apple] CinderSceneryTests.cpp
+[39/65] Compile [Apple] CinderTacticalOrderTests.cpp
+[40/65] Compile [Apple] CinderTerrainSurface.cpp
+[41/65] Compile [Apple] CinderTutorial.cpp
+[42/65] Compile [Apple] CinderTutorialCoachPreview.cpp
+[43/65] Compile [Apple] CinderTutorialGuidanceTests.cpp
+[44/65] Compile [Apple] CinderTutorialTests.cpp
+[45/65] Compile [Apple] CinderUnitInfo.cpp
+[46/65] Compile [Apple] CinderUnitInfoTests.cpp
+[47/65] Compile [Apple] CinderVisualPreview.cpp
+[48/65] Compile [Apple] CinderWorldEffects.cpp
+[49/65] Compile [Apple] CinderWorldEffectsTests.cpp
+[50/65] Compile [Apple] CinderWorldIntegrationTests.cpp
+[51/65] Compile [Apple] Module.Cinderline.gen.cpp
+[52/65] Compile [Apple] Network.cpp
+[53/65] Compile [Apple] Simulation.cpp
+[54/65] Compile [Apple] SimulationAI.cpp
+[55/65] Compile [Apple] SimulationJobs.cpp
+[56/65] Compile [Apple] SimulationMovement.cpp
+[57/65] Compile [Apple] SimulationProduction.cpp
+[58/65] Compile [Apple] SimulationTactics.cpp
+[59/65] Compile [Apple] Module.MetalRHI.1.cpp
+[60/65] Compile [Apple] Module.MetalRHI.2.cpp
+[61/65] Compile [Apple] CinderLandscapeAuthoringLibrary.cpp
+[62/65] Compile [Apple] Module.MetalRHI.3.cpp
+[63/65] Link [Apple] libUnrealEditor-MetalRHI.dylib
+Total time in Unreal Build Accelerator local executor: 155.18 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 160.86 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 31.1kb

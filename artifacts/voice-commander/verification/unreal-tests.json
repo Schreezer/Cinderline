@@ -1,0 +1,74 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "MacBook-Pro-10.local",
+			"instance": "845175962C4676D9A47838BF9E1773BF",
+			"instanceName": "MacBook-Pro-10.local-16982",
+			"platform": "MacEditor",
+			"oSVersion": "macOS 27.2 26B5091g",
+			"model": "Default",
+			"gPU": "Apple M1 Max",
+			"cPUModel": "Apple M1 Max",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.09.24-16.26.50",
+	"succeeded": 3,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.38100504875183105,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "VoiceCommanderBoundary",
+			"fullTestPath": "Cinderline.Integration.VoiceCommanderBoundary",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"845175962C4676D9A47838BF9E1773BF"
+			],
+			"duration": 0.36426255106925964,
+			"dateTime": "2026.09.24-16.26.49",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MobileHUDLayout",
+			"fullTestPath": "Cinderline.UI.MobileHUDLayout",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"845175962C4676D9A47838BF9E1773BF"
+			],
+			"duration": 0.008550792932510376,
+			"dateTime": "2026.09.24-16.26.50",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EndpointBoundary",
+			"fullTestPath": "Cinderline.Voice.EndpointBoundary",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"845175962C4676D9A47838BF9E1773BF"
+			],
+			"duration": 0.0081917084753513336,
+			"dateTime": "2026.09.24-16.26.50",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

@@ -1,0 +1,36 @@
+{
+  "status": "installed",
+  "verifiedAtUTC": "2026-09-13T17:42:13.426694+00:00",
+  "device": "Aeon",
+  "model": "iPhone 17 Pro Max",
+  "osVersion": "27.0",
+  "udid": "00008150-00060CE12684401C",
+  "deviceIdentifier": "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+  "bundleIdentifier": "com.cinderline.game",
+  "version": "1.0",
+  "build": "56702186.0.35",
+  "executableSHA256": "409069397be77bcef7f857026f8bd546fbc1a91688f1b44276dc3f839b28ba78",
+  "package": "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+  "packageReceipt": "package-verification.json",
+  "installReceipt": "install.json",
+  "installationURL": "file:///private/var/containers/Bundle/Application/D9B24B47-6C65-4D28-B0E9-28F55F70FFC8/Cinderline.app/",
+  "installedVersionMatchesPackage": true,
+  "dataPreservation": {
+    "documentsFilesRetainedWithUnchangedSizeAndModifiedDate": 28,
+    "dataContainerPathChanged": true,
+    "removedPathsOnlySystemSplashSnapshots": true,
+    "removedPaths": [
+      "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/84CDC3B1-469C-42DF-9568-577FDE750283@3x.ktx",
+      "Library/SplashBoard/Snapshots/com.cinderline.game - {DEFAULT GROUP}/A17FC8D7-E6CC-4FF9-A259-227A370B801F@3x.ktx",
+      "Library/SplashBoard/Snapshots/sceneID:com.cinderline.game-default"
+    ],
+    "note": "iOS migrated the app data container during update. All pre-existing Documents files retain their paths, size and modification time; this is metadata verification, not a byte-for-byte content comparison."
+  },
+  "launchedByAgent": false,
+  "cinderlineProcessesAfterInstall": 0,
+  "runtimeOrThermalTestPerformed": false,
+  "sourceValidation": "artifacts/code-quality/verification.json",
+  "buildLog": "build-ios.log",
+  "packageLog": "package-ios.log",
+  "previousBuild": "56702186.0.30"
+}

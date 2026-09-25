@@ -1,0 +1,197 @@
+{
+  "schema": "cinderline.navigation_visibility_verification.v1",
+  "status": "bounded pass verified; P0 remains open",
+  "checks": {
+    "release_suites": 17,
+    "sanitizer_suites": 17,
+    "server_tests": 32,
+    "predicate_cases": 7,
+    "cache_cases": 6,
+    "route_corpus": "ROUTE_CORPUS cases=21 hash=0x0a097241ddad648f reached_graph=17",
+    "current_unreal_build": true,
+    "current_unreal_automation": true,
+    "unreal_checks": 37
+  },
+  "synthetic_arrivals": [
+    160,
+    200,
+    400
+  ],
+  "paid_workloads": [
+    {
+      "players": 2,
+      "army_arrivals": 160,
+      "all_non_timing_fields_match": true,
+      "state_hash": "0xc56d273e10c4a033",
+      "trajectory_hash": "0xd29b9a17afec5dda",
+      "recording_hash": "0xa235e0cd5c9a19c3",
+      "before_phase_step_ms": {
+        "preparation": {
+          "p50": 0.524042,
+          "p95": 1.239041,
+          "p99": 1.596083,
+          "max": 136.574042
+        },
+        "march": {
+          "p50": 0.285875,
+          "p95": 0.462167,
+          "p99": 0.746417,
+          "max": 3.892792
+        },
+        "combat": {
+          "p50": 0.099,
+          "p95": 0.619917,
+          "p99": 2.184167,
+          "max": 5.067291
+        }
+      },
+      "after_phase_step_ms": {
+        "preparation": {
+          "p50": 0.428959,
+          "p95": 0.994,
+          "p99": 1.273375,
+          "max": 71.348459
+        },
+        "march": {
+          "p50": 0.274,
+          "p95": 0.397834,
+          "p99": 0.546375,
+          "max": 2.866584
+        },
+        "combat": {
+          "p50": 0.088834,
+          "p95": 0.545916,
+          "p99": 1.593125,
+          "max": 5.977666
+        }
+      }
+    },
+    {
+      "players": 4,
+      "army_arrivals": 320,
+      "all_non_timing_fields_match": true,
+      "state_hash": "0x35ed6ae28c643631",
+      "trajectory_hash": "0xbc77e98beecc9afb",
+      "recording_hash": "0x9af396d743e93143",
+      "before_phase_step_ms": {
+        "preparation": {
+          "p50": 1.7595,
+          "p95": 3.982084,
+          "p99": 5.761666,
+          "max": 220.532041
+        },
+        "march": {
+          "p50": 1.024,
+          "p95": 1.52725,
+          "p99": 2.239208,
+          "max": 13.342083
+        },
+        "combat": {
+          "p50": 0.283083,
+          "p95": 1.755625,
+          "p99": 4.0605,
+          "max": 8.052084
+        }
+      },
+      "after_phase_step_ms": {
+        "preparation": {
+          "p50": 1.395333,
+          "p95": 3.015291,
+          "p99": 3.945917,
+          "max": 145.370834
+        },
+        "march": {
+          "p50": 0.936,
+          "p95": 1.290459,
+          "p99": 1.689,
+          "max": 8.040333
+        },
+        "combat": {
+          "p50": 0.240625,
+          "p95": 1.477208,
+          "p99": 3.060875,
+          "max": 6.054292
+        }
+      }
+    }
+  ],
+  "trace_attribution": "sample-analysis-after.json",
+  "memory_bound": {
+    "terrain_result_payload_bytes": 4194304,
+    "page_limit": 1024,
+    "target_limit": 16384,
+    "metadata_in_payload_count": false,
+    "existing_full_goal_cache_is_separate": true
+  },
+  "measurement_limits": [
+    "desktop simulation only",
+    "baseline from previous verified pass",
+    "wall time depends on host scheduling",
+    "diagnostic traces include capture overhead"
+  ],
+  "new_ios_package": false,
+  "device_install": false,
+  "gpu_profiled": false,
+  "thermal_acceptance": false,
+  "public_deployment": false,
+  "compatibility": {
+    "save": 10,
+    "protocol": 7
+  },
+  "remaining": [
+    "remaining long-step cost",
+    "complete physical match and sustained CPU/GPU/thermal checks",
+    "P1-P7 roadmap"
+  ],
+  "files_sha256": {
+    "MatchVisibilityProbe.cpp": "17829d1ae932a0ea8e306ac8774f4588c0253c6fd4a6e8f4c097ac1a8f2de2d2",
+    "NavigationBefore.cpp": "582b0b2f9d372ce8384a7837a044730b7f4ab46d5f3717297ae2fcefa086cfeb",
+    "benchmarks-build.log": "7c5b95e18ddbe278777607b956d92808eccb7a7074c32c85761bfdd3a0107fcc",
+    "cache-tests-after.log": "b1d1a72c56def31f24eb7013590cac665f13142c709c4dbce05119a79d0fc0a7",
+    "edge-prefix.json": "aa327d988c55f0dce0c8ee93f1b3dce5f2debe804014eeec4fe260eb16637bdb",
+    "edge-prefix.stderr.log": "daa2c879afe8197413371f44ed38249d93a2e0487c28692c9fb21d1e16eb7c91",
+    "edge-shortcircuit-build.log": "41e7f14dd8120ca2fdaa51092762d928ec0ce9255fcdd66949303827431f5fc4",
+    "envelope-build.log": "879265080e0f7b3f6ba270bcf9cf078485a5a918fb592e728aac96a6781beb71",
+    "envelope-prefix.json": "3339bdfacd8ea3f8d971ac10d216853fd4bb20c98e20f9f5c10204cbe9d96569",
+    "envelope-prefix.stderr.log": "901f7acf0fe03dec1c818b8e0705c8e2cc48b0f078bd45fbbcb7d595db4a6bb3",
+    "export-profile.log": "f39972dd8aa4f196116fb699e1b506037ef85f9a88a85652d87320caa10a61c9",
+    "export-signposts.log": "8ea573bd2482079d3b9872c5bcaa24ca003faf24f016592da8d47662dc68f6d5",
+    "fixture-endpoint-failure-predicates-before.log": "f8a802d1aff7a29cce06fb3094a04bea0ffe22422bda107247a1292ae4d68a79",
+    "fixture-endpoint-failure-release-after.log": "6cedad669216916947be6b32eaeff03d43815230a2d3dcfe3fd82718ec4957f8",
+    "four-player-after.json": "3d3a7efe698c1f4b1686435d18005fd2a9584e0668cea02ac08750802cf5d052",
+    "four-player-after.stderr.log": "40aca4e0770a92fe93cf70a907debf6ef83ec4d132750049228160e8db8d97e9",
+    "gameplay-inputs-sha256.json": "62351225d6d832f411461d7e2cc31ccfccdcab50c003de52fd9e9736bd762bb7",
+    "interrupted-four-player-after.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "interrupted-four-player-after.stderr.log": "00e4dd7515c4ab04c88d9398e208cdf40126aec829027ef2dbe891debfa1df16",
+    "predicates-after.log": "023539597d2d03d888a5e411a06a1e72eb2d99f90b7b7bbd27b4afb17108ddf4",
+    "predicates-before-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "predicates-before.log": "023539597d2d03d888a5e411a06a1e72eb2d99f90b7b7bbd27b4afb17108ddf4",
+    "probe-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe-edge-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe-envelope-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "probe-trace-after.json": "a38abc7c553adaf38630f6c607661f5c628283cd0f06f11428ab5b4cb18dbb00",
+    "probe-trace-after.output.log": "3deed8cd1c79e7470dfc8a9d26a90fee3f8902a84c6db2f3606eeab7bbf667ad",
+    "prototype-build.log": "5c7a2c67ce56d7294158c652c69c75c8872dfab305b9ed9d4cf26ad8b517f3e6",
+    "prototype-prefix.json": "1aef67a99160957b8b08cf858e438e23d0d069cc881188fdda803e2f93fa98f1",
+    "prototype-prefix.stderr.log": "3c079aced50bf9ca92d9381549b86623540c47c9ab4981dbeb551c75c17de6d7",
+    "release-after.log": "52f05c8a5c6ddb933eb89e2394b17e6a66cd0faefbff7efaf1ec65115ac6dc34",
+    "release-fixture-compile-failure.log": "743fcddded828d77aef48c89ad52c24a9f21398ebba4e7809a4f70b8db60f7eb",
+    "review-notes.json": "8922a3b6b20952203f12ddb51d83e6bdbfda0ded1eb3848bb36f9ed858f58e38",
+    "sample-analysis-after.json": "fa10d754d302459aa06b30db5ea94cc1c07fd9cea5819d8e93b747992dbd6fb0",
+    "sanitize-after.log": "82a601c6182fa88806b15b6177ee88ce29ec8f6254b34fa2fde4e2d42ac7824e",
+    "server-after.log": "7f0cbe331ba0cb6efdcdb63a018a105d052e8098ca48f816a204503c8dfbd5b7",
+    "signposts-after.xml": "6000891c9808558a3824b34a5b480a6917e0ae8431c02c339a2e839c7bef2b6e",
+    "synthetic-after.json": "2726478f8f92af15a911af795837d982b9e26ef7c18ecabf16e7564692fd3bd1",
+    "synthetic-after.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-inputs-sha256.json": "c6a1a24cbc7731daa9a66f0d789d5ce23ab1c62b6e66c3f7bb1321995707802b",
+    "trace-after-record.log": "9b7d5f71069afdc2dad58d56cc535ae343e72b832d3979e3ebb2e6a687ccec2f",
+    "trace-inputs-sha256.json": "2abd1da46b5fee1a6dfdf406c5f745a5cab694eaaa63c9d25bdec83020fa3d5b",
+    "two-player-after.json": "9c172c08ad48954c2a24bfcf86d1896a1b696896bba1979da8730eb847ce3678",
+    "two-player-after.stderr.log": "0d86c3dd35611a292542a3eb6c2e25b8b91ba253bf4a9c7e9ea545c8c2f98624",
+    "unreal-automation.log": "e015333053c5a91f8d24bcd80d455fd2652048cdd2bd7268847f10bb2096ee41",
+    "unreal-build.log": "605bfa61dd9d60c20a279301e9775a7d93d744714880681d6e8014d236a09042",
+    "unreal-verification.json": "b2b236c047465737c747f0309c5e5bb99a79ab31a70ed74eb12e18c930a34113",
+    "verified-core-sha256.json": "c48e511fb4223f03cdfe00e859c01519b7830f32509bd5d50f0ff8826d46fe7b",
+    "verify_visibility_pass.py": "ab3113259f114c627e6f0d50a21df4391dd23f287b1cd7248af175a5e1252a92"
+  }
+}

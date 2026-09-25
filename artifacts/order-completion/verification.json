@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-09-14T10:00:22.732636+00:00",
+  "git_head": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "scope": "P0 completed-order reliability, pending ore delivery, controller pointer-coordinate integration; broader goal remains open",
+  "status": "bounded local pass verified; full P0 and gameplay capability goal remain open",
+  "source_files": {
+    "CMakeLists.txt": "dbc280f6fb33867de0f1eda7d250e1fae8784df619ca821cd510198a71da7ede",
+    "Source/Cinderline/Cinderline.Build.cs": "84c79f9066ca431d79ca1c83aa3c4889e47964dce84cdd0562d7e140a5f3b9f1",
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "192729b97743df3140f242706032186aa40710687fa85bfe6262a12d1a79b29c",
+    "Source/Cinderline/Private/Presentation/CinderUnitInfo.cpp": "c26a42e1878466e6ff0f1ab13de208c5d503b56de87b3111aa1d117047740bc0",
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "84e85262077ecd5a209c8ba19da9edc7af81fc9cb1c77452e4c6509fd78de65b",
+    "Source/Cinderline/Private/Sim/Network.cpp": "76d4ab1126c31db7fd35272cb624c1dbafccf9d12ea37dad98938577426408b5",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "100feae57ea29890e7f38d49c9ce37bc51da002ffba9725c264c22b6476aa2be",
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "576d8b5acbce58d2c1b3ccad1523072a39a4c708a4885aa4e3e075774c8d8a2c",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "3243f08bf8ea0aa2bf4c074ad217b64ef2f470a30751c86774b1977a37956a04",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "c4840858d3d2e2312c78471661c64403f98e7ec8ed853bcf1d9739e0027a5a7a",
+    "Source/Cinderline/Private/Tests/CinderArmyControlTests.cpp": "c6701539f50afe9e5f8e52c97f0e4cd777cbde3354156993ee00dc45a8ad0c77",
+    "Source/Cinderline/Private/Tests/CinderUnitInfoTests.cpp": "bbd304d9a5380e2dfd34dd2422bb6883a7e42cd0d668bcb4a0f984dddc9ff930",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1",
+    "Source/Cinderline/Public/Sim/MatchLength.h": "5c39350635561f976f8467b98f64dbcc0518fea785040f820d1bb5eca304bf62",
+    "Source/Cinderline/Public/Sim/Navigation.h": "c1531f3006611568d80f952c3bd5d26a2af0fd066166deed0e010ea4b7488fe0",
+    "Source/Cinderline/Public/Sim/Network.h": "3584c3e406edc71c48d75fb3b9de9738065a30120fbcbddc26d860fddb52b0ff",
+    "Source/Cinderline/Public/Sim/Simulation.h": "a1f09f695276aa594397bc8653ced03764a1dd1f4ea0d087bb28dc91b61e59a6",
+    "Source/Cinderline/Public/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563",
+    "Tests/NavigationTests.cpp": "c59822569f73f15e4f53d74841f4b35cad529728c977773e9af7570bdb22d47e",
+    "Tests/OrderCompletionTests.cpp": "0abe75743189779d806d67148d9aacc7e5b582b004bf7415b1b10da56e80cb36",
+    "Tests/WorkerOrderCompletionTests.cpp": "659e4348f77d19b8cabf7329fb2c3fb114c53b8dd05ac87fd1c821fc2a7f815d",
+    "Tools/GameplayBaseline.cpp": "59bd0cb9269cb9eb21aa1daa5a0c3cbb41d8e413c22c416b8fb70a3581a10613"
+  },
+  "compatibility": {
+    "save_version": 10,
+    "network_protocol": 7,
+    "new_serialized_fields": false
+  },
+  "checks": {
+    "portable": {
+      "passed": 10,
+      "failed": 0
+    },
+    "asan_ubsan": {
+      "passed": 10,
+      "failed": 0,
+      "build_type": "RelWithDebInfo"
+    },
+    "server": {
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "worker": "Saved/P0OrderCompletionBuild/CinderlineMatchWorker"
+    },
+    "new_regressions": {
+      "combat": {
+        "before_passed": 3,
+        "before_failed": 4,
+        "after_passed": 7,
+        "after_failed": 0
+      },
+      "worker": {
+        "before_passed": 0,
+        "before_failed": 2,
+        "after_passed": 2,
+        "after_failed": 0
+      }
+    },
+    "stress": {
+      "exit": 0,
+      "arrivals": [
+        160,
+        200,
+        400
+      ],
+      "deterministic": true,
+      "prior_movement_baseline_hashes_preserved": true
+    },
+    "unreal": {
+      "passed": 37,
+      "failed": 0,
+      "warnings": 0,
+      "not_run": 0,
+      "mode": "NullRHI local-all",
+      "pointer_scope": "production controller coordinate entry points and synthetic viewport; not physical event dispatch",
+      "report": "Saved/Automation/Integration/20260914T095835Z-3136/index.json"
+    }
+  },
+  "commands": {
+    "portable": "CINDERLINE_BUILD_DIR=\"$PWD/Saved/P0OrderCompletionBuild\" CINDERLINE_BUILD_JOBS=2 ./scripts/test.sh -DCINDERLINE_BUILD_NATIVE=OFF",
+    "sanitizers": "CINDERLINE_BUILD_DIR=\"$PWD/Saved/P0SanitizeBuild\" CINDERLINE_BUILD_JOBS=2 ./scripts/test.sh -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCINDERLINE_SANITIZE=ON -DCINDERLINE_BUILD_NATIVE=OFF",
+    "server": "CINDERLINE_MATCH_WORKER=\"$PWD/Saved/P0OrderCompletionBuild/CinderlineMatchWorker\" npm --prefix Server test",
+    "unreal_build": "./scripts/unreal.sh build -MaxParallelActions=2",
+    "unreal_tests": "./scripts/test-unreal.sh --all --allow-idevice-id-warning",
+    "stress": "Saved/P0OrderCompletionBuild/CinderlineGameplayBaseline"
+  },
+  "remaining": [
+    "Actual physical mouse/touch dispatch and full-match acceptance",
+    "Legal supported-entity workloads and measured input/network response",
+    "Sustained physical CPU/GPU/frame/memory/battery/thermal profile",
+    "iOS package and installation of these local changes",
+    "Public deployment and physical online/LAN acceptance",
+    "P1-P7 capability milestones"
+  ],
+  "device_changed": false,
+  "public_service_deployed": false,
+  "goal_complete": false,
+  "binaries": {
+    "Saved/P0OrderCompletionBefore/libCinderlineSimulation.a": "9ebfe1642757925b75740a2de51a23e3ee2691c1868276a556d4d31b590e0a12",
+    "Saved/P0OrderCompletionBuild/libCinderlineSimulation.a": "cf6e1e9b678e860c60962c0c0551240cd935eec4129efbbcac2d4be4550e5dd3",
+    "Saved/P0OrderCompletionBuild/CinderlineOrderCompletionTests": "3cb9e42148261328b8bfcbbfa6b049fc62b387584698490da93b9441c83cb4c2",
+    "Saved/P0OrderCompletionBuild/CinderlineWorkerOrderCompletionTests": "bdda38082d693c23a665db96c263766b22f587177622335a74bc8cfae1f4208e",
+    "Saved/P0OrderCompletionBuild/CinderlineMatchWorker": "e79191d260062bdbcf90171490f6fd3b90960814e3f07f45ad7bf95d33180008",
+    "Saved/P0OrderCompletionBuild/CinderlineGameplayBaseline": "1852fefb468a26fb5046399ac196d4c8e48601d0879ce671ed7eb639406516a7",
+    "Binaries/Mac/libUnrealEditor-Cinderline.dylib": "89c3fe368c08c8e39d30918d7b9b76454a1c1362cd53203d1283482932d9e48f"
+  },
+  "evidence_files": {
+    "combat-after.log": "9ab5ef375f89f26fcee6e1a0e561ba2330ca736cde1b63708cf316fb716e8cdb",
+    "combat-before.log": "34b132af8558d32c57e5f9951e6e64362fd30b22a0e7bd655eb98a6484dd1428",
+    "configure.log": "5fd53c73c55bcd15bf7e2e36a0e90e9279c93058be5421a4cc04f024f8999c03",
+    "direct-attack-after.log": "94cbb079c9aed8ffd7cba2720fa6e519f9a175eb2e5901aac900f6d05228d2fb",
+    "direct-attack-before.log": "3b4fa91c5515304f3acd52a10c9a1fef2873fd0a1b18a768e5aa3d4f9e190fa1",
+    "initial-library-build.log": "7e78b1371aa5407f3ea2a0c5637b241767810953962b1dc8b2811a0a670d230d",
+    "library-build.log": "ab28fd102cee3b760b1b9c0eb831272d270ad5839a2c2678990012452997c564",
+    "portable-detail.log": "0c466bbf020e511fa42b8dbbf5c31f3a13bf6adb44375318d64122145cce8ac0",
+    "portable-initial.log": "fccc90d44f845dae1f9e02c5030a62a036bde9218994e3b8ac08e6e11b455861",
+    "portable.log": "fe4920ee3f0cae77d5259d252425d6f154599e3cef1b9aed370553af14fcc3da",
+    "sanitize-detail.log": "cf7e1d3af154f22058acd5052a95617bb4575491ab5b3dd8086582c4ffe4b64f",
+    "sanitize.log": "2e35fd2353eab139783169152f2374ab9137308ef77498f84339828574fc1fef",
+    "server.log": "8a2d7a426e986b6d400c7c5c5f3aa7d457956ea64c9a3e17a5b59b7c08b8316a",
+    "source-before.json": "f8b00f4b66f554a233f174f5e1b7ba5510ca8c0d267c46a47765067292478975",
+    "stress-current.json": "f1a741c02b8774fde6cb6fd3b6ea1ec55862b8a52fddc223e7df6eef7c6cc83a",
+    "unreal-automation.json": "3eef9159fe0e0bcfb278410126575e2deeaf4e4521527697d2809e1bc856fdf9",
+    "unreal-build-camera-fixture.log": "93fde30c760d2edbc004077b8c4dad3045414a7176f9bafb7de22b7df53e1168",
+    "unreal-build-final.log": "5c74e9cd773528e840e36e7ec83e2db4749230d5c7339c534e96cab5301e3375",
+    "unreal-build-retry.log": "7aa6b71499e1088f7d8abf4c1a89fcc4aba840fad01a9ad70d6c36b00fcb07bb",
+    "unreal-build.log": "eefdc69cc36e3507bc54f5f2f4dba53fd2b6b8f717855a664f4bafd425439e73",
+    "unreal-coordinate-failure.json": "355993b79fdeb5d468534d047bf9bac9f4d171973946ecca70515c18b41b2e3c",
+    "unreal-first-fixture.json": "a46156ea90695d5dd22c9aef025fa39bd0bc4e95aaeb2705741395a44f95d373",
+    "unreal-tests-coordinate-failure.log": "0bb937c2beb1515a66ec5ac0ddd0951a69069141977eee8c9bb3472699d13736",
+    "unreal-tests-first-fixture.log": "01b95eaff85eb0b8a1f847a60cfff5a80ea981065244c5a54937e055beac5fcf",
+    "unreal-tests-pixel-diagnosis.log": "77422c126c00dac2dafedce32c6972c45e30811510257c7af017112eea84f685",
+    "unreal-tests-roundtrip-failure.log": "86776cbc9c9cae05eb93761b52a66ce07307d21b7fd3459123cd092fc0753968",
+    "unreal-tests.log": "dad49a5d237265fdaaa94ac55f69f7d657b014f7cce3c3be13f4f8d5fbc0d9ac",
+    "worker-after-pre-fixture-fix.log": "a8535e95d57bfb07a336d6cf1928c37937adc1766973f24f3457c7afc74d6911",
+    "worker-after-pre-geometry-tightening.log": "040987118ec5ea699011f10715e2bad2a29d55ab4085b24c68ff74a153ce8dd9",
+    "worker-after.log": "040987118ec5ea699011f10715e2bad2a29d55ab4085b24c68ff74a153ce8dd9",
+    "worker-before-pre-geometry-tightening.log": "5bd42079b136563b13548505702126ef62bc37044f58a6dd1980eaa30388152d",
+    "worker-before.log": "5bd42079b136563b13548505702126ef62bc37044f58a6dd1980eaa30388152d"
+  }
+}

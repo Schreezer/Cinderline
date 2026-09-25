@@ -1,0 +1,20 @@
+{
+  "apk": {
+    "path": "/Volumes/Codex Storage/Cinderline/Android/packages/Cinderline-Android-arm64.apk",
+    "sha256": "dad37087f9fabaa080a63a417fbcee4b5b177c4edeeb3448bb41864e8040b48c",
+    "size_bytes": 274457418,
+    "package": "com.cinderline.game",
+    "version_code": 3,
+    "version_name": "0.1.2",
+    "signature_verified": true,
+    "development_signed": true,
+    "same_signer_as_previous": true,
+    "signer_certificate_sha256": "1430ffabfd20b590dc334486f80f8423a402369e60db88a4142734ce128d1541",
+    "zipalign_16kb_verified": true,
+    "unreal_library_sha256": "061ea0fc1e14e3a30d1ca1c049feca024b2345e2cab3ce03f94aaaa98f13a476",
+    "cooked_data_entries": [
+      "assets/main.obb.png"
+    ]
+  },
+  "checks_passed": true
+}

@@ -1,0 +1,6 @@
+EVIDENCE Hard reclaimed_hq=0 ward=0 miners=0 income=0
+FAIL captured ore becomes income and defense: AI did not buy and finish a base at captured off-landmark ore
+FAIL bounded guards preserve main army and saves: productive frontier did not retain its bounded guard
+FAIL Expert denies exposed income: Expert ignored exposed miners outside a Headquarters
+FAIL Expert third base and workforce: productive base targets did not distinguish Hard and Expert
+PASS hidden ore isolation

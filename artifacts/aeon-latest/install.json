@@ -1,0 +1,41 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "install",
+      "app",
+      "--device",
+      "00008150-00060CE12684401C",
+      "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/Packages/IOS/Cinderline.app",
+      "--timeout",
+      "180",
+      "--json-output",
+      "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/aeon-latest/install.json",
+      "--log-output",
+      "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/aeon-latest/install-device.log"
+    ],
+    "commandType" : "devicectl.device.install.app",
+    "environment" : {
+      "TERM" : "dumb"
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "642.16"
+  },
+  "result" : {
+    "deviceIdentifier" : "D9AC3A68-8FAB-5625-AAEA-EE4EE716AF70",
+    "installedApplications" : [
+      {
+        "bundleID" : "com.cinderline.game",
+        "databaseSequenceNumber" : 3132,
+        "databaseUUID" : "C177D366-7EF9-47F4-B258-DB53D1DA3642",
+        "installationURL" : "file:///private/var/containers/Bundle/Application/D9B24B47-6C65-4D28-B0E9-28F55F70FFC8/Cinderline.app/",
+        "launchServicesIdentifier" : "unknown",
+        "options" : {
+
+        }
+      }
+    ]
+  }
+}

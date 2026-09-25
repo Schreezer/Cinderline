@@ -1,0 +1,2 @@
+formation baseline units=16
+formation baseline failed: Formation completion did not apply arrival facing: stage=2 id=45 kind=3 tick=115 actual=2.971479 requested=-3.141593 distance=19.297571 order=7

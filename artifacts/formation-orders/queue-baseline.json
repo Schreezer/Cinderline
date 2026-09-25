@@ -1,0 +1,82 @@
+{
+  "schema": "cinderline.tactical_order_baseline.v1",
+  "success": true,
+  "benchmark_scope": "synthetic_debug_spawn_command_and_snapshot_cpu",
+  "release_build_required": true,
+  "paid_production_workload": false,
+  "device_or_render_workload": false,
+  "simulation_ticks_advanced": 0,
+  "timings_excluded_from_determinism_checks": true,
+  "future_orders_per_unit": 16,
+  "future_orders_per_player_cap": 4096,
+  "snapshot_frame_byte_limit": 1048576,
+  "mixed_mobile_kinds": ["Ember", "Needle", "Skim", "Anvil", "Cinderthrow", "Mend", "Veil", "Drudge"],
+  "workloads": [
+    {
+      "unit_count": 16,
+      "future_steps_at_full": 256,
+      "append_acceptance_wall_ms": {"samples": 16, "mean": 0.158620, "p50": 0.156875, "p95": 0.184000, "max": 0.184000},
+      "seventeenth_rejection_wall_ms": 0.017750,
+      "snapshots": [
+        {"tail": "empty", "depth_per_unit": 0, "future_steps": 0, "bytes": 1949, "encoded_entities": 17, "hold_preserved": true, "accepted_points_immutable": true},
+        {"tail": "half", "depth_per_unit": 8, "future_steps": 128, "bytes": 4253, "encoded_entities": 17, "hold_preserved": true, "accepted_points_immutable": true},
+        {"tail": "full", "depth_per_unit": 16, "future_steps": 256, "bytes": 6557, "encoded_entities": 17, "hold_preserved": true, "accepted_points_immutable": true}
+      ],
+      "seventeenth_group_append_rejected": true,
+      "rejection_state_hash_unchanged": true,
+      "rejection_recording_count_unchanged": true,
+      "state_hash": "0xedc00384a84f5022",
+      "repeat_state_hash": "0xedc00384a84f5022",
+      "deterministic_state": true,
+      "recorded_commands": 17,
+      "repeat_recorded_commands": 17,
+      "deterministic_recording": true,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "unit_count": 160,
+      "future_steps_at_full": 2560,
+      "append_acceptance_wall_ms": {"samples": 16, "mean": 1.550591, "p50": 1.463000, "p95": 1.825917, "max": 1.825917},
+      "seventeenth_rejection_wall_ms": 1.086500,
+      "snapshots": [
+        {"tail": "empty", "depth_per_unit": 0, "future_steps": 0, "bytes": 16370, "encoded_entities": 161, "hold_preserved": true, "accepted_points_immutable": true},
+        {"tail": "half", "depth_per_unit": 8, "future_steps": 1280, "bytes": 39410, "encoded_entities": 161, "hold_preserved": true, "accepted_points_immutable": true},
+        {"tail": "full", "depth_per_unit": 16, "future_steps": 2560, "bytes": 62450, "encoded_entities": 161, "hold_preserved": true, "accepted_points_immutable": true}
+      ],
+      "seventeenth_group_append_rejected": true,
+      "rejection_state_hash_unchanged": true,
+      "rejection_recording_count_unchanged": true,
+      "state_hash": "0x9baa068cbfdb543e",
+      "repeat_state_hash": "0x9baa068cbfdb543e",
+      "deterministic_state": true,
+      "recorded_commands": 17,
+      "repeat_recorded_commands": 17,
+      "deterministic_recording": true,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "unit_count": 200,
+      "future_steps_at_full": 3200,
+      "append_acceptance_wall_ms": {"samples": 16, "mean": 1.759255, "p50": 1.761125, "p95": 1.850292, "max": 1.850292},
+      "seventeenth_rejection_wall_ms": 1.586333,
+      "snapshots": [
+        {"tail": "empty", "depth_per_unit": 0, "future_steps": 0, "bytes": 20382, "encoded_entities": 201, "hold_preserved": true, "accepted_points_immutable": true},
+        {"tail": "half", "depth_per_unit": 8, "future_steps": 1600, "bytes": 49182, "encoded_entities": 201, "hold_preserved": true, "accepted_points_immutable": true},
+        {"tail": "full", "depth_per_unit": 16, "future_steps": 3200, "bytes": 77982, "encoded_entities": 201, "hold_preserved": true, "accepted_points_immutable": true}
+      ],
+      "seventeenth_group_append_rejected": true,
+      "rejection_state_hash_unchanged": true,
+      "rejection_recording_count_unchanged": true,
+      "state_hash": "0x89dd236a284820d1",
+      "repeat_state_hash": "0x89dd236a284820d1",
+      "deterministic_state": true,
+      "recorded_commands": 17,
+      "repeat_recorded_commands": 17,
+      "deterministic_recording": true,
+      "valid": true,
+      "errors": []
+    }
+  ]
+}

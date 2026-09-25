@@ -1,0 +1,42 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CinderlineEditor Mac Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Executing up to 2 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for CinderlineEditor (ispc deleted)
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.3.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.2.cpp.d!
+Building CinderlineEditor...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from Cinderline unity file: CinderFormationTests.cpp, CinderTacticalOrderTests.cpp, CinderUnitInfoTests.cpp, CinderArmyControlTests.cpp, CinderPatrolEscortTests.cpp, CinderOnlineIntegrationTests.cpp, CinderHUDInputTests.cpp, Network.cpp, SimulationMovement.cpp, Navigation.cpp, SimulationProduction.cpp, SimulationAI.cpp, SimulationTactics.cpp, SimulationJobs.cpp, Simulation.cpp, CinderHUD.cpp, CinderTutorial.cpp, CinderHelpContent.cpp, CinderBattlefield.cpp, CinderPlayerController.cpp, CinderHUDStyle.cpp, CinderQualityDiagnostics.cpp, CinderUnitInfo.cpp, CinderLANDiscovery.cpp, CinderOnlineSubsystem.cpp, CinderMobileHUDPreview.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 6 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 29.75 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/6] Compile [Apple] Module.MetalRHI.1.cpp
+[2/6] Compile [Apple] Module.MetalRHI.2.cpp
+[3/6] Compile [Apple] CinderHUDInputTests.cpp
+[4/6] Link [Apple] libUnrealEditor-Cinderline.dylib
+[5/6] Compile [Apple] Module.MetalRHI.3.cpp
+[6/6] Link [Apple] libUnrealEditor-MetalRHI.dylib
+
+Total time in Unreal Build Accelerator local executor: 26.11 seconds
+Output binary: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/Mac/UnrealEditor
+Deploying CinderlineEditor Mac Development...
+Deploying now!
+
+Result: Succeeded
+Total execution time: 29.82 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 6.4kb

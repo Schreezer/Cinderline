@@ -1,0 +1,3 @@
+PASS exhausted ore finishes at delivery point
+FAIL pending cargo waits for replacement depot across save-load: cargo stays in a pending Gather return while no completed depot exists: order=0 returning=0 carried=0.000000
+RESULT passed=1 failed=1

@@ -1,0 +1,3 @@
+Verified 21 Release + 21 sanitizer suites, 35 server tests, 40 Unreal tests,
+2 real transport tests, synthetic formation/queue/patrol/escort/navigation repeats and 12 reviewed captures.
+P0 paid/latency/device gates remain open. Stop before P2.

@@ -1,0 +1,10 @@
+{
+  "status": "failed preparation staging gate; repeat stopped after the failed primary to avoid redundant work",
+  "reason": "All four paid rosters reached100/100, but continuously moving holding formations did not enter1400-radius regions simultaneously before72000 preparation ticks. Strict gate was not relaxed.",
+  "source_archive": "Saved/P1SustainedReceiptSource",
+  "binary": "Saved/P1SustainedVerified/StagedWorkload/CinderlineMatchBaseline",
+  "log": "artifacts/patrol-escort/paid-four-player.log",
+  "prior_failure": "artifacts/patrol-escort/paid-four-player-before-staging.json",
+  "p1_2_combined_acceptance": false,
+  "recorded_at": "2026-09-14T19:44:31.195626+00:00"
+}

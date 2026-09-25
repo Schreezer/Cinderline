@@ -1,0 +1,91 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+[  5%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[  5%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[  8%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 11%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 14%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 17%] Linking CXX static library libCinderlineSimulation.a
+[ 20%] Built target CinderlineSimulation
+[ 22%] Building CXX object CMakeFiles/CinderlineMatchBaseline.dir/Tools/MatchBaseline.cpp.o
+[ 25%] Building CXX object CMakeFiles/CinderlineGameplayBaseline.dir/Tools/GameplayBaseline.cpp.o
+[ 28%] Linking CXX executable CinderlineGameplayBaseline
+[ 28%] Built target CinderlineGameplayBaseline
+[ 31%] Linking CXX executable CinderlineMatchBaseline
+[ 34%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 34%] Built target CinderlineMatchBaseline
+[ 37%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 40%] Linking CXX executable CinderlineMatchWorker
+[ 40%] Built target CinderlineMatchWorker
+[ 42%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 45%] Linking CXX executable CinderlineNavigationTests
+[ 45%] Built target CinderlineNavigationTests
+[ 48%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 51%] Linking CXX executable CinderlineTests
+[ 51%] Built target CinderlineTests
+[ 54%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 57%] Linking CXX executable CinderlineNetworkTests
+[ 57%] Built target CinderlineNetworkTests
+[ 60%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 62%] Linking CXX executable CinderlineDefenseTests
+[ 62%] Built target CinderlineDefenseTests
+[ 65%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 68%] Linking CXX executable CinderlineAIDifficultyTests
+[ 68%] Built target CinderlineAIDifficultyTests
+[ 71%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 74%] Linking CXX executable CinderlineProductionAllocationTests
+[ 74%] Built target CinderlineProductionAllocationTests
+[ 77%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 80%] Linking CXX executable CinderlineMatchLengthTests
+[ 80%] Built target CinderlineMatchLengthTests
+[ 82%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 85%] Linking CXX executable CinderlineOrderCompletionTests
+[ 85%] Built target CinderlineOrderCompletionTests
+[ 88%] Building CXX object CMakeFiles/CinderlineWorkerOrderCompletionTests.dir/Tests/WorkerOrderCompletionTests.cpp.o
+[ 91%] Linking CXX executable CinderlineFourPlayerTests
+[ 91%] Built target CinderlineFourPlayerTests
+[ 94%] Building CXX object CMakeFiles/CinderlineSimulationProfilingTests.dir/Tests/SimulationProfilingTests.cpp.o
+[ 97%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 97%] Built target CinderlineWorkerOrderCompletionTests
+[100%] Linking CXX executable CinderlineSimulationProfilingTests
+[100%] Built target CinderlineSimulationProfilingTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+      Start  1: simulation_rules
+ 1/11 Test  #1: simulation_rules ......................   Passed   17.41 sec
+      Start  2: navigation_regressions
+ 2/11 Test  #2: navigation_regressions ................   Passed    1.57 sec
+      Start  3: network_protocol
+ 3/11 Test  #3: network_protocol ......................   Passed    0.85 sec
+      Start  4: defense_regressions
+ 4/11 Test  #4: defense_regressions ...................   Passed    0.65 sec
+      Start  5: ai_difficulty_regressions
+ 5/11 Test  #5: ai_difficulty_regressions .............   Passed   12.06 sec
+      Start  6: production_allocation_regressions
+ 6/11 Test  #6: production_allocation_regressions .....   Passed    1.45 sec
+      Start  7: match_length_regressions
+ 7/11 Test  #7: match_length_regressions ..............   Passed    9.81 sec
+      Start  8: four_player_regressions
+ 8/11 Test  #8: four_player_regressions ...............   Passed    2.95 sec
+      Start  9: order_completion_regressions
+ 9/11 Test  #9: order_completion_regressions ..........   Passed    0.52 sec
+      Start 10: worker_order_completion_regressions
+10/11 Test #10: worker_order_completion_regressions ...   Passed    0.55 sec
+      Start 11: simulation_profiling_regressions
+11/11 Test #11: simulation_profiling_regressions ......   Passed    1.40 sec
+
+100% tests passed, 0 tests failed out of 11
+
+Label Time Summary:
+ai              =  12.06 sec*proc (1 test)
+defense         =   0.65 sec*proc (1 test)
+economy         =   0.55 sec*proc (1 test)
+four-player     =   2.95 sec*proc (1 test)
+match-length    =   9.81 sec*proc (1 test)
+navigation      =  14.86 sec*proc (4 tests)
+network         =   4.40 sec*proc (2 tests)
+orders          =   1.07 sec*proc (2 tests)
+production      =   1.45 sec*proc (1 test)
+profiling       =   1.40 sec*proc (1 test)
+
+Total Test time (real) =  49.23 sec

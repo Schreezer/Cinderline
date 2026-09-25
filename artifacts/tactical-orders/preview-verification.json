@@ -1,0 +1,68 @@
+{
+  "schema": "cinderline.tactical_preview.v1",
+  "cases": [
+    {
+      "case": "desktop-armed",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/tactical-orders/desktop-armed.png",
+      "sha256": "7f0737b5d863a4a4c2531ccb9b183bc9d725fb63bdba23c5a311870978389d8f",
+      "fixture_receipt": "[2026.09.14-17.11.22:177][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-armed primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-pending",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/tactical-orders/desktop-pending.png",
+      "sha256": "9def716a030c3bad333d232996c4f45ac5b921a9ddfe6540b93079c3e1101f6f",
+      "fixture_receipt": "[2026.09.14-17.11.39:465][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-pending primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=1 sheet=4"
+    },
+    {
+      "case": "mobile-armed",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/tactical-orders/mobile-armed.png",
+      "sha256": "6961e9391dd2f1069745547575640fe5d7c339ec3bd308658b8381fd57388062",
+      "fixture_receipt": "[2026.09.14-17.11.56:470][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-armed primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-pending",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/tactical-orders/mobile-pending.png",
+      "sha256": "e5ddaf65aa42c2f6215968ab7146ff2446f44ae86e39646b8d15e19d044971c6",
+      "fixture_receipt": "[2026.09.14-17.12.13:283][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-pending primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=1 sheet=4"
+    }
+  ],
+  "complete": true,
+  "evidence": "scripted Mac rendering; no native gesture or iPhone acceptance",
+  "module": "Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+  "module_sha256": "571f4516760104089343fe4a0112eda7378e131c188555b0eb2fba0dc564de0a",
+  "protected_unchanged": true,
+  "protected_before": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "protected_after": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "visual_review": "passed",
+  "visual_observations": [
+    "Inspected all four final desktop/mobile armed/pending images at their captured sizes.",
+    "Queue move, Queue pending and Clear queued remain readable without clipped labels.",
+    "Current destination and both numbered future points are inside each viewport.",
+    "The sheet distinguishes armed and pending state; global catalogs remain visible.",
+    "Scripted rendering only: physical gestures, thumb reach and iPhone performance remain unverified."
+  ]
+}

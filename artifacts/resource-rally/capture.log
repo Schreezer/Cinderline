@@ -1,0 +1,5 @@
+Starting mobile-producer at 1600x738
+Traceback (most recent call last):
+  File "/Users/chirag13/Documents/ChatGPT/starCraft/artifacts/resource-rally/capture_preview.py", line 90, in <module>
+    raise RuntimeError(f"Preview exited before capture ({process.returncode})")
+RuntimeError: Preview exited before capture (0)

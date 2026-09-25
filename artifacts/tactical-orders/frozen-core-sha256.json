@@ -1,0 +1,16 @@
+{
+  "note": "Release simulation and command benchmark inputs; presentation/device acceptance is separate.",
+  "files": {
+    "Saved/P1TacticalVerified/libCinderlineSimulation.a": "6c8a096e30ebc149d81d7c5411053a497c99363973dfe031adcdb4eb2a6f614b",
+    "Saved/P1TacticalVerified/CinderlineGameplayBaseline": "16b2709d7bac578845ddb6ecb02029f45c8ed9060a5480161702cb155ebd3a73",
+    "Saved/P1TacticalVerified/CinderlineMatchBaseline": "f4a7a95f821900a192f23889be44abefea47adef5d6c08d533353071182b75ca",
+    "Saved/P1TacticalVerified/CinderlineTacticalOrderBaseline": "6a6a7da01fe29aa423d3b840e0fe307d4b9e35727545d99f87d55bff83d0b464",
+    "Saved/P1TacticalVerified/CinderlineMatchWorker": "0d7f6703a559df69c405b033418febc85f465aabe158b3356a44584c7e8956f2",
+    "Saved/P1TacticalVerified/Include/Sim/Simulation.h": "4db1208a4e124d0e801868490e58c12fdaca7ba3d1b46c8e71a0a8ef02d9a35b",
+    "Saved/P1TacticalVerified/Include/Sim/Navigation.h": "401dcd52f6bfed4e252dee614872487b0b209510b369501c00a90db1fe9bd0ec",
+    "Saved/P1TacticalVerified/Include/Sim/MatchLength.h": "5c39350635561f976f8467b98f64dbcc0518fea785040f820d1bb5eca304bf62",
+    "Saved/P1TacticalVerified/Include/Sim/Network.h": "079b171222e2ab41eb2e4a8eea4d22f59ade13b05657040eeddf869aea4a3f8c",
+    "Saved/P1TacticalVerified/Include/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563",
+    "Saved/P1TacticalVerified/Include/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1"
+  }
+}

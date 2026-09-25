@@ -1,0 +1,28 @@
+PASS explicit predicate edges match oracle
+PASS invalid and extreme inputs match oracle
+PREDICATE_CORPUS seed=0x51a7c0de fixtures=24 point_queries=3840 segment_queries=1920
+PASS fixed-seed predicate corpus matches oracle
+ROUTE_CASE name=wall-a reached=1 exhausted=0 expanded=1623 cost_bits=0x4495a13d origin_bits=0x43200000:0x44160000 points=7 result_hash=0xbc2ebb385bb080e9
+ROUTE_CASE name=wall-b-warm reached=1 exhausted=0 expanded=1473 cost_bits=0x4491c4c0 origin_bits=0x43340000:0x44098000 points=7 result_hash=0xfd728398c86959a9
+ROUTE_CASE name=wall-clearance reached=1 exhausted=0 expanded=1639 cost_bits=0x449db85e origin_bits=0x43340000:0x44098000 points=11 result_hash=0xc03fbb156e1ab6fe
+ROUTE_CASE name=wall-ignore reached=1 exhausted=0 expanded=43 cost_bits=0x4486f24e origin_bits=0x43340000:0x44098000 points=2 result_hash=0x1264967c1f7a24af
+ROUTE_CASE name=wall-multi reached=1 exhausted=0 expanded=1560 cost_bits=0x4491c4c0 origin_bits=0x43340000:0x44098000 points=7 result_hash=0x8f60639ba3ea28f5
+ROUTE_CASE name=wall-goal-reorder reached=1 exhausted=0 expanded=1654 cost_bits=0x449b4b5b origin_bits=0x432a0000:0x44200000 points=7 result_hash=0xa2375c3ed54ec048
+ROUTE_CASE name=ignored-circle-start reached=1 exhausted=0 expanded=64 cost_bits=0x446d7414 origin_bits=0x43160000:0x43fa0000 points=9 result_hash=0xdc19317e7c102b02
+ROUTE_CASE name=ignored-circle-goal reached=1 exhausted=0 expanded=46 cost_bits=0x446d7414 origin_bits=0x43160000:0x43fa0000 points=9 result_hash=0x0987c8e638b0e738
+ROUTE_CASE name=maze-a reached=1 exhausted=0 expanded=19 cost_bits=0x441b7490 origin_bits=0x428c0000:0x428c0000 points=2 result_hash=0x79482ecd4e953784
+ROUTE_CASE name=maze-b-warm reached=1 exhausted=0 expanded=60 cost_bits=0x443f6baf origin_bits=0x42b40000:0x42c80000 points=6 result_hash=0xb30e50505df4b913
+ROUTE_CASE name=maze-wide reached=1 exhausted=0 expanded=63 cost_bits=0x4455779a origin_bits=0x42b40000:0x42c80000 points=10 result_hash=0xfdfb2624834000a5
+ROUTE_CASE name=maze-ignore reached=1 exhausted=0 expanded=60 cost_bits=0x443f6baf origin_bits=0x42b40000:0x42c80000 points=6 result_hash=0xb30e50505df4b913
+ROUTE_CASE name=maze-multi reached=1 exhausted=0 expanded=0 cost_bits=0x42e24630 origin_bits=0x442f0000:0x43af0000 points=1 result_hash=0x17f62b228c27fb01
+ROUTE_CASE name=maze-zero reached=1 exhausted=0 expanded=0 cost_bits=0x00000000 origin_bits=0x42b40000:0x442c8000 points=0 result_hash=0xdbec0dc4832ed470
+ROUTE_CASE name=arena-a reached=1 exhausted=0 expanded=22 cost_bits=0x44751677 origin_bits=0x430c0000:0x442f0000 points=6 result_hash=0xa0029eaa21c33c64
+ROUTE_CASE name=arena-b-warm reached=1 exhausted=0 expanded=21 cost_bits=0x446a8770 origin_bits=0x43200000:0x44390000 points=6 result_hash=0xdaca462b9563453e
+ROUTE_CASE name=arena-wide reached=1 exhausted=0 expanded=1178 cost_bits=0x4485e9bf origin_bits=0x43200000:0x44390000 points=6 result_hash=0x20207711074c9045
+ROUTE_CASE name=arena-ignore reached=1 exhausted=0 expanded=22 cost_bits=0x446a8770 origin_bits=0x43200000:0x44390000 points=6 result_hash=0xce0370eb8df79755
+ROUTE_CASE name=arena-multi reached=1 exhausted=0 expanded=9 cost_bits=0x43ca6057 origin_bits=0x43fa0000:0x44960000 points=3 result_hash=0x9d0bf3f1f2bc439b
+ROUTE_CASE name=arena-invalid reached=0 exhausted=0 expanded=0 cost_bits=0x00000000 origin_bits=0x00000000:0x00000000 points=0 result_hash=0x481a52cb06432423
+ROUTE_CASE name=arena-no-goals reached=0 exhausted=0 expanded=0 cost_bits=0x00000000 origin_bits=0x00000000:0x00000000 points=0 result_hash=0x481a52cb06432423
+ROUTE_CORPUS cases=21 hash=0x0a097241ddad648f reached_graph=17
+PASS route corpus has stable comparable fingerprint
+RESULT passed=4 failed=0

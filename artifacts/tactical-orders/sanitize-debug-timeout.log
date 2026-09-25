@@ -1,0 +1,96 @@
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1TacticalSanitize
+[  4%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[  4%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[  6%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[  8%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 10%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 12%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 14%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationProduction.cpp.o
+[ 16%] Linking CXX static library libCinderlineSimulation.a
+[ 16%] Built target CinderlineSimulation
+[ 20%] Building CXX object CMakeFiles/CinderlineMatchBaseline.dir/Tools/MatchBaseline.cpp.o
+[ 20%] Building CXX object CMakeFiles/CinderlineGameplayBaseline.dir/Tools/GameplayBaseline.cpp.o
+[ 22%] Linking CXX executable CinderlineGameplayBaseline
+[ 22%] Built target CinderlineGameplayBaseline
+[ 24%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 26%] Linking CXX executable CinderlineMatchBaseline
+[ 26%] Built target CinderlineMatchBaseline
+[ 28%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 30%] Linking CXX executable CinderlineMatchWorker
+[ 30%] Built target CinderlineMatchWorker
+[ 32%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 34%] Linking CXX executable CinderlineTests
+[ 34%] Built target CinderlineTests
+[ 36%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 38%] Linking CXX executable CinderlineNavigationTests
+[ 38%] Built target CinderlineNavigationTests
+[ 40%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 44%] Linking CXX executable CinderlineNetworkTests
+[ 44%] Linking CXX executable CinderlineDefenseTests
+[ 44%] Built target CinderlineDefenseTests
+[ 44%] Built target CinderlineNetworkTests
+[ 46%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 48%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 50%] Linking CXX executable CinderlineAIDifficultyTests
+[ 50%] Built target CinderlineAIDifficultyTests
+[ 52%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 54%] Linking CXX executable CinderlineProductionAllocationTests
+[ 54%] Built target CinderlineProductionAllocationTests
+[ 56%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 58%] Linking CXX executable CinderlineMatchLengthTests
+[ 58%] Built target CinderlineMatchLengthTests
+[ 60%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 62%] Linking CXX executable CinderlineFourPlayerTests
+[ 62%] Built target CinderlineFourPlayerTests
+[ 64%] Building CXX object CMakeFiles/CinderlineTacticalOrderTests.dir/Tests/TacticalOrderTests.cpp.o
+[ 66%] Linking CXX executable CinderlineOrderCompletionTests
+[ 66%] Built target CinderlineOrderCompletionTests
+[ 68%] Building CXX object CMakeFiles/CinderlineWorkerOrderCompletionTests.dir/Tests/WorkerOrderCompletionTests.cpp.o
+[ 70%] Linking CXX executable CinderlineTacticalOrderTests
+[ 70%] Built target CinderlineTacticalOrderTests
+[ 72%] Building CXX object CMakeFiles/CinderlineSimulationProfilingTests.dir/Tests/SimulationProfilingTests.cpp.o
+[ 74%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 74%] Built target CinderlineWorkerOrderCompletionTests
+[ 76%] Building CXX object CMakeFiles/CinderlineNavigationAttachmentCacheTests.dir/Tests/NavigationAttachmentCacheTests.cpp.o
+[ 78%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 78%] Built target CinderlineNavigationAttachmentCacheTests
+[ 82%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 82%] Building CXX object CMakeFiles/CinderlineNavigationMultiSourceTests.dir/Tests/NavigationMultiSourceTests.cpp.o
+[ 82%] Built target CinderlineSimulationProfilingTests
+[ 84%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 86%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 86%] Built target CinderlineNavigationMultiSourceTests
+[ 88%] Building CXX object CMakeFiles/CinderlineNavigationTerrainVisibilityTests.dir/Tests/NavigationTerrainVisibilityTests.cpp.o
+[ 90%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[ 90%] Built target CinderlineNavigationPredicateParityTests
+[ 92%] Building CXX object CMakeFiles/CinderlineProductionExitTests.dir/Tests/ProductionExitTests.cpp.o
+[ 94%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 94%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 96%] Building CXX object CMakeFiles/CinderlineProductionTrafficTests.dir/Tests/ProductionTrafficTests.cpp.o
+[ 98%] Linking CXX executable CinderlineProductionExitTests
+[ 98%] Built target CinderlineProductionExitTests
+[100%] Linking CXX executable CinderlineProductionTrafficTests
+[100%] Built target CinderlineProductionTrafficTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1TacticalSanitize
+      Start  1: simulation_rules
+ 1/18 Test  #1: simulation_rules ............................   Passed  109.95 sec
+      Start  2: navigation_regressions
+ 2/18 Test  #2: navigation_regressions ......................   Passed    7.82 sec
+      Start  3: network_protocol
+ 3/18 Test  #3: network_protocol ............................   Passed    4.69 sec
+      Start  4: defense_regressions
+ 4/18 Test  #4: defense_regressions .........................   Passed    3.25 sec
+      Start  5: ai_difficulty_regressions
+ 5/18 Test  #5: ai_difficulty_regressions ...................***Timeout 120.04 sec
+
+      Start  6: production_allocation_regressions
+ 6/18 Test  #6: production_allocation_regressions ...........   Passed   11.66 sec
+      Start  7: match_length_regressions

@@ -1,0 +1,65 @@
+{
+  "date": "2026-09-16",
+  "scope": "Hard and Expert captured-ore development, guards, and Expert income denial",
+  "source_sha256": {
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "d8f3ded4b2e45e7cb010eaa624c3b216cf4f74960b28671804defebbebe04193",
+    "Tests/AIResourceControlTests.cpp": "674654e2c7d05c86d216402b27d686180661db68ea104c9bea6e23f755f51866",
+    "CMakeLists.txt": "a5cd9b0e3e342198e54d4d3cd92dd9d9b7545fac6ce4d8f1590ed2f17198f36f",
+    "docs/AI_ORE_CONTROL.md": "eb8080fbb032809ba2a2f6e6ce1a59874937d4ecac566bb29ffabff91babc222"
+  },
+  "release": {
+    "passed": 28,
+    "failed": 0,
+    "log": "tests-final.log",
+    "native_client_enabled": false
+  },
+  "sanitizers": {
+    "passed": 28,
+    "failed": 0,
+    "log": "sanitize-tests-final.log",
+    "enabled": [
+      "AddressSanitizer",
+      "UndefinedBehaviorSanitizer"
+    ]
+  },
+  "ore_regressions": {
+    "before_passed": 1,
+    "before_failed": 4,
+    "after_passed": 5,
+    "after_failed": 0,
+    "before_log": "before-ore-tests.log",
+    "after_log": "ore-tests-final.log",
+    "captured_ore_delivered": {
+      "Hard": 1638,
+      "Expert": 1170
+    },
+    "scenario": "Development capture fixture followed by 175 seconds of normal purchases and mining"
+  },
+  "challenges": {
+    "control": "control.json",
+    "comparison": "comparison.json",
+    "common_source_parity": true,
+    "per_difficulty_matches": 9,
+    "hard_before_wins": 9,
+    "hard_after_wins": 9,
+    "expert_before_wins": 9,
+    "expert_after_wins": 9,
+    "seconds_limit": 900,
+    "seed": 7300
+  },
+  "unreal": {
+    "build": "succeeded",
+    "build_log": "unreal-build-final.log",
+    "integration_passed": 18,
+    "warnings": 0,
+    "errors": 0,
+    "integration_log": "unreal-tests-final.log",
+    "report": "Saved/Automation/Integration/20260916T105505Z-61367/index.json"
+  },
+  "diff_check": "passed; tracked tree and added-file whitespace checked",
+  "limitations": [
+    "Scripted challenge results are not human playtest or broad win-rate evidence.",
+    "Existing mobile and Linux packages were not rebuilt or installed.",
+    "Unrelated changes in the shared checkout were preserved."
+  ]
+}

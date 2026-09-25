@@ -1,0 +1,8 @@
+FAIL explicit Attack target death: completed explicit Attack walked toward its target's corpse
+FAIL explicit Attack missing corpse: Attack with a cleaned-up target walked toward its stale position
+FAIL explicit Attack shared target death: later explicit attacker damaged an enemy it was never ordered to attack
+FAIL explicit Attack visibility transition: combat replaced a live hidden explicit target before movement handled vision loss
+PASS AttackMove incidental target death
+PASS Idle automatic acquisition anchor
+PASS Mender leader death
+RESULT passed=3 failed=4

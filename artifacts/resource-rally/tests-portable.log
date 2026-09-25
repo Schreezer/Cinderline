@@ -1,0 +1,18 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild
+    Start  3: network_protocol
+1/4 Test  #3: network_protocol ....................   Passed    0.10 sec
+    Start  6: production_allocation_regressions
+2/4 Test  #6: production_allocation_regressions ...   Passed    0.23 sec
+    Start 20: production_exit_regressions
+3/4 Test #20: production_exit_regressions .........   Passed    1.08 sec
+    Start 21: production_traffic_regressions
+4/4 Test #21: production_traffic_regressions ......   Passed    2.28 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Label Time Summary:
+navigation    =   3.35 sec*proc (2 tests)
+network       =   0.23 sec*proc (1 test)
+production    =   3.59 sec*proc (3 tests)
+
+Total Test time (real) =   3.69 sec

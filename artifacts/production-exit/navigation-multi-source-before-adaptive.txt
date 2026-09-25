@@ -1,0 +1,8 @@
+PASS sealed first start uses reachable later start
+PASS unreachable sources return complete failure
+PASS ties are independent of start order
+FAIL adaptive pass avoids large dead-end budget: multi-source adaptive pass exhausted in a reachable basin
+PASS singleton preserves route and warm cache behavior
+PASS geometry changes and copies stay isolated
+PASS invalid starts are filtered deterministically
+RESULT passed=6 failed=1

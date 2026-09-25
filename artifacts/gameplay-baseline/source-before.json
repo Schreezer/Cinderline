@@ -1,0 +1,19 @@
+{
+  "git_head": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "files": {
+    "Source/Cinderline/Private/Sim/Navigation.cpp": "84e85262077ecd5a209c8ba19da9edc7af81fc9cb1c77452e4c6509fd78de65b",
+    "Source/Cinderline/Private/Sim/Network.cpp": "76d4ab1126c31db7fd35272cb624c1dbafccf9d12ea37dad98938577426408b5",
+    "Source/Cinderline/Private/Sim/Simulation.cpp": "024f627d7cb808a757964b3ac37cbeeed0e3229f6f2a6bc2e2aaf252dea61af6",
+    "Source/Cinderline/Private/Sim/SimulationAI.cpp": "576d8b5acbce58d2c1b3ccad1523072a39a4c708a4885aa4e3e075774c8d8a2c",
+    "Source/Cinderline/Private/Sim/SimulationJobs.cpp": "3243f08bf8ea0aa2bf4c074ad217b64ef2f470a30751c86774b1977a37956a04",
+    "Source/Cinderline/Private/Sim/SimulationMovement.cpp": "0390ca0b6367edd8db8580c5b86ffc70f766bb3fd3c93dcab0542ceb5a521ee6",
+    "Source/Cinderline/Public/Sim/AIDifficulty.h": "3e3577a744467c8b2af518fc85648ffb670b8657866863d129f2e27b84bd1af1",
+    "Source/Cinderline/Public/Sim/MatchLength.h": "5c39350635561f976f8467b98f64dbcc0518fea785040f820d1bb5eca304bf62",
+    "Source/Cinderline/Public/Sim/Navigation.h": "c1531f3006611568d80f952c3bd5d26a2af0fd066166deed0e010ea4b7488fe0",
+    "Source/Cinderline/Public/Sim/Network.h": "3584c3e406edc71c48d75fb3b9de9738065a30120fbcbddc26d860fddb52b0ff",
+    "Source/Cinderline/Public/Sim/Simulation.h": "82fb2b77b210cad25fd1bfa1998c2261b44c24c1b567be7cc23eabd4ca5046a5",
+    "Source/Cinderline/Public/Sim/SimulationRules.h": "ebbc8cf06f2c0c1144a3112917b111ca7b1df2a4fe6668d29923d879768a1563"
+  },
+  "archive": "Saved/P0BaselineBefore/libCinderlineSimulation.a",
+  "archive_sha256": "2492cdf9bcbb69d92c1ec8b7c743ee0474565dd1e1c3e77c78df63a4598f26c1"
+}

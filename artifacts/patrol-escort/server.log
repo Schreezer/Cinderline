@@ -1,0 +1,224 @@
+
+> cinderline-game-server@0.1.0 test
+> node --test
+
+TAP version 13
+# Subtest: LAN address selection keeps only reachable private addresses and formats WebSocket URLs
+ok 1 - LAN address selection keeps only reachable private addresses and formats WebSocket URLs
+  ---
+  duration_ms: 11.993042
+  type: 'test'
+  ...
+# Subtest: host configuration makes LAN binding explicit and rejects ambiguous environment values
+ok 2 - host configuration makes LAN binding explicit and rejects ambiguous environment values
+  ---
+  duration_ms: 0.714042
+  type: 'test'
+  ...
+# Subtest: Bonjour instance labels stay within the 63-byte DNS label limit
+ok 3 - Bonjour instance labels stay within the 63-byte DNS label limit
+  ---
+  duration_ms: 0.135541
+  type: 'test'
+  ...
+# Subtest: Bonjour advertises the actual bound port and stops the service before destroying its socket
+ok 4 - Bonjour advertises the actual bound port and stops the service before destroying its socket
+  ---
+  duration_ms: 0.318833
+  type: 'test'
+  ...
+# Subtest: Bonjour failure leaves manual LAN URLs available
+ok 5 - Bonjour failure leaves manual LAN URLs available
+  ---
+  duration_ms: 0.262625
+  type: 'test'
+  ...
+# Subtest: configured startup forwards mode and name, advertises only LAN, and closes once
+ok 6 - configured startup forwards mode and name, advertises only LAN, and closes once
+  ---
+  duration_ms: 0.395583
+  type: 'test'
+  ...
+# Subtest: Docker runtime packaging includes the complete index.js module closure
+ok 7 - Docker runtime packaging includes the complete index.js module closure
+  ---
+  duration_ms: 2.943084
+  type: 'test'
+  ...
+# Subtest: health and lobby controls reject stale, malformed, repeated, and excessive input
+ok 8 - health and lobby controls reject stale, malformed, repeated, and excessive input
+  ---
+  duration_ms: 28.160958
+  type: 'test'
+  ...
+# Subtest: rooms accept only two or four players and a four-player worker waits for every ready seat
+ok 9 - rooms accept only two or four players and a four-player worker waits for every ready seat
+  ---
+  duration_ms: 16.511833
+  type: 'test'
+  ...
+# Subtest: four simultaneous disconnects preserve seats through grace and finish through the worker
+ok 10 - four simultaneous disconnects preserve seats through grace and finish through the worker
+  ---
+  duration_ms: 42.950416
+  type: 'test'
+  ...
+# Subtest: multiple four-player disconnects can reconnect independently within grace
+ok 11 - multiple four-player disconnects can reconnect independently within grace
+  ---
+  duration_ms: 6.16675
+  type: 'test'
+  ...
+# Subtest: worker result byte 255 is exposed as a draw
+ok 12 - worker result byte 255 is exposed as a draw
+  ---
+  duration_ms: 4.7805
+  type: 'test'
+  ...
+# Subtest: worker backpressure preserves a prioritized forfeit until drain
+ok 13 - worker backpressure preserves a prioritized forfeit until drain
+  ---
+  duration_ms: 2.493584
+  type: 'test'
+  ...
+# Subtest: commands queued during worker backpressure receive and cache one authoritative acknowledgement
+ok 14 - commands queued during worker backpressure receive and cache one authoritative acknowledgement
+  ---
+  duration_ms: 2.532167
+  type: 'test'
+  ...
+# Subtest: active worker progress timeout closes a hung room independently of socket pong
+ok 15 - active worker progress timeout closes a hung room independently of socket pong
+  ---
+  duration_ms: 2.583292
+  type: 'test'
+  ...
+# Subtest: sustained snapshot backpressure disconnects a slow client for normal recovery
+ok 16 - sustained snapshot backpressure disconnects a slow client for normal recovery
+  ---
+  duration_ms: 3.717375
+  type: 'test'
+  ...
+# Subtest: draining fails readiness and new room creation while keeping the listener observable
+ok 17 - draining fails readiness and new room creation while keeping the listener observable
+  ---
+  duration_ms: 3.19325
+  type: 'test'
+  ...
+# Subtest: origin, per-address connections, room creation, and public metadata are bounded
+ok 18 - origin, per-address connections, room creation, and public metadata are bounded
+  ---
+  duration_ms: 4.731958
+  type: 'test'
+  ...
+# Subtest: forwarded addresses are trusted only from an explicitly configured proxy
+ok 19 - forwarded addresses are trusted only from an explicitly configured proxy
+  ---
+  duration_ms: 2.460083
+  type: 'test'
+  ...
+# Subtest: active worker capacity queues a ready room and starts it when capacity returns
+ok 20 - active worker capacity queues a ready room and starts it when capacity returns
+  ---
+  duration_ms: 3.087042
+  type: 'test'
+  ...
+# Subtest: real clients create, join, reject a third seat, ready, and receive private snapshots
+ok 21 - real clients create, join, reject a third seat, ready, and receive private snapshots
+  ---
+  duration_ms: 399.743208
+  type: 'test'
+  ...
+# Subtest: both seats command only their view handles and command sequences survive reconnect
+ok 22 - both seats command only their view handles and command sequences survive reconnect
+  ---
+  duration_ms: 37.468916
+  type: 'test'
+  ...
+# Subtest: append commands acknowledge and publish the queued tactical order
+ok 23 - append commands acknowledge and publish the queued tactical order
+  ---
+  duration_ms: 43.7135
+  type: 'test'
+  ...
+# Subtest: a rejected append leaves the authoritative queue and opaque handle intact
+ok 24 - a rejected append leaves the authoritative queue and opaque handle intact
+  ---
+  duration_ms: 1039.678375
+  type: 'test'
+  ...
+# Subtest: patrol and escort acknowledge and publish private sustained state
+ok 25 - patrol and escort acknowledge and publish private sustained state
+  ---
+  duration_ms: 73.958125
+  type: 'test'
+  ...
+# Subtest: automatic batches and stable queue cancellation remain authoritative online
+ok 26 - automatic batches and stable queue cancellation remain authoritative online
+  ---
+  duration_ms: 93.976334
+  type: 'test'
+  ...
+# Subtest: four authoritative clients keep private ownership through nonfinal eliminations and one final winner
+ok 27 - four authoritative clients keep private ownership through nonfinal eliminations and one final winner
+  ---
+  duration_ms: 14.674416
+  type: 'test'
+  ...
+# Subtest: surrender keeps the socket for the authoritative result
+ok 28 - surrender keeps the socket for the authoritative result
+  ---
+  duration_ms: 6.308833
+  type: 'test'
+  ...
+# Subtest: disconnect grace expires into a canonical result
+ok 29 - disconnect grace expires into a canonical result
+  ---
+  duration_ms: 36.957208
+  type: 'test'
+  ...
+# Subtest: a simultaneous outage preserves the active room for reconnect, then expires through the worker
+ok 30 - a simultaneous outage preserves the active room for reconnect, then expires through the worker
+  ---
+  duration_ms: 118.535708
+  type: 'test'
+  ...
+# Subtest: ordinary attack-move play can finish a complete authoritative match
+ok 31 - ordinary attack-move play can finish a complete authoritative match
+  ---
+  duration_ms: 6499.954125
+  type: 'test'
+  ...
+# Subtest: WorkerBridge decodes fragmented and coalesced worker frames
+ok 32 - WorkerBridge decodes fragmented and coalesced worker frames
+  ---
+  duration_ms: 1.617167
+  type: 'test'
+  ...
+# Subtest: WorkerBridge rejects malformed framing once and ignores later child output
+ok 33 - WorkerBridge rejects malformed framing once and ignores later child output
+  ---
+  duration_ms: 0.314583
+  type: 'test'
+  ...
+# Subtest: WorkerBridge preserves queue bounds, collapsing, and write priority across backpressure
+ok 34 - WorkerBridge preserves queue bounds, collapsing, and write priority across backpressure
+  ---
+  duration_ms: 0.396875
+  type: 'test'
+  ...
+# Subtest: WorkerBridge owns handshake and progress timeouts and suppresses callbacks after stop
+ok 35 - WorkerBridge owns handshake and progress timeouts and suppresses callbacks after stop
+  ---
+  duration_ms: 0.208417
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8583.014667

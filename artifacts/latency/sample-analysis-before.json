@@ -1,0 +1,209 @@
+{
+  "timing_alignment": "approximate wall clock from slow-step diagnostic; initial custom-category signposts were filtered out",
+  "slow_step": {
+    "tick": "6416",
+    "phase": "preparation",
+    "update_wall_ms": "297.413",
+    "monotonic_ms": "8760.368",
+    "wall_epoch_ms": "1789391062253.694",
+    "profile_collected": "1",
+    "profile_tick": "6416",
+    "setup_ms": "0.000",
+    "production_ms": "0.005",
+    "movement_economy_ms": "297.348",
+    "vision_ms": "0.059",
+    "combat_ms": "0.001",
+    "ai_ms": "0.000",
+    "completion_ms": "0.000",
+    "profile_total_ms": "297.413"
+  },
+  "sample_window_ns": [
+    11359694091.796875,
+    11657107091.796875
+  ],
+  "samples": 298,
+  "inclusive_top": [
+    [
+      "main",
+      298.0
+    ],
+    [
+      "cinder::Simulation::update(float)",
+      298.0
+    ],
+    [
+      "cinder::Simulation::step()",
+      298.0
+    ],
+    [
+      "start",
+      298.0
+    ],
+    [
+      "(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)",
+      298.0
+    ],
+    [
+      "(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)",
+      298.0
+    ],
+    [
+      "cinder::Simulation::updateEconomy(cinder::Entity&)",
+      297.0
+    ],
+    [
+      "cinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+      297.0
+    ],
+    [
+      "cinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)",
+      297.0
+    ],
+    [
+      "cinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+      297.0
+    ],
+    [
+      "cinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)",
+      296.0
+    ],
+    [
+      "cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const",
+      295.0
+    ],
+    [
+      "cinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const",
+      295.0
+    ],
+    [
+      "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+      291.0
+    ],
+    [
+      "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+      144.0
+    ],
+    [
+      "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+      133.0
+    ]
+  ],
+  "leaf_top": [
+    [
+      "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+      133.0
+    ],
+    [
+      "cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const",
+      98.0
+    ],
+    [
+      "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+      55.0
+    ],
+    [
+      "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+      11.0
+    ],
+    [
+      "_xzm_xzone_malloc_tiny",
+      1.0
+    ]
+  ],
+  "top_stack": [
+    [
+      "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)\ncinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)\ncinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const\ncinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const\ncinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const\ncinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const\ncinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const\ncinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)\ncinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)\ncinder::Simulation::updateEconomy(cinder::Entity&)\ncinder::Simulation::step()\ncinder::Simulation::update(float)\n(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)\n(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)\nmain\nstart",
+      132.0
+    ],
+    [
+      "cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const\ncinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const\ncinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const\ncinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const\ncinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const\ncinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const\ncinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)\ncinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)\ncinder::Simulation::updateEconomy(cinder::Entity&)\ncinder::Simulation::step()\ncinder::Simulation::update(float)\n(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)\n(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)\nmain\nstart",
+      96.0
+    ],
+    [
+      "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const\ncinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const\ncinder::Navigation::Impl::cachedGoalAttachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, int) const\ncinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const\ncinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const\ncinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)\ncinder::Simulation::chooseWorkTarget(cinder::Entity&, std::__1::vector<unsigned int, std::__1::allocator<unsigned int>> const&, float)\ncinder::Simulation::updateEconomy(cinder::Entity&)\ncinder::Simulation::step()\ncinder::Simulation::update(float)\n(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)\n(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)\nmain\nstart",
+      54.0
+    ]
+  ],
+  "whole_run_inclusive_top": [
+    [
+      "start",
+      123483.0
+    ],
+    [
+      "main",
+      123481.0
+    ],
+    [
+      "(anonymous namespace)::run(int, bool, bool, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)",
+      123466.0
+    ],
+    [
+      "(anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::__1::array<cinder::net::ViewMemory, 4ul>&)",
+      120761.0
+    ],
+    [
+      "cinder::Simulation::update(float)",
+      106292.0
+    ],
+    [
+      "cinder::Simulation::step()",
+      106287.0
+    ],
+    [
+      "cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const",
+      84649.0
+    ],
+    [
+      "cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)",
+      69666.0
+    ],
+    [
+      "cinder::Simulation::updateMovement(cinder::Entity&)",
+      69619.0
+    ],
+    [
+      "cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const",
+      59141.0
+    ],
+    [
+      "cinder::Navigation::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+      55566.0
+    ],
+    [
+      "cinder::Navigation::Impl::route(cinder::Vec2, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&, float, unsigned int) const",
+      55565.0
+    ],
+    [
+      "cinder::Simulation::findRoute(cinder::Entity&, std::__1::vector<cinder::Vec2, std::__1::allocator<cinder::Vec2>> const&)",
+      53652.0
+    ],
+    [
+      "cinder::Simulation::planPath(cinder::Entity&, cinder::Vec2)",
+      49233.0
+    ],
+    [
+      "cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)",
+      40062.0
+    ],
+    [
+      "cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)",
+      38026.0
+    ],
+    [
+      "cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const",
+      27005.0
+    ],
+    [
+      "cinder::Simulation::finishMovementStep()",
+      15368.0
+    ],
+    [
+      "cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)::$_4::operator()(cinder::Vec2, float) const",
+      11378.0
+    ],
+    [
+      "cinder::Simulation::stateHash() const",
+      8257.0
+    ]
+  ]
+}

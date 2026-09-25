@@ -1,0 +1,8 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+[ 10%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 20%] Linking CXX static library libCinderlineSimulation.a
+[ 80%] Built target CinderlineSimulation
+[ 90%] Linking CXX executable CinderlineProductionTrafficTests
+[100%] Built target CinderlineProductionTrafficTests

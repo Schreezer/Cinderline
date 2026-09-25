@@ -1,0 +1,168 @@
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (0.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1SustainedBuild
+[  3%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[  3%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[  5%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[  6%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[  8%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 10%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 11%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationProduction.cpp.o
+[ 13%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationTactics.cpp.o
+[ 15%] Linking CXX static library libCinderlineSimulation.a
+[ 15%] Built target CinderlineSimulation
+[ 18%] Building CXX object CMakeFiles/CinderlineGameplayBaseline.dir/Tools/GameplayBaseline.cpp.o
+[ 18%] Building CXX object CMakeFiles/CinderlineMatchBaseline.dir/Tools/MatchBaseline.cpp.o
+[ 20%] Linking CXX executable CinderlineGameplayBaseline
+[ 20%] Built target CinderlineGameplayBaseline
+[ 22%] Building CXX object CMakeFiles/CinderlineTacticalOrderBaseline.dir/Tools/TacticalOrderBaseline.cpp.o
+[ 23%] Linking CXX executable CinderlineMatchBaseline
+[ 23%] Built target CinderlineMatchBaseline
+[ 25%] Building CXX object CMakeFiles/CinderlineSustainedOrderBaseline.dir/Tools/SustainedOrderBaseline.cpp.o
+[ 27%] Linking CXX executable CinderlineTacticalOrderBaseline
+[ 27%] Built target CinderlineTacticalOrderBaseline
+[ 28%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 30%] Linking CXX executable CinderlineSustainedOrderBaseline
+[ 30%] Built target CinderlineSustainedOrderBaseline
+[ 32%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 33%] Linking CXX executable CinderlineMatchWorker
+[ 33%] Built target CinderlineMatchWorker
+[ 35%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 37%] Linking CXX executable CinderlineNavigationTests
+[ 37%] Built target CinderlineNavigationTests
+[ 38%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 40%] Linking CXX executable CinderlineTests
+[ 40%] Built target CinderlineTests
+[ 42%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 44%] Linking CXX executable CinderlineNetworkTests
+[ 44%] Built target CinderlineNetworkTests
+[ 45%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 47%] Linking CXX executable CinderlineDefenseTests
+[ 47%] Built target CinderlineDefenseTests
+[ 49%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 50%] Linking CXX executable CinderlineAIDifficultyTests
+[ 50%] Built target CinderlineAIDifficultyTests
+[ 52%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 54%] Linking CXX executable CinderlineProductionAllocationTests
+[ 54%] Built target CinderlineProductionAllocationTests
+[ 55%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 57%] Linking CXX executable CinderlineMatchLengthTests
+[ 57%] Built target CinderlineMatchLengthTests
+[ 59%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 61%] Linking CXX executable CinderlineFourPlayerTests
+[ 61%] Built target CinderlineFourPlayerTests
+[ 62%] Linking CXX executable CinderlineOrderCompletionTests
+[ 64%] Building CXX object CMakeFiles/CinderlineTacticalOrderTests.dir/Tests/TacticalOrderTests.cpp.o
+[ 64%] Built target CinderlineOrderCompletionTests
+[ 66%] Building CXX object CMakeFiles/CinderlinePatrolEscortTests.dir/Tests/PatrolEscortTests.cpp.o
+[ 67%] Linking CXX executable CinderlineTacticalOrderTests
+[ 67%] Built target CinderlineTacticalOrderTests
+[ 69%] Building CXX object CMakeFiles/CinderlineTacticalInterruptionTests.dir/Tests/TacticalInterruptionTests.cpp.o
+[ 71%] Linking CXX executable CinderlinePatrolEscortTests
+[ 71%] Built target CinderlinePatrolEscortTests
+[ 72%] Building CXX object CMakeFiles/CinderlineWorkerOrderCompletionTests.dir/Tests/WorkerOrderCompletionTests.cpp.o
+[ 74%] Linking CXX executable CinderlineTacticalInterruptionTests
+[ 74%] Built target CinderlineTacticalInterruptionTests
+[ 76%] Building CXX object CMakeFiles/CinderlineSimulationProfilingTests.dir/Tests/SimulationProfilingTests.cpp.o
+[ 77%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 77%] Built target CinderlineWorkerOrderCompletionTests
+[ 79%] Building CXX object CMakeFiles/CinderlineNavigationAttachmentCacheTests.dir/Tests/NavigationAttachmentCacheTests.cpp.o
+[ 81%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 81%] Built target CinderlineNavigationAttachmentCacheTests
+[ 83%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 84%] Building CXX object CMakeFiles/CinderlineNavigationMultiSourceTests.dir/Tests/NavigationMultiSourceTests.cpp.o
+[ 84%] Built target CinderlineSimulationProfilingTests
+[ 86%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 88%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 88%] Built target CinderlineNavigationMultiSourceTests
+[ 89%] Building CXX object CMakeFiles/CinderlineNavigationTerrainVisibilityTests.dir/Tests/NavigationTerrainVisibilityTests.cpp.o
+[ 91%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[ 91%] Built target CinderlineNavigationPredicateParityTests
+[ 93%] Building CXX object CMakeFiles/CinderlineProductionExitTests.dir/Tests/ProductionExitTests.cpp.o
+[ 94%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 94%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 96%] Building CXX object CMakeFiles/CinderlineProductionTrafficTests.dir/Tests/ProductionTrafficTests.cpp.o
+[ 98%] Linking CXX executable CinderlineProductionExitTests
+[ 98%] Built target CinderlineProductionExitTests
+[100%] Linking CXX executable CinderlineProductionTrafficTests
+[100%] Built target CinderlineProductionTrafficTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1SustainedBuild
+      Start  1: simulation_rules
+ 1/20 Test  #1: simulation_rules ............................   Passed    4.45 sec
+      Start  2: navigation_regressions
+ 2/20 Test  #2: navigation_regressions ......................   Passed    1.36 sec
+      Start  3: network_protocol
+ 3/20 Test  #3: network_protocol ............................   Passed    0.80 sec
+      Start  4: defense_regressions
+ 4/20 Test  #4: defense_regressions .........................   Passed    0.87 sec
+      Start  5: ai_difficulty_regressions
+ 5/20 Test  #5: ai_difficulty_regressions ...................   Passed    2.60 sec
+      Start  6: production_allocation_regressions
+ 6/20 Test  #6: production_allocation_regressions ...........   Passed    0.67 sec
+      Start  7: match_length_regressions
+ 7/20 Test  #7: match_length_regressions ....................   Passed    2.11 sec
+      Start  8: four_player_regressions
+ 8/20 Test  #8: four_player_regressions .....................   Passed    0.91 sec
+      Start  9: order_completion_regressions
+ 9/20 Test  #9: order_completion_regressions ................   Passed    0.44 sec
+      Start 10: tactical_order_regressions
+10/20 Test #10: tactical_order_regressions ..................   Passed    0.51 sec
+      Start 11: patrol_escort_regressions
+11/20 Test #11: patrol_escort_regressions ...................***Failed    0.43 sec
+PASS mixed Patrol immutable laps
+FAIL Patrol pursuit return suppression and kill: Patrol reaches the interrupted endpoint before switching legs
+FAIL blocked and stationary Patrol recovery: ordinary construction closes the authored corridor
+PASS Escort leader immutability and stable slots
+PASS Escort boundary reprojection and failed-route retry
+PASS Escort projected cycles and atomic rejection
+PASS Escort leader death successors
+FAIL worker cargo and construction Escort: escorted worker did not complete its real cargo delivery
+PASS sustained clear stop and replacement
+PASS save-load continuation and replay
+PASS save-twelve sustained corruption rejection
+RESULT passed=8 failed=3
+
+      Start 12: tactical_interruption_regressions
+12/20 Test #12: tactical_interruption_regressions ...........   Passed    0.39 sec
+      Start 13: worker_order_completion_regressions
+13/20 Test #13: worker_order_completion_regressions .........   Passed    0.39 sec
+      Start 14: simulation_profiling_regressions
+14/20 Test #14: simulation_profiling_regressions ............   Passed    0.62 sec
+      Start 15: navigation_attachment_cache_regressions
+15/20 Test #15: navigation_attachment_cache_regressions .....   Passed    0.40 sec
+      Start 16: navigation_multi_source_regressions
+16/20 Test #16: navigation_multi_source_regressions .........   Passed    0.40 sec
+      Start 17: navigation_predicate_parity_regressions
+17/20 Test #17: navigation_predicate_parity_regressions .....   Passed    0.40 sec
+      Start 18: navigation_terrain_visibility_regressions
+18/20 Test #18: navigation_terrain_visibility_regressions ...   Passed    0.53 sec
+      Start 19: production_exit_regressions
+19/20 Test #19: production_exit_regressions .................   Passed    0.83 sec
+      Start 20: production_traffic_regressions
+20/20 Test #20: production_traffic_regressions ..............   Passed    3.03 sec
+
+95% tests passed, 1 tests failed out of 20
+
+Label Time Summary:
+ai              =   2.60 sec*proc (1 test)
+defense         =   0.87 sec*proc (1 test)
+economy         =   0.78 sec*proc (2 tests)
+four-player     =   0.91 sec*proc (1 test)
+match-length    =   2.11 sec*proc (1 test)
+navigation      =  11.73 sec*proc (13 tests)
+network         =   1.58 sec*proc (2 tests)
+orders          =   2.16 sec*proc (5 tests)
+production      =   4.92 sec*proc (4 tests)
+profiling       =   1.94 sec*proc (4 tests)
+
+Total Test time (real) =  22.14 sec
+
+The following tests FAILED:
+	 11 - patrol_escort_regressions (Failed)                navigation orders
+Errors while running CTest

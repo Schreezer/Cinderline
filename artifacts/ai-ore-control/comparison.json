@@ -1,0 +1,290 @@
+{
+  "hard": {
+    "before": {
+      "wins": 9,
+      "losses": 0,
+      "unfinished": 0,
+      "scripted_rejections": 0,
+      "matches": [
+        {
+          "scenario": "rush",
+          "map": 0,
+          "seconds": 319.45,
+          "winner": 1,
+          "ai_first_pressure_seconds": 255.05
+        },
+        {
+          "scenario": "rush",
+          "map": 1,
+          "seconds": 322.85,
+          "winner": 1,
+          "ai_first_pressure_seconds": 254.45
+        },
+        {
+          "scenario": "rush",
+          "map": 2,
+          "seconds": 313.8,
+          "winner": 1,
+          "ai_first_pressure_seconds": 267.65
+        },
+        {
+          "scenario": "macro",
+          "map": 0,
+          "seconds": 408.0,
+          "winner": 1,
+          "ai_first_pressure_seconds": 253.25
+        },
+        {
+          "scenario": "macro",
+          "map": 1,
+          "seconds": 379.35,
+          "winner": 1,
+          "ai_first_pressure_seconds": 252.25
+        },
+        {
+          "scenario": "macro",
+          "map": 2,
+          "seconds": 360.3,
+          "winner": 1,
+          "ai_first_pressure_seconds": 269.25
+        },
+        {
+          "scenario": "turtle",
+          "map": 0,
+          "seconds": 464.5,
+          "winner": 1,
+          "ai_first_pressure_seconds": 252.8
+        },
+        {
+          "scenario": "turtle",
+          "map": 1,
+          "seconds": 452.2,
+          "winner": 1,
+          "ai_first_pressure_seconds": 251.15
+        },
+        {
+          "scenario": "turtle",
+          "map": 2,
+          "seconds": 506.25,
+          "winner": 1,
+          "ai_first_pressure_seconds": 315.4
+        }
+      ]
+    },
+    "after": {
+      "wins": 9,
+      "losses": 0,
+      "unfinished": 0,
+      "scripted_rejections": 0,
+      "matches": [
+        {
+          "scenario": "rush",
+          "map": 0,
+          "seconds": 307.1,
+          "winner": 1,
+          "ai_first_pressure_seconds": 255.25
+        },
+        {
+          "scenario": "rush",
+          "map": 1,
+          "seconds": 310.7,
+          "winner": 1,
+          "ai_first_pressure_seconds": 255.8
+        },
+        {
+          "scenario": "rush",
+          "map": 2,
+          "seconds": 306.65,
+          "winner": 1,
+          "ai_first_pressure_seconds": 256.6
+        },
+        {
+          "scenario": "macro",
+          "map": 0,
+          "seconds": 385.85,
+          "winner": 1,
+          "ai_first_pressure_seconds": 253.15
+        },
+        {
+          "scenario": "macro",
+          "map": 1,
+          "seconds": 416.05,
+          "winner": 1,
+          "ai_first_pressure_seconds": 253.8
+        },
+        {
+          "scenario": "macro",
+          "map": 2,
+          "seconds": 579.25,
+          "winner": 1,
+          "ai_first_pressure_seconds": 436.75
+        },
+        {
+          "scenario": "turtle",
+          "map": 0,
+          "seconds": 424.7,
+          "winner": 1,
+          "ai_first_pressure_seconds": 252.9
+        },
+        {
+          "scenario": "turtle",
+          "map": 1,
+          "seconds": 450.2,
+          "winner": 1,
+          "ai_first_pressure_seconds": 250.5
+        },
+        {
+          "scenario": "turtle",
+          "map": 2,
+          "seconds": 470.85,
+          "winner": 1,
+          "ai_first_pressure_seconds": 341.4
+        }
+      ]
+    }
+  },
+  "expert": {
+    "before": {
+      "wins": 9,
+      "losses": 0,
+      "unfinished": 0,
+      "scripted_rejections": 0,
+      "matches": [
+        {
+          "scenario": "rush",
+          "map": 0,
+          "seconds": 313.1,
+          "winner": 1,
+          "ai_first_pressure_seconds": 268.05
+        },
+        {
+          "scenario": "rush",
+          "map": 1,
+          "seconds": 310.1,
+          "winner": 1,
+          "ai_first_pressure_seconds": 254.45
+        },
+        {
+          "scenario": "rush",
+          "map": 2,
+          "seconds": 323.5,
+          "winner": 1,
+          "ai_first_pressure_seconds": 275.9
+        },
+        {
+          "scenario": "macro",
+          "map": 0,
+          "seconds": 337.6,
+          "winner": 1,
+          "ai_first_pressure_seconds": 266.85
+        },
+        {
+          "scenario": "macro",
+          "map": 1,
+          "seconds": 319.75,
+          "winner": 1,
+          "ai_first_pressure_seconds": 256.65
+        },
+        {
+          "scenario": "macro",
+          "map": 2,
+          "seconds": 337.7,
+          "winner": 1,
+          "ai_first_pressure_seconds": 275.9
+        },
+        {
+          "scenario": "turtle",
+          "map": 0,
+          "seconds": 370.0,
+          "winner": 1,
+          "ai_first_pressure_seconds": 267.0
+        },
+        {
+          "scenario": "turtle",
+          "map": 1,
+          "seconds": 382.35,
+          "winner": 1,
+          "ai_first_pressure_seconds": 257.3
+        },
+        {
+          "scenario": "turtle",
+          "map": 2,
+          "seconds": 431.15,
+          "winner": 1,
+          "ai_first_pressure_seconds": 272.5
+        }
+      ]
+    },
+    "after": {
+      "wins": 9,
+      "losses": 0,
+      "unfinished": 0,
+      "scripted_rejections": 0,
+      "matches": [
+        {
+          "scenario": "rush",
+          "map": 0,
+          "seconds": 337.15,
+          "winner": 1,
+          "ai_first_pressure_seconds": 278.8
+        },
+        {
+          "scenario": "rush",
+          "map": 1,
+          "seconds": 317.25,
+          "winner": 1,
+          "ai_first_pressure_seconds": 257.6
+        },
+        {
+          "scenario": "rush",
+          "map": 2,
+          "seconds": 349.9,
+          "winner": 1,
+          "ai_first_pressure_seconds": 273.05
+        },
+        {
+          "scenario": "macro",
+          "map": 0,
+          "seconds": 344.3,
+          "winner": 1,
+          "ai_first_pressure_seconds": 266.35
+        },
+        {
+          "scenario": "macro",
+          "map": 1,
+          "seconds": 340.0,
+          "winner": 1,
+          "ai_first_pressure_seconds": 257.5
+        },
+        {
+          "scenario": "macro",
+          "map": 2,
+          "seconds": 355.85,
+          "winner": 1,
+          "ai_first_pressure_seconds": 268.8
+        },
+        {
+          "scenario": "turtle",
+          "map": 0,
+          "seconds": 511.35,
+          "winner": 1,
+          "ai_first_pressure_seconds": 266.15
+        },
+        {
+          "scenario": "turtle",
+          "map": 1,
+          "seconds": 501.1,
+          "winner": 1,
+          "ai_first_pressure_seconds": 258.3
+        },
+        {
+          "scenario": "turtle",
+          "map": 2,
+          "seconds": 428.9,
+          "winner": 1,
+          "ai_first_pressure_seconds": 267.75
+        }
+      ]
+    }
+  }
+}

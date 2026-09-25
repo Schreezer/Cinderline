@@ -1,0 +1,15 @@
+PASS serial builds and original mining recovery
+PASS explicit Gather overrides mining recovery
+PASS intermediate Move preserves mining and save hash
+PASS queued Resume then Build
+PASS activation failures skip invalid work
+PASS clear stop and replacement
+PASS cancel destroy and worker death
+PASS save load hash and replay
+PASS queue limits and snapshot fit
+PASS same-boundary mixed worker budget
+PASS invalid tail boundary budget
+PASS append behind budget-pending worker
+PASS full idle-pending append rejection
+PASS clear naturally pending worker
+RESULT passed=14 failed=0

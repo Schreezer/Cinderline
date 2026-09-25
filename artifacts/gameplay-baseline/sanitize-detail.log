@@ -1,0 +1,231 @@
+Start testing: Sep 14 14:49 IST
+----------------------------------------------------------
+1/8 Testing: simulation_rules
+1/8 Test: simulation_rules
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"simulation_rules" start time: Sep 14 14:49 IST
+Output:
+----------------------------------------------------------
+PASS reset and definitions
+PASS physical gathering and depletion
+PASS paid commands, production and supply
+CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
+PASS placement and construction
+PASS bounded production queue
+WORKER_CONSTRUCTION travelled=350.000 cargo_preserved=6.000 finished_at=75.550 delivered_after=18
+PASS worker construction economy
+PASS worker construction interruptions
+PASS worker construction hazards
+PASS construction persistence and migration
+PASS research and prerequisites
+PASS ownership and fog
+GROUP_MOVE units=15 mean_destination_distance=93.586 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
+PASS obstacle paths and group movement
+PASS ground and air combat
+COVER_ATTACK order=1 damage=70.000
+COVER_ATTACK order=2 damage=70.000
+HOLD_TRAFFIC displacement=0.000
+SUPPORT_ORDER order=1 distance=168.959 healed=39.000
+SUPPORT_ORDER order=2 distance=174.248 healed=39.000
+PASS tactical orders and support
+PASS victory and defeat
+PASS save-load continuity and replay
+PASS bounded fixed-step update
+AI_EXPANSION depleted_ore=0.000 gathered=21357 alternate_built=1
+AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+PASS AI expansion and local defense
+AI_SCOUT_AND_ARMY scout=0 attack_move=1
+AI_SCOUT_AND_ARMY scout=1 attack_move=1
+AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
+AI_ECONOMY seconds=314.250 ore=6738 gathered=9588 produced=16 built=4 paid_command_cost=2850
+PASS AI paid economy
+AI_CONSTRUCTION travelling_preserved=1 orphan_resumed=1 all_busy_orphan_paused=1
+PASS AI construction assignments
+AI_WITNESSED_DEATH tick=96 previous_decision_tick=80 cleanup_tick=100
+AI_KNOWLEDGE hidden_death_retained=1 hidden_movement_ignored=1 mobile_expired=1 empty_site_cleared=1 visible_death_immediate=1
+PASS AI observation lifecycle
+AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0
+PASS AI observed production
+AI_OBJECTIVES original_destroyed=1 empty_start_avoided=1 relocated_hq_discovered=1 remembered_hq_targeted=1
+PASS AI scouting objectives
+AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1
+PASS AI knowledge persistence
+COMBAT_EVENTS weapon_profiles=5 splash_impacts=2 lethal_order=1 actual_heal=1 monotonic_ids=1
+PASS combat event semantics
+COMBAT_FOG hidden_source=1 no_late_revelation=1 current_visibility_required=1 hidden_segment_blocked=1 tiny_corner_clip_blocked=1
+PASS combat event visibility
+COMBAT_SAVE v4_continuity=1 legacy_effects_discarded=3 v3_knowledge_retained=1 malformed_events_atomic=1
+PASS combat event persistence
+RESULT passed=27 failed=0
+<end of output>
+Test time =  16.54 sec
+----------------------------------------------------------
+Test Passed.
+"simulation_rules" end time: Sep 14 14:50 IST
+"simulation_rules" time elapsed: 00:00:16
+----------------------------------------------------------
+
+2/8 Testing: navigation_regressions
+2/8 Test: navigation_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineNavigationTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"navigation_regressions" start time: Sep 14 14:50 IST
+Output:
+----------------------------------------------------------
+PASS narrow turning gap
+PASS blocked work-site sides
+PASS reachable alternatives
+PASS inaccessible build status
+PASS busy mining corridor
+PASS foundation route invalidation
+PASS Hold and enemy collision
+PASS work-slot exhaustion semantics
+IMPOSSIBLE_ROUTE simulation_seconds=140.000 searches=1 expanded=46 failures=1 budget_deferrals=0 max_step_ms=19.132
+PASS impossible order persistence
+PASS navigation save validation and v4 migration
+PASS displaced Idle yield recovery
+PASS repeated mixed-army retreat
+PASS moving-target failed approach recovery
+RESULT passed=13 failed=0
+<end of output>
+Test time =   1.60 sec
+----------------------------------------------------------
+Test Passed.
+"navigation_regressions" end time: Sep 14 14:50 IST
+"navigation_regressions" time elapsed: 00:00:01
+----------------------------------------------------------
+
+3/8 Testing: network_protocol
+3/8 Test: network_protocol
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineNetworkTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"network_protocol" start time: Sep 14 14:50 IST
+Output:
+----------------------------------------------------------
+PASS view privacy and handles
+PASS resource memory
+PASS effect privacy
+PASS four-player views
+PASS bounded codecs
+PASS replica guards
+RESULT passed=6 failed=0
+<end of output>
+Test time =   0.81 sec
+----------------------------------------------------------
+Test Passed.
+"network_protocol" end time: Sep 14 14:50 IST
+"network_protocol" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/8 Testing: defense_regressions
+4/8 Test: defense_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineDefenseTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"defense_regressions" start time: Sep 14 14:50 IST
+Output:
+----------------------------------------------------------
+DEFENSE_REGRESSIONS arrival=1 no_chase=1 ranged_fire=1 mend=1 traffic=1 override=1 persistence=1 network=1
+<end of output>
+Test time =   0.67 sec
+----------------------------------------------------------
+Test Passed.
+"defense_regressions" end time: Sep 14 14:50 IST
+"defense_regressions" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/8 Testing: ai_difficulty_regressions
+5/8 Test: ai_difficulty_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineAIDifficultyTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"ai_difficulty_regressions" start time: Sep 14 14:50 IST
+Output:
+----------------------------------------------------------
+PASS preset contract
+PASS deterministic seeded behavior
+PASS Normal preset and default aggression
+PASS worker target differentiation
+EVIDENCE first_attack_seconds Very Easy=440.8 Easy=321.9 Normal=241.95 Hard=198.9 Expert=157.9
+PASS attack cadence differentiation
+PASS unchanged simulation rules and ai=false
+PASS persistence, network, and replay
+<end of output>
+Test time =  12.00 sec
+----------------------------------------------------------
+Test Passed.
+"ai_difficulty_regressions" end time: Sep 14 14:50 IST
+"ai_difficulty_regressions" time elapsed: 00:00:11
+----------------------------------------------------------
+
+6/8 Testing: production_allocation_regressions
+6/8 Test: production_allocation_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineProductionAllocationTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"production_allocation_regressions" start time: Sep 14 14:50 IST
+Output:
+----------------------------------------------------------
+PASS remaining-time allocation and atomic gates
+PASS worker choice and producer gates
+PASS stable cancellation and research
+PASS persistent army rally and overrides
+PASS fresh worker mining assignment
+PASS deferred worker assignment persistence
+PASS replay and persistence
+RESULT passed=7 failed=0
+<end of output>
+Test time =   1.42 sec
+----------------------------------------------------------
+Test Passed.
+"production_allocation_regressions" end time: Sep 14 14:50 IST
+"production_allocation_regressions" time elapsed: 00:00:01
+----------------------------------------------------------
+
+7/8 Testing: match_length_regressions
+7/8 Test: match_length_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineMatchLengthTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"match_length_regressions" start time: Sep 14 14:50 IST
+Output:
+----------------------------------------------------------
+MATCH_LENGTH_PACING travel_ticks=244,326,408 train_seconds=19.2,24,24
+RESULT passed=5371 failed=0
+<end of output>
+Test time =   9.74 sec
+----------------------------------------------------------
+Test Passed.
+"match_length_regressions" end time: Sep 14 14:50 IST
+"match_length_regressions" time elapsed: 00:00:09
+----------------------------------------------------------
+
+8/8 Testing: four_player_regressions
+8/8 Test: four_player_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild/CinderlineFourPlayerTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0SanitizeBuild
+"four_player_regressions" start time: Sep 14 14:50 IST
+Output:
+----------------------------------------------------------
+FOUR_PLAYER_TESTS passed
+<end of output>
+Test time =   2.95 sec
+----------------------------------------------------------
+Test Passed.
+"four_player_regressions" end time: Sep 14 14:50 IST
+"four_player_regressions" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Sep 14 14:50 IST
+
+ai =  12.00 sec*proc
+
+defense =   0.67 sec*proc
+
+four-player =   2.95 sec*proc
+
+match-length =   9.74 sec*proc
+
+navigation =  14.29 sec*proc
+
+network =   4.37 sec*proc
+
+production =   1.42 sec*proc
+

@@ -1,0 +1,5 @@
+PASS dense idle workers do not permanently block produced units
+PASS Hold and Defend anchors remain fixed during recovery
+PASS congested Gather retains its work intent
+PASS opposing friendly traffic moves at most once per tick
+RESULT passed=4 failed=0

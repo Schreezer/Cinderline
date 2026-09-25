@@ -1,0 +1,4 @@
+[ 83%] Built target CinderlineSimulation
+[ 91%] Building CXX object CMakeFiles/CinderlineAIDifficultyProgressionTests.dir/Tests/AIDifficultyProgressionTests.cpp.o
+[100%] Linking CXX executable CinderlineAIDifficultyProgressionTests
+[100%] Built target CinderlineAIDifficultyProgressionTests

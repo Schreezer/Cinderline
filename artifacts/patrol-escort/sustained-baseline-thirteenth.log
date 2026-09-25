@@ -1,0 +1,35 @@
+Patrol 16 mobiles: primary and repeat
+Escort 16 mobiles: primary and repeat
+Patrol 160 mobiles: primary and repeat
+Escort 160 mobiles: primary and repeat
+Saved synthetic failure state: artifacts/patrol-escort/escort-jam-160-11492959342699238640.cinder
+Escort convergence diagnostic: count=160 tick=9600 completed=155 leader=1817.09,3300.55 leader_order=0
+ follower=75 kind=0 pos=1574.06,3498.8 goal=1529.09,3492.55 offset=-288,192 exhausted=0 failures=0 path=0/1 yield=0.2
+  neighbor=53 kind=2 pos=1626.59,3396.6 goal=1625.09,3396.55 order=9 yield=0
+  neighbor=55 kind=4 pos=1625.67,3492.48 goal=1625.09,3492.55 order=9 yield=0.2
+  neighbor=56 kind=5 pos=1721.09,3492.55 goal=1721.09,3492.55 order=9 yield=0
+  neighbor=73 kind=6 pos=1529.09,3396.55 goal=1529.09,3396.55 order=9 yield=0
+  neighbor=77 kind=2 pos=1529.09,3588.55 goal=1529.09,3588.55 order=9 yield=0
+  neighbor=78 kind=3 pos=1625.09,3588.55 goal=1625.09,3588.55 order=9 yield=0
+  neighbor=103 kind=4 pos=1433.56,3492.57 goal=1433.09,3492.55 order=9 yield=0
+ follower=88 kind=5 pos=1844.21,2951.83 goal=1817.09,2916.55 offset=0,-384 exhausted=0 failures=0 path=0/1 yield=0.2
+  neighbor=62 kind=3 pos=1721.09,3012.55 goal=1721.09,3012.55 order=9 yield=0
+  neighbor=63 kind=4 pos=1817.75,3012.9 goal=1817.09,3012.55 order=9 yield=0.2
+  neighbor=64 kind=5 pos=1913.09,3012.55 goal=1913.09,3012.55 order=9 yield=0
+  neighbor=87 kind=4 pos=1721.36,2916.56 goal=1721.09,2916.55 order=9 yield=0
+  neighbor=89 kind=6 pos=1912.31,2916.4 goal=1913.09,2916.55 order=9 yield=0
+  neighbor=121 kind=6 pos=1816.96,2820.11 goal=1817.09,2820.55 order=9 yield=0
+  neighbor=122 kind=7 pos=1913.09,2820.55 goal=1913.09,2820.55 order=9 yield=0
+ follower=160 kind=5 pos=1669.29,2721.32 goal=1625.09,2724.55 offset=-192,-576 exhausted=0 failures=0 path=0/1 yield=0.2
+  neighbor=119 kind=4 pos=1626.5,2820.6 goal=1625.09,2820.55 order=9 yield=0
+  neighbor=120 kind=5 pos=1722.29,2820.8 goal=1721.09,2820.55 order=9 yield=0
+  neighbor=159 kind=4 pos=1529.1,2724.55 goal=1529.09,2724.55 order=9 yield=0
+  neighbor=161 kind=6 pos=1697.33,2763.87 goal=1721.09,2724.55 order=9 yield=0.2
+  neighbor=162 kind=7 pos=1817.09,2724.55 goal=1817.09,2724.55 order=9 yield=0
+ follower=161 kind=6 pos=1697.33,2763.87 goal=1721.09,2724.55 offset=-96,-576 exhausted=0 failures=0 path=0/1 yield=0.2
+  neighbor=119 kind=4 pos=1626.5,2820.6 goal=1625.09,2820.55 order=9 yield=0
+  neighbor=120 kind=5 pos=1722.29,2820.8 goal=1721.09,2820.55 order=9 yield=0
+  neighbor=121 kind=6 pos=1816.96,2820.11 goal=1817.09,2820.55 order=9 yield=0
+  neighbor=160 kind=5 pos=1669.29,2721.32 goal=1625.09,2724.55 order=9 yield=0.2
+  neighbor=162 kind=7 pos=1817.09,2724.55 goal=1817.09,2724.55 order=9 yield=0
+Sustained workload failed: Escort failed stable convergence at its accepted slots

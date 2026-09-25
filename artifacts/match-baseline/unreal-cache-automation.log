@@ -1,0 +1,5 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Running Unreal automation with /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27. Report directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Automation/Integration/20260914T104013Z-23510
+Verified 37 expected Unreal tests: no errors or unfinished tests; explicitly allowed 2 idevice_id host warnings across 1 tests.
+Unreal automation passed. Report: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/Automation/Integration/20260914T104013Z-23510/index.json

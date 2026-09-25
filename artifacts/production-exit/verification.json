@@ -1,0 +1,184 @@
+{
+  "schema": "cinderline.production_exit_verification.v1",
+  "status": "bounded pass locally verified; P0 and SC2 gameplay capability goal remain partial",
+  "git_head": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "dirty_tree_source_manifest": "current-source-sha256.json",
+  "reviewed_concurrent_packaging_changes": {
+    "Cinderline.uproject": {
+      "tested_input_sha256": "5f97d0026cb7b0dad4d085481f42c6e44814a3a6bc5f91164216db631a6616f9",
+      "current_sha256": "d150e13acf89af0ef265654b5a60fc2d496e9021b3ae850ce4a568f2f0d18071",
+      "review": "Concurrent Linux packaging work only. TargetPlatforms adds Linux; unreal.sh adds a package-linux action and helper. Existing Mac build action and shared simulation are unchanged. Mac wrapper recheck is recorded separately; no Linux package acceptance is claimed."
+    },
+    "scripts/unreal.sh": {
+      "tested_input_sha256": "77caf770f1909015f0591fa044142cb878ab281bf21c37fcf749ccfdc1808c22",
+      "current_sha256": "8a9439b0fd1c678052922e0b1315b40bd9b8eb1ebecec47da47849d9e424393e",
+      "review": "Concurrent Linux packaging work only. TargetPlatforms adds Linux; unreal.sh adds a package-linux action and helper. Existing Mac build action and shared simulation are unchanged. Mac wrapper recheck is recorded separately; no Linux package acceptance is claimed."
+    }
+  },
+  "checks": {
+    "portable_suites": 15,
+    "sanitizer_suites": 15,
+    "server_tests": 32,
+    "unreal_checks": 37,
+    "unreal_succeeded_with_warnings": 0,
+    "navigation_multi_source_cases": 8,
+    "production_exit_cases": 10,
+    "production_traffic_cases": 5,
+    "pre_fix_traffic_cases_passed": 4,
+    "pre_fix_traffic_cases_failed": 1
+  },
+  "synthetic_arrivals": [
+    160,
+    200,
+    400
+  ],
+  "synthetic_state_hashes": [
+    "0x47da3bc3d8de4971",
+    "0x72a8ceceb9f8705e",
+    "0xf4b022af6dd7cc7a"
+  ],
+  "paid_workloads": [
+    {
+      "players": 2,
+      "army_arrivals": 160,
+      "state_hash": "0xc56d273e10c4a033",
+      "trajectory_hash": "0xd29b9a17afec5dda",
+      "recording_hash": "0xa235e0cd5c9a19c3",
+      "phase_step_ms": {
+        "preparation": {
+          "p50": 0.566167,
+          "p95": 1.429333,
+          "p99": 1.876708,
+          "max": 182.985
+        },
+        "march": {
+          "p50": 0.28525,
+          "p95": 0.433375,
+          "p99": 0.673709,
+          "max": 5.162875
+        },
+        "combat": {
+          "p50": 0.0985,
+          "p95": 0.623958,
+          "p99": 2.713458,
+          "max": 6.701583
+        }
+      }
+    },
+    {
+      "players": 4,
+      "army_arrivals": 320,
+      "state_hash": "0x35ed6ae28c643631",
+      "trajectory_hash": "0xbc77e98beecc9afb",
+      "recording_hash": "0x9af396d743e93143",
+      "phase_step_ms": {
+        "preparation": {
+          "p50": 1.99225,
+          "p95": 4.799875,
+          "p99": 6.63775,
+          "max": 307.754208
+        },
+        "march": {
+          "p50": 0.976125,
+          "p95": 1.675583,
+          "p99": 2.270041,
+          "max": 15.434042
+        },
+        "combat": {
+          "p50": 0.273083,
+          "p95": 2.008584,
+          "p99": 5.340542,
+          "max": 11.517959
+        }
+      }
+    }
+  ],
+  "compatibility": {
+    "save": 10,
+    "protocol": 7
+  },
+  "new_ios_package": false,
+  "installed_on_device": false,
+  "physical_gameplay_tested": false,
+  "gpu_profiled": false,
+  "public_deployment": false,
+  "remaining": [
+    "peak simulation latency attribution and reduction",
+    "physical input and complete match",
+    "sustained CPU/GPU/frame/memory/battery/thermal acceptance",
+    "P1-P7 gameplay milestones"
+  ],
+  "files_sha256": {
+    "before-inputs-sha256.json": "6acaa7171b9a445dc52b7985cef34573c19c2161cf0f375c9d32b2b82e5d38a9",
+    "before-regression-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "before-regressions.log": "373da9f7523a390d6e2841f32d4af08beb7c5e5af58e6bdb1183b3603c0fe9c6",
+    "cinder_worker_exit_probe.cpp": "7018056739cc8ee47ce831644e2a21c05aaa9a2d58b38009ff3962690af435e0",
+    "cinder_worker_exit_probe.output.txt": "75c32c5b9fdd1771671aa0592b36486d921a44760d7fddd5f45a03a2e18faf4f",
+    "concurrent-linux-packaging.diff": "85c98d6891a6576d41c0f22ffbbaf62aa008e9b6f23dd467bd62322859393629",
+    "configure.log": "56863a8fc5f19bba9c8e99607f8c34f70236566104d3d06f028ea250abf8adb5",
+    "continuation-coordinated-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "continuation-coordinated.log": "2f50b94f77477d71e0841568d631eca3c0848d43bdeb1538fd437ac9c2c58c0e",
+    "continuation-current-stall.log": "ce7cb9d7672676e0c161b30f05446028a27568af8d15867a14452e0ad9b7c095",
+    "continuation-off-route.log": "3e81ac4ed275e97337bc01f922560834f939906af54905c91cec16562a9063ab",
+    "continuation-priority.log": "54e387eaf5e20ac87705863aca4ca7c08982e8d6850f2164fddfe5199cb6e04c",
+    "crowd-stall-continuation.output.txt": "63306c5ac557856f75f8273d696cb713eae738f6324a72902b86335daea70d30",
+    "crowd-stall-diagnostic-command.txt": "2184693f4ffa2f0f93e4acfe3cb21a30527e62419f4d210ad95a3c2d4ab1590c",
+    "crowd-stall-intermediate-march-end.save": "c803d88099a6f62106b6831784aed3fe04e90839865d9c00bbfe3aab0cd794be",
+    "crowd-stall-intermediate-march-start.save": "ab562b070b98e17d59a053c4f60432c33a12ad8ec72fd643879a0f5ff4d32390",
+    "crowd-stall-intermediate.json": "d8276e8c66dbed9b05c4affce582cc9338703544d2aee61a7c09fe530dc315e5",
+    "crowd-stall-intermediate.stderr.log": "6d799c4510d45a6714714024a437d4a2c100776907f8353f23738c9b5ff1c441",
+    "crowd_stall_continuation.cpp": "2c219e0090542c83c792aad133aa7b7cfa9774a45aa2e90b56ba28395ade9573",
+    "crowd_stall_diagnostic.cpp": "2e7bf0f8672acca6f41900ac2a1d1ab875f6f753d28489e3c1ca8651b4e0301a",
+    "current-source-sha256.json": "f337099b7b24d1c4c1bf84b1485e199adae657c5dfe2ce38a7fdee866e59c66d",
+    "focused-build-final.log": "275c975974dfa7948e6c333fbd230f849fbd7dbc3e32d0c0f66eed5cbac506fb",
+    "focused-build.log": "8d873a172b18363defa979e4c4076f110c12a413774f096ab9196cbfac9c5abe",
+    "focused-tests-corrected.log": "8b187c36a6ce9ce976e376af8bd75b19066617b4a344b48981e2bf3dd594107f",
+    "focused-tests.log": "9c8177e5a02e5eb40d288581c9d36cc2753780f8012217d21491e8b21d810eb5",
+    "four-player-current.json": "f4ec62207729901730cd121e9a889b1e05f90e550163833bfdfd62fafe02d3f9",
+    "four-player-current.stderr.log": "40aca4e0770a92fe93cf70a907debf6ef83ec4d132750049228160e8db8d97e9",
+    "four-player-intermediate.json": "10764c55a32d9ee687be7f89e05495eb81fdbb82d8bd23defaabe020ed078de7",
+    "four-player-intermediate.stderr.log": "40aca4e0770a92fe93cf70a907debf6ef83ec4d132750049228160e8db8d97e9",
+    "intermediate-inputs-sha256.json": "18970d627570c9294c49cb2478608aa23c4eb9ebf512321f4845e4214f7c42a6",
+    "mortar-stall-current-100tick.output.txt": "3494fec49dfaf4fd9f8c4b1f6eae6411b8b334455855240a80f3d4c5be825787",
+    "mortar-stall-current-command.txt": "a1e1f4b33313fc3f132a76bacc09803887726929f797b5267cdf0ceb30e2a507",
+    "mortar-stall-current.output.txt": "1d1304a8c38d5f3bfa82b9e45828cb44d56f273b12dee1da3bd0491a1d89ade7",
+    "mortar_stall_current_diagnostic.cpp": "112488b401dd9a16ded1572b248bae3bbf83fd457fb9de23d95323ad9a4dc9f3",
+    "navigation-multi-source-before-adaptive.txt": "6a89b2b3174e4049b91239071645a92dc3668ba81f1fe3b850a07c13c74efa34",
+    "production-only-source-sha256.json": "f303fabd736a795b782b8ad18d4a7c6101a04021b161bda031946391d0a6eac2",
+    "release-build-final.log": "feecde0adfa4c379a8191e9fd6b78cf3b110ed65fc3510dcb9d05ac733d37241",
+    "release-build.log": "ec8ab06f7389b313568ee3cb4b42a740b9bbfb4f2475fd4b9e36026b7bb895ed",
+    "release-current-detail.log": "497bb34b2ad5c897aa66db7d692d39aa1cbb3ccdb4e59cdabb85c77bfdc849a9",
+    "release-current.log": "664782172eff97e03bba9b77bbf4620d736ab517233ef300b653d6383c12d34e",
+    "release-final.log": "2579e0191cbf808c0465128fadfdf237ca6ba691704f973349e9fc9bda1bd869",
+    "release-regressions.log": "0225f7b0da7d56a8963c2d525675c5a66cba49dc08aa754d31414c742fc833e3",
+    "reviewed-input-drift.json": "5adc40507a108ca9e1063005dcf2a1f1b1494dd5c4c5fdaff0ffa77ddb694ffe",
+    "sanitize-current-detail.log": "fc3a8c87b1e8a90f85b6c121de6e27260eebb2c3ece1ad699fcb2611c8685fbf",
+    "sanitize-current.log": "90a35c2eea925c5415f09f9d918bb00a5f978b301f7adfaa0777414eed486045",
+    "sanitizer-configure.log": "903f70dc009ccd3360816c73f9f118fe192f03ad637a4ed0c66af11e1e922c09",
+    "server-current.log": "28dd4661bd9f91924f53c46686c6ad7c2580d9282ad968108ccf3361a4f1166d",
+    "synthetic-current.json": "e019a7d7fb0aa254c1c8fa17a533d73f30db496cde87cbd737a8897a66bf0935",
+    "synthetic-current.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "traffic-before-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "traffic-before-current-stall-gate.log": "b6ca5157ef83ea161af55e3b97166901b8fec87ea08db9208a2dacd485f8886e",
+    "traffic-before.log": "4d5c23cee52848ff91b46c49b109de26241c83f961fc509c6f45a724d362b2af",
+    "traffic-build.log": "5e4f68ba929a56e7a32d5deee98efd505b5afa891dc0d3fde461d1b36e5a636f",
+    "traffic-configure.log": "6c9b04793284836bc49844587da97b47b0c5ebfd0baa71cc15535ca7260ffaa3",
+    "traffic-coordinated-build.log": "627bf35567bba5f888bd2e92aec70c9cc12a19e572dc024d1df5eb82ba150900",
+    "traffic-coordinated-tests.log": "e38553443cb401147b53c3fe384fd2198e4ade33a807ffa800a549db2a78a161",
+    "traffic-coverage-build.log": "7e986c8889e5406dfa98f49f8417116bcc362ca92036bdcbca745ca483670f07",
+    "traffic-current-stall.log": "5cdcdb4925b85796aa8534e3a91ef31396babd35bca3e2b2e8d0ae07b6529461",
+    "traffic-four-cases.log": "378736612e20ad0bbb1872950786392943fe6bb708eed5c662ce39d193717e21",
+    "traffic-off-route.log": "5cdcdb4925b85796aa8534e3a91ef31396babd35bca3e2b2e8d0ae07b6529461",
+    "traffic-priority.log": "5cdcdb4925b85796aa8534e3a91ef31396babd35bca3e2b2e8d0ae07b6529461",
+    "traffic-tests.log": "f83c439ca4a356adda2f665250e4235839a714d544199c355ba13712dd66fff0",
+    "two-player-current.json": "28f9169bbd5805c542cfae10d7757dbcbbdd17b7aa21fbe96e5ca4d2cbdcdda3",
+    "two-player-current.stderr.log": "0d86c3dd35611a292542a3eb6c2e25b8b91ba253bf4a9c7e9ea545c8c2f98624",
+    "unreal-current-automation.log": "842a6b30b26a0342b4478d89aae30ab0dff4b03f836bfa179c87dcf3560d4df7",
+    "unreal-current-build.log": "d0b685a91a781ad99598f0ef46993bfd5323c5a1f3efc9f6816d4196235f6cfe",
+    "unreal-current-report.json": "0a818385dd0dd4f09cb68a4ec3d2d847a9c5b66a150b302ff0f8b15a0ea0a84a",
+    "unreal-current-wrapper-recheck.log": "ab08732c0ef410ea2e5eae7b953c6809ebefdd506fb1da6e8e63eaa15517537c",
+    "update-production-before.cpp.txt": "e30f252921513074f7940cdb35c45eedae1ce16f2412ce208a7f653706bdf590",
+    "verified-core-sha256.json": "fd1b81916e38a310dda4056e81c4b9f627c4fa80a67d0fc1fa1c063e212a3d91",
+    "verify_current.py": "172f065f3fe5b92d9f0231c581fab32d3af2bff79adbeacfb42bd85a0361c7fd"
+  }
+}

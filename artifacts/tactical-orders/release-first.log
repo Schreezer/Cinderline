@@ -1,0 +1,231 @@
+-- The CXX compiler identification is AppleClang 21.0.0.21000334
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (3.3s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1TacticalBuild
+[  4%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[  4%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[  6%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[  8%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 10%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 12%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 14%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationProduction.cpp.o
+[ 16%] Linking CXX static library libCinderlineSimulation.a
+[ 16%] Built target CinderlineSimulation
+[ 18%] Building CXX object CMakeFiles/CinderlineMatchBaseline.dir/Tools/MatchBaseline.cpp.o
+[ 20%] Building CXX object CMakeFiles/CinderlineGameplayBaseline.dir/Tools/GameplayBaseline.cpp.o
+[ 22%] Linking CXX executable CinderlineGameplayBaseline
+[ 22%] Built target CinderlineGameplayBaseline
+[ 24%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 26%] Linking CXX executable CinderlineMatchBaseline
+[ 26%] Built target CinderlineMatchBaseline
+[ 28%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 30%] Linking CXX executable CinderlineMatchWorker
+[ 30%] Built target CinderlineMatchWorker
+[ 32%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 34%] Linking CXX executable CinderlineNavigationTests
+[ 34%] Built target CinderlineNavigationTests
+[ 36%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 38%] Linking CXX executable CinderlineTests
+[ 38%] Built target CinderlineTests
+[ 40%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 42%] Linking CXX executable CinderlineNetworkTests
+[ 42%] Built target CinderlineNetworkTests
+[ 44%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 46%] Linking CXX executable CinderlineDefenseTests
+[ 46%] Built target CinderlineDefenseTests
+[ 48%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 50%] Linking CXX executable CinderlineAIDifficultyTests
+[ 50%] Built target CinderlineAIDifficultyTests
+[ 52%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 54%] Linking CXX executable CinderlineProductionAllocationTests
+[ 54%] Built target CinderlineProductionAllocationTests
+[ 56%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 58%] Linking CXX executable CinderlineMatchLengthTests
+[ 58%] Built target CinderlineMatchLengthTests
+[ 60%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 62%] Linking CXX executable CinderlineOrderCompletionTests
+[ 62%] Built target CinderlineOrderCompletionTests
+[ 64%] Linking CXX executable CinderlineFourPlayerTests
+[ 66%] Building CXX object CMakeFiles/CinderlineTacticalOrderTests.dir/Tests/TacticalOrderTests.cpp.o
+[ 66%] Built target CinderlineFourPlayerTests
+[ 68%] Building CXX object CMakeFiles/CinderlineWorkerOrderCompletionTests.dir/Tests/WorkerOrderCompletionTests.cpp.o
+[ 70%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 72%] Linking CXX executable CinderlineTacticalOrderTests
+[ 72%] Built target CinderlineWorkerOrderCompletionTests
+[ 74%] Building CXX object CMakeFiles/CinderlineSimulationProfilingTests.dir/Tests/SimulationProfilingTests.cpp.o
+[ 74%] Built target CinderlineTacticalOrderTests
+[ 76%] Building CXX object CMakeFiles/CinderlineNavigationAttachmentCacheTests.dir/Tests/NavigationAttachmentCacheTests.cpp.o
+[ 78%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 78%] Built target CinderlineNavigationAttachmentCacheTests
+[ 80%] Building CXX object CMakeFiles/CinderlineNavigationMultiSourceTests.dir/Tests/NavigationMultiSourceTests.cpp.o
+[ 82%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 82%] Built target CinderlineSimulationProfilingTests
+[ 84%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 86%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 86%] Built target CinderlineNavigationMultiSourceTests
+[ 88%] Building CXX object CMakeFiles/CinderlineNavigationTerrainVisibilityTests.dir/Tests/NavigationTerrainVisibilityTests.cpp.o
+[ 90%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[ 90%] Built target CinderlineNavigationPredicateParityTests
+[ 92%] Building CXX object CMakeFiles/CinderlineProductionExitTests.dir/Tests/ProductionExitTests.cpp.o
+[ 94%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 94%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 96%] Building CXX object CMakeFiles/CinderlineProductionTrafficTests.dir/Tests/ProductionTrafficTests.cpp.o
+[ 98%] Linking CXX executable CinderlineProductionExitTests
+[ 98%] Built target CinderlineProductionExitTests
+[100%] Linking CXX executable CinderlineProductionTrafficTests
+[100%] Built target CinderlineProductionTrafficTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1TacticalBuild
+      Start  1: simulation_rules
+ 1/18 Test  #1: simulation_rules ............................***Failed    3.40 sec
+PASS reset and definitions
+PASS physical gathering and depletion
+PASS paid commands, production and supply
+CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
+PASS placement and construction
+PASS bounded production queue
+WORKER_CONSTRUCTION travelled=350.000 cargo_preserved=6.000 finished_at=75.550 delivered_after=18
+PASS worker construction economy
+PASS worker construction interruptions
+PASS worker construction hazards
+PASS construction persistence and migration
+PASS research and prerequisites
+PASS ownership and fog
+GROUP_MOVE units=15 mean_destination_distance=93.586 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
+PASS obstacle paths and group movement
+PASS ground and air combat
+COVER_ATTACK order=1 damage=70.000
+COVER_ATTACK order=2 damage=70.000
+HOLD_TRAFFIC displacement=0.000
+SUPPORT_ORDER order=1 distance=168.959 healed=39.000
+FAIL tactical orders and support: support follows an ally without acquiring a weapon target
+PASS victory and defeat
+PASS save-load continuity and replay
+PASS bounded fixed-step update
+AI_EXPANSION depleted_ore=0.000 gathered=22141 alternate_built=1
+AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+PASS AI expansion and local defense
+AI_SCOUT_AND_ARMY scout=0 attack_move=1
+AI_SCOUT_AND_ARMY scout=1 attack_move=1
+AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
+AI_ECONOMY seconds=314.950 ore=6043 gathered=8893 produced=16 built=4 paid_command_cost=2850
+PASS AI paid economy
+AI_CONSTRUCTION travelling_preserved=1 orphan_resumed=1 all_busy_orphan_paused=1
+PASS AI construction assignments
+AI_WITNESSED_DEATH tick=96 previous_decision_tick=80 cleanup_tick=100
+AI_KNOWLEDGE hidden_death_retained=1 hidden_movement_ignored=1 mobile_expired=1 empty_site_cleared=1 visible_death_immediate=1
+PASS AI observation lifecycle
+AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0
+PASS AI observed production
+AI_OBJECTIVES original_destroyed=1 empty_start_avoided=1 relocated_hq_discovered=1 remembered_hq_targeted=1
+PASS AI scouting objectives
+AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1
+PASS AI knowledge persistence
+COMBAT_EVENTS weapon_profiles=5 splash_impacts=2 lethal_order=1 actual_heal=1 monotonic_ids=1
+PASS combat event semantics
+COMBAT_FOG hidden_source=1 no_late_revelation=1 current_visibility_required=1 hidden_segment_blocked=1 tiny_corner_clip_blocked=1
+PASS combat event visibility
+COMBAT_SAVE v4_continuity=1 legacy_effects_discarded=3 v3_knowledge_retained=1 malformed_events_atomic=1
+PASS combat event persistence
+RESULT passed=26 failed=1
+
+      Start  2: navigation_regressions
+ 2/18 Test  #2: navigation_regressions ......................***Failed    0.81 sec
+PASS narrow turning gap
+PASS blocked work-site sides
+PASS reachable alternatives
+PASS inaccessible build status
+PASS busy mining corridor
+PASS foundation route invalidation
+PASS Hold and enemy collision
+PASS work-slot exhaustion semantics
+IMPOSSIBLE_ROUTE simulation_seconds=140.000 searches=1 expanded=46 failures=1 budget_deferrals=0 max_step_ms=2.796
+PASS impossible order persistence
+FAIL navigation save validation and v4 migration: fresh save contains player count, match length, navigation, and production sections
+PASS displaced Idle yield recovery
+PASS repeated mixed-army retreat
+PASS moving-target failed approach recovery
+RESULT passed=12 failed=1
+
+      Start  3: network_protocol
+ 3/18 Test  #3: network_protocol ............................   Passed    0.51 sec
+      Start  4: defense_regressions
+ 4/18 Test  #4: defense_regressions .........................***Failed    0.48 sec
+DEFENSE_TEST_FAILURE: fresh Defend save uses version ten with player count, match length and stable production jobs
+
+      Start  5: ai_difficulty_regressions
+ 5/18 Test  #5: ai_difficulty_regressions ...................   Passed    2.64 sec
+      Start  6: production_allocation_regressions
+ 6/18 Test  #6: production_allocation_regressions ...........***Failed    0.61 sec
+PASS remaining-time allocation and atomic gates
+PASS worker choice and producer gates
+PASS stable cancellation and research
+PASS persistent army rally and overrides
+PASS fresh worker mining assignment
+PASS deferred worker assignment persistence
+FAIL replay and persistence: a pre-rally version-seven save without the optional tail still loads
+RESULT passed=6 failed=1
+
+      Start  7: match_length_regressions
+ 7/18 Test  #7: match_length_regressions ....................   Passed    2.11 sec
+      Start  8: four_player_regressions
+ 8/18 Test  #8: four_player_regressions .....................   Passed    1.10 sec
+      Start  9: order_completion_regressions
+ 9/18 Test  #9: order_completion_regressions ................   Passed    0.42 sec
+      Start 10: tactical_order_regressions
+10/18 Test #10: tactical_order_regressions ..................***Failed    0.47 sec
+FAIL waypoint sequence and accepted formation: arrival activates the immutable formation destinations accepted earlier
+PASS AttackMove incidental engagement
+PASS mixed Mender waypoint and leader loss
+PASS Hold ClearOrders Stop and replacement
+PASS invalid modes and atomic group limit
+PASS construction completion cancellation and replacement
+PASS automatic build excludes explicit plans
+PASS depleted Gather and missing depot recovery
+PASS save-load continuation and replay
+RESULT passed=8 failed=1
+
+      Start 11: worker_order_completion_regressions
+11/18 Test #11: worker_order_completion_regressions .........   Passed    0.37 sec
+      Start 12: simulation_profiling_regressions
+12/18 Test #12: simulation_profiling_regressions ............   Passed    0.62 sec
+      Start 13: navigation_attachment_cache_regressions
+13/18 Test #13: navigation_attachment_cache_regressions .....   Passed    0.39 sec
+      Start 14: navigation_multi_source_regressions
+14/18 Test #14: navigation_multi_source_regressions .........   Passed    0.39 sec
+      Start 15: navigation_predicate_parity_regressions
+15/18 Test #15: navigation_predicate_parity_regressions .....   Passed    0.43 sec
+      Start 16: navigation_terrain_visibility_regressions
+16/18 Test #16: navigation_terrain_visibility_regressions ...   Passed    0.53 sec
+      Start 17: production_exit_regressions
+17/18 Test #17: production_exit_regressions .................   Passed    0.87 sec
+      Start 18: production_traffic_regressions
+18/18 Test #18: production_traffic_regressions ..............   Passed    2.52 sec
+
+72% tests passed, 5 tests failed out of 18
+
+Label Time Summary:
+ai              =   2.64 sec*proc (1 test)
+defense         =   0.48 sec*proc (1 test)
+economy         =   0.37 sec*proc (1 test)
+four-player     =   1.10 sec*proc (1 test)
+match-length    =   2.11 sec*proc (1 test)
+navigation      =  10.03 sec*proc (11 tests)
+network         =   1.71 sec*proc (2 tests)
+orders          =   1.26 sec*proc (3 tests)
+production      =   4.39 sec*proc (4 tests)
+profiling       =   1.97 sec*proc (4 tests)
+
+Total Test time (real) =  18.69 sec
+
+The following tests FAILED:
+	  1 - simulation_rules (Failed)
+	  2 - navigation_regressions (Failed)                   navigation
+	  4 - defense_regressions (Failed)                      defense
+	  6 - production_allocation_regressions (Failed)        network production
+	 10 - tactical_order_regressions (Failed)               navigation orders
+Errors while running CTest

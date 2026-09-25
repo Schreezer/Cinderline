@@ -1,0 +1,59 @@
+{
+  "schema": "cinderline.tactical_preview.v1",
+  "cases": [
+    {
+      "case": "desktop-armed",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/tactical-orders/desktop-armed-first.png",
+      "sha256": "9679d40187946a2a3d4d18527b6c450ffe82b92f970129b716dc2d3d23530e11",
+      "fixture_receipt": "[2026.09.14-16.45.22:498][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-armed primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-pending",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/tactical-orders/desktop-pending-first.png",
+      "sha256": "56015094cec4a74cdb6149511522980a6c151ca307ed03ea136fdd5a76f3b55b",
+      "fixture_receipt": "[2026.09.14-16.45.39:958][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-pending primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=1 sheet=4"
+    },
+    {
+      "case": "mobile-armed",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/tactical-orders/mobile-armed-first.png",
+      "sha256": "5b1629a4300bde463463d0a2cf77c0b5fc0feac41ea0fea189027789bbf7a4d3",
+      "fixture_receipt": "[2026.09.14-16.45.56:899][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-armed primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-pending",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/tactical-orders/mobile-pending-first.png",
+      "sha256": "181bdc02eb961c0cbe8987787302f1c2abf629a0c8650f4d1847c70cc8bbe139",
+      "fixture_receipt": "[2026.09.14-16.46.12:959][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-pending primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=1 sheet=4"
+    }
+  ],
+  "complete": true,
+  "evidence": "scripted Mac rendering; no native gesture or iPhone acceptance",
+  "protected_unchanged": true,
+  "protected_before": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "protected_after": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "visual_review": "Needs revision: queue labels shrink too far; compact preview clips future waypoint 2."
+}

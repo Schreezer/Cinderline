@@ -1,0 +1,58 @@
+[  1%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[  3%] Linking CXX static library libCinderlineSimulation.a
+[ 14%] Built target CinderlineSimulation
+[ 17%] Linking CXX executable CinderlineGameplayBaseline
+[ 17%] Linking CXX executable CinderlineMatchBaseline
+[ 20%] Built target CinderlineGameplayBaseline
+[ 20%] Built target CinderlineMatchBaseline
+[ 23%] Linking CXX executable CinderlineTacticalOrderBaseline
+[ 23%] Linking CXX executable CinderlineSustainedOrderBaseline
+[ 26%] Built target CinderlineSustainedOrderBaseline
+[ 26%] Built target CinderlineTacticalOrderBaseline
+[ 30%] Linking CXX executable CinderlineMatchWorker
+[ 30%] Linking CXX executable CinderlineFormationOrderBaseline
+[ 33%] Built target CinderlineFormationOrderBaseline
+[ 33%] Built target CinderlineMatchWorker
+[ 36%] Linking CXX executable CinderlineNavigationTests
+[ 36%] Linking CXX executable CinderlineTests
+[ 39%] Built target CinderlineNavigationTests
+[ 39%] Built target CinderlineTests
+[ 42%] Linking CXX executable CinderlineNetworkTests
+[ 42%] Linking CXX executable CinderlineDefenseTests
+[ 46%] Built target CinderlineNetworkTests
+[ 46%] Built target CinderlineDefenseTests
+[ 49%] Linking CXX executable CinderlineAIDifficultyTests
+[ 49%] Linking CXX executable CinderlineProductionAllocationTests
+[ 52%] Built target CinderlineAIDifficultyTests
+[ 52%] Built target CinderlineProductionAllocationTests
+[ 55%] Linking CXX executable CinderlineMatchLengthTests
+[ 55%] Linking CXX executable CinderlineFourPlayerTests
+[ 58%] Built target CinderlineFourPlayerTests
+[ 58%] Built target CinderlineMatchLengthTests
+[ 61%] Linking CXX executable CinderlineTacticalOrderTests
+[ 61%] Linking CXX executable CinderlineOrderCompletionTests
+[ 65%] Built target CinderlineTacticalOrderTests
+[ 65%] Built target CinderlineOrderCompletionTests
+[ 66%] Linking CXX executable CinderlinePatrolEscortTests
+[ 68%] Building CXX object CMakeFiles/CinderlineFormationOrderTests.dir/Tests/FormationOrderTests.cpp.o
+[ 69%] Built target CinderlinePatrolEscortTests
+[ 71%] Linking CXX executable CinderlineTacticalInterruptionTests
+[ 73%] Built target CinderlineTacticalInterruptionTests
+[ 74%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 76%] Built target CinderlineWorkerOrderCompletionTests
+[ 77%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 79%] Built target CinderlineSimulationProfilingTests
+[ 80%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 82%] Built target CinderlineNavigationAttachmentCacheTests
+[ 84%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 85%] Built target CinderlineNavigationMultiSourceTests
+[ 87%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[ 88%] Built target CinderlineNavigationPredicateParityTests
+[ 90%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 92%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 93%] Linking CXX executable CinderlineProductionExitTests
+[ 95%] Built target CinderlineProductionExitTests
+[ 96%] Linking CXX executable CinderlineProductionTrafficTests
+[ 98%] Built target CinderlineProductionTrafficTests
+[100%] Linking CXX executable CinderlineFormationOrderTests
+[100%] Built target CinderlineFormationOrderTests

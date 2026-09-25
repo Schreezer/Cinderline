@@ -1,0 +1,91 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+[  3%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[  6%] Linking CXX static library libCinderlineSimulation.a
+[ 22%] Built target CinderlineSimulation
+[ 29%] Building CXX object CMakeFiles/CinderlineGameplayBaseline.dir/Tools/GameplayBaseline.cpp.o
+[ 29%] Building CXX object CMakeFiles/CinderlineMatchWorker.dir/Server/MatchWorker.cpp.o
+[ 32%] Linking CXX executable CinderlineMatchWorker
+[ 32%] Built target CinderlineMatchWorker
+[ 35%] Building CXX object CMakeFiles/CinderlineTests.dir/Tests/SimulationTests.cpp.o
+[ 38%] Linking CXX executable CinderlineGameplayBaseline
+[ 38%] Built target CinderlineGameplayBaseline
+[ 41%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 45%] Linking CXX executable CinderlineNavigationTests
+[ 45%] Built target CinderlineNavigationTests
+[ 48%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 51%] Linking CXX executable CinderlineTests
+[ 51%] Built target CinderlineTests
+[ 54%] Building CXX object CMakeFiles/CinderlineDefenseTests.dir/Tests/DefenseTests.cpp.o
+[ 58%] Linking CXX executable CinderlineNetworkTests
+[ 58%] Built target CinderlineNetworkTests
+[ 61%] Building CXX object CMakeFiles/CinderlineAIDifficultyTests.dir/Tests/AIDifficultyTests.cpp.o
+[ 64%] Linking CXX executable CinderlineDefenseTests
+[ 64%] Built target CinderlineDefenseTests
+[ 67%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[ 70%] Linking CXX executable CinderlineAIDifficultyTests
+[ 70%] Built target CinderlineAIDifficultyTests
+[ 74%] Building CXX object CMakeFiles/CinderlineMatchLengthTests.dir/Tests/MatchLengthTests.cpp.o
+[ 77%] Linking CXX executable CinderlineMatchLengthTests
+[ 80%] Linking CXX executable CinderlineProductionAllocationTests
+[ 80%] Built target CinderlineMatchLengthTests
+[ 83%] Building CXX object CMakeFiles/CinderlineFourPlayerTests.dir/Tests/FourPlayerTests.cpp.o
+[ 83%] Built target CinderlineProductionAllocationTests
+[ 87%] Building CXX object CMakeFiles/CinderlineOrderCompletionTests.dir/Tests/OrderCompletionTests.cpp.o
+[ 90%] Linking CXX executable CinderlineOrderCompletionTests
+[ 90%] Built target CinderlineOrderCompletionTests
+[ 93%] Building CXX object CMakeFiles/CinderlineWorkerOrderCompletionTests.dir/Tests/WorkerOrderCompletionTests.cpp.o
+[ 96%] Linking CXX executable CinderlineFourPlayerTests
+[ 96%] Built target CinderlineFourPlayerTests
+[100%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[100%] Built target CinderlineWorkerOrderCompletionTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+      Start  1: simulation_rules
+ 1/10 Test  #1: simulation_rules ......................   Passed    6.74 sec
+      Start  2: navigation_regressions
+ 2/10 Test  #2: navigation_regressions ................   Passed    0.86 sec
+      Start  3: network_protocol
+ 3/10 Test  #3: network_protocol ......................   Passed    0.58 sec
+      Start  4: defense_regressions
+ 4/10 Test  #4: defense_regressions ...................   Passed    0.51 sec
+      Start  5: ai_difficulty_regressions
+ 5/10 Test  #5: ai_difficulty_regressions .............   Passed    4.58 sec
+      Start  6: production_allocation_regressions
+ 6/10 Test  #6: production_allocation_regressions .....   Passed    0.80 sec
+      Start  7: match_length_regressions
+ 7/10 Test  #7: match_length_regressions ..............   Passed    3.85 sec
+      Start  8: four_player_regressions
+ 8/10 Test  #8: four_player_regressions ...............   Passed    1.43 sec
+      Start  9: order_completion_regressions
+ 9/10 Test  #9: order_completion_regressions ..........***Failed    0.47 sec
+PASS explicit Attack target death
+PASS explicit Attack missing corpse
+FAIL explicit Attack shared target death: completed shared explicit Attack reacquired an incidental enemy
+PASS explicit Attack visibility transition
+PASS AttackMove incidental target death
+PASS Idle automatic acquisition anchor
+PASS Mender leader death
+RESULT passed=6 failed=1
+
+      Start 10: worker_order_completion_regressions
+10/10 Test #10: worker_order_completion_regressions ...   Passed    0.42 sec
+
+90% tests passed, 1 tests failed out of 10
+
+Label Time Summary:
+ai              =   4.58 sec*proc (1 test)
+defense         =   0.51 sec*proc (1 test)
+economy         =   0.42 sec*proc (1 test)
+four-player     =   1.43 sec*proc (1 test)
+match-length    =   3.85 sec*proc (1 test)
+navigation      =   6.62 sec*proc (4 tests)
+network         =   2.23 sec*proc (2 tests)
+orders          =   0.89 sec*proc (2 tests)
+production      =   0.80 sec*proc (1 test)
+
+Total Test time (real) =  20.25 sec
+
+The following tests FAILED:
+	  9 - order_completion_regressions (Failed)             navigation orders
+Errors while running CTest

@@ -1,0 +1,89 @@
+void Simulation::updateProduction(Entity& producer) {
+ const auto& d=definition(producer.kind);
+ if(producer.progress<1) {
+  if(!constructionActive(producer.id))return;
+  const float old=producer.progress;
+  const float previousMaximum=d.hp*(0.1f+old*0.9f);
+  const float constructionDamage=std::max(0.0f,previousMaximum-producer.hp);
+  producer.progress=std::min(1.0f,old+Step/std::max(1.0f,productionTime(d.buildTime)));
+  const float currentMaximum=producer.progress>=1?d.hp:d.hp*(0.1f+producer.progress*0.9f);
+  producer.hp=std::max(0.0f,currentMaximum-constructionDamage);
+  if(producer.progress>=1) {
+   releaseConstruction(producer);
+   ++players_[producer.team].stats.built;
+   if(producer.kind==Kind::Processor||producer.kind==Kind::Headquarters)++players_[producer.team].stats.expansions;
+   if(producer.team==0)alert_=std::string(d.name)+" ready.";
+  }
+  return;
+ }
+ if(producer.queue.empty())return;
+ QueueItem& q=producer.queue.front();
+ if(!q.research&&supply(producer.team)>capacity(producer.team))return;
+ q.remaining=std::max(0.0f,q.remaining-Step);if(q.remaining>0)return;
+ const QueueItem item=q;const Id producerId=producer.id;const int team=producer.team;const Vec2 position=producer.pos,rally=producer.rally;
+ const bool producerRallyOverride=producer.rallyOverride;
+ if(item.research) {
+  Player& player=players_[team];
+  if(item.kind==Kind::Worker)player.tier=std::min(3,player.tier+1);
+  else if(item.kind==Kind::Striker)player.weapons=std::min(3,player.weapons+1);
+  else if(item.kind==Kind::Lancer)player.armor=std::min(3,player.armor+1);
+  ++player.stats.upgrades;producer.queue.erase(producer.queue.begin());if(team==0)alert_="Research completed.";return;
+ }
+ const auto& unit=definition(item.kind);Vec2 exit{};bool found=false;
+ for(int ring=0;ring<6&&!found;++ring)for(int n=0;n<16;++n) {
+  float angle=std::atan2(rally.y-position.y,rally.x-position.x)+n*Pi/8;
+  Vec2 candidate=add(position,{std::cos(angle)*(d.radius+unit.radius+28+ring*35),std::sin(angle)*(d.radius+unit.radius+28+ring*35)});
+  if(candidate.x<unit.radius||candidate.y<unit.radius||candidate.x>worldSize()-unit.radius||candidate.y>worldSize()-unit.radius)continue;
+  if(unit.air||!blocked(candidate,unit.radius)){exit=candidate;found=true;break;}
+ }
+ if(!found)return; // Keep the paid item ready until an exit becomes available.
+ Entity miningAssignment;bool mining=false;
+ bool seekMining=item.kind==Kind::Worker&&!producerRallyOverride;
+ if(item.kind==Kind::Worker&&producerRallyOverride&&q.assignmentCandidates.empty()) {
+  Id rallyResource=0;
+  for(const auto& entity:entities_)if(entity.alive()&&entity.kind==Kind::Resource&&entity.resource>0&&explored(team,entity.pos)&&
+     distanceSq(rally,entity.pos)<=definition(Kind::Resource).radius*definition(Kind::Resource).radius&&(!rallyResource||entity.id<rallyResource))rallyResource=entity.id;
+  if(rallyResource){q.assignmentCandidates.push_back(rallyResource);seekMining=true;}
+ } else if(item.kind==Kind::Worker&&producerRallyOverride&&!q.assignmentCandidates.empty())seekMining=true;
+ if(seekMining) {
+  miningAssignment.id=nextId_;miningAssignment.kind=Kind::Worker;miningAssignment.team=team;
+  miningAssignment.pos=miningAssignment.goal=exit;miningAssignment.rally=rally;
+  miningAssignment.hp=unit.hp;miningAssignment.progress=1;
+  bool deferred=false;
+  mining=assignFreshWorkerToOre(miningAssignment,q.assignmentCandidates,q.assignmentCursor,deferred);
+  if(deferred)return; // Keep the paid, completed item until its bounded search resumes.
+ }
+ producer.queue.erase(producer.queue.begin());
+ Id id=spawn(item.kind,team,exit); // Never access producer or q after this append.
+ Entity* created=get(id);if(!created)return;
+ ++players_[team].stats.produced;
+ // Give repeated production a real rally formation so settled units can retain
+ // their destination without all competing for the producer's exact rally point.
+ Vec2 arrival=rally;
+ auto rallyAvailable=[&](Vec2 point) {
+  if(point.x<unit.radius||point.y<unit.radius||point.x>worldSize()-unit.radius||point.y>worldSize()-unit.radius)return false;
+  if(!unit.air&&blocked(point,unit.radius+4,id))return false;
+  for(const auto& other:entities_) {
+   if(!other.alive()||other.id==id||other.team!=team||definition(other.kind).building||other.order==Order::Gather)continue;
+   const float spacing=unit.radius+definition(other.kind).radius+20;
+   if(distanceSq(point,other.goal)<spacing*spacing)return false;
+  }
+  return true;
+ };
+ bool rallyFound=rallyAvailable(arrival);
+ for(int ring=1;ring<=15&&!rallyFound;++ring)for(int spoke=0;spoke<24;++spoke) {
+  float angle=spoke*(2*Pi/24);Vec2 candidate=add(rally,{std::cos(angle)*ring*64,std::sin(angle)*ring*64});
+  if(rallyAvailable(candidate)){arrival=candidate;rallyFound=true;break;}
+ }
+ if(created->kind==Kind::Worker) {
+  if(mining) {
+   created->order=miningAssignment.order;created->target=miningAssignment.target;created->resourceTarget=miningAssignment.resourceTarget;
+   created->workTarget=miningAssignment.workTarget;created->workPoint=miningAssignment.workPoint;created->workPointValid=miningAssignment.workPointValid;
+   created->path=std::move(miningAssignment.path);created->pathIndex=miningAssignment.pathIndex;created->pathGeometry=miningAssignment.pathGeometry;
+  } else {created->order=Order::Move;created->goal=arrival;}
+  if(team==0&&!mining&&!producerRallyOverride)alert_="Drudge ready; no reachable ore job.";
+ } else {created->order=Order::Move;created->goal=arrival;}
+ if(team==0&&(created->kind!=Kind::Worker||producerRallyOverride||created->order==Order::Gather))alert_=std::string(unit.name)+" ready.";
+ (void)producerId;
+}
+

@@ -1,0 +1,108 @@
+Start testing: Sep 15 16:17 IST
+----------------------------------------------------------
+3/21 Testing: network_protocol
+3/21 Test: network_protocol
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild/CinderlineNetworkTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild
+"network_protocol" start time: Sep 15 16:17 IST
+Output:
+----------------------------------------------------------
+PASS view privacy and handles
+PASS resource memory
+PASS effect privacy
+PASS four-player views
+PASS bounded codecs
+PASS tactical queue codecs and privacy
+PASS sustained order codecs privacy and projection
+PASS tactical plan projection
+PASS replica guards
+RESULT passed=9 failed=0
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"network_protocol" end time: Sep 15 16:17 IST
+"network_protocol" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/21 Testing: production_allocation_regressions
+6/21 Test: production_allocation_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild/CinderlineProductionAllocationTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild
+"production_allocation_regressions" start time: Sep 15 16:17 IST
+Output:
+----------------------------------------------------------
+PASS remaining-time allocation and atomic gates
+PASS worker choice and producer gates
+PASS stable cancellation and research
+PASS persistent army rally and overrides
+PASS fresh worker mining assignment
+PASS deferred worker assignment persistence
+PASS replay and persistence
+RESULT passed=7 failed=0
+<end of output>
+Test time =   0.23 sec
+----------------------------------------------------------
+Test Passed.
+"production_allocation_regressions" end time: Sep 15 16:17 IST
+"production_allocation_regressions" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/21 Testing: production_exit_regressions
+20/21 Test: production_exit_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild/CinderlineProductionExitTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild
+"production_exit_regressions" start time: Sep 15 16:17 IST
+Output:
+----------------------------------------------------------
+PASS exact Mortar alternate exit
+PASS explicit ground worker alternate exit
+PASS ore and default worker alternate exits
+PASS resource rally paid retry save continuation
+PASS resource rally queued-worker isolation
+PASS depleted resource rally fallback
+PASS air unit ground-routing bypass
+PASS paid-ready no-local-exit persistence
+PASS unreachable-rally clear fallback
+PASS paid-ready worker backoff save continuation
+PASS worker backoff invalidation
+PASS worker backoff replacement isolation
+PASS simultaneous producer budget fairness
+RESULT passed=13 failed=0
+<end of output>
+Test time =   1.08 sec
+----------------------------------------------------------
+Test Passed.
+"production_exit_regressions" end time: Sep 15 16:17 IST
+"production_exit_regressions" time elapsed: 00:00:01
+----------------------------------------------------------
+
+21/21 Testing: production_traffic_regressions
+21/21 Test: production_traffic_regressions
+Command: "/Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild/CinderlineProductionTrafficTests"
+Directory: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1FormationBuild
+"production_traffic_regressions" start time: Sep 15 16:17 IST
+Output:
+----------------------------------------------------------
+PASS dense idle workers do not permanently block produced units
+PASS Hold fixed while Defend yields and reclaims
+PASS congested Gather retains its work intent
+PASS opposing friendly traffic moves at most once per tick
+PASS recorded paid crowd completes original moves
+RESULT passed=5 failed=0
+<end of output>
+Test time =   2.28 sec
+----------------------------------------------------------
+Test Passed.
+"production_traffic_regressions" end time: Sep 15 16:17 IST
+"production_traffic_regressions" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Sep 15 16:17 IST
+
+navigation =   3.35 sec*proc
+
+network =   0.23 sec*proc
+
+production =   3.59 sec*proc
+

@@ -1,0 +1,7 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0RegressionBuild
+[ 77%] Built target CinderlineSimulation
+[ 88%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[100%] Linking CXX executable CinderlineNavigationTests
+[100%] Built target CinderlineNavigationTests

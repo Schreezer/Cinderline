@@ -1,0 +1,43 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+      Start  1: simulation_rules
+ 1/13 Test  #1: simulation_rules ..........................   Passed    4.62 sec
+      Start  2: navigation_regressions
+ 2/13 Test  #2: navigation_regressions ....................   Passed    0.79 sec
+      Start  3: network_protocol
+ 3/13 Test  #3: network_protocol ..........................   Passed    0.49 sec
+      Start  4: defense_regressions
+ 4/13 Test  #4: defense_regressions .......................   Passed    0.48 sec
+      Start  5: ai_difficulty_regressions
+ 5/13 Test  #5: ai_difficulty_regressions .................   Passed    3.74 sec
+      Start  6: production_allocation_regressions
+ 6/13 Test  #6: production_allocation_regressions .........   Passed    0.88 sec
+      Start  7: match_length_regressions
+ 7/13 Test  #7: match_length_regressions ..................   Passed    3.25 sec
+      Start  8: four_player_regressions
+ 8/13 Test  #8: four_player_regressions ...................   Passed    1.26 sec
+      Start  9: order_completion_regressions
+ 9/13 Test  #9: order_completion_regressions ..............   Passed    0.45 sec
+      Start 10: worker_order_completion_regressions
+10/13 Test #10: worker_order_completion_regressions .......   Passed    0.41 sec
+      Start 11: simulation_profiling_regressions
+11/13 Test #11: simulation_profiling_regressions ..........   Passed    0.73 sec
+      Start 12: navigation_attachment_cache_regressions
+12/13 Test #12: navigation_attachment_cache_regressions ...   Passed    0.42 sec
+      Start 13: navigation_multi_source_regressions
+13/13 Test #13: navigation_multi_source_regressions .......   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 13
+
+Label Time Summary:
+ai              =   3.74 sec*proc (1 test)
+defense         =   0.48 sec*proc (1 test)
+economy         =   0.41 sec*proc (1 test)
+four-player     =   1.26 sec*proc (1 test)
+match-length    =   3.25 sec*proc (1 test)
+navigation      =   6.18 sec*proc (6 tests)
+network         =   2.14 sec*proc (2 tests)
+orders          =   0.85 sec*proc (2 tests)
+production      =   0.89 sec*proc (2 tests)
+profiling       =   1.15 sec*proc (2 tests)
+
+Total Test time (real) =  17.54 sec

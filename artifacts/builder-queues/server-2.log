@@ -1,0 +1,50 @@
+
+> cinderline-game-server@0.1.0 test
+> node --test
+
+✔ LAN address selection keeps only reachable private addresses and formats WebSocket URLs (14.007459ms)
+✔ host configuration makes LAN binding explicit and rejects ambiguous environment values (0.893292ms)
+✔ Bonjour instance labels stay within the 63-byte DNS label limit (0.156208ms)
+✔ Bonjour advertises the actual bound port and stops the service before destroying its socket (0.440792ms)
+✔ Bonjour failure leaves manual LAN URLs available (0.346125ms)
+✔ configured startup forwards mode and name, advertises only LAN, and closes once (0.486209ms)
+✔ Docker runtime packaging includes the complete index.js module closure (2.625375ms)
+✔ health and lobby controls reject stale, malformed, repeated, and excessive input (33.024958ms)
+✔ rooms accept only two or four players and a four-player worker waits for every ready seat (18.845625ms)
+✔ four simultaneous disconnects preserve seats through grace and finish through the worker (44.294375ms)
+✔ multiple four-player disconnects can reconnect independently within grace (7.262958ms)
+✔ worker result byte 255 is exposed as a draw (5.411ms)
+✔ Node command admission rejects the previous wire protocol before worker IPC (3.406167ms)
+✔ worker backpressure preserves a prioritized forfeit until drain (2.889458ms)
+✔ commands queued during worker backpressure receive and cache one authoritative acknowledgement (3.04975ms)
+✔ active worker progress timeout closes a hung room independently of socket pong (3.868042ms)
+✔ sustained snapshot backpressure disconnects a slow client for normal recovery (4.120917ms)
+✔ draining fails readiness and new room creation while keeping the listener observable (3.473666ms)
+✔ origin, per-address connections, room creation, and public metadata are bounded (6.246458ms)
+✔ forwarded addresses are trusted only from an explicitly configured proxy (3.196834ms)
+✔ active worker capacity queues a ready room and starts it when capacity returns (3.2355ms)
+✔ real clients create, join, reject a third seat, ready, and receive private snapshots (508.446625ms)
+✔ both seats command only their view handles and command sequences survive reconnect (40.800125ms)
+✔ append commands acknowledge and publish the queued tactical order (47.173833ms)
+✔ queued mining publishes its private opaque target in protocol eleven (33.21725ms)
+✔ queued construction stays unpaid and private until its preceding move completes (1141.642959ms)
+✔ a rejected append leaves the authoritative queue and opaque handle intact (2020.333541ms)
+✔ patrol and escort acknowledge and publish private sustained state (97.500709ms)
+✔ automatic batches and stable queue cancellation remain authoritative online (115.805166ms)
+✔ four authoritative clients keep private ownership through nonfinal eliminations and one final winner (14.0965ms)
+✔ surrender keeps the socket for the authoritative result (5.946333ms)
+✔ disconnect grace expires into a canonical result (35.8215ms)
+✔ a simultaneous outage preserves the active room for reconnect, then expires through the worker (119.362ms)
+✔ ordinary attack-move play can finish a complete authoritative match (6565.007708ms)
+✔ WorkerBridge decodes fragmented and coalesced worker frames (1.379ms)
+✔ WorkerBridge rejects malformed framing once and ignores later child output (0.302209ms)
+✔ WorkerBridge preserves queue bounds, collapsing, and write priority across backpressure (0.470292ms)
+✔ WorkerBridge owns handshake and progress timeouts and suppresses callbacks after stop (0.248625ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11989.054

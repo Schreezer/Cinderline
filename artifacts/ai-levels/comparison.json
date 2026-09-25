@@ -1,0 +1,217 @@
+{
+  "macro": {
+    "Very Easy": {
+      "before": {
+        "wins": 0,
+        "losses": 3,
+        "unfinished": 0,
+        "pressure_seconds": [
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "completion_seconds": [
+          448.85,
+          457.0,
+          475.6
+        ]
+      },
+      "after": {
+        "wins": 0,
+        "losses": 3,
+        "unfinished": 0,
+        "pressure_seconds": [
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "completion_seconds": [
+          451.0,
+          466.9,
+          461.1
+        ]
+      }
+    },
+    "Easy": {
+      "before": {
+        "wins": 0,
+        "losses": 3,
+        "unfinished": 0,
+        "pressure_seconds": [
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "completion_seconds": [
+          435.9,
+          455.7,
+          443.4
+        ]
+      },
+      "after": {
+        "wins": 0,
+        "losses": 3,
+        "unfinished": 0,
+        "pressure_seconds": [
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "completion_seconds": [
+          467.5,
+          458.5,
+          458.4
+        ]
+      }
+    },
+    "Normal": {
+      "before": {
+        "wins": 0,
+        "losses": 3,
+        "unfinished": 0,
+        "pressure_seconds": [
+          -1.0,
+          -1.0,
+          -1.0
+        ],
+        "completion_seconds": [
+          456.6,
+          457.0,
+          439.45
+        ]
+      },
+      "after": {
+        "wins": 2,
+        "losses": 0,
+        "unfinished": 1,
+        "pressure_seconds": [
+          271.45,
+          283.05,
+          274.5
+        ],
+        "completion_seconds": [
+          900.0,
+          660.85,
+          715.15
+        ]
+      }
+    },
+    "Hard": {
+      "before": {
+        "wins": 3,
+        "losses": 0,
+        "unfinished": 0,
+        "pressure_seconds": [
+          253.25,
+          252.25,
+          269.25
+        ],
+        "completion_seconds": [
+          408.0,
+          379.35,
+          360.3
+        ]
+      },
+      "after": {
+        "wins": 3,
+        "losses": 0,
+        "unfinished": 0,
+        "pressure_seconds": [
+          253.25,
+          252.25,
+          269.25
+        ],
+        "completion_seconds": [
+          408.0,
+          379.35,
+          360.3
+        ]
+      }
+    },
+    "Expert": {
+      "before": {
+        "wins": 3,
+        "losses": 0,
+        "unfinished": 0,
+        "pressure_seconds": [
+          266.85,
+          256.65,
+          275.9
+        ],
+        "completion_seconds": [
+          337.6,
+          319.75,
+          337.7
+        ]
+      },
+      "after": {
+        "wins": 3,
+        "losses": 0,
+        "unfinished": 0,
+        "pressure_seconds": [
+          266.85,
+          256.65,
+          275.9
+        ],
+        "completion_seconds": [
+          337.6,
+          319.75,
+          337.7
+        ]
+      }
+    }
+  },
+  "practice": [
+    {
+      "difficulty": "Very Easy",
+      "seconds": 638.15,
+      "winner": 1,
+      "ai_first_pressure_seconds": 456.05
+    },
+    {
+      "difficulty": "Easy",
+      "seconds": 395.45,
+      "winner": 1,
+      "ai_first_pressure_seconds": 353.45
+    },
+    {
+      "difficulty": "Normal",
+      "seconds": 306.75,
+      "winner": 1,
+      "ai_first_pressure_seconds": 271.45
+    },
+    {
+      "difficulty": "Hard",
+      "seconds": 281.7,
+      "winner": 1,
+      "ai_first_pressure_seconds": 248.5
+    },
+    {
+      "difficulty": "Expert",
+      "seconds": 291.05,
+      "winner": 1,
+      "ai_first_pressure_seconds": 266.9
+    }
+  ],
+  "expert_seeds": [
+    {
+      "seed": 7300,
+      "seconds": 337.6,
+      "winner": 1,
+      "ai_first_pressure_seconds": 266.85
+    },
+    {
+      "seed": 7301,
+      "seconds": 342.35,
+      "winner": 1,
+      "ai_first_pressure_seconds": 266.1
+    },
+    {
+      "seed": 7302,
+      "seconds": 327.15,
+      "winner": 1,
+      "ai_first_pressure_seconds": 268.0
+    }
+  ],
+  "scripted_rejections": 0
+}

@@ -1,0 +1,138 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1SustainedBuild
+[  1%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[  3%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[  5%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[  6%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationTactics.cpp.o
+[  8%] Linking CXX static library libCinderlineSimulation.a
+[ 15%] Built target CinderlineSimulation
+[ 18%] Linking CXX executable CinderlineMatchBaseline
+[ 18%] Linking CXX executable CinderlineGameplayBaseline
+[ 22%] Built target CinderlineGameplayBaseline
+[ 22%] Built target CinderlineMatchBaseline
+[ 25%] Linking CXX executable CinderlineTacticalOrderBaseline
+[ 25%] Building CXX object CMakeFiles/CinderlineSustainedOrderBaseline.dir/Tools/SustainedOrderBaseline.cpp.o
+[ 27%] Built target CinderlineTacticalOrderBaseline
+[ 28%] Linking CXX executable CinderlineMatchWorker
+[ 30%] Built target CinderlineMatchWorker
+[ 32%] Linking CXX executable CinderlineTests
+[ 33%] Built target CinderlineTests
+[ 35%] Linking CXX executable CinderlineNavigationTests
+[ 37%] Built target CinderlineNavigationTests
+[ 38%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[ 40%] Linking CXX executable CinderlineSustainedOrderBaseline
+[ 40%] Built target CinderlineSustainedOrderBaseline
+[ 42%] Linking CXX executable CinderlineDefenseTests
+[ 44%] Built target CinderlineDefenseTests
+[ 45%] Linking CXX executable CinderlineAIDifficultyTests
+[ 47%] Built target CinderlineAIDifficultyTests
+[ 49%] Linking CXX executable CinderlineProductionAllocationTests
+[ 50%] Built target CinderlineProductionAllocationTests
+[ 52%] Linking CXX executable CinderlineMatchLengthTests
+[ 54%] Built target CinderlineMatchLengthTests
+[ 55%] Linking CXX executable CinderlineFourPlayerTests
+[ 57%] Built target CinderlineFourPlayerTests
+[ 59%] Linking CXX executable CinderlineOrderCompletionTests
+[ 61%] Built target CinderlineOrderCompletionTests
+[ 62%] Linking CXX executable CinderlineTacticalOrderTests
+[ 64%] Built target CinderlineTacticalOrderTests
+[ 66%] Building CXX object CMakeFiles/CinderlinePatrolEscortTests.dir/Tests/PatrolEscortTests.cpp.o
+[ 67%] Linking CXX executable CinderlineNetworkTests
+[ 67%] Built target CinderlineNetworkTests
+[ 69%] Linking CXX executable CinderlineTacticalInterruptionTests
+[ 71%] Built target CinderlineTacticalInterruptionTests
+[ 72%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 74%] Built target CinderlineWorkerOrderCompletionTests
+[ 76%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 77%] Built target CinderlineSimulationProfilingTests
+[ 79%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 81%] Built target CinderlineNavigationAttachmentCacheTests
+[ 83%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 84%] Built target CinderlineNavigationMultiSourceTests
+[ 86%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[ 88%] Built target CinderlineNavigationPredicateParityTests
+[ 89%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 91%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 93%] Linking CXX executable CinderlineProductionExitTests
+[ 94%] Built target CinderlineProductionExitTests
+[ 96%] Linking CXX executable CinderlineProductionTrafficTests
+[ 98%] Linking CXX executable CinderlinePatrolEscortTests
+[100%] Built target CinderlineProductionTrafficTests
+[100%] Built target CinderlinePatrolEscortTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1SustainedBuild
+      Start  1: simulation_rules
+ 1/20 Test  #1: simulation_rules ............................   Passed    3.52 sec
+      Start  2: navigation_regressions
+ 2/20 Test  #2: navigation_regressions ......................   Passed    0.79 sec
+      Start  3: network_protocol
+ 3/20 Test  #3: network_protocol ............................   Passed    0.58 sec
+      Start  4: defense_regressions
+ 4/20 Test  #4: defense_regressions .........................   Passed    0.48 sec
+      Start  5: ai_difficulty_regressions
+ 5/20 Test  #5: ai_difficulty_regressions ...................   Passed    2.53 sec
+      Start  6: production_allocation_regressions
+ 6/20 Test  #6: production_allocation_regressions ...........   Passed    0.63 sec
+      Start  7: match_length_regressions
+ 7/20 Test  #7: match_length_regressions ....................   Passed    2.11 sec
+      Start  8: four_player_regressions
+ 8/20 Test  #8: four_player_regressions .....................   Passed    0.92 sec
+      Start  9: order_completion_regressions
+ 9/20 Test  #9: order_completion_regressions ................   Passed    0.47 sec
+      Start 10: tactical_order_regressions
+10/20 Test #10: tactical_order_regressions ..................   Passed    0.49 sec
+      Start 11: patrol_escort_regressions
+11/20 Test #11: patrol_escort_regressions ...................***Failed    0.47 sec
+PASS mixed Patrol immutable laps
+FAIL Patrol pursuit return suppression and kill: Patrol reaches the interrupted endpoint before switching legs: id=35 pos=2070.33,1900 goal=2070.33,1900 order=0 phase=0 direction=0 carried=0 returning=0 workTarget=0 pathIndex=0 pathSize=0 repath=0 failures=0 exhausted=0
+PASS blocked and stationary Patrol recovery
+PASS Escort leader immutability and stable slots
+PASS Escort boundary reprojection and failed-route retry
+PASS sequential Escort assignment and reassignment
+PASS Escort projected cycles and atomic rejection
+PASS Escort leader death successors
+PASS worker cargo and construction Escort
+FAIL Anchor cargo delivery with Escort traffic: Escort traffic blocked normal Anchor cargo delivery; worker id=36 pos=850,650 goal=850,650 order=4 phase=0 direction=0 carried=18 returning=1 workTarget=0 pathIndex=0 pathSize=0 repath=0.55 failures=5 exhausted=1 guard id=37 pos=770,820 goal=754,554 order=9 phase=0 direction=0 carried=0 returning=0 workTarget=0 pathIndex=0 pathSize=0 repath=0.55 failures=5 exhausted=1 anchor id=33 pos=650,650 goal=650,650 order=0 phase=0 direction=0 carried=0 returning=0 workTarget=0 pathIndex=0 pathSize=0 repath=0 failures=0 exhausted=0
+PASS sustained clear stop and replacement
+PASS save-load continuation and replay
+PASS save-twelve sustained corruption rejection
+RESULT passed=11 failed=2
+
+      Start 12: tactical_interruption_regressions
+12/20 Test #12: tactical_interruption_regressions ...........   Passed    0.54 sec
+      Start 13: worker_order_completion_regressions
+13/20 Test #13: worker_order_completion_regressions .........   Passed    1.83 sec
+      Start 14: simulation_profiling_regressions
+14/20 Test #14: simulation_profiling_regressions ............   Passed    1.13 sec
+      Start 15: navigation_attachment_cache_regressions
+15/20 Test #15: navigation_attachment_cache_regressions .....   Passed    0.41 sec
+      Start 16: navigation_multi_source_regressions
+16/20 Test #16: navigation_multi_source_regressions .........   Passed    0.40 sec
+      Start 17: navigation_predicate_parity_regressions
+17/20 Test #17: navigation_predicate_parity_regressions .....   Passed    0.51 sec
+      Start 18: navigation_terrain_visibility_regressions
+18/20 Test #18: navigation_terrain_visibility_regressions ...   Passed    0.55 sec
+      Start 19: production_exit_regressions
+19/20 Test #19: production_exit_regressions .................   Passed    0.86 sec
+      Start 20: production_traffic_regressions
+20/20 Test #20: production_traffic_regressions ..............   Passed    2.51 sec
+
+95% tests passed, 1 tests failed out of 20
+
+Label Time Summary:
+ai              =   2.53 sec*proc (1 test)
+defense         =   0.48 sec*proc (1 test)
+economy         =   2.36 sec*proc (2 tests)
+four-player     =   0.92 sec*proc (1 test)
+match-length    =   2.11 sec*proc (1 test)
+navigation      =  11.04 sec*proc (13 tests)
+network         =   1.55 sec*proc (2 tests)
+orders          =   3.79 sec*proc (5 tests)
+production      =   4.40 sec*proc (4 tests)
+profiling       =   2.61 sec*proc (4 tests)
+
+Total Test time (real) =  21.74 sec
+
+The following tests FAILED:
+	 11 - patrol_escort_regressions (Failed)                navigation orders
+Errors while running CTest

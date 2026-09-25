@@ -1,0 +1,198 @@
+Cinderline iOS 27 engine clone verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Cinderline MetalFX engine verified: /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27
+Setting up bundled DotNet SDK
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Binaries/ThirdParty/DotNet/10.0/mac-arm64
+Running dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CinderlineEditor Mac Development /Users/chirag13/Documents/ChatGPT/starCraft/Cinderline.uproject -WaitMutex -MaxParallelActions=2 -ForceRulesCompile -SkipRulesCompile
+Log file: /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Log.txt
+Executing up to 2 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (/Users/chirag13/Documents/ChatGPT/starCraft).
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for CinderlineEditor (ispc deleted)
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/MetalShaderConverter.build.cs: warning: Referenced directory '/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/ThirdParty/Apple/MetalShaderConverter/include/metal_irconverter_ext' does not exist.
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.1.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.2.cpp.d!
+CppDependencyCache - There is no partition covering path to /Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Intermediate/Build/Mac/arm64/UnrealEditor/Development/MetalRHI/Module.MetalRHI.3.cpp.d!
+Building CinderlineEditor...
+===== Toolchain Information =====
+Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+  Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+[Adaptive Build] Excluded from Cinderline unity file: SimulationMovement.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 10 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 30.95 GB/32 GB committed
+  UBA Storage capacity 40 GB
+[1/10] Compile [Apple] Module.MetalRHI.1.cpp
+[2/10] Compile [Apple] Module.MetalRHI.2.cpp
+[3/10] Compile [Apple] Module.Cinderline.1.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.1.cpp:31:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderHUD.cpp:61:9: error: redefinition of 'Name'
+   61 | FString Name(cinder::Kind Kind) { return UTF8_TO_TCHAR(cinder::definition(Kind).name); }
+      |         ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderHelpContent.cpp:8:9: note: previous definition is here
+    8 | FString Name(cinder::Kind Kind)
+      |         ^
+1 error generated.
+[4/10] Compile [Apple] Module.MetalRHI.3.cpp
+[5/10] Link [Apple] libUnrealEditor-MetalRHI.dylib
+[6/10] Compile [Apple] Module.Cinderline.2.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:59:23: error: redefinition of 'PreviewRequest' with a different type: 'FOnlinePreviewRequest' vs 'FMatchLengthPreviewRequest'
+   59 | FOnlinePreviewRequest PreviewRequest;
+      |                       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderMatchLengthPreview.cpp:41:28: note: previous definition is here
+   41 | FMatchLengthPreviewRequest PreviewRequest;
+      |                            ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:60:14: error: redefinition of 'PreviewReadyTimer'
+   60 | FTimerHandle PreviewReadyTimer;
+      |              ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderMatchLengthPreview.cpp:42:14: note: previous definition is here
+   42 | FTimerHandle PreviewReadyTimer;
+      |              ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:61:14: error: redefinition of 'PreviewCaptureTimer'
+   61 | FTimerHandle PreviewCaptureTimer;
+      |              ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderMatchLengthPreview.cpp:44:14: note: previous definition is here
+   44 | FTimerHandle PreviewCaptureTimer;
+      |              ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:63:6: error: redefinition of 'ClearPreviewTimers'
+   63 | void ClearPreviewTimers()
+      |      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderMatchLengthPreview.cpp:46:6: note: previous definition is here
+   46 | void ClearPreviewTimers()
+      |      ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:94:60: error: no member named 'Guests' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+   94 |         if (UCinderOnlineSubsystem* Guest = PreviewRequest.Guests[Index].Get()) Guest->Leave();
+      |                                             ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:95:54: error: no member named 'GuestInstances' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+   95 |         if (UGameInstance* Instance = PreviewRequest.GuestInstances[Index])
+      |                                       ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:99:24: error: no member named 'Guests' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+   99 |         PreviewRequest.Guests[Index].Reset();
+      |         ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:100:24: error: no member named 'GuestInstances' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  100 |         PreviewRequest.GuestInstances[Index] = nullptr;
+      |         ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:104:6: error: redefinition of 'FailPreview'
+  104 | void FailPreview(const FString& Reason)
+      |      ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderMatchLengthPreview.cpp:59:6: note: previous definition is here
+   59 | void FailPreview(const FString& Reason)
+      |      ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:107:87: error: no member named 'Mode' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  107 |         TEXT("CINDERLINE_ONLINE_PREVIEW failed=%s mode=%s"), *Reason, *PreviewRequest.Mode);
+      |                                                                        ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:106:5: error: use of undeclared identifier 'UCFS_FChecker'
+  106 |     UE_LOG(LogCinderOnlinePreview, Error,
+      |     ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:281:3: note: expanded from macro 'UE_LOG'
+  281 |         UE_PRIVATE_LOG(UE_EMPTY, constexpr, CategoryName, Verbosity, Format, ##__VA_ARGS__) \
+      |         ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:339:3: note: expanded from macro 'UE_PRIVATE_LOG'
+  339 |         UE_VALIDATE_FORMAT_STRING(Format, ##__VA_ARGS__); \
+      |         ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:27:36: note: expanded from macro 'UE_VALIDATE_FORMAT_STRING'
+   27 |     #define UE_VALIDATE_FORMAT_STRING UE_CHECK_FORMAT_STRING
+      |                                       ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:18:41: note: expanded from macro 'UE_CHECK_FORMAT_STRING'
+   18 |         constexpr UCFS::FResult UCFS_Result = UCFS_FChecker::Check(false, 0, Fmt); \
+      |                                               ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:106:5: error: non-type template argument is not a constant expression
+  106 |     UE_LOG(LogCinderOnlinePreview, Error,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  107 |         TEXT("CINDERLINE_ONLINE_PREVIEW failed=%s mode=%s"), *Reason, *PreviewRequest.Mode);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:281:3: note: expanded from macro 'UE_LOG'
+  281 |         UE_PRIVATE_LOG(UE_EMPTY, constexpr, CategoryName, Verbosity, Format, ##__VA_ARGS__) \
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:339:3: note: expanded from macro 'UE_PRIVATE_LOG'
+  339 |         UE_VALIDATE_FORMAT_STRING(Format, ##__VA_ARGS__); \
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:27:36: note: expanded from macro 'UE_VALIDATE_FORMAT_STRING'
+   27 |     #define UE_VALIDATE_FORMAT_STRING UE_CHECK_FORMAT_STRING
+      |                                       ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:19:65: note: expanded from macro 'UE_CHECK_FORMAT_STRING'
+   19 |         (UCFS::AssertFormatStatus<UCFS_Result.Status, UCFS::TAtArgPos<UCFS_Result.ArgPos>>()); \
+      |                                                                       ^~~~~~~~~~~~~~~~~~
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:106:5: note: initializer of 'UCFS_Result' is unknown
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:281:3: note: expanded from macro 'UE_LOG'
+  281 |         UE_PRIVATE_LOG(UE_EMPTY, constexpr, CategoryName, Verbosity, Format, ##__VA_ARGS__) \
+      |         ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:339:3: note: expanded from macro 'UE_PRIVATE_LOG'
+  339 |         UE_VALIDATE_FORMAT_STRING(Format, ##__VA_ARGS__); \
+      |         ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:27:36: note: expanded from macro 'UE_VALIDATE_FORMAT_STRING'
+   27 |     #define UE_VALIDATE_FORMAT_STRING UE_CHECK_FORMAT_STRING
+      |                                       ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:19:65: note: expanded from macro 'UE_CHECK_FORMAT_STRING'
+   19 |         (UCFS::AssertFormatStatus<UCFS_Result.Status, UCFS::TAtArgPos<UCFS_Result.ArgPos>>()); \
+      |                                                                       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:106:5: note: declared here
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:281:3: note: expanded from macro 'UE_LOG'
+  281 |         UE_PRIVATE_LOG(UE_EMPTY, constexpr, CategoryName, Verbosity, Format, ##__VA_ARGS__) \
+      |         ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/Logging/LogMacros.h:339:3: note: expanded from macro 'UE_PRIVATE_LOG'
+  339 |         UE_VALIDATE_FORMAT_STRING(Format, ##__VA_ARGS__); \
+      |         ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:27:36: note: expanded from macro 'UE_VALIDATE_FORMAT_STRING'
+   27 |     #define UE_VALIDATE_FORMAT_STRING UE_CHECK_FORMAT_STRING
+      |                                       ^
+/Users/chirag13/Documents/ChatGPT/CinderlineEngineIOS27/Engine/Source/Runtime/Core/Public/String/FormatStringSan.h:18:27: note: expanded from macro 'UE_CHECK_FORMAT_STRING'
+   18 |         constexpr UCFS::FResult UCFS_Result = UCFS_FChecker::Check(false, 0, Fmt); \
+      |                                 ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.2.cpp:11:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:107:87: error: no member named 'Mode' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  107 |         TEXT("CINDERLINE_ONLINE_PREVIEW failed=%s mode=%s"), *Reason, *PreviewRequest.Mode);
+      |                                                                        ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:107:87: error: no member named 'Mode' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  107 |         TEXT("CINDERLINE_ONLINE_PREVIEW failed=%s mode=%s"), *Reason, *PreviewRequest.Mode);
+      |                                                                        ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:109:24: error: no member named 'Mode' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  109 |     if (PreviewRequest.Mode == TEXT("four")) CleanupFourPlayerFixture();
+      |         ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:170:61: error: no member named 'ScrollStage' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  170 |         const bool bStaleFromFirstPosition = PreviewRequest.ScrollStage > 0
+      |                                              ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:171:31: error: no member named 'PaintedButtons' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  171 |             && PreviewRequest.PaintedButtons.Contains(Label) && Label != TEXT("BACK");
+      |                ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:263:70: error: no member named 'PaintedButtons' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  263 |     for (const FString& Label : Audit.PaintedButtons) PreviewRequest.PaintedButtons.Add(Label);
+      |                                                       ~~~~~~~~~~~~~~ ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Presentation/CinderOnlinePreview.cpp:264:20: error: no member named 'MinimumButtonHeight' in '(anonymous namespace)::FMatchLengthPreviewRequest'
+  264 |     PreviewRequest.MinimumButtonHeight = FMath::Min(
+      |     ~~~~~~~~~~~~~~ ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[7/10] Compile [Apple] Module.Cinderline.3.cpp
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.3.cpp:10:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Sim/SimulationJobs.cpp:9:17: error: redefinition of 'Pi'
+    9 | constexpr float Pi=3.14159265358979323846f;
+      |                 ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Sim/Simulation.cpp:19:17: note: previous definition is here
+   19 | constexpr float Pi = 3.14159265358979323846f;
+      |                 ^
+In file included from /Users/chirag13/Documents/ChatGPT/starCraft/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/Module.Cinderline.3.cpp:10:
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Sim/SimulationJobs.cpp:10:7: error: redefinition of 'distanceSquared'
+   10 | float distanceSquared(Vec2 a,Vec2 b) {const float x=a.x-b.x,y=a.y-b.y;return x*x+y*y;}
+      |       ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Sim/SimulationAI.cpp:14:7: note: previous definition is here
+   14 | float distanceSquared(Vec2 a, Vec2 b) {
+      |       ^
+2 errors generated.
+[8/10] Compile [Apple] SimulationMovement.cpp
+[9/10] Compile [Apple] Module.Cinderline.4.cpp
+Total time in Unreal Build Accelerator local executor: 38.53 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 42.23 seconds
+Trace written to file /Users/chirag13/Library/Application Support/Epic/UnrealBuildTool/Trace.uba with size 21.4kb

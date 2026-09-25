@@ -1,0 +1,31 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P1SustainedBuild
+    Start 11: patrol_escort_regressions
+1/1 Test #11: patrol_escort_regressions ........***Failed    2.50 sec
+PASS mixed Patrol immutable laps
+PASS Patrol pursuit return suppression and kill
+PASS blocked and stationary Patrol recovery
+PASS Escort leader immutability and stable slots
+PASS Escort boundary reprojection and failed-route retry
+PASS sequential Escort assignment and reassignment
+FAIL Escort traversal around an Idle formation: crossing follower never traverses its leader's physical footprint tick=41 distance=67.7211 clearance=68 mover={id=39 pos=1884.51,3286.48 goal=1722.09,3299.67 order=9 phase=0 direction=0 carried=0 returning=0 workTarget=0 pathIndex=0 pathSize=1 repath=0 failures=2 exhausted=0} leader={id=35 pos=1818.09,3299.67 goal=1818.09,3299.67 order=0 phase=0 direction=0 carried=0 returning=0 workTarget=0 pathIndex=0 pathSize=0 repath=0 failures=0 exhausted=0} nearby=[35 kind=4 pos=1818.09,3299.67 distance=67.7211 clearance=68 overlap=1 order=0 stalled=0 failures=0 yield=0][40 kind=5 pos=1941.06,3320.87 distance=66.179 clearance=64 overlap=0 order=9 stalled=0.65 failures=0 yield=0.15]
+PASS Escort projected cycles and atomic rejection
+PASS Escort leader death successors
+PASS worker cargo and construction Escort
+PASS Anchor cargo delivery with Escort traffic
+PASS sustained clear stop and replacement
+PASS save-load continuation and replay
+PASS save-twelve sustained corruption rejection
+RESULT passed=13 failed=1
+
+
+0% tests passed, 1 tests failed out of 1
+
+Label Time Summary:
+navigation    =   2.50 sec*proc (1 test)
+orders        =   2.50 sec*proc (1 test)
+
+Total Test time (real) =   2.51 sec
+
+The following tests FAILED:
+	 11 - patrol_escort_regressions (Failed)                navigation orders
+Errors while running CTest

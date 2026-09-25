@@ -1,0 +1,160 @@
+{
+  "schema": "cinderline.tactical_order_verification.v1",
+  "verified_at_utc": "2026-09-14T17:12:36.324429+00:00",
+  "status": "locally verified P1.1 implementation; physical acceptance and remaining P1 features open",
+  "git_head_context": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "dirty_checkout": true,
+  "source_manifest_sha256": "24ea40b7cc1d052664ca0d9caf817054b9fa432ee7f45abf2e37eead97893bb2",
+  "source_file_count": 143,
+  "binary_sha256": {
+    "Binaries/Mac/libUnrealEditor-Cinderline.dylib": "571f4516760104089343fe4a0112eda7378e131c188555b0eb2fba0dc564de0a",
+    "Saved/P1TacticalBuild/libCinderlineSimulation.a": "6c8a096e30ebc149d81d7c5411053a497c99363973dfe031adcdb4eb2a6f614b",
+    "Saved/P1TacticalBuild/CinderlineMatchWorker": "0d7f6703a559df69c405b033418febc85f465aabe158b3356a44584c7e8956f2"
+  },
+  "compatibility": {
+    "save": 11,
+    "protocol": 8,
+    "legacy_saves_supported": "1-10"
+  },
+  "checks": {
+    "release_suites": 19,
+    "sanitizer_suites": 19,
+    "final_tactical_save10_reruns": 2,
+    "server_tests": 34,
+    "unreal_tests": 38,
+    "real_loopback_transport_tests": 2
+  },
+  "integration_report": {
+    "path": "Saved/Automation/Integration/20260914T170835Z-32740/index.json",
+    "sha256": "f8144752865a72f8c2c8e50ed827c1e8abaa3f192f2e95cf555edfd0ac4b4478",
+    "succeeded": 37,
+    "succeeded_with_warnings": 1
+  },
+  "transport_report": {
+    "path": "Saved/Automation/Multiplayer/20260914T171017Z-33078/index.json",
+    "sha256": "0c4d1e79868f3cfec6d273d88d44a6f185ec61818a6c7790d854fc1c6ea19abb",
+    "succeeded": 2,
+    "succeeded_with_warnings": 0
+  },
+  "synthetic_navigation_arrivals": [
+    160,
+    200,
+    400
+  ],
+  "synthetic_queue_units": [
+    16,
+    160,
+    200
+  ],
+  "paid_workloads": [
+    {
+      "players": 2,
+      "army_arrivals": 160,
+      "deterministic_repeat": true,
+      "state_hash": "0x995bc4864e3893f2",
+      "trajectory_hash": "0xef6eca12feb384b0",
+      "recording_hash": "0x8bce48fd0e309703",
+      "phase_step_ms": {
+        "preparation": {
+          "p50": 0.443167,
+          "p95": 0.993375,
+          "p99": 1.248583,
+          "max": 75.372375
+        },
+        "march": {
+          "p50": 0.300917,
+          "p95": 0.422958,
+          "p99": 0.534292,
+          "max": 3.075667
+        },
+        "combat": {
+          "p50": 0.089584,
+          "p95": 0.55375,
+          "p99": 1.39425,
+          "max": 3.842416
+        }
+      }
+    },
+    {
+      "players": 4,
+      "army_arrivals": 320,
+      "deterministic_repeat": true,
+      "state_hash": "0xbaa548dc0ed0ce05",
+      "trajectory_hash": "0x3029ab32ca20bc26",
+      "recording_hash": "0xb96a28a46fc1c223",
+      "phase_step_ms": {
+        "preparation": {
+          "p50": 1.366708,
+          "p95": 2.958459,
+          "p99": 3.865458,
+          "max": 145.115625
+        },
+        "march": {
+          "p50": 0.965791,
+          "p95": 1.307667,
+          "p99": 1.801417,
+          "max": 8.130458
+        },
+        "combat": {
+          "p50": 0.243375,
+          "p95": 1.521958,
+          "p99": 2.839541,
+          "max": 5.466125
+        }
+      }
+    }
+  ],
+  "render_captures": [
+    {
+      "case": "desktop-armed",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/tactical-orders/desktop-armed.png",
+      "sha256": "7f0737b5d863a4a4c2531ccb9b183bc9d725fb63bdba23c5a311870978389d8f",
+      "fixture_receipt": "[2026.09.14-17.11.22:177][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-armed primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-pending",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/tactical-orders/desktop-pending.png",
+      "sha256": "9def716a030c3bad333d232996c4f45ac5b921a9ddfe6540b93079c3e1101f6f",
+      "fixture_receipt": "[2026.09.14-17.11.39:465][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-pending primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=1 sheet=4"
+    },
+    {
+      "case": "mobile-armed",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/tactical-orders/mobile-armed.png",
+      "sha256": "6961e9391dd2f1069745547575640fe5d7c339ec3bd308658b8381fd57388062",
+      "fixture_receipt": "[2026.09.14-17.11.56:470][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-armed primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-pending",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/tactical-orders/mobile-pending.png",
+      "sha256": "e5ddaf65aa42c2f6215968ab7146ff2446f44ae86e39646b8d15e19d044971c6",
+      "fixture_receipt": "[2026.09.14-17.12.13:283][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_TACTICAL_QUEUE_PREVIEW state=tactical-pending primary=33 current=1 queued=2 secondary=34 other_queued=3 armed=1 pending=1 sheet=4"
+    }
+  ],
+  "protected_player_state_unchanged": true,
+  "not_accepted": [
+    "native mouse/touch full playtest",
+    "current iPhone package",
+    "device CPU/GPU/thermal budget",
+    "physical LAN/Internet match",
+    "public deployment",
+    "Android package",
+    "P1 patrol/escort and formation facing",
+    "SC2 capability parity"
+  ]
+}

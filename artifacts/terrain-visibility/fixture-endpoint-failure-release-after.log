@@ -1,0 +1,117 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+[ 16%] Built target CinderlineSimulation
+[ 25%] Built target CinderlineGameplayBaseline
+[ 25%] Built target CinderlineMatchBaseline
+[ 33%] Built target CinderlineTests
+[ 33%] Built target CinderlineMatchWorker
+[ 41%] Built target CinderlineNavigationTests
+[ 41%] Built target CinderlineNetworkTests
+[ 50%] Built target CinderlineDefenseTests
+[ 50%] Built target CinderlineAIDifficultyTests
+[ 58%] Built target CinderlineProductionAllocationTests
+[ 58%] Built target CinderlineMatchLengthTests
+[ 66%] Built target CinderlineOrderCompletionTests
+[ 66%] Built target CinderlineFourPlayerTests
+[ 75%] Built target CinderlineWorkerOrderCompletionTests
+[ 75%] Built target CinderlineSimulationProfilingTests
+[ 83%] Built target CinderlineNavigationMultiSourceTests
+[ 83%] Built target CinderlineNavigationAttachmentCacheTests
+[ 89%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 89%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 93%] Built target CinderlineProductionExitTests
+[ 95%] Building CXX object CMakeFiles/CinderlineProductionTrafficTests.dir/Tests/ProductionTrafficTests.cpp.o
+[ 97%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[100%] Linking CXX executable CinderlineProductionTrafficTests
+[100%] Built target CinderlineNavigationPredicateParityTests
+[100%] Built target CinderlineProductionTrafficTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+      Start  1: simulation_rules
+ 1/17 Test  #1: simulation_rules ............................   Passed    3.36 sec
+      Start  2: navigation_regressions
+ 2/17 Test  #2: navigation_regressions ......................   Passed    0.79 sec
+      Start  3: network_protocol
+ 3/17 Test  #3: network_protocol ............................   Passed    1.08 sec
+      Start  4: defense_regressions
+ 4/17 Test  #4: defense_regressions .........................   Passed    0.49 sec
+      Start  5: ai_difficulty_regressions
+ 5/17 Test  #5: ai_difficulty_regressions ...................   Passed    2.56 sec
+      Start  6: production_allocation_regressions
+ 6/17 Test  #6: production_allocation_regressions ...........   Passed    0.62 sec
+      Start  7: match_length_regressions
+ 7/17 Test  #7: match_length_regressions ....................   Passed    2.12 sec
+      Start  8: four_player_regressions
+ 8/17 Test  #8: four_player_regressions .....................   Passed    0.92 sec
+      Start  9: order_completion_regressions
+ 9/17 Test  #9: order_completion_regressions ................   Passed    0.44 sec
+      Start 10: worker_order_completion_regressions
+10/17 Test #10: worker_order_completion_regressions .........   Passed    0.48 sec
+      Start 11: simulation_profiling_regressions
+11/17 Test #11: simulation_profiling_regressions ............   Passed    0.62 sec
+      Start 12: navigation_attachment_cache_regressions
+12/17 Test #12: navigation_attachment_cache_regressions .....   Passed    0.43 sec
+      Start 13: navigation_multi_source_regressions
+13/17 Test #13: navigation_multi_source_regressions .........   Passed    0.41 sec
+      Start 14: navigation_predicate_parity_regressions
+14/17 Test #14: navigation_predicate_parity_regressions .....***Failed    0.42 sec
+PASS explicit predicate edges match oracle
+PASS invalid and extreme inputs match oracle
+PREDICATE_CORPUS seed=0x51a7c0de fixtures=24 point_queries=3840 segment_queries=1920
+PASS fixed-seed predicate corpus matches oracle
+ADVERSARIAL_SEGMENTS comparisons=36
+PASS adversarial segment geometry matches oracle
+FAIL segment-box reconstruction envelope matches oracle: directed box reconstruction x_bits=0x46fe0000 forward oracle endpoints are not clear
+PARAMETERIZED_PREDICATES seed=0xa771c45d layouts=7 point_queries=672 segment_queries=672
+PASS parameterized geometry counts match oracle
+ROUTE_CASE name=wall-a reached=1 exhausted=0 expanded=1623 cost_bits=0x4495a13d origin_bits=0x43200000:0x44160000 points=7 result_hash=0xbc2ebb385bb080e9
+ROUTE_CASE name=wall-b-warm reached=1 exhausted=0 expanded=1473 cost_bits=0x4491c4c0 origin_bits=0x43340000:0x44098000 points=7 result_hash=0xfd728398c86959a9
+ROUTE_CASE name=wall-clearance reached=1 exhausted=0 expanded=1639 cost_bits=0x449db85e origin_bits=0x43340000:0x44098000 points=11 result_hash=0xc03fbb156e1ab6fe
+ROUTE_CASE name=wall-ignore reached=1 exhausted=0 expanded=43 cost_bits=0x4486f24e origin_bits=0x43340000:0x44098000 points=2 result_hash=0x1264967c1f7a24af
+ROUTE_CASE name=wall-multi reached=1 exhausted=0 expanded=1560 cost_bits=0x4491c4c0 origin_bits=0x43340000:0x44098000 points=7 result_hash=0x8f60639ba3ea28f5
+ROUTE_CASE name=wall-goal-reorder reached=1 exhausted=0 expanded=1654 cost_bits=0x449b4b5b origin_bits=0x432a0000:0x44200000 points=7 result_hash=0xa2375c3ed54ec048
+ROUTE_CASE name=ignored-circle-start reached=1 exhausted=0 expanded=64 cost_bits=0x446d7414 origin_bits=0x43160000:0x43fa0000 points=9 result_hash=0xdc19317e7c102b02
+ROUTE_CASE name=ignored-circle-goal reached=1 exhausted=0 expanded=46 cost_bits=0x446d7414 origin_bits=0x43160000:0x43fa0000 points=9 result_hash=0x0987c8e638b0e738
+ROUTE_CASE name=maze-a reached=1 exhausted=0 expanded=19 cost_bits=0x441b7490 origin_bits=0x428c0000:0x428c0000 points=2 result_hash=0x79482ecd4e953784
+ROUTE_CASE name=maze-b-warm reached=1 exhausted=0 expanded=60 cost_bits=0x443f6baf origin_bits=0x42b40000:0x42c80000 points=6 result_hash=0xb30e50505df4b913
+ROUTE_CASE name=maze-wide reached=1 exhausted=0 expanded=63 cost_bits=0x4455779a origin_bits=0x42b40000:0x42c80000 points=10 result_hash=0xfdfb2624834000a5
+ROUTE_CASE name=maze-ignore reached=1 exhausted=0 expanded=60 cost_bits=0x443f6baf origin_bits=0x42b40000:0x42c80000 points=6 result_hash=0xb30e50505df4b913
+ROUTE_CASE name=maze-multi reached=1 exhausted=0 expanded=0 cost_bits=0x42e24630 origin_bits=0x442f0000:0x43af0000 points=1 result_hash=0x17f62b228c27fb01
+ROUTE_CASE name=maze-zero reached=1 exhausted=0 expanded=0 cost_bits=0x00000000 origin_bits=0x42b40000:0x442c8000 points=0 result_hash=0xdbec0dc4832ed470
+ROUTE_CASE name=arena-a reached=1 exhausted=0 expanded=22 cost_bits=0x44751677 origin_bits=0x430c0000:0x442f0000 points=6 result_hash=0xa0029eaa21c33c64
+ROUTE_CASE name=arena-b-warm reached=1 exhausted=0 expanded=21 cost_bits=0x446a8770 origin_bits=0x43200000:0x44390000 points=6 result_hash=0xdaca462b9563453e
+ROUTE_CASE name=arena-wide reached=1 exhausted=0 expanded=1178 cost_bits=0x4485e9bf origin_bits=0x43200000:0x44390000 points=6 result_hash=0x20207711074c9045
+ROUTE_CASE name=arena-ignore reached=1 exhausted=0 expanded=22 cost_bits=0x446a8770 origin_bits=0x43200000:0x44390000 points=6 result_hash=0xce0370eb8df79755
+ROUTE_CASE name=arena-multi reached=1 exhausted=0 expanded=9 cost_bits=0x43ca6057 origin_bits=0x43fa0000:0x44960000 points=3 result_hash=0x9d0bf3f1f2bc439b
+ROUTE_CASE name=arena-invalid reached=0 exhausted=0 expanded=0 cost_bits=0x00000000 origin_bits=0x00000000:0x00000000 points=0 result_hash=0x481a52cb06432423
+ROUTE_CASE name=arena-no-goals reached=0 exhausted=0 expanded=0 cost_bits=0x00000000 origin_bits=0x00000000:0x00000000 points=0 result_hash=0x481a52cb06432423
+ROUTE_CORPUS cases=21 hash=0x0a097241ddad648f reached_graph=17
+PASS route corpus has stable comparable fingerprint
+RESULT passed=6 failed=1
+
+      Start 15: navigation_terrain_visibility_regressions
+15/17 Test #15: navigation_terrain_visibility_regressions ...   Passed    0.18 sec
+      Start 16: production_exit_regressions
+16/17 Test #16: production_exit_regressions .................   Passed    0.84 sec
+      Start 17: production_traffic_regressions
+17/17 Test #17: production_traffic_regressions ..............   Passed    2.49 sec
+
+94% tests passed, 1 tests failed out of 17
+
+Label Time Summary:
+ai              =   2.56 sec*proc (1 test)
+defense         =   0.49 sec*proc (1 test)
+economy         =   0.48 sec*proc (1 test)
+four-player     =   0.92 sec*proc (1 test)
+match-length    =   2.12 sec*proc (1 test)
+navigation      =   9.04 sec*proc (10 tests)
+network         =   1.54 sec*proc (2 tests)
+orders          =   0.93 sec*proc (2 tests)
+production      =   4.36 sec*proc (4 tests)
+profiling       =   1.64 sec*proc (4 tests)
+
+Total Test time (real) =  18.26 sec
+
+The following tests FAILED:
+	 14 - navigation_predicate_parity_regressions (Failed)  navigation profiling
+Errors while running CTest

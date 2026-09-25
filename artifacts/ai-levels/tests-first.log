@@ -1,0 +1,29 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/ai-upgrade
+    Start 7: ai_difficulty_regressions
+1/3 Test #7: ai_difficulty_regressions ........   Passed    3.73 sec
+    Start 8: ai_tactics_regressions
+2/3 Test #8: ai_tactics_regressions ...........***Failed    0.40 sec
+FAIL undefended economy assault: unarmed economic structures caused a healthy assault to retreat
+PASS local weighted threat withdrawal
+FAIL limited raid response: one raider redirected the committed army back across the map
+PASS mixed raid defender allocation
+PASS counter-aware local targets
+FAIL damaged veteran reuse: damaged infantry retreated despite having no recovery path or opposing weapons
+PASS concentrated army launch
+PASS fog-fair tactics
+FAIL tactical save continuation: repair support did not follow the assault
+
+    Start 9: ai_economy_regressions
+3/3 Test #9: ai_economy_regressions ...........   Passed    1.72 sec
+
+67% tests passed, 1 tests failed out of 3
+
+Label Time Summary:
+ai         =   5.85 sec*proc (3 tests)
+economy    =   1.72 sec*proc (1 test)
+
+Total Test time (real) =   5.85 sec
+
+The following tests FAILED:
+	  8 - ai_tactics_regressions (Failed)                   ai
+Errors while running CTest

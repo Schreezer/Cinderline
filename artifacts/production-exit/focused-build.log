@@ -1,0 +1,23 @@
+[ 10%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[ 20%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Sim/Navigation.cpp:861:68: warning: missing field 'origin' initializer [-Wmissing-field-initializers]
+  861 |             if (candidate <= 1.0e-3f) return {true, false, {}, 0, 0};
+      |                                                                    ^
+/Users/chirag13/Documents/ChatGPT/starCraft/Source/Cinderline/Private/Sim/Navigation.cpp:866:85: warning: missing field 'origin' initializer [-Wmissing-field-initializers]
+  866 |         if (directGoal >= 0) return {true, false, {goals[directGoal]}, directCost, 0};
+      |                                                                                     ^
+[ 30%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+2 warnings generated.
+[ 40%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 50%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 60%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 70%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationProduction.cpp.o
+[ 80%] Linking CXX static library libCinderlineSimulation.a
+[ 80%] Built target CinderlineSimulation
+[ 90%] Building CXX object CMakeFiles/CinderlineNavigationMultiSourceTests.dir/Tests/NavigationMultiSourceTests.cpp.o
+[100%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[100%] Built target CinderlineNavigationMultiSourceTests
+[ 80%] Built target CinderlineSimulation
+[ 90%] Building CXX object CMakeFiles/CinderlineProductionExitTests.dir/Tests/ProductionExitTests.cpp.o
+[100%] Linking CXX executable CinderlineProductionExitTests
+[100%] Built target CinderlineProductionExitTests

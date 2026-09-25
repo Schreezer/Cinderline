@@ -1,0 +1,8 @@
+PASS every level recovers workers
+EVIDENCE Very Easy raid_cap=4 recovery_save_continuity=1
+EVIDENCE Easy raid_cap=6 recovery_save_continuity=1
+PASS bounded beginner raids and saved recovery
+EVIDENCE Normal_300s factories=3 army=13 ore=4955
+PASS Normal parallel production
+PASS Expert seeded compositions
+PASS Expert observed expansion raids

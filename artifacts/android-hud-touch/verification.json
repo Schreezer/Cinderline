@@ -1,0 +1,100 @@
+{
+  "schema": "cinderline.android_hud_touch.v1",
+  "created_at_utc": "2026-09-15T07:12:08.163514+00:00",
+  "scope": "Focused Android tutorial Train input bug; P2 remains deferred.",
+  "source_sha256": {
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": "6a8cf00c5f462cd4f43cac229c4b73141d53a1bd6a0835fdb6ae553e2106b211",
+    "Source/Cinderline/Public/Presentation/CinderHUD.h": "34c4db829cefe3506b28e513d08b7270181bbfa7688e4427f0df9f71d59a3cc6",
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h": "29fcdaf6f4cc36ac67249cf74cdd1d95681dd6f3759d6ad05e81ba1ed6329f2c",
+    "Source/Cinderline/Private/Tests/CinderHUDInputTests.cpp": "9d51f8551c1a1e6af4f639fbc4e9969701f7168a519c54c5d1a6b2967e74fe34",
+    "Config/DefaultEngine.ini": "6694424bf5d87bc160a767714080fb5afdf273fffd3a13629b1bb380d5c484f7",
+    "scripts/lib/unreal_suites.json": "8d96634332005bb4527416cd61d26ba9e1d335142cd1fabe327bc2086d8af07a"
+  },
+  "android_workspace": "/Volumes/Codex Storage/Cinderline/Android/workspace",
+  "focused_source_matches_packaged_workspace": {
+    "Source/Cinderline/Private/Presentation/CinderHUD.cpp": true,
+    "Source/Cinderline/Public/Presentation/CinderHUD.h": true,
+    "Source/Cinderline/Public/Presentation/CinderPlayerController.h": true,
+    "Source/Cinderline/Private/Tests/CinderHUDInputTests.cpp": true,
+    "Config/DefaultEngine.ini": true,
+    "scripts/lib/unreal_suites.json": true
+  },
+  "mac_module": {
+    "path": "/Users/chirag13/Documents/ChatGPT/starCraft/Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+    "sha256": "6fedb8a284b7e62e13e6eb87cfe8d6032b358d9b538c9d8e629dd5986a71de3f"
+  },
+  "before": {
+    "report": "Saved/Automation/Integration/20260915T065443Z-89543/index.json",
+    "sha256": "40fea324b7a97138bbd680a85d317094a8717e9b51ce2afe531865830ae0b2f2",
+    "succeeded": 14,
+    "failed": 1,
+    "regression_state": "Fail",
+    "failed_assertions": [
+      "Expected 'Asymmetric Android draw keeps the full viewport width' to be 956.000000, but it was 884.000000 and outside tolerance 0.000100.",
+      "Expected 'Asymmetric Android draw keeps the full viewport height' to be 440.000000, but it was 406.000000 and outside tolerance 0.000100.",
+      "Expected 'Production layout keeps its explicit safe-inset policy after removing the engine transform' to be true.",
+      "Expected 'Asymmetric help overlay draw uses full viewport width' to be 956.000000, but it was 884.000000 and outside tolerance 0.000100.",
+      "Expected 'Asymmetric help overlay draw uses full viewport height' to be 440.000000, but it was 406.000000 and outside tolerance 0.000100."
+    ],
+    "evidence": "Independent full-viewport geometry assertions fail before the fix. Not a physical reproduction of the reported worker movement."
+  },
+  "after": {
+    "report": "Saved/Automation/Integration/20260915T065727Z-90165/index.json",
+    "sha256": "a9ab5f174eea4641321480f77c351cc066fc73271c0d393bec987434a514ca17",
+    "succeeded": 40,
+    "succeeded_with_warnings": 1,
+    "failed": 0,
+    "not_run": 0,
+    "regression_state": "Success",
+    "expected_total": 41,
+    "allowed_host_warnings": 2
+  },
+  "rendered_preview": {
+    "receipt": "artifacts/android-hud-touch/preview-verification.json",
+    "sha256": "3d717aba9a179aab236231b1ab1ccbbff1a4413f04802f3e29a853d8850783ee",
+    "cases": 2,
+    "visual_review": "passed",
+    "platform": "Mac mobile HUD with synthetic safe zone"
+  },
+  "android_apk": {
+    "path": "/Volumes/Codex Storage/Cinderline/Android/packages/Cinderline-Android-arm64.apk",
+    "sha256": "543762f5d40f26ca2abe467493ebecc162562d2ad9bfd533bccc900d221fa9c5",
+    "size_bytes": 274457578,
+    "modified_utc": "2026-09-15T07:09:31.960990+00:00",
+    "package": "com.cinderline.game",
+    "version_code": 2,
+    "version_name": "0.1.1",
+    "min_sdk": 26,
+    "target_sdk": 35,
+    "compile_sdk": 36,
+    "signer_certificate_sha256": "1430ffabfd20b590dc334486f80f8423a402369e60db88a4142734ce128d1541",
+    "same_signer_as_previous": true,
+    "signature_verifies": true,
+    "signature_scheme": "v2",
+    "development_signed": true,
+    "zipalign_16kb_passed": true,
+    "native_library_sha256": {
+      "lib/arm64-v8a/libGPUCounters.so": "b3d2c06fd9361aeb0169114cea3d98a307fcd81823c41eec6553cfe65a6b24b6",
+      "lib/arm64-v8a/libUnreal.so": "313f66b14006be34e6afdec4c94f73eb6afa5b1b2f38126e05072dc5b87bfe4f",
+      "lib/arm64-v8a/libheapprofd_standalone_client.so": "b7c950ab48885f9b440286887a1f7aa3ea56ded5544527ab532903ab3bd6ff28",
+      "lib/arm64-v8a/libpsoservice.so": "d09bae9fab0bda179682dbce5f3fa276e9074690957c4e6f74ee215c193cce24",
+      "lib/arm64-v8a/libswappy.so": "2991de5ddacc4e221e276314c443171273a512e293fa9833f104b4d8a60b44de",
+      "lib/arm64-v8a/libvkquality.so": "14fe5fd323b83b1b7322c3da0bf2c8c8a8fd656382fc848c6dc685dd328fd4c5"
+    },
+    "cooked_data_entries": [
+      "assets/main.obb.png"
+    ],
+    "build_exit_code": 0,
+    "compile_log": "artifacts/android-hud-touch/package-compile.log"
+  },
+  "physical_android_retest": false,
+  "installed_on_device": false,
+  "public_backend_deployed": false,
+  "p2_started": false,
+  "limitations": [
+    "Mac regression executes the shared safe-zone transform and raw-input dispatch; Android-specific layout code is compiled in the APK but not executed on an Android device here.",
+    "Existing explicit inset policy remains unchanged. The engine right/bottom-only pop guard is respected.",
+    "Scripted rendered previews alone do not prove native touch input.",
+    "Current local P1 source save13/protocol10 is included. This does not complete P0/P1 device acceptance."
+  ]
+}

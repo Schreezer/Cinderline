@@ -1,0 +1,56 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0RegressionBuild
+[ 25%] Built target CinderlineSimulation
+[ 29%] Building CXX object CMakeFiles/CinderlineGameplayBaseline.dir/Tools/GameplayBaseline.cpp.o
+[ 33%] Linking CXX executable CinderlineGameplayBaseline
+[ 33%] Built target CinderlineGameplayBaseline
+[ 37%] Linking CXX executable CinderlineMatchWorker
+[ 40%] Built target CinderlineMatchWorker
+[ 44%] Linking CXX executable CinderlineTests
+[ 48%] Built target CinderlineTests
+[ 51%] Building CXX object CMakeFiles/CinderlineNavigationTests.dir/Tests/NavigationTests.cpp.o
+[ 55%] Linking CXX executable CinderlineNavigationTests
+[ 55%] Built target CinderlineNavigationTests
+[ 59%] Linking CXX executable CinderlineNetworkTests
+[ 62%] Built target CinderlineNetworkTests
+[ 66%] Linking CXX executable CinderlineDefenseTests
+[ 70%] Built target CinderlineDefenseTests
+[ 74%] Linking CXX executable CinderlineAIDifficultyTests
+[ 77%] Built target CinderlineAIDifficultyTests
+[ 81%] Linking CXX executable CinderlineProductionAllocationTests
+[ 85%] Built target CinderlineProductionAllocationTests
+[ 88%] Linking CXX executable CinderlineMatchLengthTests
+[ 92%] Built target CinderlineMatchLengthTests
+[ 96%] Linking CXX executable CinderlineFourPlayerTests
+[100%] Built target CinderlineFourPlayerTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0RegressionBuild
+    Start 1: simulation_rules
+1/8 Test #1: simulation_rules ....................   Passed    7.11 sec
+    Start 2: navigation_regressions
+2/8 Test #2: navigation_regressions ..............   Passed    0.98 sec
+    Start 3: network_protocol
+3/8 Test #3: network_protocol ....................   Passed    0.54 sec
+    Start 4: defense_regressions
+4/8 Test #4: defense_regressions .................   Passed    0.48 sec
+    Start 5: ai_difficulty_regressions
+5/8 Test #5: ai_difficulty_regressions ...........   Passed    4.70 sec
+    Start 6: production_allocation_regressions
+6/8 Test #6: production_allocation_regressions ...   Passed    0.78 sec
+    Start 7: match_length_regressions
+7/8 Test #7: match_length_regressions ............   Passed    3.98 sec
+    Start 8: four_player_regressions
+8/8 Test #8: four_player_regressions .............   Passed    1.46 sec
+
+100% tests passed, 0 tests failed out of 8
+
+Label Time Summary:
+ai              =   4.70 sec*proc (1 test)
+defense         =   0.48 sec*proc (1 test)
+four-player     =   1.46 sec*proc (1 test)
+match-length    =   3.98 sec*proc (1 test)
+navigation      =   6.42 sec*proc (3 tests)
+network         =   2.23 sec*proc (2 tests)
+production      =   0.78 sec*proc (1 test)
+
+Total Test time (real) =  20.04 sec

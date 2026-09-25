@@ -1,0 +1,32 @@
+[ 14%] Built target CinderlineSimulation
+[ 20%] Built target CinderlineMatchBaseline
+[ 20%] Built target CinderlineGameplayBaseline
+[ 26%] Built target CinderlineSustainedOrderBaseline
+[ 26%] Built target CinderlineTacticalOrderBaseline
+[ 33%] Built target CinderlineMatchWorker
+[ 33%] Built target CinderlineFormationOrderBaseline
+[ 39%] Built target CinderlineTests
+[ 39%] Built target CinderlineNavigationTests
+[ 46%] Built target CinderlineDefenseTests
+[ 46%] Built target CinderlineNetworkTests
+[ 52%] Built target CinderlineAIDifficultyTests
+[ 52%] Built target CinderlineProductionAllocationTests
+[ 58%] Built target CinderlineFourPlayerTests
+[ 58%] Built target CinderlineMatchLengthTests
+[ 65%] Built target CinderlineTacticalOrderTests
+[ 65%] Built target CinderlineOrderCompletionTests
+[ 68%] Built target CinderlinePatrolEscortTests
+[ 69%] Building CXX object CMakeFiles/CinderlineFormationOrderTests.dir/Tests/FormationOrderTests.cpp.o
+[ 73%] Built target CinderlineTacticalInterruptionTests
+[ 76%] Built target CinderlineWorkerOrderCompletionTests
+[ 79%] Built target CinderlineSimulationProfilingTests
+[ 82%] Built target CinderlineNavigationAttachmentCacheTests
+[ 85%] Built target CinderlineNavigationMultiSourceTests
+[ 88%] Built target CinderlineNavigationPredicateParityTests
+[ 92%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 95%] Built target CinderlineProductionExitTests
+[ 96%] Building CXX object CMakeFiles/CinderlineProductionTrafficTests.dir/Tests/ProductionTrafficTests.cpp.o
+[ 98%] Linking CXX executable CinderlineProductionTrafficTests
+[ 98%] Built target CinderlineProductionTrafficTests
+[100%] Linking CXX executable CinderlineFormationOrderTests
+[100%] Built target CinderlineFormationOrderTests

@@ -1,0 +1,12 @@
+{
+  "Cinderline.uproject": {
+    "tested_input_sha256": "5f97d0026cb7b0dad4d085481f42c6e44814a3a6bc5f91164216db631a6616f9",
+    "current_sha256": "d150e13acf89af0ef265654b5a60fc2d496e9021b3ae850ce4a568f2f0d18071",
+    "review": "Concurrent Linux packaging work only. TargetPlatforms adds Linux; unreal.sh adds a package-linux action and helper. Existing Mac build action and shared simulation are unchanged. Mac wrapper recheck is recorded separately; no Linux package acceptance is claimed."
+  },
+  "scripts/unreal.sh": {
+    "tested_input_sha256": "77caf770f1909015f0591fa044142cb878ab281bf21c37fcf749ccfdc1808c22",
+    "current_sha256": "8a9439b0fd1c678052922e0b1315b40bd9b8eb1ebecec47da47849d9e424393e",
+    "review": "Concurrent Linux packaging work only. TargetPlatforms adds Linux; unreal.sh adds a package-linux action and helper. Existing Mac build action and shared simulation are unchanged. Mac wrapper recheck is recorded separately; no Linux package acceptance is claimed."
+  }
+}

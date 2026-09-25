@@ -1,0 +1,189 @@
+{
+  "schema": "cinderline.match_scale_comparison.v1",
+  "scope": "Single sequential before/after portable CPU wall-time captures on one Mac; no renderer, transport or device claim.",
+  "reference_mobile_units_per_player": 100,
+  "reference_crew_per_player": 184,
+  "workloads": [
+    {
+      "players": 2,
+      "preparation_ticks": 44420,
+      "final_tick": 49220,
+      "state_hash": "0x31e57fb924c970a7",
+      "trajectory_hash": "0xaa0f839f1fb63a68",
+      "recording_hash": "0x3948a219e7461ab7",
+      "recorded_commands": 29156,
+      "army_arrivals": [
+        80,
+        80
+      ],
+      "combat_units_lost": 143,
+      "navigation": {
+        "searches": 35060,
+        "expanded": 159840,
+        "failures": 30,
+        "budget_deferrals": 1877
+      },
+      "phases": [
+        {
+          "name": "preparation",
+          "ticks": 44420,
+          "step_ms_before": {
+            "p50": 0.671042,
+            "p95": 1.828875,
+            "p99": 2.565917,
+            "max": 158.365125
+          },
+          "step_ms_after": {
+            "p50": 0.593584,
+            "p95": 1.387917,
+            "p99": 1.737875,
+            "max": 153.695417
+          },
+          "step_p99_reduction_percent": 32.27080221223056,
+          "movement_economy_p99_ms_before": 2.461208,
+          "movement_economy_p99_ms_after": 1.643666,
+          "snapshot_all_seats_p95_ms_after": 0.136833,
+          "snapshot_max_message_bytes": 11809.0
+        },
+        {
+          "name": "march",
+          "ticks": 2400,
+          "step_ms_before": {
+            "p50": 0.285083,
+            "p95": 0.444958,
+            "p99": 0.708833,
+            "max": 6.719625
+          },
+          "step_ms_after": {
+            "p50": 0.277125,
+            "p95": 0.417833,
+            "p99": 0.715792,
+            "max": 6.460875
+          },
+          "step_p99_reduction_percent": -0.9817545176367348,
+          "movement_economy_p99_ms_before": 0.611458,
+          "movement_economy_p99_ms_after": 0.616042,
+          "snapshot_all_seats_p95_ms_after": 0.141083,
+          "snapshot_max_message_bytes": 11821.0
+        },
+        {
+          "name": "combat",
+          "ticks": 2400,
+          "step_ms_before": {
+            "p50": 0.097791,
+            "p95": 0.638375,
+            "p99": 3.464292,
+            "max": 18.304333
+          },
+          "step_ms_after": {
+            "p50": 0.0955,
+            "p95": 0.592542,
+            "p99": 2.627791,
+            "max": 5.540417
+          },
+          "step_p99_reduction_percent": 24.146376806574033,
+          "movement_economy_p99_ms_before": 3.306459,
+          "movement_economy_p99_ms_after": 2.44975,
+          "snapshot_all_seats_p95_ms_after": 0.180709,
+          "snapshot_max_message_bytes": 20264.0
+        }
+      ],
+      "files_sha256": {
+        "two-player-before.json": "1d25ed59bcea4374aa0c95725aaa3a859cb717515964fc1b98e8d91a06abd9a1",
+        "two-player-after.json": "9360254b615adfaf933846346d4ff1226a6602a269632c03ab4e6eab16e88828"
+      }
+    },
+    {
+      "players": 4,
+      "preparation_ticks": 44180,
+      "final_tick": 48980,
+      "state_hash": "0x5dfa62d85b901ac5",
+      "trajectory_hash": "0x863fd0cdaf9e33c5",
+      "recording_hash": "0xd1721284a45f460b",
+      "recorded_commands": 58781,
+      "army_arrivals": [
+        80,
+        80,
+        80,
+        80
+      ],
+      "combat_units_lost": 316,
+      "navigation": {
+        "searches": 72562,
+        "expanded": 751232,
+        "failures": 493,
+        "budget_deferrals": 9343
+      },
+      "phases": [
+        {
+          "name": "preparation",
+          "ticks": 44180,
+          "step_ms_before": {
+            "p50": 2.177375,
+            "p95": 5.77425,
+            "p99": 8.121292,
+            "max": 324.664958
+          },
+          "step_ms_after": {
+            "p50": 1.7045,
+            "p95": 3.931625,
+            "p99": 5.304833,
+            "max": 329.037209
+          },
+          "step_p99_reduction_percent": 34.679937625688126,
+          "movement_economy_p99_ms_before": 7.923458,
+          "movement_economy_p99_ms_after": 5.071791,
+          "snapshot_all_seats_p95_ms_after": 0.346875,
+          "snapshot_max_message_bytes": 11467.0
+        },
+        {
+          "name": "march",
+          "ticks": 2400,
+          "step_ms_before": {
+            "p50": 0.976791,
+            "p95": 1.203167,
+            "p99": 2.133708,
+            "max": 12.137083
+          },
+          "step_ms_after": {
+            "p50": 0.980375,
+            "p95": 1.322042,
+            "p99": 3.606333,
+            "max": 17.783417
+          },
+          "step_p99_reduction_percent": -69.0171757335118,
+          "movement_economy_p99_ms_before": 1.454459,
+          "movement_economy_p99_ms_after": 1.569333,
+          "snapshot_all_seats_p95_ms_after": 0.395125,
+          "snapshot_max_message_bytes": 11542.0
+        },
+        {
+          "name": "combat",
+          "ticks": 2400,
+          "step_ms_before": {
+            "p50": 0.245416,
+            "p95": 1.963708,
+            "p99": 6.577417,
+            "max": 15.147417
+          },
+          "step_ms_after": {
+            "p50": 0.259667,
+            "p95": 1.674792,
+            "p99": 5.232917,
+            "max": 10.050167
+          },
+          "step_p99_reduction_percent": 20.44115493969746,
+          "movement_economy_p99_ms_before": 5.900291,
+          "movement_economy_p99_ms_after": 4.784917,
+          "snapshot_all_seats_p95_ms_after": 0.516208,
+          "snapshot_max_message_bytes": 34196.0
+        }
+      ],
+      "files_sha256": {
+        "four-player-before.json": "0b2b8ce4f3c5054a6b5df39e751bbd5a5c99c06a1eaeaff6c311aba313c6c30b",
+        "four-player-after.json": "8c8d5c75b17d0e93b562909e286610128c630b7f9e00429ddd7049ef97db96c7"
+      }
+    }
+  ],
+  "success": true
+}

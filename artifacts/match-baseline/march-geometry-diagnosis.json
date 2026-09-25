@@ -1,0 +1,88 @@
+{
+  "schema": "cinderline.march_geometry_diagnosis.v1",
+  "classification": "static enclosure in scripted paid base layout",
+  "unit_radius": 30,
+  "coordinate_precision": "approximately 6 significant digits from probe; every gap is below 60 by more than 5 units",
+  "blocker_cycle": [
+    {
+      "id": 80,
+      "kind": "Siphon",
+      "x": 387.868,
+      "y": 4412.13,
+      "radius": 76.0
+    },
+    {
+      "id": 118,
+      "kind": "Siphon",
+      "x": 431.619,
+      "y": 4606.51,
+      "radius": 76.0
+    },
+    {
+      "id": 172,
+      "kind": "Crucible",
+      "x": 196.949,
+      "y": 4603.05,
+      "radius": 104.0
+    },
+    {
+      "id": 126,
+      "kind": "Siphon",
+      "x": 193.493,
+      "y": 4368.38,
+      "radius": 76.0
+    }
+  ],
+  "edges": [
+    {
+      "from_id": 80,
+      "to_id": 118,
+      "footprint_gap_approx": 47.24290301288036,
+      "blocks_diameter_60": true
+    },
+    {
+      "from_id": 118,
+      "to_id": 172,
+      "footprint_gap_approx": 54.695505922035096,
+      "blocks_diameter_60": true
+    },
+    {
+      "from_id": 172,
+      "to_id": 126,
+      "footprint_gap_approx": 54.695446986088825,
+      "blocks_diameter_60": true
+    },
+    {
+      "from_id": 126,
+      "to_id": 80,
+      "footprint_gap_approx": 47.237805461212616,
+      "blocks_diameter_60": true
+    }
+  ],
+  "enclosed_units": [
+    {
+      "id": 248,
+      "x": 311.5,
+      "y": 4488.5,
+      "inside_blocker_center_polygon": true,
+      "clear_of_expanded_circles": true
+    },
+    {
+      "id": 264,
+      "x": 288.562,
+      "y": 4504.56,
+      "inside_blocker_center_polygon": true,
+      "clear_of_expanded_circles": true
+    }
+  ],
+  "proof": "The blocker centers form a convex closed polygon around each clear unit center. Every edge lies inside the union of its two circles expanded by radius 30 because their expanded radii overlap. That closed barrier separates the unit centers from the external goals.",
+  "counterfactual": "Removing any one of IDs 80,118,172,126 from a diagnostic-only Navigation instance restores each original route. Radius 27 routes succeed; radius 28 and 30 routes fail without hitting the search cap. No simulation geometry was modified.",
+  "production_placement_scope": "AutoBuild checks worker access. The scripted fixture must additionally reserve clearance for its full reference army; legal self-walling remains possible in actual matches.",
+  "files_sha256": {
+    "original-goals-diagnostic.json": "73def6f153dfdac17f5e4de1fb185fdf58c4e044ba9670c03a65725eb5b5e80f",
+    "original-goals-diagnostic.stderr.log": "ec6c9dd78709bece8047572fe101c0e54b2a00d7afc5931a9c761b26d48825df",
+    "original-goals-march-end.save": "38e7011f12c2551e4706f897b983c53171b1a4385164ab3b34ee79a90aa29438",
+    "original-goals-march-start.save": "260602c4a4e64b294d5b1f86dca4d95270b087e33394c5131f6fc1c736f3cef2",
+    "MatchBaseline-original-goals-diagnostic.cpp": "c109c7efb2cdf6d3232a9e4df57b2b3985c291cf9bc7535c58a5dcf0b391b115"
+  }
+}

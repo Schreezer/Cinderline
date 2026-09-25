@@ -1,0 +1,142 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/build/ai-upgrade
+      Start  1: simulation_rules
+ 1/26 Test  #1: simulation_rules ............................***Failed    4.12 sec
+PASS reset and definitions
+PASS physical gathering and depletion
+PASS paid commands, production and supply
+CONSTRUCTION_HEALTH full_hp=1550.000 damage_taken=11.000 completed_damaged_hp=1539.000
+PASS placement and construction
+PASS bounded production queue
+WORKER_CONSTRUCTION travelled=350.000 cargo_preserved=6.000 finished_at=75.550 delivered_after=18
+PASS worker construction economy
+PASS worker construction interruptions
+PASS worker construction hazards
+PASS construction persistence and migration
+PASS research and prerequisites
+PASS ownership and fog
+GROUP_MOVE units=15 mean_destination_distance=93.586 min_separation=41.600 diameter=40.000 clearance_ratio=1.040
+PASS obstacle paths and group movement
+PASS ground and air combat
+COVER_ATTACK order=1 damage=70.000
+COVER_ATTACK order=2 damage=70.000
+HOLD_TRAFFIC displacement=0.000
+SUPPORT_ORDER order=1 distance=168.959 healed=39.000
+FAIL tactical orders and support: support remains within healing range of attack leader
+PASS victory and defeat
+PASS save-load continuity and replay
+PASS bounded fixed-step update
+AI_EXPANSION depleted_ore=0.000 gathered=22798 alternate_built=1
+AI_BASE_DEFENSE old_turret_alive=1 worker_dispatched=1 remote_turret_built=1
+PASS AI expansion and local defense
+AI_SCOUT_AND_ARMY scout=0 attack_move=1
+AI_SCOUT_AND_ARMY scout=1 attack_move=1
+AI_SUPPORT joined_existing_attack=1 redundant_orders=0 dead_leader_replaced=1
+AI_ECONOMY seconds=312.400 ore=6079 gathered=8929 produced=16 built=4 paid_command_cost=2850
+PASS AI paid economy
+AI_CONSTRUCTION travelling_preserved=1 orphan_resumed=1 all_busy_orphan_paused=1
+PASS AI construction assignments
+AI_WITNESSED_DEATH tick=96 previous_decision_tick=80 cleanup_tick=100
+AI_KNOWLEDGE hidden_death_retained=1 hidden_movement_ignored=1 mobile_expired=1 empty_site_cleared=1 visible_death_immediate=1
+PASS AI observation lifecycle
+AI_COMPOSITION hidden_equal=1 observed_air_armor_counters=1 light_infantry_response=1 remembered_air_response=1 duplicate_scouts=0
+PASS AI observed production
+AI_OBJECTIVES original_destroyed=1 empty_start_avoided=1 relocated_hq_discovered=1 remembered_hq_targeted=1
+PASS AI scouting objectives
+AI_KNOWLEDGE_SAVE continuity=1 v1_migrated=1 v2_migrated=1 invalid_v3_atomic=1
+PASS AI knowledge persistence
+COMBAT_EVENTS weapon_profiles=5 splash_impacts=2 lethal_order=1 actual_heal=1 monotonic_ids=1
+PASS combat event semantics
+COMBAT_FOG hidden_source=1 no_late_revelation=1 current_visibility_required=1 hidden_segment_blocked=1 tiny_corner_clip_blocked=1
+PASS combat event visibility
+COMBAT_SAVE v4_continuity=1 legacy_effects_discarded=3 v3_knowledge_retained=1 malformed_events_atomic=1
+PASS combat event persistence
+RESULT passed=26 failed=1
+
+      Start  2: navigation_regressions
+ 2/26 Test  #2: navigation_regressions ......................   Passed    0.76 sec
+      Start  3: movement_following_regressions
+ 3/26 Test  #3: movement_following_regressions ..............   Passed    0.47 sec
+      Start  4: navigation_route_quality_regressions
+ 4/26 Test  #4: navigation_route_quality_regressions ........   Passed    0.12 sec
+      Start  5: network_protocol
+ 5/26 Test  #5: network_protocol ............................   Passed    0.51 sec
+      Start  6: defense_regressions
+ 6/26 Test  #6: defense_regressions .........................   Passed    0.44 sec
+      Start  7: ai_difficulty_regressions
+ 7/26 Test  #7: ai_difficulty_regressions ...................   Passed    3.45 sec
+      Start  8: ai_tactics_regressions
+ 8/26 Test  #8: ai_tactics_regressions ......................***Failed    0.15 sec
+PASS undefended economy assault
+PASS local weighted threat withdrawal
+PASS limited raid response
+PASS mixed raid defender allocation
+FAIL counter-aware local targets: siege failed to select a reachable structure while an incompatible aircraft was visible
+PASS damaged veteran reuse
+PASS concentrated army launch
+PASS fog-fair tactics
+PASS tactical save continuation
+
+      Start  9: ai_economy_regressions
+ 9/26 Test  #9: ai_economy_regressions ......................   Passed    1.61 sec
+      Start 10: production_allocation_regressions
+10/26 Test #10: production_allocation_regressions ...........   Passed    0.81 sec
+      Start 11: match_length_regressions
+11/26 Test #11: match_length_regressions ....................***Failed    2.93 sec
+FAIL mirrored bases harvest and deliver equal starting ore over equal time
+FAIL mirrored bases harvest and deliver equal starting ore over equal time
+FAIL mirrored bases harvest and deliver equal starting ore over equal time
+MATCH_LENGTH_PACING travel_ticks=244,326,408 train_seconds=19.2,24,24
+RESULT passed=5549 failed=3
+
+      Start 12: four_player_regressions
+12/26 Test #12: four_player_regressions .....................   Passed    1.19 sec
+      Start 13: order_completion_regressions
+13/26 Test #13: order_completion_regressions ................   Passed    0.45 sec
+      Start 14: tactical_order_regressions
+14/26 Test #14: tactical_order_regressions ..................   Passed    0.50 sec
+      Start 15: patrol_escort_regressions
+15/26 Test #15: patrol_escort_regressions ...................   Passed    0.43 sec
+      Start 16: formation_order_regressions
+16/26 Test #16: formation_order_regressions .................   Passed    0.51 sec
+      Start 17: tactical_interruption_regressions
+17/26 Test #17: tactical_interruption_regressions ...........   Passed    0.37 sec
+      Start 18: worker_order_completion_regressions
+18/26 Test #18: worker_order_completion_regressions .........   Passed    0.36 sec
+      Start 19: builder_queue_regressions
+19/26 Test #19: builder_queue_regressions ...................   Passed    0.52 sec
+      Start 20: simulation_profiling_regressions
+20/26 Test #20: simulation_profiling_regressions ............   Passed    0.68 sec
+      Start 21: navigation_attachment_cache_regressions
+21/26 Test #21: navigation_attachment_cache_regressions .....   Passed    0.11 sec
+      Start 22: navigation_multi_source_regressions
+22/26 Test #22: navigation_multi_source_regressions .........   Passed    0.11 sec
+      Start 23: navigation_predicate_parity_regressions
+23/26 Test #23: navigation_predicate_parity_regressions .....   Passed    0.11 sec
+      Start 24: navigation_terrain_visibility_regressions
+24/26 Test #24: navigation_terrain_visibility_regressions ...   Passed    0.27 sec
+      Start 25: production_exit_regressions
+25/26 Test #25: production_exit_regressions .................   Passed    0.95 sec
+      Start 26: production_traffic_regressions
+26/26 Test #26: production_traffic_regressions ..............   Passed    2.66 sec
+
+88% tests passed, 3 tests failed out of 26
+
+Label Time Summary:
+ai              =   5.21 sec*proc (3 tests)
+defense         =   0.44 sec*proc (1 test)
+economy         =   2.86 sec*proc (4 tests)
+four-player     =   1.19 sec*proc (1 test)
+match-length    =   2.93 sec*proc (1 test)
+navigation      =  11.93 sec*proc (16 tests)
+network         =   2.51 sec*proc (3 tests)
+orders          =   3.13 sec*proc (7 tests)
+production      =   4.53 sec*proc (4 tests)
+profiling       =   1.17 sec*proc (4 tests)
+
+Total Test time (real) =  24.60 sec
+
+The following tests FAILED:
+	  1 - simulation_rules (Failed)
+	  8 - ai_tactics_regressions (Failed)                   ai
+	 11 - match_length_regressions (Failed)                 match-length navigation
+Errors while running CTest

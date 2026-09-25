@@ -1,0 +1,4 @@
+train accepted=1 message=Cinderthrow queued.
+spawn=311.5,4488.5 goal=1120,3680 locally_clear=1 route_reached=0 search_exhausted=0
+reachable_alternate_exit=311.5,4717.6 ring=0 spoke=4
+unreachable_first_exit_with_reachable_alternative=1

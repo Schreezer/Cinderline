@@ -1,0 +1,269 @@
+Analysis of sampling CinderlineMatchBaseline (pid 10420) every 1 millisecond
+Process:         CinderlineMatchBaseline [10420]
+Path:            /private/tmp/CinderlineMatchBaseline
+Load Address:    0x104d60000
+Identifier:      CinderlineMatchBaseline
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  codex [36651]
+Target Type:     live task
+
+Date/Time:       2026-09-14 15:49:07.446 +0530
+Launch Time:     2026-09-14 15:46:14.940 +0530
+OS Version:      macOS 27.0 (26A428)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         9120K
+Physical footprint (peak):  19.5M
+Idle exit:                  untracked
+----
+
+Call graph:
+    824 Thread_9582849   DispatchQueue_1: com.apple.main-thread  (serial)
+      824 start  (in dyld) + 6688  [0x193e6fe80]
+        824 main  (in CinderlineMatchBaseline) + 1052  [0x104d609a4]
+          824 (anonymous namespace)::run(int, bool, bool)  (in CinderlineMatchBaseline) + 8680  [0x104d644f8]
+            824 (anonymous namespace)::stepStage(cinder::Simulation&, (anonymous namespace)::RunResult&, (anonymous namespace)::StageMetrics&, std::array<cinder::net::ViewMemory, 4ul>&)  (in CinderlineMatchBaseline) + 64  [0x104d66310]
+              824 cinder::Simulation::update(float)  (in CinderlineMatchBaseline) + 252  [0x104d8b840]
+                808 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 1460  [0x104d8be3c]
+                + 722 cinder::Simulation::updateEconomy(cinder::Entity&)  (in CinderlineMatchBaseline) + 672  [0x104d8d6c0]
+                + ! 721 cinder::Simulation::chooseWorkTarget(cinder::Entity&, std::vector<unsigned int> const&, float)  (in CinderlineMatchBaseline) + 664  [0x104da3980]
+                + ! : 721 cinder::Simulation::findRoute(cinder::Entity&, std::vector<cinder::Vec2> const&)  (in CinderlineMatchBaseline) + 156  [0x104da9440]
+                + ! :   714 cinder::Navigation::Impl::route(cinder::Vec2, std::vector<cinder::Vec2> const&, float, unsigned int) const  (in CinderlineMatchBaseline) + 1408  [0x104d6d004]
+                + ! :   | 693 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 620  [0x104d710f4]
+                + ! :   | + 432 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + ! :   | + ! 132 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 132  [0x104d706cc]
+                + ! :   | + ! : 132 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 908,748,...  [0x104d70b0c,0x104d70a6c,...]
+                + ! :   | + ! 102 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 172  [0x104d706f4]
+                + ! :   | + ! : 102 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 948,612,...  [0x104d70b34,0x104d709e4,...]
+                + ! :   | + ! 93 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 252  [0x104d70744]
+                + ! :   | + ! : 93 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 948,748,...  [0x104d70b34,0x104d70a6c,...]
+                + ! :   | + ! 85 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 212  [0x104d7071c]
+                + ! :   | + ! : 85 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 572,748,...  [0x104d709bc,0x104d70a6c,...]
+                + ! :   | + ! 20 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 56,124,...  [0x104d70680,0x104d706c4,...]
+                + ! :   | + 107 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 92  [0x104d6c88c]
+                + ! :   | + ! 107 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 404,452,...  [0x104d6c7e8,0x104d6c818,...]
+                + ! :   | + 94 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 64  [0x104d6c870]
+                + ! :   | + ! 94 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 404,452,...  [0x104d6c7e8,0x104d6c818,...]
+                + ! :   | + 55 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 316,488,...  [0x104d6c96c,0x104d6ca18,...]
+                + ! :   | + 3 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 612,556  [0x104d710ec,0x104d710b4]
+                + ! :   | + 2 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 300  [0x104d70774]
+                + ! :   | 16 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 372  [0x104d70ffc]
+                + ! :   | + 11 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + ! :   | + ! 4 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 212  [0x104d7071c]
+                + ! :   | + ! : 4 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 80,748,...  [0x104d707d0,0x104d70a6c,...]
+                + ! :   | + ! 3 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 132  [0x104d706cc]
+                + ! :   | + ! : 3 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 148,692,...  [0x104d70814,0x104d70a34,...]
+                + ! :   | + ! 2 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 172  [0x104d706f4]
+                + ! :   | + ! : 2 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 736,920  [0x104d70a60,0x104d70b18]
+                + ! :   | + ! 2 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 252  [0x104d70744]
+                + ! :   | + !   2 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 748,908  [0x104d70a6c,0x104d70b0c]
+                + ! :   | + 3 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 164,288,...  [0x104d6c8d4,0x104d6c950,...]
+                + ! :   | + 1 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 304  [0x104d70fb8]
+                + ! :   | + 1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 92  [0x104d6c88c]
+                + ! :   | +   1 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 452  [0x104d6c818]
+                + ! :   | 3 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 516  [0x104d6ca34]
+                + ! :   | 1 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 420  [0x104d7102c]
+                + ! :   | + 1 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 324  [0x104d70fcc]
+                + ! :   | 1 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 756  [0x104d7117c]
+                + ! :   |   1 std::__introsort<std::_ClassicAlgPolicy, cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const::'lambda'(cinder::Navigation::Impl::Attachment const&, cinder::Navigation::Impl::Attachment const&)&, cinder::Navigation::Impl::Attachment*, false>(cinder::Navigation::Impl::Attachment*, cinder::Navigation::Impl::Attachment*, cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const::'lambda'(cinder::Navigation::Impl::Attachment const&, cinder::Navigation::Impl::Attachment const&)&, std::iterator_traits<cinder::Navigation::Impl::Attachment*>::difference_type, bool)  (in CinderlineMatchBaseline) + 2268  [0x104d7999c]
+                + ! :   |     1 std::__partition_with_equals_on_right[abi:nqe220106]<std::_ClassicAlgPolicy, cinder::Navigation::Impl::Attachment*, cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const::'lambda'(cinder::Navigation::Impl::Attachment const&, cinder::Navigation::Impl::Attachment const&)&>(cinder::Navigation::Impl::Attachment*, cinder::Navigation::Impl::Attachment*, cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const::'lambda'(cinder::Navigation::Impl::Attachment const&, cinder::Navigation::Impl::Attachment const&)&)  (in CinderlineMatchBaseline) + 52  [0x104d7a34c]
+                + ! :   3 cinder::Navigation::Impl::route(cinder::Vec2, std::vector<cinder::Vec2> const&, float, unsigned int) const  (in CinderlineMatchBaseline) + 1436  [0x104d6d020]
+                + ! :   | 1 std::vector<cinder::Navigation::Impl::Attachment>::__insert_with_size[abi:nqe220106]<std::_ClassicAlgPolicy, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>>(std::__wrap_iter<cinder::Navigation::Impl::Attachment const*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, long)  (in CinderlineMatchBaseline) + 184  [0x104d7afa8]
+                + ! :   | + 1 operator new(unsigned long)  (in libc++abi.dylib) + 52  [0x1941fc3c0]
+                + ! :   | +   1 _xzm_malloc_large_huge  (in libsystem_malloc.dylib) + 968  [0x1940604ac]
+                + ! :   | +     1 xzm_segment_group_alloc_chunk  (in libsystem_malloc.dylib) + 564  [0x19404092c]
+                + ! :   | +       1 _xzm_segment_group_find_and_allocate_chunk  (in libsystem_malloc.dylib) + 520  [0x194040fa8]
+                + ! :   | 1 std::vector<cinder::Navigation::Impl::Attachment>::__insert_with_size[abi:nqe220106]<std::_ClassicAlgPolicy, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>>(std::__wrap_iter<cinder::Navigation::Impl::Attachment const*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, long)  (in CinderlineMatchBaseline) + 240  [0x104d7afe0]
+                + ! :   | + 1 _platform_memmove  (in libsystem_platform.dylib) + 192  [0x19424fe20]
+                + ! :   | 1 std::vector<cinder::Navigation::Impl::Attachment>::__insert_with_size[abi:nqe220106]<std::_ClassicAlgPolicy, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>>(std::__wrap_iter<cinder::Navigation::Impl::Attachment const*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, std::__wrap_iter<cinder::Navigation::Impl::Attachment*>, long)  (in CinderlineMatchBaseline) + 212  [0x104d7afc4]
+                + ! :   2 cinder::Navigation::Impl::route(cinder::Vec2, std::vector<cinder::Vec2> const&, float, unsigned int) const  (in CinderlineMatchBaseline) + 504  [0x104d6cc7c]
+                + ! :   | 2 cinder::Navigation::Impl::route(cinder::Vec2, std::vector<cinder::Vec2> const&, float, unsigned int) const  (in CinderlineMatchBaseline) + 680,908  [0x104d6cd2c,0x104d6ce10]
+                + ! :   2 cinder::Navigation::Impl::route(cinder::Vec2, std::vector<cinder::Vec2> const&, float, unsigned int) const  (in CinderlineMatchBaseline) + 1284  [0x104d6cf88]
+                + ! :     2 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 620  [0x104d710f4]
+                + ! :       1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 64  [0x104d6c870]
+                + ! :       + 1 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 452  [0x104d6c818]
+                + ! :       1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 92  [0x104d6c88c]
+                + ! :         1 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 404  [0x104d6c7e8]
+                + ! 1 cinder::Simulation::chooseWorkTarget(cinder::Entity&, std::vector<unsigned int> const&, float)  (in CinderlineMatchBaseline) + 236  [0x104da37d4]
+                + !   1 cinder::Simulation::workPoints(cinder::Entity const&, cinder::Vec2, float, unsigned int, cinder::Navigation const&, bool) const  (in CinderlineMatchBaseline) + 240  [0x104da3218]
+                + !     1 cinder::Simulation::workPoints(cinder::Entity const&, cinder::Vec2, float, unsigned int, cinder::Navigation const&, bool) const::$_0::operator()(cinder::Vec2) const  (in CinderlineMatchBaseline) + 120  [0x104da32d8]
+                + !       1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + !         1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 252  [0x104d70744]
+                + !           1 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 668  [0x104d70a1c]
+                + 81 cinder::Simulation::updateEconomy(cinder::Entity&)  (in CinderlineMatchBaseline) + 1652  [0x104d8da94]
+                + ! 78 cinder::Simulation::approachWork(cinder::Entity&, cinder::Entity const&, float)  (in CinderlineMatchBaseline) + 324  [0x104da3538]
+                + ! : 78 cinder::Simulation::findRoute(cinder::Entity&, std::vector<cinder::Vec2> const&)  (in CinderlineMatchBaseline) + 156  [0x104da9440]
+                + ! :   73 cinder::Navigation::Impl::route(cinder::Vec2, std::vector<cinder::Vec2> const&, float, unsigned int) const  (in CinderlineMatchBaseline) + 1408  [0x104d6d004]
+                + ! :   | 72 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 620  [0x104d710f4]
+                + ! :   | + 49 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + ! :   | + ! 18 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 132  [0x104d706cc]
+                + ! :   | + ! : 18 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 60,640,...  [0x104d707bc,0x104d70a00,...]
+                + ! :   | + ! 12 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 172  [0x104d706f4]
+                + ! :   | + ! : 12 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 88,68,...  [0x104d707d8,0x104d707c4,...]
+                + ! :   | + ! 9 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 252  [0x104d70744]
+                + ! :   | + ! : 9 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 672,832,...  [0x104d70a20,0x104d70ac0,...]
+                + ! :   | + ! 6 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 212  [0x104d7071c]
+                + ! :   | + ! : 6 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 748,72,...  [0x104d70a6c,0x104d707c8,...]
+                + ! :   | + ! 4 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 16,20,...  [0x104d70658,0x104d7065c,...]
+                + ! :   | + 10 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 92  [0x104d6c88c]
+                + ! :   | + ! 10 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 452,404,...  [0x104d6c818,0x104d6c7e8,...]
+                + ! :   | + 6 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 64  [0x104d6c870]
+                + ! :   | + ! 6 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 452,404,...  [0x104d6c818,0x104d6c7e8,...]
+                + ! :   | + 6 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 20,152,...  [0x104d6c844,0x104d6c8c8,...]
+                + ! :   | + 1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 300  [0x104d70774]
+                + ! :   | 1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 516  [0x104d6ca34]
+                + ! :   5 cinder::Navigation::Impl::route(cinder::Vec2, std::vector<cinder::Vec2> const&, float, unsigned int) const  (in CinderlineMatchBaseline) + 1284  [0x104d6cf88]
+                + ! :     5 cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline) + 620  [0x104d710f4]
+                + ! :       5 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + ! :         2 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 132  [0x104d706cc]
+                + ! :         + 2 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 640,748  [0x104d70a00,0x104d70a6c]
+                + ! :         2 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 212  [0x104d7071c]
+                + ! :         + 2 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 648,824  [0x104d70a08,0x104d70ab8]
+                + ! :         1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 240  [0x104d70738]
+                + ! 3 cinder::Simulation::approachWork(cinder::Entity&, cinder::Entity const&, float)  (in CinderlineMatchBaseline) + 152  [0x104da348c]
+                + !   1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 92  [0x104d6c88c]
+                + !   | 1 cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 332  [0x104d6c7a0]
+                + !   1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + !   | 1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 132  [0x104d706cc]
+                + !   |   1 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 856  [0x104d70ad8]
+                + !   1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 288  [0x104d6c950]
+                + 3 cinder::Simulation::updateEconomy(cinder::Entity&)  (in CinderlineMatchBaseline) + 728  [0x104d8d6f8]
+                + ! 3 cinder::Simulation::approachWork(cinder::Entity&, cinder::Entity const&, float)  (in CinderlineMatchBaseline) + 172  [0x104da34a0]
+                + !   1 cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)  (in CinderlineMatchBaseline) + 3348  [0x104daa44c]
+                + !   : 1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + !   :   1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 252  [0x104d70744]
+                + !   :     1 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 612  [0x104d709e4]
+                + !   1 cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)  (in CinderlineMatchBaseline) + 3572  [0x104daa52c]
+                + !   : 1 cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)::$_4::operator()(cinder::Vec2, float) const  (in CinderlineMatchBaseline) + 244  [0x104dab784]
+                + !   :   1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + !   :     1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 172  [0x104d706f4]
+                + !   :       1 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 748  [0x104d70a6c]
+                + !   1 cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)  (in CinderlineMatchBaseline) + 3648  [0x104daa578]
+                + !     1 cinder::Simulation::moveToward(cinder::Entity&, cinder::Vec2)::$_4::operator()(cinder::Vec2, float) const  (in CinderlineMatchBaseline) + 244  [0x104dab784]
+                + !       1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                + !         1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 132  [0x104d706cc]
+                + !           1 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 736  [0x104d70a60]
+                + 1 cinder::Simulation::updateEconomy(cinder::Entity&)  (in CinderlineMatchBaseline) + 440  [0x104d8d5d8]
+                + ! 1 cinder::Simulation::updateEconomy(cinder::Entity&)  (in CinderlineMatchBaseline) + 264  [0x104d8d528]
+                + 1 cinder::Simulation::updateEconomy(cinder::Entity&)  (in CinderlineMatchBaseline) + 1408  [0x104d8d9a0]
+                +   1 cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+                +     1 cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 172  [0x104d706f4]
+                +       1 cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 816  [0x104d70ab0]
+                10 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 1556  [0x104d8be9c]
+                + 10 cinder::Simulation::updateVision()  (in CinderlineMatchBaseline) + 416,468,...  [0x104d866e8,0x104d8671c,...]
+                4 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 1668  [0x104d8bf0c]
+                + 3 cinder::Simulation::updateCombat(cinder::Entity&)  (in CinderlineMatchBaseline) + 660  [0x104d8e4c8]
+                + ! 3 cinder::Simulation::updateCombat(cinder::Entity&)  (in CinderlineMatchBaseline) + 1064,1092  [0x104d8e65c,0x104d8e678]
+                + 1 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 1668  [0x104d8bf0c]
+                +   1 cinder::Simulation::updateCombat(cinder::Entity&)  (in CinderlineMatchBaseline) + 420  [0x104d8e3d8]
+                1 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 1376  [0x104d8bde8]
+                + 1 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 1376  [0x104d8bde8]
+                +   1 cinder::Simulation::updateProduction(cinder::Entity&)  (in CinderlineMatchBaseline) + 880  [0x104d8c5d0]
+                1 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 2320  [0x104d8c198]
+                  1 cinder::Simulation::step()  (in CinderlineMatchBaseline) + 2344  [0x104d8c1b0]
+
+Total number in stack (recursive counted multiple, when >=5):
+        20       cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline) + 0  [0x104d70780]
+        10       cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 140  [0x104d6c8bc]
+        8       cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 0  [0x104d6c654]
+        6       cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 132  [0x104d706cc]
+        6       cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 0  [0x104d6c830]
+        5       cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 0  [0x104d70648]
+        5       cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 172  [0x104d706f4]
+        5       cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline) + 252  [0x104d70744]
+        5       cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline) + 92  [0x104d6c88c]
+
+Sort by top of stack, same collapsed (when >= 5):
+        cinder::(anonymous namespace)::navSegmentSegmentDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::Vec2, cinder::Vec2)  (in CinderlineMatchBaseline)        478
+        cinder::Navigation::Impl::pointClear(cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline)        221
+        cinder::Navigation::Impl::segmentClear(cinder::Vec2, cinder::Vec2, float, unsigned int) const  (in CinderlineMatchBaseline)        69
+        cinder::(anonymous namespace)::navSegmentBoxDistanceSquared(cinder::Vec2, cinder::Vec2, cinder::NavBox const&)  (in CinderlineMatchBaseline)        28
+        cinder::Simulation::updateVision()  (in CinderlineMatchBaseline)        10
+        cinder::Navigation::Impl::attachments(cinder::Navigation::Impl::Layer const&, cinder::Vec2, float, unsigned int, int) const  (in CinderlineMatchBaseline)        5
+
+Binary Images:
+       0x104d60000 -        0x104db1f4b +CinderlineMatchBaseline (0) <26BFF35C-479F-348B-9094-A07A374E9771> /tmp/CinderlineMatchBaseline
+       0x193dbc000 -        0x193e0b5f7  libobjc.A.dylib (973.1) <C0680DF6-9900-3C29-A071-95A031686EF8> /usr/lib/libobjc.A.dylib
+       0x193e0c000 -        0x193e1623f  libsharedcache.dylib (0) <117C1ED6-AE11-3D9E-B05B-844F35395552> /usr/lib/libsharedcache.dylib
+       0x193e17000 -        0x193e3dd3b  libdyld.dylib (27062) <62863BCA-DD60-3D32-A9DB-89099BA6F3D7> /usr/lib/system/libdyld.dylib
+       0x193e3e000 -        0x193efd6e3  dyld (1.0.0 - 27062) <D341DDCB-7969-3A9C-8E03-0CF4751398A9> /usr/lib/dyld
+       0x193efe000 -        0x193f0101f  libsystem_blocks.dylib (98.1) <6F304731-D95D-3501-B4AD-F2934F7F2446> /usr/lib/system/libsystem_blocks.dylib
+       0x193f02000 -        0x193f570df  libxpc.dylib (3298.1.1) <0791121F-B5FC-3F84-BF04-115E86D2D882> /usr/lib/system/libxpc.dylib
+       0x193f58000 -        0x193f77c13  libsystem_trace.dylib (1966.1.1) <B48A8E3E-A12A-3342-8321-428B555E965E> /usr/lib/system/libsystem_trace.dylib
+       0x193f78000 -        0x19402cf27  libcorecrypto.dylib (2109.0.22) <807AA6C9-5D8A-3CA5-B4CE-FACE5296EF6A> /usr/lib/system/libcorecrypto.dylib
+       0x19402d000 -        0x194082c5f  libsystem_malloc.dylib (886.0.8) <2339CB57-FE5A-3154-A206-A76059C749EB> /usr/lib/system/libsystem_malloc.dylib
+       0x194083000 -        0x1940c919f  libdispatch.dylib (1605.0.2) <022BF08F-0B3A-3225-9E65-16D1553CE90D> /usr/lib/system/libdispatch.dylib
+       0x1940ca000 -        0x1940ccd2b  libsystem_featureflags.dylib (108) <20C1CAB2-1F13-3426-8146-9CAE9FF2A33D> /usr/lib/system/libsystem_featureflags.dylib
+       0x1940cd000 -        0x19414fca3  libsystem_c.dylib (1786.0.3) <FBA7B23E-AA60-3A90-9AA4-A7A2E0AD63EE> /usr/lib/system/libsystem_c.dylib
+       0x194150000 -        0x1941e5033  libc++.1.dylib (2200.27) <1E9BA4AA-B5DA-3CF3-80AC-4B880049573F> /usr/lib/libc++.1.dylib
+       0x1941e6000 -        0x1941ffeff  libc++abi.dylib (2200.27) <A21743EE-6E1C-3E74-97EA-7AF793DE4BDF> /usr/lib/libc++abi.dylib
+       0x194200000 -        0x19423e9ab  libsystem_kernel.dylib (13432.1.9) <F63BF418-8F75-34A4-AAF1-8CAF2B9B6A05> /usr/lib/system/libsystem_kernel.dylib
+       0x19423f000 -        0x19424b91b  libsystem_pthread.dylib (553.0.1) <5A1828C3-CBC2-3B85-BD07-C8ED10021A41> /usr/lib/system/libsystem_pthread.dylib
+       0x19424c000 -        0x1942554f3  libsystem_platform.dylib (402.0.1.0.1) <080E4444-A0FB-3913-9756-4E470015F32F> /usr/lib/system/libsystem_platform.dylib
+       0x194256000 -        0x194284903  libsystem_info.dylib (603) <BC387AEB-1CEF-3513-92D7-D7F913596711> /usr/lib/system/libsystem_info.dylib
+       0x1983ae000 -        0x1983b7b13  libsystem_darwin.dylib (1786.0.3) <4E66C888-993C-3E6A-A8DA-A949C01C5B67> /usr/lib/system/libsystem_darwin.dylib
+       0x198808000 -        0x198819b8b  libsystem_notify.dylib (368) <58FD36D8-37A7-311C-80F2-8E64DD8710CF> /usr/lib/system/libsystem_notify.dylib
+       0x19a965000 -        0x19a97fd93  libsystem_networkextension.dylib (2340.1.2) <22E1D190-486F-324F-ABA4-F36AB841BFE9> /usr/lib/system/libsystem_networkextension.dylib
+       0x19aa0d000 -        0x19aa24247  libsystem_asl.dylib (409) <B4D449B7-A821-3A9A-8019-E917B291F10A> /usr/lib/system/libsystem_asl.dylib
+       0x19b9b8000 -        0x19b9b8f2f  libobjcMsgSend.dylib (973.1) <41179EDE-DC97-3BBE-8848-6400D12C1436> /usr/lib/objc/libobjcMsgSend.dylib
+       0x19cb04000 -        0x19cb0bedf  libsystem_symptoms.dylib (2394.0.4) <60EE7884-9F4E-3184-A6AC-FA40A7A0297D> /usr/lib/system/libsystem_symptoms.dylib
+       0x1a0e9c000 -        0x1a0ed6aeb  libsystem_containermanager.dylib (833.0.8.0.1) <08A57205-555D-3792-8931-9D5B585AF326> /usr/lib/system/libsystem_containermanager.dylib
+       0x1a24ef000 -        0x1a24f3317  libsystem_configuration.dylib (1446) <F3EB66A7-7A24-3AE5-B6E8-9A37BB00F119> /usr/lib/system/libsystem_configuration.dylib
+       0x1a24f4000 -        0x1a24fae03  libsystem_sandbox.dylib (3051.0.52) <1E892B56-092E-3832-BDE3-DCE356D7A4FA> /usr/lib/system/libsystem_sandbox.dylib
+       0x1a39b8000 -        0x1a39b8f2f  libobjcMsgSend1.dylib (973.1) <B40D9B2A-E1EE-37ED-8004-711A1F263DE1> /usr/lib/objc/libobjcMsgSend1.dylib
+       0x1a40d8000 -        0x1a40daf93  libquarantine.dylib (217.0.4) <7FD4AE22-86EF-382B-83F5-ADF9336C1160> /usr/lib/system/libquarantine.dylib
+       0x1a47ea000 -        0x1a47f01e7  libsystem_coreservices.dylib (203) <57248E07-11A5-3857-918E-4A3A63B69FE8> /usr/lib/system/libsystem_coreservices.dylib
+       0x1a4db2000 -        0x1a4defb27  libsystem_m.dylib (3326.0.1) <A3FB340F-3ED5-30F4-8B64-9D5860F64D35> /usr/lib/system/libsystem_m.dylib
+       0x1a4df1000 -        0x1a4df44f7  libmacho.dylib (27062) <50DEADEC-3E99-3519-AFC3-4A3FEB3F14C3> /usr/lib/system/libmacho.dylib
+       0x1a4e0e000 -        0x1a4e1a707  libcommonCrypto.dylib (600041) <41C99F45-C5E6-39DB-B1F2-A1BEA9D242A4> /usr/lib/system/libcommonCrypto.dylib
+       0x1a4e1b000 -        0x1a4e24c87  libunwind.dylib (2200.5) <3070AB81-B082-39E8-8A00-EF88DDE9AC47> /usr/lib/system/libunwind.dylib
+       0x1a4e2c000 -        0x1a4e367eb  libcopyfile.dylib (260.0.3) <72D95AF9-BF5E-3A84-81A6-BCC5BDB99857> /usr/lib/system/libcopyfile.dylib
+       0x1a4e37000 -        0x1a4e3a8bf  libcompiler_rt.dylib (103.4) <DFB5CE7F-A36E-36AA-BECE-1392D3D43607> /usr/lib/system/libcompiler_rt.dylib
+       0x1a4e3b000 -        0x1a4e40077  libsystem_collections.dylib (1786.0.3) <1E8022D4-5A37-3A7A-8936-603E6FA88358> /usr/lib/system/libsystem_collections.dylib
+       0x1a4e41000 -        0x1a4e43f1f  libsystem_secinit.dylib (182) <DE037464-4C5D-3E96-A33F-2A4557CC6A20> /usr/lib/system/libsystem_secinit.dylib
+       0x1a4e44000 -        0x1a4e4697f  libremovefile.dylib (96) <E6E6DFCF-6B2C-3F30-A59D-816CAB1190CE> /usr/lib/system/libremovefile.dylib
+       0x1a4e47000 -        0x1a4e47e27  libkeymgr.dylib (31) <5EC997EF-3ADA-360B-9FCD-5F940C83FA4E> /usr/lib/system/libkeymgr.dylib
+       0x1a4e48000 -        0x1a4e50af7  libsystem_dnssd.dylib (3111.0.5.0.1) <DE22096F-1E5B-3D6E-8164-771582DD6391> /usr/lib/system/libsystem_dnssd.dylib
+       0x1a4e51000 -        0x1a4e55f1b  libcache.dylib (95) <80BAE197-E285-3F6E-A1EE-B77FE37D7E5D> /usr/lib/system/libcache.dylib
+       0x1a4e56000 -        0x1a4e578f3  libSystem.B.dylib (1359) <4FDC9AA6-B344-37FE-B8C6-A4C94A038F57> /usr/lib/libSystem.B.dylib
+       0x1ab9b8000 -        0x1ab9b8f2f  libobjcMsgSend2.dylib (973.1) <BD27A84B-C9AE-3282-BBEA-3B6119837B5A> /usr/lib/objc/libobjcMsgSend2.dylib
+       0x1b39b8000 -        0x1b39b8f2f  libobjcMsgSend3.dylib (973.1) <C0860D68-DDFC-3BD7-8B06-DB0645CBBED4> /usr/lib/objc/libobjcMsgSend3.dylib
+       0x1bb9b8000 -        0x1bb9b8f2f  libobjcMsgSend4.dylib (973.1) <A6153BF5-622B-3B01-81B6-F64A365EF613> /usr/lib/objc/libobjcMsgSend4.dylib
+       0x1c39b8000 -        0x1c39b8f2f  libobjcMsgSend5.dylib (973.1) <3913A71C-B29A-3AEA-820B-BEC40AC1861A> /usr/lib/objc/libobjcMsgSend5.dylib
+       0x1cb9b8000 -        0x1cb9b8f2f  libobjcMsgSend6.dylib (973.1) <9BC523A3-E167-3F6C-8CAE-0F3EBA671791> /usr/lib/objc/libobjcMsgSend6.dylib
+       0x1d39b8000 -        0x1d39b8f2f  libobjcMsgSend7.dylib (973.1) <248B7BCE-5B4C-34C7-A340-43D5228628C5> /usr/lib/objc/libobjcMsgSend7.dylib
+       0x1db9b8000 -        0x1db9b8f2f  libobjcMsgSend8.dylib (973.1) <3E041BAD-A8E8-3069-B741-78CD1A45B176> /usr/lib/objc/libobjcMsgSend8.dylib
+       0x1e39b8000 -        0x1e39b8f2f  libobjcMsgSend9.dylib (973.1) <34A67969-21A0-39D6-BB81-8FDA5A2409DB> /usr/lib/objc/libobjcMsgSend9.dylib
+       0x1eb9b8000 -        0x1eb9b8f2f  libobjcMsgSend10.dylib (973.1) <678186C0-8EAD-3B35-8CBB-00285B41E4A0> /usr/lib/objc/libobjcMsgSend10.dylib
+       0x1f39b8000 -        0x1f39b8f2f  libobjcMsgSend11.dylib (973.1) <E05CB08C-E956-36FA-8967-AE8E346A8D2C> /usr/lib/objc/libobjcMsgSend11.dylib
+       0x21b9b8000 -        0x21b9b8f2f  libobjcMsgSend12.dylib (973.1) <10AB03AA-FF1F-3FDC-9DFB-BFC40042C501> /usr/lib/objc/libobjcMsgSend12.dylib
+       0x2239b8000 -        0x2239b8f2f  libobjcMsgSend13.dylib (973.1) <ABF53427-FA6F-3D0D-8F9D-7AD795CA5C92> /usr/lib/objc/libobjcMsgSend13.dylib
+       0x22b9b8000 -        0x22b9b8f2f  libobjcMsgSend14.dylib (973.1) <9A844C46-A6DA-34D4-8EBF-2AD775C30684> /usr/lib/objc/libobjcMsgSend14.dylib
+       0x2339b8000 -        0x2339b8f2f  libobjcMsgSend15.dylib (973.1) <7C995666-2B2D-3284-AA0A-EBF7C922838E> /usr/lib/objc/libobjcMsgSend15.dylib
+       0x23b9b8000 -        0x23b9b8f2f  libobjcMsgSend16.dylib (973.1) <B6C0E14B-53AE-3E22-9ED5-1729C49F46F2> /usr/lib/objc/libobjcMsgSend16.dylib
+       0x2439b8000 -        0x2439b8f2f  libobjcMsgSend17.dylib (973.1) <07B4CF85-251B-301B-832B-20B315A59E19> /usr/lib/objc/libobjcMsgSend17.dylib
+       0x24b9b8000 -        0x24b9b8f2f  libobjcMsgSend18.dylib (973.1) <43E575B7-04DB-3999-A633-1A3B638BA6E3> /usr/lib/objc/libobjcMsgSend18.dylib
+       0x2539b8000 -        0x2539b8f2f  libobjcMsgSend19.dylib (973.1) <736F4D85-76F7-3B28-8D87-C07E8F7A0EF4> /usr/lib/objc/libobjcMsgSend19.dylib
+       0x25b9b8000 -        0x25b9b8f2f  libobjcMsgSend20.dylib (973.1) <74E67C8B-6BCA-3184-A18E-A97F370052C6> /usr/lib/objc/libobjcMsgSend20.dylib
+       0x2639b8000 -        0x2639b8f2f  libobjcMsgSend21.dylib (973.1) <CC0D732F-98E7-3888-9E15-70984DA2FB04> /usr/lib/objc/libobjcMsgSend21.dylib
+       0x26b9b8000 -        0x26b9b8f2f  libobjcMsgSend22.dylib (973.1) <85A60286-5DE3-32BA-B18C-2A498B065C88> /usr/lib/objc/libobjcMsgSend22.dylib
+       0x2739b8000 -        0x2739b8f2f  libobjcMsgSend23.dylib (973.1) <5452A0D2-6B19-39BE-ADDD-80B7BCDE3A98> /usr/lib/objc/libobjcMsgSend23.dylib
+       0x27b9b8000 -        0x27b9b8f2f  libobjcMsgSend24.dylib (973.1) <94BBF2D6-722B-350D-8557-4D25A8E8D53A> /usr/lib/objc/libobjcMsgSend24.dylib
+       0x2839b8000 -        0x2839b8f2f  libobjcMsgSend25.dylib (973.1) <35481387-5A8E-3AE4-86A6-94CEB3CC8726> /usr/lib/objc/libobjcMsgSend25.dylib
+       0x29b9b8000 -        0x29b9b8f2f  libobjcMsgSend26.dylib (973.1) <9E0C8664-E7F4-39D1-AAFC-BD92B255E4E8> /usr/lib/objc/libobjcMsgSend26.dylib
+       0x2a39b8000 -        0x2a39b8f2f  libobjcMsgSend27.dylib (973.1) <FD424935-55A9-3650-955A-EED3441A1D19> /usr/lib/objc/libobjcMsgSend27.dylib
+       0x2ab9b8000 -        0x2ab9b8f2f  libobjcMsgSend28.dylib (973.1) <09BA7B97-7DF7-3C7F-932A-B6847662FC49> /usr/lib/objc/libobjcMsgSend28.dylib
+       0x2b39b8000 -        0x2b39b8f2f  libobjcMsgSend29.dylib (973.1) <36D5BA3F-2139-30B0-8558-556764BE9813> /usr/lib/objc/libobjcMsgSend29.dylib
+       0x2bb9b8000 -        0x2bb9b8f2f  libobjcMsgSend30.dylib (973.1) <9F05564A-9D12-372C-98FC-E9F0E6BE4F04> /usr/lib/objc/libobjcMsgSend30.dylib
+       0x2c06d2000 -        0x2c06d8fe5  libRosetta.dylib (385) <E359944B-D230-33F9-A04E-0C3B17C3326E> /usr/lib/libRosetta.dylib
+       0x2c10c1000 -        0x2c10c475b  libsystem_darwindirectory.dylib (129.0.1) <61264923-2AA5-3658-B8C4-550C71E9D4B3> /usr/lib/system/libsystem_darwindirectory.dylib
+       0x2c10c5000 -        0x2c10cfd9b  libsystem_eligibility.dylib (446.1.3) <EDDE8E9C-A2CF-3931-BBB3-321CB852EB30> /usr/lib/system/libsystem_eligibility.dylib
+       0x2c10d0000 -        0x2c10d942b  libsystem_sanitizers.dylib (32) <7138ED99-7AA0-34EA-B35B-20EF6ADB1EED> /usr/lib/system/libsystem_sanitizers.dylib
+       0x2c10da000 -        0x2c10daa13  libsystem_trial.dylib (511) <6AE48824-EC44-3A8C-B501-BE57DBE892E7> /usr/lib/system/libsystem_trial.dylib
+       0x2c39b8000 -        0x2c39b8f2f  libobjcMsgSend31.dylib (973.1) <0985E20F-78C3-3466-A2B2-DBB95F7104A3> /usr/lib/objc/libobjcMsgSend31.dylib
+       0x2cb9b8000 -        0x2cb9b8f2f  libobjcMsgSend32.dylib (973.1) <0D309D58-D576-3E5D-AD4B-6D55AB491702> /usr/lib/objc/libobjcMsgSend32.dylib
+       0x2d39b8000 -        0x2d39b8f2f  libobjcMsgSend33.dylib (973.1) <346E0484-48FA-369B-8A64-93B5F5341CFE> /usr/lib/objc/libobjcMsgSend33.dylib
+       0x2db9b8000 -        0x2db9b8f2f  libobjcMsgSend34.dylib (973.1) <6A31F809-BCBE-3E01-A367-E91FDACCE324> /usr/lib/objc/libobjcMsgSend34.dylib

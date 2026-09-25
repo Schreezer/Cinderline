@@ -1,0 +1,77 @@
+-- Configuring done (0.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+[ 16%] Built target CinderlineSimulation
+[ 25%] Built target CinderlineMatchBaseline
+[ 25%] Built target CinderlineGameplayBaseline
+[ 33%] Built target CinderlineMatchWorker
+[ 33%] Built target CinderlineTests
+[ 41%] Built target CinderlineNetworkTests
+[ 41%] Built target CinderlineNavigationTests
+[ 50%] Built target CinderlineAIDifficultyTests
+[ 50%] Built target CinderlineDefenseTests
+[ 58%] Built target CinderlineMatchLengthTests
+[ 58%] Built target CinderlineProductionAllocationTests
+[ 66%] Built target CinderlineFourPlayerTests
+[ 66%] Built target CinderlineOrderCompletionTests
+[ 75%] Built target CinderlineWorkerOrderCompletionTests
+[ 75%] Built target CinderlineSimulationProfilingTests
+[ 83%] Built target CinderlineNavigationMultiSourceTests
+[ 83%] Built target CinderlineNavigationAttachmentCacheTests
+[ 87%] Building CXX object CMakeFiles/CinderlineNavigationPredicateParityTests.dir/Tests/NavigationPredicateParityTests.cpp.o
+[ 89%] Built target CinderlineNavigationTerrainVisibilityTests
+[ 93%] Built target CinderlineProductionExitTests
+[ 97%] Built target CinderlineProductionTrafficTests
+[100%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[100%] Built target CinderlineNavigationPredicateParityTests
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+      Start  1: simulation_rules
+ 1/17 Test  #1: simulation_rules ............................   Passed    2.77 sec
+      Start  2: navigation_regressions
+ 2/17 Test  #2: navigation_regressions ......................   Passed    0.37 sec
+      Start  3: network_protocol
+ 3/17 Test  #3: network_protocol ............................   Passed    0.08 sec
+      Start  4: defense_regressions
+ 4/17 Test  #4: defense_regressions .........................   Passed    0.08 sec
+      Start  5: ai_difficulty_regressions
+ 5/17 Test  #5: ai_difficulty_regressions ...................   Passed    2.11 sec
+      Start  6: production_allocation_regressions
+ 6/17 Test  #6: production_allocation_regressions ...........   Passed    0.22 sec
+      Start  7: match_length_regressions
+ 7/17 Test  #7: match_length_regressions ....................   Passed    1.70 sec
+      Start  8: four_player_regressions
+ 8/17 Test  #8: four_player_regressions .....................   Passed    0.51 sec
+      Start  9: order_completion_regressions
+ 9/17 Test  #9: order_completion_regressions ................   Passed    0.06 sec
+      Start 10: worker_order_completion_regressions
+10/17 Test #10: worker_order_completion_regressions .........   Passed    0.02 sec
+      Start 11: simulation_profiling_regressions
+11/17 Test #11: simulation_profiling_regressions ............   Passed    0.22 sec
+      Start 12: navigation_attachment_cache_regressions
+12/17 Test #12: navigation_attachment_cache_regressions .....   Passed    0.03 sec
+      Start 13: navigation_multi_source_regressions
+13/17 Test #13: navigation_multi_source_regressions .........   Passed    0.02 sec
+      Start 14: navigation_predicate_parity_regressions
+14/17 Test #14: navigation_predicate_parity_regressions .....   Passed    0.42 sec
+      Start 15: navigation_terrain_visibility_regressions
+15/17 Test #15: navigation_terrain_visibility_regressions ...   Passed    0.17 sec
+      Start 16: production_exit_regressions
+16/17 Test #16: production_exit_regressions .................   Passed    0.43 sec
+      Start 17: production_traffic_regressions
+17/17 Test #17: production_traffic_regressions ..............   Passed    2.07 sec
+
+100% tests passed, 0 tests failed out of 17
+
+Label Time Summary:
+ai              =   2.11 sec*proc (1 test)
+defense         =   0.08 sec*proc (1 test)
+economy         =   0.02 sec*proc (1 test)
+four-player     =   0.51 sec*proc (1 test)
+match-length    =   1.70 sec*proc (1 test)
+navigation      =   5.78 sec*proc (10 tests)
+network         =   0.73 sec*proc (2 tests)
+orders          =   0.07 sec*proc (2 tests)
+production      =   2.75 sec*proc (4 tests)
+profiling       =   0.83 sec*proc (4 tests)
+
+Total Test time (real) =  11.28 sec

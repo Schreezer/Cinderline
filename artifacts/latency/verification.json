@@ -1,0 +1,185 @@
+{
+  "schema": "cinderline.navigation_endpoint_verification.v1",
+  "status": "portable verified; current Unreal gates pending Android initialization; P0 remains open",
+  "checks": {
+    "release_suites": 16,
+    "sanitizer_suites": 16,
+    "server_tests": 32,
+    "route_corpus": "ROUTE_CORPUS cases=21 hash=0x0a097241ddad648f reached_graph=17",
+    "current_unreal_build": false,
+    "current_unreal_automation": false
+  },
+  "synthetic_arrivals": [
+    160,
+    200,
+    400
+  ],
+  "paid_workloads": [
+    {
+      "players": 2,
+      "army_arrivals": 160,
+      "all_non_timing_fields_match": true,
+      "state_hash": "0xc56d273e10c4a033",
+      "trajectory_hash": "0xd29b9a17afec5dda",
+      "recording_hash": "0xa235e0cd5c9a19c3",
+      "before_phase_step_ms": {
+        "preparation": {
+          "p50": 0.566167,
+          "p95": 1.429333,
+          "p99": 1.876708,
+          "max": 182.985
+        },
+        "march": {
+          "p50": 0.28525,
+          "p95": 0.433375,
+          "p99": 0.673709,
+          "max": 5.162875
+        },
+        "combat": {
+          "p50": 0.0985,
+          "p95": 0.623958,
+          "p99": 2.713458,
+          "max": 6.701583
+        }
+      },
+      "after_phase_step_ms": {
+        "preparation": {
+          "p50": 0.524042,
+          "p95": 1.239041,
+          "p99": 1.596083,
+          "max": 136.574042
+        },
+        "march": {
+          "p50": 0.285875,
+          "p95": 0.462167,
+          "p99": 0.746417,
+          "max": 3.892792
+        },
+        "combat": {
+          "p50": 0.099,
+          "p95": 0.619917,
+          "p99": 2.184167,
+          "max": 5.067291
+        }
+      }
+    },
+    {
+      "players": 4,
+      "army_arrivals": 320,
+      "all_non_timing_fields_match": true,
+      "state_hash": "0x35ed6ae28c643631",
+      "trajectory_hash": "0xbc77e98beecc9afb",
+      "recording_hash": "0x9af396d743e93143",
+      "before_phase_step_ms": {
+        "preparation": {
+          "p50": 1.99225,
+          "p95": 4.799875,
+          "p99": 6.63775,
+          "max": 307.754208
+        },
+        "march": {
+          "p50": 0.976125,
+          "p95": 1.675583,
+          "p99": 2.270041,
+          "max": 15.434042
+        },
+        "combat": {
+          "p50": 0.273083,
+          "p95": 2.008584,
+          "p99": 5.340542,
+          "max": 11.517959
+        }
+      },
+      "after_phase_step_ms": {
+        "preparation": {
+          "p50": 1.7595,
+          "p95": 3.982084,
+          "p99": 5.761666,
+          "max": 220.532041
+        },
+        "march": {
+          "p50": 1.024,
+          "p95": 1.52725,
+          "p99": 2.239208,
+          "max": 13.342083
+        },
+        "combat": {
+          "p50": 0.283083,
+          "p95": 1.755625,
+          "p99": 4.0605,
+          "max": 8.052084
+        }
+      }
+    }
+  ],
+  "trace_attribution": "sample-analysis-prefix-before.json",
+  "measurement_limits": [
+    "desktop simulation only",
+    "before complete workloads from prior verified pass",
+    "wall time depends on OS scheduling and Launcher initialization",
+    "Instruments prefixes are diagnostic and include capture overhead"
+  ],
+  "new_ios_package": false,
+  "device_install": false,
+  "gpu_profiled": false,
+  "thermal_acceptance": false,
+  "public_deployment": false,
+  "compatibility": {
+    "save": 10,
+    "protocol": 7
+  },
+  "remaining": [
+    "remaining long-step collision cost",
+    "current Unreal build and automation",
+    "complete phone match and sustained CPU/GPU/thermal checks",
+    "P1-P7 roadmap"
+  ],
+  "files_sha256": {
+    "MatchLatencyProbe.cpp": "1a7dd8b69217ce56947e741aff1cea262cac726fd639ce2200cc877b09f1eba6",
+    "MatchLatencyProbeInitial.cpp": "dff31cd6bffe409db6a374baba589d573e0da32745982f6ff610f15537f88e42",
+    "NavigationBefore.cpp": "82be50608964fe2446ad677710de2fb7ad1b2a3e6dd72a8d70effe83a6e692e8",
+    "README.md": "2dc54c52803efe2a8ae46dd6ade027ab47519084db62edef429be18ee0ac72c0",
+    "analyze_trace.py": "f3f4f208ff87b2b23a4d96191b319361969eda6ff49f6f4a8a9c1851240743f3",
+    "benchmark-build.log": "a39c603b0360573d3eaac7b7dcc9a7031f3f2c3d91687c2b75f5ea46ef95c232",
+    "endpoint-inputs-sha256.json": "0472d81ddcb07e7bd7fd1c0d172f117b209e890e9619bda7044fc9f06eb3a454",
+    "four-player-after.json": "229b3786b4e1ef2bb000fdce8a4916238368e6b39ab74ff12f3ae40b1090d03b",
+    "four-player-after.stderr.log": "40aca4e0770a92fe93cf70a907debf6ef83ec4d132750049228160e8db8d97e9",
+    "paid-four-probe-before.json": "c5f808f1f2c2e00f4cddccd306414b924ff20855bcd6806fe5fad63cb75336d5",
+    "predicate-before-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "predicates-after.log": "5b9d6de23a26328cfdc2260f733af3905138de7450686ad23bb1e5dfa9cf5c53",
+    "predicates-before-unfrozen.log": "5b9d6de23a26328cfdc2260f733af3905138de7450686ad23bb1e5dfa9cf5c53",
+    "predicates-before.log": "5b9d6de23a26328cfdc2260f733af3905138de7450686ad23bb1e5dfa9cf5c53",
+    "probe-before-inputs-sha256.json": "59b8dd4209feb2df90ed7eeba1aa9364f4567a97527bb8e5efeeeab617fd0fa2",
+    "probe-before.output.log": "8fdeabb835f3948c48ceb0859c8b1cad21017a435ffa180b4bebffde69cc9c2e",
+    "probe-endpoint-prefix.json": "149a1b4b840662548720ddfe1e1da13079a6f8f988ac29df07924caec5802e1b",
+    "probe-native-prefix-before.json": "b7841b440b21f163926f589fd28cc2da4491ecf23442bfee4a5f711aeee0059c",
+    "probe-prefix-after.json": "c56e1285a717eaf7e276d8b322bbc61a5f44263e952a3233c463e1e7cf94c85b",
+    "probe-prefix-after.output.log": "d05fb006c65c709b91236d052afb084284cd7c58df0b3fa79483957619e2a8ee",
+    "probe-prefix-before.json": "5871f25213aa70bee0dc10dc7291faa99589b61d36892f56672fc640edec8e4e",
+    "probe-prefix-before.output.log": "815284358d98fc4c305b022b087ccfc792571ccc9e618863ed5f0b40edf74b2a",
+    "release-after.log": "287afb53f4d25033b39802bc9780a49f226b5a4b0f1efabc7811f62d8ddfee09",
+    "sample-analysis-before.json": "74e4d1da4abbce95b3b57382901671b92ba0f2436dc62ffb36580a273faa7337",
+    "sample-analysis-prefix-after.json": "81442e85dad28ff9ced2dfbaa7aecc9342c183d5a9eed7e852a1838c903ba0dc",
+    "sample-analysis-prefix-before.json": "5c0a5dcd5742bc55d156c3be3a34647f146b511f70b3255d1bcb1139ca9865c5",
+    "sanitize-after.log": "f046367fd4d710b9ac5b9e03dca8942eff01a3510074a2b88e55d92d5ea139dc",
+    "server-after.log": "54eef332189ba66a6d4e563989d1097d4a0a7b38328d3129a43a042ee544f229",
+    "signposts-before.xml": "b90415a1de62c7bf76ef2ac98857ce4367e2b57574383bbeb57a6336b9c3de0c",
+    "signposts-prefix-after.xml": "abb2d0821ed4ba0d8c0da892f32c66bafd53320139b98f769acef512d1ba3009",
+    "signposts-prefix-before.xml": "6366ea0ccf2a15dfea1cb6343b97a64478b40fb3e02e6c768e44b301f2bc75b5",
+    "slow-steps-before.log": "306b5d7fc2617dfbec63902a135774d0faeff004c3e42f84877c7901fc9cf36c",
+    "slow-steps-endpoint-prefix.log": "cdfc0f3a51b50c3dd1341fe1b39e50fedf654eee288fcf4df881962158ac8b1d",
+    "slow-steps-native-prefix-before.log": "fcbffe46c8ba41222d10ba551fb45ed8e0c4696ffa505456c73dc49b6ea5427f",
+    "synthetic-after.json": "359651c8400f3f372b854769a0c945fbfd34af0f0bf2f9b579a478dc1dc45ea8",
+    "synthetic-after.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test-inputs-sha256.json": "f4573cf0e6d160bcba7a074a8223e61031f4cc574a771bfdad2ae2ee1c368e8e",
+    "trace-before-record.log": "0186aab2825ea83a93ba1c740b2062d729dee308aeccca9855efb76a447bb031",
+    "trace-before-toc.xml": "a7d46a51905edba5cb9026c437ccdd8cb5322d06fdc5147690482973774fda9d",
+    "trace-prefix-after-record.log": "3a1080b165d1ceaa708c610740459a7f785e383eddf83e7a7e4fb80fa5fe9b4b",
+    "trace-prefix-before-record.log": "f6840a737d7b7c9cd9b87738a6fe3223872a9edd1ec00a064ab96c74966ae8c8",
+    "trace-prefix-before-toc.xml": "999d4a0c2dbc1c9f34ed5389d1b0d0ba9cb5ceedb32e5da7952992b66fc0ee87",
+    "two-player-after.json": "e4a88398acb2ee00438ce92990e2a865b2589cac3cc6d3e0b9cc482c7ab89bb4",
+    "two-player-after.stderr.log": "0d86c3dd35611a292542a3eb6c2e25b8b91ba253bf4a9c7e9ea545c8c2f98624",
+    "verified-core-sha256.json": "1097b8042f5aee135b71db8dc278dcbb8a6da0e8b089a1e5be689ed5b56c19e6",
+    "verify_endpoint_pass.py": "936127f68ab2edef7c08b60c47a4b0c1f1f9a025b955c062c4f719928726ffeb"
+  }
+}

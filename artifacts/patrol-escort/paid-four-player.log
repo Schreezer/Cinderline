@@ -1,0 +1,16 @@
+match-baseline preparation tick 0 team0=5/100 supply=9/30 team1=5/100 supply=9/30 team2=5/100 supply=9/30 team3=5/100 supply=9/30
+match-baseline preparation tick 6000 team0=21/100 supply=21/184 team1=21/100 supply=21/184 team2=21/100 supply=21/184 team3=21/100 supply=21/184
+match-baseline preparation tick 12000 team0=30/100 supply=96/184 team1=28/100 supply=94/184 team2=30/100 supply=96/184 team3=28/100 supply=94/184
+match-baseline preparation tick 18000 team0=48/100 supply=122/184 team1=47/100 supply=120/184 team2=48/100 supply=122/184 team3=48/100 supply=122/184
+match-baseline preparation tick 24000 team0=61/100 supply=146/184 team1=61/100 supply=146/184 team2=61/100 supply=146/184 team3=61/100 supply=146/184
+match-baseline preparation tick 30000 team0=74/100 supply=172/184 team1=73/100 supply=170/184 team2=74/100 supply=172/184 team3=74/100 supply=172/184
+match-baseline preparation tick 36000 team0=86/100 supply=184/184 team1=86/100 supply=184/184 team2=86/100 supply=184/184 team3=86/100 supply=184/184
+match-baseline preparation tick 42000 team0=96/100 supply=184/184 team1=96/100 supply=184/184 team2=96/100 supply=184/184 team3=96/100 supply=184/184
+match-baseline preparation tick 48000 team0=100/100 supply=184/184 team1=100/100 supply=184/184 team2=100/100 supply=184/184 team3=100/100 supply=184/184
+match-baseline preparation tick 54000 team0=100/100 supply=184/184 team1=100/100 supply=184/184 team2=100/100 supply=184/184 team3=100/100 supply=184/184
+match-baseline preparation tick 60000 team0=100/100 supply=184/184 team1=100/100 supply=184/184 team2=100/100 supply=184/184 team3=100/100 supply=184/184
+match-baseline preparation tick 66000 team0=100/100 supply=184/184 team1=100/100 supply=184/184 team2=100/100 supply=184/184 team3=100/100 supply=184/184
+match-baseline preparation tick 0 team0=5/100 supply=9/30 team1=5/100 supply=9/30 team2=5/100 supply=9/30 team3=5/100 supply=9/30
+match-baseline preparation tick 6000 team0=21/100 supply=21/184 team1=21/100 supply=21/184 team2=21/100 supply=21/184 team3=21/100 supply=21/184
+match-baseline preparation tick 12000 team0=30/100 supply=96/184 team1=28/100 supply=94/184 team2=30/100 supply=96/184 team3=28/100 supply=94/184
+match-baseline preparation tick 18000 team0=48/100 supply=122/184 team1=47/100 supply=120/184 team2=48/100 supply=122/184 team3=48/100 supply=122/184

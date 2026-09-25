@@ -1,0 +1,105 @@
+{
+  "schema": "cinderline.match_scale_verification.v1",
+  "status": "locally verified instrumentation, cache and same-source legal workload comparison; P0 remains partial",
+  "date": "2026-09-14",
+  "git_head": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "dirty_tree_source_manifest": "production-source-sha256.json",
+  "checks": {
+    "portable_suites": 12,
+    "sanitizer_suites": 12,
+    "server_tests": 32,
+    "unreal_checks": 37,
+    "unreal_allowed_idevice_id_warnings": 2,
+    "synthetic_arrivals": [
+      160,
+      200,
+      400
+    ],
+    "synthetic_state_hashes": [
+      "0x262c63d50786a124",
+      "0x0c0167983082b76d",
+      "0xff16d50b23bd1499"
+    ]
+  },
+  "performance_captures_complete": true,
+  "new_ios_package": false,
+  "installed_on_device": false,
+  "physical_gameplay_tested": false,
+  "public_deployment": false,
+  "files_sha256": {
+    "portable-final.log": "6f63bb58d122ef288e4aa2a62087db6766784e1482e4e4b46a2c518afcff8069",
+    "sanitizer-final.log": "4f7a9e9080e25963d67defcae7b944381e72d78b899182d15dc81cb79b5d9109",
+    "server-final.log": "3fd694728ee1e729b8bfc7ebc25ff32d733cd400adc7f642258b2446a349269c",
+    "unreal-cache-build.log": "52f0190adbe2b9d7d57ec9130a65e2afc02a99ff77b20696eb29f09561e67458",
+    "unreal-cache-automation.log": "9b90d5c3c27df98ec826c602f045ef2635633e676a5e37b4da3e8bc0d8f41aa2",
+    "unreal-report.json": "2fdc7ae196b4a344a0f1fe1c7e7b67c2127b4901f34359be53029fccaacbf495",
+    "synthetic-current.json": "efb1a535ef3be64e4fa378a6f549650d4fe379c41c869851fbb395fd9a12220a",
+    "production-source-sha256.json": "1473fc93310a7eed0463fdbcbb73ae2c0209efb1b985364f49f7e561b9eb6afb",
+    "benchmark-build.log": "4e49a43ad0b16f14ff176e894f7216a617adb4ce66f9008c0a390ee8247f5b06",
+    "original-goals-diagnostic.json": "73def6f153dfdac17f5e4de1fb185fdf58c4e044ba9670c03a65725eb5b5e80f",
+    "original-goals-diagnostic.stderr.log": "ec6c9dd78709bece8047572fe101c0e54b2a00d7afc5931a9c761b26d48825df",
+    "march-geometry-diagnosis.json": "b4f0cc5877c88185814bc4ecbd9714280a905e70cb1e17126ee0991712211b3d",
+    "original-goals-march-end.save": "38e7011f12c2551e4706f897b983c53171b1a4385164ab3b34ee79a90aa29438",
+    "two-player-after.json": "9360254b615adfaf933846346d4ff1226a6602a269632c03ab4e6eab16e88828",
+    "four-player-diagnostic.json": "a1a49d82f89494f5a5d37ebe5bb3d201b57c24ce5980dfddc51571b5a28dd5a9",
+    "sanitizer.log": "05a2aadb010be6f51314669c42e7da6559b724a2effc049d0f3b58dcfdca13a8",
+    "navigation-cache.diff": "b559d2fddd93cbac20bfa8299ee68e138eeb5948a77eb538cf69aa40434ee95e",
+    "unreal-automation.log": "dd6ec829c3798930c075b2f2b8fc3ce131499f3e2c728e40e6325901352935c9",
+    "four-player-after.json": "8c8d5c75b17d0e93b562909e286610128c630b7f9e00429ddd7049ef97db96c7",
+    "two-player-before.json": "1d25ed59bcea4374aa0c95725aaa3a859cb717515964fc1b98e8d91a06abd9a1",
+    "verify_comparison.py": "8647d2f77ccd4f43908d936c4db3b85fb13e581462f0b88512a8fa1650c5a547",
+    "comparison.json": "a048e8e47af098d0001ea17cf3375a402aed8ce7fd3c263ac9a7e4788c59cd97",
+    "original-goals-march-start.save": "260602c4a4e64b294d5b1f86dca4d95270b087e33394c5131f6fc1c736f3cef2",
+    "portable-build.log": "b8b789b907598e540509ca0767dd2f6a70cc1a19830ab8d4f444055ce5ebdea9",
+    "four-player-diagnostic.stderr.log": "69ec2947aa24b1317e84297585f52159094f29502cb395328c3b3c08ff32db27",
+    "unreal-build-final.log": "f399a68622764ccc995945ab3ebe760e12e63fa7e6027c0b81ef2123d7ac6e6e",
+    "benchmark-inputs-sha256.json": "608c4b1687e79b25a92d8ae46bc70434eec1ca8598b2d8fe8b7d34d8d6de1a55",
+    "march-geometry-probe.cpp": "cde8ecfc912eea66d40af9cbe9231ea835a4c0ab67d8916b3289ea512cd21e7f",
+    "preparation-sample.txt": "b1f427b4368b44f775e0a952c3ef04b069e63092b8b2f03cb39df4bb3f60104b",
+    "four-player-before.stderr.log": "0a0d8467a69301997c01cbf831bb7470afde621463932af99e9771f5691142cc",
+    "march-geometry-probe.log": "d0ad2cd404f865bf7bb7de92c9b531fb9a2c38bef98abee157927a2e1b910d16",
+    "unreal-build.log": "41138c20dda776ad672d86957d1aaf80e5fdc08493ebb34734862c43addcb6df",
+    "four-player-after.stderr.log": "0a0d8467a69301997c01cbf831bb7470afde621463932af99e9771f5691142cc",
+    "two-player-after.stderr.log": "4423eb386ef4338659774c92e6451832d9abb71b85bc13dc321d4a7893e35e1a",
+    "server-tests.log": "ea926677bdb0bf329b28b4510f57d747d7e54dfaec5b812c8d680d4745a45b44",
+    "portable-tests.log": "b741814fb74d413f22665414f57e1023355a65cba2a268763082c9b5b9f39aaf",
+    "environment.json": "3dc89680b1cdcb81838a848632b936d137731bee4b8db4f6ae89d66fcf293571",
+    "four-player-before.json": "0b2b8ce4f3c5054a6b5df39e751bbd5a5c99c06a1eaeaff6c311aba313c6c30b",
+    "production-exit-repro.cpp": "cafd5fbcfe82fe1341283784e1368c5467d7f397175eec1ba339e5d852c35ce5",
+    "production-exit-repro.log": "160048f66e68b402a66ddd5cb4f75aa43c2073d957b7e7a384a5fc51993014d3",
+    "two-player-before.stderr.log": "4423eb386ef4338659774c92e6451832d9abb71b85bc13dc321d4a7893e35e1a",
+    "two-player-diagnostic.json": "cf240c06d02fbc5d107828f6f1f7dc47bb2f855789ff5c4d11e0487742ec07b8",
+    "MatchBaseline-original-goals-diagnostic.cpp": "c109c7efb2cdf6d3232a9e4df57b2b3985c291cf9bc7535c58a5dcf0b391b115"
+  },
+  "preserved_before_core_sha256": "718a3d78920d46bc723626d6fc9fd3df0656dcd21da9396a31e42135ff6cfe3c",
+  "optimized_core_sha256": "bdd2b77a062fcbd0a0ee02aa2ed0fbd67cdc5fbab62a54d7f0a3301819d0a199",
+  "limitations": [
+    "Source remains save version 10/protocol 7; no iOS package, install, public deployment or device gameplay/thermal result in this pass.",
+    "Two-player and four-player preparation maxima remain about 154 and 329 ms; peak call-stack capture and bounded work remain open.",
+    "Four-player march p99 increased in this one-pair comparison; no uniform or statistically guaranteed speedup is claimed.",
+    "Locally clear production exit can be disconnected despite a reachable alternate exit; isolated reproducer remains open.",
+    "Portable CPU wall-clock and snapshot metrics exclude rendering, GPU, network transit, touch latency and phone thermals.",
+    "Combat windows include unit attrition; the reference is 100 mixed units/184 crew per player, not the theoretical 200/800 mobile-unit ceilings.",
+    "Independent review covered production profiling/cache changes; the later planned tactical-order brief was reviewed locally after the agent hit its usage limit."
+  ],
+  "comparison": "comparison.json",
+  "production_exit_defect": {
+    "status": "reproduced, not fixed",
+    "source": "production-exit-repro.cpp",
+    "output": "production-exit-repro.log",
+    "exit_code": 0,
+    "scope": "synthetic isolated layout with normal paid Train command"
+  },
+  "legal_army_arrivals": [
+    [
+      80,
+      80
+    ],
+    [
+      80,
+      80,
+      80,
+      80
+    ]
+  ]
+}

@@ -1,0 +1,26 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+    Start 13: navigation_multi_source_regressions
+1/2 Test #13: navigation_multi_source_regressions ...   Passed    0.90 sec
+    Start 14: production_exit_regressions
+2/2 Test #14: production_exit_regressions ...........***Failed    0.68 sec
+PASS exact Mortar alternate exit
+FAIL explicit ground worker alternate exit: explicit-worker fixture begins with a clear but unreachable exit
+FAIL ore and default worker alternate exits: worker mining fixture begins with an exit that cannot reach ore work
+PASS air unit ground-routing bypass
+PASS paid-ready no-local-exit persistence
+PASS unreachable-rally clear fallback
+FAIL simultaneous producer budget fairness: simultaneous producer accepts its paid Mender
+RESULT passed=4 failed=3
+
+
+50% tests passed, 1 tests failed out of 2
+
+Label Time Summary:
+navigation    =   1.58 sec*proc (2 tests)
+production    =   1.58 sec*proc (2 tests)
+
+Total Test time (real) =   1.59 sec
+
+The following tests FAILED:
+	 14 - production_exit_regressions (Failed)              navigation production
+Errors while running CTest

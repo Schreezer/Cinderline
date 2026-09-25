@@ -1,0 +1,73 @@
+[  1%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[  2%] Linking CXX static library libCinderlineSimulation.a
+[ 12%] Built target CinderlineSimulation
+[ 17%] Linking CXX executable CinderlineGameplayBaseline
+[ 17%] Linking CXX executable CinderlineMatchBaseline
+[ 17%] Linking CXX executable CinderlineTacticalOrderBaseline
+[ 17%] Linking CXX executable CinderlineSustainedOrderBaseline
+[ 20%] Built target CinderlineTacticalOrderBaseline
+[ 20%] Built target CinderlineMatchBaseline
+[ 21%] Built target CinderlineSustainedOrderBaseline
+[ 22%] Built target CinderlineGameplayBaseline
+[ 27%] Linking CXX executable CinderlineMatchWorker
+[ 27%] Linking CXX executable CinderlineAIChallengeBaseline
+[ 27%] Linking CXX executable CinderlineFormationOrderBaseline
+[ 27%] Linking CXX executable CinderlineTests
+[ 28%] Built target CinderlineAIChallengeBaseline
+[ 30%] Built target CinderlineMatchWorker
+[ 31%] Built target CinderlineTests
+[ 32%] Built target CinderlineFormationOrderBaseline
+[ 35%] Linking CXX executable CinderlineNavigationTests
+[ 35%] Linking CXX executable CinderlineMovementFollowingTests
+[ 36%] Linking CXX executable CinderlineNavigationRouteQualityTests
+[ 37%] Linking CXX executable CinderlineNetworkTests
+[ 40%] Built target CinderlineMovementFollowingTests
+[ 40%] Built target CinderlineNavigationTests
+[ 41%] Built target CinderlineNavigationRouteQualityTests
+[ 42%] Built target CinderlineNetworkTests
+[ 47%] Linking CXX executable CinderlineAIDifficultyTests
+[ 47%] Linking CXX executable CinderlineDefenseTests
+[ 47%] Linking CXX executable CinderlineAIDifficultyProgressionTests
+[ 47%] Linking CXX executable CinderlineAITacticsTests
+[ 52%] Built target CinderlineAIDifficultyProgressionTests
+[ 52%] Built target CinderlineAIDifficultyTests
+[ 52%] Built target CinderlineDefenseTests
+[ 52%] Built target CinderlineAITacticsTests
+[ 56%] Linking CXX executable CinderlineMatchLengthTests
+[ 56%] Linking CXX executable CinderlineProductionAllocationTests
+[ 56%] Linking CXX executable CinderlineAIEconomyTests
+[ 57%] Linking CXX executable CinderlineAIResourceControlTests
+[ 58%] Built target CinderlineMatchLengthTests
+[ 60%] Built target CinderlineAIEconomyTests
+[ 61%] Built target CinderlineProductionAllocationTests
+[ 62%] Built target CinderlineAIResourceControlTests
+[ 67%] Linking CXX executable CinderlineTacticalOrderTests
+[ 67%] Linking CXX executable CinderlineOrderCompletionTests
+[ 67%] Linking CXX executable CinderlineFourPlayerTests
+[ 67%] Linking CXX executable CinderlinePatrolEscortTests
+[ 68%] Built target CinderlineTacticalOrderTests
+[ 70%] Built target CinderlineFourPlayerTests
+[ 71%] Built target CinderlinePatrolEscortTests
+[ 72%] Built target CinderlineOrderCompletionTests
+[ 75%] Linking CXX executable CinderlineWorkerOrderCompletionTests
+[ 75%] Linking CXX executable CinderlineTacticalInterruptionTests
+[ 76%] Linking CXX executable CinderlineFormationOrderTests
+[ 77%] Linking CXX executable CinderlineBuilderQueueTests
+[ 80%] Built target CinderlineBuilderQueueTests
+[ 80%] Built target CinderlineTacticalInterruptionTests
+[ 81%] Built target CinderlineFormationOrderTests
+[ 82%] Built target CinderlineWorkerOrderCompletionTests
+[ 83%] Linking CXX executable CinderlineNavigationAttachmentCacheTests
+[ 86%] Linking CXX executable CinderlineSimulationProfilingTests
+[ 86%] Linking CXX executable CinderlineNavigationMultiSourceTests
+[ 87%] Linking CXX executable CinderlineNavigationPredicateParityTests
+[ 88%] Built target CinderlineNavigationMultiSourceTests
+[ 91%] Built target CinderlineNavigationPredicateParityTests
+[ 91%] Built target CinderlineNavigationAttachmentCacheTests
+[ 92%] Built target CinderlineSimulationProfilingTests
+[ 93%] Linking CXX executable CinderlineNavigationTerrainVisibilityTests
+[ 95%] Linking CXX executable CinderlineProductionTrafficTests
+[ 96%] Linking CXX executable CinderlineProductionExitTests
+[ 98%] Built target CinderlineProductionTrafficTests
+[ 98%] Built target CinderlineNavigationTerrainVisibilityTests
+[100%] Built target CinderlineProductionExitTests

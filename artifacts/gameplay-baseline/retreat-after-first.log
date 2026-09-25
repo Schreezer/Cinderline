@@ -1,0 +1,3 @@
+RETREAT_LAGGARD id=37 kind=2 pos=827.19,2737.72 goal=900,2672 remaining=98.0867 order=0 failures=0 exhausted=0
+FAIL repeated mixed-army retreat: every surviving mixed-army unit reaches its final retreat slot
+RESULT passed=0 failed=1

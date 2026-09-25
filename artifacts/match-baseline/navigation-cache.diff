@@ -1,0 +1,146 @@
+diff --git a/Source/Cinderline/Private/Sim/Navigation.cpp b/Source/Cinderline/Private/Sim/Navigation.cpp
+index aa5f877..b59cf90 100644
+--- a/Source/Cinderline/Private/Sim/Navigation.cpp
++++ b/Source/Cinderline/Private/Sim/Navigation.cpp
+@@ -4,6 +4,7 @@
+ #include <array>
+ #include <cmath>
+ #include <cstring>
++#include <deque>
+ #include <memory>
+ #include <unordered_map>
+ #include <utility>
+@@ -18,6 +19,8 @@ constexpr float NavAttachmentRange = 42.0f;
+ constexpr int NavMaxAdaptiveNodes = 8192;
+ // A route cannot consume an entire simulation step on a large obstructed map.
+ constexpr int NavMaxExpandedNodes = 40000;
++constexpr std::size_t NavMaxGoalAttachmentCacheEntries = 2048;
++constexpr std::size_t NavMaxGoalAttachmentCacheBytes = 4 * 1024 * 1024;
+ constexpr float NavPi = 3.14159265358979323846f;
+ constexpr float NavInfinity = std::numeric_limits<float>::infinity();
+ 
+@@ -178,6 +181,40 @@ struct Navigation::Impl {
+         int goal = -1;
+     };
+ 
++    struct CachedGoalAttachment {
++        int node = -1;
++        float cost = 0;
++    };
++
++    struct GoalAttachmentKey {
++        std::uint32_t x = 0;
++        std::uint32_t y = 0;
++        std::uint32_t clearance = 0;
++
++        bool operator==(const GoalAttachmentKey& other) const
++        {
++            return x == other.x && y == other.y && clearance == other.clearance;
++        }
++    };
++
++    struct GoalAttachmentKeyHash {
++        std::size_t operator()(const GoalAttachmentKey& key) const
++        {
++            std::uint64_t value = 1469598103934665603ULL;
++            auto add = [&](std::uint32_t part) {
++                for (int byte = 0; byte < 4; ++byte) {
++                    value = (value ^ static_cast<std::uint8_t>(part & 255)) * 1099511628211ULL;
++                    part >>= 8;
++                }
++            };
++            add(key.x); add(key.y); add(key.clearance);
++            return static_cast<std::size_t>(value);
++        }
++    };
++
++    static_assert(sizeof(CachedGoalAttachment) == 8,
++        "goal attachment cache accounting assumes one 8-byte node/cost pair");
++
+     std::shared_ptr<State> state = std::make_shared<State>();
+ 
+     // Search arrays use stamps so a route does not clear the full grid.
+@@ -190,6 +227,17 @@ struct Navigation::Impl {
+     mutable std::vector<std::uint32_t> hasGoal;
+     mutable std::uint32_t searchStamp = 0;
+     mutable std::vector<OpenNode> open;
++    mutable std::unordered_map<GoalAttachmentKey, std::vector<CachedGoalAttachment>,
++        GoalAttachmentKeyHash> goalAttachmentCache;
++    mutable std::deque<GoalAttachmentKey> goalAttachmentFIFO;
++    mutable std::size_t goalAttachmentCacheBytes = 0;
++
++    void clearGoalAttachmentCache()
++    {
++        goalAttachmentCache.clear();
++        goalAttachmentFIFO.clear();
++        goalAttachmentCacheBytes = 0;
++    }
+ 
+     static bool sameGeometry(const Geometry& a, const Geometry& b)
+     {
+@@ -579,6 +627,46 @@ struct Navigation::Impl {
+         return result;
+     }
+ 
++    std::vector<Attachment> cachedGoalAttachments(const Layer& layer, Vec2 point,
++        float clearance, int goal) const
++    {
++        const GoalAttachmentKey key{
++            navFloatBits(point.x), navFloatBits(point.y), navFloatBits(clearance)};
++        const auto found = goalAttachmentCache.find(key);
++        if (found != goalAttachmentCache.end()) {
++            std::vector<Attachment> result;
++            result.reserve(found->second.size());
++            for (const CachedGoalAttachment& attachment : found->second) {
++                result.push_back({attachment.node, attachment.cost, goal});
++            }
++            return result;
++        }
++
++        std::vector<Attachment> result = attachments(layer, point, clearance, 0, goal);
++        std::vector<CachedGoalAttachment> cached(result.size());
++        for (std::size_t index = 0; index < result.size(); ++index) {
++            cached[index] = {result[index].node, result[index].cost};
++        }
++        const std::size_t storedBytes = cached.capacity() * sizeof(CachedGoalAttachment);
++        if (storedBytes > NavMaxGoalAttachmentCacheBytes) return result;
++
++        while (!goalAttachmentFIFO.empty()
++            && (goalAttachmentCache.size() >= NavMaxGoalAttachmentCacheEntries
++                || goalAttachmentCacheBytes > NavMaxGoalAttachmentCacheBytes - storedBytes)) {
++            const GoalAttachmentKey oldest = goalAttachmentFIFO.front();
++            goalAttachmentFIFO.pop_front();
++            const auto entry = goalAttachmentCache.find(oldest);
++            if (entry == goalAttachmentCache.end()) continue;
++            goalAttachmentCacheBytes -= entry->second.capacity() * sizeof(CachedGoalAttachment);
++            goalAttachmentCache.erase(entry);
++        }
++
++        goalAttachmentCacheBytes += storedBytes;
++        goalAttachmentFIFO.push_back(key);
++        goalAttachmentCache.emplace(key, std::move(cached));
++        return result;
++    }
++
+     template <typename Visitor>
+     void visitNeighbors(const Layer& layer, int node, Id ignore, Visitor&& visitor) const
+     {
+@@ -781,7 +869,9 @@ struct Navigation::Impl {
+         if (starts.empty()) return result;
+         std::vector<Attachment> ends;
+         for (int goal = 0; goal < static_cast<int>(goals.size()); ++goal) {
+-            std::vector<Attachment> attached = attachments(graph, goals[goal], clearance, ignore, goal);
++            std::vector<Attachment> attached = ignore
++                ? attachments(graph, goals[goal], clearance, ignore, goal)
++                : cachedGoalAttachments(graph, goals[goal], clearance, goal);
+             ends.insert(ends.end(), attached.begin(), attached.end());
+         }
+         if (ends.empty()) return result;
+@@ -888,6 +978,7 @@ void Navigation::sync(float worldSize, const std::vector<NavBox>& boxes,
+         && Impl::sameGeometry(geometry, impl_->state->geometry)) return;
+     impl_->state = std::make_shared<Impl::State>();
+     impl_->state->geometry = std::move(geometry);
++    impl_->clearGoalAttachmentCache();
+ }
+ 
+ void Navigation::addCircle(NavCircle circle)

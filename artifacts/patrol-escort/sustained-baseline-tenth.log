@@ -1,0 +1,18 @@
+Patrol 16 mobiles: primary and repeat
+Escort 16 mobiles: primary and repeat
+Escort convergence diagnostic: count=16 tick=9600 completed=13 leader=1815.47,3299.71 leader_order=0
+ follower=39 kind=4 pos=1879.3,3268.53 goal=1719.47,3299.71 offset=-96,0 exhausted=0 failures=5 path=0/1 yield=0.2
+  neighbor=35 kind=4 pos=1815.47,3299.71 goal=1800,3300 order=0 yield=0
+  neighbor=37 kind=2 pos=1815.47,3203.71 goal=1815.47,3203.71 order=9 yield=0
+  neighbor=38 kind=3 pos=1911.47,3203.71 goal=1911.47,3203.71 order=9 yield=0
+  neighbor=40 kind=5 pos=1897.71,3332.49 goal=1911.47,3299.71 order=9 yield=0
+  neighbor=42 kind=7 pos=1815.47,3395.71 goal=1815.47,3395.71 order=9 yield=0
+  neighbor=43 kind=0 pos=1912.34,3395.7 goal=1911.47,3395.71 order=9 yield=0
+  neighbor=50 kind=7 pos=2007.47,3203.71 goal=2007.47,3203.71 order=9 yield=0
+ follower=40 kind=5 pos=1897.71,3332.49 goal=1911.47,3299.71 offset=96,0 exhausted=0 failures=5 path=0/1 yield=0
+  neighbor=35 kind=4 pos=1815.47,3299.71 goal=1800,3300 order=0 yield=0
+  neighbor=38 kind=3 pos=1911.47,3203.71 goal=1911.47,3203.71 order=9 yield=0
+  neighbor=39 kind=4 pos=1879.3,3268.53 goal=1719.47,3299.71 order=9 yield=0.2
+  neighbor=42 kind=7 pos=1815.47,3395.71 goal=1815.47,3395.71 order=9 yield=0
+  neighbor=43 kind=0 pos=1912.34,3395.7 goal=1911.47,3395.71 order=9 yield=0
+Sustained workload failed: Escort failed stable convergence at its accepted slots

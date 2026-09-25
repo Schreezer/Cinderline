@@ -1,0 +1,1019 @@
+{
+  "schema": "cinderline.formation_order_verification.v1",
+  "verified_at_utc": "2026-09-14T20:40:05.977367+00:00",
+  "status": "P1 local feature implementation verified; paid workload and physical acceptance remain open",
+  "execution_boundary": "stop after P1; P2 and later not started",
+  "git_head_context": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "dirty_checkout": true,
+  "source_manifest_sha256": "d5ef9690a93227606451c51cca21de06086a31cfe3a50d6bdcb62fd57a2d7a8f",
+  "source_file_count": 159,
+  "binary_sha256": {
+    "Binaries/Mac/libUnrealEditor-Cinderline.dylib": "90400e0f2a8d4aae463ff91b74557f810bdea6987c88cb510b85d126dc5adb91",
+    "Saved/P1FormationBuild/libCinderlineSimulation.a": "c940cf46d2307a19c1233590b732aa3bfd4da54732222792ed0fa9f7a9c5d74e",
+    "Saved/P1FormationBuild/CinderlineMatchWorker": "94f80197309e53d7db0369a1cc9de84eabd80ae641f4edb2bf6748b26716c700",
+    "Saved/P1FormationBuild/CinderlineFormationOrderBaseline": "084e4e97cc1bc46e364271cb9d530171572299e9448def619f2ec3cda38b2ee5",
+    "Saved/P1FormationBuild/CinderlineSustainedOrderBaseline": "70561a7840bd69b30e57162c70a37a60d1f97090c82b353f6cc44f0c2f31d03c",
+    "Saved/P1FormationBuild/CinderlineTacticalOrderBaseline": "9176040d7782d46b827c33ff0718943abc2b7596189252ba2d39c360c3cc1ced",
+    "Saved/P1FormationBuild/CinderlineGameplayBaseline": "0d09abd6a53de25a07efa14d65b670b3b01a97bf51af52a522e1a020147dc2db"
+  },
+  "evidence_sha256": {
+    "release.log": "d798a85d519fd2365609f81ac12c015b418dba7022a827fd521341791b4d4933",
+    "sanitize.log": "f7c7f7d76a20a5fd9098caa899fcdf6ad4dd34c94b5b0374c9c7feac1d74c4ea",
+    "server.log": "bd7a75cae4bb1717503c869d4ab677112555dc07335bdbc24d50aac9db7b1488",
+    "unreal-build.log": "c15fffc238b771c0c3752ab29a17ce2963134fbbdd3d972b7d2b11c704d21a3b",
+    "unreal-tests.log": "b66590b004354ae4eaca59cce390bd042be9b478f6fe123582bd926a2c28c994",
+    "multiplayer.log": "211296a924875e68b28255f12edfa043fb773297e1852eed5be0c0cc69641154",
+    "formation-baseline.json": "1c96e70be7a2488275cfd869f37bdd69776fdb93832073afb69f0e6aceb5b201",
+    "sustained-baseline.json": "6256f9f2dbbc7c834a21f26cdc39047a68c190706ba2f5a11eefc045c901aa57",
+    "queue-baseline.json": "36981399f1c1df6e545ee008654d08bca6863193341397ad9e86abfe783063da",
+    "navigation-baseline.json": "261b7d8282b2ae25f2a3badf82d4835830a079b857a650fdd93a0024070b0fe5",
+    "preview-verification.json": "5132a9203aa722c63e0584278dbb4600aacb86d22b5ca56fa938dc9fc9228776"
+  },
+  "compatibility": {
+    "save": 13,
+    "protocol": 10,
+    "legacy_saves_supported": "1-12"
+  },
+  "checks": {
+    "release_suites": 21,
+    "sanitizer_suites": 21,
+    "server_tests": 35,
+    "unreal_tests": 40,
+    "real_loopback_transport_tests": 2
+  },
+  "integration_report": {
+    "path": "Saved/Automation/Integration/20260914T203203Z-71929/index.json",
+    "sha256": "94d26c97144a254eeffed86d1061b1b269b75d17798faa9e58b6f062fce8d228",
+    "succeeded": 39,
+    "succeeded_with_warnings": 1
+  },
+  "transport_report": {
+    "path": "Saved/Automation/Multiplayer/20260914T203242Z-70357/index.json",
+    "sha256": "6745d34c0522ba1cc1ddec21b420396cb073d980ece22c87c28403be28d9774a",
+    "succeeded": 2,
+    "succeeded_with_warnings": 0
+  },
+  "formation_workloads": [
+    {
+      "units": 16,
+      "state_hash": "1944231857660257517",
+      "trajectory_hash": "8551353307069334370",
+      "recording_hash": "9373822447369689445",
+      "deterministic_repeat": true,
+      "accepted_points_unchanged": true,
+      "step_ms": {
+        "p50": 0.012292,
+        "p95": 0.025416,
+        "p99": 0.0355,
+        "max": 0.173667
+      },
+      "legs": [
+        {
+          "spacing": 0,
+          "facing": 0.0,
+          "ticks": 580,
+          "arrived": 16,
+          "command_ms": 0.235333
+        },
+        {
+          "spacing": 1,
+          "facing": 0.785398,
+          "ticks": 326,
+          "arrived": 16,
+          "command_ms": 0.015542
+        },
+        {
+          "spacing": 2,
+          "facing": -3.141593,
+          "ticks": 341,
+          "arrived": 16,
+          "command_ms": 0.006958
+        }
+      ],
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 623,
+        "messages": 1246,
+        "build_ms": {
+          "mean": 0.032592,
+          "p50": 0.029708,
+          "p95": 0.050042,
+          "p99": 0.066208,
+          "max": 0.162291
+        },
+        "encode_ms": {
+          "mean": 0.005767,
+          "p50": 0.006791,
+          "p95": 0.010625,
+          "p99": 0.015334,
+          "max": 0.054334
+        },
+        "message_cpu_ms": {
+          "mean": 0.038359,
+          "p50": 0.035708,
+          "p95": 0.057583,
+          "p99": 0.079958,
+          "max": 0.216625
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.077099,
+          "p50": 0.070542,
+          "p95": 0.120458,
+          "p99": 0.157,
+          "max": 0.300208
+        },
+        "message_bytes": {
+          "mean": 1287.286517,
+          "p50": 370.0,
+          "p95": 2288.0,
+          "p99": 2288.0,
+          "max": 2297.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 2574.573034,
+          "p50": 2565.0,
+          "p95": 2658.0,
+          "p99": 2658.0,
+          "max": 2667.0
+        },
+        "visible_entities": {
+          "mean": 9.0,
+          "p50": 1.0,
+          "p95": 17.0,
+          "p99": 17.0,
+          "max": 17.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "units": 160,
+      "state_hash": "14235848344096986302",
+      "trajectory_hash": "16241075980255383225",
+      "recording_hash": "10619465907801368144",
+      "deterministic_repeat": true,
+      "accepted_points_unchanged": true,
+      "step_ms": {
+        "p50": 0.168334,
+        "p95": 0.232917,
+        "p99": 0.245875,
+        "max": 0.311583
+      },
+      "legs": [
+        {
+          "spacing": 0,
+          "facing": 0.0,
+          "ticks": 649,
+          "arrived": 160,
+          "command_ms": 3.115042
+        },
+        {
+          "spacing": 1,
+          "facing": 0.785398,
+          "ticks": 530,
+          "arrived": 160,
+          "command_ms": 0.914167
+        },
+        {
+          "spacing": 2,
+          "facing": -3.141593,
+          "ticks": 549,
+          "arrived": 160,
+          "command_ms": 0.09275
+        }
+      ],
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 863,
+        "messages": 1726,
+        "build_ms": {
+          "mean": 0.038922,
+          "p50": 0.041542,
+          "p95": 0.049875,
+          "p99": 0.056167,
+          "max": 0.085167
+        },
+        "encode_ms": {
+          "mean": 0.021293,
+          "p50": 0.004375,
+          "p95": 0.043583,
+          "p99": 0.047958,
+          "max": 0.053458
+        },
+        "message_cpu_ms": {
+          "mean": 0.060215,
+          "p50": 0.045875,
+          "p95": 0.093833,
+          "p99": 0.103458,
+          "max": 0.131083
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.121706,
+          "p50": 0.117666,
+          "p95": 0.138583,
+          "p99": 0.152333,
+          "max": 0.168917
+        },
+        "message_bytes": {
+          "mean": 8536.746813,
+          "p50": 370.0,
+          "p95": 16814.0,
+          "p99": 16817.0,
+          "max": 16823.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 17073.493627,
+          "p50": 17082.0,
+          "p95": 17184.0,
+          "p99": 17190.0,
+          "max": 17193.0
+        },
+        "visible_entities": {
+          "mean": 81.0,
+          "p50": 1.0,
+          "p95": 161.0,
+          "p99": 161.0,
+          "max": 161.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "units": 200,
+      "state_hash": "10661714142615538601",
+      "trajectory_hash": "13963707575079026353",
+      "recording_hash": "2309420948764314920",
+      "deterministic_repeat": true,
+      "accepted_points_unchanged": true,
+      "step_ms": {
+        "p50": 0.212083,
+        "p95": 0.315666,
+        "p99": 0.328667,
+        "max": 0.340625
+      },
+      "legs": [
+        {
+          "spacing": 0,
+          "facing": 0.0,
+          "ticks": 706,
+          "arrived": 200,
+          "command_ms": 5.139417
+        },
+        {
+          "spacing": 1,
+          "facing": 0.785398,
+          "ticks": 673,
+          "arrived": 200,
+          "command_ms": 1.254292
+        },
+        {
+          "spacing": 2,
+          "facing": -3.141593,
+          "ticks": 664,
+          "arrived": 200,
+          "command_ms": 0.129333
+        }
+      ],
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 1021,
+        "messages": 2042,
+        "build_ms": {
+          "mean": 0.041523,
+          "p50": 0.043208,
+          "p95": 0.055375,
+          "p99": 0.059375,
+          "max": 0.066166
+        },
+        "encode_ms": {
+          "mean": 0.025778,
+          "p50": 0.0045,
+          "p95": 0.053417,
+          "p99": 0.057583,
+          "max": 0.060792
+        },
+        "message_cpu_ms": {
+          "mean": 0.067301,
+          "p50": 0.047,
+          "p95": 0.108917,
+          "p99": 0.114583,
+          "max": 0.12225
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.136118,
+          "p50": 0.131583,
+          "p95": 0.154333,
+          "p99": 0.1605,
+          "max": 0.167708
+        },
+        "message_bytes": {
+          "mean": 10552.67238,
+          "p50": 370.0,
+          "p95": 20844.0,
+          "p99": 20844.0,
+          "max": 20844.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 21105.34476,
+          "p50": 21106.0,
+          "p95": 21214.0,
+          "p99": 21214.0,
+          "max": 21214.0
+        },
+        "visible_entities": {
+          "mean": 101.0,
+          "p50": 1.0,
+          "p95": 201.0,
+          "p99": 201.0,
+          "max": 201.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    }
+  ],
+  "synthetic_navigation_arrivals": [
+    160,
+    200,
+    400
+  ],
+  "synthetic_queue_units": [
+    16,
+    160,
+    200
+  ],
+  "sustained_workloads": [
+    {
+      "mode": "patrol",
+      "mobile_units": 16,
+      "recipients": 16,
+      "completed": 16,
+      "ticks": 2314,
+      "moving_leader_ticks": 0,
+      "followers_moved_during_leader_route": 0,
+      "accepted_points_unchanged": true,
+      "deterministic_repeat": true,
+      "state_hash": "0x701f2f5dd06ce737",
+      "trajectory_hash": "0xdc2fac327530a1f",
+      "recording_hash": "0xa763514375695db6",
+      "command_ms": 0.353333,
+      "step_ms": {
+        "p50": 0.015167,
+        "p95": 0.025083,
+        "p99": 0.041042,
+        "max": 0.220083
+      },
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 1157,
+        "messages": 2314,
+        "build_ms": {
+          "mean": 0.031745,
+          "p50": 0.029042,
+          "p95": 0.045917,
+          "p99": 0.07225,
+          "max": 0.133041
+        },
+        "encode_ms": {
+          "mean": 0.006009,
+          "p50": 0.007458,
+          "p95": 0.010708,
+          "p99": 0.016,
+          "max": 0.062709
+        },
+        "message_cpu_ms": {
+          "mean": 0.037753,
+          "p50": 0.03575,
+          "p95": 0.055042,
+          "p99": 0.091959,
+          "max": 0.173166
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.075887,
+          "p50": 0.07,
+          "p95": 0.108375,
+          "p99": 0.170792,
+          "max": 0.287625
+        },
+        "message_bytes": {
+          "mean": 1531.926534,
+          "p50": 370.0,
+          "p95": 2720.0,
+          "p99": 2738.0,
+          "max": 2768.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 3063.853068,
+          "p50": 3069.0,
+          "p95": 3096.0,
+          "p99": 3108.0,
+          "max": 3138.0
+        },
+        "visible_entities": {
+          "mean": 9.0,
+          "p50": 1.0,
+          "p95": 17.0,
+          "p99": 17.0,
+          "max": 17.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "mode": "escort",
+      "mobile_units": 16,
+      "recipients": 15,
+      "completed": 15,
+      "ticks": 848,
+      "moving_leader_ticks": 563,
+      "followers_moved_during_leader_route": 15,
+      "accepted_points_unchanged": true,
+      "deterministic_repeat": true,
+      "state_hash": "0xe8de3630c664a654",
+      "trajectory_hash": "0x28b1ae07b2592b23",
+      "recording_hash": "0x5e14267044b025b3",
+      "command_ms": 0.05075,
+      "step_ms": {
+        "p50": 0.014291,
+        "p95": 0.017958,
+        "p99": 0.020084,
+        "max": 0.023542
+      },
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 424,
+        "messages": 848,
+        "build_ms": {
+          "mean": 0.0291,
+          "p50": 0.02875,
+          "p95": 0.033459,
+          "p99": 0.036334,
+          "max": 0.040917
+        },
+        "encode_ms": {
+          "mean": 0.006119,
+          "p50": 0.003667,
+          "p95": 0.010291,
+          "p99": 0.011958,
+          "max": 0.012792
+        },
+        "message_cpu_ms": {
+          "mean": 0.035219,
+          "p50": 0.037334,
+          "p95": 0.043,
+          "p99": 0.047792,
+          "max": 0.050792
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.070735,
+          "p50": 0.068167,
+          "p95": 0.081833,
+          "p99": 0.085333,
+          "max": 0.087875
+        },
+        "message_bytes": {
+          "mean": 1445.448113,
+          "p50": 370.0,
+          "p95": 2570.0,
+          "p99": 2582.0,
+          "max": 2588.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 2890.896226,
+          "p50": 2904.0,
+          "p95": 2946.0,
+          "p99": 2958.0,
+          "max": 2958.0
+        },
+        "visible_entities": {
+          "mean": 9.0,
+          "p50": 1.0,
+          "p95": 17.0,
+          "p99": 17.0,
+          "max": 17.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "mode": "patrol",
+      "mobile_units": 160,
+      "recipients": 160,
+      "completed": 160,
+      "ticks": 2053,
+      "moving_leader_ticks": 0,
+      "followers_moved_during_leader_route": 0,
+      "accepted_points_unchanged": true,
+      "deterministic_repeat": true,
+      "state_hash": "0x2b43e33af9c3c3b2",
+      "trajectory_hash": "0xb652f832fe753dff",
+      "recording_hash": "0xd9cc526be8e18736",
+      "command_ms": 0.903292,
+      "step_ms": {
+        "p50": 0.240167,
+        "p95": 0.273375,
+        "p99": 0.291125,
+        "max": 0.310666
+      },
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 1026,
+        "messages": 2052,
+        "build_ms": {
+          "mean": 0.038107,
+          "p50": 0.041417,
+          "p95": 0.048292,
+          "p99": 0.054041,
+          "max": 0.059167
+        },
+        "encode_ms": {
+          "mean": 0.023593,
+          "p50": 0.0045,
+          "p95": 0.047833,
+          "p99": 0.053458,
+          "max": 0.065584
+        },
+        "message_cpu_ms": {
+          "mean": 0.0617,
+          "p50": 0.045167,
+          "p95": 0.096583,
+          "p99": 0.105792,
+          "max": 0.111292
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.124965,
+          "p50": 0.12125,
+          "p95": 0.143125,
+          "p99": 0.150667,
+          "max": 0.154959
+        },
+        "message_bytes": {
+          "mean": 10931.72807,
+          "p50": 370.0,
+          "p95": 21524.0,
+          "p99": 21530.0,
+          "max": 21536.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 21863.45614,
+          "p50": 21876.0,
+          "p95": 21900.0,
+          "p99": 21906.0,
+          "max": 21906.0
+        },
+        "visible_entities": {
+          "mean": 81.0,
+          "p50": 1.0,
+          "p95": 161.0,
+          "p99": 161.0,
+          "max": 161.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "mode": "escort",
+      "mobile_units": 160,
+      "recipients": 159,
+      "completed": 159,
+      "ticks": 783,
+      "moving_leader_ticks": 588,
+      "followers_moved_during_leader_route": 159,
+      "accepted_points_unchanged": true,
+      "deterministic_repeat": true,
+      "state_hash": "0x427925888ebc1120",
+      "trajectory_hash": "0xe4b7993b019fea34",
+      "recording_hash": "0x3844dfdb87fa0ef3",
+      "command_ms": 0.670583,
+      "step_ms": {
+        "p50": 0.199292,
+        "p95": 0.231875,
+        "p99": 0.252833,
+        "max": 0.341291
+      },
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 391,
+        "messages": 782,
+        "build_ms": {
+          "mean": 0.039483,
+          "p50": 0.042583,
+          "p95": 0.052334,
+          "p99": 0.060625,
+          "max": 0.069375
+        },
+        "encode_ms": {
+          "mean": 0.032811,
+          "p50": 0.006333,
+          "p95": 0.069708,
+          "p99": 0.079708,
+          "max": 0.086417
+        },
+        "message_cpu_ms": {
+          "mean": 0.072294,
+          "p50": 0.053541,
+          "p95": 0.121709,
+          "p99": 0.136042,
+          "max": 0.155292
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.146188,
+          "p50": 0.140541,
+          "p95": 0.172167,
+          "p99": 0.186333,
+          "max": 0.198
+        },
+        "message_bytes": {
+          "mean": 9915.43734,
+          "p50": 370.0,
+          "p95": 19514.0,
+          "p99": 19520.0,
+          "max": 19529.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 19830.87468,
+          "p50": 19872.0,
+          "p95": 19887.0,
+          "p99": 19893.0,
+          "max": 19899.0
+        },
+        "visible_entities": {
+          "mean": 81.0,
+          "p50": 1.0,
+          "p95": 161.0,
+          "p99": 161.0,
+          "max": 161.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "mode": "patrol",
+      "mobile_units": 200,
+      "recipients": 200,
+      "completed": 200,
+      "ticks": 2219,
+      "moving_leader_ticks": 0,
+      "followers_moved_during_leader_route": 0,
+      "accepted_points_unchanged": true,
+      "deterministic_repeat": true,
+      "state_hash": "0x605b8637dd2db38f",
+      "trajectory_hash": "0x3a2f71e6d59e9cb4",
+      "recording_hash": "0x7070f65bfa1d7eb6",
+      "command_ms": 1.60875,
+      "step_ms": {
+        "p50": 0.336709,
+        "p95": 0.391083,
+        "p99": 0.410042,
+        "max": 0.541583
+      },
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 1109,
+        "messages": 2218,
+        "build_ms": {
+          "mean": 0.041266,
+          "p50": 0.045166,
+          "p95": 0.055792,
+          "p99": 0.062125,
+          "max": 0.08175
+        },
+        "encode_ms": {
+          "mean": 0.029612,
+          "p50": 0.005584,
+          "p95": 0.062208,
+          "p99": 0.06775,
+          "max": 0.073667
+        },
+        "message_cpu_ms": {
+          "mean": 0.070877,
+          "p50": 0.050042,
+          "p95": 0.11825,
+          "p99": 0.128333,
+          "max": 0.153083
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.143686,
+          "p50": 0.138667,
+          "p95": 0.168917,
+          "p99": 0.176417,
+          "max": 0.193167
+        },
+        "message_bytes": {
+          "mean": 13541.243463,
+          "p50": 370.0,
+          "p95": 26748.0,
+          "p99": 26754.0,
+          "max": 26766.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 27082.486925,
+          "p50": 27094.0,
+          "p95": 27121.0,
+          "p99": 27130.0,
+          "max": 27136.0
+        },
+        "visible_entities": {
+          "mean": 101.0,
+          "p50": 1.0,
+          "p95": 201.0,
+          "p99": 201.0,
+          "max": 201.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    {
+      "mode": "escort",
+      "mobile_units": 200,
+      "recipients": 199,
+      "completed": 199,
+      "ticks": 772,
+      "moving_leader_ticks": 598,
+      "followers_moved_during_leader_route": 199,
+      "accepted_points_unchanged": true,
+      "deterministic_repeat": true,
+      "state_hash": "0x1db932d250925ec6",
+      "trajectory_hash": "0x6b3088168394afcd",
+      "recording_hash": "0xf2c5d917972316b3",
+      "command_ms": 1.0735,
+      "step_ms": {
+        "p50": 0.274541,
+        "p95": 0.334208,
+        "p99": 0.361542,
+        "max": 0.416791
+      },
+      "snapshots": {
+        "scope": "fog_filtered_opaque_snapshots_cpu_no_transport",
+        "cadence_hz": 10,
+        "protocol": 10,
+        "message_byte_limit": 1048576,
+        "batches": 386,
+        "messages": 772,
+        "build_ms": {
+          "mean": 0.041923,
+          "p50": 0.046459,
+          "p95": 0.056208,
+          "p99": 0.064084,
+          "max": 0.07675
+        },
+        "encode_ms": {
+          "mean": 0.040811,
+          "p50": 0.008584,
+          "p95": 0.08775,
+          "p99": 0.097666,
+          "max": 0.121542
+        },
+        "message_cpu_ms": {
+          "mean": 0.082734,
+          "p50": 0.06675,
+          "p95": 0.144833,
+          "p99": 0.158166,
+          "max": 0.184583
+        },
+        "all_seats_batch_cpu_ms": {
+          "mean": 0.167401,
+          "p50": 0.161416,
+          "p95": 0.19625,
+          "p99": 0.214083,
+          "max": 0.229083
+        },
+        "message_bytes": {
+          "mean": 12258.361399,
+          "p50": 370.0,
+          "p95": 24209.0,
+          "p99": 24215.0,
+          "max": 24224.0
+        },
+        "all_seats_batch_bytes": {
+          "mean": 24516.722798,
+          "p50": 24540.0,
+          "p95": 24585.0,
+          "p99": 24585.0,
+          "max": 24594.0
+        },
+        "visible_entities": {
+          "mean": 101.0,
+          "p50": 1.0,
+          "p95": 201.0,
+          "p99": 201.0,
+          "max": 201.0
+        },
+        "visible_effects": {
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "max": 0.0
+        }
+      }
+    }
+  ],
+  "render_captures": [
+    {
+      "case": "desktop-formation-tight",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-tight.png",
+      "sha256": "0095bbe79042a0857018d62525504c70e8fbfda7d9e3f06e24630d0e509a344d",
+      "fixture_receipt": "[2026.09.14-20.33.26:108][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-tight spacing=0 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-formation-standard",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-standard.png",
+      "sha256": "7a5bb2ad1150c58bbd5e4a079e9879d4a0986f8d17d0c4c99fc6393c5e0d8dbf",
+      "fixture_receipt": "[2026.09.14-20.33.42:927][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-standard spacing=1 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-formation-wide",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-wide.png",
+      "sha256": "7dc885d5a05ca8a3167876fa154e83f0808b6ce7cf73bde0c2f4be2d90f6d251",
+      "fixture_receipt": "[2026.09.14-20.33.59:148][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-wide spacing=2 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-formation-facing",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-facing.png",
+      "sha256": "732edf7cb782a648f9136e02df8b1d0cbb9a409d6249d76b51719a2772280a08",
+      "fixture_receipt": "[2026.09.14-20.34.14:531][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-facing spacing=2 armed=1 dragging=1 pending=0 sheet=0"
+    },
+    {
+      "case": "desktop-formation-pending",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-pending.png",
+      "sha256": "9d5cbd10b4b065247151b6d05e98a6a267d620cd3ef0a5523397c6212ae0cef3",
+      "fixture_receipt": "[2026.09.14-20.34.30:931][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-pending spacing=1 armed=1 dragging=0 pending=1 sheet=4"
+    },
+    {
+      "case": "desktop-formation-accepted",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/formation-orders/desktop-formation-accepted.png",
+      "sha256": "64259d87c6ac48020c059dea124056b55d4e050e70b9744ba4b80e50f503f689",
+      "fixture_receipt": "[2026.09.14-20.34.47:590][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-accepted spacing=1 armed=0 dragging=0 pending=0 sheet=0"
+    },
+    {
+      "case": "mobile-formation-tight",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-tight.png",
+      "sha256": "932786b35c2763c10b5f5c170b969b163d1f785f91348abc7a2c0fa6f50c20ca",
+      "fixture_receipt": "[2026.09.14-20.35.03:933][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-tight spacing=0 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-formation-standard",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-standard.png",
+      "sha256": "aa17dbf0a0b518c11161c86fd4ec2a027f5cca5c57013bf941b681db7d4de192",
+      "fixture_receipt": "[2026.09.14-20.35.19:933][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-standard spacing=1 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-formation-wide",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-wide.png",
+      "sha256": "25887a3ccead651ceea80e43dc8b72efced12c9dbc529e67812fd122f4f2441d",
+      "fixture_receipt": "[2026.09.14-20.35.35:520][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-wide spacing=2 armed=1 dragging=0 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-formation-facing",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-facing.png",
+      "sha256": "8bfef4e5310459ef914a6d8de2d3ec9b4705588b274784c491beb30d221db322",
+      "fixture_receipt": "[2026.09.14-20.35.51:341][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-facing spacing=2 armed=1 dragging=1 pending=0 sheet=0"
+    },
+    {
+      "case": "mobile-formation-pending",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-pending.png",
+      "sha256": "fb31a82a6d9e14516bb4ab5d5c3b81960ae313676aa028a47b9155ccca3a74f6",
+      "fixture_receipt": "[2026.09.14-20.36.06:993][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-pending spacing=1 armed=1 dragging=0 pending=1 sheet=4"
+    },
+    {
+      "case": "mobile-formation-accepted",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/formation-orders/mobile-formation-accepted.png",
+      "sha256": "facbc8d51e77b72bd75011053d8a96257d81be95911ff11d7865d5634886e93e",
+      "fixture_receipt": "[2026.09.14-20.36.22:095][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_FORMATION_PREVIEW state=formation-accepted spacing=1 armed=0 dragging=0 pending=0 sheet=0"
+    }
+  ],
+  "protected_player_state_unchanged": true,
+  "not_accepted": [
+    "P0 remaining latency spikes",
+    "paid four-player noncombat isolation",
+    "native mouse and iPhone touch full match",
+    "matching iPhone package",
+    "device CPU/GPU/thermal budget",
+    "physical LAN/Internet match",
+    "public deployment",
+    "Android package",
+    "SC2 capability parity"
+  ],
+  "paid_four_player_evidence": "artifacts/patrol-escort/staging-attempt.json",
+  "paid_four_player_passed": false
+}

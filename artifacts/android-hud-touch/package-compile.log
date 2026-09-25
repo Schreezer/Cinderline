@@ -1,0 +1,474 @@
+Log started at 09/15/2026 12:32:56 (2026-09-15T07:02:56Z)
+No project argument provided while trying to parse Project File. Attempting fallback parsing to attempt to find a Project File.
+-Target argument detected in original command line args. Will attempt to subparse in search of ProjectFile.
+Resolved project argument /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject to /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject
+-Target argument detected in original command line args. Will attempt to subparse in search of ProjectFile.
+Resolved project argument /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject to /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject
+Resolved project argument /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject to /Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject through -Target resolution.
+No config file at /usr/share/Unreal Engine/UnrealBuildTool/BuildConfiguration.xml
+No config file at /Users/chirag13/Documents/Unreal Engine/UnrealBuildTool/BuildConfiguration.xml
+Configuration will be read from:
+  /Users/chirag13/Library/Application Support/Unreal Engine/UnrealBuildTool/BuildConfiguration.xml
+  /Users/chirag13/Library/Application Support/Unreal Engine/UnrealBuildTool/BuildConfiguration.xml
+Reading configuration file from: /Users/chirag13/Library/Application Support/Unreal Engine/UnrealBuildTool/BuildConfiguration.xml
+Reading configuration file from: /Users/chirag13/Library/Application Support/Unreal Engine/UnrealBuildTool/BuildConfiguration.xml
+Reading configuration file from: /Volumes/Codex Storage/Cinderline/Android/workspace/Saved/UnrealBuildTool/BuildConfiguration.xml
+Reading configuration file from: /Users/chirag13/Library/Application Support/Epic/UnrealEngine/Intermediate/Build/UnrealBuildTool.Env.BuildConfiguration.xml
+Log file: /Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/UBA-CinderlineEditor-Mac-Development.txt
+
+Setting temp directory to '/var/folders/xm/lt06m0vj609_vzwd19kx0p080000gp/T/UnrealBuildTool/e4251925'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+Android Installed SDK(s): MinVersion_Sdk=r27c, MaxVersion_Sdk=r29, CurrentVersion_Sdk=r27c, Version_AutoSdk=r27c, CurrentVersion_AutoSdk=
+        Registering build platform: Android - buildable: True
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+IOS Installed SDK(s): MinVersion_Sdk=15.2.0, MaxVersion_Sdk=27.9.0, CurrentVersion_Sdk=27.0, Version_AutoSdk=26.1.1, CurrentVersion_AutoSdk=
+        Registering build platform: IOS - buildable: True
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+Mac Installed SDK(s): MinVersion_Sdk=15.2.0, MaxVersion_Sdk=27.9.0, CurrentVersion_Sdk=27.0, Version_AutoSdk=26.1.1, CurrentVersion_AutoSdk=
+        Registering build platform: Mac - buildable: True
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "/Users/Shared/Epic Games/UE_5.8/Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll" "-Target=CinderlineEditor Mac Development -Project=\"/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject\"" "-Target=Cinderline Android Development -Project=\"/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject\"  -remoteini=\"/Volumes/Codex Storage/Cinderline/Android/workspace\"  -MaxParallelActions=2 -skipdeploy " "-log=/Users/chirag13/Library/Logs/Unreal Engine/LocalBuildLogs/UBA-CinderlineEditor-Mac-Development.txt"
+Skipping /Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/BuildRules/UE5Rules.dll: File is installed
+Skipping /Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/BuildRules/UE5ProgramRules.dll: File is installed
+Executing up to 2 actions based on MaxProcessorCount override
+[UBA] UE_SDKS_ROOT not set, skipping Apple cross-architecture path registration
+UbaStorageServer - Database loaded from /Users/chirag13/.epic/UnrealBuildAccelerator/cas/casdb (v35) in <1ms (contained 0 entries estimated to 0b)
+UbaServer - Listening on 0.0.0.0:1345
+Invalidating makefile for Cinderline (source file added)
+Invalidating makefile for CinderlineEditor (source file added)
+        Found Mac versions of toolchain
+Converted Apple version 27.0 to LLVM version 21.1.6
+Using EngineIncludeOrderVersion.Unreal5_8 for target CinderlineEditor.Target.cs
+Building UnrealEditor - CinderlineEditor - Mac - Development
+VerseVMBytecodeGenerator.Generate, generating CPP headers in: '/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/CoreUObject/VerseVMBytecode'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/CoreUObject/VerseVMBytecode/VVMBytecodeOps.gen.h'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/CoreUObject/VerseVMBytecode/VVMBytecodesAndCaptures.gen.h'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/CoreUObject/VerseVMBytecode/VVMMakeCapturesFuncs.gen.h'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Mac/UnrealEditor/Inc/CoreUObject/VerseVMBytecode/VVMCaptureSwitch.gen.h'
+UnrealHeaderTool needs to run because SavedTimestamp is older than HeaderFileTimestamp (/Volumes/Codex Storage/Cinderline/Android/workspace/Source/Cinderline/Public/Presentation/CinderHUD.h) for module Cinderline
+Found 5 shared PCH headers (listed in order of preference):
+	UnrealEd
+	Engine
+	Slate
+	CoreUObject
+	Core
+Parsing headers for CinderlineEditor
+  Running Internal UnrealHeaderTool "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject" "/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/CinderlineEditor/CinderlineEditor.uhtmanifest" -WarningsAsErrors -installed
+Compiling with Mac SDK 27.0, minimum Target OS version 14.00
+UHT compiled-in object format Default
+Step - Parse Headers
+Module 'CinderMetalFX' uses PCH 'arm64' for Architecture '/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/CinderlineEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.gch'
+Module 'CinderlineEditor' uses PCH 'arm64' for Architecture '/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/CinderlineEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.gch'
+Module 'Cinderline' uses PCH 'arm64' for Architecture '/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/CinderlineEditor/Development/UnrealEd/SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.gch'
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/libUnrealEditor/Development/Stubs/libUnrealEditor-CinderlineEditor.dylib.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/libUnrealEditor/Development/Stubs/libUnrealEditor-CinderlineEditor.dylib.rsp.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/libUnrealEditor-CinderMetalFX.dylib.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/libUnrealEditor-CinderMetalFX.dylib.rsp.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/libUnrealEditor-Cinderline.dylib.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/UnrealEditor/Development/Cinderline/libUnrealEditor-Cinderline.dylib.rsp.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/libUnrealEditor/Development/Stubs/libUnrealEditor-Cinderline.dylib.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/libUnrealEditor/Development/Stubs/libUnrealEditor-Cinderline.dylib.rsp.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/libUnrealEditor/Development/Stubs/libUnrealEditor-CinderMetalFX.dylib.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Mac/arm64/libUnrealEditor/Development/Stubs/libUnrealEditor-CinderMetalFX.dylib.rsp.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/CinderMetalFXModule.mm.o.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/CinderMetalFXModule.mm.o.rsp.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/Definitions.CinderMetalFX.h: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/Definitions.CinderMetalFX.h.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/Module.CinderMetalFX.cpp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/Module.CinderMetalFX.cpp.old.
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/Module.CinderMetalFX.cpp.o.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Intermediate/Build/Mac/arm64/UnrealEditor/Development/CinderMetalFX/Module.CinderMetalFX.cpp.o.rsp.old.
+Reading engine version from file: /Users/Shared/Epic Games/UE_5.8/Engine/Source/Runtime/Launch/Resources/Version.h
+Got engine version 5.8.2
+Step - Populate symbol table
+Android (12470979, +pgo, -bolt, +lto, -mlgo, based on r522817c) clang version 18.0.3 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262)
+Target: x86_64-apple-darwin27.0.0
+Thread model: posix
+InstalledDir: /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin
+NDK toolchain: r27c, NDK version: 270300, ClangVersion: 18.0.3
+No ISPC compiler at /Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/Intel/ISPC/bin/Mac/ispc
+Step - Exports
+       Exporter Stats skipped
+       Exporter Json skipped
+       Running exporter CodeGen
+UHT processed CinderlineEditor in 3.1040805 seconds (1 generated files written)
+Using EngineIncludeOrderVersion.Unreal5_8 for target Cinderline.Target.cs
+Building UnrealGame - Cinderline - Android - Development
+VerseVMBytecodeGenerator.Generate, generating CPP headers in: '/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Android/UnrealGame/Inc/CoreUObject/VerseVMBytecode'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Android/UnrealGame/Inc/CoreUObject/VerseVMBytecode/VVMBytecodeOps.gen.h'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Android/UnrealGame/Inc/CoreUObject/VerseVMBytecode/VVMBytecodesAndCaptures.gen.h'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Android/UnrealGame/Inc/CoreUObject/VerseVMBytecode/VVMMakeCapturesFuncs.gen.h'
+	Writing out generated header file. Changed:False Path:'/Users/Shared/Epic Games/UE_5.8/Engine/Intermediate/Build/Android/UnrealGame/Inc/CoreUObject/VerseVMBytecode/VVMCaptureSwitch.gen.h'
+UnrealHeaderTool needs to run because SavedTimestamp is older than HeaderFileTimestamp (/Volumes/Codex Storage/Cinderline/Android/workspace/Source/Cinderline/Public/Presentation/CinderHUD.h) for module Cinderline
+Parsing headers for Cinderline
+  Running Internal UnrealHeaderTool "/Volumes/Codex Storage/Cinderline/Android/workspace/Cinderline.uproject" "/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/Cinderline/Cinderline.uhtmanifest" -WarningsAsErrors -installed
+Found 4 shared PCH headers (listed in order of preference):
+	Engine
+	Slate
+	CoreUObject
+	Core
+UHT compiled-in object format Default
+Step - Parse Headers
+Compiling Native 64-bit code with NDK API 'android-26'
+Module 'Cinderline' uses PCH 'arm64' for Architecture '/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/a/Cinderline/Development/Engine/SharedPCH.Engine.Project.ValApi.ValExpApi.Cpp20.h.gch'
+Link: /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --gcc-toolchain="/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64" --sysroot="/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/sysroot" -static-libstdc++ -no-canonical-prefixes -shared -Wl,-Bsymbolic -Wl,--no-undefined -Wl,--gc-sections -gz --target=aarch64-none-linux-android26 -DANDROID=1 -march=armv8-a -Wl,-no-pie -fuse-ld=lld -Wl,-soname,libUnreal.so -Wl,--version-script="/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/a/Cinderline/Development/ExportSymbols.ldscript" -Wl,--build-id=sha1 -Wl,--pack-dyn-relocs=android -Wl,--hash-style=gnu -z max-page-size=16384 -fdiagnostics-absolute-paths -fdiagnostics-color -o "/Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Android/Cinderline-arm64.so" @"/Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/a/Cinderline/Development/Cinderline-arm64.so.rsp"
+Updating /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/a/Cinderline/Development/Cinderline-arm64.so.rsp: contents have changed. Saving previous version to /Volumes/Codex Storage/Cinderline/Android/workspace/Intermediate/Build/Android/a/Cinderline/Development/Cinderline-arm64.so.rsp.old.
+Step - Populate symbol table
+Step - Exports
+       Exporter Stats skipped
+       Exporter Json skipped
+       Running exporter CodeGen
+UHT processed Cinderline in 1.9440933 seconds (1 generated files written)
+Checking for live coding mutex: Global\LiveCoding_+Users+Shared+Epic Games+UE_5.8+Engine+Binaries+Mac+UnrealEditor
+Checking for live coding mutex: Global\LiveCoding_+Volumes+Codex Storage+Cinderline+Android+workspace+Binaries+Android+Cinderline-arm64.so
+Deleting outdated item: /Volumes/Codex Storage/Cinderline/Android/workspace/Plugins/CinderMetalFX/Binaries/Mac/libUnrealEditor-CinderMetalFX.dylib
+Deleting outdated item: /Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Mac/libUnrealEditor-Cinderline.dylib
+Deleting outdated item: /Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Mac/libUnrealEditor-CinderlineEditor.dylib
+Building CinderlineEditor and Cinderline...
+===== Toolchain Information =====
+CinderlineEditor Mac Development:
+  Using Clang compiler 21.1.6 (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++)
+    Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+  Using Clang archiver (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool)
+    Apple clang version 21.0.0 (clang-2100.3.34.2) Target: arm64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Cinderline Android Development:
+  Using ISPC compiler (/Users/Shared/Epic Games/UE_5.8/Engine/Source/ThirdParty/Intel/ISPC/bin/Mac/ispc)
+    -1
+  Using Clang compiler 18.0.3 (/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++)
+    Android (12470979, +pgo, -bolt, +lto, -mlgo, based on r522817c) clang version 18.0.3 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262) Target: x86_64-apple-darwin27.0.0 Thread model: posix InstalledDir: /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin
+  Using Clang archiver (/Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar)
+    LLVM (http://llvm.org/):   LLVM version 18.0.3   Optimized build.
+=================================
+Using Unreal Build Accelerator local executor to run 131 action(s)
+  CPU 10 physical cores, 10 logical cores
+  Memory 32 GB physical, 30.87 GB/32 GB committed
+  UBA Storage capacity 40 GB
+  UBA RootDir /Users/chirag13/.epic/UnrealBuildAccelerator
+Cache bucket 1265844746 used. Action: Compile [Apple] CinderMetalFXModule.mm (CinderlineEditor-Mac-Development)
+Cache bucket 3270144199 used. Action: Compile [Apple] Module.CinderMetalFX.cpp (CinderlineEditor-Mac-Development)
+Cache bucket 3328318318 used. Action: Link [Apple] libUnrealEditor-CinderMetalFX.dylib (CinderlineEditor-Mac-Development)
+Cache bucket 2245576613 used. Action: Compile [arm64] CinderArmyControlTests.cpp (Cinderline-Android-Development)
+Cache bucket 4138031842 used. Action: Compile [arm64] Module.Cinderline.gen.cpp (Cinderline-Android-Development)
+All processes queued
+** For CinderlineEditor-Mac-Development **
+[1/131] Compile [Apple] Module.CinderMetalFX.cpp
+[2/131] Compile [Apple] CinderMetalFXModule.mm
+[3/131] Compile [Apple] CinderArmyControlTests.cpp
+[4/131] Link [Apple] libUnrealEditor-CinderMetalFX.dylib
+[5/131] Compile [Apple] CinderArtPreview.cpp
+[6/131] Compile [Apple] CinderBattlefield.cpp
+[7/131] Compile [Apple] CinderCamera.cpp
+[8/131] Compile [Apple] CinderCameraBoundaryTests.cpp
+[9/131] Compile [Apple] CinderCameraPreview.cpp
+[10/131] Compile [Apple] CinderCanyonPreview.cpp
+[11/131] Compile [Apple] CinderCombatPreview.cpp
+[12/131] Compile [Apple] CinderCommandPreview.cpp
+[13/131] Compile [Apple] CinderDifficultyPreview.cpp
+[14/131] Compile [Apple] CinderDifficultyTests.cpp
+[15/131] Compile [Apple] CinderEntityMotion.cpp
+[16/131] Compile [Apple] CinderFormationTests.cpp
+[17/131] Compile [Apple] CinderFourPlayerPreview.cpp
+[18/131] Compile [Apple] CinderGameEngine.cpp
+[19/131] Compile [Apple] CinderGameMode.cpp
+[20/131] Compile [Apple] CinderGuidedPreview.cpp
+[21/131] Compile [Apple] CinderHUD.cpp
+[22/131] Compile [Apple] CinderHUDInputTests.cpp
+[23/131] Compile [Apple] CinderHUDStyle.cpp
+[24/131] Compile [Apple] CinderHelpContent.cpp
+[25/131] Compile [Apple] CinderLANDiscovery.cpp
+[26/131] Compile [Apple] CinderLandscapeTerrain.cpp
+[27/131] Compile [Apple] CinderLandscapeTerrainTests.cpp
+[28/131] Compile [Apple] CinderMatchLengthPreview.cpp
+[29/131] Compile [Apple] CinderMetalFXPreview.cpp
+[30/131] Compile [Apple] CinderMobileHUDPreview.cpp
+[31/131] Compile [Apple] CinderMotionPreview.cpp
+[32/131] Compile [Apple] CinderOnboardingTests.cpp
+[33/131] Compile [Apple] CinderOnlineIntegrationTests.cpp
+[34/131] Compile [Apple] CinderOnlinePreview.cpp
+[35/131] Compile [Apple] CinderOnlinePanel.cpp
+[36/131] Compile [Apple] CinderOnlineRecoveryTests.cpp
+[37/131] Compile [Apple] CinderOnlineSubsystem.cpp
+[38/131] Compile [Apple] CinderPatrolEscortTests.cpp
+[39/131] Compile [Apple] CinderPlayerController.cpp
+[40/131] Compile [Apple] CinderProductionControlTests.cpp
+[41/131] Compile [Apple] CinderQualityDiagnostics.cpp
+[42/131] Compile [Apple] CinderScenery.cpp
+[43/131] Compile [Apple] CinderSceneryTests.cpp
+[44/131] Compile [Apple] CinderTacticalOrderTests.cpp
+[45/131] Compile [Apple] CinderTerrainSurface.cpp
+[46/131] Compile [Apple] CinderTutorial.cpp
+[47/131] Compile [Apple] CinderTutorialCoachPreview.cpp
+[48/131] Compile [Apple] CinderTutorialGuidanceTests.cpp
+[49/131] Compile [Apple] CinderTutorialTests.cpp
+[50/131] Compile [Apple] CinderUnitInfo.cpp
+[51/131] Compile [Apple] CinderUnitInfoTests.cpp
+[52/131] Compile [Apple] CinderVisualPreview.cpp
+[53/131] Compile [Apple] CinderWorldEffects.cpp
+[54/131] Compile [Apple] CinderWorldEffectsTests.cpp
+[55/131] Compile [Apple] CinderWorldIntegrationTests.cpp
+[56/131] Compile [Apple] Module.Cinderline.gen.cpp
+[57/131] Compile [Apple] Navigation.cpp
+[58/131] Compile [Apple] Network.cpp
+[59/131] Compile [Apple] SimulationAI.cpp
+[60/131] Compile [Apple] Simulation.cpp
+[61/131] Compile [Apple] SimulationJobs.cpp
+[62/131] Compile [Apple] SimulationMovement.cpp
+[63/131] Compile [Apple] SimulationProduction.cpp
+[64/131] Compile [Apple] SimulationTactics.cpp
+[65/131] Link [Apple] libUnrealEditor-Cinderline.dylib
+[66/131] Compile [Apple] CinderLandscapeAuthoringLibrary.cpp
+[67/131] Link [Apple] libUnrealEditor-CinderlineEditor.dylib
+[68/131] WriteMetadata CinderlineEditor.target [NoUba]
+** For Cinderline-Android-Development **
+[69/131] Compile [arm64] CinderArmyControlTests.cpp
+ERROR: Process 92821 (CinderArmyControlTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 7.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[70/131] Compile [arm64] CinderArtPreview.cpp
+ERROR: Process 92879 (CinderArtPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[71/131] Compile [arm64] CinderBattlefield.cpp
+ERROR: Process 92882 (CinderBattlefield.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[72/131] Compile [arm64] CinderCamera.cpp
+ERROR: Process 92904 (CinderCamera.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[73/131] Compile [arm64] CinderCameraBoundaryTests.cpp
+ERROR: Process 92912 (CinderCameraBoundaryTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[74/131] Compile [arm64] CinderCameraPreview.cpp
+ERROR: Process 92920 (CinderCameraPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[75/131] Compile [arm64] CinderCombatPreview.cpp
+ERROR: Process 92938 (CinderCombatPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[76/131] Compile [arm64] CinderCanyonPreview.cpp
+ERROR: Process 92934 (CinderCanyonPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[77/131] Compile [arm64] CinderDifficultyPreview.cpp
+ERROR: Process 92958 (CinderDifficultyPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[78/131] Compile [arm64] CinderCommandPreview.cpp
+ERROR: Process 92953 (CinderCommandPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[79/131] Compile [arm64] CinderDifficultyTests.cpp
+ERROR: Process 92974 (CinderDifficultyTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[80/131] Compile [arm64] CinderEntityMotion.cpp
+ERROR: Process 92978 (CinderEntityMotion.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[81/131] Compile [arm64] CinderFormationTests.cpp
+ERROR: Process 92994 (CinderFormationTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[82/131] Compile [arm64] CinderFourPlayerPreview.cpp
+ERROR: Process 92998 (CinderFourPlayerPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[83/131] Compile [arm64] CinderGameEngine.cpp
+ERROR: Process 93011 (CinderGameEngine.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[84/131] Compile [arm64] CinderGameMode.cpp
+ERROR: Process 93015 (CinderGameMode.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[85/131] Compile [arm64] CinderGuidedPreview.cpp
+ERROR: Process 93027 (CinderGuidedPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[86/131] Compile [arm64] CinderHUD.cpp
+ERROR: Process 93031 (CinderHUD.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 6.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[87/131] Compile [arm64] CinderHUDInputTests.cpp
+ERROR: Process 93050 (CinderHUDInputTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[88/131] Compile [arm64] CinderHUDStyle.cpp
+ERROR: Process 93063 (CinderHUDStyle.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[89/131] Compile [arm64] CinderHelpContent.cpp
+ERROR: Process 93071 (CinderHelpContent.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[90/131] Compile [arm64] CinderLANDiscovery.cpp
+ERROR: Process 93084 (CinderLANDiscovery.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[91/131] Compile [arm64] CinderLandscapeTerrain.cpp
+ERROR: Process 93087 (CinderLandscapeTerrain.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[92/131] Compile [arm64] CinderLandscapeTerrainTests.cpp
+ERROR: Process 93103 (CinderLandscapeTerrainTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[93/131] Compile [arm64] CinderMatchLengthPreview.cpp
+ERROR: Process 93117 (CinderMatchLengthPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[94/131] Compile [arm64] CinderMetalFXPreview.cpp
+ERROR: Process 93121 (CinderMetalFXPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[95/131] Compile [arm64] CinderMobileHUDPreview.cpp
+ERROR: Process 93139 (CinderMobileHUDPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[96/131] Compile [arm64] CinderMotionPreview.cpp
+ERROR: Process 93142 (CinderMotionPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[97/131] Compile [arm64] CinderOnboardingTests.cpp
+ERROR: Process 93161 (CinderOnboardingTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[98/131] Compile [arm64] CinderOnlineIntegrationTests.cpp
+ERROR: Process 93165 (CinderOnlineIntegrationTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[99/131] Compile [arm64] CinderOnlinePreview.cpp
+ERROR: Process 93186 (CinderOnlinePreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[100/131] Compile [arm64] CinderOnlinePanel.cpp
+ERROR: Process 93182 (CinderOnlinePanel.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[101/131] Compile [arm64] CinderOnlineRecoveryTests.cpp
+ERROR: Process 93207 (CinderOnlineRecoveryTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[102/131] Compile [arm64] CinderOnlineSubsystem.cpp
+ERROR: Process 93210 (CinderOnlineSubsystem.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[103/131] Compile [arm64] CinderPatrolEscortTests.cpp
+ERROR: Process 93229 (CinderPatrolEscortTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[104/131] Compile [arm64] CinderPlayerController.cpp
+ERROR: Process 93237 (CinderPlayerController.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[105/131] Compile [arm64] CinderProductionControlTests.cpp
+ERROR: Process 93245 (CinderProductionControlTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[106/131] Compile [arm64] CinderQualityDiagnostics.cpp
+ERROR: Process 93264 (CinderQualityDiagnostics.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[107/131] Compile [arm64] CinderScenery.cpp
+ERROR: Process 93268 (CinderScenery.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[108/131] Compile [arm64] CinderSceneryTests.cpp
+ERROR: Process 93289 (CinderSceneryTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[109/131] Compile [arm64] CinderTacticalOrderTests.cpp
+ERROR: Process 93293 (CinderTacticalOrderTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[110/131] Compile [arm64] CinderTerrainSurface.cpp
+ERROR: Process 93311 (CinderTerrainSurface.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[111/131] Compile [arm64] CinderTutorial.cpp
+ERROR: Process 93314 (CinderTutorial.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[112/131] Compile [arm64] CinderTutorialCoachPreview.cpp
+ERROR: Process 93331 (CinderTutorialCoachPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[113/131] Compile [arm64] CinderTutorialGuidanceTests.cpp
+ERROR: Process 93340 (CinderTutorialGuidanceTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[114/131] Compile [arm64] CinderTutorialTests.cpp
+ERROR: Process 93352 (CinderTutorialTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[115/131] Compile [arm64] CinderUnitInfo.cpp
+ERROR: Process 93361 (CinderUnitInfo.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[116/131] Compile [arm64] CinderUnitInfoTests.cpp
+ERROR: Process 93374 (CinderUnitInfoTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[117/131] Compile [arm64] CinderVisualPreview.cpp
+ERROR: Process 93380 (CinderVisualPreview.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[118/131] Compile [arm64] CinderWorldEffects.cpp
+ERROR: Process 93393 (CinderWorldEffects.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[119/131] Compile [arm64] CinderWorldEffectsTests.cpp
+ERROR: Process 93402 (CinderWorldEffectsTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[120/131] Compile [arm64] CinderWorldIntegrationTests.cpp
+ERROR: Process 93410 (CinderWorldIntegrationTests.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[121/131] Compile [arm64] Module.Cinderline.gen.cpp
+ERROR: Process 93423 (Module.Cinderline.gen.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[122/131] Compile [arm64] Navigation.cpp
+ERROR: Process 93437 (Navigation.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 6.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[123/131] Compile [arm64] Network.cpp
+ERROR: Process 93445 (Network.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 5.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[124/131] Compile [arm64] SimulationAI.cpp
+ERROR: Process 93476 (SimulationAI.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[125/131] Compile [arm64] Simulation.cpp
+ERROR: Process 93472 (Simulation.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 6.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[126/131] Compile [arm64] SimulationJobs.cpp
+ERROR: Process 93497 (SimulationJobs.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[127/131] Compile [arm64] SimulationMovement.cpp
+ERROR: Process 93505 (SimulationMovement.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 4.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[128/131] Compile [arm64] SimulationProduction.cpp
+ERROR: Process 93520 (SimulationProduction.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[129/131] Compile [arm64] SimulationTactics.cpp
+ERROR: Process 93528 (SimulationTactics.cpp (Compile [arm64])) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 3.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[130/131] clang++ Cinderline-arm64.so
+ERROR: Process 93544 (Cinderline-arm64.so) not active but did not get exit message. Received 0 messages. Signal code: 1. Exit value or signal: 0. Execution time: 12.0s.
+Use "UbaCli -validate /Volumes/Codex Storage/Cinderline/Android/sdk/ndk/27.2.12479018/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++" to verify DYLD env support
+[131/131] WriteMetadata Cinderline.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 302.11 seconds
+Output binary: /Users/Shared/Epic Games/UE_5.8/Engine/Binaries/Mac/UnrealEditor
+Output binary: /Volumes/Codex Storage/Cinderline/Android/workspace/Binaries/Android/Cinderline-arm64.so
+Deploying CinderlineEditor Mac Development...
+Deploying now!
+UbaStorageServer - Database saved in <1ms (0 file entries, 0 cas entries. deleted 0 dropped cas files)
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.481 Main
+   0.018          [  0.018]  +0.145 Apply XmlConfig
+   0.024             0.024          [  0.005]  +0.004 Find target files
+   0.167          [  0.167]  +0.049 AddTelemetry
+   0.230          [  0.229]  +0.252 RegisterPlatforms
+[  0.501]  +0.627 ParseCommandLine
+   0.574          [  0.073]  +0.124 EngineRulesPlugins
+   0.701          [  0.200]  +0.176 EngineRulesFetchDirs
+   0.903          [  0.402]  +0.013 EngineRulesAssembly
+   0.917          [  0.416]  +0.000 ProgramRulesAssembly
+   0.918          [  0.416]  +0.004 ProjectRulesAssembly
+   0.922          [  0.421]  +0.206 <unknown>
+[  1.196]  +0.020 CreateTargetRules
+[  1.284]  +0.008 CreateTargetRules
+[  1.312]  +0.001 CppDependencyCache
+   1.312          [  0.000]  +0.001 CppDependencyCache
+[  1.325]  +0.117 LoadMakefile
+   1.325          [  0.000]  +0.191 LoadMakefile
+   1.443             0.118          [  0.118]  +0.032 FindPlugins
+   1.491             0.166          [  0.166]  +0.028 MakefileValid
+[  1.520]  +4.836 Cinderline Android Development
+   1.536          [  0.015]  +1.485 CinderlineEditor Mac Development
+   1.536             0.015          [  0.000]  +0.580 <unknown>
+   2.117             0.596          [  0.580]  +0.070 UHTModules
+   2.187             0.666          [  0.650]  +0.229 <unknown>
+   2.416             0.895          [  0.879]  +0.150 UHTManifest
+   2.567             1.046          [  1.030]  +3.108 UHT
+   3.022          [  1.501]  +2.654 <unknown>
+   5.676          [  4.155]  +0.018 UHTTimestamps
+   5.742          [  4.221]  +0.031 UHTModules
+   5.827          [  4.306]  +0.012 UHTManifest
+   5.840          [  4.319]  +1.944 UHT
+   5.840             4.319          [  0.000]  +0.504 <unknown>
+   6.344             4.824          [  0.504]  +0.011 WaitOnWrites
+   6.356             4.836          [  0.516]  +1.429 UHTWait
+[  6.356]  +1.451 <unknown>
+[  7.807]  +0.000 CppDependencyCache
+[  7.807]  +0.000 CppDependencyCache
+[  7.807]  +0.417 Preparing ActionGraph
+   7.825          [  0.017]  +0.004 LinkActions
+   7.829             0.021          [  0.004]  +0.000 DetectActionGraphCycles
+   7.830          [  0.022]  +0.000 GatherPrerequisiteActions
+   7.831          [  0.023]  +0.000 CppDependencyCacheWait
+   7.832          [  0.024]  +0.381 GatherOutdatedActions
+   8.213          [  0.405]  +0.000 GatherOutdatedActions
+   8.215          [  0.407]  +0.002 LinkActions
+   8.215             0.407          [  0.000]  +0.000 DetectActionGraphCycles
+   8.219          [  0.411]  +0.002 DeleteOutdatedProducedItems
+   8.221          [  0.414]  +0.003 SaveActionHistory
+   8.225          [  0.417]  +0.000 CreateDirectoriesForProducedItems
+[  8.234]  +0.691 GarbageCollect
+[  8.925]+301.417 <unknown>
+[310.343]  +0.024 Deploying targets
+[310.368]  +0.000 DisconnectCache
+[310.370]  +0.000 SaveCasTable
+[310.371]  +0.065 Saving caches
+[310.438]  +0.001 TelemetryService.FlushEvents
+[310.440]
+
+Result: Succeeded
+Total execution time: 310.44 seconds

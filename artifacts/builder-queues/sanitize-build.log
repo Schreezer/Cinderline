@@ -1,0 +1,26 @@
+[ 16%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Network.cpp.o
+[ 16%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Navigation.cpp.o
+[ 25%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/Simulation.cpp.o
+[ 33%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationAI.cpp.o
+[ 41%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationJobs.cpp.o
+[ 50%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationMovement.cpp.o
+[ 58%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationProduction.cpp.o
+[ 66%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationTactics.cpp.o
+[ 75%] Building CXX object CMakeFiles/CinderlineSimulation.dir/Source/Cinderline/Private/Sim/SimulationWorkerPlans.cpp.o
+[ 83%] Linking CXX static library libCinderlineSimulation.a
+[ 83%] Built target CinderlineSimulation
+[ 91%] Building CXX object CMakeFiles/CinderlineBuilderQueueTests.dir/Tests/BuilderQueueTests.cpp.o
+[100%] Linking CXX executable CinderlineBuilderQueueTests
+[100%] Built target CinderlineBuilderQueueTests
+[ 83%] Built target CinderlineSimulation
+[ 91%] Building CXX object CMakeFiles/CinderlineNetworkTests.dir/Tests/NetworkTests.cpp.o
+[100%] Linking CXX executable CinderlineNetworkTests
+[100%] Built target CinderlineNetworkTests
+[ 83%] Built target CinderlineSimulation
+[ 91%] Building CXX object CMakeFiles/CinderlineTacticalOrderTests.dir/Tests/TacticalOrderTests.cpp.o
+[100%] Linking CXX executable CinderlineTacticalOrderTests
+[100%] Built target CinderlineTacticalOrderTests
+[ 83%] Built target CinderlineSimulation
+[ 91%] Building CXX object CMakeFiles/CinderlineProductionAllocationTests.dir/Tests/ProductionAllocationTests.cpp.o
+[100%] Linking CXX executable CinderlineProductionAllocationTests
+[100%] Built target CinderlineProductionAllocationTests

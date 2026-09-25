@@ -1,0 +1,102 @@
+{
+  "schema": "cinderline.sustained_preview.v1",
+  "cases": [
+    {
+      "case": "desktop-patrol",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/patrol-escort/desktop-patrol.png",
+      "sha256": "f0029f11f12440e309314712686f7b69d30accaf1f7e4b3e20915f810736ad11",
+      "fixture_receipt": "[2026.09.14-19.09.13:233][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=patrol primary=33 order=8 leader=0 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-patrol-pending",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/patrol-escort/desktop-patrol-pending.png",
+      "sha256": "c68da57e5953bb53d03eda603d4e0cbee38e04381f71e8035a0e96eee88a4b59",
+      "fixture_receipt": "[2026.09.14-19.09.29:526][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=patrol-pending primary=33 order=8 leader=0 pending=1 sheet=4"
+    },
+    {
+      "case": "desktop-escort",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/patrol-escort/desktop-escort.png",
+      "sha256": "d144de6c2602d98eed8883d7a6c2c35d952130c884624c15b17c458782ce087b",
+      "fixture_receipt": "[2026.09.14-19.09.44:583][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=escort primary=33 order=9 leader=35 pending=0 sheet=4"
+    },
+    {
+      "case": "desktop-escort-pending",
+      "viewport": [
+        1440,
+        900
+      ],
+      "screenshot": "artifacts/patrol-escort/desktop-escort-pending.png",
+      "sha256": "1fa250f381967a5c7c0dcfe3f0c7c83773c25edfd89472844fc90b8b62bbb59e",
+      "fixture_receipt": "[2026.09.14-19.09.59:898][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=escort-pending primary=33 order=9 leader=35 pending=1 sheet=4"
+    },
+    {
+      "case": "mobile-patrol",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/patrol-escort/mobile-patrol.png",
+      "sha256": "33566eb63530c20a2c8db30c48eb28c943320ef26f10be14345bb8b92b6aff5e",
+      "fixture_receipt": "[2026.09.14-19.10.18:164][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=patrol primary=33 order=8 leader=0 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-patrol-pending",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/patrol-escort/mobile-patrol-pending.png",
+      "sha256": "513d26d2a863f518f2f045baf3cb8709003b3245893c24b00c734778c40de4df",
+      "fixture_receipt": "[2026.09.14-19.10.33:688][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=patrol-pending primary=33 order=8 leader=0 pending=1 sheet=4"
+    },
+    {
+      "case": "mobile-escort",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/patrol-escort/mobile-escort.png",
+      "sha256": "9dd0f30bd2a805036d3876e700cca1a48b743b233326ecfcf0cb720f55671762",
+      "fixture_receipt": "[2026.09.14-19.10.48:687][  1]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=escort primary=33 order=9 leader=35 pending=0 sheet=4"
+    },
+    {
+      "case": "mobile-escort-pending",
+      "viewport": [
+        956,
+        440
+      ],
+      "screenshot": "artifacts/patrol-escort/mobile-escort-pending.png",
+      "sha256": "89fc9e76f46325b24a48a9178203233f3cccffb650ac29359b2b30fead3e9e08",
+      "fixture_receipt": "[2026.09.14-19.11.03:686][  0]LogCinderMobileHUDPreview: Display: CINDERLINE_SUSTAINED_ORDER_PREVIEW state=escort-pending primary=33 order=9 leader=35 pending=1 sheet=4"
+    }
+  ],
+  "complete": true,
+  "evidence": "scripted Mac rendering; no native gesture or iPhone acceptance",
+  "module": "Binaries/Mac/libUnrealEditor-Cinderline.dylib",
+  "module_sha256": "a6f61a5073ff5d47e8d6c54695cfd5812b5d0338eb7da494342355bf88f31184",
+  "protected_unchanged": true,
+  "protected_before": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "protected_after": {
+    "Saved/Matches/skirmish.cinder": null,
+    "Saved/Config/Training.ini": null,
+    "Saved/Config/Skirmish.ini": null
+  },
+  "visual_review": "passed",
+  "visual_review_notes": "Reviewed all eight desktop 1440x900 and compact 956x440 images. Patrol/Escort targeting, pending labels, cancel, queue and persistent global controls are legible without clipping. Desktop shows both endpoints and escort slot/leader; compact shows forward endpoint/slot/leader, with starting units behind the deliberately open Orders sheet. World markers can be covered by the open sheet and fixed HUD; these captures do not claim native gesture or phone acceptance."
+}

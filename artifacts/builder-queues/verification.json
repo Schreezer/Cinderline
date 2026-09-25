@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-09-15T14:34:01.386933+00:00",
+  "feature": "Individual Drudge construction, resume and mining queues",
+  "git_head": "06d4a2dc000a2293caae25b37d62a9f00c71db1b",
+  "save_version": 14,
+  "protocol_version": 11,
+  "source_inputs": "source-inputs.json",
+  "source_inputs_sha256": "413aee48bcf96ca59fc7e20a99e14c49b8dc16e82a4d01cbef6d9f5cd6ef019d",
+  "checks": {
+    "portable_suites": 22,
+    "focused_builder_cases": 14,
+    "server_tests": 38,
+    "server_skipped": 0,
+    "focused_asan_ubsan_suites": 4,
+    "diff_check": "passed",
+    "review": "important findings fixed and confirmation clean"
+  },
+  "logs": {
+    "portable-3.log": "78653057a73cdb2b6e5cda85e6576a1ab481401f240b642146ebd541a859bf1b",
+    "builder-final.log": "5bcc2df0084570c51c9a4ab000adc803eea8bc7418f5f99ae27e4ff74d4121bb",
+    "server-2.log": "fc7187eeef316b154793825222f493f9f7ee31a587c56a239a026c546f136492",
+    "sanitize-tests.log": "a76f97b03c6aad0681b3a324ee7d507e117b76d84aa20de03fbe8a46a2cfc4ec",
+    "build-3.log": "0161cd464abe5b96485478621f19be7b65eeb547fde509c43c84d95a0c5f5803",
+    "sanitize-build.log": "dbfae01d4da4bfbcc81ca902e543f8a766548d5dbcbab633e2c9d8d9b5741375"
+  },
+  "binaries": {
+    "build/native/CinderlineBuilderQueueTests": "e78d2c36bb9a38d349825cf80d2272d5172d14236cf40bcdb7ad39b6ad9abdca",
+    "build/native/CinderlineMatchWorker": "3b5f703eaf8edfc73f3bf0e9702e85e5ebabaa55abe8a964ea3384c66519e99d",
+    "build/sanitize/CinderlineBuilderQueueTests": "70ad0ca7b7b7a9e6c88fd19b92b1059afe6e1da6c3a55db015523c36cba93b66"
+  },
+  "not_verified": [
+    "Unreal build and mouse/touch runtime for this feature",
+    "Campaign runtime compatibility changes",
+    "Physical Android or iPhone input",
+    "Device performance or thermals",
+    "Public deployment"
+  ],
+  "unreal_pause": "User reserved Unreal for another visual pass; no Unreal launch/build or device install in this feature pass",
+  "deployment": false,
+  "package_built": false,
+  "installed_on_device": false
+}

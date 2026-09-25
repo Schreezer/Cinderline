@@ -1,0 +1,13 @@
+Test project /Users/chirag13/Documents/ChatGPT/starCraft/Saved/P0OrderCompletionBuild
+    Start 13: navigation_multi_source_regressions
+1/2 Test #13: navigation_multi_source_regressions ...   Passed    0.30 sec
+    Start 14: production_exit_regressions
+2/2 Test #14: production_exit_regressions ...........   Passed    0.91 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Label Time Summary:
+navigation    =   1.21 sec*proc (2 tests)
+production    =   1.21 sec*proc (2 tests)
+
+Total Test time (real) =   1.21 sec

@@ -1,0 +1,11 @@
+{
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "cpu": "Apple M1 Max",
+  "memory_bytes": 34359738368,
+  "cmake": "cmake version 4.0.2",
+  "build_type": "Release",
+  "build_parallelism": 2,
+  "scope": "portable CPU simulation; not GPU, Unreal render, physical device, battery or thermal evidence"
+}
