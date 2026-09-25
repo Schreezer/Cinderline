@@ -1,0 +1,186 @@
+{
+	"systeminfo": "WHISPER : COREML = 0 | OPENVINO = 0 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | DOTPROD = 1 | ACCELERATE = 1 | OPENMP = 1 | REPACK = 1 | ",
+	"model": {
+		"type": "small",
+		"multilingual": false,
+		"vocab": 51864,
+		"audio": {
+			"ctx": 1500,
+			"state": 768,
+			"head": 12,
+			"layer": 12
+		},
+		"text": {
+			"ctx": 448,
+			"state": 768,
+			"head": 12,
+			"layer": 12
+		},
+		"mels": 80,
+		"ftype": 1
+	},
+	"params": {
+		"model": "/Users/chirag13/.cache/hyperframes/whisper/models/ggml-small.en.bin",
+		"language": "en",
+		"translate": false
+	},
+	"result": {
+		"language": "en"
+	},
+	"transcription": [
+		{
+			"timestamps": {
+				"from": "00:00:00,000",
+				"to": "00:00:04,980"
+			},
+			"offsets": {
+				"from": 0,
+				"to": 4980
+			},
+			"text": " These three labels sound healthy, but what do they actually tell you?"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:04,980",
+				"to": "00:00:07,380"
+			},
+			"offsets": {
+				"from": 4980,
+				"to": 7380
+			},
+			"text": " Let's turn the pack around."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:07,380",
+				"to": "00:00:09,780"
+			},
+			"offsets": {
+				"from": 7380,
+				"to": 9780
+			},
+			"text": " Natural isn't a nutrition score."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:09,780",
+				"to": "00:00:15,060"
+			},
+			"offsets": {
+				"from": 9780,
+				"to": 15060
+			},
+			"text": " It doesn't tell you how much sugar, salt, or saturated fat is inside."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:15,060",
+				"to": "00:00:17,760"
+			},
+			"offsets": {
+				"from": 15060,
+				"to": 17760
+			},
+			"text": " Multigrain means more than one grain."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:17,760",
+				"to": "00:00:20,480"
+			},
+			"offsets": {
+				"from": 17760,
+				"to": 20480
+			},
+			"text": " It doesn't guarantee whole grains."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:20,480",
+				"to": "00:00:23,880"
+			},
+			"offsets": {
+				"from": 20480,
+				"to": 23880
+			},
+			"text": " Look for whole wheat or whole oats in the ingredients."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:23,880",
+				"to": "00:00:27,720"
+			},
+			"offsets": {
+				"from": 23880,
+				"to": 27720
+			},
+			"text": " No added sugar doesn't mean sugar free."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:27,720",
+				"to": "00:00:30,400"
+			},
+			"offsets": {
+				"from": 27720,
+				"to": 30400
+			},
+			"text": " Only occurring sugars can still be there."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:30,400",
+				"to": "00:00:32,360"
+			},
+			"offsets": {
+				"from": 30400,
+				"to": 32360
+			},
+			"text": " Check total sugars too."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:32,360",
+				"to": "00:00:37,640"
+			},
+			"offsets": {
+				"from": 32360,
+				"to": 37640
+			},
+			"text": " Compare similar foods using the same amount, like per hundred grams."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:37,640",
+				"to": "00:00:40,080"
+			},
+			"offsets": {
+				"from": 37640,
+				"to": 40080
+			},
+			"text": " Then check how much you actually eat."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:40,080",
+				"to": "00:00:43,920"
+			},
+			"offsets": {
+				"from": 40080,
+				"to": 43920
+			},
+			"text": " The front gets your attention, the back helps you choose."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:43,920",
+				"to": "00:00:45,680"
+			},
+			"offsets": {
+				"from": 43920,
+				"to": 45680
+			},
+			"text": " Flip it before you pick it."
+		}
+	]
+}

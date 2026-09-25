@@ -1,0 +1,8 @@
+{
+  "name": "fish-control",
+  "transcript": "No added sugar.\n Sounds like sugar-free.\n Right?\n Well, not quite.\n Fruit juice can still contain sugar from the fruit.\n So turn the pack over, check total sugars, then compare similar drinks per hundred milliliters.\n Small flip.\n Better information.",
+  "differences": [],
+  "gain_db": -0.6499999999999986,
+  "processing": "Constant gain only; no time stretch, inserted gaps, or pitch processing.",
+  "limitation": "ASR validates words, not naturalness or acting quality."
+}

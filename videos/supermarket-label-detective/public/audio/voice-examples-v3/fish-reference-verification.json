@@ -1,0 +1,8 @@
+{
+  "name": "fish-reference",
+  "transcript": "No added sugar.\n Sounds like sugar-free, right?\n Well, not quite.\n Fruit juice can still contain sugar from the fruit.\n So, turn the pack over.\n Check total sugars, then compare similar drinks\n per 100 milliliters.\n Small flip, better information.",
+  "differences": [],
+  "gain_db": 1.73,
+  "processing": "Constant gain only; no time stretch, inserted gaps, or pitch processing.",
+  "limitation": "ASR validates words, not naturalness or acting quality."
+}

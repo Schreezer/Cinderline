@@ -1,0 +1,230 @@
+{
+	"systeminfo": "WHISPER : COREML = 0 | OPENVINO = 0 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | DOTPROD = 1 | ACCELERATE = 1 | OPENMP = 1 | REPACK = 1 | ",
+	"model": {
+		"type": "medium",
+		"multilingual": false,
+		"vocab": 51864,
+		"audio": {
+			"ctx": 1500,
+			"state": 1024,
+			"head": 16,
+			"layer": 24
+		},
+		"text": {
+			"ctx": 448,
+			"state": 1024,
+			"head": 16,
+			"layer": 24
+		},
+		"mels": 80,
+		"ftype": 1
+	},
+	"params": {
+		"model": "/Users/chirag13/.cache/hyperframes/whisper/models/ggml-medium.en.bin",
+		"language": "en",
+		"translate": false
+	},
+	"result": {
+		"language": "en"
+	},
+	"transcription": [
+		{
+			"timestamps": {
+				"from": "00:00:00,000",
+				"to": "00:00:02,560"
+			},
+			"offsets": {
+				"from": 0,
+				"to": 2560
+			},
+			"text": " These three labels sound healthy."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:02,560",
+				"to": "00:00:04,980"
+			},
+			"offsets": {
+				"from": 2560,
+				"to": 4980
+			},
+			"text": " But what do they actually tell you?"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:04,980",
+				"to": "00:00:06,820"
+			},
+			"offsets": {
+				"from": 4980,
+				"to": 6820
+			},
+			"text": " Let's turn the pack around."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:06,820",
+				"to": "00:00:09,660"
+			},
+			"offsets": {
+				"from": 6820,
+				"to": 9660
+			},
+			"text": " Natural isn't a nutrition score."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:09,660",
+				"to": "00:00:12,540"
+			},
+			"offsets": {
+				"from": 9660,
+				"to": 12540
+			},
+			"text": " It doesn't tell you how much sugar, salt,"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:12,540",
+				"to": "00:00:14,920"
+			},
+			"offsets": {
+				"from": 12540,
+				"to": 14920
+			},
+			"text": " or saturated fat is inside."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:14,920",
+				"to": "00:00:17,660"
+			},
+			"offsets": {
+				"from": 14920,
+				"to": 17660
+			},
+			"text": " Multigrain means more than one grain."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:17,660",
+				"to": "00:00:20,260"
+			},
+			"offsets": {
+				"from": 17660,
+				"to": 20260
+			},
+			"text": " It doesn't guarantee whole grains."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:20,260",
+				"to": "00:00:23,740"
+			},
+			"offsets": {
+				"from": 20260,
+				"to": 23740
+			},
+			"text": " Look for whole wheat or whole oats in the ingredients."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:23,740",
+				"to": "00:00:27,100"
+			},
+			"offsets": {
+				"from": 23740,
+				"to": 27100
+			},
+			"text": " No added sugar doesn't mean sugar-free."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:27,100",
+				"to": "00:00:30,420"
+			},
+			"offsets": {
+				"from": 27100,
+				"to": 30420
+			},
+			"text": " Naturally occurring sugars can still be there."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:30,420",
+				"to": "00:00:32,360"
+			},
+			"offsets": {
+				"from": 30420,
+				"to": 32360
+			},
+			"text": " Check total sugars too."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:32,360",
+				"to": "00:00:35,380"
+			},
+			"offsets": {
+				"from": 32360,
+				"to": 35380
+			},
+			"text": " Compare similar foods using the same amount,"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:35,380",
+				"to": "00:00:37,400"
+			},
+			"offsets": {
+				"from": 35380,
+				"to": 37400
+			},
+			"text": " like per 100 grams."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:37,400",
+				"to": "00:00:40,000"
+			},
+			"offsets": {
+				"from": 37400,
+				"to": 40000
+			},
+			"text": " Then check how much you actually eat."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:40,000",
+				"to": "00:00:41,900"
+			},
+			"offsets": {
+				"from": 40000,
+				"to": 41900
+			},
+			"text": " The front gets your attention."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:41,900",
+				"to": "00:00:43,940"
+			},
+			"offsets": {
+				"from": 41900,
+				"to": 43940
+			},
+			"text": " The back helps you choose."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:43,940",
+				"to": "00:00:45,880"
+			},
+			"offsets": {
+				"from": 43940,
+				"to": 45880
+			},
+			"text": " Flip it before you pick it."
+		}
+	]
+}

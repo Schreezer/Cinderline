@@ -1,0 +1,120 @@
+{
+	"systeminfo": "WHISPER : COREML = 0 | OPENVINO = 0 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | DOTPROD = 1 | ACCELERATE = 1 | OPENMP = 1 | REPACK = 1 | ",
+	"model": {
+		"type": "medium",
+		"multilingual": false,
+		"vocab": 51864,
+		"audio": {
+			"ctx": 1500,
+			"state": 1024,
+			"head": 16,
+			"layer": 24
+		},
+		"text": {
+			"ctx": 448,
+			"state": 1024,
+			"head": 16,
+			"layer": 24
+		},
+		"mels": 80,
+		"ftype": 1
+	},
+	"params": {
+		"model": "/Users/chirag13/.cache/hyperframes/whisper/models/ggml-medium.en.bin",
+		"language": "en",
+		"translate": false
+	},
+	"result": {
+		"language": "en"
+	},
+	"transcription": [
+		{
+			"timestamps": {
+				"from": "00:00:00,000",
+				"to": "00:00:01,440"
+			},
+			"offsets": {
+				"from": 0,
+				"to": 1440
+			},
+			"text": " No added sugar."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:01,440",
+				"to": "00:00:03,440"
+			},
+			"offsets": {
+				"from": 1440,
+				"to": 3440
+			},
+			"text": " Sounds like sugar-free."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:03,440",
+				"to": "00:00:04,440"
+			},
+			"offsets": {
+				"from": 3440,
+				"to": 4440
+			},
+			"text": " Right?"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:04,440",
+				"to": "00:00:07,460"
+			},
+			"offsets": {
+				"from": 4440,
+				"to": 7460
+			},
+			"text": " Well, not quite."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:07,460",
+				"to": "00:00:10,440"
+			},
+			"offsets": {
+				"from": 7460,
+				"to": 10440
+			},
+			"text": " Fruit juice can still contain sugar from the fruit."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:10,440",
+				"to": "00:00:17,120"
+			},
+			"offsets": {
+				"from": 10440,
+				"to": 17120
+			},
+			"text": " So turn the pack over, check total sugars, then compare similar drinks per hundred milliliters."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:17,120",
+				"to": "00:00:18,560"
+			},
+			"offsets": {
+				"from": 17120,
+				"to": 18560
+			},
+			"text": " Small flip."
+		},
+		{
+			"timestamps": {
+				"from": "00:00:18,560",
+				"to": "00:00:19,840"
+			},
+			"offsets": {
+				"from": 18560,
+				"to": 19840
+			},
+			"text": " Better information."
+		}
+	]
+}

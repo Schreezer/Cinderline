@@ -1,0 +1,131 @@
+{
+	"systeminfo": "WHISPER : COREML = 0 | OPENVINO = 0 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | DOTPROD = 1 | ACCELERATE = 1 | OPENMP = 1 | REPACK = 1 | ",
+	"model": {
+		"type": "small",
+		"multilingual": true,
+		"vocab": 51865,
+		"audio": {
+			"ctx": 1500,
+			"state": 768,
+			"head": 12,
+			"layer": 12
+		},
+		"text": {
+			"ctx": 448,
+			"state": 768,
+			"head": 12,
+			"layer": 12
+		},
+		"mels": 80,
+		"ftype": 1
+	},
+	"params": {
+		"model": "/Users/chirag13/.cache/hyperframes/whisper/models/ggml-small.bin",
+		"language": "hi",
+		"translate": false
+	},
+	"result": {
+		"language": "hi"
+	},
+	"transcription": [
+		{
+			"timestamps": {
+				"from": "00:00:00,000",
+				"to": "00:00:02,000"
+			},
+			"offsets": {
+				"from": 0,
+				"to": 2000
+			},
+			"text": " पैकिट पल लिखा है नेचुरल"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:02,000",
+				"to": "00:00:04,000"
+			},
+			"offsets": {
+				"from": 2000,
+				"to": 4000
+			},
+			"text": " तो क्या यह सेहत किली अच्छा है"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:04,000",
+				"to": "00:00:06,000"
+			},
+			"offsets": {
+				"from": 4000,
+				"to": 6000
+			},
+			"text": " जरूरी नहीं"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:06,000",
+				"to": "00:00:08,000"
+			},
+			"offsets": {
+				"from": 6000,
+				"to": 8000
+			},
+			"text": " पैकिट पलटिये"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:08,000",
+				"to": "00:00:10,000"
+			},
+			"offsets": {
+				"from": 8000,
+				"to": 10000
+			},
+			"text": " चीनी कितनी है"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:10,000",
+				"to": "00:00:12,000"
+			},
+			"offsets": {
+				"from": 10000,
+				"to": 12000
+			},
+			"text": " सोडियम कितना है"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:12,000",
+				"to": "00:00:14,000"
+			},
+			"offsets": {
+				"from": 12000,
+				"to": 14000
+			},
+			"text": " मिलती जुलती चीजो की तुलना"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:14,000",
+				"to": "00:00:16,000"
+			},
+			"offsets": {
+				"from": 14000,
+				"to": 16000
+			},
+			"text": " सो ग्राम के हिसाब से कीजे"
+		},
+		{
+			"timestamps": {
+				"from": "00:00:16,000",
+				"to": "00:00:18,000"
+			},
+			"offsets": {
+				"from": 16000,
+				"to": 18000
+			},
+			"text": " तुर देखे आप कितना खाते है"
+		}
+	]
+}

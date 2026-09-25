@@ -1,0 +1,86 @@
+{
+  "english": {
+    "duration": 45.789750566893424,
+    "transcript": "These three labels sound healthy, but what do they actually tell you?\n Let's turn the pack around.\n Natural isn't a nutrition score.\n It doesn't tell you how much sugar, salt, or saturated fat is inside.\n Multigrain means more than one grain.\n It doesn't guarantee whole grains.\n Look for whole wheat or whole oats in the ingredients.\n No added sugar doesn't mean sugar free.\n Only occurring sugars can still be there.\n Check total sugars too.\n Compare similar foods using the same amount, like per hundred grams.\n Then check how much you actually eat.\n The front gets your attention, the back helps you choose.\n Flip it before you pick it.",
+    "static_gain_db": -0.75,
+    "pauses_previous": {
+      "count_250ms_or_more": 9,
+      "total_seconds": 3.401701,
+      "durations": [
+        0.440113,
+        0.400522,
+        0.367234,
+        0.442154,
+        0.348005,
+        0.376349,
+        0.332993,
+        0.371474,
+        0.322857
+      ]
+    },
+    "pauses_v2": {
+      "count_250ms_or_more": 10,
+      "total_seconds": 4.326258,
+      "durations": [
+        0.552381,
+        0.491293,
+        0.510159,
+        0.305578,
+        0.43746,
+        0.436054,
+        0.384422,
+        0.402653,
+        0.379546,
+        0.426712
+      ]
+    },
+    "word_differences": [
+      {
+        "kind": "replace",
+        "expected": [
+          "naturally"
+        ],
+        "asr": [
+          "only"
+        ]
+      }
+    ],
+    "medium_asr_transcript": "These three labels sound healthy.\n But what do they actually tell you?\n Let's turn the pack around.\n Natural isn't a nutrition score.\n It doesn't tell you how much sugar, salt,\n or saturated fat is inside.\n Multigrain means more than one grain.\n It doesn't guarantee whole grains.\n Look for whole wheat or whole oats in the ingredients.\n No added sugar doesn't mean sugar-free.\n Naturally occurring sugars can still be there.\n Check total sugars too.\n Compare similar foods using the same amount,\n like per 100 grams.\n Then check how much you actually eat.\n The front gets your attention.\n The back helps you choose.\n Flip it before you pick it.",
+    "medium_asr_word_differences": [],
+    "word_check_resolution": "Medium English ASR correctly transcribes Naturally; all words match after normalizing 100 to hundred."
+  },
+  "limitations": "Silence detection is approximate and includes boundary silence. ASR does not establish naturalness, emotion, or Hindi pronunciation.",
+  "hindi": {
+    "duration": 18.390204081632653,
+    "transcript": "पैकिट पल लिखा है नेचुरल\n तो क्या यह सेहत किली अच्छा है\n जरूरी नहीं\n पैकिट पलटिये\n चीनी कितनी है\n सोडियम कितना है\n मिलती जुलती चीजो की तुलना\n सो ग्राम के हिसाब से कीजे\n तुर देखे आप कितना खाते है",
+    "static_gain_db": 3.0599999999999996,
+    "pauses_previous": {
+      "count_250ms_or_more": 7,
+      "total_seconds": 3.197302,
+      "durations": [
+        0.670975,
+        0.628912,
+        0.463152,
+        0.271882,
+        0.32068,
+        0.299229,
+        0.542472
+      ]
+    },
+    "pauses_v2": {
+      "count_250ms_or_more": 9,
+      "total_seconds": 6.085601,
+      "durations": [
+        1.013696,
+        0.863651,
+        0.870227,
+        0.808707,
+        0.694626,
+        0.852766,
+        0.287279,
+        0.436644,
+        0.258005
+      ]
+    }
+  }
+}

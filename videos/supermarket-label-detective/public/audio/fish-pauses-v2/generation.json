@@ -1,0 +1,28 @@
+{
+  "model": "mlx-community/fish-audio-s2-pro-8bit",
+  "speed": 1,
+  "reference": null,
+  "notes": "Inline tags only. No system instructions, time stretch, or inserted silence.",
+  "takes": [
+    {
+      "language": "english",
+      "text": "[curious] These three labels sound healthy. [pause] [pitch up] But what do they [emphasis] actually tell you? [pause] [warm] Let's turn the pack around. [pause] [low voice] Natural isn't a nutrition score. [pause] [conversational] It doesn't tell you how much sugar, [short pause] salt, [short pause] or saturated fat is inside. [pause] [explaining] Multigrain means more than one grain. [short pause] [emphasis] It doesn't guarantee whole grains. [pause] [warm] Look for whole wheat or whole oats in the ingredients. [pause] [surprised] No added sugar [short pause] doesn't mean sugar free. [pause] [calm] Naturally occurring sugars can still be there. [short pause] [emphasis] Check total sugars, too. [pause] [conversational] Compare similar foods using the same amount, [short pause] like per hundred grams. [pause] Then check how much you [emphasis] actually eat. [pause] [low voice] The front gets your attention. [pause] [warm] The back helps you choose. [pause] [confident] Flip it [short pause] before you pick it.",
+      "seed": 47,
+      "duration": 45.789750566893424,
+      "sample_rate": 44100,
+      "raw_peak": 0.9159314036369324,
+      "gain": 1.0,
+      "generation_seconds": 54.8318914169995
+    },
+    {
+      "language": "hindi",
+      "text": "[curious] पैकेट पर लिखा है नैचुरल। [pause] [pitch up] तो क्या यह सेहत के लिए अच्छा है? [pause] [low voice] ज़रूरी नहीं! [pause] [warm] पैकेट पलटिए। [pause] [curious] चीनी कितनी है? [pause] सोडियम कितना है? [pause] [explaining] मिलती-जुलती चीज़ों की तुलना [short pause] सौ ग्राम के हिसाब से कीजिए। [pause] [warm] फिर देखिए, [short pause] आप कितना खाते हैं।",
+      "seed": 49,
+      "duration": 18.390204081632653,
+      "sample_rate": 44100,
+      "raw_peak": 0.5871153473854065,
+      "gain": 1.0,
+      "generation_seconds": 49.34493691699936
+    }
+  ]
+}

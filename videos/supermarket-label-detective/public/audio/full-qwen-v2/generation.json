@@ -1,0 +1,23 @@
+{
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16",
+  "reference": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/public/audio/voice-examples-v3/qwen-designed-raw.wav",
+  "reference_origin": "Qwen3-TTS 1.7B VoiceDesign BF16; user-approved audition",
+  "reference_text": "No added sugar. Sounds like sugar-free... right? Well... not quite. Fruit juice can still contain sugar from the fruit. So turn the pack over. Check total sugars, then compare similar drinks per hundred millilitres. Small flip. Better information.",
+  "script": [
+    "Natural. Multigrain. No added sugar. They sound healthy... right? Let's turn the pack around.",
+    "Natural sounds reassuring. But it doesn't tell you how much sugar, salt, or saturated fat you're getting.",
+    "Multigrain just means more than one grain. Whole grains? Not necessarily. Look for whole wheat or whole oats in the ingredients.",
+    "No added sugar sounds like sugar-free... but not quite. Naturally occurring sugars can still be there. Check total sugars, too.",
+    "Comparing two packs? Use the same amount... like per hundred grams. Then check how much you actually eat.",
+    "The front gets your attention. The back helps you choose. Small habit. Better information. Flip it before you pick it."
+  ],
+  "seed": 2026,
+  "temperature": 0.9,
+  "top_p": 1,
+  "speed": 1,
+  "duration": 38.0,
+  "sample_rate": 24000,
+  "raw_peak": 0.5630638599395752,
+  "gain": 1,
+  "generation_seconds": 25.427680916998725
+}

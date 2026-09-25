@@ -1,0 +1,141 @@
+{
+  "ok": false,
+  "errorCount": 1,
+  "warningCount": 14,
+  "infoCount": 0,
+  "findings": [
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-composition-id=\"frame-01\" data-start=\"0\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "selector": "[data-composition-id=\"frame-01\"]",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-composition-id=\"frame-01\" data-composition-src=\"compositions/frames/01.html\" data-start=\"0\" data-duration=\"6.95\" data-track-index=\"1\" data-width=\"1080\" data-height=\"1920\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-composition-id=\"frame-02\" data-start=\"6.95\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "selector": "[data-composition-id=\"frame-02\"]",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-composition-id=\"frame-02\" data-composition-src=\"compositions/frames/02.html\" data-start=\"6.95\" data-duration=\"6.510000000000001\" data-track-index=\"1\" data-width=\"1080\" data-height=\"1920\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-composition-id=\"frame-03\" data-start=\"13.46\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "selector": "[data-composition-id=\"frame-03\"]",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-composition-id=\"frame-03\" data-composition-src=\"compositions/frames/03.html\" data-start=\"13.46\" data-duration=\"6.869999999999997\" data-track-index=\"1\" data-width=\"1080\" data-height=\"1920\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-composition-id=\"frame-04\" data-start=\"20.33\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "selector": "[data-composition-id=\"frame-04\"]",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-composition-id=\"frame-04\" data-composition-src=\"compositions/frames/04.html\" data-start=\"20.33\" data-duration=\"6.870000000000001\" data-track-index=\"1\" data-width=\"1080\" data-height=\"1920\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-composition-id=\"frame-05\" data-start=\"27.2\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "selector": "[data-composition-id=\"frame-05\"]",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-composition-id=\"frame-05\" data-composition-src=\"compositions/frames/05.html\" data-start=\"27.2\" data-duration=\"6.489999999999998\" data-track-index=\"1\" data-width=\"1080\" data-height=\"1920\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-composition-id=\"frame-06\" data-start=\"33.69\" data-track-index=\"1\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "selector": "[data-composition-id=\"frame-06\"]",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-composition-id=\"frame-06\" data-composition-src=\"compositions/frames/06.html\" data-start=\"33.69\" data-duration=\"6.310000000000002\" data-track-index=\"1\" data-width=\"1080\" data-height=\"1920\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div class=\"caption-layer\" data-start=\"0\" data-track-index=\"3\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip caption-layer\" data-start=\"0\" data-duration=\"40\" data-track-index=\"3\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "nested_structure_needs_subcomposition",
+      "severity": "warning",
+      "message": "<div> is a timeline element that contains nested <div id=\"cap-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+      "fixHint": "Move <div> and its contents into a sub-composition file and mount it with data-composition-src.",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-start=\"0\" data-duration=\"6.95\" data-track-index=\"0\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/compositions/frames/01.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-start=\"0\" data-duration=\"6.510000000000001\" data-track-index=\"0\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/compositions/frames/02.html"
+    },
+    {
+      "code": "gsap_fullscreen_overlay_starts_visible",
+      "severity": "error",
+      "message": "Full-frame overlay \"#f2-front\" starts visible before its first GSAP opacity tween at 0.10s. It will cover earlier render frames, often as a blank/white video.",
+      "selector": "#f2-front",
+      "elementId": "f2-front",
+      "fixHint": "Add `opacity: 0` to \"#f2-front\" in CSS/inline styles, or add an immediate `gsap.set(\"#f2-front\", { opacity: 0 })` (outside the timeline) before the reveal tween.",
+      "snippet": "tl.fromTo(\"#f2-front\", { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: \"power3.out\" }, 0.1)",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/compositions/frames/02.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-start=\"0\" data-duration=\"6.869999999999997\" data-track-index=\"0\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/compositions/frames/03.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-start=\"0\" data-duration=\"6.870000000000001\" data-track-index=\"0\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/compositions/frames/04.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-start=\"0\" data-duration=\"6.489999999999998\" data-track-index=\"0\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/compositions/frames/05.html"
+    },
+    {
+      "code": "studio_missing_editable_id",
+      "severity": "warning",
+      "message": "<div data-start=\"0\" data-track-index=\"0\"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.",
+      "fixHint": "Add a stable, human-readable id such as id=\"hero-title\" or id=\"scene-1-card\" to every timeline-visible element you want agents or Studio to edit.",
+      "snippet": "<div class=\"clip\" data-start=\"0\" data-duration=\"6.310000000000002\" data-track-index=\"0\">",
+      "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/compositions/frames/06.html"
+    }
+  ],
+  "filesScanned": 7,
+  "_meta": {
+    "version": "0.8.60",
+    "latestVersion": "0.8.60",
+    "updateAvailable": false
+  }
+}

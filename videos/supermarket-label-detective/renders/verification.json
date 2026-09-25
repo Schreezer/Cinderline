@@ -1,0 +1,32 @@
+{
+  "programs": [],
+  "stream_groups": [],
+  "streams": [
+    {
+      "codec_name": "h264",
+      "codec_type": "video",
+      "width": 1080,
+      "height": 1920,
+      "r_frame_rate": "30/1",
+      "duration": "40.000000"
+    },
+    {
+      "codec_name": "aac",
+      "codec_type": "audio",
+      "r_frame_rate": "0/0",
+      "duration": "40.000000"
+    }
+  ],
+  "format": {
+    "duration": "40.000000",
+    "size": "7148451"
+  },
+  "checks": {
+    "hyperframes_check": "passed",
+    "encoded_video_decode": "passed",
+    "encoded_contact_sheet": "visually reviewed all six scenes including final frame",
+    "script_transcript": "108 of 108 words match after punctuation normalization",
+    "audio": "local Qwen 1.7B, normalized to -16 LUFS before mixing",
+    "scope": "English pilot; not published"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "jobId": "grocery-still",
+  "type": "image",
+  "prompt": "Premium editorial still life photograph with playful art direction for a food-label education film. Three fictional unbranded grocery packages arranged on a warm ivory tabletop: a sage green stand-up granola pouch, a golden ochre bread bag showing a loaf, and a coral red small juice carton. Each has a large completely blank cream paper label on the front, absolutely no text, no letters, no logos. Beautiful realistic materials, subtle crinkled paper, tactile packaging, carefully styled with a small scattering of oats and one orange slice. Warm studio sunshine, rich dark forest green background with soft out-of-focus supermarket shelf shapes. Elegant contemporary food magazine, high-end commercial still life, pleasing sculptural arrangement, crisp detail, no people, no hands, no faces. All three packages fully visible in center, negative space at top and bottom.",
+  "model": "Nano Banana 2",
+  "ratio": "3:4",
+  "requestedOutputs": 1,
+  "quality": "original",
+  "downloadedAt": "2026-09-22T13:34:19.740Z",
+  "source": "google-flow-browser",
+  "flowUrl": "https://flow.google.com/project/4aead6dd-1704-4389-812a-874aa61c6d5d",
+  "status": "downloaded"
+}

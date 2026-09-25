@@ -1,0 +1,17 @@
+{
+  "name": "qwen-designed",
+  "model": "mlx-community/Qwen3-TTS-12Hz-1.7B-VoiceDesign-bf16",
+  "parameters": {
+    "text": "No added sugar. Sounds like sugar-free... right? Well... not quite. Fruit juice can still contain sugar from the fruit. So turn the pack over. Check total sugars, then compare similar drinks per hundred millilitres. Small flip. Better information.",
+    "instruct": "Male, early thirties, a warm resonant midrange voice with light breathiness and clear English. An easy conversational rhythm, as if talking to a friend in a shop. The opening question is curious and slightly incredulous; the correction is gently amused; the advice is warm and reassuring. Let the question hang for a beat. Use natural rises and falls in pitch, brief breaths between ideas, and relaxed sentence endings.",
+    "language": "English",
+    "temperature": 0.9,
+    "top_p": 1,
+    "max_tokens": 900
+  },
+  "duration": 19.44,
+  "sample_rate": 24000,
+  "raw_peak": 0.6150965094566345,
+  "gain": 1,
+  "elapsed_seconds": 10.61444579199997
+}

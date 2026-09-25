@@ -1,0 +1,43 @@
+{
+	"systeminfo": "WHISPER : COREML = 0 | OPENVINO = 0 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | DOTPROD = 1 | ACCELERATE = 1 | OPENMP = 1 | REPACK = 1 | ",
+	"model": {
+		"type": "small",
+		"multilingual": true,
+		"vocab": 51865,
+		"audio": {
+			"ctx": 1500,
+			"state": 768,
+			"head": 12,
+			"layer": 12
+		},
+		"text": {
+			"ctx": 448,
+			"state": 768,
+			"head": 12,
+			"layer": 12
+		},
+		"mels": 80,
+		"ftype": 1
+	},
+	"params": {
+		"model": "/Users/chirag13/.cache/hyperframes/whisper/models/ggml-small.bin",
+		"language": "hi",
+		"translate": false
+	},
+	"result": {
+		"language": "hi"
+	},
+	"transcription": [
+		{
+			"timestamps": {
+				"from": "00:00:00,000",
+				"to": "00:00:30,000"
+			},
+			"offsets": {
+				"from": 0,
+				"to": 30000
+			},
+			"text": " पैकिट पल लिखाए नेचुरल, तो क्या ये सहत के लिए च्छाए, जिरूरी नहीं, पैकिट पलटिये, चीनी कितनी है, सोडियम कितना है, मिलती जुलती चीजों कि तुलना सो ग्राम के हिसाप से कीजे, फिर देखे आप कितना खाते है"
+		}
+	]
+}

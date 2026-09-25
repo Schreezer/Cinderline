@@ -1,0 +1,25 @@
+{
+  "model": "mlx-community/fish-audio-s2-pro-8bit",
+  "instruct": "One warm, engaging young adult narrator speaking directly to a friend. Conversational and expressive, with clear diction, varied pitch, and purposeful short pauses. Curiosity in questions, light skepticism at marketing claims, reassuring confidence in practical advice. Natural brisk explainer pacing. No shouting, caricature, background music, or sound effects.",
+  "license": "Fish Audio Research License; local non-commercial audition",
+  "takes": [
+    {
+      "name": "english-expressive",
+      "text": "[curious] These three labels sound healthy. [short pause] But what do they actually tell you? [inviting] Let's turn the pack around. [skeptical] Natural isn't a nutrition score. [explaining] It doesn't tell you how much sugar, salt, or saturated fat is inside. Multigrain means more than one grain. [emphasis] It doesn't guarantee whole grains. [warm] Look for whole wheat or whole oats in the ingredients. [surprised] No added sugar doesn't mean sugar free. [explaining] Naturally occurring sugars can still be there. Check total sugars, too. Compare similar foods using the same amount, like per hundred grams. Then check how much you actually eat. [confident] The front gets your attention. [short pause] The back helps you choose. [upbeat] Flip it before you pick it.",
+      "duration": 69.65986394557824,
+      "sample_rate": 44100,
+      "elapsed": 83.09182229099952,
+      "path": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/public/audio/fish-audition/english-expressive.wav",
+      "reference": null
+    },
+    {
+      "name": "hindi-expressive",
+      "text": "[curious] पैकेट पर लिखा है नैचुरल। तो क्या ये हेल्दी है? [skeptical] ज़रूरी नहीं। [short pause] पैकेट पलटकर देखिए। [explaining] इंग्रीडिएंट्स के साथ न्यूट्रिशन की जानकारी भी पढ़िए। चीनी कितनी है? सोडियम कितना है? [warm] मिलती-जुलती चीज़ों की तुलना सौ ग्राम के हिसाब से कीजिए। [confident] फिर देखिए, आप असल में कितना खाते हैं।",
+      "duration": 21.408798185941045,
+      "sample_rate": 44100,
+      "elapsed": 49.16319220800051,
+      "path": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/public/audio/fish-audition/hindi-expressive.wav",
+      "reference": "english-expressive.wav"
+    }
+  ]
+}

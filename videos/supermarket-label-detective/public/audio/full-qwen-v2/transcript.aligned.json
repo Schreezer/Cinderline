@@ -1,0 +1,662 @@
+[
+  {
+    "text": "Natural.",
+    "start": 0.18,
+    "end": 1.01,
+    "id": "w0"
+  },
+  {
+    "text": "Multigrain.",
+    "start": 1.23,
+    "end": 2,
+    "id": "w1"
+  },
+  {
+    "text": "No",
+    "start": 2,
+    "end": 2.16,
+    "id": "w2"
+  },
+  {
+    "text": "added",
+    "start": 2.16,
+    "end": 2.55,
+    "id": "w3"
+  },
+  {
+    "text": "sugar.",
+    "start": 2.55,
+    "end": 3.08,
+    "id": "w4"
+  },
+  {
+    "text": "They",
+    "start": 3.32,
+    "end": 3.33,
+    "id": "w5"
+  },
+  {
+    "text": "sound",
+    "start": 3.33,
+    "end": 3.56,
+    "id": "w6"
+  },
+  {
+    "text": "healthy...",
+    "start": 3.56,
+    "end": 4,
+    "id": "w7"
+  },
+  {
+    "text": "right?",
+    "start": 4,
+    "end": 4.76,
+    "id": "w8"
+  },
+  {
+    "text": "Let's",
+    "start": 4.98,
+    "end": 5.09,
+    "id": "w9"
+  },
+  {
+    "text": "turn",
+    "start": 5.09,
+    "end": 5.34,
+    "id": "w10"
+  },
+  {
+    "text": "the",
+    "start": 5.34,
+    "end": 5.43,
+    "id": "w11"
+  },
+  {
+    "text": "pack",
+    "start": 5.44,
+    "end": 5.62,
+    "id": "w12"
+  },
+  {
+    "text": "around.",
+    "start": 5.87,
+    "end": 6.4,
+    "id": "w13"
+  },
+  {
+    "text": "Natural",
+    "start": 6.91,
+    "end": 7.11,
+    "id": "w14"
+  },
+  {
+    "text": "sounds",
+    "start": 7.14,
+    "end": 7.5,
+    "id": "w15"
+  },
+  {
+    "text": "reassuring.",
+    "start": 7.5,
+    "end": 8.25,
+    "id": "w16"
+  },
+  {
+    "text": "But",
+    "start": 8.25,
+    "end": 8.31,
+    "id": "w17"
+  },
+  {
+    "text": "it",
+    "start": 8.41,
+    "end": 8.56,
+    "id": "w18"
+  },
+  {
+    "text": "doesn't",
+    "start": 8.56,
+    "end": 9.04,
+    "id": "w19"
+  },
+  {
+    "text": "tell",
+    "start": 9.04,
+    "end": 9.27,
+    "id": "w20"
+  },
+  {
+    "text": "you",
+    "start": 9.27,
+    "end": 9.44,
+    "id": "w21"
+  },
+  {
+    "text": "how",
+    "start": 9.44,
+    "end": 9.54,
+    "id": "w22"
+  },
+  {
+    "text": "much",
+    "start": 9.63,
+    "end": 9.84,
+    "id": "w23"
+  },
+  {
+    "text": "sugar,",
+    "start": 9.84,
+    "end": 10.28,
+    "id": "w24"
+  },
+  {
+    "text": "salt,",
+    "start": 10.62,
+    "end": 10.79,
+    "id": "w25"
+  },
+  {
+    "text": "or",
+    "start": 10.83,
+    "end": 10.86,
+    "id": "w26"
+  },
+  {
+    "text": "saturated",
+    "start": 11.11,
+    "end": 11.5,
+    "id": "w27"
+  },
+  {
+    "text": "fat",
+    "start": 11.5,
+    "end": 11.61,
+    "id": "w28"
+  },
+  {
+    "text": "you're",
+    "start": 11.61,
+    "end": 12.08,
+    "id": "w29"
+  },
+  {
+    "text": "getting.",
+    "start": 12.16,
+    "end": 12.73,
+    "id": "w30"
+  },
+  {
+    "text": "Multigrain",
+    "start": 12.73,
+    "end": 13.38,
+    "id": "w31"
+  },
+  {
+    "text": "just",
+    "start": 13.38,
+    "end": 13.53,
+    "id": "w32"
+  },
+  {
+    "text": "means",
+    "start": 13.65,
+    "end": 13.88,
+    "id": "w33"
+  },
+  {
+    "text": "more",
+    "start": 13.88,
+    "end": 14.24,
+    "id": "w34"
+  },
+  {
+    "text": "than",
+    "start": 14.24,
+    "end": 14.49,
+    "id": "w35"
+  },
+  {
+    "text": "one",
+    "start": 14.49,
+    "end": 14.68,
+    "id": "w36"
+  },
+  {
+    "text": "grain.",
+    "start": 14.68,
+    "end": 15.17,
+    "id": "w37"
+  },
+  {
+    "text": "Whole",
+    "start": 15.37,
+    "end": 15.41,
+    "id": "w38"
+  },
+  {
+    "text": "grains?",
+    "start": 15.93,
+    "end": 16.48,
+    "id": "w39"
+  },
+  {
+    "text": "Not",
+    "start": 16.48,
+    "end": 16.66,
+    "id": "w40"
+  },
+  {
+    "text": "necessarily.",
+    "start": 16.66,
+    "end": 17.36,
+    "id": "w41"
+  },
+  {
+    "text": "Look",
+    "start": 17.71,
+    "end": 17.77,
+    "id": "w42"
+  },
+  {
+    "text": "for",
+    "start": 17.77,
+    "end": 17.95,
+    "id": "w43"
+  },
+  {
+    "text": "whole",
+    "start": 17.95,
+    "end": 18.25,
+    "id": "w44"
+  },
+  {
+    "text": "wheat",
+    "start": 18.26,
+    "end": 18.57,
+    "id": "w45"
+  },
+  {
+    "text": "or",
+    "start": 18.57,
+    "end": 18.67,
+    "id": "w46"
+  },
+  {
+    "text": "whole",
+    "start": 18.71,
+    "end": 19,
+    "id": "w47"
+  },
+  {
+    "text": "oats",
+    "start": 19,
+    "end": 19.09,
+    "id": "w48"
+  },
+  {
+    "text": "in",
+    "start": 19.21,
+    "end": 19.37,
+    "id": "w49"
+  },
+  {
+    "text": "the",
+    "start": 19.37,
+    "end": 19.52,
+    "id": "w50"
+  },
+  {
+    "text": "ingredients.",
+    "start": 19.8,
+    "end": 20.48,
+    "id": "w51"
+  },
+  {
+    "text": "No",
+    "start": 20.48,
+    "end": 20.58,
+    "id": "w52"
+  },
+  {
+    "text": "added",
+    "start": 20.58,
+    "end": 20.73,
+    "id": "w53"
+  },
+  {
+    "text": "sugar",
+    "start": 20.73,
+    "end": 21.16,
+    "id": "w54"
+  },
+  {
+    "text": "sounds",
+    "start": 21.16,
+    "end": 21.59,
+    "id": "w55"
+  },
+  {
+    "text": "like",
+    "start": 21.59,
+    "end": 21.65,
+    "id": "w56"
+  },
+  {
+    "text": "sugar-free...",
+    "start": 21.65,
+    "end": 22.28,
+    "id": "w57"
+  },
+  {
+    "text": "but",
+    "start": 22.28,
+    "end": 22.63,
+    "id": "w58"
+  },
+  {
+    "text": "not",
+    "start": 22.63,
+    "end": 22.75,
+    "id": "w59"
+  },
+  {
+    "text": "quite.",
+    "start": 22.75,
+    "end": 23.24,
+    "id": "w60"
+  },
+  {
+    "text": "Naturally",
+    "start": 23.24,
+    "end": 23.8,
+    "id": "w61"
+  },
+  {
+    "text": "occurring",
+    "start": 23.8,
+    "end": 24.01,
+    "id": "w62"
+  },
+  {
+    "text": "sugars",
+    "start": 24.71,
+    "end": 24.73,
+    "id": "w63"
+  },
+  {
+    "text": "can",
+    "start": 24.73,
+    "end": 24.9,
+    "id": "w64"
+  },
+  {
+    "text": "still",
+    "start": 24.92,
+    "end": 25.22,
+    "id": "w65"
+  },
+  {
+    "text": "be",
+    "start": 25.22,
+    "end": 25.26,
+    "id": "w66"
+  },
+  {
+    "text": "there.",
+    "start": 25.35,
+    "end": 25.69,
+    "id": "w67"
+  },
+  {
+    "text": "Check",
+    "start": 25.8,
+    "end": 25.92,
+    "id": "w68"
+  },
+  {
+    "text": "total",
+    "start": 26.11,
+    "end": 26.23,
+    "id": "w69"
+  },
+  {
+    "text": "sugars,",
+    "start": 26.23,
+    "end": 26.53,
+    "id": "w70"
+  },
+  {
+    "text": "too.",
+    "start": 26.53,
+    "end": 26.8,
+    "id": "w71"
+  },
+  {
+    "text": "Comparing",
+    "start": 27.15,
+    "end": 27.51,
+    "id": "w72"
+  },
+  {
+    "text": "two",
+    "start": 27.51,
+    "end": 27.69,
+    "id": "w73"
+  },
+  {
+    "text": "packs?",
+    "start": 27.69,
+    "end": 28.18,
+    "id": "w74"
+  },
+  {
+    "text": "Use",
+    "start": 28.18,
+    "end": 28.36,
+    "id": "w75"
+  },
+  {
+    "text": "the",
+    "start": 28.36,
+    "end": 28.52,
+    "id": "w76"
+  },
+  {
+    "text": "same",
+    "start": 28.52,
+    "end": 28.56,
+    "id": "w77"
+  },
+  {
+    "text": "amount...",
+    "start": 29.15,
+    "end": 29.27,
+    "id": "w78"
+  },
+  {
+    "text": "like",
+    "start": 29.27,
+    "end": 29.51,
+    "id": "w79"
+  },
+  {
+    "text": "per",
+    "start": 29.51,
+    "end": 29.69,
+    "id": "w80"
+  },
+  {
+    "text": "hundred",
+    "start": 29.69,
+    "end": 30.17,
+    "id": "w81"
+  },
+  {
+    "text": "grams.",
+    "start": 30.56,
+    "end": 30.84,
+    "id": "w82"
+  },
+  {
+    "text": "Then",
+    "start": 30.93,
+    "end": 30.96,
+    "id": "w83"
+  },
+  {
+    "text": "check",
+    "start": 31.15,
+    "end": 31.21,
+    "id": "w84"
+  },
+  {
+    "text": "how",
+    "start": 31.21,
+    "end": 31.36,
+    "id": "w85"
+  },
+  {
+    "text": "much",
+    "start": 31.36,
+    "end": 31.55,
+    "id": "w86"
+  },
+  {
+    "text": "you",
+    "start": 31.55,
+    "end": 31.65,
+    "id": "w87"
+  },
+  {
+    "text": "actually",
+    "start": 31.65,
+    "end": 32.19,
+    "id": "w88"
+  },
+  {
+    "text": "eat.",
+    "start": 32.19,
+    "end": 32.35,
+    "id": "w89"
+  },
+  {
+    "text": "The",
+    "start": 32.42,
+    "end": 32.57,
+    "id": "w90"
+  },
+  {
+    "text": "front",
+    "start": 32.57,
+    "end": 32.82,
+    "id": "w91"
+  },
+  {
+    "text": "gets",
+    "start": 32.82,
+    "end": 33.02,
+    "id": "w92"
+  },
+  {
+    "text": "your",
+    "start": 33.02,
+    "end": 33.22,
+    "id": "w93"
+  },
+  {
+    "text": "attention.",
+    "start": 33.22,
+    "end": 33.83,
+    "id": "w94"
+  },
+  {
+    "text": "The",
+    "start": 33.83,
+    "end": 33.96,
+    "id": "w95"
+  },
+  {
+    "text": "back",
+    "start": 33.96,
+    "end": 34.28,
+    "id": "w96"
+  },
+  {
+    "text": "helps",
+    "start": 34.28,
+    "end": 34.43,
+    "id": "w97"
+  },
+  {
+    "text": "you",
+    "start": 34.43,
+    "end": 34.58,
+    "id": "w98"
+  },
+  {
+    "text": "choose.",
+    "start": 34.58,
+    "end": 35.12,
+    "id": "w99"
+  },
+  {
+    "text": "Small",
+    "start": 35.31,
+    "end": 35.37,
+    "id": "w100"
+  },
+  {
+    "text": "habit.",
+    "start": 35.37,
+    "end": 35.76,
+    "id": "w101"
+  },
+  {
+    "text": "Better",
+    "start": 35.76,
+    "end": 35.84,
+    "id": "w102"
+  },
+  {
+    "text": "information.",
+    "start": 36.35,
+    "end": 36.78,
+    "id": "w103"
+  },
+  {
+    "text": "Flip",
+    "start": 36.78,
+    "end": 36.98,
+    "id": "w104"
+  },
+  {
+    "text": "it",
+    "start": 36.98,
+    "end": 37.08,
+    "id": "w105"
+  },
+  {
+    "text": "before",
+    "start": 37.08,
+    "end": 37.38,
+    "id": "w106"
+  },
+  {
+    "text": "you",
+    "start": 37.38,
+    "end": 37.53,
+    "id": "w107"
+  },
+  {
+    "text": "pick",
+    "start": 37.53,
+    "end": 37.73,
+    "id": "w108"
+  },
+  {
+    "text": "it.",
+    "start": 37.84,
+    "end": 37.92,
+    "id": "w109"
+  }
+]

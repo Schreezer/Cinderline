@@ -1,0 +1,19 @@
+{
+  "name": "fish-control",
+  "model": "mlx-community/fish-audio-s2-pro-8bit",
+  "parameters": {
+    "text": "[curious] No added sugar. Sounds like sugar-free... right? [long-break] [doubtful] Well... not quite. [break] Fruit juice can still contain sugar from the fruit. [confident] So turn the pack over. Check total sugars, then compare similar drinks per hundred millilitres. [warm] Small flip. Better information.",
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "max_tokens": 1000,
+    "chunk_length": 1800,
+    "speed": 1,
+    "reference": null,
+    "reference_text": null
+  },
+  "duration": 19.969160997732427,
+  "sample_rate": 44100,
+  "raw_peak": 0.8798010945320129,
+  "gain": 1,
+  "elapsed_seconds": 24.578255915999762
+}

@@ -1,0 +1,30 @@
+{
+  "times": [
+    0,
+    6.91,
+    12.73,
+    20.48,
+    27.15,
+    32.42,
+    38.7
+  ],
+  "audio_duration": 38.0,
+  "audio_src": "public/audio/full-qwen-v2/voice.wav",
+  "lines": "public/audio/full-qwen-v2/script-lines.json",
+  "transcript": "public/audio/full-qwen-v2/transcript.aligned.json",
+  "srt": "renders/subtitles.qwen-v2.en.srt",
+  "click_times": [
+    0.18,
+    1.23,
+    2.0,
+    9.84,
+    10.62,
+    11.11,
+    17.71,
+    26.11,
+    29.69,
+    33.83
+  ],
+  "gain_db": 3.29,
+  "word_audit": "All 110 spoken words match the script after normalizing punctuation and 100/hundred. Caption punctuation restored from source script."
+}

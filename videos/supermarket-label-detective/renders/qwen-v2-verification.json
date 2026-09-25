@@ -1,0 +1,31 @@
+{
+  "file": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/renders/flip-it-then-pick-it.qwen-v2.en.mp4",
+  "duration": "38.700000",
+  "video": {
+    "codec_name": "h264",
+    "width": 1080,
+    "height": 1920,
+    "r_frame_rate": "30/1",
+    "nb_frames": "1161"
+  },
+  "audio": {
+    "codec_name": "aac",
+    "sample_rate": "48000",
+    "channels": 2,
+    "duration": "38.700000"
+  },
+  "decode_errors": 0,
+  "script_word_audit": "All 110 spoken words match the script after normalizing punctuation and 100/hundred. Caption punctuation restored from source script.",
+  "sample_times": [
+    0.5,
+    6.1,
+    12.2,
+    19.6,
+    26.65,
+    31.65,
+    37.6,
+    38.6
+  ],
+  "renderer": "HyperFrames 0.8.61; updated from 0.8.60; check passed with existing caption-track structure warning.",
+  "encoded_audio_asr": "Full script matches decoded final MP4 audio; punctuation and 100/hundred normalized."
+}

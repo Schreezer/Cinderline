@@ -1,0 +1,320 @@
+{
+  "ok": true,
+  "strict": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"caption-layer\"> is a timeline element that contains nested <div id=\"cap-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#caption-layer",
+        "dataAttributes": {},
+        "sourceFile": "/Users/chirag13/Documents/ChatGPT/starCraft/videos/supermarket-label-detective/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"caption-layer\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 7
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 5,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"whoosh-0\" is 0.57s but its slot (data-duration) is 0.65s — the slot is shortened to the media length when rendered. Set data-duration to ~0.57s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-duration": "40",
+          "data-start": "0"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"whoosh-1\" is 0.57s but its slot (data-duration) is 0.65s — the slot is shortened to the media length when rendered. Set data-duration to ~0.57s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-duration": "40",
+          "data-start": "0"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"whoosh-2\" is 0.57s but its slot (data-duration) is 0.65s — the slot is shortened to the media length when rendered. Set data-duration to ~0.57s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-duration": "40",
+          "data-start": "0"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"whoosh-3\" is 0.57s but its slot (data-duration) is 0.65s — the slot is shortened to the media length when rendered. Set data-duration to ~0.57s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-duration": "40",
+          "data-start": "0"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"whoosh-4\" is 0.57s but its slot (data-duration) is 0.65s — the slot is shortened to the media length when rendered. Set data-duration to ~0.57s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-width": "1080",
+          "data-height": "1920",
+          "data-duration": "40",
+          "data-start": "0"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1080,
+          "height": 1920
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "infoCount": 2,
+    "findings": [
+      {
+        "code": "content_overlap",
+        "severity": "warning",
+        "time": 9.375,
+        "selector": "div.label > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 389.42,
+          "top": 1225.23,
+          "right": 495.69,
+          "bottom": 1284.02,
+          "width": 106.27,
+          "height": 58.79
+        },
+        "containerSelector": "div.label > div:nth-of-type(2)",
+        "text": "THE WORD ALONE",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/02.html",
+        "bbox": {
+          "x": 389.42,
+          "y": 1225.23,
+          "width": 106.27,
+          "height": 58.79
+        },
+        "firstSeen": 9.375,
+        "lastSeen": 9.5,
+        "occurrences": 2,
+        "heldMs": 125
+      },
+      {
+        "code": "content_overlap",
+        "severity": "info",
+        "time": 20.625,
+        "selector": "div.eyebrow > div:nth-of-type(1)",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 11.76,
+          "top": 805.02,
+          "right": 119.45,
+          "bottom": 859.89,
+          "width": 107.69,
+          "height": 54.87
+        },
+        "containerSelector": "div.eyebrow > div:nth-of-type(2)",
+        "text": "FRUIT",
+        "fixHint": "Give each block its own zone, or mark intentional layering with data-layout-allow-overlap.",
+        "dataAttributes": {},
+        "sourceFile": "compositions/frames/04.html",
+        "bbox": {
+          "x": 11.76,
+          "y": 805.02,
+          "width": 107.69,
+          "height": 54.87
+        },
+        "firstSeen": 20.625,
+        "lastSeen": 20.625,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 38.6,
+        "selector": "#f6-image > img:nth-of-type(1)",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 78,
+          "top": -123,
+          "right": 1006,
+          "bottom": 1120,
+          "width": 928,
+          "height": 1243
+        },
+        "containerSelector": "#f6-image",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 76,
+          "top": 225,
+          "right": 1004,
+          "bottom": 955,
+          "width": 928,
+          "height": 730
+        },
+        "overflow": {
+          "top": 348,
+          "bottom": 165
+        },
+        "dataAttributes": {
+          "data-hf-authored-opacity": ""
+        },
+        "sourceFile": "compositions/frames/06.html",
+        "bbox": {
+          "x": 78,
+          "y": -123,
+          "width": 928,
+          "height": 1243
+        },
+        "firstSeen": 38.6,
+        "lastSeen": 38.6,
+        "occurrences": 1,
+        "heldMs": 0
+      }
+    ],
+    "duration": 40,
+    "samples": [
+      3.8,
+      10.9,
+      18.8,
+      25.7,
+      32,
+      38.6
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 3,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      3.8,
+      10.9,
+      18.8,
+      25.7,
+      38.6
+    ],
+    "checked": 60,
+    "passed": 60
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": true,
+    "files": [
+      "snapshots/frame-00-at-3.8s.png",
+      "snapshots/frame-01-at-10.9s.png",
+      "snapshots/frame-02-at-18.8s.png",
+      "snapshots/frame-03-at-25.7s.png",
+      "snapshots/frame-04-at-38.6s.png"
+    ],
+    "times": [
+      3.8,
+      10.9,
+      18.8,
+      25.7,
+      38.6
+    ],
+    "findingFiles": []
+  },
+  "_meta": {
+    "version": "0.8.60",
+    "latestVersion": "0.8.60",
+    "updateAvailable": false
+  }
+}

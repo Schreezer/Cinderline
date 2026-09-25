@@ -1,0 +1,16 @@
+{
+  "english": {
+    "duration": 44.95383219954648,
+    "max_abs_sample": 0.84918212890625,
+    "transcription": "These three labels sound healthy.\n But what do they actually tell you?\n Let's turn the pack around.\n Natural isn't a nutrition score.\n It doesn't tell you how much sugar, salt,\n or saturated fat is inside.\n Multigrain means more than one grain.\n It doesn't guarantee whole grains.\n Look for whole wheat or whole oats in the ingredients.\n No added sugar doesn't mean sugar-free.\n Naturally occurring sugars can still be there.\n Check total sugars too.\n Compare similar foods using the same amount,\n like per hundred grams.\n Then check how much you actually eat.\n The front gets your attention.\n The back helps you choose.\n Flip it before you pick it.",
+    "expected_word_count": 113,
+    "transcribed_word_count": 113,
+    "differences": []
+  },
+  "hindi": {
+    "duration": 14.303492063492063,
+    "max_abs_sample": 0.372283935546875,
+    "transcription": "पैकिट पल लिखाए नेचुरल, तो क्या ये सहत के लिए च्छाए, जिरूरी नहीं, पैकिट पलटिये, चीनी कितनी है, सोडियम कितना है, मिलती जुलती चीजों कि तुलना सो ग्राम के हिसाप से कीजे, फिर देखे आप कितना खाते है"
+  },
+  "note": "ASR checks word content, not perceived emotion or voice quality. Hindi needs fluent listening review."
+}
