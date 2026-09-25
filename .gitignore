@@ -16,3 +16,7 @@ Server/.env.local
 
 # gflow-cli browser profile (contains Google session cookies)
 .gflow/
+
+# Downloaded third-party video and extracted reference media stay local.
+/videos/health-channel/references/PhrcWPJEpqs/*
+!/videos/health-channel/references/PhrcWPJEpqs/STYLE-STUDY.md
