@@ -93,8 +93,15 @@ bool UCinderLandscapeAuthoringLibrary::AuthorFrontierLandscapes(FString& OutRepo
             CinderLandscapeTerrain::MapTag(Map),
             CinderLandscapeTerrain::GeometryTag(CinderLandscapeTerrain::CanonicalGeometrySignature(Map))
         };
+        // Z scale is NOT cosmetic and NOT independent of the heightfield. Unreal decodes a
+        // landscape sample as (Stored - 32768) * (1/128) * ActorScale.Z, while BuildHeightData
+        // encodes it as 32768 + Height * HeightEncodeScale. The two only cancel when
+        // ActorScale.Z is 128 / HeightEncodeScale, which is exactly HeightActorZScale. Halving
+        // the encode scale to fit 480 cm mesas in the uint16 therefore had to double this, or
+        // every mesa would have rendered at half its authored height with nothing to catch it.
+        // Derive it, never type it: these two numbers must never be edited independently.
         Landscape->SetActorScale3D(FVector(CinderLandscapeTerrain::VertexSpacing(),
-            CinderLandscapeTerrain::VertexSpacing(), 1.0f));
+            CinderLandscapeTerrain::VertexSpacing(), CinderLandscapeTerrain::HeightActorZScale));
         Landscape->LandscapeMaterial = Material;
         Landscape->bUseDynamicMaterialInstance = true;
         Landscape->bUsedForNavigation = false;

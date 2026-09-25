@@ -123,11 +123,27 @@ def create_photo_material(replace):
     helper.MATERIALS = PHOTO_MATERIALS
     graph = helper.Graph("M_CinderSceneryPhotogrammetry")
     uv = graph.uv0(1.0)
-    diffuse = graph.sample("PhotogrammetryDiffuse", color, uv, "COLOR")
-    graph.output(diffuse, "BASE_COLOR", "RGB")
-    sampled_normal = graph.sample("PhotogrammetryNormal", normal, uv, "NORMAL")
+    diffuse = graph.sample("PhotogrammetryDiffuse", color, uv, "COLOR",
+                           sampler_source=helper.WRAP_SAMPLER_GROUP)
+    # The raw Namaqualand albedo used to reach BASE_COLOR untouched, and this
+    # material wins the load order over MI_CinderSceneryRock, which is the only
+    # rock asset that had a tint parameter. The map therefore shipped as beige
+    # photogrammetry boulders standing on orange ground. Two ALU nodes on a
+    # material that already takes three fetches pull the photograph towards the
+    # canyon's own rock: partial desaturation first so the boulders keep their
+    # scanned value contrast, then a tint that can be retuned without a reimport.
+    neutral = graph.node("Neutral photogrammetry grain", "Desaturation")
+    graph.link(diffuse, neutral, "Input", "RGB")
+    graph.link(graph.scalar("Desaturation", 0.55), neutral, "Fraction")
+    tinted = graph.node("Canyon rock albedo", "Multiply")
+    graph.link(neutral, tinted, "A")
+    graph.link(graph.color("RockTint", (0.47, 0.33, 0.24)), tinted, "B", "RGB")
+    graph.output(tinted, "BASE_COLOR")
+    sampled_normal = graph.sample("PhotogrammetryNormal", normal, uv, "NORMAL",
+                                  sampler_source=helper.WRAP_SAMPLER_GROUP)
     graph.normal(sampled_normal, 0.82)
-    packed = graph.sample("PhotogrammetryARM", arm, uv, "MASKS")
+    packed = graph.sample("PhotogrammetryARM", arm, uv, "MASKS",
+                          sampler_source=helper.WRAP_SAMPLER_GROUP)
     graph.output(packed, "AMBIENT_OCCLUSION", "R")
     graph.output(packed, "ROUGHNESS", "G")
     graph.output(graph.node("Nonmetal rock", "Constant", r=0.0), "METALLIC")

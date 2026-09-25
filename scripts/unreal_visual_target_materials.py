@@ -40,14 +40,52 @@ COARSE_GROUND_FILES = {
     "AO": ("dry_ground_rocks_ao_2k.jpg", "b1151db9b276cbf92e9d05185eebaeb7"),
 }
 
+# The unlit core surface is the one emitter allowed to exceed the bloom
+# threshold, so its intensity is named once and shared by the palette row and
+# _core_instance rather than repeated as a literal in two places.
+CORE_TINT = (0.18, 0.46, 0.40)
+CORE_GLOW_INTENSITY = 2.60
+BLOOM_THRESHOLD = 0.62
+
+# name, slot, tint, roughness, metallic, glow, finish variation, surface wear,
+# AO, rim light, rim colour.
+#
+# Rim light is the largest single readability change in the model material.
+# M_CinderModelV3 has always built the Fresnel rim and paid its ALU on every unit
+# pixel, but no instance ever wrote RimLight, so units shipped with the 0.09
+# graph default and read as near-black blobs with no edge separation from the
+# warm ground. Darker hulls get more rim because they have further to travel to
+# reach a readable edge; the rim colour stays cool blue-white against warm
+# terrain so the separation is hue as well as value.
+#
+# The glow ordering below is deliberate and load-bearing. The thermal ladder
+# zeroes bloom at Minimum quality, so nothing may depend on bloom to be legible:
+#   TeamPanel  (0.025, 0.44, 0.37) * 0.55 peaks at 0.242, under the 0.62 bloom
+#              threshold. A panel therefore reads as solid team colour with bloom
+#              off and gains nothing it needs when bloom is on. At runtime the
+#              C++ overrides Tint with the team colour, whose brightest channel is
+#              1.00, so the worst case is still 0.55 and remains under threshold.
+#   CoreGlow   (0.18, 0.46, 0.40) * 2.60 peaks at 1.196, well over the threshold,
+#              so cores are the one thing on a unit that blooms: a garnish on an
+#              already-legible shape, never the thing that makes it legible.
 MODEL_PALETTES = (
-    ("MI_VT_HullDark", "HullDark", (0.045, 0.065, 0.075), 0.43, 0.30, 0.0, 0.050, 0.09, 1.0),
-    ("MI_VT_HullLight", "HullLight", (0.42, 0.50, 0.52), 0.40, 0.22, 0.0, 0.040, 0.05, 1.0),
-    ("MI_VT_Metal", "Metal", (0.070, 0.085, 0.095), 0.25, 0.92, 0.0, 0.025, 0.08, 0.94),
-    ("MI_VT_TeamPanel", "TeamPanel", (0.025, 0.44, 0.37), 0.38, 0.22, 0.01, 0.035, 0.05, 1.0),
-    ("MI_VT_CoreGlow", "CoreGlow", (0.18, 0.46, 0.40), 0.32, 0.0, 0.80, 0.015, 0.02, 1.0),
-    ("MI_CinderSceneryMetal", "SceneryMetal", (0.065, 0.078, 0.085), 0.30, 0.88, 0.0, 0.035, 0.11, 0.92),
-    ("MI_CinderSceneryPaint", "SceneryPaint", (0.235, 0.135, 0.055), 0.46, 0.28, 0.0, 0.050, 0.14, 0.95),
+    ("MI_VT_HullDark", "HullDark", (0.045, 0.065, 0.075), 0.43, 0.30, 0.0, 0.050, 0.09, 1.0,
+     0.55, (0.62, 0.78, 1.00)),
+    ("MI_VT_HullLight", "HullLight", (0.42, 0.50, 0.52), 0.40, 0.22, 0.0, 0.040, 0.05, 1.0,
+     0.40, (0.66, 0.80, 1.00)),
+    ("MI_VT_Metal", "Metal", (0.070, 0.085, 0.095), 0.25, 0.92, 0.0, 0.025, 0.08, 0.94,
+     0.35, (0.80, 0.86, 1.00)),
+    ("MI_VT_TeamPanel", "TeamPanel", (0.025, 0.44, 0.37), 0.38, 0.22, 0.55, 0.035, 0.05, 1.0,
+     0.25, (0.66, 0.80, 1.00)),
+    # Unused by _model_material: the core slot is parented to the unlit
+    # M_VT_CoreSurface by _core_instance. Kept truthful so the palette table
+    # still documents every shipped slot.
+    ("MI_VT_CoreGlow", "CoreGlow", CORE_TINT, 0.32, 0.0, CORE_GLOW_INTENSITY, 0.015, 0.02, 1.0,
+     0.0, (0.62, 0.78, 1.00)),
+    ("MI_CinderSceneryMetal", "SceneryMetal", (0.065, 0.078, 0.085), 0.30, 0.88, 0.0, 0.035, 0.11, 0.92,
+     0.18, (0.80, 0.86, 1.00)),
+    ("MI_CinderSceneryPaint", "SceneryPaint", (0.235, 0.135, 0.055), 0.46, 0.28, 0.0, 0.050, 0.14, 0.95,
+     0.18, (0.66, 0.80, 1.00)),
 )
 
 
@@ -79,17 +117,22 @@ def _instance(helper, parent, name, slot, values):
     helper.require(instance.get_editor_property("parent") == parent,
                    "material instance parent did not persist at " + path)
 
-    tint = values["Tint"]
-    LIB.set_material_instance_vector_parameter_value(
-        instance, "Tint", unreal.LinearColor(*tint, 1.0))
-    actual_tint = LIB.get_material_instance_vector_parameter_value(instance, "Tint")
-    helper.require(all(math.isclose(actual, expected, abs_tol=1e-5)
-                       for actual, expected in zip(
-                           (actual_tint.r, actual_tint.g, actual_tint.b, actual_tint.a),
-                           (*tint, 1.0))), "Tint readback failed at " + path)
-    readback = {"Tint": list(tint)}
+    readback = {}
+    # RimColor is written exactly like Tint. Without it every instance inherits the
+    # graph default and the whole army rims the same blue, which throws away the
+    # only cue that separates a painted hull from bare metal at phone zoom.
+    for parameter in ("Tint", "RimColor"):
+        rgb = values[parameter]
+        LIB.set_material_instance_vector_parameter_value(
+            instance, parameter, unreal.LinearColor(*rgb, 1.0))
+        actual_color = LIB.get_material_instance_vector_parameter_value(instance, parameter)
+        helper.require(all(math.isclose(actual, expected, abs_tol=1e-5)
+                           for actual, expected in zip(
+                               (actual_color.r, actual_color.g, actual_color.b, actual_color.a),
+                               (*rgb, 1.0))), parameter + " readback failed at " + path)
+        readback[parameter] = list(rgb)
     for parameter in ("Roughness", "Metallic", "GlowIntensity",
-                      "FinishVariation", "SurfaceWear", "AO"):
+                      "FinishVariation", "SurfaceWear", "AO", "RimLight"):
         value = values[parameter]
         LIB.set_material_instance_scalar_parameter_value(instance, parameter, value)
         actual = LIB.get_material_instance_scalar_parameter_value(instance, parameter)
@@ -120,7 +163,7 @@ def _core_instance(helper, parent):
     LIB.set_material_instance_parent(instance, parent)
     helper.require(instance.get_editor_property("parent") == parent,
                    "core material instance parent did not persist")
-    tint = (0.18, 0.46, 0.40)
+    tint = CORE_TINT
     LIB.set_material_instance_vector_parameter_value(
         instance, "Tint", unreal.LinearColor(*tint, 1.0))
     actual_tint = LIB.get_material_instance_vector_parameter_value(instance, "Tint")
@@ -128,7 +171,12 @@ def _core_instance(helper, parent):
                        for actual, expected in zip(
                            (actual_tint.r, actual_tint.g, actual_tint.b, actual_tint.a),
                            (*tint, 1.0))), "core Tint readback failed")
-    glow = 0.80
+    # 2.60, not 0.80: CORE_TINT peaks at 0.46, so the old value peaked at 0.368 and
+    # the core sat below the 0.62 bloom threshold, indistinguishable from the team
+    # panel beside it. At 2.60 the peak is 1.196 and the core is the only part of
+    # the silhouette that blooms. It is unlit, so this is pure emissive headroom
+    # and costs no light, no shadow and no sampler.
+    glow = CORE_GLOW_INTENSITY
     LIB.set_material_instance_scalar_parameter_value(instance, "GlowIntensity", glow)
     helper.require(math.isclose(
         LIB.get_material_instance_scalar_parameter_value(instance, "GlowIntensity"),
@@ -315,13 +363,40 @@ def _model_material(helper):
     finish_color = graph.node("Tint with subtle finish variation", "Multiply")
     graph.link(tint, finish_color, "A", "RGB")
     graph.link(color_gain, finish_color, "B")
-    vertex_ao_scale = graph.node("Visible baked AO scale", "Multiply", const_b=0.35)
+    # Baked crevices read as real shadow rather than a faint tint. RecessDepth is
+    # how far a fully occluded vertex darkens; 0 keeps the mesh flat-lit.
+    recess = graph.scalar("RecessDepth", 0.58)
+    vertex_ao_scale = graph.node("Visible baked AO scale", "Multiply")
     graph.link(vertex_color, vertex_ao_scale, "A", "A")
-    vertex_ao_floor = graph.node("Gentle baked AO floor", "Add", const_b=0.65)
+    graph.link(recess, vertex_ao_scale, "B")
+    recess_floor = graph.node("Baked AO floor", "OneMinus")
+    graph.link(recess, recess_floor, "Input")
+    vertex_ao_floor = graph.node("Baked recess response", "Add")
     graph.link(vertex_ao_scale, vertex_ao_floor, "A")
-    color = graph.node("Finish color with baked recess AO", "Multiply")
-    graph.link(finish_color, color, "A")
-    graph.link(vertex_ao_floor, color, "B")
+    graph.link(recess_floor, vertex_ao_floor, "B")
+    shaded = graph.node("Finish color with baked recess AO", "Multiply")
+    graph.link(finish_color, shaded, "A")
+    graph.link(vertex_ao_floor, shaded, "B")
+
+    # Stylized sky term. Upward faces lift and undersides fall, so hard-surface
+    # volumes read at phone zoom even where the key light does not reach them.
+    # Mesh-size independent: it keys off the vertex normal, not object bounds.
+    normal_ws = graph.node("World vertex normal", "VertexNormalWS")
+    normal_z = graph.node("Vertex normal up component", "ComponentMask",
+                          r=False, g=False, b=True, a=False)
+    graph.link(normal_ws, normal_z, "Input")
+    # gain = 1 + normal.z * SkyShading * 0.5, so a horizontal face stays exactly
+    # neutral and only the tilt away from level moves the albedo.
+    sky_half = graph.node("Half sky shading", "Multiply", const_b=0.5)
+    graph.link(graph.scalar("SkyShading", 0.30), sky_half, "A")
+    sky_signed = graph.node("Signed sky shading", "Multiply")
+    graph.link(normal_z, sky_signed, "A")
+    graph.link(sky_half, sky_signed, "B")
+    sky_gain = graph.node("Sky shading gain", "Add", const_b=1.0)
+    graph.link(sky_signed, sky_gain, "A")
+    color = graph.node("Shaded color with sky term", "Multiply")
+    graph.link(shaded, color, "A")
+    graph.link(sky_gain, color, "B")
     graph.output(color, "BASE_COLOR")
 
     rough_variation = graph.node("Finish roughness variation", "Multiply", const_b=0.10)
@@ -338,7 +413,17 @@ def _model_material(helper):
     roughness = graph.node("Physical roughness bounds", "Clamp",
                            min_default=0.12, max_default=0.96)
     graph.link(rough_with_wear, roughness, "Input")
-    graph.output(roughness, "ROUGHNESS")
+    # Grazing-angle sheen, three ALU nodes and no sampler: pull the clamped
+    # roughness towards 0.22 only where the surface turns away from the camera, so
+    # hard edges catch a glancing highlight instead of reading as matte plastic.
+    # Exponent 8 is deliberately much tighter than the silhouette rim's 3.2 - the
+    # rim owns the broad readable band, this only touches the last few degrees, so
+    # the two never stack into a halo.
+    sheen = graph.node("Grazing angle sheen", "Fresnel", exponent=8.0, base_reflect_fraction=0.0)
+    polished = graph.node("Roughness with grazing sheen", "LinearInterpolate", const_b=0.22)
+    graph.link(roughness, polished, "A")
+    graph.link(sheen, polished, "Alpha")
+    graph.output(polished, "ROUGHNESS")
     graph.output(graph.scalar("Metallic", 0.18), "METALLIC")
 
     ao = graph.node("Vertex AO times instance AO", "Multiply")
@@ -349,12 +434,31 @@ def _model_material(helper):
     glow = graph.node("Restrained emissive", "Multiply")
     graph.link(tint, glow, "A", "RGB")
     graph.link(graph.scalar("GlowIntensity", 0.0), glow, "B")
-    graph.output(glow, "EMISSIVE_COLOR")
+
+    # Silhouette separation. A view-facing rim keeps a 40-pixel unit legible
+    # against warm ground without depending on where the key light points. It is
+    # emissive rather than a light, so it survives fog, shadow and the far zoom.
+    # Exponent 3.2 rather than 4.0. MetalFX upscales from 80% linear with FXAA as
+    # the only anti-aliasing, so a one or two pixel rim is smeared out of
+    # existence before it reaches the panel. The broader band survives the upscale
+    # and still reads as an edge rather than a glow.
+    rim = graph.node("Silhouette rim", "Fresnel", exponent=3.2, base_reflect_fraction=0.0)
+    rim_strength = graph.node("Rim strength", "Multiply")
+    graph.link(rim, rim_strength, "A")
+    graph.link(graph.scalar("RimLight", 0.09), rim_strength, "B")
+    rim_color = graph.node("Rim colour", "Multiply")
+    graph.link(graph.color("RimColor", (0.55, 0.72, 1.0)), rim_color, "A", "RGB")
+    graph.link(rim_strength, rim_color, "B")
+    emissive = graph.node("Emissive plus rim", "Add")
+    graph.link(glow, emissive, "A")
+    graph.link(rim_color, emissive, "B")
+    graph.output(emissive, "EMISSIVE_COLOR")
     validation = graph.finish()
 
-    expected_vectors = {"Tint"}
+    expected_vectors = {"Tint", "RimColor"}
     expected_scalars = {"Roughness", "Metallic", "GlowIntensity",
-                        "FinishVariation", "SurfaceWear", "AO"}
+                        "FinishVariation", "SurfaceWear", "AO",
+                        "RecessDepth", "SkyShading", "RimLight"}
     helper.require(expected_vectors.issubset(
         {str(name) for name in LIB.get_vector_parameter_names(graph.material)}),
         "M_CinderModelV3 lacks Tint")
@@ -366,16 +470,24 @@ def _model_material(helper):
     validation["finish"] = {
         "coordinates": "authored UV0", "animated": False, "texture_samples": 0,
         "base_color_gain_bounds_at_default": [0.9825, 1.0175],
-        "visible_vertex_ao_multiplier": "0.65 + 0.35 * vertex color alpha",
+        "visible_vertex_ao_multiplier":
+            "(1 - RecessDepth) + RecessDepth * vertex color alpha, RecessDepth 0.58",
         "ao_source": "vertex color alpha multiplied by AO parameter",
-        "vertex_alpha_contract": "1.0 fully lit; lower values mark baked crevices"}
+        "vertex_alpha_contract": "1.0 fully lit; lower values mark baked crevices",
+        "sky_shading": "1 + world vertex normal Z * SkyShading * 0.5, neutral on level faces",
+        "rim_light": "Fresnel exponent 3.2 times RimLight times RimColor, added to "
+                     "emissive, not a scene light; band widened for 80% MetalFX plus FXAA",
+        "grazing_sheen": "Fresnel exponent 8 lerps clamped roughness towards 0.22",
+        "bloom_threshold_reference": BLOOM_THRESHOLD}
     instances = []
-    for name, slot, rgb, roughness_value, metallic, glow_value, finish, wear, ao_value in MODEL_PALETTES:
+    for (name, slot, rgb, roughness_value, metallic, glow_value, finish, wear,
+         ao_value, rim_light, rim_color) in MODEL_PALETTES:
         if slot == "CoreGlow":
             continue
         values = {"Tint": rgb, "Roughness": roughness_value, "Metallic": metallic,
                   "GlowIntensity": glow_value, "FinishVariation": finish,
-                  "SurfaceWear": wear, "AO": ao_value}
+                  "SurfaceWear": wear, "AO": ao_value, "RimLight": rim_light,
+                  "RimColor": rim_color}
         instances.append(_instance(helper, graph.material, name, slot, values))
     return validation, instances
 
@@ -413,7 +525,8 @@ def _dirt_road_material(helper):
                    "missing licensed road albedo " + texture_path)
     graph = helper.Graph("M_VT_DirtRoad")
     sample = graph.sample("GroundColor", texture,
-                          graph.world_uv(GROUND_ALBEDO_TILE_CM, "Road "), "COLOR")
+                          graph.world_uv(GROUND_ALBEDO_TILE_CM, "Road "), "COLOR",
+                          helper.WRAP_SAMPLER_GROUP)
     neutral = graph.node("Packed earth grain", "Desaturation")
     graph.link(sample, neutral, "Input", "RGB")
     graph.link(graph.scalar("Desaturation", 0.58), neutral, "Fraction")
@@ -478,7 +591,8 @@ def _terrain_material(helper, textures):
 
     graph = helper.Graph("M_CinderGroundV4")
     surface_uv = graph.world_uv(COARSE_GROUND_TILE_CM, "Dry ground ")
-    primary_color = graph.sample("GroundColor", textures["Color"], surface_uv, "COLOR")
+    primary_color = graph.sample("GroundColor", textures["Color"], surface_uv, "COLOR",
+                                 helper.WRAP_SAMPLER_GROUP)
 
     # A second lookup of the same photograph breaks the visible 400 cm repeat.
     # Rotate explicitly with scalar arithmetic so the graph uses only stable UE
@@ -515,7 +629,7 @@ def _terrain_material(helper, textures):
     graph.link(secondary_u, secondary_uv, "A")
     graph.link(secondary_v, secondary_uv, "B")
     secondary_color = graph.sample("GroundColorOffset", textures["Color"],
-                                   secondary_uv, "COLOR")
+                                   secondary_uv, "COLOR", helper.WRAP_SAMPLER_GROUP)
     photographed = graph.node("Low-cost anti-tiled ground color", "LinearInterpolate")
     graph.link(primary_color, photographed, "A", "RGB")
     graph.link(secondary_color, photographed, "B", "RGB")
@@ -525,6 +639,10 @@ def _terrain_material(helper, textures):
     graph.link(graph.color("BasaltTint", (0.58, 0.54, 0.48)),
                varied_base, "B", "RGB")
 
+    # Deliberately NOT in the shared wrap group. The mask is TA_CLAMP and covers
+    # exactly one battlefield; a wrap sampler would tile it past the map edge and
+    # paint unobserved simulation state into the border. Fog privacy is
+    # correctness, so this keeps its own sampler slot.
     layers = graph.sample("TerrainLayers", mask,
                           graph.world_uv(prefix="Layers "), "LINEAR_COLOR")
 
@@ -548,7 +666,8 @@ def _terrain_material(helper, textures):
     color = tint_layer("Iron mineral", color, "MineralTint", (1.12, 0.66, 0.42),
                        "G", "MineralStrength", 0.25)
 
-    rough_sample = graph.sample("GroundRoughness", textures["Roughness"], surface_uv, "MASKS")
+    rough_sample = graph.sample("GroundRoughness", textures["Roughness"], surface_uv, "MASKS",
+                                helper.WRAP_SAMPLER_GROUP)
     inverse_rough = graph.node("Poly Haven surface cuts", "OneMinus")
     graph.link(rough_sample, inverse_rough, "Input", "R")
     road_mask = graph.node("Road scuffs within dust", "Multiply")
@@ -567,7 +686,8 @@ def _terrain_material(helper, textures):
     graph.link(road_weight, scuffed, "Alpha")
     graph.output(scuffed, "BASE_COLOR")
 
-    graph.normal(graph.sample("GroundNormal", textures["Normal"], surface_uv, "NORMAL"), 0.86)
+    graph.normal(graph.sample("GroundNormal", textures["Normal"], surface_uv, "NORMAL",
+                              helper.WRAP_SAMPLER_GROUP), 0.86)
     rough_centered = graph.node("Centered ground roughness", "Add", const_b=-0.5)
     graph.link(rough_sample, rough_centered, "A", "R")
     rough_response = graph.node("Ground roughness response", "Multiply", const_b=0.72)
@@ -589,11 +709,16 @@ def _terrain_material(helper, textures):
                                min_default=0.32, max_default=0.98)
     graph.link(final_rough, bounded_rough, "Input")
     graph.output(bounded_rough, "ROUGHNESS")
-    graph.output(graph.sample("GroundAO", textures["AO"], surface_uv, "MASKS"),
-                 "AMBIENT_OCCLUSION", "R")
+    graph.output(graph.sample("GroundAO", textures["AO"], surface_uv, "MASKS",
+                              helper.WRAP_SAMPLER_GROUP), "AMBIENT_OCCLUSION", "R")
     graph.output(graph.node("Nonmetal ground", "Constant", r=0.0), "METALLIC")
     validation = graph.finish()
     validation["texture_samples"] = 6
+    validation["sampler_slots"] = {
+        "shared_world_wrap_group": ["GroundColor", "GroundColorOffset", "GroundNormal",
+                                    "GroundRoughness", "GroundAO"],
+        "own_slot": ["TerrainLayers"],
+        "reason": "clamped fog-privacy mask must never sample in a wrap group"}
     validation["mapping"] = {
         "pbr_set": "primary planar absolute world XY / 400 cm",
         "albedo_anti_tiling": {
@@ -636,18 +761,48 @@ def _effect_materials(helper):
     result["usage"] = "two-sided unlit additive world-effect mesh"
     results.append(result)
 
+    results.append(_dust_material(helper))
+    return results
+
+
+def _dust_material(helper):
+    """Build only the cloud material, without touching other effects or terrain."""
     dust = helper.Graph("M_VT_Dust", fog=True)
     dust.output(dust.color("Tint", (0.38, 0.20, 0.085)), "EMISSIVE_COLOR", "RGB")
+    # DepthFade softens intersections, but leaves a free-floating quad's outer
+    # edges opaque. A UV disc supplies the cloud silhouette without a texture.
+    # Its 0.48 radius reaches zero before any quad edge; squaring the falloff
+    # also makes the opacity derivative zero there, avoiding a hard circular rim.
+    centered_uv = dust.node("Cloud centered UV", "Subtract", const_b=0.5)
+    dust.link(dust.uv0(1.0), centered_uv, "A")
+    radius_squared = dust.node("Cloud radius squared", "DotProduct")
+    dust.link(centered_uv, radius_squared, "A")
+    dust.link(centered_uv, radius_squared, "B")
+    normalized_radius = dust.node("Cloud normalized squared radius", "Multiply",
+                                  const_b=1.0 / (0.48 * 0.48))
+    dust.link(radius_squared, normalized_radius, "A")
+    radial_falloff = dust.node("Cloud radial falloff", "OneMinus")
+    dust.link(normalized_radius, radial_falloff, "Input")
+    disc = dust.node("Cloud disc bounds", "Clamp", min_default=0.0, max_default=1.0)
+    dust.link(radial_falloff, disc, "Input")
+    soft_disc = dust.node("Cloud soft edge", "Multiply")
+    dust.link(disc, soft_disc, "A")
+    dust.link(disc, soft_disc, "B")
+    cloud_opacity = dust.node("Cloud opacity", "Multiply")
+    dust.link(soft_disc, cloud_opacity, "A")
+    dust.link(dust.scalar("Opacity", 0.22), cloud_opacity, "B")
     depth_fade = dust.node("Soft intersection fade", "DepthFade")
-    dust.link(dust.scalar("Opacity", 0.22), depth_fade, "Opacity")
+    dust.link(cloud_opacity, depth_fade, "Opacity")
     dust.link(dust.scalar("FadeDistance", 42.0), depth_fade, "FadeDistance")
     dust.output(depth_fade, "OPACITY")
     result = dust.finish()
     result["parameters"] = {"Tint": [0.38, 0.20, 0.085], "Opacity": 0.22,
                             "FadeDistance": 42.0}
-    result["usage"] = "two-sided unlit translucent soft-intersection world-effect mesh"
-    results.append(result)
-    return results
+    result["usage"] = "two-sided unlit translucent cloud with soft radial and intersection fades"
+    result["opacity_shape"] = {"uv_channel": 0, "radius": 0.48,
+                               "formula": "Opacity * clamp(1 - dot(UV0 - 0.5, UV0 - 0.5) / 0.48^2, 0, 1)^2 * depth fade",
+                               "texture_samples": 0, "edge_opacity": 0.0}
+    return result
 
 
 def build_visual_target_materials():

@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 
 import bmesh
@@ -173,8 +174,8 @@ def build_drudge():
     for part, hip, foot in legs:
         hx, hy, hz = hip; fx, fy = foot; knee = ((hx+fx)*.5+1.2, fy*.92, 8.0)
         p[part] += [cylinder(part, hip, 1.65, 1.7, 3, 14, "Y", .15),
-                    beam(part, hip, knee, 1.25, 2, 14), sphere(part, knee, 1.55, 2),
-                    beam(part, knee, (fx, fy, 3.5), 1.05, 2, 14),
+                    beam(part, hip, knee, 1.02, 2, 14), sphere(part, knee, 1.34, 2),
+                    beam(part, knee, (fx, fy, 3.5), 0.86, 2, 14),
                     wedge(part, (fx+1.1, fy, 2.0), (7.0, 4.2, 4.0), 0, .55),
                     box(part, (fx+2.8, fy, .65), (4.4, 4.4, 1.3), 2, .28)]
     part = "Body"
@@ -206,10 +207,10 @@ def infantry(name, heavy=False):
         x, y, z = pivot
         knee = (x+2.0, y, z*.56); ankle = (x+3.8, y, 4.2)
         p[part] += [cylinder(part, (x, y, z), 2.1, 2.0, 3, 14, "Y", .15),
-                    beam(part, (x, y, z), knee, 1.45, 2, 14),
+                    beam(part, (x, y, z), knee, 1.12, 2, 14),
                     wedge(part, (x+.9, y, z-4.7), (5.2, 5.3, 7.4), 1, .52),
-                    sphere(part, knee, 1.9, 3),
-                    beam(part, knee, ankle, 1.25, 2, 14),
+                    sphere(part, knee, 1.62, 3),
+                    beam(part, knee, ankle, 0.98, 2, 14),
                     wedge(part, (x+3.0, y, 7.3), (5.2, 5.0, 8.0), 0, .58),
                     wedge(part, (x+6.2, y, 2.25), (11.0, 6.0, 4.5), 2, .46),
                     box(part, (x+9.0, y, .7), (5.0, 6.2, 1.4), 0, .25)]
@@ -241,11 +242,11 @@ def infantry(name, heavy=False):
         oy = (index-(barrels-1)/2)*3.6
         end_x = 19.0 if heavy else 17.0
         p[weapon] += [cylinder(weapon, (wx+.8, wy+oy, wz), 2.0, 3.5, 0, 16, "X", .18),
-                      beam(weapon, (wx+1.8, wy+oy, wz), (end_x, wy+oy, wz+1.0), 1.0 if heavy else 1.25, 2, 14),
-                      cylinder(weapon, (end_x+.6, wy+oy, wz+1), 1.8, 3.0, 1, 14, "X", .18),
-                      cylinder(weapon, (end_x+2.1, wy+oy, wz+1), 1.2, 1.0, 4, 12, "X", .1)]
-    p[weapon] += [wedge(weapon, (wx+3.0, wy, wz), (8.5, 7.2 if heavy else 6.4, 5.5), 0, .55),
-                  box(weapon, (wx+6.8, wy, wz-.4), (5.5, 4.8, 3.4), 1, .32),
+                      beam(weapon, (wx+1.8, wy+oy, wz), (end_x, wy+oy, wz+1.0), 1.55 if heavy else 1.95, 2, 14),
+                      cylinder(weapon, (end_x+.6, wy+oy, wz+1), 2.55, 3.4, 1, 14, "X", .18),
+                      cylinder(weapon, (end_x+2.1, wy+oy, wz+1), 1.75, 1.2, 4, 12, "X", .1)]
+    p[weapon] += [wedge(weapon, (wx+3.0, wy, wz), (9.6, 8.4 if heavy else 7.5, 6.9), 0, .55),
+                  box(weapon, (wx+6.8, wy, wz-.4), (6.2, 5.6, 4.1), 1, .32),
                   box(weapon, (wx+2, wy, wz+3.4), (4.5, 4.5, 1.3), 3, .2)]
     return p
 
@@ -304,21 +305,21 @@ def tracked(name, artillery=False):
                       wedge(weapon, (-7, -8, 30), (13, 5, 7), 1, .45),
                       wedge(weapon, (-7, 8, 30), (13, 5, 7), 1, .45),
                       cylinder(weapon, (-10.5, 0, 27.5), 4.5, 5.0, 2, 18, "X", .2),
-                      beam(weapon, (-10, -4.5, 29), (27, -4.5, 37), 2.1, 2, 18),
-                      beam(weapon, (-10, 4.5, 29), (27, 4.5, 37), 2.1, 2, 18),
-                      cylinder(weapon, (-4, -4.5, 30.3), 3.0, 4.0, 0, 16, "X", .18),
-                      cylinder(weapon, (-4, 4.5, 30.3), 3.0, 4.0, 0, 16, "X", .18),
+                      beam(weapon, (-10, -4.5, 29), (27, -4.5, 37), 3.05, 2, 18),
+                      beam(weapon, (-10, 4.5, 29), (27, 4.5, 37), 3.05, 2, 18),
+                      cylinder(weapon, (-4, -4.5, 30.3), 3.95, 4.4, 0, 16, "X", .18),
+                      cylinder(weapon, (-4, 4.5, 30.3), 3.95, 4.4, 0, 16, "X", .18),
                       box(weapon, (24, 0, 36.5), (7, 13.5, 5.2), 1, .45),
-                      cylinder(weapon, (28, 0, 37), 3.1, 2.5, 3, 16, "X", .2)]
+                      cylinder(weapon, (28, 0, 37), 4.0, 3.0, 3, 16, "X", .2)]
     else:
         p[weapon] += [wedge(weapon, (5, 0, 29), (25, 23, 10), 1),
                       wedge(weapon, (3, -10, 29), (16, 5, 7), 0, .48),
                       wedge(weapon, (3, 10, 29), (16, 5, 7), 0, .48),
                       cylinder(weapon, (7.5, 0, 30.5), 5.0, 4.5, 0, 18, "X", .22),
-                      beam(weapon, (9, -3.8, 31), (31, -3.8, 32), 2.0, 2, 18),
-                      beam(weapon, (9, 3.8, 31), (31, 3.8, 32), 2.0, 2, 18),
-                      cylinder(weapon, (14, -3.8, 31.2), 2.8, 3.5, 0, 16, "X", .16),
-                      cylinder(weapon, (14, 3.8, 31.2), 2.8, 3.5, 0, 16, "X", .16),
+                      beam(weapon, (9, -3.8, 31), (31, -3.8, 32), 2.95, 2, 18),
+                      beam(weapon, (9, 3.8, 31), (31, 3.8, 32), 2.95, 2, 18),
+                      cylinder(weapon, (14, -3.8, 31.2), 3.7, 3.9, 0, 16, "X", .16),
+                      cylinder(weapon, (14, 3.8, 31.2), 3.7, 3.9, 0, 16, "X", .16),
                       box(weapon, (29, 0, 32), (7, 12, 5), 0, .45),
                       cylinder(weapon, (1, 0, 35), 3.0, 1.8, 1, 16, "Z", .15),
                       sphere(weapon, (1, 0, 36.5), 2.1, 4)]
@@ -608,6 +609,13 @@ def main():
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     (EVIDENCE / "fbx-roundtrip-validation.json").write_text(json.dumps({"passed": True, "checks": checks}, indent=2)+"\n")
     bpy.ops.wm.save_as_mainfile(filepath=str(OUT / "Cinderline_VisualTarget_Units.blend"))
+
+    # Proportion work needs many regenerations, and the evidence renders below
+    # dominate the run. CINDER_UNITS_SKIP_RENDER=1 exports and validates the
+    # meshes without them; the pass that records evidence must leave it unset.
+    if os.environ.get("CINDER_UNITS_SKIP_RENDER") == "1":
+        print("CINDERLINE_VISUAL_TARGET_UNITS_OK", len(records), "assets (renders skipped)", flush=True)
+        return
 
     # Low-cost RTS-angle workbench evidence plus two close silhouette inspections.
     for obj in bpy.context.scene.objects:

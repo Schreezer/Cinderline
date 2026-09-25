@@ -1,0 +1,97 @@
+{
+  "version": "cinder-frontier-foliage-v1",
+  "blender_version": "5.2.1 LTS",
+  "license": "original Cinderline procedural geometry and material; no third-party assets",
+  "unit": "centimeter",
+  "forward_axis": "+X",
+  "up_axis": "+Z",
+  "origin": "bottom center; bounds_min_z_cm is exactly 0",
+  "nanite": false,
+  "collision": "none; decorative foliage only",
+  "alpha_cards": false,
+  "material": {
+    "name": "M_CinderFrontierFoliage",
+    "unreal_path": "/Game/Art/FrontierFoliage/Materials/M_CinderFrontierFoliage"
+  },
+  "vertex_color_channels": {
+    "R": "per-blade normalized height; roots zero for wind",
+    "G": "blade tone; olive low, dry ochre high",
+    "B": "unused",
+    "A": "one"
+  },
+  "wind_contract": {
+    "time_parameter": "WindTime",
+    "default": 0,
+    "maximum_horizontal_displacement_cm": 3,
+    "root_mask": "R squared"
+  },
+  "intended_use": "sparse cliff toes and broken shoulders; 15-50 cm footprint; never lawns",
+  "assets": [
+    {
+      "name": "SM_CinderFrontier_Grass_A",
+      "material_slot": "M_CinderFrontierFoliage",
+      "lods": [
+        {
+          "lod": 0,
+          "file": "RawAssets/FrontierFoliage/FBX/SM_CinderFrontier_Grass_A.fbx",
+          "sha256": "640a6253bf733d2d1226e54c052da66a83b0008b8026702dfcd2e14b4a433d1f",
+          "triangles": 92,
+          "vertices": 102,
+          "bounds_min_cm": [
+            -17.583999633789062,
+            -20.0,
+            0.0
+          ],
+          "bounds_max_cm": [
+            17.583999633789062,
+            20.0,
+            34.5696907043457
+          ],
+          "size_cm": [
+            35.167999267578125,
+            40.0,
+            34.5696907043457
+          ],
+          "material_sections": 1,
+          "uv_channels": 1,
+          "minimum_triangle_area_cm2": 1.6842061246199131,
+          "fbx_roundtrip": {
+            "verified": true,
+            "triangles": 92,
+            "material_sections": 1,
+            "uv_channels": 1,
+            "vertex_colors": true,
+            "vertex_color_ranges": [
+              [
+                0.0,
+                1.0
+              ],
+              [
+                0.0669742003083229,
+                0.9399999976158142
+              ],
+              [
+                0.800000011920929,
+                1.0
+              ],
+              [
+                1.0,
+                1.0
+              ]
+            ],
+            "bounds_min_cm": [
+              -17.584003448486328,
+              -20.000001907348633,
+              0.0
+            ],
+            "bounds_max_cm": [
+              17.584003448486328,
+              20.000001907348633,
+              34.5696907043457
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

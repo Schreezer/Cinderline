@@ -57,7 +57,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Drudge.fbx",
-      "sha256": "b4091f4ee276a820f0c62f6461fbd352bb123ca2abf9428f4e484eecc38e62a7"
+      "sha256": "d21fdd6f5776138930c7ed8d562f57cc8436d04448752b9e3a3b2add3f1404b0"
     },
     {
       "name": "SM_Drudge_Body",
@@ -95,7 +95,7 @@
       "minimum_triangle_area_cm2": 0.019920253059450714,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_Body.fbx",
-      "sha256": "d90510819c2f00aabda88fec899aea7170bd631ea7f3f3db6d164aba1d7dc46f"
+      "sha256": "0952ff644b4bc587255094b0189443d5236a2dae13229df20125b0de70969a48"
     },
     {
       "name": "SM_Drudge_LegFL",
@@ -110,12 +110,12 @@
       ],
       "bounds_max_cm": [
         10.91585,
-        -3.78824,
+        -4.02758,
         17.07234
       ],
       "dimensions_cm": [
         12.41658,
-        6.16526,
+        5.92592,
         17.07234
       ],
       "joint_pivot_cm": [
@@ -129,10 +129,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "minimum_triangle_area_cm2": 0.01719611014938156,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegFL.fbx",
-      "sha256": "1a53c03399e25910c15d30ccdca30ac43633e67d99b83b0d381fa179d4145123"
+      "sha256": "a0526d8736b8eddc7a18c323bcbbaf83e73e6a969173f64c898bac6788d461fe"
     },
     {
       "name": "SM_Drudge_LegFR",
@@ -142,7 +142,7 @@
       "asset_type": "motion",
       "bounds_min_cm": [
         -1.50073,
-        3.78824,
+        4.02758,
         0.0
       ],
       "bounds_max_cm": [
@@ -152,7 +152,7 @@
       ],
       "dimensions_cm": [
         12.41658,
-        6.16526,
+        5.92592,
         17.07234
       ],
       "joint_pivot_cm": [
@@ -166,10 +166,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "minimum_triangle_area_cm2": 0.017196133209214315,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegFR.fbx",
-      "sha256": "dcec3f0291810d1c8662f79543fdb67d67737ccd7a5f7c7886677b93aa929cd4"
+      "sha256": "03b89edd62cf115f01aecf8fb037d440d0410558af86b868b89f785fec2058c6"
     },
     {
       "name": "SM_Drudge_LegRL",
@@ -184,12 +184,12 @@
       ],
       "bounds_max_cm": [
         -4.97212,
-        -3.78976,
+        -4.02965,
         17.07234
       ],
       "dimensions_cm": [
         7.79401,
-        6.16374,
+        5.92385,
         17.07234
       ],
       "joint_pivot_cm": [
@@ -203,10 +203,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "minimum_triangle_area_cm2": 0.01720329099944762,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegRL.fbx",
-      "sha256": "e1b225fdc459cc339955a6d00cab69b6e4e7d48623abf7d1fb7a2aac7ccaf9db"
+      "sha256": "579400488f24268e668e090d09479b14be7d7793d50adbd1a66789763db7850a"
     },
     {
       "name": "SM_Drudge_LegRR",
@@ -216,7 +216,7 @@
       "asset_type": "motion",
       "bounds_min_cm": [
         -12.76612,
-        3.78976,
+        4.02965,
         0.0
       ],
       "bounds_max_cm": [
@@ -226,7 +226,7 @@
       ],
       "dimensions_cm": [
         7.79401,
-        6.16374,
+        5.92385,
         17.07234
       ],
       "joint_pivot_cm": [
@@ -240,10 +240,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.020424297237487562,
+      "minimum_triangle_area_cm2": 0.017203242044088313,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_LegRR.fbx",
-      "sha256": "239c78bd28ca994b338ac21561b877203260285c304f125196c67771420f06c2"
+      "sha256": "ed93e3be36e9142aec67315626ff41c42954fd0f59cf93d5fe47e5b3dbb2cf4d"
     },
     {
       "name": "SM_Drudge_Tools",
@@ -281,7 +281,7 @@
       "minimum_triangle_area_cm2": 0.0029366215448486084,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Drudge_Tools.fbx",
-      "sha256": "c1ffca33450325cf59237313e2ec4bf362c40de607c80e8205e51111b798a061"
+      "sha256": "e5a287101640fdf7ff58d13e954e39e4cf837ea5ab2afd49eb4e3b87bf5f4570"
     },
     {
       "name": "SM_Ember",
@@ -311,7 +311,7 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "minimum_triangle_area_cm2": 0.00832021508929729,
       "unreal_degenerate_triangles": 0,
       "lod_triangle_percentages": [
         1.0,
@@ -319,7 +319,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Ember.fbx",
-      "sha256": "5b73291db36c6b5a463175136822076d1b36fe466e627a2076bbaf310be1a430"
+      "sha256": "ad249c7904320477a5830fdc0c255386fa5c79a745521f109a2377ee15590782"
     },
     {
       "name": "SM_Ember_Body",
@@ -333,12 +333,12 @@
         19.41177
       ],
       "bounds_max_cm": [
-        7.71707,
+        7.63345,
         15.427,
         48.0
       ],
       "dimensions_cm": [
-        27.71707,
+        27.63345,
         30.854,
         28.58823
       ],
@@ -355,10 +355,10 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.008326952231838457,
+      "minimum_triangle_area_cm2": 0.00832021508929729,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_Body.fbx",
-      "sha256": "bf86ebb68783dfcf3284971c8cdcba68f2249e154e1254b35e42f4053f180eea"
+      "sha256": "3c5c127883cae47e5bbff6ef3ad13c3e40f3330575f158f23ced149d9afd47df"
     },
     {
       "name": "SM_Ember_LegL",
@@ -367,17 +367,17 @@
       "part": "LegL",
       "asset_type": "motion",
       "bounds_min_cm": [
-        -13.96325,
+        -13.98147,
         -11.20274,
         0.0
       ],
       "bounds_max_cm": [
-        2.60754,
+        2.53934,
         -4.57896,
         22.99765
       ],
       "dimensions_cm": [
-        16.5708,
+        16.5208,
         6.62378,
         22.99765
       ],
@@ -393,10 +393,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "minimum_triangle_area_cm2": 0.016049662942422913,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_LegL.fbx",
-      "sha256": "10bf05d6f7e496ed9afd2d6678f3e39ada3065a357074461cb14dc1e0d230a00"
+      "sha256": "55de39fdd2ce56bc3522c629568ac15febda9c6f78d0e5d73ee3fa1e6c61a5a5"
     },
     {
       "name": "SM_Ember_LegR",
@@ -405,17 +405,17 @@
       "part": "LegR",
       "asset_type": "motion",
       "bounds_min_cm": [
-        -13.96325,
+        -13.98147,
         4.57896,
         0.0
       ],
       "bounds_max_cm": [
-        2.60754,
+        2.53934,
         11.20274,
         22.99765
       ],
       "dimensions_cm": [
-        16.5708,
+        16.5208,
         6.62378,
         22.99765
       ],
@@ -431,10 +431,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.016062624032416567,
+      "minimum_triangle_area_cm2": 0.016049662942422913,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_LegR.fbx",
-      "sha256": "10db83098f7c30370f7db5bd03325fa9d12bb1d5f9d1f127baffb792560a1bf8"
+      "sha256": "debb759f3b89782b2eac5abfd57edbf7d556bf03c585261c367b1ea912856f51"
     },
     {
       "name": "SM_Ember_Weapon",
@@ -443,19 +443,19 @@
       "part": "Weapon",
       "asset_type": "motion",
       "bounds_min_cm": [
-        -4.73701,
-        5.89194,
-        31.39361
+        -5.45117,
+        5.29931,
+        30.68773
       ],
       "bounds_max_cm": [
         20.0,
-        12.56704,
+        13.15967,
         38.25076
       ],
       "dimensions_cm": [
-        24.73701,
-        6.6751,
-        6.85715
+        25.45116,
+        7.86036,
+        7.56303
       ],
       "joint_pivot_cm": [
         0.37656,
@@ -470,10 +470,10 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.010280047173083295,
+      "minimum_triangle_area_cm2": 0.010271748084012553,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Ember_Weapon.fbx",
-      "sha256": "c2d168bcdd9e87b880b6d4274189844a94ec6d5ce7f8e2d43bba8938352b36b8"
+      "sha256": "0c9946eddece93587b2b9e165d0390dec05843f9bfd326e0ee98c0e015bc197e"
     },
     {
       "name": "SM_Needle",
@@ -503,7 +503,7 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "minimum_triangle_area_cm2": 0.007133889409895655,
       "unreal_degenerate_triangles": 0,
       "lod_triangle_percentages": [
         1.0,
@@ -511,7 +511,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Needle.fbx",
-      "sha256": "118c75277a9df4b93aacd2322e47f914eff310f442e60acd3760ec45d6e00fb2"
+      "sha256": "1d807601db40785213a8149286358b0773727e7b8eb51afe5401f5a9a4ca0688"
     },
     {
       "name": "SM_Needle_Body",
@@ -525,12 +525,12 @@
         19.00735
       ],
       "bounds_max_cm": [
-        6.44206,
+        6.36398,
         11.9035,
         47.0
       ],
       "dimensions_cm": [
-        27.44206,
+        27.36398,
         23.807,
         27.99265
       ],
@@ -547,10 +547,10 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.007139951278217282,
+      "minimum_triangle_area_cm2": 0.007133889409895655,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_Body.fbx",
-      "sha256": "7cd85bb7b8132e45f6f61c7cb4356d681f8decd1123166096b2ccc1b13aeee26"
+      "sha256": "2e6000f01f577b80c95d3a1ef97a0050afe7de9e66ce981f6e50189fb47a1232"
     },
     {
       "name": "SM_Needle_LegL",
@@ -559,17 +559,17 @@
       "part": "LegL",
       "asset_type": "motion",
       "bounds_min_cm": [
-        -15.9891,
+        -16.00335,
         -8.05684,
         0.0
       ],
       "bounds_max_cm": [
-        0.41729,
+        0.35635,
         -2.37978,
         20.88242
       ],
       "dimensions_cm": [
-        16.40638,
+        16.3597,
         5.67705,
         20.88242
       ],
@@ -585,10 +585,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.013772927233871864,
+      "minimum_triangle_area_cm2": 0.013761242938400649,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_LegL.fbx",
-      "sha256": "bd4038075a4feab258cd745e8da91b5276085cf650b4dba5c5a4eb32b8232923"
+      "sha256": "59d5919da140128e6c72bc77269e260e5dbdcdc178509a340f62dc095c11ca59"
     },
     {
       "name": "SM_Needle_LegR",
@@ -597,17 +597,17 @@
       "part": "LegR",
       "asset_type": "motion",
       "bounds_min_cm": [
-        -15.9891,
+        -16.00335,
         2.37978,
         0.0
       ],
       "bounds_max_cm": [
-        0.41729,
+        0.35635,
         8.05684,
         20.88242
       ],
       "dimensions_cm": [
-        16.40638,
+        16.3597,
         5.67705,
         20.88242
       ],
@@ -623,10 +623,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.013772928092326319,
+      "minimum_triangle_area_cm2": 0.013761242013126215,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_LegR.fbx",
-      "sha256": "6f16b64eac92a281140b925c4fb2fb7b7573d1ea75e18a3c6a418aaa4148c299"
+      "sha256": "dd8ca22354b0ad4d5a2ede02a3351ba0ea15e598a175a239f87dee10bdd2f6fc"
     },
     {
       "name": "SM_Needle_Weapon",
@@ -635,19 +635,19 @@
       "part": "Weapon",
       "asset_type": "motion",
       "bounds_min_cm": [
-        -11.08488,
-        -3.47949,
-        33.19326
+        -11.77469,
+        -3.98309,
+        32.50208
       ],
       "bounds_max_cm": [
         21.0,
-        3.47948,
+        3.98309,
         39.90754
       ],
       "dimensions_cm": [
-        32.08488,
-        6.95897,
-        6.71429
+        32.77469,
+        7.96619,
+        7.40546
       ],
       "joint_pivot_cm": [
         -3.95943,
@@ -662,10 +662,10 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.00881478709855401,
+      "minimum_triangle_area_cm2": 0.008807285682059202,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Needle_Weapon.fbx",
-      "sha256": "f23d34c95c12b549fd7280dbf302b0a95b3ef45932c326540e3546dc9c1716bc"
+      "sha256": "e6ed553c71b3618015c96b282e1fd58a7469417fce0988f0f17ca26e15aa76fe"
     },
     {
       "name": "SM_Skim",
@@ -703,7 +703,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Skim.fbx",
-      "sha256": "8dc11f7a2ec3fb0b1e69e091d1829db12747f176a85b7747d1dd7c9b924d832a"
+      "sha256": "311afe276d07086050715c01827483753d634843f9b7836122e0a0d9d91c5b62"
     },
     {
       "name": "SM_Anvil",
@@ -741,7 +741,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Anvil.fbx",
-      "sha256": "49843a4e20b4ae21a0849c25d279981809c8eb23a27d05409d26f14e97623425"
+      "sha256": "e39739404e6587f821ed07adf55cfef129611d23fc5c5a6783973ffb49cae909"
     },
     {
       "name": "SM_Anvil_Body",
@@ -780,7 +780,7 @@
       "minimum_triangle_area_cm2": 0.000613877978773169,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Anvil_Body.fbx",
-      "sha256": "93f3cff5093a9d3fab70ea3a9cbb4d98d52c5a415cc2c13a96f702ff6602ab40"
+      "sha256": "6a8dfe1f347d817cc7b245a0126c272ada96b46a93e82c50b72a23a9da320493"
     },
     {
       "name": "SM_Anvil_Weapon",
@@ -818,7 +818,7 @@
       "minimum_triangle_area_cm2": 0.019937895338128273,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Anvil_Weapon.fbx",
-      "sha256": "4620004cc051ce604160625ffd0994c6af4a56a198386f63e1a9764547235419"
+      "sha256": "7005b37fd982727d7a4f0949ed503feba80e1552e7f8156c98f7efb54e86ac73"
     },
     {
       "name": "SM_Cinderthrow",
@@ -848,7 +848,7 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.0005587044803848576,
+      "minimum_triangle_area_cm2": 0.0005464070401571399,
       "unreal_degenerate_triangles": 0,
       "lod_triangle_percentages": [
         1.0,
@@ -856,7 +856,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Cinderthrow.fbx",
-      "sha256": "0004b82001f532d51bf2e6d883cd50d7a004a019f35c6b3a22047b88740b8703"
+      "sha256": "32c8c97c4f03a04f7d24c54b112bd96b083af85d20202599739fe2e621e2211d"
     },
     {
       "name": "SM_Cinderthrow_Body",
@@ -870,14 +870,14 @@
         0.0
       ],
       "bounds_max_cm": [
-        24.96941,
+        24.72791,
         20.923,
-        30.79344
+        30.0992
       ],
       "dimensions_cm": [
-        54.96941,
+        54.72791,
         41.846,
-        30.79344
+        30.0992
       ],
       "joint_pivot_cm": [
         0.0,
@@ -892,10 +892,10 @@
         "TeamPanel",
         "CoreGlow"
       ],
-      "minimum_triangle_area_cm2": 0.0005587044803848576,
+      "minimum_triangle_area_cm2": 0.0005464070401571399,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Cinderthrow_Body.fbx",
-      "sha256": "4ad8d4db52e3b388303e1612e1f22a5ddd68611f795e99d88d3af5f1eae78bbd"
+      "sha256": "61ebfb04a2d1b8749335ab5ee5dc6bdab8a5a02e887cf362dc12644a51093654"
     },
     {
       "name": "SM_Cinderthrow_Weapon",
@@ -904,9 +904,9 @@
       "part": "Weapon",
       "asset_type": "motion",
       "bounds_min_cm": [
-        -19.45866,
+        -19.50497,
         -9.97178,
-        21.41358
+        20.93081
       ],
       "bounds_max_cm": [
         30.0,
@@ -914,9 +914,9 @@
         38.0
       ],
       "dimensions_cm": [
-        49.45866,
+        49.50497,
         19.94356,
-        16.58642
+        17.06919
       ],
       "joint_pivot_cm": [
         -11.99535,
@@ -930,10 +930,10 @@
         "Metal",
         "TeamPanel"
       ],
-      "minimum_triangle_area_cm2": 0.017731624069372218,
+      "minimum_triangle_area_cm2": 0.017553866141008515,
       "unreal_degenerate_triangles": 0,
       "fbx": "RawAssets/VisualTarget/Units/Motion/FBX/SM_Cinderthrow_Weapon.fbx",
-      "sha256": "f50dceccf4fc7b4f6e424245008639510989684ed39b445088462ff3f6fa28d4"
+      "sha256": "dd26073e43b9b99fe773273cd564ed105258fcd842075d2c4599f5e28cf820b9"
     },
     {
       "name": "SM_Mend",
@@ -971,7 +971,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Mend.fbx",
-      "sha256": "d6f2c3d414deacdf5d825a2aff6cd594150526e5ef2b5a32ee9767de5cd20b51"
+      "sha256": "2d1ac076b913c29a6d53b3f6ab9debefb62c6744cc5cd0074f0ddd33159474e3"
     },
     {
       "name": "SM_Veil",
@@ -1009,7 +1009,7 @@
         0.24
       ],
       "fbx": "RawAssets/VisualTarget/Units/Models/FBX/SM_Veil.fbx",
-      "sha256": "dc28ea362f571e31075b2b5a945f5722a97dcd1c42a53e56c4e8171ffedd9ff3"
+      "sha256": "2ec5df9efa29c32dc0e60ee0066032f3c1f2570d987101d4730de37c466d5260"
     }
   ]
 }

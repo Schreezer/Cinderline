@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Cinderline's original modular sandstone canyon kit in Blender.
+"""Generate Cinderline's original fractured frontier rock kit in Blender.
 
 Run with a bounded CPU budget:
   /Applications/Blender.app/Contents/MacOS/Blender --background --threads 2 \
@@ -20,6 +20,7 @@ import sys
 from pathlib import Path
 
 import bpy
+import bmesh
 from mathutils import Vector
 
 
@@ -50,10 +51,10 @@ def sha256(path: Path) -> str:
 
 
 material = bpy.data.materials.new("M_CinderCanyonRock")
-material.diffuse_color = (0.43, 0.18, 0.065, 1.0)
+material.diffuse_color = (0.27, 0.29, 0.26, 1.0)
 material.use_nodes = True
-shader = material.node_tree.nodes.get("Principled BSDF")
-shader.inputs["Base Color"].default_value = (0.43, 0.18, 0.065, 1.0)
+shader = next(node for node in material.node_tree.nodes if node.type == "BSDF_PRINCIPLED")
+shader.inputs["Base Color"].default_value = (0.27, 0.29, 0.26, 1.0)
 shader.inputs["Roughness"].default_value = 0.9
 shader.inputs["Metallic"].default_value = 0.0
 
@@ -97,6 +98,18 @@ LOD_SPECS = {
     1: (18, 9, 5, 2),
     2: (12, 5, 2, 1),
 }
+# Ambient ground scatter. Each entry is (letter, other_xy_cm, height_cm, chunks, phase)
+# against the same 100 cm largest-horizontal-dimension contract the rest of the kit uses;
+# the runtime scales an instance down to a 10-30 cm footprint, so the authored height is
+# a proportion, not a final size. Deliberately single-LOD: at that footprint the chip is
+# culled long before an LOD transition could pay for its own import surface, and 2-4
+# chunks lands each mesh at 24-48 triangles so 220 of them cost less than one boulder.
+CHIP_SPECS = [
+    ("A", 74.0, 38.0, 3, 0.11),
+    ("B", 88.0, 29.0, 2, 0.47),
+    ("C", 66.0, 44.0, 4, 0.73),
+    ("D", 81.0, 33.0, 3, 0.95),
+]
 
 
 def normalize_bounds(vertices, target):
@@ -111,74 +124,85 @@ def normalize_bounds(vertices, target):
     return result
 
 
+def fracture_chunk(center, scale, yaw, seed, lod):
+    """A battered jointed slab with a pitched crown and narrow chipped edges."""
+    rng = random.Random(seed)
+    outline = [(1,.57),(.63,1),(-.63,1),(-1,.53),
+               (-1,-.59),(-.61,-1),(.67,-1),(1,-.54)]
+    # The same corners and crown survive every LOD. Only bevels and one broad
+    # shoulder fold disappear; lower detail never turns the rock into a cylinder.
+    jitter = [(rng.uniform(.88,1.08),rng.uniform(.9,1.08)) for _ in outline]
+    pitch_x, pitch_y = rng.uniform(-.22,.22), rng.uniform(-.2,.2)
+    lean_x, lean_y = rng.uniform(-.14,.14),rng.uniform(-.12,.12)
+    levels = [(0,1.02),(.12,1.0),(.64,.94),(1,.78)] if lod == 0 else [(0,1.02),(.64,.94),(1,.78)]
+    vertices=[]; faces=[]
+    for level,(z,radius) in enumerate(levels):
+        for k,((x,y),(jx,jy)) in enumerate(zip(outline,jitter)):
+            px=x*jx*radius+lean_x*z
+            py=y*jy*radius+lean_y*z
+            # Tilted crowns, never a horizontal fan/lid. Mid-height cuts are
+            # broad diagonal planes rather than repeated sediment rings.
+            pz=z*(1+pitch_x*x+pitch_y*y)
+            vertices.append((px*scale[0],py*scale[1],pz*scale[2]))
+    for ring in range(len(levels)-1):
+        for k in range(8):
+            n=(k+1)%8
+            faces.append((ring*8+k,ring*8+n,(ring+1)*8+n,(ring+1)*8+k))
+    faces.append(tuple(reversed(range(8))))
+    top=(len(levels)-1)*8
+    ridge=len(vertices)
+    vertices.extend([(scale[0]*(-.23+lean_x),scale[1]*(.12+lean_y),scale[2]*1.12),
+                     (scale[0]*(.31+lean_x),scale[1]*(-.09+lean_y),scale[2]*1.06)])
+    faces.extend([(top,top+1,ridge+1),(top+1,top+2,ridge,ridge+1),
+                  (top+2,top+3,ridge),(top+3,top+4,ridge),
+                  (top+4,top+5,ridge),(top+5,top+6,ridge+1,ridge),
+                  (top+6,top+7,ridge+1),(top+7,top,ridge+1)])
+    bm=bmesh.new()
+    for point in vertices: bm.verts.new(point)
+    bm.verts.ensure_lookup_table()
+    for face in faces: bm.faces.new([bm.verts[i] for i in face])
+    bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
+    if lod < 2:
+        # Small bevel facets catch a thin natural edge light. They are geometry,
+        # not a pale rim painted around every silhouette.
+        bevel = min(scale)*(.055 if lod == 0 else .038)
+        if scale[2] < 16.0:
+            bevel *= .55  # shallow foundations need smaller chips than upright slabs
+        bmesh.ops.bevel(bm,geom=list(bm.edges),offset=bevel,
+                        segments=1,affect='EDGES',clamp_overlap=True)
+    bmesh.ops.triangulate(bm,faces=list(bm.faces))
+    bm.verts.index_update()
+    c,s=math.cos(yaw),math.sin(yaw)
+    result_vertices=[(center[0]+v.co.x*c-v.co.y*s,
+                      center[1]+v.co.x*s+v.co.y*c,center[2]+v.co.z) for v in bm.verts]
+    result_faces=[tuple(v.index for v in face.verts) for face in bm.faces]
+    bm.free()
+    return result_vertices,result_faces
+
+
 def rock_mesh(letter, variant, lod):
-    other_xy, height, lean, phase = ROCK_SPECS[variant][1:]
-    radial_segments, regular_levels, talus_count, ledge_count = LOD_SPECS[lod]
-    rng = random.Random(8128 + variant * 311 + lod * 17)
-    ledges = [0.24 + 0.17 * index + rng.uniform(-0.025, 0.025) for index in range(ledge_count)]
-    levels = {0.0, 1.0}
-    for index in range(1, regular_levels):
-        levels.add(index / regular_levels)
-    for ledge in ledges:
-        levels.add(max(0.02, ledge - 0.008))
-        levels.add(min(0.98, ledge + 0.008))
-    levels = sorted(levels)
-    fault_angles = [phase * math.tau, (phase + 0.43) * math.tau]
-    fault_ranges = [(0.18, 0.82), (0.43, 0.95)]
-    vertices = []
-    for ring, z01 in enumerate(levels):
-        taper = 1.0 - 0.31 * z01 ** 1.35
-        terrace = 1.0 - 0.047 * sum(z01 >= ledge + 0.008 for ledge in ledges)
-        center_x = lean * z01 + math.sin(z01 * 5.1 + phase * 4.0) * 0.028
-        center_y = math.sin(z01 * 3.7 + phase * 7.0) * 0.035
-        for segment in range(radial_segments):
-            angle = segment * math.tau / radial_segments
-            broad = 1.0 + 0.10 * math.sin(angle * 3 + phase * 5.0) + 0.055 * math.sin(angle * 7 - phase * 9.0)
-            fracture = 0.0
-            for fault_angle, (start, end) in zip(fault_angles, fault_ranges):
-                delta = abs((angle - fault_angle + math.pi) % math.tau - math.pi)
-                if start <= z01 <= end and delta < 0.14:
-                    fracture += (1.0 - delta / 0.14) * (0.13 if lod == 0 else 0.09)
-            radius = taper * terrace * broad * (1.0 - fracture)
-            x = center_x + math.cos(angle) * radius
-            y = center_y + math.sin(angle) * radius * (other_xy / 100.0)
-            z = z01 * height + math.sin(angle * 4 + phase) * (0.35 if ring not in (0, len(levels) - 1) else 0.0)
-            vertices.append((x, y, z))
-    faces = []
-    for ring in range(len(levels) - 1):
-        start, next_start = ring * radial_segments, (ring + 1) * radial_segments
-        for segment in range(radial_segments):
-            following = (segment + 1) % radial_segments
-            faces.append((start + segment, start + following, next_start + following))
-            faces.append((start + segment, next_start + following, next_start + segment))
-    bottom = len(vertices)
-    vertices.append((0, 0, 0))
-    top = len(vertices)
-    vertices.append((lean, 0, height))
-    for segment in range(radial_segments):
-        following = (segment + 1) % radial_segments
-        faces.append((bottom, following, segment))
-        last = (len(levels) - 1) * radial_segments
-        faces.append((top, last + segment, last + following))
-
-    for index in range(talus_count):
-        angle = phase * math.tau + index * math.tau / talus_count + rng.uniform(-0.16, 0.16)
-        distance = rng.uniform(0.68, 0.91)
-        scale = (rng.uniform(0.10, 0.18), rng.uniform(0.08, 0.15), rng.uniform(4.2, 8.5))
-        extra = chunk_geometry((math.cos(angle) * distance, math.sin(angle) * distance * other_xy / 100.0,
-                                scale[2] * 0.52), scale, angle, 9400 + variant * 100 + lod * 20 + index)
-        append_geometry(vertices, faces, *extra)
-
-    # Attached shelf fragments add unmistakable overhang silhouettes at LOD0/1.
-    for index, ledge in enumerate(ledges[:2]):
-        angle = phase * math.tau + 1.2 + index * 2.3
-        extra = chunk_geometry((math.cos(angle) * 0.71, math.sin(angle) * 0.71 * other_xy / 100.0,
-                                ledge * height), (0.24, 0.13, 4.8), angle, 12100 + variant * 10 + lod + index)
-        append_geometry(vertices, faces, *extra)
-
-    vertices = normalize_bounds(vertices, (100.0, other_xy, height))
-    name = f"SM_CinderCanyon_Rock_{letter}" + ("" if lod == 0 else f"_LOD{lod}")
-    return make_object(name, vertices, faces, variant)
+    other_xy,height,lean,phase=ROCK_SPECS[variant][1:]
+    rng=random.Random(8128+variant*311)
+    # Three interlocking primary slabs establish the fracture direction. Two
+    # fallen shoulders make the base wider and give each piece an asymmetric end.
+    slabs=[((-.19,.08,0),(.51,.48,.86),-.08),
+           ((.39,.17,.015),(.36,.41,.69),.14),
+           ((-.38,-.43,0),(.40,.29,.49),-.24),
+           ((.29,-.46,0),(.38,.28,.32),.34),
+           ((-.64,.37,0),(.25,.31,.39),-.36)]
+    vertices=[];faces=[]
+    for index,(center,scale,yaw) in enumerate(slabs):
+        skew=1+rng.uniform(-.13,.13)
+        # Variant-specific offsets keep the six kits from sharing one outline.
+        cx=(center[0]+rng.uniform(-.07,.07))*50
+        cy=(center[1]+rng.uniform(-.06,.06))*other_xy*.5
+        cz=center[2]*height
+        sx=scale[0]*50*skew;sy=scale[1]*other_xy*.5;sz=scale[2]*height*(1+rng.uniform(-.12,.12))
+        extra=fracture_chunk((cx,cy,cz),(sx,sy,sz),yaw+lean*2,variant*97+index*619+32,lod)
+        append_geometry(vertices,faces,*extra)
+    vertices=normalize_bounds(vertices,(100.0,other_xy,height))
+    name=f"SM_CinderCanyon_Rock_{letter}"+("" if lod == 0 else f"_LOD{lod}")
+    return make_object(name,vertices,faces,variant)
 
 
 def make_object(name, vertices, faces, variant):
@@ -201,9 +225,12 @@ def make_object(name, vertices, faces, variant):
             else:
                 uv_value = (point.x * 0.025, point.y * 0.025)
             uv.data[loop_index].uv = uv_value
-            strata = 0.28 + 0.68 * (0.5 + 0.5 * math.sin(point.z * 0.22 + variant * 0.91))
-            rust = max(0.0, math.sin(point.z * 0.071 + point.x * 0.039 + variant) * 0.52)
-            cavity = 0.74 + 0.24 * max(0.0, normal.z)
+            # One coherent tone per sculpted face, with broad nonperiodic variation.
+            center = polygon.center
+            strata = max(.28,min(.85,.56 + .13*math.sin(center.x*.047+variant*1.31)
+                                   + .09*math.sin(center.y*.031+center.z*.016+variant*.43)))
+            rust = max(0.0,math.sin(center.x*.028-center.y*.041+variant*.91)*.30)
+            cavity = .80 + .19*max(0.0,normal.z)
             colors.data[loop_index].color = (strata, rust, cavity, 1.0)
     obj = bpy.data.objects.new(name, mesh)
     bpy.context.collection.objects.link(obj)
@@ -212,32 +239,16 @@ def make_object(name, vertices, faces, variant):
 
 
 def skirt_mesh(lod):
-    segments = (28, 18, 12)[lod]
-    rings = (4, 3, 2)[lod]
-    vertices = []
-    for ring in range(rings):
-        z01 = ring / (rings - 1)
-        for index in range(segments):
-            angle = index * math.tau / segments
-            radius = 1.0 - z01 * 0.34 + 0.06 * math.sin(index * 2.7 + 0.4)
-            vertices.append((math.cos(angle) * radius, math.sin(angle) * radius * 0.90,
-                             z01 * 12.0 + math.sin(angle * 3) * z01 * 0.5))
-    faces = []
-    for ring in range(rings - 1):
-        for index in range(segments):
-            following = (index + 1) % segments
-            a, b = ring * segments + index, ring * segments + following
-            c, d = (ring + 1) * segments + following, (ring + 1) * segments + index
-            faces.extend(((a, b, c), (a, c, d)))
-    bottom = len(vertices); vertices.append((0, 0, 0))
-    top = len(vertices); vertices.append((0, 0, 12))
-    for index in range(segments):
-        following = (index + 1) % segments
-        faces.extend(((bottom, following, index),
-                      (top, (rings - 1) * segments + index, (rings - 1) * segments + following)))
-    vertices = normalize_bounds(vertices, (100.0, 90.0, 12.0))
-    name = "SM_CinderCanyon_CliffMass" + ("" if lod == 0 else f"_LOD{lod}")
-    return make_object(name, vertices, faces, 7)
+    # A broad fractured foot closes the blocked footprint under the taller slabs.
+    # It stays low and has no smooth concentric rings or continuous bright lip.
+    vertices=[];faces=[]
+    for i,(x,y,sx,sy,z) in enumerate([(-.47,0,.55,.88,11),(.39,.02,.59,.87,13),
+                                     (-.1,-.65,.73,.30,7),(.15,.65,.66,.30,9)]):
+        append_geometry(vertices,faces,*fracture_chunk((x*50,y*45,0),
+            (sx*50,sy*45,z),(-.07 if i%2 else .09),814+i*313,lod))
+    vertices=normalize_bounds(vertices,(100.,90.,12.))
+    name="SM_CinderCanyon_CliffMass"+("" if lod == 0 else f"_LOD{lod}")
+    return make_object(name,vertices,faces,7)
 
 
 def debris_mesh(lod):
@@ -256,6 +267,24 @@ def debris_mesh(lod):
     return make_object(name, vertices, faces, 8)
 
 
+def chip_mesh(letter, variant):
+    """Return one ambient scatter chip: a tight faceted pebble group, single LOD."""
+    other_xy, height, chunk_count, phase = CHIP_SPECS[variant][1:]
+    rng = random.Random(20700 + variant * 137)
+    vertices, faces = [], []
+    for index in range(chunk_count):
+        angle = phase * math.tau + index * math.tau / chunk_count + rng.uniform(-0.22, 0.22)
+        # The first chunk sits on the origin so the group always has a dominant mass; the
+        # rest stay inside 0.74 so normalizing never stretches the dominant chunk thin.
+        distance = 0.0 if index == 0 else rng.uniform(0.34, 0.74)
+        scale = (rng.uniform(0.26, 0.44), rng.uniform(0.22, 0.38), rng.uniform(9.0, 17.0))
+        extra = chunk_geometry((math.cos(angle) * distance, math.sin(angle) * distance * other_xy / 100.0,
+                                scale[2] * 0.48), scale, angle, 20900 + variant * 40 + index)
+        append_geometry(vertices, faces, *extra)
+    vertices = normalize_bounds(vertices, (100.0, other_xy, height))
+    return make_object(f"SM_CinderCanyon_Chip_{letter}", vertices, faces, 9 + variant)
+
+
 def geometry_record(obj, path, lod):
     obj.data.calc_loop_triangles()
     triangles = len(obj.data.loop_triangles)
@@ -272,6 +301,10 @@ def geometry_record(obj, path, lod):
     assert len(obj.data.uv_layers) == 1 and len(obj.data.uv_layers[0].data) == len(obj.data.loops)
     if "_Rock_" in obj.name and lod == 0:
         assert 800 <= triangles <= 2000, f"{obj.name}: {triangles} triangles"
+    # Scatter chips are placed by the hundred and never LOD down, so their triangle count
+    # is a hard budget rather than a target.
+    if "_Chip_" in obj.name:
+        assert triangles <= 96, f"{obj.name}: {triangles} triangles"
     bpy.ops.object.select_all(action="DESELECT")
     obj.select_set(True)
     bpy.context.view_layer.objects.active = obj
@@ -292,7 +325,7 @@ def geometry_record(obj, path, lod):
         "minimum_triangle_area_cm2": round(min(areas), 8),
         "material_sections": 1,
         "uv_channels": 1,
-        "vertex_color": "R strata, G iron staining, B broad cavity response",
+        "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
     }
 
 
@@ -301,7 +334,7 @@ def verify_fbx_roundtrip(record):
     path = ROOT / record["file"]
     before = set(bpy.data.objects)
     bpy.ops.object.select_all(action="DESELECT")
-    bpy.ops.import_scene.fbx(filepath=str(path), use_custom_normals=True)
+    bpy.ops.import_scene.fbx(filepath=str(path), use_custom_normals=True, colors_type="LINEAR")
     imported = [obj for obj in bpy.data.objects if obj not in before and obj.type == "MESH"]
     assert len(imported) == 1, f"{path.name}: expected one round-trip mesh, got {len(imported)}"
     obj = imported[0]
@@ -318,7 +351,14 @@ def verify_fbx_roundtrip(record):
         and abs((low[1] + high[1]) * 0.5) <= tolerance, path.name + " lost bottom-center origin"
     assert len(obj.data.materials) == 1, path.name + " must round-trip with one material section"
     assert len(obj.data.uv_layers) >= 1, path.name + " lost UV0 on FBX round trip"
+    color = obj.data.color_attributes.active_color
+    assert color is not None and len(color.data), path.name + " lost vertex colors on FBX round trip"
+    color_ranges = [[min(item.color[channel] for item in color.data),
+                     max(item.color[channel] for item in color.data)] for channel in range(3)]
+    assert color_ranges[0][1] - color_ranges[0][0] > 0.01, path.name + " lost authored face variation"
     record["fbx_roundtrip"] = {
+        "vertex_color_ranges": color_ranges,
+        "vertex_colors": True,
         "triangles": len(obj.data.loop_triangles),
         "bounds_min_cm": [round(value, 5) for value in low],
         "bounds_max_cm": [round(value, 5) for value in high],
@@ -340,6 +380,8 @@ for variant, spec in enumerate(ROCK_SPECS):
     asset_objects[f"SM_CinderCanyon_Rock_{letter}"] = [rock_mesh(letter, variant, lod) for lod in range(3)]
 asset_objects["SM_CinderCanyon_CliffMass"] = [skirt_mesh(lod) for lod in range(3)]
 asset_objects["SM_CinderCanyon_Debris"] = [debris_mesh(lod) for lod in range(3)]
+for variant, spec in enumerate(CHIP_SPECS):
+    asset_objects[f"SM_CinderCanyon_Chip_{spec[0]}"] = [chip_mesh(spec[0], variant)]
 
 records = []
 for name, objects in asset_objects.items():
@@ -350,7 +392,10 @@ for name, objects in asset_objects.items():
     base_size = lods[0]["size_cm"]
     assert all(max(abs(value - base_size[axis]) for axis, value in enumerate(record["size_cm"])) <= 0.002
                for record in lods[1:]), name + " LOD bounds drifted"
-    assert lods[0]["triangles"] > lods[1]["triangles"] > lods[2]["triangles"], name + " LOD order invalid"
+    # Single-LOD scatter chips have no ordering to check; every multi-LOD kit piece must
+    # still shed triangles monotonically.
+    if len(lods) > 1:
+        assert lods[0]["triangles"] > lods[1]["triangles"] > lods[2]["triangles"], name + " LOD order invalid"
     records.append({"name": name, "material_slot": material.name, "lods": lods})
 
 for record in records:
@@ -360,18 +405,18 @@ for record in records:
 material_contract = {
     "name": "M_CinderCanyonRock",
     "unreal_path": "/Game/Art/Canyon/Materials/M_CinderCanyonRock",
-    "base_colors_linear": {"shadow": [0.23, 0.075, 0.026], "sandstone": [0.58, 0.24, 0.072],
-                           "iron": [0.48, 0.105, 0.025]},
-    "vertex_color_channels": {"R": "strata blend", "G": "iron stain blend", "B": "ambient occlusion"},
+    "base_colors_linear": {"shadow": [0.16, 0.17, 0.15], "sandstone": [0.30, 0.29, 0.23],
+                           "iron": [0.24, 0.22, 0.17]},
+    "vertex_color_channels": {"R": "broad face tone", "G": "sparse weathering", "B": "ambient occlusion"},
     "roughness": [0.82, 0.95],
     "metallic": 0.0,
-    "texture_coordinates": "authored dominant-axis UV0 at 40 cm per tile; material color uses authored strata masks",
+    "texture_coordinates": "authored dominant-axis UV0 at 40 cm per tile; material color uses broad face tone and sparse weathering masks",
 }
 (OUT / "M_CinderCanyonRock.json").write_text(json.dumps(material_contract, indent=2) + "\n")
 manifest = {
     "generator": "scripts/create_canyon_assets.py",
     "blender_version": bpy.app.version_string,
-    "license": "original Cinderline procedural geometry and material",
+    "license": "original Cinderline fractured slab geometry and material",
     "unit": "centimeter",
     "forward_axis": "+X",
     "up_axis": "+Z",
@@ -393,8 +438,9 @@ if ARGS.no_render:
 for objects in asset_objects.values():
     for lod, obj in enumerate(objects):
         obj.hide_render = lod != 0
-positions = [(-225, 150), (-75, 150), (75, 150), (225, 150),
-             (-225, -130), (-75, -130), (75, -130), (225, -130)]
+positions = [(-225, 300), (-75, 300), (75, 300), (225, 300),
+             (-225, 20), (-75, 20), (75, 20), (225, 20),
+             (-225, -200), (-75, -200), (75, -200), (225, -200)]
 for (name, objects), (x, y) in zip(asset_objects.items(), positions):
     objects[0].location = (x, y, 0)
     bpy.ops.object.text_add(location=(x - 36, y - 50, 1), rotation=(0, 0, 0))
@@ -417,11 +463,13 @@ world.color = (0.018, 0.012, 0.009)
 camera_data = bpy.data.cameras.new("Canyon contact camera")
 camera = bpy.data.objects.new("Canyon contact camera", camera_data)
 scene.collection.objects.link(camera)
-camera.location = (520, -930, 900)
+camera.location = (520, -1180, 1150)
 target = Vector((0, 0, 55))
 camera.rotation_euler = (target - camera.location).to_track_quat("-Z", "Y").to_euler()
 camera_data.type = "ORTHO"
-camera_data.ortho_scale = 720
+# Three rows instead of two: the frame has to grow with the kit or the chip row falls
+# off the bottom of the sheet the pass is reviewed from.
+camera_data.ortho_scale = 1000
 camera_data.clip_end = 5000
 scene.camera = camera
 scene.render.engine = "BLENDER_WORKBENCH"
@@ -434,7 +482,7 @@ scene.display.shading.cavity_type = "WORLD"
 scene.display.shading.curvature_ridge_factor = 1.7
 scene.display.shading.curvature_valley_factor = 1.2
 scene.render.resolution_x = 1600
-scene.render.resolution_y = 1000
+scene.render.resolution_y = 1250
 scene.render.resolution_percentage = 100
 scene.render.threads_mode = "FIXED"
 scene.render.threads = 2

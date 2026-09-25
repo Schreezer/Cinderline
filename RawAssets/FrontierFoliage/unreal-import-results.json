@@ -1,0 +1,333 @@
+{
+  "assets": [
+    {
+      "dimensions_cm": [
+        35.167999267578125,
+        40.0,
+        34.5696907043457
+      ],
+      "material": "/Game/Art/FrontierFoliage/Materials/M_CinderFrontierFoliage.M_CinderFrontierFoliage",
+      "nanite": false,
+      "path": "/Game/Art/FrontierFoliage/Meshes/SM_CinderFrontier_Grass_A.SM_CinderFrontier_Grass_A",
+      "section_collision": false,
+      "sections": 1,
+      "simple_collisions": 0,
+      "triangles": [
+        92
+      ],
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              1.0,
+              0.9372549653053284,
+              1.0,
+              1.0
+            ],
+            "rgba_min": [
+              0.0,
+              0.06666667014360428,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 92
+          },
+          "source": {
+            "rgba_max": [
+              0.9999999403953552,
+              0.9372548460960388,
+              0.9999999403953552,
+              1.0
+            ],
+            "rgba_min": [
+              0.0,
+              0.06666666269302368,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 92
+          }
+        }
+      ]
+    }
+  ],
+  "import_contract": {
+    "previous": 1,
+    "restored": true,
+    "route": "legacy FBX",
+    "variable": "Interchange.FeatureFlags.Import.FBX",
+    "vertex_color_option": "REPLACE"
+  },
+  "manifest_sha256": "f8709928b3a88b4b681e112f4a444d19ba97694f3dce27ebd2636048d4089e64",
+  "material": {
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "connections": [
+      {
+        "from": "FoliageRoot",
+        "input": "A",
+        "output": "RGB",
+        "to": "Olive blade root to tip"
+      },
+      {
+        "from": "FoliageTip",
+        "input": "B",
+        "output": "RGB",
+        "to": "Olive blade root to tip"
+      },
+      {
+        "from": "Authored blade height and dry tone",
+        "input": "Alpha",
+        "output": "R",
+        "to": "Olive blade root to tip"
+      },
+      {
+        "from": "Olive blade root to tip",
+        "input": "A",
+        "output": "",
+        "to": "Occasional muted ochre stalk"
+      },
+      {
+        "from": "FoliageDry",
+        "input": "B",
+        "output": "RGB",
+        "to": "Occasional muted ochre stalk"
+      },
+      {
+        "from": "Authored blade height and dry tone",
+        "input": "Alpha",
+        "output": "G",
+        "to": "Occasional muted ochre stalk"
+      },
+      {
+        "from": "Foliage fog Absolute world position",
+        "input": "",
+        "output": "",
+        "to": "Foliage fog World XY"
+      },
+      {
+        "from": "Foliage fog World XY",
+        "input": "A",
+        "output": "",
+        "to": "Foliage fog World centimeters to texture UV"
+      },
+      {
+        "from": "CinderWorldSizeInverse",
+        "input": "B",
+        "output": "",
+        "to": "Foliage fog World centimeters to texture UV"
+      },
+      {
+        "from": "Foliage fog World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "FogMask"
+      },
+      {
+        "from": "FogMask",
+        "input": "",
+        "output": "R",
+        "to": "Visible foliage fraction"
+      },
+      {
+        "from": "Occasional muted ochre stalk",
+        "input": "A",
+        "output": "",
+        "to": "Fog gated foliage diffuse"
+      },
+      {
+        "from": "Visible foliage fraction",
+        "input": "B",
+        "output": "",
+        "to": "Fog gated foliage diffuse"
+      },
+      {
+        "from": "UnknownFog",
+        "input": "A",
+        "output": "RGB",
+        "to": "Unknown and explored foliage fog"
+      },
+      {
+        "from": "ExploredFog",
+        "input": "B",
+        "output": "RGB",
+        "to": "Unknown and explored foliage fog"
+      },
+      {
+        "from": "FogMask",
+        "input": "Alpha",
+        "output": "G",
+        "to": "Unknown and explored foliage fog"
+      },
+      {
+        "from": "Unknown and explored foliage fog",
+        "input": "A",
+        "output": "",
+        "to": "Foliage fog independent of lighting"
+      },
+      {
+        "from": "FogMask",
+        "input": "B",
+        "output": "R",
+        "to": "Foliage fog independent of lighting"
+      },
+      {
+        "from": "Foliage wind world position",
+        "input": "A",
+        "output": "",
+        "to": "Per-position wind phase"
+      },
+      {
+        "from": "Wind spatial frequency",
+        "input": "B",
+        "output": "",
+        "to": "Per-position wind phase"
+      },
+      {
+        "from": "WindTime",
+        "input": "A",
+        "output": "",
+        "to": "Slow simulation wind cycle"
+      },
+      {
+        "from": "Per-position wind phase",
+        "input": "A",
+        "output": "",
+        "to": "Animated wind phase"
+      },
+      {
+        "from": "Slow simulation wind cycle",
+        "input": "B",
+        "output": "",
+        "to": "Animated wind phase"
+      },
+      {
+        "from": "Per-position wind phase",
+        "input": "",
+        "output": "",
+        "to": "Wind at authored rest"
+      },
+      {
+        "from": "Animated wind phase",
+        "input": "",
+        "output": "",
+        "to": "Wind at simulation time"
+      },
+      {
+        "from": "Wind at simulation time",
+        "input": "A",
+        "output": "",
+        "to": "Wind relative to rest"
+      },
+      {
+        "from": "Wind at authored rest",
+        "input": "B",
+        "output": "",
+        "to": "Wind relative to rest"
+      },
+      {
+        "from": "Authored blade height and dry tone",
+        "input": "A",
+        "output": "R",
+        "to": "Pinned roots and flexible tips"
+      },
+      {
+        "from": "Authored blade height and dry tone",
+        "input": "B",
+        "output": "R",
+        "to": "Pinned roots and flexible tips"
+      },
+      {
+        "from": "Wind relative to rest",
+        "input": "A",
+        "output": "",
+        "to": "Root masked wind"
+      },
+      {
+        "from": "Pinned roots and flexible tips",
+        "input": "B",
+        "output": "",
+        "to": "Root masked wind"
+      },
+      {
+        "from": "Root masked wind",
+        "input": "A",
+        "output": "",
+        "to": "Bounded wind centimeters"
+      },
+      {
+        "from": "Bounded wind centimeters",
+        "input": "A",
+        "output": "",
+        "to": "Horizontal foliage sway"
+      },
+      {
+        "from": "Wind direction",
+        "input": "B",
+        "output": "",
+        "to": "Horizontal foliage sway"
+      }
+    ],
+    "depth_test_enabled": true,
+    "graph_replacement": {
+      "before_count": 0,
+      "method": "snapshot of expressions, delete each through engine API",
+      "remaining_after_delete": 0
+    },
+    "nodes": 34,
+    "outputs": {
+      "BASE_COLOR": {
+        "node": "Fog gated foliage diffuse",
+        "output": ""
+      },
+      "EMISSIVE_COLOR": {
+        "node": "Foliage fog independent of lighting",
+        "output": ""
+      },
+      "METALLIC": {
+        "node": "Nonmetal foliage",
+        "output": ""
+      },
+      "ROUGHNESS": {
+        "node": "Matte foliage",
+        "output": ""
+      },
+      "SPECULAR": {
+        "node": "Restrained leaf specular",
+        "output": ""
+      },
+      "WORLD_POSITION_OFFSET": {
+        "node": "Horizontal foliage sway",
+        "output": ""
+      }
+    },
+    "path": "/Game/Art/FrontierFoliage/Materials/M_CinderFrontierFoliage.M_CinderFrontierFoliage",
+    "runtime_contract": {
+      "WindTime": "simulation seconds; zero is authored rest; no engine Time node",
+      "fog_sampler": "linear color, texture clamp",
+      "maximum_wind_displacement_cm": 2.9665468140583924,
+      "opacity": "opaque",
+      "phase_cycles_per_second": 0.16,
+      "root_wind_displacement_cm": 0,
+      "texture_samples": 1,
+      "textures": [
+        "FogMask"
+      ],
+      "two_sided": true,
+      "vertex_color": {
+        "G": "dry tone",
+        "R": "height bending mask"
+      },
+      "wind_z_cm": 0,
+      "world_size_parameter": "CinderWorldSizeInverse"
+    },
+    "shader_errors": [],
+    "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+    "two_sided": true,
+    "version": "cinder-frontier-foliage-v1"
+  },
+  "owner": "scripts/unreal_frontier_foliage.py",
+  "success": true,
+  "utc": "2026-09-22T10:55:15.202220+00:00",
+  "version": "cinder-frontier-foliage-v1"
+}

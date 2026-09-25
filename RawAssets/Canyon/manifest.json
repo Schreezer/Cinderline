@@ -1,7 +1,7 @@
 {
   "generator": "scripts/create_canyon_assets.py",
   "blender_version": "5.2.1 LTS",
-  "license": "original Cinderline procedural geometry and material",
+  "license": "original Cinderline fractured slab geometry and material",
   "unit": "centimeter",
   "forward_axis": "+X",
   "up_axis": "+Z",
@@ -14,24 +14,24 @@
     "unreal_path": "/Game/Art/Canyon/Materials/M_CinderCanyonRock",
     "base_colors_linear": {
       "shadow": [
-        0.23,
-        0.075,
-        0.026
+        0.16,
+        0.17,
+        0.15
       ],
       "sandstone": [
-        0.58,
-        0.24,
-        0.072
+        0.3,
+        0.29,
+        0.23
       ],
       "iron": [
-        0.48,
-        0.105,
-        0.025
+        0.24,
+        0.22,
+        0.17
       ]
     },
     "vertex_color_channels": {
-      "R": "strata blend",
-      "G": "iron stain blend",
+      "R": "broad face tone",
+      "G": "sparse weathering",
       "B": "ambient occlusion"
     },
     "roughness": [
@@ -39,7 +39,7 @@
       0.95
     ],
     "metallic": 0.0,
-    "texture_coordinates": "authored dominant-axis UV0 at 40 cm per tile; material color uses authored strata masks"
+    "texture_coordinates": "authored dominant-axis UV0 at 40 cm per tile; material color uses broad face tone and sparse weathering masks"
   },
   "assets": [
     {
@@ -49,9 +49,9 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_A.fbx",
-          "sha256": "bde6589fe33f45383f5fdd5e6d3ac9086700040e3eb43e9ccdb9c0f3580128fd",
-          "triangles": 1376,
-          "vertices": 714,
+          "sha256": "07881d54182eb5a03a652b05a67090086f09788fa9dd0cf3a1194ded0dcbbd6f",
+          "triangles": 1280,
+          "vertices": 650,
           "bounds_min_cm": [
             -50.0,
             -39.0,
@@ -67,12 +67,27 @@
             78.0,
             118.0
           ],
-          "minimum_triangle_area_cm2": 3.03873015,
+          "minimum_triangle_area_cm2": 0.43285107,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 1376,
+            "vertex_color_ranges": [
+              [
+                0.3542625308036804,
+                0.7797641754150391
+              ],
+              [
+                0.0,
+                0.29999956488609314
+              ],
+              [
+                0.800000011920929,
+                0.9899088740348816
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 1280,
             "bounds_min_cm": [
               -50.00001,
               -39.00001,
@@ -91,9 +106,9 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_A_LOD1.fbx",
-          "sha256": "884ac310afc92d72d98f6b9f6eeee98d4dff7b356d3c8cc785bc90f30b8ce29a",
-          "triangles": 588,
-          "vertices": 310,
+          "sha256": "3e66bc1507456a4c147a0b58b7cfec109f13b0ff3b3b85428e21b97d110f14e1",
+          "triangles": 960,
+          "vertices": 490,
           "bounds_min_cm": [
             -50.0,
             -39.0,
@@ -109,12 +124,27 @@
             78.0,
             118.0
           ],
-          "minimum_triangle_area_cm2": 14.58760088,
+          "minimum_triangle_area_cm2": 0.20779678,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 588,
+            "vertex_color_ranges": [
+              [
+                0.3540401756763458,
+                0.7796218991279602
+              ],
+              [
+                0.0,
+                0.29999998211860657
+              ],
+              [
+                0.800000011920929,
+                0.9899091124534607
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 960,
             "bounds_min_cm": [
               -50.00001,
               -39.00001,
@@ -133,9 +163,9 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_A_LOD2.fbx",
-          "sha256": "930698ca380ed7f8c0ca8cd39fb888f6361d7d519137289a518a868651b38ceb",
-          "triangles": 228,
-          "vertices": 122,
+          "sha256": "4639f7154fd8f672e5cc5bf3846609b5753c350c77c7c9ce862b0a96fc8b766f",
+          "triangles": 240,
+          "vertices": 130,
           "bounds_min_cm": [
             -50.0,
             -39.0,
@@ -151,12 +181,27 @@
             78.0,
             118.0
           ],
-          "minimum_triangle_area_cm2": 13.1062161,
+          "minimum_triangle_area_cm2": 27.83497963,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 228,
+            "vertex_color_ranges": [
+              [
+                0.37054383754730225,
+                0.7790818214416504
+              ],
+              [
+                0.0,
+                0.29996955394744873
+              ],
+              [
+                0.800000011920929,
+                0.9846881628036499
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 240,
             "bounds_min_cm": [
               -50.00001,
               -39.00001,
@@ -181,9 +226,9 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_B.fbx",
-          "sha256": "3c7014937a72f3c999608f37002562141886d46f82e58096a5c0626bcb24b5c6",
-          "triangles": 1376,
-          "vertices": 714,
+          "sha256": "da9f9b3708c31e79b6de6f677322983d3ffc13df7996431a5119d83f9783b583",
+          "triangles": 1280,
+          "vertices": 650,
           "bounds_min_cm": [
             -50.0,
             -45.5,
@@ -199,12 +244,27 @@
             91.0,
             104.0
           ],
-          "minimum_triangle_area_cm2": 4.9343404,
+          "minimum_triangle_area_cm2": 0.56019867,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 1376,
+            "vertex_color_ranges": [
+              [
+                0.4597039222717285,
+                0.7794910669326782
+              ],
+              [
+                0.0,
+                0.29999998211860657
+              ],
+              [
+                0.800000011920929,
+                0.9897485971450806
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 1280,
             "bounds_min_cm": [
               -50.00001,
               -45.50001,
@@ -223,9 +283,9 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_B_LOD1.fbx",
-          "sha256": "297b09879764eae827b456002a90ea6c44c5ac8aed0ce3cb649f53e04165d2a4",
-          "triangles": 588,
-          "vertices": 310,
+          "sha256": "b71c6ef5d98c36ca21f93dd18c4644de418635fb33f289e1e817e8147e8d1ab0",
+          "triangles": 960,
+          "vertices": 490,
           "bounds_min_cm": [
             -50.0,
             -45.5,
@@ -241,12 +301,27 @@
             91.0,
             104.0
           ],
-          "minimum_triangle_area_cm2": 3.90321175,
+          "minimum_triangle_area_cm2": 0.27010659,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 588,
+            "vertex_color_ranges": [
+              [
+                0.45876646041870117,
+                0.7794660329818726
+              ],
+              [
+                0.0,
+                0.2999991476535797
+              ],
+              [
+                0.800000011920929,
+                0.9897481799125671
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 960,
             "bounds_min_cm": [
               -50.00001,
               -45.50001,
@@ -265,9 +340,9 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_B_LOD2.fbx",
-          "sha256": "95acd47a508e29c3465183089ada87939b97ddfee0ab141cf4ca8444bc13150d",
-          "triangles": 228,
-          "vertices": 122,
+          "sha256": "0205c66f5203586925b02fd4acb5855c2b264802f62bdf0bfe58437f8be6c582",
+          "triangles": 240,
+          "vertices": 130,
           "bounds_min_cm": [
             -50.0,
             -45.5,
@@ -283,12 +358,27 @@
             91.0,
             104.0
           ],
-          "minimum_triangle_area_cm2": 21.824381,
+          "minimum_triangle_area_cm2": 35.82051239,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 228,
+            "vertex_color_ranges": [
+              [
+                0.491618275642395,
+                0.7786728143692017
+              ],
+              [
+                0.0,
+                0.2999885082244873
+              ],
+              [
+                0.800000011920929,
+                0.9897475838661194
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 240,
             "bounds_min_cm": [
               -50.00001,
               -45.50001,
@@ -313,9 +403,9 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_C.fbx",
-          "sha256": "5aef9b4118c0aafdad8f8f3ed984e41f42c4a50b04dbdcef255d10b5e01b1740",
-          "triangles": 1376,
-          "vertices": 714,
+          "sha256": "11204744bb9ec1db5c4911218faca77075f0768a25c3d2016592fdf05b42534b",
+          "triangles": 1280,
+          "vertices": 650,
           "bounds_min_cm": [
             -50.0,
             -36.0,
@@ -331,12 +421,27 @@
             72.0,
             128.0
           ],
-          "minimum_triangle_area_cm2": 2.15412839,
+          "minimum_triangle_area_cm2": 0.35718216,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 1376,
+            "vertex_color_ranges": [
+              [
+                0.4224865734577179,
+                0.7799740433692932
+              ],
+              [
+                0.0,
+                0.29999998211860657
+              ],
+              [
+                0.800000011920929,
+                0.989899754524231
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 1280,
             "bounds_min_cm": [
               -50.0,
               -36.00001,
@@ -355,9 +460,9 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_C_LOD1.fbx",
-          "sha256": "5b0aa29e13a83a020683fd32250c2d5c071af87d3be1a7f0bbcf8d0387cfe4bf",
-          "triangles": 588,
-          "vertices": 310,
+          "sha256": "362d5ead61ddfc4c5961a042abe20ac41b7bf3e8f7ae70f7dca6b580c1964dfe",
+          "triangles": 960,
+          "vertices": 490,
           "bounds_min_cm": [
             -50.0,
             -36.0,
@@ -373,12 +478,27 @@
             72.0,
             128.0
           ],
-          "minimum_triangle_area_cm2": 5.4330018,
+          "minimum_triangle_area_cm2": 0.17247626,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 588,
+            "vertex_color_ranges": [
+              [
+                0.4221128225326538,
+                0.7799946665763855
+              ],
+              [
+                0.0,
+                0.2999981939792633
+              ],
+              [
+                0.800000011920929,
+                0.9898996353149414
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 960,
             "bounds_min_cm": [
               -50.0,
               -36.00001,
@@ -397,9 +517,9 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_C_LOD2.fbx",
-          "sha256": "34f1e32e43dfd1583de39bdabee07b4c9192addc3ea71ee0dd37e1e09135ac68",
-          "triangles": 228,
-          "vertices": 122,
+          "sha256": "ebc6cdefef1c47252f5b732202ac62ab3ba50d86c8ec0c7819809acf07dc2c04",
+          "triangles": 240,
+          "vertices": 130,
           "bounds_min_cm": [
             -50.0,
             -36.0,
@@ -415,12 +535,27 @@
             72.0,
             128.0
           ],
-          "minimum_triangle_area_cm2": 22.30096693,
+          "minimum_triangle_area_cm2": 23.99273735,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 228,
+            "vertex_color_ranges": [
+              [
+                0.43736618757247925,
+                0.7799923419952393
+              ],
+              [
+                0.0,
+                0.2999996542930603
+              ],
+              [
+                0.800000011920929,
+                0.9892851114273071
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 240,
             "bounds_min_cm": [
               -50.0,
               -36.00001,
@@ -445,9 +580,9 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_D.fbx",
-          "sha256": "e33b4acaa2fe876a103cb63702d4ffdd9b350440ae0fea0851e5402b0fc16b2a",
-          "triangles": 1376,
-          "vertices": 714,
+          "sha256": "4dcbb75cbb8ec9878f96230f099afbb05645d47dcdc15f80bcefadbe06f641a4",
+          "triangles": 1280,
+          "vertices": 650,
           "bounds_min_cm": [
             -50.0,
             -48.0,
@@ -463,12 +598,27 @@
             96.0,
             100.0
           ],
-          "minimum_triangle_area_cm2": 5.04152162,
+          "minimum_triangle_area_cm2": 0.53894388,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 1376,
+            "vertex_color_ranges": [
+              [
+                0.3820764422416687,
+                0.7761695384979248
+              ],
+              [
+                0.0,
+                0.29995277523994446
+              ],
+              [
+                0.800000011920929,
+                0.9898939728736877
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 1280,
             "bounds_min_cm": [
               -50.00001,
               -48.00001,
@@ -487,9 +637,9 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_D_LOD1.fbx",
-          "sha256": "7cfe91a1d35356df5d9bfc226f182d985bf304f62c619469fdae9e922a6a9403",
-          "triangles": 588,
-          "vertices": 310,
+          "sha256": "5f5ffeb454ae7fcdcd3f1fb16c4ad72a329586d8131f6c61ccabd7d24dddb57f",
+          "triangles": 960,
+          "vertices": 490,
           "bounds_min_cm": [
             -50.0,
             -48.0,
@@ -505,12 +655,27 @@
             96.0,
             100.0
           ],
-          "minimum_triangle_area_cm2": 0.00670662,
+          "minimum_triangle_area_cm2": 0.25823385,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 588,
+            "vertex_color_ranges": [
+              [
+                0.38145914673805237,
+                0.7763950228691101
+              ],
+              [
+                0.0,
+                0.29998981952667236
+              ],
+              [
+                0.800000011920929,
+                0.989854633808136
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 960,
             "bounds_min_cm": [
               -50.00001,
               -48.00001,
@@ -529,9 +694,9 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_D_LOD2.fbx",
-          "sha256": "66a98f78a0d9476654982d296d3e7be34cc7e6a5511899f4f24a2e400c2eb046",
-          "triangles": 228,
-          "vertices": 122,
+          "sha256": "f263c29c4d2bfc2594bf5b3434634396f191d02f09b4e6d052b580850d7b4151",
+          "triangles": 240,
+          "vertices": 130,
           "bounds_min_cm": [
             -50.0,
             -48.0,
@@ -547,12 +712,27 @@
             96.0,
             100.0
           ],
-          "minimum_triangle_area_cm2": 20.38149928,
+          "minimum_triangle_area_cm2": 30.78065531,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 228,
+            "vertex_color_ranges": [
+              [
+                0.3958524465560913,
+                0.7730400562286377
+              ],
+              [
+                0.0,
+                0.2999624013900757
+              ],
+              [
+                0.800000011920929,
+                0.988854169845581
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 240,
             "bounds_min_cm": [
               -50.00001,
               -48.00001,
@@ -577,9 +757,9 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_E.fbx",
-          "sha256": "9707e8082027dbb470ccc42efa9febdffd9ff63a9800304dd437dda1f87739a3",
-          "triangles": 1376,
-          "vertices": 714,
+          "sha256": "7e845564ab80354a143692b30ae893123a1114fd6ed309b32a6979fe383f082f",
+          "triangles": 1280,
+          "vertices": 650,
           "bounds_min_cm": [
             -50.0,
             -42.0,
@@ -595,12 +775,27 @@
             84.0,
             132.0
           ],
-          "minimum_triangle_area_cm2": 0.67975518,
+          "minimum_triangle_area_cm2": 0.48610211,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 1376,
+            "vertex_color_ranges": [
+              [
+                0.3611804246902466,
+                0.7663976550102234
+              ],
+              [
+                0.0,
+                0.29999977350234985
+              ],
+              [
+                0.800000011920929,
+                0.9882411956787109
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 1280,
             "bounds_min_cm": [
               -50.00001,
               -42.00001,
@@ -619,9 +814,9 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_E_LOD1.fbx",
-          "sha256": "615938055aede8e0c2a9dd68e81967b4b323f8cfb68b388d746fc498c859a5f5",
-          "triangles": 588,
-          "vertices": 310,
+          "sha256": "c0370a2fae879afcf514425626f6ab66ae5ea8d315fc9ff3946009cd0e6e2163",
+          "triangles": 960,
+          "vertices": 490,
           "bounds_min_cm": [
             -50.0,
             -42.0,
@@ -637,12 +832,27 @@
             84.0,
             132.0
           ],
-          "minimum_triangle_area_cm2": 3.32472981,
+          "minimum_triangle_area_cm2": 0.23356155,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 588,
+            "vertex_color_ranges": [
+              [
+                0.3612811863422394,
+                0.7665380239486694
+              ],
+              [
+                0.0,
+                0.2999996840953827
+              ],
+              [
+                0.800000011920929,
+                0.9879557490348816
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 960,
             "bounds_min_cm": [
               -50.00001,
               -42.00001,
@@ -661,9 +871,9 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_E_LOD2.fbx",
-          "sha256": "e4744c5ab91f3631e390fa873149128a991ae23ae7378ad3f92dd759d31aaee9",
-          "triangles": 228,
-          "vertices": 122,
+          "sha256": "1b0100c19074933e15a29be09bb113e6ce0c559737d7941b5c58e5547dfd33a4",
+          "triangles": 240,
+          "vertices": 130,
           "bounds_min_cm": [
             -50.0,
             -42.0,
@@ -679,12 +889,27 @@
             84.0,
             132.0
           ],
-          "minimum_triangle_area_cm2": 16.25097548,
+          "minimum_triangle_area_cm2": 37.43386482,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 228,
+            "vertex_color_ranges": [
+              [
+                0.36529967188835144,
+                0.7602194547653198
+              ],
+              [
+                0.0,
+                0.2999853193759918
+              ],
+              [
+                0.800000011920929,
+                0.9872468709945679
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 240,
             "bounds_min_cm": [
               -50.00001,
               -42.00001,
@@ -709,9 +934,9 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_F.fbx",
-          "sha256": "d0229adf353d62df84e4a78014c385e5e750f07f1d25a91b2f343ca2df3d1b64",
-          "triangles": 1376,
-          "vertices": 714,
+          "sha256": "27198d957db0b5992a1ab0c4558c1ee30fc1693e7c58b32c39f39c2c4f392278",
+          "triangles": 1280,
+          "vertices": 650,
           "bounds_min_cm": [
             -50.0,
             -44.5,
@@ -727,12 +952,27 @@
             89.0,
             112.0
           ],
-          "minimum_triangle_area_cm2": 8.27883133,
+          "minimum_triangle_area_cm2": 0.61096,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 1376,
+            "vertex_color_ranges": [
+              [
+                0.3491135835647583,
+                0.778775691986084
+              ],
+              [
+                0.0,
+                0.2968203127384186
+              ],
+              [
+                0.800000011920929,
+                0.9896043539047241
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 1280,
             "bounds_min_cm": [
               -50.00001,
               -44.50001,
@@ -751,9 +991,9 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_F_LOD1.fbx",
-          "sha256": "a769c9fbca93041dd0c38b8815def651b40501c4f7f9c430b4fcd58de4668799",
-          "triangles": 588,
-          "vertices": 310,
+          "sha256": "5e3327ddf440ebb92fcda2140c4857972261e7a25a14001f237144e60bd90537",
+          "triangles": 960,
+          "vertices": 490,
           "bounds_min_cm": [
             -50.0,
             -44.5,
@@ -769,12 +1009,27 @@
             89.0,
             112.0
           ],
-          "minimum_triangle_area_cm2": 15.39656018,
+          "minimum_triangle_area_cm2": 0.29341158,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 588,
+            "vertex_color_ranges": [
+              [
+                0.34916242957115173,
+                0.7788777947425842
+              ],
+              [
+                0.0,
+                0.2965165674686432
+              ],
+              [
+                0.800000011920929,
+                0.9896053671836853
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 960,
             "bounds_min_cm": [
               -50.00001,
               -44.50001,
@@ -793,9 +1048,9 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Rock_F_LOD2.fbx",
-          "sha256": "d892f524ff5e004838befa8a29ff7720bc36c7a59c81ea33c1583612bcc622f0",
-          "triangles": 228,
-          "vertices": 122,
+          "sha256": "aefdf6aba636503572fdf3a68925961b4c0ee36b3a6f56fc2666aabfee89b29c",
+          "triangles": 240,
+          "vertices": 130,
           "bounds_min_cm": [
             -50.0,
             -44.5,
@@ -811,12 +1066,27 @@
             89.0,
             112.0
           ],
-          "minimum_triangle_area_cm2": 21.72892666,
+          "minimum_triangle_area_cm2": 37.80288781,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 228,
+            "vertex_color_ranges": [
+              [
+                0.3526921272277832,
+                0.7779929041862488
+              ],
+              [
+                0.0,
+                0.2952422797679901
+              ],
+              [
+                0.800000011920929,
+                0.9890595078468323
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 240,
             "bounds_min_cm": [
               -50.00001,
               -44.50001,
@@ -841,9 +1111,9 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_CliffMass.fbx",
-          "sha256": "a63d35e132604bc0a3b061cdcbd91c4a6a29033af7f6cd9ce2e0b16778d2d8cb",
-          "triangles": 224,
-          "vertices": 114,
+          "sha256": "ca3cbf9c248655d3fb5154758bee1ff12447c4cba86c49d5ce5ef9803f81daac",
+          "triangles": 1024,
+          "vertices": 520,
           "bounds_min_cm": [
             -50.0,
             -45.0,
@@ -859,12 +1129,27 @@
             90.0,
             12.0
           ],
-          "minimum_triangle_area_cm2": 21.14391216,
+          "minimum_triangle_area_cm2": 0.02693301,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 224,
+            "vertex_color_ranges": [
+              [
+                0.34682193398475647,
+                0.7793337106704712
+              ],
+              [
+                0.0,
+                0.2999993562698364
+              ],
+              [
+                0.800000011920929,
+                0.9899987578392029
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 1024,
             "bounds_min_cm": [
               -50.00001,
               -45.00001,
@@ -883,9 +1168,9 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_CliffMass_LOD1.fbx",
-          "sha256": "c8a0828fb0c48ae4d0411a3dce16e80bccb6217897fe23a1752953c6e11ce494",
-          "triangles": 108,
-          "vertices": 56,
+          "sha256": "387a1a43bc0d5afbaf0373088a2f6b0bacc9af3412941ae97156c602965a287e",
+          "triangles": 768,
+          "vertices": 392,
           "bounds_min_cm": [
             -50.0,
             -45.0,
@@ -901,12 +1186,27 @@
             90.0,
             12.0
           ],
-          "minimum_triangle_area_cm2": 50.32290523,
+          "minimum_triangle_area_cm2": 0.0126288,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 108,
+            "vertex_color_ranges": [
+              [
+                0.34675082564353943,
+                0.7793256044387817
+              ],
+              [
+                0.0,
+                0.29999321699142456
+              ],
+              [
+                0.800000011920929,
+                0.9899987578392029
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 768,
             "bounds_min_cm": [
               -50.00001,
               -45.00001,
@@ -925,9 +1225,9 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_CliffMass_LOD2.fbx",
-          "sha256": "cb4cc25fec72c133cf828becec9ed72b0a1aa0d1220a2c3a91f4e69ee2ce0914",
-          "triangles": 48,
-          "vertices": 26,
+          "sha256": "d10e83181a2633ccf1fbb00eae68403c29e20fd747af421520dc360c61d7f8f6",
+          "triangles": 192,
+          "vertices": 104,
           "bounds_min_cm": [
             -50.0,
             -45.0,
@@ -943,12 +1243,27 @@
             90.0,
             12.0
           ],
-          "minimum_triangle_area_cm2": 148.5772196,
+          "minimum_triangle_area_cm2": 12.96569124,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
-            "triangles": 48,
+            "vertex_color_ranges": [
+              [
+                0.3517536520957947,
+                0.778252363204956
+              ],
+              [
+                0.0,
+                0.29998430609703064
+              ],
+              [
+                0.800000011920929,
+                0.9899911284446716
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 192,
             "bounds_min_cm": [
               -50.00001,
               -45.00001,
@@ -973,7 +1288,7 @@
         {
           "lod": 0,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Debris.fbx",
-          "sha256": "6b9d81f6b56c97035e666a3807c53271a699e187f8ad0977d7342e53a9d1a7b2",
+          "sha256": "7f62d8cbd6af666e2b1c47cde109cdfa919f3cc5579aa076f1b6e44c8ff06445",
           "triangles": 192,
           "vertices": 128,
           "bounds_min_cm": [
@@ -994,8 +1309,23 @@
           "minimum_triangle_area_cm2": 6.59056077,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
+            "vertex_color_ranges": [
+              [
+                0.3404765725135803,
+                0.6856063008308411
+              ],
+              [
+                0.0,
+                0.2999885082244873
+              ],
+              [
+                0.800000011920929,
+                0.987136721611023
+              ]
+            ],
+            "vertex_colors": true,
             "triangles": 192,
             "bounds_min_cm": [
               -50.0,
@@ -1015,7 +1345,7 @@
         {
           "lod": 1,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Debris_LOD1.fbx",
-          "sha256": "cf76ed1ff7531ca72e66629856cde550595e124c742cb552a8ebdb39410e8b06",
+          "sha256": "497bd08d1db53e9b4a0eb9727bdf478fe55bd94d8241c9f596af84e260882d21",
           "triangles": 96,
           "vertices": 64,
           "bounds_min_cm": [
@@ -1036,8 +1366,23 @@
           "minimum_triangle_area_cm2": 6.53564756,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
+            "vertex_color_ranges": [
+              [
+                0.3817470371723175,
+                0.6594051122665405
+              ],
+              [
+                0.0,
+                0.29999980330467224
+              ],
+              [
+                0.800000011920929,
+                0.9852002859115601
+              ]
+            ],
+            "vertex_colors": true,
             "triangles": 96,
             "bounds_min_cm": [
               -50.0,
@@ -1057,7 +1402,7 @@
         {
           "lod": 2,
           "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Debris_LOD2.fbx",
-          "sha256": "46f79de7c88ec3defc56403ffad4fd0ab3f623a5642216a3f49a4544a96d6a6c",
+          "sha256": "6fe3304da83889904a4e429467f0132bce27824a96ab201f029716da2ec57e55",
           "triangles": 48,
           "vertices": 32,
           "bounds_min_cm": [
@@ -1078,8 +1423,23 @@
           "minimum_triangle_area_cm2": 13.72491422,
           "material_sections": 1,
           "uv_channels": 1,
-          "vertex_color": "R strata, G iron staining, B broad cavity response",
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
           "fbx_roundtrip": {
+            "vertex_color_ranges": [
+              [
+                0.4125661849975586,
+                0.601658284664154
+              ],
+              [
+                0.0,
+                0.2983781099319458
+              ],
+              [
+                0.800000011920929,
+                0.9852194786071777
+              ]
+            ],
+            "vertex_colors": true,
             "triangles": 48,
             "bounds_min_cm": [
               -50.0,
@@ -1090,6 +1450,258 @@
               50.0,
               35.00001,
               20.0
+            ],
+            "material_sections": 1,
+            "uv_channels": 1,
+            "verified": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "SM_CinderCanyon_Chip_A",
+      "material_slot": "M_CinderCanyonRock",
+      "lods": [
+        {
+          "lod": 0,
+          "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_A.fbx",
+          "sha256": "2a96d5087054f2864a1532ddf6b18d3f8b06bd98cc1bd8882f9ef40f966eeb8e",
+          "triangles": 36,
+          "vertices": 24,
+          "bounds_min_cm": [
+            -50.0,
+            -37.0,
+            0.0
+          ],
+          "bounds_max_cm": [
+            50.0,
+            37.0,
+            38.0
+          ],
+          "size_cm": [
+            100.0,
+            74.0,
+            38.0
+          ],
+          "minimum_triangle_area_cm2": 269.54807817,
+          "material_sections": 1,
+          "uv_channels": 1,
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
+          "fbx_roundtrip": {
+            "vertex_color_ranges": [
+              [
+                0.3402111828327179,
+                0.6704585552215576
+              ],
+              [
+                0.0,
+                0.29839643836021423
+              ],
+              [
+                0.800000011920929,
+                0.9872655868530273
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 36,
+            "bounds_min_cm": [
+              -50.0,
+              -37.00001,
+              0.0
+            ],
+            "bounds_max_cm": [
+              50.0,
+              37.00001,
+              38.0
+            ],
+            "material_sections": 1,
+            "uv_channels": 1,
+            "verified": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "SM_CinderCanyon_Chip_B",
+      "material_slot": "M_CinderCanyonRock",
+      "lods": [
+        {
+          "lod": 0,
+          "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_B.fbx",
+          "sha256": "4ffe157f03034fb66e5f5f4a0663b22a6004863defc87609504b727d1efdd835",
+          "triangles": 24,
+          "vertices": 16,
+          "bounds_min_cm": [
+            -50.0,
+            -44.0,
+            0.0
+          ],
+          "bounds_max_cm": [
+            50.0,
+            44.0,
+            29.0
+          ],
+          "size_cm": [
+            100.0,
+            88.0,
+            29.0
+          ],
+          "minimum_triangle_area_cm2": 403.62744488,
+          "material_sections": 1,
+          "uv_channels": 1,
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
+          "fbx_roundtrip": {
+            "vertex_color_ranges": [
+              [
+                0.34604859352111816,
+                0.6250768303871155
+              ],
+              [
+                0.0,
+                0.29852521419525146
+              ],
+              [
+                0.800000011920929,
+                0.9892264604568481
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 24,
+            "bounds_min_cm": [
+              -50.00001,
+              -44.00001,
+              0.0
+            ],
+            "bounds_max_cm": [
+              50.00001,
+              44.00001,
+              29.0
+            ],
+            "material_sections": 1,
+            "uv_channels": 1,
+            "verified": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "SM_CinderCanyon_Chip_C",
+      "material_slot": "M_CinderCanyonRock",
+      "lods": [
+        {
+          "lod": 0,
+          "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_C.fbx",
+          "sha256": "af00d1b4db80f4a0542b27f0eba791b37b14d22bb597e41d4dd244bc80283de6",
+          "triangles": 48,
+          "vertices": 32,
+          "bounds_min_cm": [
+            -50.0,
+            -33.0,
+            0.0
+          ],
+          "bounds_max_cm": [
+            50.0,
+            33.0,
+            44.0
+          ],
+          "size_cm": [
+            100.0,
+            66.0,
+            44.0
+          ],
+          "minimum_triangle_area_cm2": 153.02074107,
+          "material_sections": 1,
+          "uv_channels": 1,
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
+          "fbx_roundtrip": {
+            "vertex_color_ranges": [
+              [
+                0.38050922751426697,
+                0.629259467124939
+              ],
+              [
+                0.0,
+                0.10050377994775772
+              ],
+              [
+                0.800000011920929,
+                0.9837334752082825
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 48,
+            "bounds_min_cm": [
+              -50.0,
+              -33.00001,
+              0.0
+            ],
+            "bounds_max_cm": [
+              50.0,
+              33.00001,
+              44.0
+            ],
+            "material_sections": 1,
+            "uv_channels": 1,
+            "verified": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "SM_CinderCanyon_Chip_D",
+      "material_slot": "M_CinderCanyonRock",
+      "lods": [
+        {
+          "lod": 0,
+          "file": "RawAssets/Canyon/FBX/SM_CinderCanyon_Chip_D.fbx",
+          "sha256": "359753ed739a34b8ed7fb22b61a4cc0ed963de04bfb857b1e477bc93d0ae4ccb",
+          "triangles": 36,
+          "vertices": 24,
+          "bounds_min_cm": [
+            -50.0,
+            -40.5,
+            0.0
+          ],
+          "bounds_max_cm": [
+            50.0,
+            40.5,
+            33.0
+          ],
+          "size_cm": [
+            100.0,
+            81.0,
+            33.0
+          ],
+          "minimum_triangle_area_cm2": 223.49555531,
+          "material_sections": 1,
+          "uv_channels": 1,
+          "vertex_color": "R broad face tone, G sparse weathering, B broad cavity response",
+          "fbx_roundtrip": {
+            "vertex_color_ranges": [
+              [
+                0.3450491726398468,
+                0.6062363386154175
+              ],
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.800000011920929,
+                0.9888243079185486
+              ]
+            ],
+            "vertex_colors": true,
+            "triangles": 36,
+            "bounds_min_cm": [
+              -50.00001,
+              -40.50001,
+              0.0
+            ],
+            "bounds_max_cm": [
+              50.00001,
+              40.50001,
+              33.0
             ],
             "material_sections": 1,
             "uv_channels": 1,

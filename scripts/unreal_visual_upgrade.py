@@ -38,6 +38,16 @@ GROUND_FILES = {
     "AO": "gravel_floor_04_ao_2k.png",
 }
 LIB = unreal.MaterialEditingLibrary
+# A TextureSampleParameter2D defaults to SSM_FROM_TEXTURE_ASSET, which spends one
+# of the pixel shader's eight Metal sampler slots per sampler node. Every wrapped
+# albedo/normal/roughness lookup wants the same trilinear wrap state, so pointing
+# them at the shared world group collapses them onto one slot and leaves headroom
+# for the clamped masks. Only ever pass this for TA_WRAP textures: TerrainLayers
+# and FogMask are TA_CLAMP, and a wrap group would tile the fog mask past the map
+# edge, painting unexplored simulation state into the border. That is a
+# fog-privacy correctness bug, not a look regression, so those two stay on their
+# own asset samplers on purpose.
+WRAP_SAMPLER_GROUP = "SSM_WRAP_WORLD_GROUP_SETTINGS"
 
 
 def require(condition, message):
@@ -227,9 +237,16 @@ class Graph:
         return self.node("Authored UV0", "TextureCoordinate", coordinate_index=0,
                          u_tiling=tiling, v_tiling=tiling)
 
-    def sample(self, label, asset, uv, sampler):
+    def sample(self, label, asset, uv, sampler, sampler_source=None):
         node = self.node(label, "TextureSampleParameter2D", parameter_name=label, texture=asset,
                          sampler_type=getattr(unreal.MaterialSamplerType, "SAMPLERTYPE_" + sampler))
+        if sampler_source is not None:
+            # Resolved by name with an explicit failure: the engine's Python
+            # spelling of a C++ enumerator is generated, so a silent AttributeError
+            # here would take down every generator that imports this helper.
+            mode = getattr(unreal.SamplerSourceMode, sampler_source, None)
+            require(mode is not None, "engine exposes no SamplerSourceMode." + sampler_source)
+            set_checked(node, "sampler_source", mode)
         self.link(uv, node, "UVs")
         return node
 
@@ -280,7 +297,7 @@ def ground_material(textures, *, rock=False):
     # Cliff normal maps must follow the mesh's authored tangent UVs on every
     # face. The stationary horizontal battlefield retains metric world mapping.
     uv = graph.uv0(2.0) if rock else graph.world_uv(TILE_CM)
-    color = graph.sample("GroundColor", textures["Color"], uv, "COLOR")
+    color = graph.sample("GroundColor", textures["Color"], uv, "COLOR", WRAP_SAMPLER_GROUP)
     desaturate = graph.node("Neutral basalt grain", "Desaturation")
     graph.link(color, desaturate, "Input", "RGB")
     graph.link(graph.scalar("Desaturation", 0.9 if rock else 0.94), desaturate, "Fraction")
@@ -298,7 +315,7 @@ def ground_material(textures, *, rock=False):
         require(isinstance(macro_texture, unreal.Texture2D), "bootstrap original basalt texture before V2.2")
         require(macro_texture.get_editor_property("srgb"), "existing basalt must retain its color sampler contract")
         macro = graph.sample("BasaltMacroColor", macro_texture,
-                             graph.world_uv(MACRO_TILE_CM, "Macro "), "COLOR")
+                             graph.world_uv(MACRO_TILE_CM, "Macro "), "COLOR", WRAP_SAMPLER_GROUP)
         neutral = graph.node("Macro rock luminance", "Desaturation")
         graph.link(macro, neutral, "Input", "RGB")
         graph.link(graph.node("Macro desaturation", "Constant", r=1.0), neutral, "Fraction")
@@ -317,10 +334,12 @@ def ground_material(textures, *, rock=False):
                         "luminance_gain": 5.0, "luminance_bias": 0.72,
                         "asset_modified": False, "original_source": "RawAssets/Textures/T_CinderBasalt.png",
                         "original_source_sha256": sha256(ROOT / "RawAssets/Textures/T_CinderBasalt.png")}
-    graph.normal(graph.sample("GroundNormal", textures["Normal"], uv, "NORMAL"), 0.45 if rock else 0.85)
-    roughness = graph.sample("GroundRoughness", textures["Roughness"], uv, "MASKS")
+    graph.normal(graph.sample("GroundNormal", textures["Normal"], uv, "NORMAL", WRAP_SAMPLER_GROUP),
+                 0.45 if rock else 0.85)
+    roughness = graph.sample("GroundRoughness", textures["Roughness"], uv, "MASKS", WRAP_SAMPLER_GROUP)
     graph.output(roughness, "ROUGHNESS", "R")
-    graph.output(graph.sample("GroundAO", textures["AO"], uv, "MASKS"), "AMBIENT_OCCLUSION", "R")
+    graph.output(graph.sample("GroundAO", textures["AO"], uv, "MASKS", WRAP_SAMPLER_GROUP),
+                 "AMBIENT_OCCLUSION", "R")
     graph.output(graph.node("Nonmetal mineral", "Constant", r=0.0), "METALLIC")
     validation = graph.finish()
     validation["texture_coordinates"] = {"mode": "authored UV0", "channel": 0, "tiling": [2.0, 2.0]} if rock else {
@@ -338,8 +357,8 @@ def model_material(textures):
     # Authored UVs move and rotate with each mesh; world-space microdetail swam
     # across moving units and disagreed with their imported tangent frames.
     uv = graph.uv0(4.0)
-    graph.normal(graph.sample("MicroNormal", textures["Normal"], uv, "NORMAL"), 0.10)
-    micro = graph.sample("MicroRoughness", textures["Roughness"], uv, "MASKS")
+    graph.normal(graph.sample("MicroNormal", textures["Normal"], uv, "NORMAL", WRAP_SAMPLER_GROUP), 0.10)
+    micro = graph.sample("MicroRoughness", textures["Roughness"], uv, "MASKS", WRAP_SAMPLER_GROUP)
     centered = graph.node("Centered micro roughness", "Add", const_b=-0.5)
     graph.link(micro, centered, "A", "R")
     varied = graph.node("Small roughness variation", "Multiply")

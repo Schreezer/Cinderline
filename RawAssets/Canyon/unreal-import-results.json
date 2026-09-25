@@ -2,15 +2,23 @@
   "assets": [
     {
       "dimensions_cm": [
-        100.0,
-        78.0,
+        99.99999618530273,
+        78.00000762939453,
         118.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
-        0.0,
-        0.0,
+        1.9073486328125e-06,
+        -3.814697265625e-06,
         59.0
       ],
       "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_A.SM_CinderCanyon_Rock_A",
@@ -26,27 +34,136 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "bde6589fe33f45383f5fdd5e6d3ac9086700040e3eb43e9ccdb9c0f3580128fd",
-        "884ac310afc92d72d98f6b9f6eeee98d4dff7b356d3c8cc785bc90f30b8ce29a",
-        "930698ca380ed7f8c0ca8cd39fb888f6361d7d519137289a518a868651b38ceb"
+        "07881d54182eb5a03a652b05a67090086f09788fa9dd0cf3a1194ded0dcbbd6f",
+        "3e66bc1507456a4c147a0b58b7cfec109f13b0ff3b3b85428e21b97d110f14e1",
+        "4639f7154fd8f672e5cc5bf3846609b5753c350c77c7c9ce862b0a96fc8b766f"
       ],
       "triangles": [
-        1376,
-        588,
-        228
+        1280,
+        960,
+        240
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3529411852359772,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 1280
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3529411554336548,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 1280
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3529411852359772,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 960
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3529411554336548,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 960
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.9843137860298157,
+              1.0
+            ],
+            "rgba_min": [
+              0.3686274588108063,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 240
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9843136668205261,
+              1.0
+            ],
+            "rgba_min": [
+              0.3686274290084839,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 240
+          }
+        }
+      ]
     },
     {
       "dimensions_cm": [
         100.0,
-        90.99999618530273,
+        91.00000381469727,
         104.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
-        0.0,
+        3.814697265625e-06,
         -1.9073486328125e-06,
         52.0
       ],
@@ -63,27 +180,136 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "3c7014937a72f3c999608f37002562141886d46f82e58096a5c0626bcb24b5c6",
-        "297b09879764eae827b456002a90ea6c44c5ac8aed0ce3cb649f53e04165d2a4",
-        "95acd47a508e29c3465183089ada87939b97ddfee0ab141cf4ca8444bc13150d"
+        "da9f9b3708c31e79b6de6f677322983d3ffc13df7996431a5119d83f9783b583",
+        "b71c6ef5d98c36ca21f93dd18c4644de418635fb33f289e1e817e8147e8d1ab0",
+        "0205c66f5203586925b02fd4acb5855c2b264802f62bdf0bfe58437f8be6c582"
       ],
       "triangles": [
-        1376,
-        588,
-        228
+        1280,
+        960,
+        240
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.458823561668396,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 1280
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.4588235020637512,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 1280
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.4549019932746887,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 960
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.45490193367004395,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 960
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.4901961088180542,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 240
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.4901960492134094,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 240
+          }
+        }
+      ]
     },
     {
       "dimensions_cm": [
-        100.00000381469727,
+        99.99999618530273,
         72.00000381469727,
         128.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
-        -1.9073486328125e-06,
+        1.9073486328125e-06,
         -1.9073486328125e-06,
         64.0
       ],
@@ -100,28 +326,137 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "5aef9b4118c0aafdad8f8f3ed984e41f42c4a50b04dbdcef255d10b5e01b1740",
-        "5b0aa29e13a83a020683fd32250c2d5c071af87d3be1a7f0bbcf8d0387cfe4bf",
-        "34f1e32e43dfd1583de39bdabee07b4c9192addc3ea71ee0dd37e1e09135ac68"
+        "11204744bb9ec1db5c4911218faca77075f0768a25c3d2016592fdf05b42534b",
+        "362d5ead61ddfc4c5961a042abe20ac41b7bf3e8f7ae70f7dca6b580c1964dfe",
+        "ebc6cdefef1c47252f5b732202ac62ab3ba50d86c8ec0c7819809acf07dc2c04"
       ],
       "triangles": [
-        1376,
-        588,
-        228
+        1280,
+        960,
+        240
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.41960787773132324,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 1280
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.41960781812667847,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 1280
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.41960787773132324,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 960
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.41960781812667847,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 960
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.43529415130615234,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 240
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.43529409170150757,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 240
+          }
+        }
+      ]
     },
     {
       "dimensions_cm": [
         100.0,
-        95.99999618530273,
+        95.99999237060547,
         100.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
+        3.814697265625e-06,
         0.0,
-        1.9073486328125e-06,
         50.0
       ],
       "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_D.SM_CinderCanyon_Rock_D",
@@ -137,28 +472,137 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "e33b4acaa2fe876a103cb63702d4ffdd9b350440ae0fea0851e5402b0fc16b2a",
-        "7cfe91a1d35356df5d9bfc226f182d985bf304f62c619469fdae9e922a6a9403",
-        "66a98f78a0d9476654982d296d3e7be34cc7e6a5511899f4f24a2e400c2eb046"
+        "4dcbb75cbb8ec9878f96230f099afbb05645d47dcdc15f80bcefadbe06f641a4",
+        "5f5ffeb454ae7fcdcd3f1fb16c4ad72a329586d8131f6c61ccabd7d24dddb57f",
+        "f263c29c4d2bfc2594bf5b3434634396f191d02f09b4e6d052b580850d7b4151"
       ],
       "triangles": [
-        1376,
-        588,
-        228
+        1280,
+        960,
+        240
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.7725490927696228,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921937942505,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 1280
+          },
+          "source": {
+            "rgba_max": [
+              0.7725489735603333,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921341896057,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 1280
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.7725490927696228,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921937942505,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 960
+          },
+          "source": {
+            "rgba_max": [
+              0.7725489735603333,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921341896057,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 960
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.7725490927696228,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3921568989753723,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 240
+          },
+          "source": {
+            "rgba_max": [
+              0.7725489735603333,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.39215683937072754,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 240
+          }
+        }
+      ]
     },
     {
       "dimensions_cm": [
         99.99999618530273,
-        84.0,
+        84.00000762939453,
         132.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
-        -1.9073486328125e-06,
-        3.814697265625e-06,
+        1.9073486328125e-06,
+        -3.814697265625e-06,
         66.0
       ],
       "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_E.SM_CinderCanyon_Rock_E",
@@ -174,28 +618,137 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "9707e8082027dbb470ccc42efa9febdffd9ff63a9800304dd437dda1f87739a3",
-        "615938055aede8e0c2a9dd68e81967b4b323f8cfb68b388d746fc498c859a5f5",
-        "e4744c5ab91f3631e390fa873149128a991ae23ae7378ad3f92dd759d31aaee9"
+        "7e845564ab80354a143692b30ae893123a1114fd6ed309b32a6979fe383f082f",
+        "c0370a2fae879afcf514425626f6ab66ae5ea8d315fc9ff3946009cd0e6e2163",
+        "1b0100c19074933e15a29be09bb113e6ce0c559737d7941b5c58e5547dfd33a4"
       ],
       "triangles": [
-        1376,
-        588,
-        228
+        1280,
+        960,
+        240
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.7647059559822083,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3607843220233917,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 1280
+          },
+          "source": {
+            "rgba_max": [
+              0.7647058367729187,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.36078429222106934,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 1280
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.7647059559822083,
+              0.2980392277240753,
+              0.9843137860298157,
+              1.0
+            ],
+            "rgba_min": [
+              0.3607843220233917,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 960
+          },
+          "source": {
+            "rgba_max": [
+              0.7647058367729187,
+              0.29803919792175293,
+              0.9843136668205261,
+              1.0
+            ],
+            "rgba_min": [
+              0.36078429222106934,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 960
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.7568628191947937,
+              0.2980392277240753,
+              0.9843137860298157,
+              1.0
+            ],
+            "rgba_min": [
+              0.364705890417099,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 240
+          },
+          "source": {
+            "rgba_max": [
+              0.7568626999855042,
+              0.29803919792175293,
+              0.9843136668205261,
+              1.0
+            ],
+            "rgba_min": [
+              0.3647058606147766,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 240
+          }
+        }
+      ]
     },
     {
       "dimensions_cm": [
-        100.0,
-        89.00000381469727,
+        99.99999618530273,
+        89.00000762939453,
         112.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
-        0.0,
         1.9073486328125e-06,
+        0.0,
         56.0
       ],
       "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Rock_F.SM_CinderCanyon_Rock_F",
@@ -211,28 +764,137 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "d0229adf353d62df84e4a78014c385e5e750f07f1d25a91b2f343ca2df3d1b64",
-        "a769c9fbca93041dd0c38b8815def651b40501c4f7f9c430b4fcd58de4668799",
-        "d892f524ff5e004838befa8a29ff7720bc36c7a59c81ea33c1583612bcc622f0"
+        "27198d957db0b5992a1ab0c4558c1ee30fc1693e7c58b32c39f39c2c4f392278",
+        "5e3327ddf440ebb92fcda2140c4857972261e7a25a14001f237144e60bd90537",
+        "aefdf6aba636503572fdf3a68925961b4c0ee36b3a6f56fc2666aabfee89b29c"
       ],
       "triangles": [
-        1376,
-        588,
-        228
+        1280,
+        960,
+        240
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.29411765933036804,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490196168422699,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 1280
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29411762952804565,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490195870399475,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 1280
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.29411765933036804,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490196168422699,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 960
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29411762952804565,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490195870399475,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 960
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.29411765933036804,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490196168422699,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 240
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29411762952804565,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490195870399475,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 240
+          }
+        }
+      ]
     },
     {
       "dimensions_cm": [
         100.0,
-        90.0,
+        89.99999618530273,
         12.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
-        0.0,
-        0.0,
+        3.814697265625e-06,
+        -1.9073486328125e-06,
         6.0
       ],
       "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_CliffMass.SM_CinderCanyon_CliffMass",
@@ -248,16 +910,117 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "a63d35e132604bc0a3b061cdcbd91c4a6a29033af7f6cd9ce2e0b16778d2d8cb",
-        "c8a0828fb0c48ae4d0411a3dce16e80bccb6217897fe23a1752953c6e11ce494",
-        "cb4cc25fec72c133cf828becec9ed72b0a1aa0d1220a2c3a91f4e69ee2ce0914"
+        "ca3cbf9c248655d3fb5154758bee1ff12447c4cba86c49d5ce5ef9803f81daac",
+        "387a1a43bc0d5afbaf0373088a2f6b0bacc9af3412941ae97156c602965a287e",
+        "d10e83181a2633ccf1fbb00eae68403c29e20fd747af421520dc360c61d7f8f6"
       ],
       "triangles": [
-        224,
-        108,
-        48
+        1024,
+        768,
+        192
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3450980484485626,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 1024
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.34509801864624023,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 1024
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3450980484485626,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 768
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.34509801864624023,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 768
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.7764706611633301,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490196168422699,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 192
+          },
+          "source": {
+            "rgba_max": [
+              0.7764705419540405,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.3490195870399475,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 192
+          }
+        }
+      ]
     },
     {
       "dimensions_cm": [
@@ -265,6 +1028,14 @@
         70.0,
         20.0
       ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0,
+          0.10000000149011612,
+          0.03500000014901161
+        ]
+      },
       "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
       "nanite": false,
       "origin_cm": [
@@ -285,201 +1056,1039 @@
       ],
       "simple_collisions": 0,
       "source_sha256": [
-        "6b9d81f6b56c97035e666a3807c53271a699e187f8ad0977d7342e53a9d1a7b2",
-        "cf76ed1ff7531ca72e66629856cde550595e124c742cb552a8ebdb39410e8b06",
-        "46f79de7c88ec3defc56403ffad4fd0ab3f623a5642216a3f49a4544a96d6a6c"
+        "7f62d8cbd6af666e2b1c47cde109cdfa919f3cc5579aa076f1b6e44c8ff06445",
+        "497bd08d1db53e9b4a0eb9727bdf478fe55bd94d8241c9f596af84e260882d21",
+        "6fe3304da83889904a4e429467f0132bce27824a96ab201f029716da2ec57e55"
       ],
       "triangles": [
         192,
         96,
         48
       ],
-      "vertex_colors": true
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.6823529601097107,
+              0.2980392277240753,
+              0.9843137860298157,
+              1.0
+            ],
+            "rgba_min": [
+              0.33725491166114807,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 192
+          },
+          "source": {
+            "rgba_max": [
+              0.6823529005050659,
+              0.29803919792175293,
+              0.9843136668205261,
+              1.0
+            ],
+            "rgba_min": [
+              0.3372548818588257,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 192
+          }
+        },
+        {
+          "lod": 1,
+          "render": {
+            "rgba_max": [
+              0.658823549747467,
+              0.2980392277240753,
+              0.9843137860298157,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921937942505,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 96
+          },
+          "source": {
+            "rgba_max": [
+              0.6588234901428223,
+              0.29803919792175293,
+              0.9843136668205261,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921341896057,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 96
+          }
+        },
+        {
+          "lod": 2,
+          "render": {
+            "rgba_max": [
+              0.6000000238418579,
+              0.2980392277240753,
+              0.9843137860298157,
+              1.0
+            ],
+            "rgba_min": [
+              0.4117647409439087,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 48
+          },
+          "source": {
+            "rgba_max": [
+              0.5999999642372131,
+              0.29803919792175293,
+              0.9843136668205261,
+              1.0
+            ],
+            "rgba_min": [
+              0.4117646813392639,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 48
+          }
+        }
+      ]
+    },
+    {
+      "dimensions_cm": [
+        99.99999237060547,
+        74.00000381469727,
+        38.0
+      ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0
+        ]
+      },
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        -1.9073486328125e-06,
+        19.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Chip_A.SM_CinderCanyon_Chip_A",
+      "section_collision": [
+        false
+      ],
+      "sections": [
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "2a96d5087054f2864a1532ddf6b18d3f8b06bd98cc1bd8882f9ef40f966eeb8e"
+      ],
+      "triangles": [
+        36
+      ],
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.6666666865348816,
+              0.2980392277240753,
+              0.9843137860298157,
+              1.0
+            ],
+            "rgba_min": [
+              0.33725491166114807,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 36
+          },
+          "source": {
+            "rgba_max": [
+              0.6666666269302368,
+              0.29803919792175293,
+              0.9843136668205261,
+              1.0
+            ],
+            "rgba_min": [
+              0.3372548818588257,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 36
+          }
+        }
+      ]
+    },
+    {
+      "dimensions_cm": [
+        100.00000762939453,
+        88.0,
+        29.0
+      ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0
+        ]
+      },
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        0.0,
+        0.0,
+        14.5
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Chip_B.SM_CinderCanyon_Chip_B",
+      "section_collision": [
+        false
+      ],
+      "sections": [
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "4ffe157f03034fb66e5f5f4a0663b22a6004863defc87609504b727d1efdd835"
+      ],
+      "triangles": [
+        24
+      ],
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.6235294342041016,
+              0.2980392277240753,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.3450980484485626,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 24
+          },
+          "source": {
+            "rgba_max": [
+              0.6235294342041016,
+              0.29803919792175293,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.34509801864624023,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 24
+          }
+        }
+      ]
+    },
+    {
+      "dimensions_cm": [
+        100.0,
+        66.00000762939453,
+        44.0
+      ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0
+        ]
+      },
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        -3.814697265625e-06,
+        3.814697265625e-06,
+        22.0
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Chip_C.SM_CinderCanyon_Chip_C",
+      "section_collision": [
+        false
+      ],
+      "sections": [
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "af00d1b4db80f4a0542b27f0eba791b37b14d22bb597e41d4dd244bc80283de6"
+      ],
+      "triangles": [
+        48
+      ],
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.6274510025978088,
+              0.09803922474384308,
+              0.9803922176361084,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921937942505,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 48
+          },
+          "source": {
+            "rgba_max": [
+              0.6274509429931641,
+              0.09803920239210129,
+              0.9803921580314636,
+              1.0
+            ],
+            "rgba_min": [
+              0.3803921341896057,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 48
+          }
+        }
+      ]
+    },
+    {
+      "dimensions_cm": [
+        100.00000381469727,
+        80.99999237060547,
+        33.0
+      ],
+      "lod_selection": {
+        "auto_compute": "disabled by native SetLodScreenSizes",
+        "screen_sizes": [
+          1.0
+        ]
+      },
+      "material": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+      "nanite": false,
+      "origin_cm": [
+        -1.9073486328125e-06,
+        0.0,
+        16.5
+      ],
+      "path": "/Game/Art/Canyon/Meshes/SM_CinderCanyon_Chip_D.SM_CinderCanyon_Chip_D",
+      "section_collision": [
+        false
+      ],
+      "sections": [
+        1
+      ],
+      "simple_collisions": 0,
+      "source_sha256": [
+        "359753ed739a34b8ed7fb22b61a4cc0ed963de04bfb857b1e477bc93d0ae4ccb"
+      ],
+      "triangles": [
+        36
+      ],
+      "vertex_colors": true,
+      "vertex_colors_per_lod": [
+        {
+          "lod": 0,
+          "render": {
+            "rgba_max": [
+              0.6039215922355652,
+              0.0,
+              0.988235354423523,
+              1.0
+            ],
+            "rgba_min": [
+              0.34117648005485535,
+              0.0,
+              0.8000000715255737,
+              1.0
+            ],
+            "triangles": 36
+          },
+          "source": {
+            "rgba_max": [
+              0.6039215326309204,
+              0.0,
+              0.9882352948188782,
+              1.0
+            ],
+            "rgba_min": [
+              0.34117645025253296,
+              0.0,
+              0.7999999523162842,
+              1.0
+            ],
+            "triangles": 36
+          }
+        }
+      ]
     }
   ],
   "destination": "/Game/Art/Canyon/Meshes",
-  "manifest_sha256": "7711b64b201364b0651fa91e27b6b7802164a3f311c0d31a734f2004dc5a1ccd",
+  "import_contract": {
+    "previous": 1,
+    "restored": true,
+    "route": "legacy FBX",
+    "variable": "Interchange.FeatureFlags.Import.FBX",
+    "vertex_color_option": "REPLACE"
+  },
+  "manifest_sha256": "55b6edd84da8887bec5e99426fe215962c145901abe0b8568fa21de7c5785eb0",
   "material": {
     "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
     "connections": [
       {
         "from": "CanyonShadow",
         "input": "A",
-        "output": "",
-        "to": "Stratified sandstone color"
+        "output": "RGB",
+        "to": "Broad authored rock face tone"
       },
       {
         "from": "CanyonSandstone",
         "input": "B",
-        "output": "",
-        "to": "Stratified sandstone color"
+        "output": "RGB",
+        "to": "Broad authored rock face tone"
       },
       {
-        "from": "Authored strata, iron, and cavity masks",
+        "from": "Authored face tone, weathering, and cavity",
         "input": "Alpha",
         "output": "R",
-        "to": "Stratified sandstone color"
+        "to": "Broad authored rock face tone"
       },
       {
-        "from": "Stratified sandstone color",
+        "from": "World vertex normal",
+        "input": "",
+        "output": "",
+        "to": "Absolute world normal"
+      },
+      {
+        "from": "Absolute world normal",
+        "input": "Base",
+        "output": "",
+        "to": "Sharp rock projection weights"
+      },
+      {
+        "from": "Sharp rock projection weights",
+        "input": "",
+        "output": "",
+        "to": "X projection magnitude"
+      },
+      {
+        "from": "Sharp rock projection weights",
+        "input": "",
+        "output": "",
+        "to": "Y projection magnitude"
+      },
+      {
+        "from": "Sharp rock projection weights",
+        "input": "",
+        "output": "",
+        "to": "Z projection magnitude"
+      },
+      {
+        "from": "X projection magnitude",
         "input": "A",
         "output": "",
-        "to": "Warm iron staining"
+        "to": "Horizontal projection weight sum"
+      },
+      {
+        "from": "Y projection magnitude",
+        "input": "B",
+        "output": "",
+        "to": "Horizontal projection weight sum"
+      },
+      {
+        "from": "Horizontal projection weight sum",
+        "input": "A",
+        "output": "",
+        "to": "Rock projection weight sum"
+      },
+      {
+        "from": "Z projection magnitude",
+        "input": "B",
+        "output": "",
+        "to": "Rock projection weight sum"
+      },
+      {
+        "from": "Rock projection weight sum",
+        "input": "A",
+        "output": "",
+        "to": "Nonzero projection weight sum"
+      },
+      {
+        "from": "Canyon world position",
+        "input": "",
+        "output": "",
+        "to": "X facing world coordinates"
+      },
+      {
+        "from": "X facing world coordinates",
+        "input": "A",
+        "output": "",
+        "to": "X rock projection at 340 cm"
+      },
+      {
+        "from": "X rock projection at 340 cm",
+        "input": "UVs",
+        "output": "",
+        "to": "Rock grain X"
+      },
+      {
+        "from": "X projection magnitude",
+        "input": "A",
+        "output": "",
+        "to": "X normalized projection weight"
+      },
+      {
+        "from": "Nonzero projection weight sum",
+        "input": "B",
+        "output": "",
+        "to": "X normalized projection weight"
+      },
+      {
+        "from": "Rock grain X",
+        "input": "A",
+        "output": "RGB",
+        "to": "X weighted rock grain"
+      },
+      {
+        "from": "X normalized projection weight",
+        "input": "B",
+        "output": "",
+        "to": "X weighted rock grain"
+      },
+      {
+        "from": "Canyon world position",
+        "input": "",
+        "output": "",
+        "to": "Y facing world coordinates"
+      },
+      {
+        "from": "Y facing world coordinates",
+        "input": "A",
+        "output": "",
+        "to": "Y rock projection at 340 cm"
+      },
+      {
+        "from": "Y rock projection at 340 cm",
+        "input": "UVs",
+        "output": "",
+        "to": "Rock grain Y"
+      },
+      {
+        "from": "Y projection magnitude",
+        "input": "A",
+        "output": "",
+        "to": "Y normalized projection weight"
+      },
+      {
+        "from": "Nonzero projection weight sum",
+        "input": "B",
+        "output": "",
+        "to": "Y normalized projection weight"
+      },
+      {
+        "from": "Rock grain Y",
+        "input": "A",
+        "output": "RGB",
+        "to": "Y weighted rock grain"
+      },
+      {
+        "from": "Y normalized projection weight",
+        "input": "B",
+        "output": "",
+        "to": "Y weighted rock grain"
+      },
+      {
+        "from": "Canyon world position",
+        "input": "",
+        "output": "",
+        "to": "Z facing world coordinates"
+      },
+      {
+        "from": "Z facing world coordinates",
+        "input": "A",
+        "output": "",
+        "to": "Z rock projection at 340 cm"
+      },
+      {
+        "from": "Z rock projection at 340 cm",
+        "input": "UVs",
+        "output": "",
+        "to": "Rock grain Z"
+      },
+      {
+        "from": "Z projection magnitude",
+        "input": "A",
+        "output": "",
+        "to": "Z normalized projection weight"
+      },
+      {
+        "from": "Nonzero projection weight sum",
+        "input": "B",
+        "output": "",
+        "to": "Z normalized projection weight"
+      },
+      {
+        "from": "Rock grain Z",
+        "input": "A",
+        "output": "RGB",
+        "to": "Z weighted rock grain"
+      },
+      {
+        "from": "Z normalized projection weight",
+        "input": "B",
+        "output": "",
+        "to": "Z weighted rock grain"
+      },
+      {
+        "from": "X weighted rock grain",
+        "input": "A",
+        "output": "",
+        "to": "Combined rock side grain"
+      },
+      {
+        "from": "Y weighted rock grain",
+        "input": "B",
+        "output": "",
+        "to": "Combined rock side grain"
+      },
+      {
+        "from": "Combined rock side grain",
+        "input": "A",
+        "output": "",
+        "to": "Triplanar rock grain"
+      },
+      {
+        "from": "Z weighted rock grain",
+        "input": "B",
+        "output": "",
+        "to": "Triplanar rock grain"
+      },
+      {
+        "from": "World vertex normal",
+        "input": "",
+        "output": "",
+        "to": "Signed rock up facing"
+      },
+      {
+        "from": "Signed rock up facing",
+        "input": "",
+        "output": "",
+        "to": "Up facing rock surfaces"
+      },
+      {
+        "from": "Up facing rock surfaces",
+        "input": "Base",
+        "output": "",
+        "to": "Rock dust facing weight"
+      },
+      {
+        "from": "Rock dust facing weight",
+        "input": "",
+        "output": "",
+        "to": "Rock weathered side weight"
+      },
+      {
+        "from": "Authored face tone, weathering, and cavity",
+        "input": "A",
+        "output": "G",
+        "to": "Authored side weathering"
+      },
+      {
+        "from": "Rock weathered side weight",
+        "input": "B",
+        "output": "",
+        "to": "Authored side weathering"
+      },
+      {
+        "from": "Authored side weathering",
+        "input": "A",
+        "output": "",
+        "to": "Restrained side staining"
+      },
+      {
+        "from": "Broad authored rock face tone",
+        "input": "A",
+        "output": "",
+        "to": "Sparse warm rock staining"
       },
       {
         "from": "IronOxide",
         "input": "B",
-        "output": "",
-        "to": "Warm iron staining"
-      },
-      {
-        "from": "Authored strata, iron, and cavity masks",
-        "input": "Alpha",
-        "output": "G",
-        "to": "Warm iron staining"
-      },
-      {
-        "from": "Authored UV0",
-        "input": "UVs",
-        "output": "",
-        "to": "Licensed sediment grain"
-      },
-      {
-        "from": "Licensed sediment grain",
-        "input": "",
         "output": "RGB",
-        "to": "Neutral sediment luminance"
+        "to": "Sparse warm rock staining"
       },
       {
-        "from": "Full grain desaturation",
+        "from": "Restrained side staining",
+        "input": "Alpha",
+        "output": "",
+        "to": "Sparse warm rock staining"
+      },
+      {
+        "from": "Authored face tone, weathering, and cavity",
+        "input": "A",
+        "output": "G",
+        "to": "Authored cap weathering"
+      },
+      {
+        "from": "Rock dust facing weight",
+        "input": "B",
+        "output": "",
+        "to": "Authored cap weathering"
+      },
+      {
+        "from": "Authored cap weathering",
+        "input": "A",
+        "output": "",
+        "to": "Restrained cap dust"
+      },
+      {
+        "from": "WeatheringStrength",
+        "input": "B",
+        "output": "",
+        "to": "Restrained cap dust"
+      },
+      {
+        "from": "Sparse warm rock staining",
+        "input": "A",
+        "output": "",
+        "to": "Rock with sparse cap dust"
+      },
+      {
+        "from": "CanyonCap",
+        "input": "B",
+        "output": "RGB",
+        "to": "Rock with sparse cap dust"
+      },
+      {
+        "from": "Restrained cap dust",
+        "input": "Alpha",
+        "output": "",
+        "to": "Rock with sparse cap dust"
+      },
+      {
+        "from": "Triplanar rock grain",
+        "input": "",
+        "output": "",
+        "to": "Neutral rock grain luminance"
+      },
+      {
+        "from": "Full rock grain desaturation",
         "input": "Fraction",
         "output": "",
-        "to": "Neutral sediment luminance"
+        "to": "Neutral rock grain luminance"
       },
       {
-        "from": "Neutral sediment luminance",
+        "from": "Neutral rock grain luminance",
         "input": "A",
         "output": "",
-        "to": "Restrained grain contrast"
+        "to": "Centered rock grain"
       },
       {
-        "from": "Restrained grain contrast",
+        "from": "Centered rock grain",
         "input": "A",
         "output": "",
-        "to": "Centered grain value"
+        "to": "Restrained rock detail contrast"
       },
       {
-        "from": "Centered grain value",
+        "from": "RockDetailAmount",
+        "input": "B",
+        "output": "",
+        "to": "Restrained rock detail contrast"
+      },
+      {
+        "from": "Restrained rock detail contrast",
+        "input": "A",
+        "output": "",
+        "to": "Rock detail around unity"
+      },
+      {
+        "from": "Rock detail around unity",
         "input": "",
         "output": "",
-        "to": "Bounded sediment modulation"
+        "to": "Bounded rock detail modulation"
       },
       {
-        "from": "Warm iron staining",
+        "from": "Rock with sparse cap dust",
         "input": "A",
         "output": "",
-        "to": "Strata with sediment grain"
+        "to": "Authored rock with quiet grain"
       },
       {
-        "from": "Bounded sediment modulation",
+        "from": "Bounded rock detail modulation",
         "input": "B",
         "output": "",
-        "to": "Strata with sediment grain"
+        "to": "Authored rock with quiet grain"
       },
       {
-        "from": "Authored UV0",
+        "from": "Canyon fog Absolute world position",
+        "input": "",
+        "output": "",
+        "to": "Canyon fog World XY"
+      },
+      {
+        "from": "Canyon fog World XY",
+        "input": "A",
+        "output": "",
+        "to": "Canyon fog World centimeters to texture UV"
+      },
+      {
+        "from": "CinderWorldSizeInverse",
+        "input": "B",
+        "output": "",
+        "to": "Canyon fog World centimeters to texture UV"
+      },
+      {
+        "from": "Canyon fog World centimeters to texture UV",
         "input": "UVs",
         "output": "",
-        "to": "Restrained sediment normal"
+        "to": "FogMask"
       },
       {
-        "from": "Flat tangent normal",
+        "from": "FogMask",
+        "input": "",
+        "output": "R",
+        "to": "Known visible rock fraction"
+      },
+      {
+        "from": "Authored rock with quiet grain",
         "input": "A",
         "output": "",
-        "to": "Restrained normal detail"
+        "to": "Fog gated rock diffuse"
       },
       {
-        "from": "Restrained sediment normal",
+        "from": "Known visible rock fraction",
+        "input": "B",
+        "output": "",
+        "to": "Fog gated rock diffuse"
+      },
+      {
+        "from": "UnknownFog",
+        "input": "A",
+        "output": "RGB",
+        "to": "Unknown and explored rock fog"
+      },
+      {
+        "from": "ExploredFog",
         "input": "B",
         "output": "RGB",
-        "to": "Restrained normal detail"
+        "to": "Unknown and explored rock fog"
       },
       {
-        "from": "NormalStrength",
+        "from": "FogMask",
         "input": "Alpha",
-        "output": "",
-        "to": "Restrained normal detail"
+        "output": "G",
+        "to": "Unknown and explored rock fog"
       },
       {
-        "from": "Restrained normal detail",
-        "input": "VectorInput",
+        "from": "Unknown and explored rock fog",
+        "input": "A",
         "output": "",
-        "to": "Normalized tangent normal"
+        "to": "Rock fog independent of lighting"
       },
       {
-        "from": "Authored strata, iron, and cavity masks",
+        "from": "FogMask",
+        "input": "B",
+        "output": "R",
+        "to": "Rock fog independent of lighting"
+      },
+      {
+        "from": "Canyon fog World centimeters to texture UV",
+        "input": "UVs",
+        "output": "",
+        "to": "RockHeightFog"
+      },
+      {
+        "from": "RockHeightFog",
+        "input": "",
+        "output": "G",
+        "to": "Unexplored rock height fraction"
+      },
+      {
+        "from": "Canyon world position",
+        "input": "",
+        "output": "",
+        "to": "Rock height above baseline"
+      },
+      {
+        "from": "Rock height above baseline",
+        "input": "A",
+        "output": "",
+        "to": "Rock hidden baseline below terrain"
+      },
+      {
+        "from": "Rock hidden baseline below terrain",
+        "input": "A",
+        "output": "",
+        "to": "Unknown rock relief"
+      },
+      {
+        "from": "Unexplored rock height fraction",
+        "input": "B",
+        "output": "",
+        "to": "Unknown rock relief"
+      },
+      {
+        "from": "Unknown rock relief",
+        "input": "A",
+        "output": "",
+        "to": "Flatten unexplored rock vertices"
+      },
+      {
+        "from": "Rock downward offset",
+        "input": "B",
+        "output": "",
+        "to": "Flatten unexplored rock vertices"
+      },
+      {
+        "from": "Authored face tone, weathering, and cavity",
         "input": "Alpha",
         "output": "R",
-        "to": "Layered roughness"
+        "to": "Matte rock roughness"
+      },
+      {
+        "from": "Authored face tone, weathering, and cavity",
+        "input": "",
+        "output": "B",
+        "to": "Bounded authored rock cavity"
       }
     ],
     "depth_test_enabled": true,
     "graph_replacement": {
-      "before_count": 8,
+      "before_count": 75,
       "method": "snapshot of expressions, delete each through engine API",
       "remaining_after_delete": 0
     },
     "licensed_surface_detail": {
       "albedo_modulation": [
-        0.78,
-        1.2
+        0.94,
+        1.06
       ],
       "license": "CC0-1.0",
-      "mapping": "authored UV0 at 2x tiling",
-      "normal_strength": 0.42,
+      "mapping": "three world albedo projections; normalized abs(vertex normal)^4 weights",
+      "normal_strength": 0.0,
+      "normals": "authored geometric fracture normals",
+      "projection": {
+        "blended": "samples, never coordinates",
+        "stable_under_nonuniform_instance_scale": true,
+        "tile_width_cm": 340.0
+      },
+      "rock_detail_amount": 0.14,
+      "roughness_bounds": [
+        0.88,
+        0.94
+      ],
+      "side_stain_strength": 0.12,
       "source": "Poly Haven gravel_floor_04",
-      "specular": 0.08,
-      "texture_samples": 2,
+      "specular": 0.2,
+      "texture_samples": 3,
       "textures": [
-        "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Color",
-        "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Normal"
-      ]
+        "/Game/Art/Textures/VisualUpgrade/T_CinderGroundV2_Color"
+      ],
+      "total_pixel_texture_samples": 4,
+      "unknown_height": {
+        "baseline_world_z": -32.0,
+        "offset": "-(worldZ + 32) * (1 - explored G)",
+        "source": "clamped FogMask G, explicit mip 0"
+      },
+      "vertex_channels": {
+        "B": "cavity visibility, clamped 0.78 to 1.0",
+        "G": "sparse weathering",
+        "R": "non-periodic broad face tone"
+      },
+      "vertex_texture_samples": 1,
+      "weathering_strength": 0.22
     },
-    "nodes": 22,
+    "nodes": 75,
     "outputs": {
       "AMBIENT_OCCLUSION": {
-        "node": "Authored strata, iron, and cavity masks",
-        "output": "B"
+        "node": "Bounded authored rock cavity",
+        "output": ""
       },
       "BASE_COLOR": {
-        "node": "Strata with sediment grain",
+        "node": "Fog gated rock diffuse",
+        "output": ""
+      },
+      "EMISSIVE_COLOR": {
+        "node": "Rock fog independent of lighting",
         "output": ""
       },
       "METALLIC": {
-        "node": "Nonmetal sandstone",
+        "node": "Nonmetal fractured rock",
         "output": ""
       },
       "NORMAL": {
-        "node": "Normalized tangent normal",
+        "node": "Authored fracture normals",
         "output": ""
       },
       "ROUGHNESS": {
-        "node": "Layered roughness",
+        "node": "Matte rock roughness",
         "output": ""
       },
       "SPECULAR": {
-        "node": "Low sandstone specular",
+        "node": "Restrained rock specular",
+        "output": ""
+      },
+      "WORLD_POSITION_OFFSET": {
+        "node": "Flatten unexplored rock vertices",
         "output": ""
       }
     },
     "path": "/Game/Art/Canyon/Materials/M_CinderCanyonRock.M_CinderCanyonRock",
+    "rock_palette_linear_rgb": {
+      "CanyonCap": [
+        0.16,
+        0.17,
+        0.135
+      ],
+      "CanyonSandstone": [
+        0.135,
+        0.15,
+        0.12
+      ],
+      "CanyonShadow": [
+        0.065,
+        0.082,
+        0.078
+      ],
+      "IronOxide": [
+        0.105,
+        0.09,
+        0.065
+      ]
+    },
     "shader_errors": [],
     "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
     "two_sided": false,
-    "version": "cinder-canyon-v1"
+    "version": "cinder-canyon-v3"
   },
   "owner": "scripts/unreal_canyon_assets.py",
   "success": true,
-  "utc": "2026-09-13T07:29:45.735458+00:00",
-  "version": "cinder-canyon-v1"
+  "utc": "2026-09-22T11:22:53.288155+00:00",
+  "version": "cinder-canyon-v3"
 }
