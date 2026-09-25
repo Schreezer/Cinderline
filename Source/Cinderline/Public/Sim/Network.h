@@ -2,9 +2,12 @@
 #include "Sim/Simulation.h"
 #include <cstddef>
 #include <unordered_map>
+#include <utility>
 
 namespace cinder::net {
-constexpr std::uint32_t ProtocolVersion = 7;
+// Map revisions select gameplay terrain as well as geometry. Older peers must
+// negotiate a matching protocol before they can exchange commands or snapshots.
+constexpr std::uint32_t ProtocolVersion = 12;
 constexpr std::size_t MaxMessageBytes = 1024 * 1024;
 constexpr std::size_t MaxCommandUnits = 256;
 struct Snapshot;
@@ -33,6 +36,8 @@ struct Snapshot {
     std::vector<Effect> effects;
     // 0 unexplored, 1 previously explored, 2 currently visible. Recipient only.
     std::array<std::uint8_t, Simulation::FogSize * Simulation::FogSize> fog{};
+    std::string workerPlanNotice;
+    std::uint64_t workerPlanNoticeSerial = 0;
 };
 Snapshot snapshotFor(const Simulation& simulation, int viewer, ViewMemory* memory = nullptr);
 std::vector<std::uint8_t> encodeSnapshot(const Snapshot& snapshot);
@@ -40,4 +45,12 @@ bool decodeSnapshot(const void* data, std::size_t size, Snapshot& out, std::stri
 std::vector<std::uint8_t> encodeCommand(const Command& command, std::uint32_t sequence);
 bool decodeCommand(const void* data, std::size_t size, Command& out, std::uint32_t& sequence, std::string& error);
 bool translateCommand(const Simulation& simulation, int team, const ViewMemory& memory, Command& command, std::string& error);
+// Read-only admission for normalized appended tactical destinations. Includes
+// the current viewer snapshot, without mutating opaque-handle memory.
+bool orderPlanFitsSnapshot(const Simulation& simulation, int team,
+                          const std::vector<std::pair<Id,TacticalOrder>>& orders);
+// Read-only admission for complete, prevalidated Patrol/Escort recipient states.
+// Authoritative state and opaque-handle memory are never mutated.
+bool sustainedPlanFitsSnapshot(const Simulation& simulation, int team,
+                               const std::vector<Entity>& candidates);
 }

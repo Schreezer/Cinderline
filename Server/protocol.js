@@ -1,4 +1,4 @@
-export const PROTOCOL_VERSION = 7;
+export const PROTOCOL_VERSION = 12;
 export const WEBSOCKET_PATH = "/play";
 
 export const WORKER_IPC = Object.freeze({
@@ -11,4 +11,3 @@ export const WORKER_IPC = Object.freeze({
   acknowledgement: 130,
   result: 131,
 });
-

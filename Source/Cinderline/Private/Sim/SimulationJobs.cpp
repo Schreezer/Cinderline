@@ -226,14 +226,13 @@ Id Simulation::chooseWorkTarget(Entity& worker,const std::vector<Id>& targets,fl
  return worker.workTarget;
 }
 
-bool Simulation::assignFreshWorkerToOre(Entity& worker,std::vector<Id>& assignmentCandidates,int& cursor,bool& deferred) {
- deferred=false;
- if(worker.kind!=Kind::Worker||!worker.alive()||!activeTeam(worker.team)||eliminated(worker.team))return false;
+Simulation::WorkerAssignmentResult Simulation::assignFreshWorkerToOre(Entity& worker,std::vector<Id>& assignmentCandidates,int& cursor,const std::vector<Vec2>& exits) {
+ if(worker.kind!=Kind::Worker||!worker.alive()||!activeTeam(worker.team)||eliminated(worker.team))return WorkerAssignmentResult::Unavailable;
  ensureNavigation();
  std::vector<Id> depots;
  for(const auto& entity:entities_)if(entity.alive()&&entity.team==worker.team&&entity.progress>=1&&
     (entity.kind==Kind::Headquarters||entity.kind==Kind::Processor))depots.push_back(entity.id);
- if(depots.empty())return false;
+ if(depots.empty())return WorkerAssignmentResult::Unavailable;
 
  const float workerRadius=definition(worker.kind).radius;
  if(assignmentCandidates.empty()) {
@@ -264,12 +263,13 @@ bool Simulation::assignFreshWorkerToOre(Entity& worker,std::vector<Id>& assignme
   const float resourceReach=definition(resource->kind).radius+workerRadius+9;
   const auto resourceGoals=workPoints(worker,resource->pos,resourceReach,resource->id,navigation_,true);
   if(resourceGoals.empty())continue;
-  if(!claimNavigationSearch()){deferred=true;return false;}
+  if(!claimNavigationSearch())return WorkerAssignmentResult::Deferred;
   ++navigationStats_.searches;
-  auto outward=navigation_.route(worker.pos,resourceGoals,workerRadius,worker.id);
+  auto outward=navigation_.routeFromAny(exits,resourceGoals,workerRadius,worker.id);
   navigationStats_.expanded+=static_cast<std::uint64_t>(std::max(0,outward.expanded));
+  if(outward.exhausted)return WorkerAssignmentResult::SearchLimited;
   if(!outward.reached)continue;
-  const Vec2 resourcePoint=outward.points.empty()?worker.pos:outward.points.back();
+  const Vec2 resourcePoint=outward.points.empty()?outward.origin:outward.points.back();
 
   Entity returning=worker;returning.pos=resourcePoint;
   std::vector<Vec2> depotGoals;
@@ -279,18 +279,20 @@ bool Simulation::assignFreshWorkerToOre(Entity& worker,std::vector<Id>& assignme
    depotGoals.insert(depotGoals.end(),points.begin(),points.end());
   }
   if(depotGoals.empty())continue;
-  if(!claimNavigationSearch()){deferred=true;return false;}
+  if(!claimNavigationSearch())return WorkerAssignmentResult::Deferred;
   ++navigationStats_.searches;
   const auto home=navigation_.route(resourcePoint,depotGoals,workerRadius,worker.id);
   navigationStats_.expanded+=static_cast<std::uint64_t>(std::max(0,home.expanded));
+  if(home.exhausted)return WorkerAssignmentResult::SearchLimited;
   if(!home.reached)continue;
+  worker.pos=outward.origin;
   resetNavigation(worker);
   worker.order=Order::Gather;worker.target=resource->id;worker.resourceTarget=resource->id;
   worker.workTarget=resource->id;worker.workPoint=resourcePoint;worker.workPointValid=true;
   worker.path=std::move(outward.points);worker.pathGeometry=navigation_.geometryVersion();
-  return true;
+  return WorkerAssignmentResult::Assigned;
  }
- return false;
+ return WorkerAssignmentResult::Unavailable;
 }
 
 Id Simulation::reachableConstructionWorker(const std::vector<Id>& workers,Vec2 site,Kind kind,Id existing,bool automatic) const {

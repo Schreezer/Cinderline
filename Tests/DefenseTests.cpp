@@ -50,13 +50,58 @@ CommandResult send(Simulation& simulation, CommandType type, int team,
 
 Simulation fixture(std::uint32_t seed) {
     Simulation simulation;
-    simulation.reset({0, seed, false, 1.0f});
+    // Defense distances and anchors below describe the original flat layout.
+    simulation.reset({0, seed, false, 1.0f, MatchLength::Standard, 2, 0});
     for (int team = 0; team < 2; ++team) {
         std::vector<Id> workers = ids(simulation, team, Kind::Worker);
         check(send(simulation, CommandType::Stop, team, workers).accepted,
               "fixture workers stop cleanly");
     }
     return simulation;
+}
+
+std::vector<std::string> saveFields(const std::string& line) {
+    std::istringstream input(line);std::vector<std::string> values;std::string value;
+    while(input>>value)values.push_back(value);return values;
+}
+
+std::string joinSaveFields(const std::vector<std::string>& values) {
+    std::ostringstream output;for(std::size_t index=0;index<values.size();++index)output<<(index?" ":"")<<values[index];return output.str();
+}
+
+void downgradeSaveThirteenToTen(std::vector<std::string>& lines) {
+    if(lines.front()=="CINDERLINE 15") {
+        auto config=saveFields(lines.at(1));check(config.size()==7&&config.back()=="0","legacy defense migration uses flat-map revision zero");
+        config.pop_back();lines[1]=joinSaveFields(config);
+    }
+    const auto config=saveFields(lines.at(1));const auto players=static_cast<std::size_t>(std::stoul(config.back()));std::size_t cursor=3+players;
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    const auto entityCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t entity=0;entity<entityCount;++entity) {
+        ++cursor;cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+        cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    }
+    const auto effectHeader=saveFields(lines.at(cursor));cursor+=1+static_cast<std::size_t>(std::stoul(effectHeader.front()))+players*2;
+    const auto recordingCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t recording=0;recording<recordingCount;++recording) {
+        auto row=saveFields(lines.at(cursor));
+        check(row.size()>=13&&row.size()==13+static_cast<std::size_t>(std::stoul(row[12])),
+              "version-thirteen recording layout contains formation fields");
+        row.erase(row.begin()+9,row.begin()+12);
+        check(row.size()>=10&&row.size()==10+static_cast<std::size_t>(std::stoul(row[9])),
+              "version-eleven recording layout contains queue mode");
+        row.erase(row.begin()+8);lines[cursor++]=joinSaveFields(row);
+    }
+    const auto orders=std::find(lines.begin(),lines.end(),"ORDER_QUEUES 1");
+    const auto sustained=std::find(lines.begin(),lines.end(),"SUSTAINED_ORDERS 1");
+    const auto formation=std::find(lines.begin(),lines.end(),"FORMATION_ORDERS 1");
+    const auto queuedWork=std::find(lines.begin(),lines.end(),"QUEUED_WORK 1");
+    check(orders!=lines.end()&&sustained!=lines.end()&&formation!=lines.end()&&queuedWork!=lines.end()&&
+          orders<sustained&&sustained<formation&&formation<queuedWork,
+          "save-fourteen defense fixture contains ordered tactical, sustained, formation, and queued-work state");
+    lines.erase(queuedWork,lines.end());
+    lines.erase(formation,lines.end());
+    lines.erase(orders,lines.end());
 }
 
 template <typename Predicate>
@@ -228,28 +273,30 @@ void trafficAndPersistence() {
           "defender retains and reclaims its anchor after friendly traffic");
 
     const auto path = (std::filesystem::temp_directory_path() /
-                       "cinderline-defense-v10.sav").string();
+                       "cinderline-defense-v13.sav").string();
     check(simulation.save(path), "Defend state saves in the compatible format");
     std::ifstream saved(path);
     std::vector<std::string> saveLines;std::string saveLine;
     while(std::getline(saved,saveLine))saveLines.push_back(saveLine);
     const auto production=std::find(saveLines.begin(),saveLines.end(),"PRODUCTION_JOBS 1");
-    check(!saveLines.empty()&&saveLines.front()=="CINDERLINE 10"&&production!=saveLines.end(), "fresh Defend save uses version ten with player count, match length and stable production jobs");
+    check(!saveLines.empty()&&saveLines.front()=="CINDERLINE 15"&&production!=saveLines.end(), "fresh Defend save includes map revision, player count, match length, stable production jobs, tactical orders, sustained orders, formation orders, and queued work");
     Simulation loaded;
     check(loaded.load(path), "Defend state loads from the compatible format");
     check(loaded.stateHash() == simulation.stateHash(),
           "save-load preserves defense orders, anchors and navigation state");
     auto writeVersion = [&](int version,bool includeProduction) {
         const std::string candidate = path + ".version-" + std::to_string(version);
+        auto source=saveLines;if(version<=10)downgradeSaveThirteenToTen(source);
+        const auto sourceProduction=std::find(source.begin(),source.end(),"PRODUCTION_JOBS 1");
         {
             std::ofstream output(candidate);
-            for(auto line=saveLines.begin();line!=(includeProduction?saveLines.end():production);++line) {
-                std::string value=line==saveLines.begin()?"CINDERLINE "+std::to_string(version):*line;
-                if(version<10&&line==saveLines.begin()+1) {
+            for(auto line=source.begin();line!=(includeProduction?source.end():sourceProduction);++line) {
+                std::string value=line==source.begin()?"CINDERLINE "+std::to_string(version):*line;
+                if(version<10&&line==source.begin()+1) {
                     auto values=std::vector<std::string>{};std::istringstream input(value);std::string field;while(input>>field)values.push_back(field);
                     values.pop_back();if(version<9)values.pop_back();value.clear();for(std::size_t i=0;i<values.size();++i)value+=(i?" ":"")+values[i];
                 }
-                if(version<10&&line==saveLines.begin()+2) {
+                if(version<10&&line==source.begin()+2) {
                     auto values=std::vector<std::string>{};std::istringstream input(value);std::string field;while(input>>field)values.push_back(field);
                     values.pop_back();value.clear();for(std::size_t i=0;i<values.size();++i)value+=(i?" ":"")+values[i];
                 }
@@ -270,7 +317,7 @@ void trafficAndPersistence() {
         std::filesystem::remove(candidate);
     };
     rejectsVersion(5,false,"version five rejects the later Defend enum while preserving the active match");
-    rejectsVersion(11,true,"future save versions are rejected while preserving the active match");
+    rejectsVersion(16,true,"future save versions are rejected while preserving the active match");
     std::filesystem::remove(path);
     for (int step = 0; step < 80; ++step) {
         simulation.update(Simulation::Step);

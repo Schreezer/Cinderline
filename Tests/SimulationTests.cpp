@@ -36,8 +36,10 @@ CommandResult send(Simulation& s,CommandType type,int team,std::vector<Id> units
                    Vec2 point={},Id target=0,Kind kind=Kind::Worker,int index=0) {
   return s.command({type,team,std::move(units),point,target,kind,index});
 }
+// These regression scenarios use fixed coordinates from the original maps.
+// Authored revision gameplay and migration have their own MapTerrainSimulation suite.
 Simulation quiet(int map=0) {
-  Simulation s; s.reset({map,42,false,1});
+  Simulation s; s.reset({map,42,false,1,MatchLength::Standard,2,0});
   for(int t=0;t<2;++t) send(s,CommandType::Stop,t,ids(s,t,Kind::Worker));
   return s;
 }
@@ -97,7 +99,7 @@ std::vector<std::string> saveFields(const std::string& line) {
 std::string joinSaveFields(const std::vector<std::string>& fields) {
   std::ostringstream out;for(std::size_t i=0;i<fields.size();++i)out<<(i?" ":"")<<fields[i];return out.str();
 }
-struct SavedLayout { std::vector<std::size_t> entities;std::size_t effects=0; };
+struct SavedLayout { std::vector<std::size_t> entities,recordings;std::size_t effects=0; };
 SavedLayout savedLayout(const std::vector<std::string>& lines) {
   SavedLayout result;std::size_t cursor=5;
   cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
@@ -107,16 +109,44 @@ SavedLayout savedLayout(const std::vector<std::string>& lines) {
     cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
     cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
   }
-  result.effects=cursor;return result;
+  result.effects=cursor;
+  const auto effects=static_cast<std::size_t>(std::stoul(saveFields(lines.at(cursor))[0]));
+  cursor+=1+effects+4;
+  const auto recordings=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+  for(std::size_t n=0;n<recordings;++n)result.recordings.push_back(cursor++);
+  return result;
 }
 std::vector<std::string> legacyCombatSave(std::vector<std::string> lines,int version) {
+  auto currentConfig=saveFields(lines.at(1));
+  check(currentConfig.size()==7&&currentConfig.back()=="0","legacy fixture begins on map revision zero");
+  currentConfig.pop_back();lines[1]=joinSaveFields(currentConfig);
   const auto layout=savedLayout(lines);const auto header=saveFields(lines.at(layout.effects));
-  check(header.size()==2,"legacy fixture begins with the v4 effect header");
+  check(header.size()==2,"legacy fixture begins with the current effect header");
   const auto count=static_cast<std::size_t>(std::stoul(header.front()));
   lines.front()="CINDERLINE "+std::to_string(version);lines[layout.effects]=header.front();
+  for(std::size_t row:layout.recordings) {
+    auto fields=saveFields(lines.at(row));
+    check(fields.size()>=13&&fields.size()==13+static_cast<std::size_t>(std::stoul(fields[12])),
+          "legacy fixture begins with a save-thirteen recording row");
+    fields.erase(fields.begin()+9,fields.begin()+12);
+    check(fields.size()>=10&&fields.size()==10+static_cast<std::size_t>(std::stoul(fields[9])),
+          "legacy fixture begins with a save-eleven recording row");
+    fields.erase(fields.begin()+8);lines[row]=joinSaveFields(fields);
+  }
+  const auto orderQueues=std::find(lines.begin(),lines.end(),"ORDER_QUEUES 1");
+  check(orderQueues!=lines.end(),"legacy fixture identifies the order-queue section");
+  const auto sustainedOrders=std::find(lines.begin(),lines.end(),"SUSTAINED_ORDERS 1");
+  const auto formationOrders=std::find(lines.begin(),lines.end(),"FORMATION_ORDERS 1");
+  const auto queuedWork=std::find(lines.begin(),lines.end(),"QUEUED_WORK 1");
+  check(sustainedOrders!=lines.end()&&formationOrders!=lines.end()&&queuedWork!=lines.end()&&
+        orderQueues<sustainedOrders&&sustainedOrders<formationOrders&&formationOrders<queuedWork,
+        "legacy fixture identifies the ordered save-fourteen terminal sections");
+  lines.erase(queuedWork,lines.end());
+  lines.erase(formationOrders,lines.end());
+  lines.erase(orderQueues,lines.end());
   if(version<10) {
-    auto config=saveFields(lines.at(1));check(config.size()==6,"legacy fixture starts from a v10 config row");config.pop_back();lines[1]=joinSaveFields(config);
-    auto timeline=saveFields(lines.at(2));check(timeline.size()==6,"legacy fixture starts from a v10 timeline row");timeline.pop_back();lines[2]=joinSaveFields(timeline);
+    auto config=saveFields(lines.at(1));check(config.size()==6,"legacy fixture starts from a current config row");config.pop_back();lines[1]=joinSaveFields(config);
+    auto timeline=saveFields(lines.at(2));check(timeline.size()==6,"legacy fixture starts from a current timeline row");timeline.pop_back();lines[2]=joinSaveFields(timeline);
   }
   if(version<9) {auto config=saveFields(lines.at(1));check(config.size()==5,"version nine fixture retains match length");config.pop_back();lines[1]=joinSaveFields(config);}
   for(std::size_t n=0;n<count;++n) {
@@ -150,9 +180,9 @@ void resetAndDefinitions() {
   auto worker=first(s,0,Kind::Worker);
   send(s,CommandType::Move,0,{worker},{900,900}); advance(s,2);
   check(s.time()>0&&!s.recording().empty(),"commands recorded while running");
-  s.reset({0,42,false,1});
+  s.reset({0,42,false,1,MatchLength::Standard,2,0});
   check(s.tick()==0&&s.winner()==-1&&s.recording().empty(),"reset clears time, result and recording");
-  Simulation fresh; fresh.reset({0,42,false,1});
+  Simulation fresh; fresh.reset({0,42,false,1,MatchLength::Standard,2,0});
   check(s.stateHash()==fresh.stateHash(),"reset same seed produces identical state");
 }
 
@@ -674,13 +704,38 @@ void tacticalOrders() {
     s.debugSpawn(Kind::Scout,0,{1700,1900});
     check(!send(s,CommandType::Attack,0,{support},{},target).accepted,"support alone cannot attack enemies");
     check(send(s,order,0,{soldier,support},{1800,1600},target).accepted,"mixed army attack order accepted");
-    advance(s,10);
+    const Vec2 acceptedSupportGoal=s.find(support)->goal;
+    // Observe support while its order is still traveling. A correct shorter
+    // route can finish AttackMove before the former fixed ten-second sample.
+    waitUntil(s,10,[&]{return s.find(support)->pos.x>1100;},"support advances with attacking army");
     const auto* mend=s.find(support);const auto* ally=s.find(soldier);
     check(mend&&ally&&mend->pos.x>1100,"support advances with attacking army");
     check(distance(mend->pos,ally->pos)<=definition(Kind::Mender).range,"support remains within healing range of attack leader");
     check(ally->hp>wounded,"following support heals actual combat damage");
-    check(definition(Kind::Mender).damage==0&&mend->target==soldier,"support follows an ally without acquiring a weapon target");
+    const bool directFollow=order==CommandType::Attack&&mend->order==Order::Attack&&mend->target==soldier&&mend->supportTarget==0;
+    const bool waypointSupport=order==CommandType::AttackMove&&mend->order==Order::AttackMove&&mend->target==0&&mend->supportTarget==soldier;
+    check(definition(Kind::Mender).damage==0&&(directFollow||waypointSupport),
+          "support uses direct follow for Attack and a retained waypoint relation for Attack-move");
     std::cout<<"SUPPORT_ORDER order="<<static_cast<int>(order)<<" distance="<<distance(mend->pos,ally->pos)<<" healed="<<ally->hp-wounded<<'\n';
+    if(order==CommandType::AttackMove) {
+      waitUntil(s,20,[&]{
+        const auto* traveling=s.find(support);
+        check(distance(traveling->goal,acceptedSupportGoal)<0.001f,"support retains its accepted attack-move waypoint");
+        if(traveling->order==Order::AttackMove)
+          check(traveling->target==0&&traveling->supportTarget==soldier,"traveling support retains its selected leader");
+        return traveling->order!=Order::AttackMove;
+      },"support completes its accepted attack-move waypoint");
+      mend=s.find(support);
+      check(mend->order==Order::Idle&&mend->target==0&&mend->supportTarget==0&&
+            distance(mend->goal,acceptedSupportGoal)<0.001f&&distance(mend->pos,acceptedSupportGoal)<20,
+            "completed attack-move support reaches its own waypoint and clears the finished relation");
+    } else {
+      advance(s,10);
+      mend=s.find(support);ally=s.find(soldier);
+      check(mend->order==Order::Attack&&mend->target==soldier&&mend->supportTarget==0&&
+            distance(mend->pos,ally->pos)<=definition(Kind::Mender).range,
+            "direct attack support keeps following its leader after the initial advance");
+    }
   }
 }
 
@@ -724,7 +779,7 @@ void saveLoadAndReplay() {
   auto original=quiet();w=first(original,0,Kind::Worker);
   send(original,CommandType::Move,0,{w},{950,1000}); advance(original,4);
   send(original,CommandType::Hold,0,{w}); advance(original,2);
-  const auto recording=original.recording();Simulation replay;replay.reset({0,42,false,1});
+  const auto recording=original.recording();Simulation replay;replay.reset({0,42,false,1,MatchLength::Standard,2,0});
   std::size_t index=0;
   while(replay.tick()<original.tick()) {
     while(index<recording.size()&&recording[index].tick==replay.tick()) {
@@ -734,7 +789,7 @@ void saveLoadAndReplay() {
   }
   check(index==recording.size(),"replayed every command");
   check(replay.stateHash()==original.stateHash(),"tick-indexed command replay is deterministic");
-  Simulation ai;ai.reset({2,73,true,1});advance(ai,75);
+  Simulation ai;ai.reset({2,73,true,1,MatchLength::Standard,2,0});advance(ai,75);
   const auto aiPath=savePath("ai-continuity");check(ai.save(aiPath),"AI match save succeeds");
   Simulation resumed;check(resumed.load(aiPath),"AI match load succeeds");
   for(int i=0;i<250;++i) {
@@ -792,7 +847,7 @@ void constructionPersistence() {
   const auto paused=roundTrip("paused",definition(Kind::Foundry).buildTime+1);
   check(paused.find(building)->progress==pausedProgress&&paused.constructionWorker(building)==0,"paused foundation remains paused through loading and a full build duration");
   check(send(s,CommandType::ResumeConstruction,0,{worker},{},building).accepted,"resumed construction is recorded as a command");
-  advance(s,4);const auto commands=s.recording();Simulation replay;replay.reset({0,42,false,1});std::size_t next=0;
+  advance(s,4);const auto commands=s.recording();Simulation replay;replay.reset({0,42,false,1,MatchLength::Standard,2,0});std::size_t next=0;
   while(replay.tick()<s.tick()) {
     while(next<commands.size()&&commands[next].tick==replay.tick()) {
       check(replay.command(commands[next].command).accepted,"construction replay accepts each historical command");++next;
@@ -840,7 +895,7 @@ void boundedUpdate() {
 }
 
 void aiExpansionAndBaseDefense() {
-  Simulation economy;economy.reset({0,123,true,1});
+  Simulation economy;economy.reset({0,123,true,1,MatchLength::Standard,2,0});
   const Vec2 depletedSite{2900,3800},richSite{3800,2000};
   std::vector<Id> deposits;
   for(const auto& e:economy.entities())if(e.kind==Kind::Resource&&distance(e.pos,depletedSite)<350)deposits.push_back(e.id);
@@ -856,7 +911,10 @@ void aiExpansionAndBaseDefense() {
   float remaining=0;for(Id id:deposits)remaining+=economy.find(id)->resource;
   check(remaining==0,"first expansion is actually depleted by workers before AI chooses");
   check(economy.players()[0].stats.gathered>=12000,"depletion produced delivered ore rather than edited resource state");
+  // Satisfy Normal's production plan so this fixture isolates site choice.
   economy.debugSpawn(Kind::Foundry,1,{3900,4300});
+  economy.debugSpawn(Kind::Foundry,1,{3850,4650});
+  economy.debugSpawn(Kind::Foundry,1,{4550,4050});
   economy.debugSpawn(Kind::Processor,1,{4300,3900});
   economy.debugSpawn(Kind::Laboratory,1,{4450,4400});
   economy.debugSpawn(Kind::Turret,1,{3900,3950});
@@ -876,7 +934,7 @@ void aiExpansionAndBaseDefense() {
   check(expanded,"AI issues a paid expansion command at the viable alternate site");
   std::cout<<"AI_EXPANSION depleted_ore="<<remaining<<" gathered="<<economy.players()[0].stats.gathered<<" alternate_built="<<expanded<<'\n';
 
-  Simulation defense;defense.reset({0,321,true,1});
+  Simulation defense;defense.reset({0,321,true,1,MatchLength::Standard,2,0});
   for(int n=0;n<2020;++n){defense.debugResources(1,0);defense.update(Simulation::Step);}
   defense.debugSpawn(Kind::Foundry,1,{3900,4300});
   defense.debugSpawn(Kind::Processor,1,{4300,3900});
@@ -884,6 +942,7 @@ void aiExpansionAndBaseDefense() {
   const Id oldTurret=defense.debugSpawn(Kind::Turret,1,{3900,4200});
   const Vec2 remoteBase{2200,4200};
   defense.debugSpawn(Kind::Headquarters,1,remoteBase);
+  defense.debugSpawn(Kind::Scout,0,{2200,3750}); // A real observed threat makes defense urgent.
   check(distance(defense.find(oldTurret)->pos,remoteBase)>900,"old turret cannot defend the second base");
   defense.debugResources(1,1000);const std::size_t defenseStart=defense.recording().size();
   advance(defense,20);bool defended=false,builderDispatched=false;
@@ -902,7 +961,7 @@ void aiExpansionAndBaseDefense() {
 }
 
 void aiArmyAndSupportCoordination() {
-  Simulation waiting;waiting.reset({0,123,true,1});
+  Simulation waiting;waiting.reset({0,123,true,1,MatchLength::Standard,2,0});
   for(int n=0;n<7160;++n){waiting.debugResources(1,0);waiting.update(Simulation::Step);}
   check(waiting.time()>=358&&ids(waiting,1,Kind::Scout).empty(),"army cadence fixture has no scout after350 seconds");
   std::vector<Id> army;
@@ -924,15 +983,16 @@ void aiArmyAndSupportCoordination() {
     std::cout<<"AI_SCOUT_AND_ARMY scout="<<withScout<<" attack_move="<<attackRecorded<<'\n';
   }
 
-  Simulation joining;joining.reset({0,456,true,1});joining.debugResources(1,0);
+  Simulation joining;joining.reset({0,456,true,1,MatchLength::Standard,2,0});joining.debugResources(1,0);
   const Id target=joining.debugSpawn(Kind::Foundry,0,{3300,4200});
   const Id firstSoldier=joining.debugSpawn(Kind::Striker,1,{3570,4200});
   const Id secondSoldier=joining.debugSpawn(Kind::Lancer,1,{3600,4300});
   check(send(joining,CommandType::Attack,1,{firstSoldier,secondSoldier},{},target).accepted,"armed units already attack the chosen enemy");
   const Id newSupport=joining.debugSpawn(Kind::Mender,1,{3770,4280});
   joining.update(Simulation::Step);
-  check(joining.find(newSupport)->order==Order::Attack&&
-        (joining.find(newSupport)->target==firstSoldier||joining.find(newSupport)->target==secondSoldier),"new Mender joins an attack already underway");
+  check(joining.find(newSupport)->order==Order::Escort&&
+        (joining.find(newSupport)->sustained.escortTarget==firstSoldier||
+         joining.find(newSupport)->sustained.escortTarget==secondSoldier),"new Mender escorts an attack already underway");
   const auto settledCommand=joining.recording().size();advance(joining,4.2f);int redundant=0;
   for(std::size_t i=settledCommand;i<joining.recording().size();++i) {
     const auto& c=joining.recording()[i].command;
@@ -940,7 +1000,7 @@ void aiArmyAndSupportCoordination() {
   }
   check(redundant==0,"valid support follow does not reset the armed leader every AI tick");
 
-  Simulation replacement;replacement.reset({0,789,true,1});replacement.debugResources(1,0);
+  Simulation replacement;replacement.reset({0,789,true,1,MatchLength::Standard,2,0});replacement.debugResources(1,0);
   const Id enemy=replacement.debugSpawn(Kind::Bastion,0,{3340,4200});
   replacement.debugSpawn(Kind::Mender,0,{3105,4200});
   replacement.debugSpawn(Kind::Mender,0,{3120,4100});
@@ -961,17 +1021,16 @@ void aiArmyAndSupportCoordination() {
   advance(replacement,3);bool reassigned=false;
   for(std::size_t i=handoffStart;i<replacement.recording().size();++i) {
     const auto& c=replacement.recording()[i].command;
-    if(c.team==1&&c.type==CommandType::Attack&&c.target==enemy&&
-       std::find(c.units.begin(),c.units.end(),follower)!=c.units.end()&&
-       std::find(c.units.begin(),c.units.end(),survivor)!=c.units.end())reassigned=true;
+    if(c.team==1&&c.type==CommandType::Escort&&c.target==survivor&&
+       std::find(c.units.begin(),c.units.end(),follower)!=c.units.end())reassigned=true;
   }
-  check(reassigned&&replacement.find(follower)->target==survivor,"AI reassigns orphaned support with an existing eligible armed leader");
+  check(reassigned&&replacement.find(follower)->sustained.escortTarget==survivor,"AI reassigns orphaned support with an existing eligible armed leader");
   std::cout<<"AI_SUPPORT joined_existing_attack=1 redundant_orders="<<redundant<<" dead_leader_replaced="<<reassigned<<'\n';
 }
 
 void aiEconomy() {
   aiArmyAndSupportCoordination();
-  Simulation s;s.reset({0,123,true,1});
+  Simulation s;s.reset({0,123,true,1,MatchLength::Standard,2,0});
   for(int i=0;i<12000&&s.winner()<0;++i) s.update(Simulation::Step);
   const auto& p=s.players()[1];
   check(p.stats.gathered>0,"opponent gathers finite map resources");
@@ -989,7 +1048,7 @@ void aiEconomy() {
 }
 
 void aiConstructionAssignments() {
-  Simulation s;s.reset({0,987,true,1});
+  Simulation s;s.reset({0,987,true,1,MatchLength::Standard,2,0});
   const Id worker=first(s,1,Kind::Worker);const Vec2 site=distantPlacement(s,1,Kind::Foundry,worker);
   check(send(s,CommandType::Build,1,{worker},site,0,Kind::Foundry).accepted,"AI construction fixture places a paid foundation");
   const Id building=first(s,1,Kind::Foundry);s.debugResources(1,0);
@@ -1007,7 +1066,7 @@ void aiConstructionAssignments() {
   const Id replacement=s.constructionWorker(building);
   check(resumed&&replacement!=0&&s.find(replacement)->order==Order::Construct,"AI recovers an orphan through ResumeConstruction without overwriting it with a mining order in the same update");
 
-  Simulation reserved;reserved.reset({0,654,true,1});reserved.debugResources(1,5000);
+  Simulation reserved;reserved.reset({0,654,true,1,MatchLength::Standard,2,0});reserved.debugResources(1,5000);
   const auto workers=ids(reserved,1,Kind::Worker);std::vector<Id> sites;
   for(Id id:workers) {
     const Vec2 point=distantPlacement(reserved,1,Kind::Processor,id);
@@ -1049,7 +1108,7 @@ std::vector<Kind> aiTrainingSince(const Simulation& s,std::size_t start) {
 }
 
 void aiObservationLifecycle() {
-  Simulation s;s.reset({0,803,true,1});s.debugResources(1,0);
+  Simulation s;s.reset({0,803,true,1,MatchLength::Standard,2,0});s.debugResources(1,0);
   const Id builder=s.debugSpawn(Kind::Worker,0,{1100,300});
   const Vec2 site=validPlacement(s,0,Kind::Processor,{1100,300});
   check(send(s,CommandType::Build,0,{builder},site,0,Kind::Processor).accepted,"observation fixture buys an ordinary foundation");
@@ -1079,7 +1138,7 @@ void aiObservationLifecycle() {
   advanceWithoutAIFunds(s,15);
   check(s.visible(1,site)&&s.aiLastObserved(site)>lastSeen,"returning observer actually rechecks the remembered terrain");
   check(!remembered(s,foundation),"renewed vision of an empty site invalidates the remembered building");
-  Simulation witnessed;witnessed.reset({0,807,true,1});
+  Simulation witnessed;witnessed.reset({0,807,true,1,MatchLength::Standard,2,0});
   const Id victim=witnessed.debugSpawn(Kind::Mender,0,{1200,300});
   witnessed.debugSpawn(Kind::Mender,1,{1500,300});advanceWithoutAIFunds(witnessed,1.0f);
   check(remembered(witnessed,victim),"visible-death fixture first establishes a real mobile sighting");
@@ -1095,7 +1154,7 @@ void aiObservationLifecycle() {
 }
 
 Simulation aiProductionFixture(Kind enemyKind,bool reveal,int enemyCount=1,int existingStrikers=0) {
-  Simulation s;s.reset({0,804,true,1});
+  Simulation s;s.reset({0,804,true,1,MatchLength::Standard,2,0});
   s.debugSpawn(Kind::Foundry,1,{3850,4450});
   s.debugSpawn(Kind::Foundry,1,{4150,4550});
   s.debugSpawn(Kind::Foundry,1,{4500,4150});
@@ -1150,7 +1209,7 @@ void aiObservedProduction() {
   const auto rememberedQueue=aiTrainingSince(recent,rememberedStart);
   check(!rememberedQueue.empty()&&rememberedQueue.front()==Kind::Lancer,"recent remembered aircraft still drive counter production outside vision");
 
-  Simulation scouts;scouts.reset({0,805,true,1});
+  Simulation scouts;scouts.reset({0,805,true,1,MatchLength::Standard,2,0});
   for(Vec2 p:{Vec2{3850,4450},Vec2{4150,4550},Vec2{4500,4150}})scouts.debugSpawn(Kind::Foundry,1,p);
   scouts.debugSpawn(Kind::Processor,1,{4500,4500});scouts.debugResources(1,2000);scouts.update(Simulation::Step);
   const auto scoutQueue=aiTrainingSince(scouts,0);
@@ -1159,24 +1218,30 @@ void aiObservedProduction() {
 }
 
 void aiScoutingObjectives() {
-  Simulation s;s.reset({0,806,true,1});s.debugResources(1,0);
+  Simulation s;s.reset({0,806,true,1,MatchLength::Standard,2,0});s.debugResources(1,0);
   send(s,CommandType::Stop,0,ids(s,0,Kind::Worker));
   const Vec2 original=s.find(first(s,0,Kind::Headquarters))->pos,remote{600,4200};
   const Id originalHQ=first(s,0,Kind::Headquarters),remoteHQ=s.debugSpawn(Kind::Headquarters,0,remote);
   std::vector<Id> army;
   for(int n=0;n<10;++n)army.push_back(s.debugSpawn(Kind::Kite,1,{800.f+(n%5)*45,450.f+(n/5)*55}));
   check(send(s,CommandType::Attack,1,army,{},originalHQ).accepted,"objective fixture attacks the original headquarters through ordinary combat");
-  advanceWithoutAIFunds(s,65);
+  for(int n=0;n<1300&&s.find(originalHQ)&&s.find(originalHQ)->alive();++n)
+    advanceWithoutAIFunds(s,Simulation::Step);
   check(!s.find(originalHQ)||!s.find(originalHQ)->alive(),"original headquarters actually falls in combat");
   check(s.winner()<0&&s.find(remoteHQ)->alive()&&!remembered(s,remoteHQ),"hidden relocated headquarters keeps the match alive without leaking its location");
   // Remove residual local defenders through attack-move before checking the
   // strategic fallback. A visible enemy legitimately takes tactical priority.
   check(send(s,CommandType::AttackMove,1,army,{800,760}).accepted,"army sweeps the original economy through ordinary attack-move");
-  advanceWithoutAIFunds(s,40);
+  // Keep the cleanup sweep local; the improved AI otherwise immediately
+  // continues reconnaissance and can finish the match before the memory checks.
+  for(int n=0;n<800;++n) {
+    send(s,CommandType::AttackMove,1,army,{800,760});
+    advanceWithoutAIFunds(s,Simulation::Step);
+  }
   check(send(s,CommandType::Move,1,army,{1300,600}).accepted,"army regroups after clearing the first site");
   advanceWithoutAIFunds(s,20);
   check(s.aiLastObserved(original)>0&&!remembered(s,originalHQ),"opponent has confirmed the original headquarters is gone");
-  advanceWithoutAIFunds(s,110);
+  advanceWithoutAIFunds(s,std::max(0.0f,235.0f-s.time()));
   const auto searchStart=s.recording().size();bool searched=false;
   for(int n=0;n<520&&!searched;++n) {
     advanceWithoutAIFunds(s,Simulation::Step);
@@ -1217,7 +1282,7 @@ void aiKnowledgePersistence() {
   std::ifstream in(path);std::vector<std::string> lines;std::string line;
   while(std::getline(in,line))lines.push_back(line);in.close();
   const auto marker=std::find(lines.begin(),lines.end(),"AI_KNOWLEDGE 1");
-  check(marker!=lines.end()&&lines.front()=="CINDERLINE 10","current save retains player count, match length, AI knowledge, and stable production identities");
+  check(marker!=lines.end()&&lines.front()=="CINDERLINE 15","current save retains player count, match length, AI knowledge, stable production identities, tactical order queues, sustained orders, formation orders, and queued work");
   const auto start=static_cast<std::size_t>(marker-lines.begin());
   const auto count=static_cast<std::size_t>(std::stoul(lines[start+1]));
   check(count>0&&lines.size()>start+count+3,"knowledge save contains sightings and observation cells");
@@ -1238,7 +1303,7 @@ void aiKnowledgePersistence() {
   auto badCells=lines;badCells[start+2+count]="4095";reject(badCells,"incorrect observation-grid size is rejected");
   auto futureCell=lines;futureCell[start+3+count]=replaceField(futureCell[start+3+count],0,std::to_string(s.tick()+1000));reject(futureCell,"future observation-grid timestamps are rejected");
   auto truncated=lines;truncated.resize(start);reject(truncated,"current save without its required knowledge block is rejected");
-  auto futureVersion=lines;futureVersion.front()="CINDERLINE 11";reject(futureVersion,"unsupported save version eleven is rejected");
+  auto futureVersion=lines;futureVersion.front()="CINDERLINE 16";reject(futureVersion,"unsupported save version sixteen is rejected");
   for(int version:{1,2}) {
     const auto legacy=legacyCombatSave(lines,version);
     write(legacy);Simulation migrated;check(migrated.load(path),"pre-knowledge save version remains readable");
@@ -1271,7 +1336,7 @@ void combatEventSemantics() {
     check(send(s,CommandType::Attack,0,{source},{},target).accepted,"weapon can fire again after movement");
     waitUntil(s,12,[&]{return s.lastEffectId()>impact.id;},"later real shot receives a new identity");
     for(const auto& fx:s.effects())check(fx.id>impact.id,"later effects cannot reuse expired event identities");
-    s.reset({0,42,false,1});check(s.effects().empty()&&s.lastEffectId()==0,"reset starts a fresh effect identity sequence");
+    s.reset({0,42,false,1,MatchLength::Standard,2,0});check(s.effects().empty()&&s.lastEffectId()==0,"reset starts a fresh effect identity sequence");
   }
   auto siege=quiet();const Id mortar=siege.debugSpawn(Kind::Mortar,0,{1400,300});
   const Id primary=siege.debugSpawn(Kind::Worker,1,{1850,300}),secondary=siege.debugSpawn(Kind::Worker,1,{1890,345});
@@ -1382,7 +1447,7 @@ void combatEventPersistence() {
   for(int n=0;n<100;++n){s.update(Simulation::Step);loaded.update(Simulation::Step);check(s.stateHash()==loaded.stateHash(),"loaded combat continues with identical damage and typed event identities");}
   check(s.lastEffectId()>savedId,"post-load combat emits later identities instead of replaying the saved identity range");
   std::ifstream input(path);std::vector<std::string> lines;std::string line;while(std::getline(input,line))lines.push_back(line);input.close();
-  check(lines.front()=="CINDERLINE 10","combat persistence declares save version ten");
+  check(lines.front()=="CINDERLINE 15","combat persistence declares revision-aware save version fifteen");
   const auto layout=savedLayout(lines);const auto effectHeader=saveFields(lines[layout.effects]);
   const auto count=static_cast<std::size_t>(std::stoul(effectHeader[0]));check(count>=2,"saved event corruption fixture has distinct ordered events");
   auto write=[&](const std::vector<std::string>& content){std::ofstream out(path);for(const auto& value:content)out<<value<<'\n';};
@@ -1510,7 +1575,7 @@ void commandIntegrationOpponent(Simulation& s) {
 
 void matchDuration() {
   for(int map=0;map<3;++map) {
-    Simulation s;s.reset({map,42,true,1});
+    Simulation s;s.reset({map,42,true,1,MatchLength::Standard,2,0});
     const auto wall=std::chrono::steady_clock::now();
     while(s.time()<1800&&s.winner()<0) {
       if(s.tick()%40==0) commandIntegrationOpponent(s);

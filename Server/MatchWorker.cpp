@@ -115,7 +115,35 @@ public:
             if (accepted) accepted = cinder::net::translateCommand(simulation_, seat, views_[seat], command, error);
             cinder::CommandResult result;
             if (accepted) {
-                result = simulation_.command(command);
+                if (command.queueMode == cinder::CommandQueueMode::Append ||
+                    command.type == cinder::CommandType::Patrol ||
+                    command.type == cinder::CommandType::Escort) {
+                    // Appends and sustained orders can grow private tactical
+                    // snapshots. Test the exact transition on copies, including
+                    // every recipient's remembered resources and opaque handles.
+                    // Do not install the candidate simulation after admission:
+                    // its Navigation copy intentionally has isolated caches, and
+                    // replacing the authority would discard the original's warm
+                    // terrain caches on every admitted tactical command.
+                    cinder::Simulation candidate = simulation_;
+                    auto candidateViews = views_;
+                    result = candidate.command(command);
+                    if (result.accepted) {
+                        for (int viewer = 0; viewer < candidate.playerCount(); ++viewer) {
+                            auto snapshot = cinder::net::snapshotFor(candidate, viewer, &candidateViews[viewer]);
+                            auto encoded = cinder::net::encodeSnapshot(snapshot);
+                            if (encoded.empty() || encoded.size() > cinder::net::MaxMessageBytes) {
+                                result = {false, "Queued orders would exceed the network snapshot limit."};
+                                break;
+                            }
+                        }
+                    }
+                    // The worker is single-threaded and no authoritative state
+                    // changes between the successful preflight and this call.
+                    if (result.accepted) result = simulation_.command(command);
+                } else {
+                    result = simulation_.command(command);
+                }
                 // Local feedback may name authoritative entity IDs. Network
                 // clients identify assignments from their opaque snapshot handles.
                 if (result.accepted && command.type == cinder::CommandType::AutoBuild)

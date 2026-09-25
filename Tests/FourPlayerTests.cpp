@@ -92,6 +92,39 @@ std::string join(const std::vector<std::string>& values) {
     std::ostringstream output;for(std::size_t index=0;index<values.size();++index)output<<(index?" ":"")<<values[index];return output.str();
 }
 
+void downgradeSaveThirteenToTen(std::vector<std::string>& lines) {
+    if(lines.front()=="CINDERLINE 15") {
+        auto config=fields(lines.at(1));check(config.size()==7&&config.back()=="0","legacy four-player migration uses flat-map revision zero");
+        config.pop_back();lines[1]=join(config);
+    }
+    const auto config=fields(lines.at(1));check(config.size()==6,"save-thirteen downgrade starts from a complete config row");
+    const auto players=static_cast<std::size_t>(std::stoul(config.back()));std::size_t cursor=3+players;
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    const auto entityCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t entity=0;entity<entityCount;++entity) {
+        ++cursor;cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+        cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    }
+    const auto effectHeader=fields(lines.at(cursor));cursor+=1+static_cast<std::size_t>(std::stoul(effectHeader.front()))+players*2;
+    const auto recordingCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t recording=0;recording<recordingCount;++recording) {
+        auto row=fields(lines.at(cursor));
+        check(row.size()>=13&&row.size()==13+static_cast<std::size_t>(std::stoul(row[12])),"version-thirteen recording layout contains formation fields");
+        row.erase(row.begin()+9,row.begin()+12);
+        check(row.size()>=10&&row.size()==10+static_cast<std::size_t>(std::stoul(row[9])),"version-eleven recording layout contains queue mode");
+        row.erase(row.begin()+8);lines[cursor++]=join(row);
+    }
+    const auto orders=std::find(lines.begin(),lines.end(),"ORDER_QUEUES 1");
+    const auto sustained=std::find(lines.begin(),lines.end(),"SUSTAINED_ORDERS 1");
+    const auto formation=std::find(lines.begin(),lines.end(),"FORMATION_ORDERS 1");
+    const auto queuedWork=std::find(lines.begin(),lines.end(),"QUEUED_WORK 1");
+    check(orders!=lines.end()&&sustained!=lines.end()&&formation!=lines.end()&&queuedWork!=lines.end()&&orders<sustained&&sustained<formation&&formation<queuedWork,
+          "save-fourteen downgrade finds ordered tactical, sustained, formation, and queued-work sections");
+    lines.erase(queuedWork,lines.end());
+    lines.erase(formation,lines.end());
+    lines.erase(orders,lines.end());
+}
+
 bool circleTouchesBox(Vec2 point,float radius,const Obstacle& obstacle) {
     const float x=std::max(std::fabs(point.x-obstacle.center.x)-obstacle.half.x,0.0f);
     const float y=std::max(std::fabs(point.y-obstacle.center.y)-obstacle.half.y,0.0f);
@@ -215,13 +248,13 @@ void eliminationAndDraw() {
 }
 
 void persistenceMigrationAndReplica() {
-    const auto path=(std::filesystem::temp_directory_path()/"cinderline-four-player-v10.sav").string();
+    const auto path=(std::filesystem::temp_directory_path()/"cinderline-four-player-v13.sav").string();
     Simulation simulation;simulation.reset(fourPlayerConfig(2,MatchLength::Long,9191));simulation.forfeit(2);
     const Entity* worker=firstOf(simulation,3,Kind::Worker);check(worker&&simulation.command({CommandType::Move,3,{worker->id},{1800,4200}}).accepted,"persistence fixture records a surviving-player order");
     for(int step=0;step<20;++step)simulation.update(Simulation::Step);
     check(simulation.save(path),"four-player state saves");
-    const auto current=readLines(path);check(current.size()>3&&current.front()=="CINDERLINE 10","four-player persistence declares save version ten");
-    check(fields(current[1]).size()==6&&fields(current[1]).back()=="4"&&fields(current[2]).size()==6&&fields(current[2]).back()=="4","version ten stores player count and elimination mask explicitly");
+    const auto current=readLines(path);check(current.size()>3&&current.front()=="CINDERLINE 15","four-player persistence declares save version fifteen");
+    check(fields(current[1]).size()==7&&fields(current[1])[5]=="4"&&fields(current[1]).back()=="1"&&fields(current[2]).size()==6&&fields(current[2]).back()=="4","current save stores map revision, player count and elimination mask explicitly");
     Simulation loaded;check(loaded.load(path)&&loaded.playerCount()==4&&loaded.eliminated(2)&&loaded.stateHash()==simulation.stateHash(),"four-player save round trip preserves elimination and deterministic state");
     for(int step=0;step<40;++step){simulation.update(Simulation::Step);loaded.update(Simulation::Step);}
     check(loaded.stateHash()==simulation.stateHash(),"loaded four-player state continues deterministically");
@@ -229,13 +262,13 @@ void persistenceMigrationAndReplica() {
     auto rejects=[&](std::vector<std::string> lines,const std::string& message) {
         writeLines(path,lines);Simulation untouched;const auto before=untouched.stateHash();check(!untouched.load(path)&&untouched.stateHash()==before,message);
     };
-    auto invalidCount=current;auto config=fields(invalidCount[1]);config.back()="3";invalidCount[1]=join(config);rejects(invalidCount,"version ten rejects unsupported player counts atomically");
-    auto invalidMask=current;auto timeline=fields(invalidMask[2]);timeline.back()="16";invalidMask[2]=join(timeline);rejects(invalidMask,"version ten rejects elimination bits outside the active player range");
-    auto inconsistentWinner=current;timeline=fields(inconsistentWinner[2]);timeline[4]="0";inconsistentWinner[2]=join(timeline);rejects(inconsistentWinner,"version ten rejects a winner while multiple players survive");
-    auto missingElimination=current;timeline=fields(missingElimination[2]);timeline.back()="0";missingElimination[2]=join(timeline);rejects(missingElimination,"version ten rejects a player without an Anchor unless that player is eliminated");
+    auto invalidCount=current;auto config=fields(invalidCount[1]);config[5]="3";invalidCount[1]=join(config);rejects(invalidCount,"current save rejects unsupported player counts atomically");
+    auto invalidMask=current;auto timeline=fields(invalidMask[2]);timeline.back()="16";invalidMask[2]=join(timeline);rejects(invalidMask,"current save rejects elimination bits outside the active player range");
+    auto inconsistentWinner=current;timeline=fields(inconsistentWinner[2]);timeline[4]="0";inconsistentWinner[2]=join(timeline);rejects(inconsistentWinner,"current save rejects a winner while multiple players survive");
+    auto missingElimination=current;timeline=fields(missingElimination[2]);timeline.back()="0";missingElimination[2]=join(timeline);rejects(missingElimination,"current save rejects a player without an Anchor unless that player is eliminated");
 
-    Simulation standard;standard.reset({1,5151,false,1.0f,MatchLength::Standard});check(standard.save(path),"legacy migration fixture saves");
-    auto legacy=readLines(path);legacy.front()="CINDERLINE 9";config=fields(legacy[1]);config.pop_back();legacy[1]=join(config);timeline=fields(legacy[2]);timeline.pop_back();legacy[2]=join(timeline);writeLines(path,legacy);
+    Simulation standard;standard.reset({1,5151,false,1.0f,MatchLength::Standard,2,0});check(standard.save(path),"legacy migration fixture saves");
+    auto legacy=readLines(path);downgradeSaveThirteenToTen(legacy);legacy.front()="CINDERLINE 9";config=fields(legacy[1]);config.pop_back();legacy[1]=join(config);timeline=fields(legacy[2]);timeline.pop_back();legacy[2]=join(timeline);writeLines(path,legacy);
     Simulation migrated;check(migrated.load(path)&&migrated.playerCount()==2&&migrated.eliminatedMask()==0&&migrated.stateHash()==standard.stateHash(),"version nine migrates to an ongoing two-player match without changing gameplay state");
 
     net::ViewMemory memory;const net::Snapshot view=net::snapshotFor(simulation,2,&memory);

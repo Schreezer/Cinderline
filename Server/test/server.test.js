@@ -6,10 +6,11 @@ import { resolve } from "node:path";
 import test from "node:test";
 import { WebSocket } from "ws";
 import { createGameServer } from "../server.js";
+import { PROTOCOL_VERSION } from "../protocol.js";
 
 const workerPath = process.env.CINDERLINE_MATCH_WORKER ?? resolve(import.meta.dirname, "../../build/CinderlineMatchWorker");
 const workerAvailable = existsSync(workerPath);
-const protocolVersion = 7;
+const protocolVersion = PROTOCOL_VERSION;
 
 function workerFrame(opcode, payload = Buffer.alloc(0)) {
   const frame = Buffer.alloc(5 + payload.length);
@@ -170,6 +171,8 @@ function readSnapshot(data) {
   const matchLength = data[offset]; offset += 1;
   assert(matchLength >= 0 && matchLength <= 2, "snapshot carries a valid match-length preset");
   const playerCount = data[offset]; offset += 1;
+  const mapRevision = data.readInt32LE(offset); offset += 4;
+  assert.ok(mapRevision === 0 || mapRevision === 1, "snapshot names a supported terrain revision");
   assert(playerCount === 2 || playerCount === 4, "snapshot carries a valid player count");
   const tick = Number(data.readBigUInt64LE(offset)); offset += 8;
   const lastEffectId = data.readBigUInt64LE(offset); offset += 8;
@@ -224,13 +227,55 @@ function readSnapshot(data) {
     offset += 8;
     entity.navigationExhausted = data[offset]; offset += 1;
     entity.nextQueueId = data.readUInt32LE(offset); offset += 4;
+    entity.supportTarget = data.readUInt32LE(offset); offset += 4;
+    entity.hasArrivalFacing = data[offset]; offset += 1;
+    entity.arrivalFacing = data.readFloatLE(offset); offset += 4;
+    entity.sustained = {
+      patrolOrigin: [0, 0], patrolDestination: [0, 0], patrolTowardDestination: 0,
+      escortTarget: 0, escortOffset: [0, 0], pursuitTarget: 0, pursuitAnchor: [0, 0], phase: 0,
+    };
+    if (entity.order === 8) {
+      entity.sustained.patrolOrigin = [data.readFloatLE(offset), data.readFloatLE(offset + 4)]; offset += 8;
+      entity.sustained.patrolDestination = [data.readFloatLE(offset), data.readFloatLE(offset + 4)]; offset += 8;
+      entity.sustained.patrolTowardDestination = data[offset]; offset += 1;
+      entity.sustained.pursuitTarget = data.readUInt32LE(offset); offset += 4;
+      entity.sustained.pursuitAnchor = [data.readFloatLE(offset), data.readFloatLE(offset + 4)]; offset += 8;
+      entity.sustained.phase = data[offset]; offset += 1;
+    } else if (entity.order === 9) {
+      entity.sustained.escortTarget = data.readUInt32LE(offset); offset += 4;
+      entity.sustained.escortOffset = [data.readFloatLE(offset), data.readFloatLE(offset + 4)]; offset += 8;
+      entity.sustained.pursuitTarget = data.readUInt32LE(offset); offset += 4;
+      entity.sustained.phase = data[offset]; offset += 1;
+    }
+    const futureOrderCount = data[offset]; offset += 1;
+    entity.futureOrders = [];
+    for (let orderIndex = 0; orderIndex < futureOrderCount; orderIndex += 1) {
+      entity.futureOrders.push({
+        order: data[offset],
+        point: [data.readFloatLE(offset + 1), data.readFloatLE(offset + 5)],
+        supportTarget: data.readUInt32LE(offset + 9),
+        hasArrivalFacing: data[offset + 13],
+        arrivalFacing: data.readFloatLE(offset + 14),
+        buildingKind: data[offset + 18],
+      });
+      offset += 19;
+    }
     entities.push(entity);
   }
-  return { map, seed, ai, aiAggression, matchLength, playerCount, tick, lastEffectId, winner, eliminatedMask, ore, tier, weapons, armor, armyRally, armyRallySet, entities };
+  const effectCount = data.readUInt32LE(offset); offset += 4 + effectCount * 38;
+  const fogRunCount = data.readUInt16LE(offset); offset += 2 + fogRunCount * 3;
+  const workerPlanNoticeSerial = data.readBigUInt64LE(offset); offset += 8;
+  const noticeLength = data.readUInt16LE(offset); offset += 2;
+  const workerPlanNotice = data.subarray(offset, offset + noticeLength).toString("utf8"); offset += noticeLength;
+  assert.equal(offset, data.length, "snapshot reader consumes the versioned terrain header and feedback tail");
+  return { map, mapRevision, seed, ai, aiAggression, matchLength, playerCount, tick, lastEffectId, winner, eliminatedMask, ore, tier, weapons, armor, armyRally, armyRallySet, entities, workerPlanNotice, workerPlanNoticeSerial };
 }
 
-function command(sequence, type, units, { point = [0, 0], target = 0, kind = 0, queueIndex = 0 } = {}) {
-  const data = Buffer.alloc(32 + units.length * 4);
+function command(sequence, type, units, {
+  point = [0, 0], target = 0, kind = 0, queueIndex = 0, queueMode = 0,
+  spacing = 1, hasArrivalFacing = 0, arrivalFacing = 0,
+} = {}) {
+  const data = Buffer.alloc(39 + units.length * 4);
   data.write("CCMD", 0, "ascii");
   data.writeUInt32LE(protocolVersion, 4);
   data.writeUInt32LE(sequence, 8);
@@ -242,7 +287,11 @@ function command(sequence, type, units, { point = [0, 0], target = 0, kind = 0, 
   data.writeFloatLE(point[1], offset); offset += 4;
   data.writeUInt32LE(target, offset); offset += 4;
   data[offset] = kind; offset += 1;
-  data.writeInt32LE(queueIndex, offset);
+  data.writeInt32LE(queueIndex, offset); offset += 4;
+  data[offset] = queueMode; offset += 1;
+  data[offset] = spacing; offset += 1;
+  data[offset] = hasArrivalFacing; offset += 1;
+  data.writeFloatLE(arrivalFacing, offset);
   return data;
 }
 
@@ -348,7 +397,7 @@ test("health and lobby controls reject stale, malformed, repeated, and excessive
   const client = await instance.connect();
   client.send("{");
   assert.equal((await client.json("error")).message, "Malformed JSON.");
-  client.send({ type: "create", version: 6, name: "Ash", map: 0 });
+  client.send({ type: "create", version: 11, name: "Ash", map: 0 });
   assert.equal((await client.json("error")).message, "Unsupported protocol version.");
   client.send({ type: "join", version: protocolVersion, name: "Ash", room: "AAAAAA" });
   assert.equal((await client.json("error")).message, "Room not found.");
@@ -466,6 +515,17 @@ test("worker result byte 255 is exposed as a draw", async (t) => {
   fake.workers[0].stdout.emit("data", workerFrame(131, Buffer.from([255, 255])));
   const results = await Promise.all(room.players.map((player) => player.json("result")));
   assert.equal(results.every((result) => result.winner === -2 && result.reason === "victory"), true);
+});
+
+test("Node command admission rejects the previous wire protocol before worker IPC", async (t) => {
+  const fake = fakeWorkerFactory();
+  const room = await startedRoom(t, { spawnWorker: fake.factory, tickIntervalMs: 60_000 });
+  const previous = command(1, 4, [11]);
+  previous.writeUInt32LE(11, 4);
+  room.first.send(previous);
+  assert.equal((await room.first.json("error")).message, "Malformed command header.");
+  assert.equal(fake.workers[0].stdin.writes.some((frame) => frame[4] === 2), false,
+    "protocol-eleven commands never enter the authoritative worker queue");
 });
 
 test("worker backpressure preserves a prioritized forfeit until drain", async (t) => {
@@ -653,6 +713,8 @@ test("real clients create, join, reject a third seat, ready, and receive private
   assert.equal(leftView.ai, 0);
   assert.equal(leftView.matchLength, 1, "hosted matches remain Standard by default");
   assert.equal(rightView.matchLength, 1, "both seats receive the shared Standard preset");
+  assert.equal(leftView.mapRevision, 1, "fresh worker snapshots select the current terrain revision");
+  assert.equal(rightView.mapRevision, leftView.mapRevision, "both seats share one terrain revision");
   assert.equal(leftView.ore, 500);
   assert.equal(rightView.ore, 500);
   assert(leftView.entities.some((entity) => entity.team === 0 && entity.kind === 8));
@@ -707,6 +769,251 @@ test("both seats command only their view handles and command sequences survive r
   await replacement.snapshot();
   replacement.send(train);
   assert.deepEqual(await replacement.json("ack"), spent);
+});
+
+test("append commands acknowledge and publish the queued tactical order", { skip: !workerAvailable }, async (t) => {
+  const room = await startedRoom(t, { tickIntervalMs: 20, stepsPerTick: 1, snapshotEverySteps: 1 });
+  const initial = readSnapshot(room.firstSnapshot);
+  const worker = initial.entities.find((entity) => entity.team === 0 && entity.kind === 0);
+  assert(worker);
+
+  room.first.send(command(1, 0, [worker.id], { point: [1200, 1200] }));
+  const moved = await room.first.json("ack");
+  assert.equal(moved.seq, 1);
+  assert.equal(moved.accepted, true);
+  room.first.send(command(2, 2, [worker.id], {
+    point: [1800, 1600], queueMode: 1, spacing: 2,
+    hasArrivalFacing: 1, arrivalFacing: Math.PI / 4,
+  }));
+  const appended = await room.first.json("ack");
+  assert.equal(appended.seq, 2);
+  assert.equal(appended.accepted, true);
+  assert.equal(appended.message, "Destination queued.");
+
+  const queued = await snapshotUntil(room.first, (snapshot) => {
+    const entity = snapshot.entities.find((candidate) => candidate.id === worker.id);
+    return entity?.futureOrders.length === 1;
+  });
+  const queuedWorker = queued.entities.find((entity) => entity.id === worker.id);
+  assert.equal(queuedWorker.futureOrders[0].order, 3, "attack-move is retained as the next tactical order");
+  assert.deepEqual(queuedWorker.futureOrders[0].point, [1800, 1600]);
+  assert.equal(queuedWorker.futureOrders[0].supportTarget, 0);
+  assert.equal(queuedWorker.futureOrders[0].hasArrivalFacing, 1);
+  assert.equal(queuedWorker.futureOrders[0].arrivalFacing, Math.fround(Math.PI / 4));
+  assert.equal(queuedWorker.futureOrders[0].buildingKind, 0, "existing movement steps use the Worker kind sentinel");
+
+  const opponent = await snapshotUntil(room.second, (snapshot) => snapshot.tick >= queued.tick);
+  assert.equal(opponent.entities.every((entity) =>
+    entity.hasArrivalFacing === 0 && Object.is(entity.arrivalFacing, 0)
+    && entity.futureOrders.length === 0), true,
+  "the other seat receives canonical defaults and no queued formation intent");
+
+  await room.first.close();
+  await room.second.json("peer");
+  const replacement = await room.connect();
+  replacement.send({
+    type: "reconnect", version: protocolVersion,
+    room: room.firstWelcome.room, token: room.firstWelcome.token,
+  });
+  assert.equal((await replacement.json("welcome")).team, 0);
+  await replacement.json("lobby");
+  await replacement.json("started");
+  const reconnected = readSnapshot(await replacement.snapshot());
+  const retained = reconnected.entities.find((entity) => entity.id === worker.id);
+  assert(retained);
+  assert.equal(retained.futureOrders.length, 1);
+  assert.equal(retained.futureOrders[0].hasArrivalFacing, 1);
+  assert.equal(retained.futureOrders[0].arrivalFacing, Math.fround(Math.PI / 4));
+});
+
+test("queued mining publishes its private opaque target in the current protocol", { skip: !workerAvailable }, async (t) => {
+  const room = await startedRoom(t, { tickIntervalMs: 20, stepsPerTick: 1, snapshotEverySteps: 1 });
+  const initial = readSnapshot(room.firstSnapshot);
+  const worker = initial.entities.find((entity) => entity.team === 0 && entity.kind === 0);
+  const resource = initial.entities.find((entity) => entity.team === -1 && entity.kind === 14);
+  assert(worker && resource);
+
+  room.first.send(command(1, 0, [worker.id], { point: [1800, 1800] }));
+  assert.equal((await room.first.json("ack")).accepted, true);
+  room.first.send(command(2, 3, [worker.id], { target: resource.id, queueMode: 1 }));
+  const acknowledgement = await room.first.json("ack");
+  assert.deepEqual(acknowledgement, { type: "ack", seq: 2, accepted: true, message: "Mining queued." });
+
+  const queued = await snapshotUntil(room.first, (snapshot) => {
+    const entity = snapshot.entities.find((candidate) => candidate.id === worker.id);
+    return entity?.futureOrders.some((order) => order.order === 4);
+  });
+  const plan = queued.entities.find((entity) => entity.id === worker.id).futureOrders.find((order) => order.order === 4);
+  assert.equal(plan.supportTarget, resource.id);
+  assert.equal(plan.buildingKind, 0);
+  assert.equal(plan.hasArrivalFacing, 0);
+  assert.equal(plan.arrivalFacing, 0);
+
+  const opponent = await snapshotUntil(room.second, (snapshot) => snapshot.tick >= queued.tick);
+  assert.equal(opponent.entities.every((entity) => entity.futureOrders.length === 0), true,
+    "another seat cannot inspect queued mining targets or kinds");
+});
+
+test("queued construction stays unpaid and private until its preceding move completes", { skip: !workerAvailable, timeout: 10_000 }, async (t) => {
+  const room = await startedRoom(t, { tickIntervalMs: 20, stepsPerTick: 1, snapshotEverySteps: 1 });
+  const initial = readSnapshot(room.firstSnapshot);
+  const workers = initial.entities.filter((entity) => entity.team === 0 && entity.kind === 0);
+  assert(workers.length >= 2);
+  const worker = workers[0];
+
+  room.first.send(command(1, 5, workers.map((entity) => entity.id)));
+  assert.equal((await room.first.json("ack")).accepted, true);
+  const settled = await snapshotUntil(room.first, (snapshot) => workers.every((candidate) =>
+    snapshot.entities.find((entity) => entity.id === candidate.id)?.order === 5));
+
+  // Leave enough travel after the authored starting formation for the queued
+  // plan to be observable before it activates on a subsequent simulation step.
+  room.first.send(command(2, 0, [worker.id], { point: [1200, 950] }));
+  assert.equal((await room.first.json("ack")).accepted, true);
+  room.first.send(command(3, 6, [worker.id], { point: [950, 950], kind: 10, queueMode: 1 }));
+  assert.deepEqual(await room.first.json("ack"), {
+    type: "ack", seq: 3, accepted: true, message: "Construction queued.",
+  });
+
+  const queued = await snapshotUntil(room.first, (snapshot) => {
+    const candidate = snapshot.entities.find((entity) => entity.id === worker.id);
+    return candidate?.order === 1 && candidate.futureOrders.some((order) => order.order === 6);
+  });
+  const queuedWorker = queued.entities.find((entity) => entity.id === worker.id);
+  const plan = queuedWorker.futureOrders.find((order) => order.order === 6);
+  assert.deepEqual(plan.point, [950, 950]);
+  assert.equal(plan.supportTarget, 0);
+  assert.equal(plan.buildingKind, 10);
+  assert.equal(plan.hasArrivalFacing, 0);
+  assert.equal(plan.arrivalFacing, 0);
+  assert.equal(queued.ore, settled.ore, "a queued site does not spend ore before activation");
+  assert.equal(queued.entities.some((entity) => entity.team === 0 && entity.kind === 10), false,
+    "a queued site does not spawn a foundation before activation");
+
+  const opponent = await snapshotUntil(room.second, (snapshot) => snapshot.tick >= queued.tick);
+  assert.equal(opponent.entities.every((entity) => entity.futureOrders.length === 0), true,
+    "another seat cannot inspect the queued construction site or kind");
+
+  const activated = await snapshotUntil(room.first, (snapshot) =>
+    snapshot.entities.some((entity) => entity.team === 0 && entity.kind === 10 && entity.progress < 1), 120);
+  const foundations = activated.entities.filter((entity) => entity.team === 0 && entity.kind === 10);
+  const activatedWorker = activated.entities.find((entity) => entity.id === worker.id);
+  assert.equal(foundations.length, 1, "activation creates exactly one foundation");
+  assert.equal(activated.ore, settled.ore - 250, "activation charges the Kiln cost exactly once");
+  assert.equal(activatedWorker.order, 6);
+  assert.equal(activatedWorker.target, foundations[0].id);
+  assert.equal(activatedWorker.futureOrders.length, 0);
+});
+
+test("a rejected append leaves the authoritative queue and opaque handle intact", { skip: !workerAvailable }, async (t) => {
+  const room = await startedRoom(t, { tickIntervalMs: 1000, stepsPerTick: 1, snapshotEverySteps: 1 });
+  const initial = readSnapshot(room.firstSnapshot);
+  const worker = initial.entities.find((entity) => entity.team === 0 && entity.kind === 0);
+  assert(worker);
+
+  room.first.send(command(1, 0, [worker.id], { point: [4200, 4200] }));
+  assert.equal((await room.first.json("ack")).accepted, true);
+  for (let sequence = 2; sequence <= 17; sequence += 1) {
+    room.first.send(command(sequence, 0, [worker.id], {
+      point: [4200 - sequence * 10, 4200], queueMode: 1,
+    }));
+    assert.equal((await room.first.json("ack")).accepted, true);
+  }
+
+  room.first.send(command(18, 0, [worker.id], { point: [3900, 4100], queueMode: 1 }));
+  const rejected = await room.first.json("ack");
+  assert.equal(rejected.seq, 18);
+  assert.equal(rejected.accepted, false);
+  assert.match(rejected.message, /maximum 16 queued orders/u);
+
+  const after = await snapshotUntil(room.first, (snapshot) => {
+    const entity = snapshot.entities.find((candidate) => candidate.id === worker.id);
+    return entity?.futureOrders.length === 16;
+  }, 3);
+  const afterWorker = after.entities.find((entity) => entity.id === worker.id);
+  assert.equal(afterWorker.id, worker.id, "rejected candidate views do not consume or replace the viewer's opaque handle");
+  assert.equal(afterWorker.futureOrders.length, 16, "rejected candidate state is never installed on the authority");
+  assert.equal(afterWorker.futureOrders.some((order) => order.point[0] === 3900 && order.point[1] === 4100), false);
+
+  room.first.send(command(19, 0, [worker.id], {
+    point: [3850, 4100], queueMode: 1, spacing: 3,
+  }));
+  const malformed = await room.first.json("ack");
+  assert.equal(malformed.seq, 19);
+  assert.equal(malformed.accepted, false, "worker strictly rejects an unknown formation spacing");
+  const preserved = await snapshotUntil(room.first, (snapshot) => {
+    const entity = snapshot.entities.find((candidate) => candidate.id === worker.id);
+    return entity?.futureOrders.length === 16;
+  });
+  assert.equal(preserved.entities.find((entity) => entity.id === worker.id).futureOrders.length, 16,
+    "malformed modifier admission preserves the accepted queue tail");
+});
+
+test("patrol and escort acknowledge and publish private sustained state", { skip: !workerAvailable }, async (t) => {
+  const room = await startedRoom(t, { tickIntervalMs: 20, stepsPerTick: 1, snapshotEverySteps: 1 });
+  const initial = readSnapshot(room.firstSnapshot);
+  const workers = initial.entities.filter((entity) => entity.team === 0 && entity.kind === 0);
+  assert(workers.length >= 2);
+  const patrol = workers[0];
+  const escort = workers[1];
+
+  room.first.send(command(1, 19, [patrol.id], { point: [1350, 1150] }));
+  const patrolAck = await room.first.json("ack");
+  assert.equal(patrolAck.seq, 1);
+  assert.equal(patrolAck.accepted, true);
+  assert.equal(patrolAck.message, "Patrol route accepted.");
+  const patrolling = await snapshotUntil(room.first, (snapshot) => {
+    const entity = snapshot.entities.find((candidate) => candidate.id === patrol.id);
+    return entity?.order === 8;
+  });
+  const patrolState = patrolling.entities.find((entity) => entity.id === patrol.id);
+  assert.equal(patrolState.sustained.patrolOrigin.every(Number.isFinite), true);
+  assert.deepEqual(patrolState.sustained.patrolDestination, [1350, 1150]);
+  assert.equal(patrolState.sustained.patrolTowardDestination, 1);
+  assert.equal(patrolState.sustained.pursuitTarget, 0);
+  assert.equal(patrolState.sustained.phase, 0);
+
+  room.first.send(command(2, 20, [escort.id], { target: patrol.id }));
+  const escortAck = await room.first.json("ack");
+  assert.equal(escortAck.seq, 2);
+  assert.equal(escortAck.accepted, true);
+  assert.equal(escortAck.message, "Escort formation assigned.");
+  const escorting = await snapshotUntil(room.first, (snapshot) => {
+    const entity = snapshot.entities.find((candidate) => candidate.id === escort.id);
+    return entity?.order === 9;
+  });
+  const escortState = escorting.entities.find((entity) => entity.id === escort.id);
+  assert.equal(escortState.sustained.escortTarget, patrol.id, "Escort uses the leader's stable opaque handle");
+  assert.equal(Math.hypot(...escortState.sustained.escortOffset) <= 2048, true);
+  assert.equal(escortState.sustained.pursuitTarget, 0);
+  assert.equal(escortState.sustained.phase, 0);
+
+  const opponent = await snapshotUntil(room.second, (snapshot) => snapshot.tick >= escorting.tick);
+  const hiddenPlans = opponent.entities.filter((entity) => entity.team !== 0);
+  assert(hiddenPlans.length > 0);
+  assert.equal(hiddenPlans.every((entity) => entity.order !== 8 && entity.order !== 9
+    && entity.supportTarget === 0 && entity.futureOrders.length === 0
+    && entity.sustained.escortTarget === 0 && entity.sustained.pursuitTarget === 0
+    && entity.sustained.patrolTowardDestination === 0
+    && entity.sustained.patrolOrigin[0] === 0 && entity.sustained.patrolOrigin[1] === 0
+    && entity.sustained.patrolDestination[0] === 0 && entity.sustained.patrolDestination[1] === 0
+    && entity.sustained.escortOffset[0] === 0 && entity.sustained.escortOffset[1] === 0
+    && entity.sustained.pursuitAnchor[0] === 0 && entity.sustained.pursuitAnchor[1] === 0
+    && entity.sustained.phase === 0), true, "Opponent snapshots strip all sustained intent and opaque references");
+
+  room.first.send(command(3, 20, [escort.id], { target: escort.id }));
+  const rejected = await room.first.json("ack");
+  assert.equal(rejected.seq, 3);
+  assert.equal(rejected.accepted, false);
+  const preserved = await snapshotUntil(room.first, (snapshot) => {
+    const entity = snapshot.entities.find((candidate) => candidate.id === escort.id);
+    return entity?.order === 9;
+  });
+  const preservedEscort = preserved.entities.find((entity) => entity.id === escort.id);
+  assert.equal(preservedEscort.id, escort.id, "Rejected sustained preflight preserves the stable opaque identity");
+  assert.equal(preservedEscort.sustained.escortTarget, patrol.id);
+  assert.deepEqual(preservedEscort.sustained.escortOffset, escortState.sustained.escortOffset,
+    "Rejected sustained preflight leaves the accepted Escort slot unchanged");
 });
 
 test("automatic batches and stable queue cancellation remain authoritative online", { skip: !workerAvailable }, async (t) => {

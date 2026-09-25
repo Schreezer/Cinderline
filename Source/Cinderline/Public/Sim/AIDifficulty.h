@@ -65,14 +65,14 @@ constexpr const char* aiDifficultyName(AIDifficulty difficulty) {
 
 constexpr const char* aiDifficultyDescription(AIDifficulty difficulty) {
     switch (difficulty) {
-        case AIDifficulty::VeryEasy: return "Long buildup with small, infrequent attacks.";
-        case AIDifficulty::Easy: return "Slower development with lighter attacks.";
-        case AIDifficulty::Normal: return "Balanced development and pressure.";
-        case AIDifficulty::Hard: return "Faster development with larger, frequent attacks.";
-        case AIDifficulty::Expert: return "Fast development with relentless coordinated attacks.";
-        case AIDifficulty::Count: return "Balanced development and pressure.";
+        case AIDifficulty::VeryEasy: return "Small raids with long buildup and recovery periods.";
+        case AIDifficulty::Easy: return "Limited raids, basic counters, and time to recover.";
+        case AIDifficulty::Normal: return "Steady expansion, grouped attacks, and balanced pressure.";
+        case AIDifficulty::Hard: return "Expanding economy, focused attacks, and responsive defense.";
+        case AIDifficulty::Expert: return "Varied armies, sustained assaults, and scouted expansion raids.";
+        case AIDifficulty::Count: return "Steady expansion, grouped attacks, and balanced pressure.";
     }
-    return "Balanced development and pressure.";
+    return "Steady expansion, grouped attacks, and balanced pressure.";
 }
 
 } // namespace cinder

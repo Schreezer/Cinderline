@@ -35,7 +35,8 @@ std::vector<Obstacle>& mutableObstacles(Simulation& simulation) {
 
 Simulation emptyFixture(Vec2 home={700,700}) {
   Simulation simulation;
-  simulation.reset({0,0xC1D3u,false,1});
+  // Tests install synthetic obstacles and compare legacy save migrations.
+  simulation.reset({0,0xC1D3u,false,1,MatchLength::Standard,2,0});
   mutableEntities(simulation).clear();
   mutableObstacles(simulation).clear();
   simulation.debugSpawn(Kind::Headquarters,0,home);
@@ -130,6 +131,53 @@ std::string joinFields(const std::vector<std::string>& values) {
   std::ostringstream output;
   for(std::size_t index=0;index<values.size();++index)output<<(index?" ":"")<<values[index];
   return output.str();
+}
+
+void stripQueueModesForSaveTen(std::vector<std::string>& lines) {
+  const auto config=fields(lines.at(1));const auto players=static_cast<std::size_t>(std::stoul(config.at(5)));std::size_t cursor=3+players;
+  cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+  const auto entityCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+  for(std::size_t entity=0;entity<entityCount;++entity) {
+    ++cursor;cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+  }
+  const auto effectHeader=fields(lines.at(cursor));cursor+=1+static_cast<std::size_t>(std::stoul(effectHeader.front()))+players*2;
+  const auto recordingCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+  for(std::size_t recording=0;recording<recordingCount;++recording) {
+    auto row=fields(lines.at(cursor));
+    check(row.size()>=10&&row.size()==10+static_cast<std::size_t>(std::stoul(row[9])),
+          "version-eleven recording layout contains queue mode");
+    row.erase(row.begin()+8);lines[cursor++]=joinFields(row);
+  }
+}
+
+void stripFormationForSaveTwelve(std::vector<std::string>& lines) {
+  if(lines.front()=="CINDERLINE 15") {
+    auto config=fields(lines.at(1));check(config.size()==7&&config.back()=="0","legacy migration uses explicit flat-map revision zero");
+    config.pop_back();lines[1]=joinFields(config);
+  }
+  const auto config=fields(lines.at(1));const auto players=static_cast<std::size_t>(std::stoul(config.at(5)));std::size_t cursor=3+players;
+  cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+  const auto entityCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+  for(std::size_t entity=0;entity<entityCount;++entity) {
+    ++cursor;cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+  }
+  const auto effectHeader=fields(lines.at(cursor));cursor+=1+static_cast<std::size_t>(std::stoul(effectHeader.front()))+players*2;
+  const auto recordingCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+  for(std::size_t recording=0;recording<recordingCount;++recording) {
+    auto row=fields(lines.at(cursor));
+    check(row.size()>=13&&row.size()==13+static_cast<std::size_t>(std::stoul(row[12])),
+          "version-thirteen recording layout contains formation fields");
+    row.erase(row.begin()+9,row.begin()+12);lines[cursor++]=joinFields(row);
+  }
+  const auto sustained=std::find(lines.begin(),lines.end(),"SUSTAINED_ORDERS 1");
+  const auto formation=std::find(lines.begin(),lines.end(),"FORMATION_ORDERS 1");
+  const auto queuedWork=std::find(lines.begin(),lines.end(),"QUEUED_WORK 1");
+  check(sustained!=lines.end()&&formation!=lines.end()&&queuedWork!=lines.end()&&sustained<formation&&formation<queuedWork,
+        "save-fourteen navigation fixture contains ordered sustained, formation, and queued-work sections");
+  lines.erase(queuedWork,lines.end());
+  lines.erase(formation,lines.end());
 }
 
 void narrowTurningGap() {
@@ -392,20 +440,29 @@ void navigationSaveValidationAndMigration() {
   check(send(simulation,CommandType::Move,0,{worker},goal).accepted,"navigation persistence move is accepted");
   for(int step=0;step<30;++step)simulation.update(Simulation::Step);
   check(distance(simulation.find(worker)->pos,goal)>100,"navigation persistence fixture saves during route travel");
-  const auto path=temporarySave("validation-v10");
-  check(simulation.save(path),"version-ten navigation state saves");
+  const auto path=temporarySave("validation-v13");
+  check(simulation.save(path),"version-thirteen navigation state saves");
   const auto original=readLines(path);
   const auto marker=std::find(original.begin(),original.end(),"NAVIGATION 1");
   const auto production=std::find(original.begin(),original.end(),"PRODUCTION_JOBS 1");
-  check(marker!=original.end()&&production!=original.end()&&marker<production&&original.front()=="CINDERLINE 10","fresh save contains player count, match length, navigation, and production sections");
+  const auto orders=std::find(original.begin(),original.end(),"ORDER_QUEUES 1");
+  const auto sustained=std::find(original.begin(),original.end(),"SUSTAINED_ORDERS 1");
+  const auto formation=std::find(original.begin(),original.end(),"FORMATION_ORDERS 1");
+  const auto queuedWork=std::find(original.begin(),original.end(),"QUEUED_WORK 1");
+  check(marker!=original.end()&&production!=original.end()&&marker<production&&
+        orders!=original.end()&&sustained!=original.end()&&formation!=original.end()&&queuedWork!=original.end()&&
+        orders<sustained&&sustained<formation&&formation<queuedWork&&original.front()=="CINDERLINE 15",
+        "fresh save contains player count, match length, navigation, production, tactical-order, sustained-order, formation-order, and queued-work sections");
   const std::size_t navigationLine=static_cast<std::size_t>(marker-original.begin());
   const std::size_t productionLine=static_cast<std::size_t>(production-original.begin());
   check(navigationLine+2<original.size(),"navigation section contains entity records");
   auto versionFive=original;
+  stripFormationForSaveTwelve(versionFive);
+  stripQueueModesForSaveTen(versionFive);
   versionFive.erase(versionFive.begin()+static_cast<std::ptrdiff_t>(productionLine),versionFive.end());
   versionFive.front()="CINDERLINE 5";
-  {auto config=fields(versionFive.at(1));check(config.size()==6,"version-ten navigation fixture includes player count and match length");config.pop_back();config.pop_back();versionFive[1]=joinFields(config);}
-  {auto timeline=fields(versionFive.at(2));check(timeline.size()==6,"version-ten navigation fixture includes elimination state");timeline.pop_back();versionFive[2]=joinFields(timeline);}
+  {auto config=fields(versionFive.at(1));check(config.size()==6,"current navigation fixture includes player count and match length");config.pop_back();config.pop_back();versionFive[1]=joinFields(config);}
+  {auto timeline=fields(versionFive.at(2));check(timeline.size()==6,"current navigation fixture includes elimination state");timeline.pop_back();versionFive[2]=joinFields(timeline);}
   writeLines(path,versionFive);
   Simulation previousVersion;
   check(previousVersion.load(path)&&previousVersion.stateHash()==simulation.stateHash(),
@@ -437,11 +494,13 @@ void navigationSaveValidationAndMigration() {
   rejectRepath("-0.01","negative navigation retry timers are rejected");
   rejectRepath("10.01","navigation retry timers above the compatibility ceiling are rejected");
 
-  auto future=original;future.front()="CINDERLINE 11";writeLines(path,future);
+  auto future=original;future.front()="CINDERLINE 16";writeLines(path,future);
   auto current=emptyFixture({1100,900});const auto currentHash=current.stateHash();
-  check(!current.load(path)&&current.stateHash()==currentHash,"unsupported version eleven is rejected atomically");
+  check(!current.load(path)&&current.stateHash()==currentHash,"unsupported version sixteen is rejected atomically");
 
   auto legacy=original;
+  stripFormationForSaveTwelve(legacy);
+  stripQueueModesForSaveTen(legacy);
   legacy.front()="CINDERLINE 4";
   {auto config=fields(legacy.at(1));config.pop_back();config.pop_back();legacy[1]=joinFields(config);}
   {auto timeline=fields(legacy.at(2));timeline.pop_back();legacy[2]=joinFields(timeline);}
@@ -454,6 +513,129 @@ void navigationSaveValidationAndMigration() {
   runUntil(migrated,45,[&]{return distance(migrated.find(worker)->pos,goal)<35;},{worker},
            "version-four migrated unit did not rebuild navigation and finish its route");
   std::filesystem::remove(path);
+}
+
+void movingTargetRecoversFromFailedApproach() {
+  auto simulation=emptyFixture();
+  setObstacles(simulation,{{{2050,1500},{250,450}}});
+  const Id soldier=simulation.debugSpawn(Kind::Striker,0,{1400,1500});
+  simulation.debugSpawn(Kind::Scout,0,{1600,1500}); // Observes air but cannot damage it.
+  const Id flyer=simulation.debugSpawn(Kind::Kite,1,{2050,1500});
+  check(send(simulation,CommandType::Hold,1,{flyer}).accepted,"air target holds over terrain");
+  simulation.update(Simulation::Step);
+  check(send(simulation,CommandType::Attack,0,{soldier},{},flyer).accepted,
+        "visible aircraft accepts an attack order");
+  for(int step=0;step<20;++step)simulation.update(Simulation::Step);
+  check(simulation.find(soldier)->navigationExhausted,
+        "initial firing approach is obstructed by terrain");
+  const Vec2 before=simulation.find(soldier)->pos;
+  const auto searches=simulation.navigationStats().searches;
+  for(int step=0;step<100;++step)simulation.update(Simulation::Step);
+  check(simulation.navigationStats().searches-searches<=10,
+        "stationary inaccessible targets retain bounded pursuit retry work");
+  check(distance(simulation.find(soldier)->pos,before)<1,
+        "failed pursuit cannot cross blocked terrain");
+  check(send(simulation,CommandType::Move,1,{flyer},{1650,1100}).accepted,
+        "air target can move into a reachable approach without changing static geometry");
+  runUntil(simulation,15,[&]{return simulation.players()[0].stats.damage>0;},{soldier},
+           "ground attacker did not resume pursuit after the aircraft moved into reach");
+  check(distance(simulation.find(soldier)->pos,before)>30,
+        "attacker reached a firing position using the original attack order");
+}
+
+void displacedIdleDrainsYieldAndReclaimsGoal() {
+  auto simulation=emptyFixture();
+  const Vec2 goal{2900,1500};
+  const Id reclaimer=simulation.debugSpawn(Kind::Lancer,0,goal);
+  check(send(simulation,CommandType::Move,0,{reclaimer},goal).accepted,
+        "formation unit accepts its original movement goal");
+  simulation.update(Simulation::Step);
+  check(simulation.find(reclaimer)->order==Order::Idle,
+        "formation unit settles before traffic displaces it");
+
+  auto& displaced=*std::find_if(mutableEntities(simulation).begin(),mutableEntities(simulation).end(),
+    [&](const Entity& entity){return entity.id==reclaimer;});
+  displaced.pos={3000,1500};
+  displaced.yieldFor=0.2f;
+
+  const float contact=(definition(Kind::Lancer).radius*2.0f)*1.04f;
+  const Id held=simulation.debugSpawn(Kind::Lancer,0,
+    {displaced.pos.x+std::nextafter(contact,0.0f),displaced.pos.y});
+  const Vec2 heldPosition=simulation.find(held)->pos;
+  check(send(simulation,CommandType::Hold,0,{held}).accepted,
+        "near-contact traffic fixture anchors its held unit");
+
+  runUntil(simulation,2.0f,[&]{return distance(simulation.find(reclaimer)->pos,goal)<=30;},
+           {reclaimer},"displaced Idle unit kept yielding instead of reclaiming its goal");
+  check(distance(simulation.find(reclaimer)->goal,goal)<0.01f,
+        "Idle recovery preserves the player's original formation goal");
+  check(distance(simulation.find(held)->pos,heldPosition)<0.01f,
+        "Idle recovery does not displace a held friendly unit");
+}
+
+void repeatedMixedArmyRetreat() {
+  auto simulation=emptyFixture({700,700});
+  setObstacles(simulation,{{{2400,2300},{120,500}}});
+  const std::array<Kind,8> kinds{{Kind::Worker,Kind::Striker,Kind::Lancer,Kind::Scout,
+    Kind::Bastion,Kind::Mortar,Kind::Mender,Kind::Kite}};
+  std::vector<Id> units;
+  std::vector<Id> groundUnits;
+  for(int row=0;row<3;++row)for(int column=0;column<8;++column) {
+    const Kind kind=kinds[static_cast<std::size_t>(column)];
+    const Id unit=simulation.debugSpawn(kind,0,{1150.0f+column*100,1850.0f+row*100});
+    units.push_back(unit);
+    if(!definition(kind).air)groundUnits.push_back(unit);
+  }
+  // Retarget while the mixed-speed army is still negotiating the obstruction.
+  // Arrival checks use the last acknowledged destination, not an Idle flag.
+  for(int reversal=0;reversal<12;++reversal) {
+    const bool retreat=(reversal%2)!=0;
+    const Vec2 goal=retreat?Vec2{900,2800}:Vec2{3300,1800};
+    const auto tickBefore=simulation.tick();
+    check(send(simulation,CommandType::Move,0,units,goal).accepted,
+          "every repeated mixed-army movement order is accepted");
+    check(simulation.tick()==tickBefore,"accepting a new order does not advance game time");
+    for(Id unit:units) {
+      const auto* entity=simulation.find(unit);
+      check(entity&&entity->order==Order::Move&&entity->target==0,
+            "latest direct move applies to every selected unit, including support");
+      check(retreat?entity->goal.x<1400:entity->goal.x>2800,
+            "every mixed-army unit receives the latest side of the retreat");
+    }
+    for(int step=0;step<20;++step) {
+      simulation.update(Simulation::Step);
+      for(Id unit:groundUnits)checkStaticClearance(simulation,unit,"repeated mixed-army retreat");
+    }
+  }
+  std::vector<Vec2> finalGoals;
+  for(Id unit:units)finalGoals.push_back(simulation.find(unit)->goal);
+  const auto savePath=temporarySave("mixed-retreat");
+  check(simulation.save(savePath),"pending retreat saves");
+  Simulation loaded;
+  check(loaded.load(savePath)&&loaded.stateHash()==simulation.stateHash(),
+        "pending retreat loads without changing orders");
+  std::filesystem::remove(savePath);
+  const auto retreatStartTick=simulation.tick();
+  for(int step=0;step<1600;++step) {
+    simulation.update(Simulation::Step);loaded.update(Simulation::Step);
+    check(simulation.stateHash()==loaded.stateHash(),"retreat continuation is deterministic after reload");
+    for(Id unit:groundUnits)checkStaticClearance(simulation,unit,"final retreat");
+  }
+  check(simulation.winner()==-1&&simulation.tick()==retreatStartTick+1600,
+        "retreat fixture stays live and executes every requested simulation step");
+  for(std::size_t index=0;index<units.size();++index) {
+    const auto* entity=simulation.find(units[index]);
+    if(entity&&distance(entity->pos,finalGoals[index])>=35)
+      std::cerr<<"RETREAT_LAGGARD id="<<entity->id<<" kind="<<static_cast<int>(entity->kind)
+        <<" pos="<<entity->pos.x<<','<<entity->pos.y<<" goal="<<finalGoals[index].x<<','<<finalGoals[index].y
+        <<" remaining="<<distance(entity->pos,finalGoals[index])<<" order="<<static_cast<int>(entity->order)
+        <<" failures="<<entity->navigationFailures<<" exhausted="<<entity->navigationExhausted<<'\n';
+    check(entity&&entity->alive()&&distance(entity->pos,finalGoals[index])<35,
+          "every surviving mixed-army unit reaches its final retreat slot");
+    check(distance(entity->goal,finalGoals[index])<0.01f,
+          "movement recovery preserves the last acknowledged retreat destination");
+    check(!entity->navigationExhausted,"reachable final retreat does not retain route failure");
+  }
 }
 
 void benchmark() {
@@ -525,7 +707,10 @@ int main(int argc,char** argv) {
     {"Hold and enemy collision",holdAndEnemyCollision},
     {"work-slot exhaustion semantics",workSlotExhaustionSemantics},
     {"impossible order persistence",impossibleOrderIsBoundedAndPersistent},
-    {"navigation save validation and v4 migration",navigationSaveValidationAndMigration}
+    {"navigation save validation and v4 migration",navigationSaveValidationAndMigration},
+    {"displaced Idle yield recovery",displacedIdleDrainsYieldAndReclaimsGoal},
+    {"repeated mixed-army retreat",repeatedMixedArmyRetreat},
+    {"moving-target failed approach recovery",movingTargetRecoversFromFailedApproach}
   };
   if(argc>1&&std::string(argv[1])=="--benchmark")tests={{"navigation benchmark",benchmark}};
   else if(argc>1) {

@@ -4,6 +4,7 @@
 #include <array>
 #include <cmath>
 #include <cstring>
+#include <deque>
 #include <memory>
 #include <unordered_map>
 #include <utility>
@@ -18,6 +19,10 @@ constexpr float NavAttachmentRange = 42.0f;
 constexpr int NavMaxAdaptiveNodes = 8192;
 // A route cannot consume an entire simulation step on a large obstructed map.
 constexpr int NavMaxExpandedNodes = 40000;
+constexpr std::size_t NavMaxGoalAttachmentCacheEntries = 2048;
+constexpr std::size_t NavMaxGoalAttachmentCacheBytes = 4 * 1024 * 1024;
+constexpr std::size_t NavMaxTerrainVisibilityTargets = 16384;
+constexpr std::size_t NavMaxTerrainVisibilityPages = 1024;
 constexpr float NavPi = 3.14159265358979323846f;
 constexpr float NavInfinity = std::numeric_limits<float>::infinity();
 
@@ -86,6 +91,86 @@ float navSegmentBoxDistanceSquared(Vec2 from, Vec2 to, const NavBox& box)
         navSegmentSegmentDistanceSquared(from, to, br, tr),
         navSegmentSegmentDistanceSquared(from, to, tr, tl),
         navSegmentSegmentDistanceSquared(from, to, tl, bl)});
+}
+
+bool navSegmentBoxBlocks(Vec2 from, Vec2 to, const NavBox& box, float clearanceSquared)
+{
+#if defined(__FAST_MATH__)
+    // The projection-envelope proof below requires ordered IEEE operations.
+    const float separation = navSegmentBoxDistanceSquared(from, to, box);
+    return separation == 0 || separation < clearanceSquared;
+#else
+    const float left = box.center.x - box.half.x;
+    const float right = box.center.x + box.half.x;
+    const float bottom = box.center.y - box.half.y;
+    const float top = box.center.y + box.half.y;
+    const Vec2 bl{left, bottom}, br{right, bottom}, tr{right, top}, tl{left, top};
+    auto bounded = [](Vec2 point) {
+        return std::fabs(point.x) <= 1.0e12f && std::fabs(point.y) <= 1.0e12f;
+    };
+    // In this domain all legacy distance intermediates are finite: products
+    // are below 1e26 and the >1e-12 projection denominator bounds division
+    // below 1e37. br/tl inherit the checked bl/tr components. Any blocking
+    // edge therefore makes the finite minimum block.
+    // Retain the original minimum for extreme inputs, including its NaN rules.
+    if (!bounded(from) || !bounded(to) || !bounded(bl) || !bounded(tr)
+        || !navFinite(clearanceSquared)) {
+        const float separation = navSegmentBoxDistanceSquared(from, to, box);
+        return separation == 0 || separation < clearanceSquared;
+    }
+    auto inside = [&](Vec2 point) {
+        return point.x >= left && point.x <= right && point.y >= bottom && point.y <= top;
+    };
+    if (inside(from) || inside(to)) return true;
+    const std::array<Vec2, 5> corners{{bl, br, tr, tl, bl}};
+    for (std::size_t edge = 0; edge < 4; ++edge) {
+        // Preserve even the legacy tolerance/orientation decisions before
+        // rejecting any distance work from a bounding envelope.
+        if (navSegmentsIntersect(from, to, corners[edge], corners[edge + 1])) return true;
+    }
+
+    // For clamped t in [0,1], fl(a + fl((b-a)*t)) lies between a and
+    // fl(a + fl(b-a)) by monotonicity. Include both authored endpoints too:
+    // every point and every projected foot in the old distance terms then
+    // belongs to one of these envelopes. Directed box-edge reconstruction
+    // matters: simply using left/right would miss its possible rounding.
+    const Vec2 reconstructed = navAdd(from, navSubtract(to, from));
+    const Vec2 segmentLow{std::min({from.x, to.x, reconstructed.x}),
+                          std::min({from.y, to.y, reconstructed.y})};
+    const Vec2 segmentHigh{std::max({from.x, to.x, reconstructed.x}),
+                           std::max({from.y, to.y, reconstructed.y})};
+    const float forwardX = left + (right - left), reverseX = right + (left - right);
+    const float forwardY = bottom + (top - bottom), reverseY = top + (bottom - top);
+    const Vec2 boxLow{std::min({left, right, forwardX, reverseX}),
+                     std::min({bottom, top, forwardY, reverseY})};
+    const Vec2 boxHigh{std::max({left, right, forwardX, reverseX}),
+                      std::max({bottom, top, forwardY, reverseY})};
+    auto separated = [&](float aLow, float aHigh, float bLow, float bHigh) {
+        float a = 0, b = 0;
+        if (aHigh < bLow) { a = aHigh; b = bLow; }
+        else if (bHigh < aLow) { a = aLow; b = bHigh; }
+        else return false;
+        // Check both subtraction directions used by the original terms.
+        // One axis suffices, avoiding any sum/contraction rounding change.
+        const float ab = navSquare(a - b), ba = navSquare(b - a);
+        return ab > 0 && ba > 0 && ab >= clearanceSquared && ba >= clearanceSquared;
+    };
+    if (separated(segmentLow.x, segmentHigh.x, boxLow.x, boxHigh.x)
+        || separated(segmentLow.y, segmentHigh.y, boxLow.y, boxHigh.y)) return false;
+
+    auto blocks = [&](Vec2 point, Vec2 a, Vec2 b) {
+        const float distance = navPointSegmentDistanceSquared(point, a, b);
+        return distance == 0 || distance < clearanceSquared;
+    };
+    for (std::size_t edge = 0; edge < 4; ++edge) {
+        if (blocks(from, corners[edge], corners[edge + 1])
+            || blocks(to, corners[edge], corners[edge + 1])
+            || blocks(corners[edge], from, to)) return true;
+    }
+    // Each corner-to-segment term appeared twice in the old four-edge
+    // minimum. Evaluating it once preserves the same finite value set.
+    return false;
+#endif
 }
 
 float navCanonical(float value) { return value == 0 ? 0.0f : value; }
@@ -178,11 +263,54 @@ struct Navigation::Impl {
         int goal = -1;
     };
 
+    struct CachedGoalAttachment {
+        int node = -1;
+        float cost = 0;
+    };
+
+    struct GoalAttachmentKey {
+        std::uint32_t x = 0;
+        std::uint32_t y = 0;
+        std::uint32_t clearance = 0;
+
+        bool operator==(const GoalAttachmentKey& other) const
+        {
+            return x == other.x && y == other.y && clearance == other.clearance;
+        }
+    };
+
+    struct GoalAttachmentKeyHash {
+        std::size_t operator()(const GoalAttachmentKey& key) const
+        {
+            std::uint64_t value = 1469598103934665603ULL;
+            auto add = [&](std::uint32_t part) {
+                for (int byte = 0; byte < 4; ++byte) {
+                    value = (value ^ static_cast<std::uint8_t>(part & 255)) * 1099511628211ULL;
+                    part >>= 8;
+                }
+            };
+            add(key.x); add(key.y); add(key.clearance);
+            return static_cast<std::size_t>(value);
+        }
+    };
+
+    static_assert(sizeof(CachedGoalAttachment) == 8,
+        "goal attachment cache accounting assumes one 8-byte node/cost pair");
+
+    // Two bits per exact target: unknown, blocked by terrain, or terrain-clear.
+    // Stable target coordinates survive circle-only layer rebuilds; node ids do not.
+    struct TerrainVisibilityPage {
+        std::array<std::uint64_t, NavMaxTerrainVisibilityTargets / 32> results{};
+    };
+    static_assert(sizeof(TerrainVisibilityPage) == 4096,
+        "1024 terrain visibility pages must stay within 4 MiB of result payload");
+
     std::shared_ptr<State> state = std::make_shared<State>();
 
     // Search arrays use stamps so a route does not clear the full grid.
     mutable std::vector<float> costs;
     mutable std::vector<int> parents;
+    mutable std::vector<int> sourceIndex;
     mutable std::vector<std::uint32_t> seen;
     mutable std::vector<std::uint32_t> closed;
     mutable std::vector<float> goalSuffix;
@@ -190,11 +318,37 @@ struct Navigation::Impl {
     mutable std::vector<std::uint32_t> hasGoal;
     mutable std::uint32_t searchStamp = 0;
     mutable std::vector<OpenNode> open;
+    mutable std::unordered_map<GoalAttachmentKey, std::vector<CachedGoalAttachment>,
+        GoalAttachmentKeyHash> goalAttachmentCache;
+    mutable std::deque<GoalAttachmentKey> goalAttachmentFIFO;
+    mutable std::size_t goalAttachmentCacheBytes = 0;
+    mutable std::unordered_map<std::uint64_t, std::uint32_t> terrainVisibilityTargets;
+    mutable std::unordered_map<GoalAttachmentKey, TerrainVisibilityPage,
+        GoalAttachmentKeyHash> terrainVisibilityPages;
+    mutable std::deque<GoalAttachmentKey> terrainVisibilityFIFO;
+    mutable bool terrainVisibilityResetPending = false;
+    mutable NavigationVisibilityStats terrainVisibilityStats;
 
-    static bool sameGeometry(const Geometry& a, const Geometry& b)
+    void clearGoalAttachmentCache()
+    {
+        goalAttachmentCache.clear();
+        goalAttachmentFIFO.clear();
+        goalAttachmentCacheBytes = 0;
+    }
+
+    void clearTerrainVisibilityCache() const
+    {
+        terrainVisibilityPages.clear();
+        terrainVisibilityTargets.clear();
+        terrainVisibilityFIFO.clear();
+        terrainVisibilityResetPending = false;
+        ++terrainVisibilityStats.resets;
+    }
+
+    static bool sameTerrain(const Geometry& a, const Geometry& b)
     {
         if (navFloatBits(a.worldSize) != navFloatBits(b.worldSize)
-            || a.boxes.size() != b.boxes.size() || a.circles.size() != b.circles.size()) return false;
+            || a.boxes.size() != b.boxes.size()) return false;
         for (std::size_t i = 0; i < a.boxes.size(); ++i) {
             const auto& x = a.boxes[i]; const auto& y = b.boxes[i];
             if (navFloatBits(x.center.x) != navFloatBits(y.center.x)
@@ -202,6 +356,12 @@ struct Navigation::Impl {
                 || navFloatBits(x.half.x) != navFloatBits(y.half.x)
                 || navFloatBits(x.half.y) != navFloatBits(y.half.y)) return false;
         }
+        return true;
+    }
+
+    static bool sameGeometry(const Geometry& a, const Geometry& b)
+    {
+        if (!sameTerrain(a, b) || a.circles.size() != b.circles.size()) return false;
         for (std::size_t i = 0; i < a.circles.size(); ++i) {
             const auto& x = a.circles[i]; const auto& y = b.circles[i];
             if (x.id != y.id || navFloatBits(x.center.x) != navFloatBits(y.center.x)
@@ -279,12 +439,30 @@ struct Navigation::Impl {
     bool segmentClear(Vec2 from, Vec2 to, float clearance, Id ignore) const
     {
         if (!pointClear(from, clearance, ignore) || !pointClear(to, clearance, ignore)) return false;
+        return segmentInteriorClear(from, to, clearance, ignore);
+    }
+
+    // Both endpoints must already be clear for this clearance/ignore pair.
+    // Keep the exact segment predicates shared with the public validated path.
+    bool segmentInteriorClear(Vec2 from, Vec2 to, float clearance, Id ignore) const
+    {
+        return segmentTerrainClear(from, to, clearance)
+            && segmentCirclesClear(from, to, clearance, ignore);
+    }
+
+    bool segmentTerrainClear(Vec2 from, Vec2 to, float clearance) const
+    {
         const Geometry& geometry = state->geometry;
         const float clearanceSquared = clearance * clearance;
         for (const NavBox& box : geometry.boxes) {
-            const float separation = navSegmentBoxDistanceSquared(from, to, box);
-            if (separation == 0 || separation < clearanceSquared) return false;
+            if (navSegmentBoxBlocks(from, to, box, clearanceSquared)) return false;
         }
+        return true;
+    }
+
+    bool segmentCirclesClear(Vec2 from, Vec2 to, float clearance, Id ignore) const
+    {
+        const Geometry& geometry = state->geometry;
         for (const NavCircle& circle : geometry.circles) {
             if (ignore && circle.id == ignore) continue;
             const float combined = clearance + circle.radius;
@@ -293,10 +471,70 @@ struct Navigation::Impl {
         return true;
     }
 
+    bool cachedTerrainClear(Vec2 from, Vec2 to, float clearance,
+        TerrainVisibilityPage& page) const
+    {
+        const std::uint64_t key = (static_cast<std::uint64_t>(navFloatBits(to.x)) << 32)
+            | navFloatBits(to.y);
+        auto found = terrainVisibilityTargets.find(key);
+        if (found == terrainVisibilityTargets.end()) {
+            if (terrainVisibilityTargets.size() >= NavMaxTerrainVisibilityTargets) {
+                // A page is borrowed by attachments. Reset only before the next
+                // page acquisition so the current call never holds a dangling page.
+                terrainVisibilityResetPending = true;
+                ++terrainVisibilityStats.misses;
+                ++terrainVisibilityStats.saturationMisses;
+                return segmentTerrainClear(from, to, clearance);
+            }
+            const auto index = static_cast<std::uint32_t>(terrainVisibilityTargets.size());
+            found = terrainVisibilityTargets.emplace(key, index).first;
+        }
+        const std::uint32_t index = found->second;
+        std::uint64_t& word = page.results[index / 32];
+        const auto shift = (index % 32) * 2;
+        const auto cached = (word >> shift) & 3;
+        if (cached == 1 || cached == 2) {
+            ++terrainVisibilityStats.hits;
+            return cached == 2;
+        }
+        ++terrainVisibilityStats.misses;
+        const bool clear = segmentTerrainClear(from, to, clearance);
+        word = (word & ~(std::uint64_t{3} << shift))
+            | (static_cast<std::uint64_t>(clear ? 2 : 1) << shift);
+        return clear;
+    }
+
+    TerrainVisibilityPage& terrainVisibilityPage(const GoalAttachmentKey& key) const
+    {
+        if (terrainVisibilityResetPending) clearTerrainVisibilityCache();
+        auto found = terrainVisibilityPages.find(key);
+        if (found != terrainVisibilityPages.end()) return found->second;
+        while (terrainVisibilityPages.size() >= NavMaxTerrainVisibilityPages) {
+            terrainVisibilityPages.erase(terrainVisibilityFIFO.front());
+            terrainVisibilityFIFO.pop_front();
+        }
+        terrainVisibilityFIFO.push_back(key);
+        return terrainVisibilityPages.try_emplace(key).first->second;
+    }
+
     void addAdaptiveCandidate(Layer& layer, Vec2 point) const
     {
         if (static_cast<int>(layer.adaptive.size()) >= NavMaxAdaptiveNodes) return;
         if (pointClear(point, layer.clearance, 0)) layer.adaptive.push_back(point);
+    }
+
+    static int arcSegments(float blockedRadius, float sampleRadius, float arc, int minimum)
+    {
+        // Clear samples do not imply clear edges: each chord cuts inside its
+        // sampling circle. Size the angular step so the chord remains outside
+        // the actual blocker, retaining a little of the existing radial pad for
+        // floating-point error. More samples preserve tight passages that an
+        // inflated sampling radius would erase.
+        const double ratio = std::clamp(static_cast<double>(blockedRadius) / sampleRadius, 0.0, 1.0);
+        const double angle = 1.9 * std::acos(ratio);
+        if (angle <= 0) return NavMaxAdaptiveNodes;
+        return std::max(minimum, static_cast<int>(std::min(
+            static_cast<double>(NavMaxAdaptiveNodes), std::ceil(arc / angle))));
     }
 
     void addBoxCandidates(Layer& layer, const NavBox& box) const
@@ -319,9 +557,10 @@ struct Navigation::Impl {
         addRange(false, top + margin, left, right);
         const std::array<Vec2, 4> corners{{{left, bottom}, {right, bottom}, {right, top}, {left, top}}};
         const std::array<float, 4> starts{{NavPi, -0.5f * NavPi, 0, 0.5f * NavPi}};
+        const int samples = arcSegments(layer.clearance, margin, 0.5f * NavPi, 6);
         for (int corner = 0; corner < 4; ++corner) {
-            for (int sample = 0; sample <= 6; ++sample) {
-                const float angle = starts[corner] + 0.5f * NavPi * static_cast<float>(sample) / 6;
+            for (int sample = 0; sample <= samples; ++sample) {
+                const float angle = starts[corner] + 0.5f * NavPi * static_cast<float>(sample) / samples;
                 addAdaptiveCandidate(layer, navAdd(corners[corner], {std::cos(angle) * margin, std::sin(angle) * margin}));
             }
         }
@@ -331,7 +570,8 @@ struct Navigation::Impl {
     {
         const float radius = circle.radius + layer.clearance
             + std::max(0.25f, layer.clearance * 0.002f);
-        const int samples = std::clamp(static_cast<int>(std::ceil(2 * NavPi * radius / NavAdaptiveSpacing)), 16, 40);
+        const int spacingSamples = std::clamp(static_cast<int>(std::ceil(2 * NavPi * radius / NavAdaptiveSpacing)), 16, 40);
+        const int samples = arcSegments(circle.radius + layer.clearance, radius, 2 * NavPi, spacingSamples);
         for (int sample = 0; sample < samples; ++sample) {
             const float angle = 2 * NavPi * static_cast<float>(sample) / samples;
             addAdaptiveCandidate(layer, navAdd(circle.center, {std::cos(angle) * radius, std::sin(angle) * radius}));
@@ -545,8 +785,13 @@ struct Navigation::Impl {
     }
 
     std::vector<Attachment> attachments(const Layer& layer, Vec2 point, float clearance,
-        Id ignore, int goal) const
+        Id ignore, int goal, TerrainVisibilityPage* terrainPage = nullptr) const
     {
+        // route/routeFromAny validate point before requesting attachments.
+        // Grid targets pass nodeClear; adaptive targets were validated when
+        // this clearance layer was built (ignoring a circle cannot block them).
+        // Rechecking both endpoints for every candidate repeats full obstacle
+        // scans, especially when attaching many cold mining destinations.
         std::vector<Attachment> result;
         const int range = static_cast<int>(std::ceil(NavAttachmentRange / NavGridCell));
         const int centerX = static_cast<int>(point.x / NavGridCell);
@@ -558,7 +803,7 @@ struct Navigation::Impl {
                 const Vec2 target = layer.gridPoint(node);
                 const float cost = navDistance(point, target);
                 if (cost <= NavAttachmentRange && nodeClear(layer, node, ignore)
-                    && segmentClear(point, target, clearance, ignore)) result.push_back({node, cost, goal});
+                    && segmentInteriorClear(point, target, clearance, ignore)) result.push_back({node, cost, goal});
             }
         }
         for (int adaptive = 0; adaptive < static_cast<int>(layer.adaptive.size()); ++adaptive) {
@@ -566,7 +811,12 @@ struct Navigation::Impl {
             // Boundary nodes form a sparse visibility overlay. Long exact-clear
             // attachments avoid expanding thousands of open lattice nodes just
             // to reach the first obstacle corner.
-            if (segmentClear(point, layer.adaptive[adaptive], clearance, ignore)) {
+            const Vec2 target = layer.adaptive[adaptive];
+            const bool clear = terrainPage
+                ? cachedTerrainClear(point, target, clearance, *terrainPage)
+                    && segmentCirclesClear(point, target, clearance, ignore)
+                : segmentInteriorClear(point, target, clearance, ignore);
+            if (clear) {
                 result.push_back({layer.gridCount + adaptive, cost, goal});
             }
         }
@@ -576,6 +826,47 @@ struct Navigation::Impl {
         result.erase(std::unique(result.begin(), result.end(), [](const Attachment& a, const Attachment& b) {
             return a.node == b.node;
         }), result.end());
+        return result;
+    }
+
+    std::vector<Attachment> cachedGoalAttachments(const Layer& layer, Vec2 point,
+        float clearance, int goal) const
+    {
+        const GoalAttachmentKey key{
+            navFloatBits(point.x), navFloatBits(point.y), navFloatBits(clearance)};
+        const auto found = goalAttachmentCache.find(key);
+        if (found != goalAttachmentCache.end()) {
+            std::vector<Attachment> result;
+            result.reserve(found->second.size());
+            for (const CachedGoalAttachment& attachment : found->second) {
+                result.push_back({attachment.node, attachment.cost, goal});
+            }
+            return result;
+        }
+
+        TerrainVisibilityPage& terrain = terrainVisibilityPage(key);
+        std::vector<Attachment> result = attachments(layer, point, clearance, 0, goal, &terrain);
+        std::vector<CachedGoalAttachment> cached(result.size());
+        for (std::size_t index = 0; index < result.size(); ++index) {
+            cached[index] = {result[index].node, result[index].cost};
+        }
+        const std::size_t storedBytes = cached.capacity() * sizeof(CachedGoalAttachment);
+        if (storedBytes > NavMaxGoalAttachmentCacheBytes) return result;
+
+        while (!goalAttachmentFIFO.empty()
+            && (goalAttachmentCache.size() >= NavMaxGoalAttachmentCacheEntries
+                || goalAttachmentCacheBytes > NavMaxGoalAttachmentCacheBytes - storedBytes)) {
+            const GoalAttachmentKey oldest = goalAttachmentFIFO.front();
+            goalAttachmentFIFO.pop_front();
+            const auto entry = goalAttachmentCache.find(oldest);
+            if (entry == goalAttachmentCache.end()) continue;
+            goalAttachmentCacheBytes -= entry->second.capacity() * sizeof(CachedGoalAttachment);
+            goalAttachmentCache.erase(entry);
+        }
+
+        goalAttachmentCacheBytes += storedBytes;
+        goalAttachmentFIFO.push_back(key);
+        goalAttachmentCache.emplace(key, std::move(cached));
         return result;
     }
 
@@ -631,6 +922,7 @@ struct Navigation::Impl {
     {
         if (static_cast<int>(costs.size()) < count) {
             costs.resize(count); parents.resize(count); seen.resize(count);
+            sourceIndex.resize(count);
             closed.resize(count); goalSuffix.resize(count); goalIndex.resize(count); hasGoal.resize(count);
         }
         ++searchStamp;
@@ -768,12 +1060,12 @@ struct Navigation::Impl {
         int directGoal = -1;
         for (int goal = 0; goal < static_cast<int>(goals.size()); ++goal) {
             const float candidate = navDistance(from, goals[goal]);
-            if (candidate <= 1.0e-3f) return {true, false, {}, 0, 0};
+            if (candidate <= 1.0e-3f) return {true, false, {}, 0, 0, from};
             if (candidate < directCost && segmentClear(from, goals[goal], clearance, ignore)) {
                 directCost = candidate; directGoal = goal;
             }
         }
-        if (directGoal >= 0) return {true, false, {goals[directGoal]}, directCost, 0};
+        if (directGoal >= 0) return {true, false, {goals[directGoal]}, directCost, 0, from};
 
         const auto cachedLayer = layer(clearance);
         const Layer& graph = *cachedLayer;
@@ -781,7 +1073,9 @@ struct Navigation::Impl {
         if (starts.empty()) return result;
         std::vector<Attachment> ends;
         for (int goal = 0; goal < static_cast<int>(goals.size()); ++goal) {
-            std::vector<Attachment> attached = attachments(graph, goals[goal], clearance, ignore, goal);
+            std::vector<Attachment> attached = ignore
+                ? attachments(graph, goals[goal], clearance, ignore, goal)
+                : cachedGoalAttachments(graph, goals[goal], clearance, goal);
             ends.insert(ends.end(), attached.begin(), attached.end());
         }
         if (ends.empty()) return result;
@@ -863,6 +1157,219 @@ struct Navigation::Impl {
 
         return completeRoute(graph, from, goals, bestNode, bestGoal, result.expanded, clearance, ignore);
     }
+
+    NavigationResult multiSourceSearch(const Layer& graph, const std::vector<Vec2>& starts,
+        const std::vector<Vec2>& goals, const std::vector<Attachment>& allStarts,
+        const std::vector<Attachment>& allEnds, float clearance, Id ignore,
+        bool adaptiveOnly, int expanded) const
+    {
+        NavigationResult result;
+        result.expanded = expanded;
+        std::vector<Attachment> searchStarts, searchEnds;
+        searchStarts.reserve(allStarts.size()); searchEnds.reserve(allEnds.size());
+        for (const Attachment& start : allStarts)
+            if (!adaptiveOnly || start.node >= graph.gridCount) searchStarts.push_back(start);
+        for (const Attachment& end : allEnds)
+            if (!adaptiveOnly || end.node >= graph.gridCount) searchEnds.push_back(end);
+        if (searchStarts.empty() || searchEnds.empty()) return result;
+
+        prepareScratch(graph.nodeCount());
+        auto heuristic = [&](int node) {
+            float best = NavInfinity;
+            const Vec2 point = graph.point(node);
+            for (Vec2 goal : goals) best = std::min(best, navDistance(point, goal));
+            return best;
+        };
+        auto push = [&](OpenNode node) {
+            open.push_back(node);
+            std::push_heap(open.begin(), open.end(), OpenGreater{});
+        };
+        for (const Attachment& end : searchEnds) {
+            if (hasGoal[end.node] != searchStamp || end.cost < goalSuffix[end.node]
+                || (end.cost == goalSuffix[end.node] && end.goal < goalIndex[end.node])) {
+                hasGoal[end.node] = searchStamp;
+                goalSuffix[end.node] = end.cost;
+                goalIndex[end.node] = end.goal;
+            }
+        }
+        for (const Attachment& start : searchStarts) {
+            if (seen[start.node] != searchStamp || start.cost < costs[start.node]
+                || (start.cost == costs[start.node] && start.goal < sourceIndex[start.node])) {
+                seen[start.node] = searchStamp;
+                costs[start.node] = start.cost;
+                parents[start.node] = -1;
+                sourceIndex[start.node] = start.goal;
+                push({start.cost + heuristic(start.node), start.cost, start.node});
+            }
+        }
+
+        float bestCost = NavInfinity;
+        int bestNode = -1;
+        int bestGoal = -1;
+        int bestStart = -1;
+        while (!open.empty()) {
+            std::pop_heap(open.begin(), open.end(), OpenGreater{});
+            const OpenNode current = open.back(); open.pop_back();
+            if (closed[current.node] == searchStamp || seen[current.node] != searchStamp
+                || current.cost != costs[current.node]) continue;
+            if (current.score > bestCost) break;
+            closed[current.node] = searchStamp;
+            ++result.expanded;
+            if (result.expanded >= NavMaxExpandedNodes) {
+                result.exhausted = true;
+                return result;
+            }
+            if (hasGoal[current.node] == searchStamp) {
+                const float candidate = current.cost + goalSuffix[current.node];
+                const int candidateStart = sourceIndex[current.node];
+                const int candidateGoal = goalIndex[current.node];
+                if (candidate < bestCost || (candidate == bestCost
+                    && (bestStart < 0 || candidateStart < bestStart
+                        || (candidateStart == bestStart && candidateGoal < bestGoal)))) {
+                    bestCost = candidate;
+                    bestNode = current.node;
+                    bestGoal = candidateGoal;
+                    bestStart = candidateStart;
+                }
+            }
+            auto relax = [&](int next, float edgeCost) {
+                if (closed[next] == searchStamp) return;
+                const float candidate = current.cost + edgeCost;
+                const int candidateStart = sourceIndex[current.node];
+                if (seen[next] != searchStamp || candidate + 1.0e-5f < costs[next]
+                    || (std::fabs(candidate - costs[next]) <= 1.0e-5f
+                        && (candidateStart < sourceIndex[next]
+                            || (candidateStart == sourceIndex[next] && current.node < parents[next])))) {
+                    seen[next] = searchStamp;
+                    costs[next] = candidate;
+                    parents[next] = current.node;
+                    sourceIndex[next] = candidateStart;
+                    push({candidate + heuristic(next), candidate, next});
+                }
+            };
+            if (adaptiveOnly) {
+                const int adaptive = current.node - graph.gridCount;
+                for (int nextAdaptive : graph.adaptiveEdges[adaptive]) {
+                    const int next = graph.gridCount + nextAdaptive;
+                    relax(next, navDistance(graph.point(current.node), graph.point(next)));
+                }
+            } else visitNeighbors(graph, current.node, ignore, relax);
+        }
+        if (bestNode < 0) return result;
+
+        NavigationResult routed = completeRoute(graph, starts[bestStart], goals, bestNode,
+            bestGoal, result.expanded, clearance, ignore);
+        if (routed.reached) routed.origin = starts[bestStart];
+        return routed;
+    }
+
+    NavigationResult routeFromAny(const std::vector<Vec2>& suppliedStarts,
+        const std::vector<Vec2>& suppliedGoals, float clearance, Id ignore) const
+    {
+        NavigationResult result;
+        if (!navFinite(clearance) || clearance < 0 || suppliedStarts.empty()
+            || suppliedGoals.empty()) return result;
+        if (ignore) {
+            const bool present = std::any_of(state->geometry.circles.begin(), state->geometry.circles.end(),
+                [&](const NavCircle& circle) { return circle.id == ignore; });
+            if (!present) ignore = 0;
+        }
+
+        std::vector<Vec2> starts;
+        starts.reserve(suppliedStarts.size());
+        for (Vec2 start : suppliedStarts) {
+            if (!navFinite(start)) continue;
+            start.x = navCanonical(start.x); start.y = navCanonical(start.y);
+            if (pointClear(start, clearance, ignore)) starts.push_back(start);
+        }
+        std::sort(starts.begin(), starts.end(), [](Vec2 a, Vec2 b) {
+            if (a.x != b.x) return a.x < b.x;
+            return a.y < b.y;
+        });
+        starts.erase(std::unique(starts.begin(), starts.end(), [](Vec2 a, Vec2 b) {
+            return navDistanceSquared(a, b) <= 1.0e-6f;
+        }), starts.end());
+        if (starts.empty()) return result;
+
+        std::vector<Vec2> goals;
+        goals.reserve(suppliedGoals.size());
+        for (Vec2 goal : suppliedGoals) {
+            if (!pointClear(goal, clearance, ignore)) continue;
+            bool duplicate = false;
+            for (Vec2 existing : goals) if (navDistanceSquared(goal, existing) <= 1.0e-6f) duplicate = true;
+            if (!duplicate) goals.push_back(goal);
+        }
+        if (goals.empty()) return result;
+
+        // A single valid source uses the established route path verbatim.
+        if (starts.size() == 1) {
+            result = route(starts.front(), goals, clearance, ignore);
+            if (result.reached) result.origin = starts.front();
+            return result;
+        }
+
+        float directCost = NavInfinity;
+        int directStart = -1;
+        int directGoal = -1;
+        for (int start = 0; start < static_cast<int>(starts.size()); ++start) {
+            for (int goal = 0; goal < static_cast<int>(goals.size()); ++goal) {
+                const float candidate = navDistance(starts[start], goals[goal]);
+                if (candidate <= 1.0e-3f) {
+                    result.reached = true;
+                    result.origin = starts[start];
+                    return result;
+                }
+                if (candidate < directCost
+                    && segmentClear(starts[start], goals[goal], clearance, ignore)) {
+                    directCost = candidate; directStart = start; directGoal = goal;
+                }
+            }
+        }
+        if (directStart >= 0) {
+            result.reached = true;
+            result.points.push_back(goals[directGoal]);
+            result.cost = directCost;
+            result.origin = starts[directStart];
+            return result;
+        }
+
+        const auto cachedLayer = layer(clearance);
+        const Layer& graph = *cachedLayer;
+        std::vector<Attachment> allStarts;
+        for (int start = 0; start < static_cast<int>(starts.size()); ++start) {
+            std::vector<Attachment> attached = attachments(graph, starts[start], clearance, ignore, start);
+            allStarts.insert(allStarts.end(), attached.begin(), attached.end());
+        }
+        if (allStarts.empty()) return result;
+
+        std::vector<Attachment> ends;
+        for (int goal = 0; goal < static_cast<int>(goals.size()); ++goal) {
+            std::vector<Attachment> attached = ignore
+                ? attachments(graph, goals[goal], clearance, ignore, goal)
+                : cachedGoalAttachments(graph, goals[goal], clearance, goal);
+            ends.insert(ends.end(), attached.begin(), attached.end());
+        }
+        if (ends.empty()) return result;
+
+        NavigationResult adaptive = multiSourceSearch(graph, starts, goals, allStarts, ends,
+            clearance, ignore, true, 0);
+        if (adaptive.reached || adaptive.exhausted) return adaptive;
+
+        if (!ignore) {
+            std::vector<int> startComponents;
+            startComponents.reserve(allStarts.size());
+            for (const Attachment& start : allStarts) startComponents.push_back(graph.component[start.node]);
+            std::sort(startComponents.begin(), startComponents.end());
+            startComponents.erase(std::unique(startComponents.begin(), startComponents.end()), startComponents.end());
+            ends.erase(std::remove_if(ends.begin(), ends.end(), [&](const Attachment& end) {
+                return !std::binary_search(startComponents.begin(), startComponents.end(), graph.component[end.node]);
+            }), ends.end());
+            if (ends.empty()) return adaptive;
+        }
+
+        return multiSourceSearch(graph, starts, goals, allStarts, ends, clearance, ignore,
+            false, adaptive.expanded);
+    }
 };
 
 Navigation::Navigation() : impl_(std::make_unique<Impl>()) {}
@@ -886,8 +1393,10 @@ void Navigation::sync(float worldSize, const std::vector<NavBox>& boxes,
     Impl::Geometry geometry = Impl::normalize(worldSize, boxes, circles);
     if (geometry.fingerprint == impl_->state->geometry.fingerprint
         && Impl::sameGeometry(geometry, impl_->state->geometry)) return;
+    if (!Impl::sameTerrain(geometry, impl_->state->geometry)) impl_->clearTerrainVisibilityCache();
     impl_->state = std::make_shared<Impl::State>();
     impl_->state->geometry = std::move(geometry);
+    impl_->clearGoalAttachmentCache();
 }
 
 void Navigation::addCircle(NavCircle circle)
@@ -917,9 +1426,26 @@ bool Navigation::segmentClear(Vec2 from, Vec2 to, float clearance, Id ignore) co
 NavigationResult Navigation::route(Vec2 from, const std::vector<Vec2>& goals,
     float clearance, Id ignore) const
 {
-    return impl_->route(from, goals, clearance, ignore);
+    NavigationResult result = impl_->route(from, goals, clearance, ignore);
+    if (result.reached) result.origin = from;
+    return result;
+}
+
+NavigationResult Navigation::routeFromAny(const std::vector<Vec2>& starts,
+    const std::vector<Vec2>& goals, float clearance, Id ignore) const
+{
+    return impl_->routeFromAny(starts, goals, clearance, ignore);
 }
 
 std::uint64_t Navigation::geometryVersion() const { return impl_->state->geometry.fingerprint; }
+
+NavigationVisibilityStats Navigation::visibilityStats() const
+{
+    NavigationVisibilityStats result = impl_->terrainVisibilityStats;
+    result.pages = impl_->terrainVisibilityPages.size();
+    result.targets = impl_->terrainVisibilityTargets.size();
+    result.payloadBytes = result.pages * sizeof(Impl::TerrainVisibilityPage);
+    return result;
+}
 
 } // namespace cinder

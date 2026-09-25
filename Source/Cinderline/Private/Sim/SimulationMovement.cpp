@@ -65,8 +65,43 @@ bool mobile(const Entity& entity) {
 }
 
 bool anchored(const Entity& entity) {
-    return entity.order == Order::Hold ||
-        (entity.order == Order::Defend && distanceSquared(entity.pos, entity.goal) <= 5.0f * 5.0f);
+    // Hold is the explicit immovable traffic order. Defenders retain their
+    // anchor as authoritative intent, but may yield to friendly traffic and
+    // use their normal movement update to reclaim it afterward.
+    return entity.order == Order::Hold;
+}
+
+bool resting(const Entity& entity) {
+    // An arrived unit can be pushed away from its slot by later traffic. While
+    // it reclaims that slot it is moving, even though its order remains Idle.
+    return entity.order == Order::Idle && entity.target == 0 &&
+        distanceSquared(entity.pos, entity.goal) <= 30.0f * 30.0f;
+}
+
+bool yieldsTo(const Entity& candidate, const Entity& mover) {
+    // A follower must not occupy the work perimeter or entry lane needed by
+    // its leader. Worker leaders keep cargo and construction state while their
+    // escorts step aside through the existing deterministic traffic flow.
+    const bool moverEscortsCandidate = mover.order == Order::Escort &&
+        mover.sustained.escortTarget == candidate.id;
+    if (moverEscortsCandidate) return false;
+    const bool escortingMover = candidate.order == Order::Escort &&
+        candidate.sustained.escortTarget == mover.id;
+    const float recoverySquared =
+        (Simulation::EscortSpacing * 0.5f) * (Simulation::EscortSpacing * 0.5f);
+    const float candidateError = distanceSquared(candidate.pos, candidate.goal);
+    const float moverError = distanceSquared(mover.pos, mover.goal);
+    const bool candidateRecovering = candidate.order == Order::Escort &&
+        candidate.sustained.phase == SustainedOrderPhase::Travel &&
+        candidateError <= recoverySquared;
+    const bool moverRecovering = mover.order == Order::Escort &&
+        mover.sustained.phase == SustainedOrderPhase::Travel && moverError <= recoverySquared;
+    const bool recoveringEscortYields = candidateRecovering &&
+        (!moverRecovering || candidateError < moverError ||
+         (candidateError == moverError && candidate.id < mover.id));
+    return escortingMover || recoveringEscortYields || resting(candidate) ||
+        (candidate.order == Order::Idle && candidate.target == 0 &&
+         mover.order != Order::Idle && mover.navigationFailures >= 3);
 }
 
 std::uint64_t bucketKey(int x, int y) {
@@ -113,7 +148,7 @@ void Simulation::beginMovementStep() {
     }
 }
 
-bool Simulation::yieldAtWork(Entity& entity, Vec2 center) {
+bool Simulation::yieldAtWork(Entity& entity, Vec2 center, Id ignoredStatic) {
     if (entity.yieldFor <= 0.0f || !mobile(entity) || definition(entity.kind).air) {
         return false;
     }
@@ -141,8 +176,10 @@ bool Simulation::yieldAtWork(Entity& entity, Vec2 center) {
                         continue;
                     }
                     const float separation = unit.radius + definition(other.kind).radius;
-                    if (segmentDistanceSquared(entity.pos, candidate, other.pos) <
-                        separation * separation) {
+                    const float before=distanceSquared(entity.pos,other.pos);
+                    const float after=distanceSquared(candidate,other.pos);
+                    if (before<separation*separation&&after>before+0.01f)continue;
+                    if (segmentDistanceSquared(entity.pos, candidate, other.pos) < separation * separation) {
                         clear = false;
                         break;
                     }
@@ -158,7 +195,8 @@ bool Simulation::yieldAtWork(Entity& entity, Vec2 center) {
         for (float fraction : std::array<float, 3>{{1.0f, 0.5f, 0.25f}}) {
             const Vec2 candidate = clampToWorld(worldSize(), 
                 addPoints(entity.pos, scalePoint(direction, travel * fraction)), unit.radius);
-            if (!navigation_.segmentClear(entity.pos, candidate, unit.radius, entity.id) ||
+            if (!navigation_.segmentClear(entity.pos, candidate, unit.radius,
+                    ignoredStatic ? ignoredStatic : entity.id) ||
                 !dynamicallyClear(candidate)) {
                 continue;
             }
@@ -253,10 +291,84 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
     }
 
     if (unit.air) {
-        const Vec2 direction = normalizePoint(destinationDelta);
+        const Vec2 direct = normalizePoint(destinationDelta);
         const float travel = std::min(unit.speed * Step, std::sqrt(lengthSquared(destinationDelta)));
-        entity.pos = clampToWorld(worldSize(), addPoints(entity.pos, scalePoint(direction, travel)), unit.radius);
-        entity.facing = std::atan2(direction.y, direction.x);
+        auto clearsAirHolds = [&](Vec2 candidate) {
+            for (const Entity& other : entities_) {
+                if (other.id == entity.id || !mobile(other) ||
+                    !definition(other.kind).air || other.order != Order::Hold) {
+                    continue;
+                }
+                const float clearance = unit.radius + definition(other.kind).radius;
+                const float before = distanceSquared(entity.pos, other.pos);
+                const float after = distanceSquared(candidate, other.pos);
+                if (before < clearance * clearance) {
+                    const Vec2 displacement = subtractPoints(candidate, entity.pos);
+                    const Vec2 radial = subtractPoints(entity.pos, other.pos);
+                    if (after <= before + 0.01f ||
+                        displacement.x * radial.x + displacement.y * radial.y < -0.01f) return false;
+                    continue;
+                }
+                if (segmentDistanceSquared(entity.pos, candidate, other.pos) <
+                    clearance * clearance) return false;
+            }
+            return true;
+        };
+        auto candidateFor = [&](Vec2 direction, float amount) {
+            return clampToWorld(worldSize(),
+                addPoints(entity.pos, scalePoint(normalizePoint(direction), amount)), unit.radius);
+        };
+
+        const Vec2 directCandidate = candidateFor(direct, travel);
+        Vec2 accepted = directCandidate;
+        Vec2 acceptedDirection = direct;
+        bool moved = clearsAirHolds(directCandidate);
+        if (!moved) {
+            const Entity* nearestHold = nullptr;
+            float nearestDistance = std::numeric_limits<float>::max();
+            for (const Entity& other : entities_) {
+                if (other.id == entity.id || !mobile(other) ||
+                    !definition(other.kind).air || other.order != Order::Hold) {
+                    continue;
+                }
+                const float clearance = unit.radius + definition(other.kind).radius;
+                if (segmentDistanceSquared(entity.pos, directCandidate, other.pos) >=
+                    clearance * clearance) continue;
+                const float distance = distanceSquared(entity.pos, other.pos);
+                if (!nearestHold || distance < nearestDistance ||
+                    (distance == nearestDistance && other.id < nearestHold->id)) {
+                    nearestHold = &other;
+                    nearestDistance = distance;
+                }
+            }
+            if (nearestHold) {
+                if (entity.avoidanceSide == 0) entity.avoidanceSide = -1;
+                const Vec2 radial = normalizePoint(subtractPoints(entity.pos, nearestHold->pos));
+                const Vec2 perpendicular{-radial.y, radial.x};
+                for (int pass = 0; pass < 2 && !moved; ++pass) {
+                    const int side = pass == 0 ? entity.avoidanceSide : -entity.avoidanceSide;
+                    const Vec2 tangent = scalePoint(perpendicular, static_cast<float>(side));
+                    for (float outward : std::array<float, 3>{{0.12f, 0.35f, 0.7f}}) {
+                        const Vec2 steering = normalizePoint(
+                            addPoints(tangent, scalePoint(radial, outward)));
+                        for (float fraction : std::array<float, 4>{{1.0f, 0.5f, 0.25f, 0.125f}}) {
+                            const Vec2 candidate = candidateFor(steering, travel * fraction);
+                            if (!clearsAirHolds(candidate)) continue;
+                            accepted = candidate;
+                            acceptedDirection = steering;
+                            entity.avoidanceSide = side;
+                            moved = true;
+                            break;
+                        }
+                        if (moved) break;
+                    }
+                }
+            }
+        }
+        if (moved) {
+            entity.pos = accepted;
+            entity.facing = std::atan2(acceptedDirection.y, acceptedDirection.x);
+        }
         return true;
     }
 
@@ -291,9 +403,35 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
         entity.navigationBestDistance = 0.0f;
     }
 
+    // Traffic separation can move a unit away from the segment the planner
+    // validated. Check the whole remaining leg before taking another step:
+    // checking only this frame's travel lets it walk into the obstacle before
+    // stall recovery discovers the broken route. Repair through the usual
+    // bounded search budget, preserving the accepted destination/work slot.
+    if (entity.pathIndex < static_cast<int>(entity.path.size()) &&
+        !navigation_.segmentClear(entity.pos, entity.path[entity.pathIndex],
+            unit.radius, entity.id)) {
+        entity.path.clear();
+        entity.pathIndex = 0;
+        entity.repath = 0.0f;
+        entity.navigationExhausted = false;
+        entity.stalledFor = 0.0f;
+        entity.navigationBestDistance = 0.0f;
+    }
+
     if (entity.path.empty() || entity.pathIndex >= static_cast<int>(entity.path.size())) {
         if (entity.navigationExhausted && entity.pathGeometry == geometry) {
-            return false;
+            // A moving target changes its approach point without changing the
+            // static graph. Retry pursuit with the existing bounded backoff;
+            // fixed unreachable Move/Hold/work orders keep their failure state.
+            const bool pursuing = (entity.target != 0 &&
+                (entity.order == Order::Attack || entity.order == Order::AttackMove||entity.order == Order::Idle)) ||
+                ((entity.order == Order::Patrol||entity.order == Order::Escort)&&
+                 (entity.sustained.phase==SustainedOrderPhase::Pursuit||entity.order==Order::Escort));
+            if (!pursuing || entity.repath > 0.0f) {
+                return false;
+            }
+            entity.navigationExhausted = false;
         }
         if (entity.repath > 0.0f) {
             return true;
@@ -311,6 +449,13 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
         const bool finalWaypoint = entity.pathIndex + 1 == static_cast<int>(entity.path.size());
         const float arrival = finalWaypoint ? ArrivalDistance : WaypointDistance;
         if (distanceSquared(entity.pos, entity.path[entity.pathIndex]) >= arrival * arrival) {
+            break;
+        }
+        // Near a corner is not the same as around it. Only skip a turning
+        // point when the unit's entire clearance disk can reach the next leg.
+        // Otherwise keep approaching this point, including sub-step distances.
+        if (!finalWaypoint && !navigation_.segmentClear(entity.pos,
+                entity.path[entity.pathIndex + 1], unit.radius, entity.id)) {
             break;
         }
         ++entity.pathIndex;
@@ -332,11 +477,21 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
     for (int index = entity.pathIndex + 1; index < static_cast<int>(entity.path.size()); ++index) {
         remainingDistance += distanceBetween(entity.path[index - 1], entity.path[index]);
     }
-    const bool trafficYielding = entity.yieldFor > 0.0f && entity.order != Order::Idle;
-    if (advancedWaypoint || entity.navigationBestDistance <= 0.0f || trafficYielding) {
+    // A moving Escort can receive a fresh yield marker on every collision with
+    // its own leader while its immutable slot lies on the opposite side. It
+    // must still measure lack of route progress so lateral avoidance matures;
+    // only an Escort already inside its arrival region treats the timer as a
+    // completed traffic yield.
+    const bool escortStillTraveling = entity.order == Order::Escort &&
+        distanceSquared(entity.pos, entity.goal) >=
+            Simulation::SustainedReturnTolerance * Simulation::SustainedReturnTolerance;
+    const bool hasTrafficYield = entity.yieldFor > 0.0f && entity.order != Order::Idle;
+    const bool resetProgressForTraffic = hasTrafficYield && !escortStillTraveling;
+    if (advancedWaypoint || entity.navigationBestDistance <= 0.0f || resetProgressForTraffic) {
         entity.navigationAnchor = entity.pos;
         entity.stalledFor = 0.0f;
         entity.navigationBestDistance = remainingDistance;
+        if (advancedWaypoint) entity.navigationExhausted = false;
         if (advancedWaypoint) {
             entity.navigationFailures = std::max(0, entity.navigationFailures - 1);
         }
@@ -345,47 +500,45 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
             entity.navigationAnchor = entity.pos;
             entity.stalledFor = 0.0f;
             entity.navigationBestDistance = remainingDistance;
+            entity.navigationExhausted = false;
         } else {
             entity.stalledFor += Step;
         }
     }
 
-    if (entity.stalledFor >= StallWindow) {
-        const int previousFailures = entity.navigationFailures;
-        entity.navigationFailures = std::min(
-            MaxNavigationFailures, entity.navigationFailures + 1);
-        const bool workRoute = entity.workPointValid ||
-            entity.order == Order::Gather || entity.order == Order::Construct;
-        if (workRoute) {
-            entity.workPointValid = false;
-        }
-        // Traffic is absent from the static route graph. Keep a still-valid
-        // route through short traffic stalls and try local passing first. One
-        // bounded replan checks for a better static approach after repeated
-        // failures; work orders also re-evaluate their perimeter slot.
-        const bool replan = workRoute || entity.navigationFailures == 3;
-        if (replan) {
-            entity.path.clear();
-            entity.pathIndex = 0;
-            entity.repath = retryDelay(entity.navigationFailures);
-        }
-        entity.navigationExhausted = false;
-        entity.stalledFor = 0.0f;
-        entity.navigationAnchor = entity.pos;
-        if (replan) {
-            entity.navigationBestDistance = 0.0f;
-            entity.avoidanceSide = entity.avoidanceSide == 0 ? -1 : -entity.avoidanceSide;
-        }
-        if (entity.navigationFailures > previousFailures) {
-            ++navigationStats_.failures;
-        }
-        return true;
-    }
 
     Vec2 direction = normalizePoint(subtractPoints(waypoint, entity.pos));
     const float stepDistance = std::min(unit.speed * Step, distanceBetween(entity.pos, waypoint));
     if (stepDistance <= 0.0001f) {
         return true;
+    }
+
+    // The static route graph does not contain mobile leaders. When an Escort's
+    // immutable slot lies across its own leader, derive a finite local arc
+    // without changing the accepted goal or serialized path. A stable side and
+    // small outward bias carry the follower around the physical clearance disk;
+    // ordinary exact-goal steering resumes as soon as the direct segment clears.
+    bool escortBypassingLeader = false;
+    if (entity.order == Order::Escort &&
+        entity.sustained.phase != SustainedOrderPhase::Pursuit) {
+        const Entity* leader = find(entity.sustained.escortTarget);
+        if (leader && leader->alive() && !definition(leader->kind).air) {
+            const float physical = unit.radius + definition(leader->kind).radius;
+            const float trigger = physical + 8.0f;
+            const float currentRadius = distanceBetween(entity.pos, leader->pos);
+            if (currentRadius <= physical + Simulation::EscortSpacing &&
+                segmentDistanceSquared(entity.pos, entity.goal, leader->pos) < trigger * trigger) {
+                if (entity.avoidanceSide == 0) entity.avoidanceSide = -1;
+                const Vec2 radial = normalizePoint(subtractPoints(entity.pos, leader->pos));
+                const Vec2 tangent = scalePoint(
+                    Vec2{-radial.y, radial.x}, static_cast<float>(entity.avoidanceSide));
+                const float orbitRadius = physical + 14.0f;
+                const float outward = std::max(0.08f,
+                    std::clamp((orbitRadius - currentRadius) / orbitRadius, 0.0f, 0.55f));
+                direction = normalizePoint(addPoints(tangent, scalePoint(radial, outward)));
+                escortBypassingLeader = true;
+            }
+        }
     }
 
     auto visitNeighbors = [&](Vec2 point, const auto& visitor) {
@@ -417,21 +570,61 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
             entity.pos, addPoints(entity.pos, scalePoint(direction, std::max(stepDistance, 72.0f))), other.pos);
         const Vec2 offset = subtractPoints(other.pos, entity.pos);
         const float forward = offset.x * direction.x + offset.y * direction.y;
+        const bool leavingEscortLeader = entity.order == Order::Escort &&
+            entity.sustained.escortTarget == other.id && forward <= 0.0f;
+        if (leavingEscortLeader) return;
         if (forward > -combined * 0.25f && forward < 84.0f && along < combined * combined &&
             forward < nearestBlockerDistance) {
             nearestBlocker = &other;
             nearestBlockerDistance = forward;
         }
     });
-    if (nearestBlocker) {
-        // Static routing cannot improve a route that is waiting on nearby
-        // traffic. Give local avoidance time to resolve it without treating
-        // lateral passing or queueing as failed route progress.
-        entity.stalledFor = 0.0f;
-        entity.navigationBestDistance = remainingDistance;
+    const bool blockedByHold = nearestBlocker && nearestBlocker->order == Order::Hold;
+    // A Hold can close an otherwise valid route because mobile units are not
+    // part of the static path graph. Such a blocked marker belongs to the
+    // retained path and clears immediately when the Hold is released; ordinary
+    // static no-route state has an empty path and remains unchanged.
+    if (entity.navigationExhausted && !entity.path.empty() && !blockedByHold) {
+        entity.navigationExhausted = false;
     }
-    const bool yieldableIdle = nearestBlocker && nearestBlocker->order == Order::Idle &&
-        nearestBlocker->target == 0;
+    if (entity.stalledFor >= StallWindow) {
+        const int previousFailures = entity.navigationFailures;
+        entity.navigationFailures = std::min(
+            MaxNavigationFailures, entity.navigationFailures + 1);
+        const bool workRoute = entity.workPointValid ||
+            entity.order == Order::Gather || entity.order == Order::Construct;
+        // Avoidance can push a unit off a previously clear route. Repair that
+        // segment even when nearby traffic is also blocking it, while keeping
+        // its accepted mining/construction slot. Otherwise use local avoidance
+        // for traffic and reconsider work positions only without a blocker.
+        const bool offRoute = !navigation_.segmentClear(
+            entity.pos, waypoint, unit.radius, entity.id);
+        const bool reconsiderWork = !offRoute && !nearestBlocker && workRoute;
+        const bool replan = offRoute || reconsiderWork ||
+            (!nearestBlocker && entity.navigationFailures == 3);
+        if (reconsiderWork) entity.workPointValid = false;
+        if (replan) {
+            entity.path.clear();
+            entity.pathIndex = 0;
+            entity.repath = retryDelay(entity.navigationFailures);
+        }
+        entity.navigationExhausted = blockedByHold && !replan &&
+            entity.navigationFailures >= MaxNavigationFailures;
+        entity.stalledFor = 0.0f;
+        entity.navigationAnchor = entity.pos;
+        if (replan) {
+            entity.navigationBestDistance = 0.0f;
+            if (!escortBypassingLeader)
+                entity.avoidanceSide = entity.avoidanceSide == 0 ? -1 : -entity.avoidanceSide;
+        }
+        if (entity.navigationFailures > previousFailures) {
+            ++navigationStats_.failures;
+        }
+        return true;
+    }
+
+
+    const bool yieldableIdle = nearestBlocker && yieldsTo(*nearestBlocker, entity);
     const bool yieldableWorker = nearestBlocker && nearestBlocker->order == Order::Gather &&
         !nearestBlocker->returning && nearestBlocker->workPointValid &&
         distanceSquared(nearestBlocker->pos, nearestBlocker->workPoint) < 20.0f * 20.0f;
@@ -452,7 +645,10 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
         if (navigation_.segmentClear(
                 nearestBlocker->pos, yielded, otherUnit.radius, nearestBlocker->id)) {
             nearestBlocker->pos = yielded;
-            nearestBlocker->yieldFor = 0.35f;
+            const bool directFollower = nearestBlocker->order == Order::Escort &&
+                nearestBlocker->sustained.escortTarget == entity.id;
+            if (!directFollower || entity.order == Order::Gather || entity.order == Order::Construct)
+                nearestBlocker->yieldFor = 0.35f;
             nearestBlocker->navigationAnchor = yielded;
             nearestBlocker->stalledFor = 0.0f;
         }
@@ -465,14 +661,25 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
                 return;
             }
             const float physicalRadius = unit.radius + definition(other.kind).radius;
+            const bool directEscortEdge =
+                (entity.order == Order::Escort && entity.sustained.escortTarget == other.id) ||
+                (other.order == Order::Escort && other.sustained.escortTarget == entity.id);
             const bool compressibleFriendly = other.team == entity.team &&
-                !anchored(other) && !anchored(entity);
+                !anchored(other) && !anchored(entity) && !directEscortEdge;
             // A moving friendly queue may compress slightly during the movement
             // phase; finishMovementStep restores full separation. The swept
             // check still prevents one unit from crossing through another.
             const float combined = compressibleFriendly ? physicalRadius * 0.35f : physicalRadius;
             const float before = distanceSquared(entity.pos, other.pos);
             const float after = distanceSquared(candidate, other.pos);
+            if (other.order == Order::Hold && before < physicalRadius * physicalRadius) {
+                const Vec2 displacement = subtractPoints(candidate, entity.pos);
+                const Vec2 radial = subtractPoints(entity.pos, other.pos);
+                if (after > before + 0.01f &&
+                    displacement.x * radial.x + displacement.y * radial.y >= -0.01f) return;
+                clear = false;
+                return;
+            }
             if (before < combined * combined && after > before + 0.01f) {
                 return;
             }
@@ -523,7 +730,7 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
             !navigation_.segmentClear(entity.pos, crossingRight, unit.radius, entity.id);
     }
 
-    if (trafficYielding && narrowPassage && !anchored(entity)) {
+    if (hasTrafficYield && narrowPassage && !anchored(entity)) {
         // Pass the yield request back through a queue. Without this, the first
         // unit can have room behind it in principle but remain pinned by the
         // next unit, which never sees the oncoming traffic itself.
@@ -581,7 +788,43 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
     }
 
     bool moved = false;
-    if (opposingTraffic && !narrowPassage) {
+    if (escortBypassingLeader) {
+        for (float fraction : std::array<float, 4>{{1.0f, 0.5f, 0.25f, 0.125f}}) {
+            if (tryDirection(direction, stepDistance * fraction)) {moved=true;break;}
+        }
+    }
+    if (!moved && nearestBlocker && nearestBlocker->team == entity.team &&
+        entity.navigationFailures > 0 && entity.stalledFor >= 0.2f && !anchored(entity)) {
+        // After measured lack of progress, prefer one deterministic side of a
+        // friendly queue before trying the direct heading again. A past stall
+        // alone must not keep steering a progressing or freshly planned route
+        // sideways. No synthetic waypoint or persistent destination is needed.
+        const Vec2 perpendicular{-direction.y, direction.x};
+        int side = entity.avoidanceSide;
+        if (side == 0) {
+            side = -1;
+            entity.avoidanceSide = side;
+        }
+        for (float bias : std::array<float, 3>{{1.0f, 1.65f, 4.0f}}) {
+            if (tryDirection(
+                    addPoints(direction, scalePoint(perpendicular, side * bias)), stepDistance)) {
+                moved = true;
+                break;
+            }
+        }
+        if (!moved) {
+            // Tiny forward fractions can oscillate between two blockers forever.
+            // Commit to a short sideways retreat before trying those fractions.
+            const Vec2 backward = scalePoint(direction, -1.0f);
+            for (float bias : std::array<float, 3>{{0.2f, 0.45f, 0.9f}}) {
+                if (tryDirection(addPoints(backward, scalePoint(perpendicular, side * bias)), stepDistance)) {
+                    moved = true;
+                    break;
+                }
+            }
+        }
+    }
+    if (!moved && opposingTraffic && !narrowPassage) {
         const Vec2 perpendicular{-direction.y, direction.x};
         const int side = entity.avoidanceSide == 0 ? -1 : entity.avoidanceSide;
         entity.avoidanceSide = side;
@@ -710,6 +953,27 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
                 }
             }
         }
+        if (!moved && nearestBlocker && nearestBlocker->team == entity.team &&
+            entity.navigationFailures > 0 && !anchored(entity)) {
+            // A dense friendly queue can leave no forward or lateral opening.
+            // A short retreat can create enough room for the next biased local
+            // steering attempt without changing or extending the route.
+            const Vec2 backward = scalePoint(direction, -1.0f);
+            for (float amount : std::array<float, 3>{{0.45f, 0.9f, 0.0f}}) {
+                for (int backSide : std::array<int, 2>{{side, -side}}) {
+                    const Vec2 escape = addPoints(
+                        backward, scalePoint(perpendicular, amount * backSide));
+                    for (float fraction : std::array<float, 3>{{1.0f, 0.5f, 0.25f}}) {
+                        if (tryDirection(escape, stepDistance * fraction)) {
+                            moved = true;
+                            break;
+                        }
+                    }
+                    if (moved) break;
+                }
+                if (moved) break;
+            }
+        }
     }
 
     if (moved) {
@@ -720,6 +984,12 @@ bool Simulation::moveToward(Entity& entity, Vec2 destination) {
 
 void Simulation::finishMovementStep() {
     ensureNavigation();
+    std::vector<const Entity*> holds;
+    for (const Entity& entity : entities_) {
+        if (mobile(entity) && entity.order == Order::Hold) {
+            holds.push_back(&entity);
+        }
+    }
     // Entity index order makes separation deterministic; the unordered buckets
     // only accelerate lookup and never decide which correction happens first.
     for (std::size_t leftIndex = 0; leftIndex < entities_.size(); ++leftIndex) {
@@ -763,12 +1033,19 @@ void Simulation::finishMovementStep() {
                         const float correction = std::min(8.0f, desired - separation);
                         const bool leftHeld = anchored(left);
                         const bool rightHeld = anchored(right);
-                        const bool leftIdle = left.order == Order::Idle && left.target == 0;
-                        const bool rightIdle = right.order == Order::Idle && right.target == 0;
+                        const bool leftIdle = yieldsTo(left, right);
+                        const bool rightIdle = yieldsTo(right, left);
+                        const bool leftLeadsRight = right.order == Order::Escort &&
+                            right.sustained.escortTarget == left.id;
+                        const bool rightLeadsLeft = left.order == Order::Escort &&
+                            left.sustained.escortTarget == right.id;
 
                         float leftShare = 0.5f;
                         float rightShare = 0.5f;
-                        if (leftHeld || rightHeld) {
+                        if (leftLeadsRight || rightLeadsLeft) {
+                            leftShare = leftLeadsRight ? 0.0f : 1.0f;
+                            rightShare = rightLeadsLeft ? 0.0f : 1.0f;
+                        } else if (leftHeld || rightHeld) {
                             leftShare = leftHeld ? 0.0f : 1.0f;
                             rightShare = rightHeld ? 0.0f : 1.0f;
                         } else if (leftIdle != rightIdle && left.team == right.team) {
@@ -780,17 +1057,60 @@ void Simulation::finishMovementStep() {
                             addPoints(left.pos, scalePoint(delta, correction * leftShare)), leftUnit.radius);
                         const Vec2 rightCandidate = clampToWorld(worldSize(), 
                             addPoints(right.pos, scalePoint(delta, -correction * rightShare)), rightUnit.radius);
+                        auto clearsEscortLeader = [&](const Entity& follower, Vec2 candidate) {
+                            if (follower.order != Order::Escort) return true;
+                            const Entity* leader = find(follower.sustained.escortTarget);
+                            if (!leader || !leader->alive() ||
+                                definition(leader->kind).air != definition(follower.kind).air) return true;
+                            const float clearance = definition(follower.kind).radius +
+                                definition(leader->kind).radius;
+                            const float before = distanceSquared(follower.pos, leader->pos);
+                            const float after = distanceSquared(candidate, leader->pos);
+                            return after >= clearance * clearance ||
+                                (before < clearance * clearance && after > before + 0.01f);
+                        };
+                        auto clearsHolds = [&](const Entity& mover, Vec2 candidate) {
+                            for (const Entity* heldPointer : holds) {
+                                const Entity& held = *heldPointer;
+                                if (held.id == mover.id || definition(held.kind).air !=
+                                    definition(mover.kind).air) continue;
+                                const float clearance = definition(mover.kind).radius +
+                                    definition(held.kind).radius;
+                                const float before = distanceSquared(mover.pos, held.pos);
+                                const float after = distanceSquared(candidate, held.pos);
+                                if (before < clearance * clearance) {
+                                    const Vec2 displacement = subtractPoints(candidate, mover.pos);
+                                    const Vec2 radial = subtractPoints(mover.pos, held.pos);
+                                    if (after <= before + 0.01f ||
+                                        displacement.x * radial.x + displacement.y * radial.y < -0.01f) {
+                                        return false;
+                                    }
+                                    continue;
+                                }
+                                if (segmentDistanceSquared(mover.pos, candidate, held.pos) <
+                                    clearance * clearance) return false;
+                            }
+                            return true;
+                        };
                         if (leftShare > 0.0f && (leftUnit.air || navigation_.segmentClear(
-                                left.pos, leftCandidate, leftUnit.radius, left.id))) {
+                                left.pos, leftCandidate, leftUnit.radius, left.id)) &&
+                                clearsEscortLeader(left, leftCandidate) &&
+                                clearsHolds(left, leftCandidate)) {
                             left.pos = leftCandidate;
-                            if (leftIdle && left.team == right.team) {
+                            const bool directNonWorkLeader = rightLeadsLeft &&
+                                right.order != Order::Gather && right.order != Order::Construct;
+                            if (leftIdle && left.team == right.team && !directNonWorkLeader) {
                                 left.yieldFor = std::max(left.yieldFor, 0.2f);
                             }
                         }
                         if (rightShare > 0.0f && (rightUnit.air || navigation_.segmentClear(
-                                right.pos, rightCandidate, rightUnit.radius, right.id))) {
+                                right.pos, rightCandidate, rightUnit.radius, right.id)) &&
+                                clearsEscortLeader(right, rightCandidate) &&
+                                clearsHolds(right, rightCandidate)) {
                             right.pos = rightCandidate;
-                            if (rightIdle && left.team == right.team) {
+                            const bool directNonWorkLeader = leftLeadsRight &&
+                                left.order != Order::Gather && left.order != Order::Construct;
+                            if (rightIdle && left.team == right.team && !directNonWorkLeader) {
                                 right.yieldFor = std::max(right.yieldFor, 0.2f);
                             }
                         }

@@ -78,6 +78,61 @@ void writeLines(const std::string& path,const std::vector<std::string>& lines) {
     std::ofstream output(path,std::ios::trunc);for(const auto& line:lines)output<<line<<'\n';
 }
 
+void stripSaveElevenRecordingModes(std::vector<std::string>& lines) {
+    auto split=[](const std::string& row) {
+        std::istringstream input(row);std::vector<std::string> values;std::string value;
+        while(input>>value)values.push_back(value);return values;
+    };
+    auto join=[](const std::vector<std::string>& values) {
+        std::ostringstream output;for(std::size_t index=0;index<values.size();++index)output<<(index?" ":"")<<values[index];return output.str();
+    };
+    const auto config=split(lines.at(1));const auto players=static_cast<std::size_t>(std::stoul(config.at(5)));std::size_t cursor=3+players;
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    const auto entityCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t entity=0;entity<entityCount;++entity) {
+        ++cursor;cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+        cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    }
+    const auto effectHeader=split(lines.at(cursor));cursor+=1+static_cast<std::size_t>(std::stoul(effectHeader.front()))+players*2;
+    const auto recordingCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t recording=0;recording<recordingCount;++recording) {
+        auto row=split(lines.at(cursor));row.erase(row.begin()+8);lines[cursor++]=join(row);
+    }
+}
+
+void stripSaveThirteenFormation(std::vector<std::string>& lines) {
+    auto split=[](const std::string& row) {
+        std::istringstream input(row);std::vector<std::string> values;std::string value;
+        while(input>>value)values.push_back(value);return values;
+    };
+    auto join=[](const std::vector<std::string>& values) {
+        std::ostringstream output;for(std::size_t index=0;index<values.size();++index)output<<(index?" ":"")<<values[index];return output.str();
+    };
+    auto config=split(lines.at(1));
+    if(lines.front()=="CINDERLINE 15") {check(config.size()==7,"current production save includes its map revision");config.pop_back();lines[1]=join(config);}
+    const auto players=static_cast<std::size_t>(std::stoul(config.at(5)));std::size_t cursor=3+players;
+    cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    const auto entityCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t entity=0;entity<entityCount;++entity) {
+        ++cursor;cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+        cursor+=1+static_cast<std::size_t>(std::stoul(lines.at(cursor)));
+    }
+    const auto effectHeader=split(lines.at(cursor));cursor+=1+static_cast<std::size_t>(std::stoul(effectHeader.front()))+players*2;
+    const auto recordingCount=static_cast<std::size_t>(std::stoul(lines.at(cursor++)));
+    for(std::size_t recording=0;recording<recordingCount;++recording) {
+        auto row=split(lines.at(cursor));
+        check(row.size()>=13&&row.size()==13+static_cast<std::size_t>(std::stoul(row[12])),
+              "save-thirteen production fixture has complete formation recording fields");
+        row.erase(row.begin()+9,row.begin()+12);lines[cursor++]=join(row);
+    }
+    const auto sustained=std::find(lines.begin(),lines.end(),"SUSTAINED_ORDERS 1");
+    const auto formation=std::find(lines.begin(),lines.end(),"FORMATION_ORDERS 1");
+    check(sustained!=lines.end()&&formation!=lines.end()&&sustained<formation,
+          "save-thirteen production fixture has ordered sustained and formation sections");
+    lines.erase(formation,lines.end());
+    lines.front()="CINDERLINE 12";
+}
+
 std::string replaceField(const std::string& row,std::size_t column,const std::string& replacement) {
     std::istringstream input(row);std::vector<std::string> fields;std::string value;
     while(input>>value)fields.push_back(value);check(column<fields.size(),"save fixture field exists");fields[column]=replacement;
@@ -358,13 +413,15 @@ void replayAndPersistence() {
     check(send(simulation,CommandType::AutoRally,0,{}, {1800,1500},0,Kind::Foundry).accepted,"persistence fixture records a global rally");
     check(send(simulation,CommandType::AutoRally,0,{}, {2100,1700},0,Kind::Resource).accepted,"persistence fixture records the persistent army rally");
     const auto recording=simulation.recording();
-    check(recording.size()==4&&recording[0].command.type==CommandType::AutoTrain&&recording[0].command.units.empty()&&recording[0].command.queueIndex==5,"recording retains the complete automatic batch request");
+    check(recording.size()==4&&recording[0].command.type==CommandType::AutoTrain&&recording[0].command.units.empty()&&
+          recording[0].command.queueIndex==5&&recording[0].command.queueMode==CommandQueueMode::Replace,
+          "recording retains the complete replacing automatic batch request");
 
     auto replay=prepare();
     for(const auto& item:recording)check(replay.command(item.command).accepted,"recorded automatic command replays successfully");
     check(replay.stateHash()==simulation.stateHash(),"automatic allocation and stable job IDs replay deterministically");
 
-    const auto path=(std::filesystem::temp_directory_path()/"cinderline-production-rallies-v10.sav").string();
+    const auto path=(std::filesystem::temp_directory_path()/"cinderline-production-rallies-v13.sav").string();
     check(simulation.save(path),"stable production jobs save");
     Simulation loaded;check(loaded.load(path),"stable production jobs load");
     check(loaded.stateHash()==simulation.stateHash(),"save-load preserves the full authoritative hash");
@@ -374,19 +431,23 @@ void replayAndPersistence() {
         check(restored->rallyOverride==source.rallyOverride&&restored->rally.x==source.rally.x&&restored->rally.y==source.rally.y,"save-load preserves facility rally inheritance and explicit overrides");
         for(std::size_t index=0;index<source.queue.size();++index)check(restored->queue[index].id==source.queue[index].id,"save-load preserves every stable queue job ID");
     }
-    check(loaded.recording().size()==recording.size()&&loaded.recording()[0].command.type==CommandType::AutoTrain&&loaded.recording()[0].command.queueIndex==5,"save-load preserves automatic replay commands");
+    check(loaded.recording().size()==recording.size()&&loaded.recording()[0].command.type==CommandType::AutoTrain&&
+          loaded.recording()[0].command.queueIndex==5&&loaded.recording()[0].command.queueMode==CommandQueueMode::Replace,
+          "save-load preserves automatic replay commands and their queue mode");
 
     const auto current=readLines(path);const auto marker=std::find(current.begin(),current.end(),"RALLY_STATE 1");
     check(marker!=current.end()&&marker+4<current.end(),"current save appends a complete tagged rally-state tail");
     const std::size_t markerIndex=static_cast<std::size_t>(marker-current.begin());
     auto missing=current;missing.erase(missing.begin()+static_cast<std::ptrdiff_t>(markerIndex),missing.end());writeLines(path,missing);
     Simulation incomplete;const auto incompleteBefore=incomplete.stateHash();
-    check(!incomplete.load(path)&&incomplete.stateHash()==incompleteBefore,"version ten requires its complete rally-state tail");
-    auto legacy=missing;legacy.front()="CINDERLINE 7";
+    check(!incomplete.load(path)&&incomplete.stateHash()==incompleteBefore,"version thirteen requires its complete rally, order-queue, sustained-order, and formation-order tail");
+    auto legacy=current;stripSaveThirteenFormation(legacy);
+    legacy.erase(legacy.begin()+static_cast<std::ptrdiff_t>(markerIndex),legacy.end());
+    stripSaveElevenRecordingModes(legacy);legacy.front()="CINDERLINE 7";
     {std::istringstream input(legacy.at(1));int map=0,ai=0,length=0,players=0;std::uint32_t seed=0;float aggression=0;
      input>>map>>seed>>ai>>aggression>>length>>players;legacy[1]=std::to_string(map)+" "+std::to_string(seed)+" "+std::to_string(ai)+" "+std::to_string(aggression);}
     {std::istringstream input(legacy.at(2));std::vector<std::string> values;std::string value;while(input>>value)values.push_back(value);
-     check(values.size()==6,"version ten fixture stores elimination state");values.pop_back();std::ostringstream output;
+     check(values.size()==6,"current fixture stores elimination state");values.pop_back();std::ostringstream output;
      for(std::size_t index=0;index<values.size();++index)output<<(index?" ":"")<<values[index];legacy[2]=output.str();}
     writeLines(path,legacy);
     Simulation migrated;check(migrated.load(path),"a pre-rally version-seven save without the optional tail still loads");
