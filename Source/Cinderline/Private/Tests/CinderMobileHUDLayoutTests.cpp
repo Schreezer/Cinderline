@@ -8,11 +8,12 @@ struct FMobileHUDCase
     const TCHAR* Name;
     FVector2D Size;
     FVector4 Insets;
+    bool bWideDrawer;
 };
 
 bool NearlyEqual(double A, double B)
 {
-    return FMath::IsNearlyEqual(A, B, 0.0001);
+    return FMath::IsNearlyEqual(A, B, 0.001);
 }
 
 bool IsDoubled(const FCinderMobileHUDLayout& Base, const FCinderMobileHUDLayout& Doubled)
@@ -42,6 +43,11 @@ bool IsDoubled(const FCinderMobileHUDLayout& Base, const FCinderMobileHUDLayout&
         && NearlyEqual(Doubled.Identity.Min.Y, Base.Identity.Min.Y * 2.0f)
         && NearlyEqual(Doubled.Identity.Max.X, Base.Identity.Max.X * 2.0f)
         && NearlyEqual(Doubled.Identity.Max.Y, Base.Identity.Max.Y * 2.0f)
+        && NearlyEqual(Doubled.VoiceButton.Min.X, Base.VoiceButton.Min.X * 2.0f)
+        && NearlyEqual(Doubled.VoiceButton.Max.Y, Base.VoiceButton.Max.Y * 2.0f)
+        && NearlyEqual(Doubled.VoiceControls.Min.Y, Base.VoiceControls.Min.Y * 2.0f)
+        && NearlyEqual(Doubled.VoiceStatus.Min.X, Base.VoiceStatus.Min.X * 2.0f)
+        && NearlyEqual(Doubled.VoiceStatus.Max.Y, Base.VoiceStatus.Max.Y * 2.0f)
         && NearlyEqual(Doubled.Drawer.Min.X, Base.Drawer.Min.X * 2.0f)
         && NearlyEqual(Doubled.Drawer.Min.Y, Base.Drawer.Min.Y * 2.0f)
         && NearlyEqual(Doubled.Drawer.Max.X, Base.Drawer.Max.X * 2.0f)
@@ -69,14 +75,14 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
 {
     (void)Parameters;
     const FMobileHUDCase Cases[] = {
-        {TEXT("iPhone 667x375"), FVector2D(667.0f, 375.0f), FVector4(0.0f, 0.0f, 0.0f, 0.0f)},
-        {TEXT("iPhone 844x390"), FVector2D(844.0f, 390.0f), FVector4(47.0f, 0.0f, 47.0f, 21.0f)},
-        {TEXT("iPhone 956x440"), FVector2D(956.0f, 440.0f), FVector4(62.0f, 0.0f, 62.0f, 34.0f)},
-        {TEXT("Landscape island left"), FVector2D(956.0f, 440.0f), FVector4(62.0f, 0.0f, 21.0f, 21.0f)},
-        {TEXT("Landscape island right"), FVector2D(956.0f, 440.0f), FVector4(21.0f, 0.0f, 62.0f, 21.0f)},
-        {TEXT("AEON native pixels island left"), FVector2D(2868.0f, 1320.0f), FVector4(186.0f, 0.0f, 63.0f, 63.0f)},
-        {TEXT("AEON native pixels island right"), FVector2D(2868.0f, 1320.0f), FVector4(63.0f, 0.0f, 186.0f, 63.0f)},
-        {TEXT("iPad 1024x768"), FVector2D(1024.0f, 768.0f), FVector4(0.0f, 0.0f, 0.0f, 20.0f)},
+        {TEXT("iPhone 667x375"), FVector2D(667.0f, 375.0f), FVector4(0.0f, 0.0f, 0.0f, 0.0f), false},
+        {TEXT("iPhone 844x390"), FVector2D(844.0f, 390.0f), FVector4(47.0f, 0.0f, 47.0f, 21.0f), true},
+        {TEXT("iPhone 956x440"), FVector2D(956.0f, 440.0f), FVector4(62.0f, 0.0f, 62.0f, 34.0f), true},
+        {TEXT("Landscape island left"), FVector2D(956.0f, 440.0f), FVector4(62.0f, 0.0f, 21.0f, 21.0f), true},
+        {TEXT("Landscape island right"), FVector2D(956.0f, 440.0f), FVector4(21.0f, 0.0f, 62.0f, 21.0f), true},
+        {TEXT("AEON native pixels island left"), FVector2D(2868.0f, 1320.0f), FVector4(186.0f, 0.0f, 63.0f, 63.0f), true},
+        {TEXT("AEON native pixels island right"), FVector2D(2868.0f, 1320.0f), FVector4(63.0f, 0.0f, 186.0f, 63.0f), true},
+        {TEXT("iPad 1024x768"), FVector2D(1024.0f, 768.0f), FVector4(0.0f, 0.0f, 0.0f, 20.0f), true},
     };
 
     for (const FMobileHUDCase& Case : Cases)
@@ -89,20 +95,32 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
         const float SafeTop = static_cast<float>(Case.Insets.Y);
         const float SafeRight = static_cast<float>(Case.Insets.Z);
         const float SafeBottom = static_cast<float>(Case.Insets.W);
-        const float ExpectedScale = Width / Height < 1.65f
+        // Mirrors the three device references the layout now selects between:
+        // 4:3 tablet, 16:9 phone and 19.5:9 phone. The fixtures below cover
+        // one aspect on each side of both thresholds.
+        const float Aspect = Width / Height;
+        const float ExpectedScale = Aspect < 1.65f
             ? FMath::Min(Width / 1024.0f, Height / 768.0f)
-            : FMath::Min(Width / 667.0f, Height / 375.0f);
+            : Aspect < 1.90f
+                ? FMath::Min(Width / 667.0f, Height / 375.0f)
+                : FMath::Min(Width / 844.0f, Height / 390.0f);
 
         TestTrue(*FString::Printf(TEXT("%s selects the expected logical scale"), *Prefix),
             NearlyEqual(Layout.Scale, ExpectedScale));
-        TestTrue(*FString::Printf(TEXT("%s global rail is 48 by 188 logical units"), *Prefix),
-            NearlyEqual(Layout.GlobalActions.GetSize().X, 48.0f * Layout.Scale)
-                && NearlyEqual(Layout.GlobalActions.GetSize().Y, 188.0f * Layout.Scale));
-        TestTrue(*FString::Printf(TEXT("%s navigation trio is 140 by 44 logical units"), *Prefix),
-            NearlyEqual(Layout.Navigation.GetSize().X, 140.0f * Layout.Scale)
+        // A 19.5:9 phone must be measured against the 844x390 reference, not
+        // the 2017 16:9 pair that used to inflate every control on it.
+        if (Aspect >= 1.90f)
+            TestTrue(*FString::Printf(TEXT("%s uses the 844 by 390 modern phone reference"), *Prefix),
+                NearlyEqual(Layout.Scale, FMath::Min(Width / 844.0f, Height / 390.0f))
+                    && Layout.Scale < FMath::Min(Width / 667.0f, Height / 375.0f));
+        TestTrue(*FString::Printf(TEXT("%s global tools fit a 92-unit icon grid"), *Prefix),
+            NearlyEqual(Layout.GlobalActions.GetSize().X, 92.0f * Layout.Scale)
+                && NearlyEqual(Layout.GlobalActions.GetSize().Y, 92.0f * Layout.Scale));
+        TestTrue(*FString::Printf(TEXT("%s navigation fits one 188 by 44 row"), *Prefix),
+            NearlyEqual(Layout.Navigation.GetSize().X, 188.0f * Layout.Scale)
                 && NearlyEqual(Layout.Navigation.GetSize().Y, 44.0f * Layout.Scale));
-        TestTrue(*FString::Printf(TEXT("%s command row is 208 by 44 logical units"), *Prefix),
-            NearlyEqual(Layout.Commands.GetSize().X, 208.0f * Layout.Scale)
+        TestTrue(*FString::Printf(TEXT("%s command row is 232 by 44 logical units"), *Prefix),
+            NearlyEqual(Layout.Commands.GetSize().X, 232.0f * Layout.Scale)
                 && NearlyEqual(Layout.Commands.GetSize().Y, 44.0f * Layout.Scale));
         TestTrue(*FString::Printf(TEXT("%s portrait ribbon is 44 logical units high"), *Prefix),
             NearlyEqual(Layout.Portraits.GetSize().Y, 44.0f * Layout.Scale));
@@ -115,51 +133,93 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
             NearlyEqual(Layout.GlobalActions.Min.X, Layout.Left)
                 && NearlyEqual(Layout.GlobalActions.Min.Y, Layout.Top + 46.0f * Layout.Scale)
                 && NearlyEqual(Layout.Navigation.Max.X, Layout.Right)
-                && NearlyEqual(Layout.Navigation.Min.Y, Layout.Top + 46.0f * Layout.Scale)
+                && NearlyEqual(Layout.Navigation.Min.Y, Layout.Top)
                 && NearlyEqual(Layout.Commands.Max.X, Layout.Right)
                 && NearlyEqual(Layout.Commands.Max.Y, Layout.Bottom));
         TestTrue(*FString::Printf(TEXT("%s minimap uses the bottom-left safe-area anchor"), *Prefix),
             NearlyEqual(Layout.Minimap.Min.X, Layout.Left)
                 && NearlyEqual(Layout.Minimap.Max.Y, Layout.Bottom));
-        TestTrue(*FString::Printf(TEXT("%s persistent global tabs retain 44-unit targets"), *Prefix),
+        TestTrue(*FString::Printf(TEXT("%s persistent global tools retain 44-unit targets"), *Prefix),
             FCinderMobileHUDLayout::GlobalBuildWidth >= 44.0f
                 && FCinderMobileHUDLayout::GlobalTrainWidth >= 44.0f
                 && FCinderMobileHUDLayout::GlobalResearchWidth >= 44.0f
                 && FCinderMobileHUDLayout::GlobalArmyWidth >= 44.0f
                 && FCinderMobileHUDLayout::GlobalActionHeight >= 44.0f);
-        TestTrue(*FString::Printf(TEXT("%s global tabs use four 48-wide faces on a 188-unit vertical rail"), *Prefix),
-            NearlyEqual(FCinderMobileHUDLayout::GlobalBuildWidth, 48.0f)
-                && NearlyEqual(FCinderMobileHUDLayout::GlobalTrainWidth, 48.0f)
-                && NearlyEqual(FCinderMobileHUDLayout::GlobalResearchWidth, 48.0f)
-                && NearlyEqual(FCinderMobileHUDLayout::GlobalArmyWidth, 48.0f)
-                && NearlyEqual(4.0f * FCinderMobileHUDLayout::GlobalActionHeight
-                    + 3.0f * FCinderMobileHUDLayout::GlobalActionGap, 188.0f));
-        const float NavTarget = 44.0f * Layout.Scale;
-        const float NavGap = 4.0f * Layout.Scale;
+        TestTrue(*FString::Printf(TEXT("%s four global icons use equal 44-unit touch faces"), *Prefix),
+            NearlyEqual(FCinderMobileHUDLayout::GlobalBuildWidth, 44.0f)
+                && NearlyEqual(FCinderMobileHUDLayout::GlobalTrainWidth, 44.0f)
+                && NearlyEqual(FCinderMobileHUDLayout::GlobalResearchWidth, 44.0f)
+                && NearlyEqual(FCinderMobileHUDLayout::GlobalArmyWidth, 44.0f)
+                && NearlyEqual(FCinderMobileHUDLayout::GlobalActionGridWidth, 92.0f)
+                && NearlyEqual(FCinderMobileHUDLayout::GlobalActionGridHeight, 92.0f));
+        const float ToolGap = FCinderMobileHUDLayout::GlobalActionGap * Layout.Scale;
+        const float ToolSize = FCinderMobileHUDLayout::GlobalActionHeight * Layout.Scale;
+        const FBox2D BuildTarget(Layout.GlobalActions.Min,
+            Layout.GlobalActions.Min + FVector2D(ToolSize, ToolSize));
+        const FBox2D TrainTarget(BuildTarget.Min + FVector2D(ToolSize + ToolGap, 0.0f),
+            BuildTarget.Max + FVector2D(ToolSize + ToolGap, 0.0f));
+        const FBox2D ResearchTarget(BuildTarget.Min + FVector2D(0.0f, ToolSize + ToolGap),
+            BuildTarget.Max + FVector2D(0.0f, ToolSize + ToolGap));
+        const FBox2D ArmyTarget(TrainTarget.Min + FVector2D(0.0f, ToolSize + ToolGap),
+            TrainTarget.Max + FVector2D(0.0f, ToolSize + ToolGap));
+        TestTrue(*FString::Printf(TEXT("%s global grid has four separated touch targets"), *Prefix),
+            NearlyEqual(BuildTarget.GetSize().X, ToolSize)
+                && NearlyEqual(ArmyTarget.GetSize().Y, ToolSize)
+                && NearlyEqual(ArmyTarget.Max.X, Layout.GlobalActions.Max.X)
+                && NearlyEqual(ArmyTarget.Max.Y, Layout.GlobalActions.Max.Y)
+                && Separated(BuildTarget, TrainTarget)
+                && Separated(BuildTarget, ResearchTarget)
+                && Separated(TrainTarget, ArmyTarget)
+                && Separated(ResearchTarget, ArmyTarget));
+        const float NavGap = FCinderMobileHUDLayout::NavigationGap * Layout.Scale;
         const FBox2D DeselectTarget(Layout.Navigation.Min,
-            Layout.Navigation.Min + FVector2D(NavTarget, NavTarget));
+            Layout.Navigation.Min + FVector2D(FCinderMobileHUDLayout::NavigationDeselectWidth * Layout.Scale,
+                FCinderMobileHUDLayout::NavigationHeight * Layout.Scale));
         const FBox2D SelectTarget(
-            FVector2D(Layout.Navigation.Min.X + NavTarget + NavGap, Layout.Navigation.Min.Y),
-            FVector2D(Layout.Navigation.Min.X + 2.0f * NavTarget + NavGap, Layout.Navigation.Max.Y));
+            FVector2D(DeselectTarget.Max.X + NavGap, Layout.Navigation.Min.Y),
+            FVector2D(DeselectTarget.Max.X + NavGap
+                + FCinderMobileHUDLayout::NavigationSelectWidth * Layout.Scale,
+                DeselectTarget.Max.Y));
         const FBox2D HomeTarget(
-            FVector2D(Layout.Navigation.Min.X + 2.0f * (NavTarget + NavGap), Layout.Navigation.Min.Y),
+            FVector2D(SelectTarget.Max.X + NavGap, Layout.Navigation.Min.Y),
+            FVector2D(SelectTarget.Max.X + NavGap
+                + FCinderMobileHUDLayout::NavigationHomeWidth * Layout.Scale,
+                DeselectTarget.Max.Y));
+        const FBox2D MenuTarget(
+            FVector2D(HomeTarget.Max.X + NavGap, Layout.Navigation.Min.Y),
             Layout.Navigation.Max);
-        TestTrue(*FString::Printf(TEXT("%s deselect, select and home retain distinct 44-unit targets"), *Prefix),
-            NearlyEqual(DeselectTarget.GetSize().X, NavTarget)
-                && NearlyEqual(SelectTarget.GetSize().X, NavTarget)
-                && NearlyEqual(HomeTarget.GetSize().X, NavTarget)
+        TestTrue(*FString::Printf(TEXT("%s one-row navigation has four equal 44-unit targets"), *Prefix),
+            NearlyEqual(DeselectTarget.GetSize().X, 44.0f * Layout.Scale)
+                && NearlyEqual(SelectTarget.GetSize().X, 44.0f * Layout.Scale)
+                && NearlyEqual(HomeTarget.GetSize().X, 44.0f * Layout.Scale)
+                && NearlyEqual(MenuTarget.GetSize().X, 44.0f * Layout.Scale)
+                && NearlyEqual(DeselectTarget.GetSize().Y, 44.0f * Layout.Scale)
+                && NearlyEqual(SelectTarget.GetSize().Y, 44.0f * Layout.Scale)
+                && NearlyEqual(HomeTarget.GetSize().Y, 44.0f * Layout.Scale)
+                && NearlyEqual(MenuTarget.GetSize().Y, 44.0f * Layout.Scale)
                 && NearlyEqual(SelectTarget.Min.X - DeselectTarget.Max.X, NavGap)
-                && NearlyEqual(HomeTarget.Min.X - SelectTarget.Max.X, NavGap));
-        TestTrue(*FString::Printf(TEXT("%s keeps existing select and home positions while adding deselect left"), *Prefix),
-            NearlyEqual(DeselectTarget.Min.X, Layout.Right - 140.0f * Layout.Scale)
-                && NearlyEqual(SelectTarget.Min.X, Layout.Right - 92.0f * Layout.Scale)
-                && NearlyEqual(HomeTarget.Min.X, Layout.Right - 44.0f * Layout.Scale)
-                && NearlyEqual(HomeTarget.Max.X, Layout.Right));
+                && NearlyEqual(HomeTarget.Min.X - SelectTarget.Max.X, NavGap)
+                && NearlyEqual(MenuTarget.Min.X - HomeTarget.Max.X, NavGap));
+        // Check right-edge positions in logical units. At native pixel scales,
+        // subtraction of two pixel coordinates loses enough float precision to
+        // make a 1e-4 physical-pixel comparison unreliable.
+        const auto UnitsFromRight = [&](double X) { return (Layout.Right - X) / Layout.Scale; };
+        TestTrue(*FString::Printf(TEXT("%s aligns the navigation row to the right safe edge"), *Prefix),
+            FMath::IsNearlyEqual(UnitsFromRight(DeselectTarget.Min.X), 188.0, 0.001)
+                && FMath::IsNearlyEqual(UnitsFromRight(SelectTarget.Min.X), 140.0, 0.001)
+                && FMath::IsNearlyEqual(UnitsFromRight(HomeTarget.Min.X), 92.0, 0.001)
+                && FMath::IsNearlyEqual(UnitsFromRight(MenuTarget.Min.X), 44.0, 0.001)
+                && FMath::IsNearlyEqual(UnitsFromRight(MenuTarget.Max.X), 0.0, 0.001));
         TestTrue(*FString::Printf(TEXT("%s navigation targets remain inside the safe frame and do not overlap"), *Prefix),
             DeselectTarget.Min.X >= Layout.Left - 0.0001f
-                && HomeTarget.Max.X <= Layout.Right + 0.0001f
+                && MenuTarget.Max.X <= Layout.Right + 0.0001f
                 && Separated(DeselectTarget, SelectTarget)
-                && Separated(SelectTarget, HomeTarget));
+                && Separated(SelectTarget, HomeTarget)
+                && Separated(HomeTarget, MenuTarget));
+        TestTrue(*FString::Printf(TEXT("%s remains right-aligned when Clear is hidden"), *Prefix),
+            NearlyEqual(SelectTarget.Min.X,
+                Layout.Right - (3.0f * 44.0f + 2.0f * 4.0f) * Layout.Scale)
+                && NearlyEqual(MenuTarget.Max.X, Layout.Right));
         TestTrue(*FString::Printf(TEXT("%s four context commands retain 44-unit targets"), *Prefix),
             (Layout.Commands.GetSize().X - 3.0f * 4.0f * Layout.Scale) / 4.0f
                 >= 44.0f * Layout.Scale);
@@ -168,17 +228,27 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
                 && NearlyEqual(Layout.Identity.GetSize().Y, 44.0f * Layout.Scale)
                 && NearlyEqual(Layout.Commands.Min.Y - Layout.Identity.Max.Y, 6.0f * Layout.Scale)
                 && NearlyEqual(Layout.Identity.Max.X, Layout.Right));
+        TestTrue(*FString::Printf(TEXT("%s voice controls retain full touch faces above the selection dock"), *Prefix),
+            NearlyEqual(Layout.VoiceButton.GetSize().X, 88.0f * Layout.Scale)
+                && NearlyEqual(Layout.VoiceButton.GetSize().Y, 44.0f * Layout.Scale)
+                && NearlyEqual(Layout.VoiceControls.GetSize().X, 188.0f * Layout.Scale)
+                && NearlyEqual(Layout.Identity.Min.Y - Layout.VoiceControls.Max.Y, 6.0f * Layout.Scale)
+                && NearlyEqual(Layout.VoiceControls.Min.Y - Layout.VoiceStatus.Max.Y, 4.0f * Layout.Scale)
+                && NearlyEqual(Layout.VoiceControls.Max.X, Layout.Right));
         TestTrue(*FString::Printf(TEXT("%s portrait ribbon fits six comfortable targets"), *Prefix),
             Layout.Portraits.GetSize().X >= (6.0f * 44.0f + 5.0f * 3.0f) * Layout.Scale
                 && NearlyEqual(Layout.Portraits.GetSize().Y, 44.0f * Layout.Scale));
-        const float LogicalWidth = (Layout.Right - Layout.Left) / Layout.Scale;
-        const float RemainingLogicalWidth = LogicalWidth - 56.0f;
-        const float ExpectedDrawerWidth = RemainingLogicalWidth >= 640.0f ? 416.0f : 336.0f;
-        TestTrue(*FString::Printf(TEXT("%s drawer uses the compact width and 190-unit default height"), *Prefix),
-            NearlyEqual(Layout.Drawer.Min.X, Layout.Left + 56.0f * Layout.Scale)
+        const float ExpectedDrawerWidth = Case.bWideDrawer ? 384.0f : 300.0f;
+        TestTrue(*FString::Printf(TEXT("%s sheet sits beside the icon grid with its device-width variant"), *Prefix),
+            NearlyEqual(Layout.Drawer.Min.X, Layout.Left + 104.0f * Layout.Scale)
                 && NearlyEqual(Layout.Drawer.Min.Y, Layout.Top + 46.0f * Layout.Scale)
                 && NearlyEqual(Layout.Drawer.GetSize().X, ExpectedDrawerWidth * Layout.Scale)
                 && NearlyEqual(Layout.Drawer.GetSize().Y, 190.0f * Layout.Scale));
+        TestTrue(*FString::Printf(TEXT("%s sheet leaves a 12-unit grid gutter"), *Prefix),
+            NearlyEqual(Layout.Drawer.Min.X - Layout.GlobalActions.Max.X, 12.0f * Layout.Scale));
+        const float DrawerNavGap = static_cast<float>((Layout.Navigation.Min.X - Layout.Drawer.Max.X) / Layout.Scale);
+        TestTrue(*FString::Printf(TEXT("%s sheet clears the right navigation cluster"), *Prefix),
+            DrawerNavGap >= 36.0f - 0.001f);
         TestTrue(*FString::Printf(TEXT("%s expanded roster fits four 44-unit individual cards"), *Prefix),
             (Layout.Drawer.GetSize().X - (28.0f + 3.0f * 4.0f) * Layout.Scale) / 4.0f
                 >= 44.0f * Layout.Scale);
@@ -192,18 +262,18 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
         TestTrue(*FString::Printf(TEXT("%s roster paging leaves four units before the roster tab"), *Prefix),
             NearlyEqual(RosterTab.Min.X - RosterNext.Max.X, 4.0f * Layout.Scale)
                 && RosterNext.Max.X <= RosterTab.Min.X);
-        TestTrue(*FString::Printf(TEXT("%s left rail clears the bottom-left minimap"), *Prefix),
-            Layout.Minimap.Min.Y - Layout.GlobalActions.Max.Y >= 8.0f * Layout.Scale);
-        TestTrue(*FString::Printf(TEXT("%s base HUD regions do not overlap"), *Prefix),
-            Separated(Layout.GlobalActions, Layout.Navigation)
-                && Separated(Layout.GlobalActions, Layout.Drawer)
-                && Separated(Layout.Navigation, Layout.Drawer)
-                && Separated(Layout.GlobalActions, Layout.Minimap)
-                && Separated(Layout.Navigation, Layout.Minimap)
-                && Separated(Layout.Minimap, Layout.Portraits)
-                && Separated(Layout.Portraits, Layout.Commands)
-                && Separated(Layout.Portraits, Layout.Identity)
-                && Separated(Layout.Identity, Layout.Commands));
+        TestTrue(*FString::Printf(TEXT("%s grid frees at least 118 units above the minimap"), *Prefix),
+            Layout.Minimap.Min.Y - Layout.GlobalActions.Max.Y >= 118.0f * Layout.Scale);
+        const FBox2D* Regions[] = { &Layout.GlobalActions, &Layout.Navigation, &Layout.Commands,
+            &Layout.Portraits, &Layout.Identity, &Layout.Drawer, &Layout.Minimap,
+            &Layout.VoiceControls, &Layout.VoiceStatus };
+        const int32 RegionCount = static_cast<int32>(UE_ARRAY_COUNT(Regions));
+        bool bRegionsSeparated = true;
+        for (int32 I = 0; I < RegionCount; ++I)
+            for (int32 J = I + 1; J < RegionCount; ++J)
+                bRegionsSeparated &= Separated(*Regions[I], *Regions[J]);
+        TestTrue(*FString::Printf(TEXT("%s has no overlapping base HUD regions"), *Prefix),
+            bRegionsSeparated);
         TestTrue(*FString::Printf(TEXT("%s keeps explicit gaps around bottom regions"), *Prefix),
             NearlyEqual(Layout.Portraits.Min.X - Layout.Minimap.Max.X, 12.0f * Layout.Scale)
                 && NearlyEqual(Layout.Commands.Min.X - Layout.Portraits.Max.X, 10.0f * Layout.Scale));
@@ -214,9 +284,8 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
                 Layout.Identity.Min.Y - 8.0f * Layout.Scale));
         TestTrue(*FString::Printf(TEXT("%s reserves an open middle battlefield area"), *Prefix),
             OpenWorld.GetSize().X >= 300.0f * Layout.Scale
-                && OpenWorld.GetSize().Y >= 120.0f * Layout.Scale);
-        for (const FBox2D* Region : { &Layout.GlobalActions, &Layout.Navigation, &Layout.Commands,
-                &Layout.Portraits, &Layout.Identity, &Layout.Drawer, &Layout.Minimap })
+                && OpenWorld.GetSize().Y >= 180.0f * Layout.Scale);
+        for (const FBox2D* Region : Regions)
         {
             TestTrue(*FString::Printf(TEXT("%s keeps every layout region inside the safe frame"), *Prefix),
                 Region->Min.X >= Layout.Left - 0.0001f && Region->Max.X <= Layout.Right + 0.0001f
@@ -251,9 +320,16 @@ bool FCinderMobileHUDLayoutTest::RunTest(const FString& Parameters)
     TestTrue(TEXT("Desktop layout uses the 1280 by 720 reference scale"),
         NearlyEqual(Desktop.Scale, 0.8f));
     TestTrue(TEXT("Desktop navigation bounds include both selection and zoom rows"),
-        NearlyEqual(Desktop.Navigation.GetSize().X, 140.0f * Desktop.Scale)
+        NearlyEqual(Desktop.Navigation.GetSize().X, 188.0f * Desktop.Scale)
             && NearlyEqual(Desktop.Navigation.GetSize().Y, 92.0f * Desktop.Scale)
-            && NearlyEqual(Desktop.Navigation.Max.Y, Desktop.Top + 138.0f * Desktop.Scale));
+            && NearlyEqual(Desktop.Navigation.Max.Y, Desktop.Top + 92.0f * Desktop.Scale));
+    TestTrue(TEXT("Desktop zoom controls have distinct 84-unit faces in the navigation bounds"),
+        NearlyEqual(FCinderMobileHUDLayout::NavigationZoomWidth, 84.0f)
+            && 2.0f * FCinderMobileHUDLayout::NavigationZoomWidth
+                + FCinderMobileHUDLayout::NavigationGap <= FCinderMobileHUDLayout::NavigationWidth
+            && Desktop.Navigation.GetSize().Y / Desktop.Scale
+                >= 2.0f * FCinderMobileHUDLayout::NavigationHeight
+                    + FCinderMobileHUDLayout::NavigationGap - 0.001f);
     const FCinderMobileHUDLayout TinyDesktop = FCinderMobileHUDLayout::Make(
         FVector2D(480.0f, 270.0f), FVector4(0, 0, 0, 0), true);
     TestTrue(TEXT("Desktop layout scale has a 0.45 floor"), NearlyEqual(TinyDesktop.Scale, 0.45f));

@@ -6,7 +6,13 @@
 
 void ACinderHUD::Surface(float X, float Y, float W, float H, FLinearColor Color, float Radius)
 {
-    if (!Canvas || W <= 0 || H <= 0 || Color.A <= 0) return;
+    Surface(X, Y, W, H, Color, Color, Radius);
+}
+
+void ACinderHUD::Surface(float X, float Y, float W, float H, FLinearColor TopColor,
+    FLinearColor BottomColor, float Radius)
+{
+    if (!Canvas || W <= 0 || H <= 0 || (TopColor.A <= 0 && BottomColor.A <= 0)) return;
 
     constexpr int32 SegmentsPerCorner = 4;
     constexpr int32 CornerCount = 4;
@@ -41,14 +47,27 @@ void ACinderHUD::Surface(float X, float Y, float W, float H, FLinearColor Color,
     }
 
     const FVector2D Center(X + W * 0.5f, Y + H * 0.5f);
-    const auto MakeTriangle = [&Color, &Center](const FVector2D& A, const FVector2D& B)
+    // The fan already owns a distinct centre vertex, so vertex colour alone
+    // buys a real gradient: perimeter vertices take their colour from their own
+    // Y, the centre takes the midpoint. Nesting two flat rects to fake depth
+    // cost a second Surface call per control; this costs nothing.
+    const float InverseHeight = 1.0f / H;
+    const FLinearColor CenterColor = FMath::Lerp(TopColor, BottomColor, 0.5f);
+    const auto ColorAt = [&TopColor, &BottomColor, Y, InverseHeight](float PointY)
+    {
+        return FMath::Lerp(TopColor, BottomColor,
+            FMath::Clamp((PointY - Y) * InverseHeight, 0.0f, 1.0f));
+    };
+    const auto MakeTriangle = [&ColorAt, &CenterColor, &Center](const FVector2D& A, const FVector2D& B)
     {
         FCanvasUVTri Triangle;
         Triangle.V0_Pos = Center;
         Triangle.V1_Pos = A;
         Triangle.V2_Pos = B;
         Triangle.V0_UV = Triangle.V1_UV = Triangle.V2_UV = FVector2D::ZeroVector;
-        Triangle.V0_Color = Triangle.V1_Color = Triangle.V2_Color = Color;
+        Triangle.V0_Color = CenterColor;
+        Triangle.V1_Color = ColorAt(static_cast<float>(A.Y));
+        Triangle.V2_Color = ColorAt(static_cast<float>(B.Y));
         return Triangle;
     };
 
@@ -66,7 +85,9 @@ bool ACinderHUD::ActionGlyph(const FString& Action, int32 Arg, float X, float Y,
     if (Size <= 0) return false;
 
     const float S = UIScale;
-    const float Stroke = 2 * S;
+    // The same glyphs appear at 16 units in the resource chips and 19 units
+    // in action buttons. A two-unit stroke closes their small interior gaps.
+    const float Stroke = FMath::Clamp(Size * 0.09f, 1.4f * S, 1.8f * S);
     const float L = X + Size * 0.16f;
     const float R = X + Size * 0.84f;
     const float T = Y + Size * 0.16f;
@@ -104,6 +125,27 @@ bool ACinderHUD::ActionGlyph(const FString& Action, int32 Arg, float X, float Y,
         const float D = FMath::Max(S, Diameter);
         Panel(CenterX - D * 0.5f, CenterY - D * 0.5f, D, D, Color);
     };
+    if (Action == TEXT("VoiceToggle") || Action == TEXT("VoiceMute"))
+    {
+        // A capsule microphone remains legible on the 44-point touch face.
+        Circle(CX, Y + U * 0.27f, U * 0.12f, 10);
+        Line(CX - U * 0.12f, Y + U * 0.27f, CX - U * 0.12f, Y + U * 0.50f);
+        Line(CX + U * 0.12f, Y + U * 0.27f, CX + U * 0.12f, Y + U * 0.50f);
+        Line(CX - U * 0.12f, Y + U * 0.50f, CX + U * 0.12f, Y + U * 0.50f);
+        Line(CX - U * 0.25f, Y + U * 0.43f, CX - U * 0.25f, Y + U * 0.57f);
+        Line(CX + U * 0.25f, Y + U * 0.43f, CX + U * 0.25f, Y + U * 0.57f);
+        Line(CX - U * 0.25f, Y + U * 0.57f, CX, Y + U * 0.68f);
+        Line(CX + U * 0.25f, Y + U * 0.57f, CX, Y + U * 0.68f);
+        Line(CX, Y + U * 0.68f, CX, Y + U * 0.84f);
+        Line(CX - U * 0.16f, Y + U * 0.84f, CX + U * 0.16f, Y + U * 0.84f);
+        if (Action == TEXT("VoiceMute")) Line(L, B, R, T);
+        return true;
+    }
+    if (Action == TEXT("VoiceEnd"))
+    {
+        Line(L, T, R, B); Line(L, B, R, T);
+        return true;
+    }
     const auto Head = [&Circle, &Line, U](float CenterX, float CenterY, float Scale)
     {
         const float Radius = U * 0.075f * Scale;
@@ -125,10 +167,22 @@ bool ACinderHUD::ActionGlyph(const FString& Action, int32 Arg, float X, float Y,
     {
         for (int32 Row = 0; Row < 3; ++Row)
         {
-            const float RowY = T + U * (0.10f + Row * 0.19f);
-            Dot(L + U * 0.035f, RowY, U * 0.045f);
-            Line(L + U * 0.12f, RowY, R, RowY);
+            const float RowY = T + U * (0.15f + Row * 0.18f);
+            Dot(L + U * 0.04f, RowY, U * 0.055f);
+            Line(L + U * 0.16f, RowY, R, RowY);
         }
+    };
+    const auto Queue = [&Line, L, R, T, U]()
+    {
+        // Three advancing slots read as a sequence even in a 19-unit button.
+        for (int32 Row = 0; Row < 3; ++Row)
+        {
+            const float RowY = T + U * (0.15f + Row * 0.18f);
+            const float StartX = L + U * (0.025f + Row * 0.09f);
+            Line(StartX, RowY, R - U * 0.09f, RowY);
+        }
+        Line(R - U * 0.20f, T + U * 0.43f, R - U * 0.09f, T + U * 0.51f);
+        Line(R - U * 0.09f, T + U * 0.51f, R, T + U * 0.43f);
     };
     const auto Shield = [&Polygon, &Line, CX, T, B, U]()
     {
@@ -236,6 +290,21 @@ bool ACinderHUD::ActionGlyph(const FString& Action, int32 Arg, float X, float Y,
         Line(L + Arm, B, L, B); Line(L, B, L, B - Arm);
         return true;
     }
+    if (Action == TEXT("focus"))
+    {
+        // An eye reads as "find this selection"; the attack glyph owns the
+        // circular crosshair and box select owns the four empty corners.
+        const FVector2D Eye[] =
+        {
+            {L, CY}, {CX - U * 0.20f, CY - U * 0.18f},
+            {CX + U * 0.20f, CY - U * 0.18f}, {R, CY},
+            {CX + U * 0.20f, CY + U * 0.18f},
+            {CX - U * 0.20f, CY + U * 0.18f}
+        };
+        Polygon(Eye, UE_ARRAY_COUNT(Eye));
+        Dot(CX, CY, U * 0.14f);
+        return true;
+    }
     if (Action == TEXT("home"))
     {
         Line(L, CY, CX, T); Line(CX, T, R, CY);
@@ -246,7 +315,17 @@ bool ACinderHUD::ActionGlyph(const FString& Action, int32 Arg, float X, float Y,
         Line(CX + U * 0.07f, B, CX + U * 0.07f, CY + U * 0.12f);
         return true;
     }
-    if (Action == TEXT("help") || Action == TEXT("info"))
+    if (Action == TEXT("help"))
+    {
+        Circle(CX, CY, U * 0.30f);
+        Line(CX - U * 0.11f, CY - U * 0.10f, CX - U * 0.06f, CY - U * 0.17f);
+        Line(CX - U * 0.06f, CY - U * 0.17f, CX + U * 0.09f, CY - U * 0.17f);
+        Line(CX + U * 0.09f, CY - U * 0.17f, CX + U * 0.12f, CY - U * 0.08f);
+        Line(CX + U * 0.12f, CY - U * 0.08f, CX, CY + U * 0.05f);
+        Dot(CX, CY + U * 0.17f, U * 0.055f);
+        return true;
+    }
+    if (Action == TEXT("info"))
     {
         Circle(CX, CY, U * 0.30f);
         Dot(CX, CY - U * 0.17f, U * 0.055f);
@@ -283,20 +362,51 @@ bool ACinderHUD::ActionGlyph(const FString& Action, int32 Arg, float X, float Y,
     }
     if (Action == TEXT("productionrally"))
     {
-        Line(L + U * 0.12f, T, L + U * 0.12f, B);
-        const FVector2D Flag[] =
-        {
-            {L + U * 0.12f, T}, {R, T + U * 0.10f},
-            {R - U * 0.12f, CY}, {L + U * 0.12f, CY - U * 0.04f}
-        };
-        Polygon(Flag, UE_ARRAY_COUNT(Flag));
-        Line(L, B, L + U * 0.30f, B);
+        // The pennant went out with the world overlay it stood for. This is the
+        // route the ground now draws: a spine leaving the structure with an
+        // arrowhead where the output gathers. Diagonal and anchored at its base,
+        // so it never reads as the horizontal MOVE arrow.
+        Dot(L + U * 0.10f, B - U * 0.10f, U * 0.08f);
+        Line(L + U * 0.10f, B - U * 0.10f, R - U * 0.14f, T + U * 0.14f);
+        Line(R - U * 0.36f, T + U * 0.16f, R - U * 0.14f, T + U * 0.14f);
+        Line(R - U * 0.16f, T + U * 0.36f, R - U * 0.14f, T + U * 0.14f);
         return true;
     }
-    if (Action == TEXT("producerjobs") || Action == TEXT("orders")
-        || (Action == TEXT("sheet") && Arg == 3))
+    if (Action == TEXT("producerjobs"))
+    {
+        // Checked rows distinguish completed/active jobs from the order list.
+        for (int32 Row = 0; Row < 2; ++Row)
+        {
+            const float RowY = T + U * (0.23f + Row * 0.27f);
+            Line(L, RowY, L + U * 0.06f, RowY + U * 0.06f);
+            Line(L + U * 0.06f, RowY + U * 0.06f, L + U * 0.17f, RowY - U * 0.08f);
+            Line(L + U * 0.27f, RowY, R, RowY);
+        }
+        return true;
+    }
+    if (Action == TEXT("orders"))
     {
         List();
+        return true;
+    }
+    if ((Action == TEXT("sheet") && Arg == 3) || Action == TEXT("queuenext"))
+    {
+        Queue();
+        return true;
+    }
+    if (Action == TEXT("sheet"))
+    {
+        // Context drawers (site and laboratory) use a compact detail card.
+        const FVector2D Card[] =
+        {
+            {L + U * 0.04f, T}, {R - U * 0.04f, T},
+            {R - U * 0.04f, B}, {L + U * 0.04f, B}
+        };
+        Polygon(Card, UE_ARRAY_COUNT(Card));
+        Line(L + U * 0.04f, T + U * 0.19f, R - U * 0.04f, T + U * 0.19f);
+        Dot(L + U * 0.16f, CY + U * 0.05f, U * 0.055f);
+        Line(CX - U * 0.02f, CY + U * 0.05f, R - U * 0.15f, CY + U * 0.05f);
+        Line(L + U * 0.16f, CY + U * 0.22f, R - U * 0.15f, CY + U * 0.22f);
         return true;
     }
     if (Action == TEXT("zoom+") || Action == TEXT("zoom-"))

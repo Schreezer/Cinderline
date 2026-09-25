@@ -2,17 +2,25 @@
 
 #if WITH_DEV_AUTOMATION_TESTS
 
+#include "Camera/PlayerCameraManager.h"
+#include "Engine/GameViewportClient.h"
+#include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
 #include "GameFramework/WorldSettings.h"
 #include "HAL/FileManager.h"
 #include "Misc/AutomationTest.h"
 #include "Misc/Guid.h"
 #include "Misc/Paths.h"
+#include "Misc/ScopeExit.h"
 #include "Presentation/CinderBattlefield.h"
+#include "Presentation/CinderCamera.h"
 #include "Presentation/CinderGameMode.h"
+#include "Presentation/CinderLandscapeTerrain.h"
 #include "Presentation/CinderOnlineSubsystem.h"
 #include "Presentation/CinderPlayerController.h"
+#include "Sim/MapDefinition.h"
 #include "Sim/Network.h"
+#include "Slate/SceneViewport.h"
 #include "Tests/AutomationCommon.h"
 #include <algorithm>
 #include <iterator>
@@ -402,6 +410,109 @@ bool FCinderWorldTapIntegration::RunTest(const FString& Parameters)
     if (!TestTrue(TEXT("World-tap fixture has live units, a producer, and ore"),
         Worker && Headquarters && Ore && Soldier && Flyer)) return false;
 
+    // FTestWorldWrapper deliberately creates no local player or viewport. Add
+    // both here so the production projection, hit testing, deprojection, and
+    // pointer reducer can be exercised under the NullRHI automation command.
+    UGameViewportClient* ViewportClient = NewObject<UGameViewportClient>(GEngine);
+    ULocalPlayer* LocalPlayer = NewObject<ULocalPlayer>(GEngine);
+    if (!TestNotNull(TEXT("Pointer fixture creates an engine viewport client"), ViewportClient)
+        || !TestNotNull(TEXT("Pointer fixture creates an engine local player"), LocalPlayer)) return false;
+    TSharedRef<FSceneViewport> TestViewport = FSceneViewport::Create(ViewportClient, nullptr);
+    TestViewport->SetInitialSize(FIntPoint(1280, 720));
+    Controller.SetPlayer(LocalPlayer);
+    LocalPlayer->PlayerAdded(ViewportClient, 0);
+    LocalPlayer->Origin = FVector2D::ZeroVector;
+    LocalPlayer->Size = FVector2D(1, 1);
+    ON_SCOPE_EXIT
+    {
+        LocalPlayer->PlayerRemoved();
+    };
+    ACinderCamera* Camera = Controller.GetWorld()->SpawnActor<ACinderCamera>();
+    if (!TestNotNull(TEXT("Pointer fixture creates the production camera"), Camera)) return false;
+    Controller.Possess(Camera);
+    Controller.SetViewTarget(Camera);
+    Camera->Focus(FVector(1100, 1100, 0), true);
+    if (!Fixture.WorldOwner.TickTestWorld(Simulation::Step))
+    {
+        Fixture.WorldOwner.ForwardErrorMessages(this);
+        return false;
+    }
+    if (!TestNotNull(TEXT("Pointer fixture initializes the production camera manager"),
+        Controller.PlayerCameraManager.Get())) return false;
+    Controller.PlayerCameraManager->UpdateCamera(Simulation::Step);
+    if (!TestTrue(TEXT("Pointer fixture advances the production camera cache"),
+        Controller.PlayerCameraManager->GetCameraCacheTime() > 0)) return false;
+
+    FVector2D SoldierScreen, FlyerScreen;
+    const Vec2 SoldierRender = Battle.RenderPosition(*Sim.find(Soldier));
+    const Vec2 FlyerRender = Battle.RenderPosition(*Sim.find(Flyer));
+    if (!TestTrue(TEXT("NullRHI viewport projects both mixed-unit centers"),
+        Controller.ProjectWorldLocationToScreen(FVector(SoldierRender.x, SoldierRender.y,
+            Battle.EntityGroundHeight(SoldierRender, Kind::Striker) + 25), SoldierScreen)
+        && Controller.ProjectWorldLocationToScreen(FVector(FlyerRender.x, FlyerRender.y,
+            Battle.EntityGroundHeight(FlyerRender, Kind::Kite) + 125), FlyerScreen))) return false;
+    const FVector2D BoxMin(FMath::Min(SoldierScreen.X, FlyerScreen.X) - 8,
+        FMath::Min(SoldierScreen.Y, FlyerScreen.Y) - 8);
+    const FVector2D BoxMax(FMath::Max(SoldierScreen.X, FlyerScreen.X) + 8,
+        FMath::Max(SoldierScreen.Y, FlyerScreen.Y) + 8);
+    Controller.ResetInteraction(true);
+    Controller.PointerPressed(BoxMin, false, false);
+    Controller.PointerMoved(BoxMax, 0.1f);
+    Controller.PointerReleased(BoxMax);
+    const std::vector<Id> PointerSelection = Controller.Selection();
+    if (!TestTrue(TEXT("A controller pointer drag creates a mixed ground-and-air selection"),
+        Contains(PointerSelection, Soldier) && Contains(PointerSelection, Flyer)
+        && PointerSelection.size() >= 2)) return false;
+    TestTrue(TEXT("The completed pointer drag clears its gesture state"),
+        !Controller.bPointerDown && !Controller.bDragging && !Controller.IsSelecting());
+    if (!TestTrue(TEXT("The pointer-created mixed selection can be saved as a squad"),
+        Controller.AssignSquad(2))) return false;
+    const std::vector<Id> PointerSquad = Controller.Squad(2);
+    if (!TestTrue(TEXT("The pointer-created squad retains both mixed combat units"),
+        Contains(PointerSquad, Soldier) && Contains(PointerSquad, Flyer))) return false;
+
+    const Vec2 PointerMovePoint{1500, 1100};
+    FVector2D PointerMoveScreen;
+    if (!TestTrue(TEXT("NullRHI viewport projects the contextual move destination"),
+        Controller.ProjectWorldLocationToScreen(
+            FVector(PointerMovePoint.x, PointerMovePoint.y, Battle.GroundHeight(PointerMovePoint)), PointerMoveScreen))) return false;
+    const std::size_t BeforePointerMove = Sim.recording().size();
+    Controller.PointerPressed(PointerMoveScreen, false, false);
+    Controller.PointerReleased(PointerMoveScreen);
+    if (!TestTrue(TEXT("A controller pointer click submits one contextual move for the pointer selection"),
+        Sim.recording().size() == BeforePointerMove + 1)) return false;
+    const Command PointerMove = Sim.recording().back().command;
+    TestEqual(TEXT("The contextual pointer command is Move"), static_cast<int32>(PointerMove.type),
+        static_cast<int32>(CommandType::Move));
+    TestTrue(TEXT("The contextual move keeps every pointer-selected unit"), PointerMove.units == PointerSelection);
+    // Unreal's FSceneView::DeprojectScreenToWorld truncates screen coordinates
+    // to whole pixels. Check the commanded point against that actual cursor
+    // pixel rather than assuming a fractional projection has an exact inverse.
+    FVector2D CommandScreen;
+    if (!TestTrue(TEXT("The pointer command projects back through the production camera"),
+        Controller.ProjectWorldLocationToScreen(FVector(PointerMove.point.x, PointerMove.point.y,
+            Battle.GroundHeight(PointerMove.point)), CommandScreen))) return false;
+    const FVector2D CursorPixel(static_cast<int32>(PointerMoveScreen.X), static_cast<int32>(PointerMoveScreen.Y));
+    TestTrue(FString::Printf(TEXT("Pointer move returns to cursor pixel %.3f,%.3f; actual %.3f,%.3f"),
+        CursorPixel.X, CursorPixel.Y, CommandScreen.X, CommandScreen.Y),
+        FMath::Abs(CommandScreen.X - CursorPixel.X) < 0.05 && FMath::Abs(CommandScreen.Y - CursorPixel.Y) < 0.05);
+    TestTrue(TEXT("All pointer-selected units receive the move order"),
+        std::all_of(PointerSelection.begin(), PointerSelection.end(), [&](Id SelectedId)
+        {
+            return Sim.find(SelectedId) && Sim.find(SelectedId)->order == Order::Move;
+        }));
+    const uint64 PointerMoveHash = Sim.stateHash();
+    const std::size_t PointerMoveCount = Sim.recording().size();
+    Controller.ExecuteAction(TEXT("deselect"));
+    TestTrue(TEXT("Deselect clears the pointer selection while preserving its squad and move orders"),
+        Controller.Selection().empty() && Controller.Squad(2) == PointerSquad
+        && std::all_of(PointerSelection.begin(), PointerSelection.end(), [&](Id SelectedId)
+        {
+            return Sim.find(SelectedId) && Sim.find(SelectedId)->order == Order::Move;
+        }));
+    TestTrue(TEXT("Deselect after the pointer move leaves authoritative state and recording unchanged"),
+        Sim.stateHash() == PointerMoveHash && Sim.recording().size() == PointerMoveCount);
+
     Command Build; Build.type = CommandType::AutoBuild; Build.kind = Kind::Foundry;
     bool FoundSite = false;
     for (int32 Y = 400; Y <= 1200 && !FoundSite; Y += 80)
@@ -785,7 +896,57 @@ bool FCinderWorldTapIntegration::RunTest(const FString& Parameters)
     Controller.PruneArmyControlState();
     TestTrue(TEXT("Local elimination clears the pending destination mode"),
         Sim.eliminated(0) && NoDestinations());
-    AddInfo(TEXT("CINDERLINE_WORLD_TAP_PASS friendly_touch=1 friendly_desktop=1 destination_modes=3 toggles=3 rejected_modes=9 minimap_attack_move=1 moving_latch=1 empty_ground_latch=1 dead_latch=1 gesture_latches=4 deselect_preserves_jobs=1 elimination_clears_mode=1"));
+
+    // A real projected aircraft above the authored cliff must be selectable where its
+    // hull is drawn, rather than at the old absolute 125 cm point beneath the cliff.
+    Sim.reset(Setup);
+    Battle.ResetPresentation();
+    Controller.ResetInteraction(true);
+    const auto& AuthoredMap = mapDefinition(Sim.config().map, Sim.playerCount(),
+        Sim.config().matchLength, Sim.config().mapRevision);
+    const auto Rock = std::find(AuthoredMap.obstacleKinds.begin(), AuthoredMap.obstacleKinds.end(),
+        MapObstacleKind::RockMass);
+    if (!TestTrue(TEXT("The current authored map contains a rock body for aircraft clearance"),
+        Sim.usesAuthoredTerrain() && Rock != AuthoredMap.obstacleKinds.end())) return false;
+    const Vec2 CliffCenter = Sim.obstacles()[static_cast<std::size_t>(Rock - AuthoredMap.obstacleKinds.begin())].center;
+    const Id CliffFlyer = Sim.debugSpawn(Kind::Kite, 0, CliffCenter);
+    if (!TestTrue(TEXT("Aircraft projection fixture spawns above the authored western obstacle"),
+        CliffFlyer != 0)) return false;
+    Camera->Focus(FVector(CliffCenter.x, CliffCenter.y, 0), true);
+    if (!Fixture.WorldOwner.TickTestWorld(Simulation::Step))
+    {
+        Fixture.WorldOwner.ForwardErrorMessages(this);
+        return false;
+    }
+    Controller.PlayerCameraManager->UpdateCamera(Simulation::Step);
+    TestTrue(TEXT("Projection fixture uses canonical simulation geometry"),
+        CinderLandscapeTerrain::IsCanonicalGeometry(Sim));
+    TestFalse(TEXT("The transient fixture has no bound Landscape and must use rendered flat mode"),
+        Battle.HasTerrainRelief());
+    const Vec2 RaisedPoint = Battle.RenderPosition(*Sim.find(CliffFlyer));
+    const float RaisedGround = Battle.EntityGroundHeight(RaisedPoint, Kind::Kite);
+    TestTrue(TEXT("Aircraft use the visible obstacle envelope above the flat fallback plane"),
+        RaisedGround > Battle.GroundHeight(RaisedPoint) + 250.0f);
+    TestEqual(TEXT("Ground units retain actual terrain seating beside the aircraft path"),
+        Battle.EntityGroundHeight(RaisedPoint, Kind::Striker), Battle.GroundHeight(RaisedPoint));
+    FVector2D RaisedScreen, OldFlatScreen;
+    if (!TestTrue(TEXT("Viewport projects both the raised hull and the former flat aircraft point"),
+        Controller.ProjectWorldLocationToScreen(FVector(RaisedPoint.x, RaisedPoint.y, RaisedGround + 125.0f), RaisedScreen)
+        && Controller.ProjectWorldLocationToScreen(FVector(RaisedPoint.x, RaisedPoint.y, 125.0f), OldFlatScreen))) return false;
+    TestTrue(TEXT("The regression fixture separates the two aircraft targets beyond the pointer hit radius"),
+        FVector2D::Distance(RaisedScreen, OldFlatScreen) > 40.0f);
+    const Entity* RaisedPick = Controller.PickEntityAtScreen(RaisedScreen);
+    TestTrue(TEXT("Production hit testing selects the aircraft at its visible raised hull"),
+        RaisedPick && RaisedPick->id == CliffFlyer);
+    const Entity* OldFlatPick = Controller.PickEntityAtScreen(OldFlatScreen);
+    TestTrue(TEXT("The aircraft no longer leaves an invisible hit target at its old absolute altitude"),
+        !OldFlatPick || OldFlatPick->id != CliffFlyer);
+    Controller.PointerStart = RaisedScreen - FVector2D(8, 8);
+    Controller.PointerLast = RaisedScreen + FVector2D(8, 8);
+    Controller.SelectRectangle();
+    TestTrue(TEXT("A tight selection rectangle around the visible raised aircraft includes it"),
+        Contains(Controller.Selection(), CliffFlyer));
+    AddInfo(TEXT("CINDERLINE_WORLD_TAP_PASS controller_pointer_mixed_drag_move=1 friendly_touch=1 friendly_desktop=1 destination_modes=3 toggles=3 rejected_modes=9 minimap_attack_move=1 moving_latch=1 empty_ground_latch=1 dead_latch=1 gesture_latches=4 deselect_preserves_jobs=1 elimination_clears_mode=1"));
     return !HasAnyErrors();
 }
 

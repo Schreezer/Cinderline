@@ -12,7 +12,7 @@
 namespace
 {
 constexpr int32 CurrentLANProtocol = static_cast<int32>(cinder::net::ProtocolVersion);
-static_assert(CurrentLANProtocol == 7, "Bonjour compatibility must track the four-player wire protocol");
+static_assert(CurrentLANProtocol == 12, "Bonjour compatibility must track the authored-map wire protocol");
 
 struct FCinderLANFallbackState
 {
@@ -262,10 +262,10 @@ bool FCinderLANDiscoveryValueTest::RunTest(const FString& Parameters)
     TestEqual(TEXT("IPv6 WebSocket hosts are bracketed"), IPv6.Endpoint(), TEXT("ws://[fd00::42]:8787/play"));
 
     int32 Version = -1;
-    TestTrue(TEXT("Current advertised protocol is compatible"), CinderLANParseProtocol(TEXT("7"), Version));
-    TestEqual(TEXT("Current protocol is retained"), Version, 7);
-    TestFalse(TEXT("Older advertised protocol is incompatible"), CinderLANParseProtocol(TEXT("6"), Version));
-    TestFalse(TEXT("Malformed advertised protocol is incompatible"), CinderLANParseProtocol(TEXT("7beta"), Version));
+    TestTrue(TEXT("Current advertised protocol is compatible"), CinderLANParseProtocol(FString::FromInt(cinder::net::ProtocolVersion), Version));
+    TestEqual(TEXT("Current protocol is retained"), Version, static_cast<int32>(cinder::net::ProtocolVersion));
+    TestFalse(TEXT("Protocol ten advertisement is incompatible"), CinderLANParseProtocol(TEXT("10"), Version));
+    TestFalse(TEXT("Malformed protocol eleven advertisement is incompatible"), CinderLANParseProtocol(TEXT("11beta"), Version));
     TestEqual(TEXT("Malformed protocol has no usable version"), Version, -1);
 
     FCinderLANService Unresolved;

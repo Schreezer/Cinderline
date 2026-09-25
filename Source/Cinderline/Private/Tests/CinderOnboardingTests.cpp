@@ -183,9 +183,11 @@ bool FCinderOnboardingIntegration::RunTest(const FString& Parameters)
 
     Controller.LoadTutorialPreference(Files.Missing);
     Controller.Confirm();
-    TestTrue(TEXT("Enter accepts the pending offer and starts guided training"),
-        !Controller.IsTutorialOfferPending() && Battle.Tutorial().IsActive()
-        && !Battle.Sim().config().ai);
+    TestTrue(TEXT("Enter accepts the pending offer and opens the campaign briefing"),
+        !Controller.IsTutorialOfferPending() && Controller.IsCampaignMenuOpen() && Battle.IsMenu());
+    Controller.ExecuteAction(TEXT("tutorial"));
+    TestTrue(TEXT("The quick tutorial remains explicitly available from campaign selection"),
+        Battle.Tutorial().IsActive() && !Controller.IsCampaignMenuOpen() && !Battle.Sim().config().ai);
     Controller.SaveTutorialPreference(Files.Accepted);
     Battle.Sim().forfeit(1);
     Controller.UpdateTutorial();
@@ -199,7 +201,7 @@ bool FCinderOnboardingIntegration::RunTest(const FString& Parameters)
         Controller.IsTutorialOfferPending());
 
     Controller.LoadTutorialPreference(Files.Missing);
-    Controller.Confirm();
+    Controller.ExecuteAction(TEXT("onboardlearn"));
     FString GuidedFailure;
     const bool bFinishedGuidedMatch = DriveGuidedTutorialToStep(
         Battle.Sim(), Battle.Tutorial(), ECinderTutorialStep::Complete, GuidedFailure);

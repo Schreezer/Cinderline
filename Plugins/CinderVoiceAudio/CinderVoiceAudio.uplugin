@@ -1,0 +1,13 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.0",
+  "FriendlyName": "Cinder Voice Audio",
+  "Description": "Permission-gated native microphone and voice playback for Cinderline.",
+  "Category": "Audio",
+  "CanContainContent": false,
+  "Installed": false,
+  "Modules": [
+    { "Name": "CinderVoiceAudio", "Type": "Runtime", "LoadingPhase": "Default" }
+  ]
+}

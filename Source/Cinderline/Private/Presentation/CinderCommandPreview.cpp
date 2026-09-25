@@ -25,7 +25,7 @@ FTimerHandle CommandSeventhPanelTimer, CommandCaptureTimer;
 
 FAutoConsoleCommandWithWorldAndArgs CommandPreviewCommand(
     TEXT("cinder.commandpreview"),
-    TEXT("DEVELOPMENT: unattended fresh local menu only. Army HUD fixture; never writes preferences or saves. States include idle|ribbon|army|roster-page|squads|unit|orders|queue|rally-unset|rally-set|rally-marker|rally-override|worker-rally|deselected."),
+    TEXT("DEVELOPMENT: unattended fresh local menu only. Army HUD fixture; never writes preferences or saves. States include idle|ribbon|army|roster-page|squads|unit|orders|queue|rally-unset|rally-set|rally-marker|rally-override|worker-rally|build-plan|deselected."),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
     {
         const FString State = Args.Num() == 1 ? Args[0].ToLower() : FString();
@@ -36,7 +36,7 @@ FAutoConsoleCommandWithWorldAndArgs CommandPreviewCommand(
             TEXT("global-build"), TEXT("global-train"), TEXT("global-research"), TEXT("global-jobs"),
             TEXT("global-pinned"), TEXT("global-blocked"), TEXT("global-rally"), TEXT("global-construction"),
             TEXT("rally-unset"), TEXT("rally-set"), TEXT("rally-marker"), TEXT("rally-override"),
-            TEXT("worker-rally"), TEXT("deselected")};
+            TEXT("worker-rally"), TEXT("build-plan"), TEXT("deselected")};
         if (!States.Contains(State))
         {
             UE_LOG(LogCinderCommandPreview, Warning, TEXT("CINDERLINE_COMMAND_PREVIEW refused=invalid_state"));
@@ -123,6 +123,70 @@ FAutoConsoleCommandWithWorldAndArgs CommandPreviewCommand(
             for (int Step = 0; Step < 60; ++Step) Sim.update(cinder::Simulation::Step);
             if (State == TEXT("global-blocked")) Sim.debugResources(0, 0);
         }
+        else if (State == TEXT("build-plan"))
+        {
+            // Blueprints only earn their place if they survive deselection, so
+            // the fixture carries three at once: a queued chain on the drudge
+            // that is selected, one queued site on a drudge that is not, and a
+            // foundation already raising, where the ghost has to read against
+            // the stub growing inside it.
+            Sim.debugSpawn(cinder::Kind::Foundry, 0, {1050, 650});
+            cinder::Id Partner = 0;
+            for (const cinder::Entity& E : Sim.entities())
+                if (E.team == 0 && E.kind == cinder::Kind::Worker && E.id != Worker) { Partner = E.id; break; }
+            // Authored coordinates rot the moment the map generator changes, so
+            // the fixture asks the simulation where each kind will actually fit.
+            const auto FindSite = [&](cinder::Kind Kind, cinder::Vec2 Near, cinder::Vec2& Out)
+            {
+                for (int Ring = 0; Ring <= 8; ++Ring)
+                    for (int Spoke = 0; Spoke < 16; ++Spoke)
+                    {
+                        const float Angle = Spoke * 2.0f * PI / 16.0f;
+                        const cinder::Vec2 Site{Near.x + FMath::Cos(Angle) * Ring * 90.0f,
+                            Near.y + FMath::Sin(Angle) * Ring * 90.0f};
+                        if (!Sim.visible(0, Site) || !Sim.canPlace(0, Kind, Site)) continue;
+                        Out = Site; return true;
+                    }
+                return false;
+            };
+            const cinder::Kind Plans[]{cinder::Kind::Processor, cinder::Kind::Laboratory, cinder::Kind::Turret};
+            const cinder::Vec2 Anchors[]{{1420, 1080}, {1720, 1200}, {1340, 1430}};
+            for (int32 Index = 0; Index < 3; ++Index)
+            {
+                cinder::Command Build; Build.type = cinder::CommandType::Build;
+                Build.units = {Worker}; Build.kind = Plans[Index];
+                Build.queueMode = cinder::CommandQueueMode::Append;
+                if (!FindSite(Plans[Index], Anchors[Index], Build.point))
+                {
+                    UE_LOG(LogCinderCommandPreview, Error,
+                        TEXT("CINDERLINE_COMMAND_PREVIEW failed=build_plan_site_%d"), Index);
+                    return;
+                }
+                if (!Issue(Build)) return;
+            }
+            // Two for the partner as well: it starts the first, which leaves
+            // the second queued, which is what proves a plan stays drawn on a
+            // drudge nobody has selected.
+            const cinder::Kind PartnerPlans[]{cinder::Kind::Foundry, cinder::Kind::Turret};
+            const cinder::Vec2 PartnerAnchors[]{{880, 1330}, {640, 1180}};
+            if (Partner) for (int32 Index = 0; Index < 2; ++Index)
+            {
+                cinder::Command Build; Build.type = cinder::CommandType::Build;
+                Build.units = {Partner}; Build.kind = PartnerPlans[Index];
+                Build.queueMode = cinder::CommandQueueMode::Append;
+                if (!FindSite(PartnerPlans[Index], PartnerAnchors[Index], Build.point))
+                {
+                    UE_LOG(LogCinderCommandPreview, Error,
+                        TEXT("CINDERLINE_COMMAND_PREVIEW failed=build_plan_partner_site_%d"), Index);
+                    return;
+                }
+                if (!Issue(Build)) return;
+            }
+            // Long enough for the lead drudge to walk to the first site and get
+            // a foundation out of the ground, short of finishing it.
+            for (int Step = 0; Step < 900; ++Step) Sim.update(cinder::Simulation::Step);
+            Selected = Worker;
+        }
         else if (State == TEXT("queue"))
         {
             cinder::Command Train; Train.type = cinder::CommandType::Train;
@@ -194,7 +258,11 @@ FAutoConsoleCommandWithWorldAndArgs CommandPreviewCommand(
         {
             const cinder::Entity* Focus = Sim.find(Selected);
             Rig->Focus(State == TEXT("queue") && Focus ? FVector(Focus->pos.x, Focus->pos.y, 0)
-                : State == TEXT("defend") ? FVector(1250, 1430, 0) : FVector(1160, 1010, 0), true);
+                : State == TEXT("defend") ? FVector(1250, 1430, 0)
+                // Centred on the plan rather than the base, so the frame shows
+                // the queued ghosts and not the structures already standing.
+                : State == TEXT("build-plan") ? FVector(1320, 1220, 0)
+                : FVector(1160, 1010, 0), true);
         }
 
         CommandCaptureWorld = World;
@@ -383,6 +451,29 @@ FAutoConsoleCommandWithWorldAndArgs CommandPreviewCommand(
                     PinnedProducer, Producer && Producer->rallyOverride,
                     Producer ? Producer->rally.x : 0.0f, Producer ? Producer->rally.y : 0.0f,
                     CurrentPC->IsProductionRallyMode(), bMarkerVisible);
+            }
+            if (State == TEXT("build-plan"))
+            {
+                int32 PlannedSites = 0, Foundations = 0, PlanningWorkers = 0;
+                for (const auto& Entity : CurrentBattle->Sim().entities())
+                {
+                    if (!Entity.alive() || Entity.team != 0) continue;
+                    if (cinder::definition(Entity.kind).building && Entity.progress < 1) ++Foundations;
+                    if (Entity.kind != cinder::Kind::Worker) continue;
+                    int32 Sites = 0;
+                    for (const auto& Planned : Entity.futureOrders)
+                        if (Planned.order == cinder::Order::Construct
+                            && Planned.buildingKind != cinder::Kind::Worker && !Planned.supportTarget) ++Sites;
+                    PlannedSites += Sites;
+                    if (Sites > 0) ++PlanningWorkers;
+                }
+                UE_LOG(LogCinderCommandPreview, Display,
+                    TEXT("CINDERLINE_BUILD_PLAN_PREVIEW state=%s planned_sites=%d planning_workers=%d foundations=%d selection=%d"),
+                    *State, PlannedSites, PlanningWorkers, Foundations,
+                    static_cast<int>(CurrentPC->Selection().size()));
+                if (PlannedSites < 2 || PlanningWorkers < 2 || Foundations < 1)
+                    UE_LOG(LogCinderCommandPreview, Error,
+                        TEXT("CINDERLINE_COMMAND_PREVIEW failed=build_plan_fixture"));
             }
             if (State.StartsWith(TEXT("global-")))
             {

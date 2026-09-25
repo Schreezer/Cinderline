@@ -96,7 +96,7 @@ FCinderHelpPage CinderHelp::Page(int32 PageIndex, bool bTouch, int32 ReferenceIn
         {
             Add(Result, TEXT("Navigate"), TEXT("Drag empty ground to pan. Use two fingers to pan or pinch to zoom."));
             Add(Result, TEXT("Select"), TEXT("Tap a friendly unit to select it, even while it moves. DESELECT clears selection without stopping units or changing squads. Hold, then drag for a selection box."));
-            Add(Result, TEXT("Command"), TEXT("Tap MOVE, then tap a point to move through a crowded friendly area. A normal ground tap with a building selected deselects it; use RALLY to change its rally. ATTACK arms attack-move; BUILD starts placement."));
+            Add(Result, TEXT("Command and formation"), TEXT("Choose MOVE, ATTACK or DEFEND, then tap a destination. ORDERS cycles TIGHT, STANDARD or WIDE spacing. FACE NEXT uses one press-drag: press the destination center, drag toward the arrival facing and release. A short drag sends nothing and stays armed. Queue next appends one Move or Attack waypoint."));
         }
         else
         {
@@ -106,23 +106,26 @@ FCinderHelpPage CinderHelp::Page(int32 PageIndex, bool bTouch, int32 ReferenceIn
             Add(Result, TEXT("Navigate"), TEXT("Alt-drag to pan. Scroll to zoom. Arrow keys also move the camera."));
 #endif
             Add(Result, TEXT("Select"), TEXT("Click a friendly unit to select it, even while it moves. DESELECT clears selection without stopping units or changing squads. Drag a box or double-click for its visible type."));
-            Add(Result, TEXT("Command"), TEXT("Choose MOVE, then click a point to move through a crowded friendly area. A normal ground click with a building selected deselects it; use RALLY or secondary-click to change its rally. ATTACK arms attack-move."));
+            Add(Result, TEXT("Command and formation"), TEXT("Choose MOVE, ATTACK or DEFEND, then click a destination. ORDERS cycles TIGHT, STANDARD or WIDE spacing. FACE NEXT uses one press-drag from the destination center toward the arrival facing. Hold Shift at release to append Move or Attack. A short drag sends nothing and stays armed."));
         }
         break;
     case 1:
-        Add(Result, TEXT("Ore"), TEXT("New Drudges find reachable explored ore automatically. An explicit Anchor rally takes priority. Select the Anchor, open its JOBS, and choose AUTO MINE to restore automatic mining."));
-        Add(Result, TEXT("Delivery"), TEXT("A Drudge carries ore to an operational Anchor or Siphon. Shorter routes improve income."));
-        Add(Result, TEXT("Crew"), TEXT("An Anchor provides 30 capacity. Each completed Siphon adds 14, up to the 200 cap. Queued units reserve crew."));
+        Add(Result, TEXT("Ore"), TEXT("New Drudges find reachable explored ore automatically. To choose their mine, select an Anchor, choose RALLY, then tap an ore deposit. New Drudges gather there; existing workers keep their orders. On desktop, right-click ore with the Anchor selected."));
+        Add(Result, TEXT("Worker rally"), TEXT("Rallying onto plain ground sends new Drudges there without mining. An empty or unreachable chosen mine also falls back to the ground rally. Select the Anchor, open ORDERS or JOBS, and choose AUTO MINE to restore automatic ore assignment."));
+        Add(Result, TEXT("Delivery and crew"), TEXT("Drudges deliver ore to an operational Anchor or Siphon; shorter routes improve income. An Anchor provides 30 crew capacity. Each completed Siphon adds 14, up to 200. Queued units reserve crew."));
         break;
     case 2:
         Add(Result, TEXT("Place"), TEXT("Open BUILD, choose a structure, then place it on currently visible clear ground. A reachable idle Drudge is assigned first, then a miner."));
         Add(Result, TEXT("Build"), TEXT("One Drudge constructs each site. Mining pauses while assigned and resumes afterward; progress stops if the worker leaves."));
-        Add(Result, TEXT("Jobs"), TEXT("Open JOBS to inspect progress or cancel. Select an unfinished site when you need to assign a different Drudge."));
+        Add(Result, TEXT("One builder's plan"), bTouch
+            ? TEXT("Select one Drudge. In ORDERS, arm QUEUE WORK. Choose BUILD WITH THIS DRUDGE to place several sites, or tap ore or an unfinished friendly building to queue mining or resume work. Cancel ends placement.")
+            : TEXT("Select one Drudge. Hold Shift when placing construction sites, or Shift-right-click ore or an unfinished friendly building to append mining or resume work. Queued placement stays open for more sites."));
+        Add(Result, TEXT("Plans and cancellation"), TEXT("Numbered plans cost ore when construction starts. Blocked or unaffordable jobs are skipped with a message. Up to 16 future jobs fit per Drudge. CLEAR QUEUED keeps its active job; STOP pauses the current foundation and clears the plan. JOBS cancels paid foundations."));
         break;
     case 3:
         Add(Result, TEXT("Produce"), FString::Printf(TEXT("Open TRAIN for single or batched orders. Work is balanced across available producers; each queue holds up to %d paid items. Select a combat producer and choose RALLY to override it; USE DEFAULT restores the shared army rally."), cinder::Simulation::MaxQueue));
-        Add(Result, TEXT("Organize and rally"), TEXT("ARMY opens the roster and squads. ALL selects every combat unit. ARMY > RALLY > SET FLAG sets the destination inherited by current and future combat producers."));
-        Add(Result, TEXT("Move and defend"), TEXT("Move sends units to assigned positions. Defend keeps them near the chosen point. ATTACK arms attack-move; choosing a visible enemy orders a direct attack."));
+        Add(Result, TEXT("Organize and rally"), TEXT("ARMY opens the roster and squads. TACTICS recalls a saved squad and opens its ORDERS. ALL selects every combat unit. ARMY > RALLY > SET RALLY sets the destination inherited by current and future combat producers."));
+        Add(Result, TEXT("Move, patrol, and escort"), TEXT("MOVE and ATTACK use numbered future waypoints. PATROL repeats between accepted A/B points and returns to its interrupted endpoint after a pursuit; ESCORT follows an owned mobile leader at a stable slot. Both fight inside their marked leash, and the selected leader keeps its order. CLEAR QUEUED keeps the current order; STOP clears all. Queued steps wait behind persistent orders."));
         break;
     case 4:
         Add(Result, TEXT("Vision"), TEXT("Bright ground is visible now. Dim ground was explored earlier. Unexplored ground hides terrain and enemies."));

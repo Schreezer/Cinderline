@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Sim/Simulation.h"
+#include "Sim/MapDefinition.h"
 
 namespace CinderTerrainSurface
 {
@@ -10,11 +11,14 @@ constexpr int32 TextureSize = 256;
 struct FFeatures
 {
     int32 Map = 0;
+    const cinder::MapDefinition* AuthoredDefinition = nullptr;
     float WorldSize = cinder::Simulation::WorldSize;
     TArray<cinder::Obstacle> Cliffs;
     TArray<cinder::Vec2> Minerals;
     TArray<cinder::Obstacle> ServicePads;
     TArray<TPair<cinder::Vec2, cinder::Vec2>> Roads;
+    /** Authored geographic routes, independent of units, buildings and resource state. */
+    TArray<TPair<cinder::Vec2, cinder::Vec2>> Trails;
 };
 
 /** Packed linear mask: R exposed stone, G mineral stain, B windblown ash, A service ground. */

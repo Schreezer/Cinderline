@@ -84,6 +84,8 @@ FString CinderUnitInfo::OrderName(cinder::Order Order)
     case Order::Hold: return TEXT("Holding position");
     case Order::Construct: return TEXT("Constructing");
     case Order::Defend: return TEXT("Defending");
+    case Order::Patrol: return TEXT("Patrolling");
+    case Order::Escort: return TEXT("Escorting");
     }
     return TEXT("Idle");
 }
@@ -140,14 +142,30 @@ FCinderUnitDetails CinderUnitInfo::Describe(const cinder::Simulation& Simulation
     }
 
     Result.OrderText = OrderName(Entity.order);
-    if (Entity.order == cinder::Order::Gather && Entity.returning)
-        Result.OrderText = TEXT("Returning ore");
+    if (Entity.order == cinder::Order::Gather)
+        Result.OrderText = Entity.navigationExhausted
+            ? (Entity.returning ? TEXT("Ore delivery blocked") : TEXT("Mining route blocked"))
+            : (Entity.returning ? TEXT("Returning ore") : TEXT("Gathering ore"));
     else if (Entity.order == cinder::Order::Defend)
     {
         const float DeltaX = Entity.pos.x - Entity.goal.x;
         const float DeltaY = Entity.pos.y - Entity.goal.y;
         Result.OrderText = DeltaX * DeltaX + DeltaY * DeltaY > 5.0f * 5.0f
             ? TEXT("Moving to defend") : TEXT("Defending");
+    }
+    else if (Entity.order == cinder::Order::Patrol)
+    {
+        Result.OrderText = Entity.navigationExhausted ? TEXT("Patrol route blocked")
+            : Entity.sustained.phase == cinder::SustainedOrderPhase::Pursuit ? TEXT("Patrol engaging")
+            : Entity.sustained.phase == cinder::SustainedOrderPhase::Return ? TEXT("Returning to patrol endpoint")
+            : TEXT("Patrolling");
+    }
+    else if (Entity.order == cinder::Order::Escort)
+    {
+        Result.OrderText = Entity.navigationExhausted ? TEXT("Escort route blocked")
+            : Entity.sustained.phase == cinder::SustainedOrderPhase::Pursuit ? TEXT("Escort engaging")
+            : Entity.sustained.phase == cinder::SustainedOrderPhase::Return ? TEXT("Returning to escort slot")
+            : FString::Printf(TEXT("Escorting unit #%u"), Entity.sustained.escortTarget);
     }
 
     return Result;

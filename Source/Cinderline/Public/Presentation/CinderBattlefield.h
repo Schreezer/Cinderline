@@ -3,6 +3,8 @@
 #include "GameFramework/Actor.h"
 #include "Presentation/CinderEntityMotion.h"
 #include "Presentation/CinderTutorial.h"
+#include "Presentation/CinderCampaign.h"
+#include "Presentation/CinderCampaignSave.h"
 #include "Sim/AIDifficulty.h"
 #include "Sim/MatchLength.h"
 #include "Sim/Simulation.h"
@@ -48,10 +50,36 @@ public:
     void StartMatch(int MapIndex, cinder::AIDifficulty Difficulty = cinder::AIDifficulty::Normal,
         cinder::MatchLength Length = cinder::MatchLength::Standard);
     void StartTutorial();
+    bool StartCampaignMission(int32 Mission);
+    bool ResumeCampaignCheckpoint();
+    void GuidanceCameraInput();
+    void RequestCampaignHint();
+    FCinderCampaign& Campaign() { return CampaignDirector; }
+    const FCinderCampaign& Campaign() const { return CampaignDirector; }
+    const FCinderCampaignProgress& CampaignProgress() const { return CampaignRecord; }
+    bool HasCampaignCheckpoint() const { return bCampaignCheckpointAvailable; }
+    const FString& CampaignSaveMessage() const { return CampaignStorageMessage; }
+    bool IsMatchOver() const { return CampaignDirector.IsTerminal() || Simulation->winner() != -1; }
     bool StartOnlineMatch(const cinder::net::Snapshot& Snapshot);
     bool IsOnlineMatch() const { return bOnlineMatch; }
-    cinder::CommandResult SubmitCommand(const cinder::Command& Command);
+    cinder::CommandResult SubmitCommand(const cinder::Command& Command, uint32* OutOnlineSequence = nullptr);
     cinder::Vec2 RenderPosition(const cinder::Entity& Entity) const;
+    /**
+     * World Z of the presented ground at an XY, for anything that has to sit on
+     * the terrain rather than on the old flat plane — selection rings, world
+     * labels, ground markers. Evaluates the same closed-form generator the
+     * landscape is baked from, so it agrees with the rendered surface without
+     * reading back a render resource.
+     */
+    float GroundHeight(cinder::Vec2 Point) const;
+    /** Ground height after the terrain material's explored-fog vertex flattening.
+        Used for pointer rays; entity seating continues to use GroundHeight. */
+    float PickingGroundHeight(cinder::Vec2 Point) const;
+    /** Terrain/obstacle reference for an entity, before its hull or UI clearance is added.
+        Aircraft clear the visible cliff body; ground entities use the actual terrain. */
+    float EntityGroundHeight(cinder::Vec2 Point, cinder::Kind Kind) const;
+    /** True while the authored Landscape is bound, so the presented ground carries relief. */
+    bool HasTerrainRelief() const { return bTerrainRelief; }
     FCinderTutorial& Tutorial() { return Training; }
     const FCinderTutorial& Tutorial() const { return Training; }
     void ReturnToMenu();
@@ -81,12 +109,18 @@ public:
     const TArray<uint8>& FogCells() const { return LastFogCells; }
     int32 FogDimension() const { return cinder::Simulation::FogSize; }
     uint64 FogRevision() const { return FogSnapshotRevision; }
+    /** Changes at every reset/load, even when entity IDs and simulation tick are reused. */
+    uint64 MatchGeneration() const { return MatchGenerationSerial; }
 
 private:
     friend class FCinderWorldLifecycleIntegration;
     friend class FCinderDifficultyIntegration;
     friend class FCinderArmyControlIntegration;
+    friend class FCinderTacticalOrderIntegration;
+    friend class FCinderPatrolEscortIntegration;
     friend class FCinderCameraBoundaryTest;
+    friend class FCinderTerrainPickingTest;
+    friend class FCinderCampaignLifecycleIntegration;
     struct FBatch
     {
         UInstancedStaticMeshComponent* Mesh = nullptr;
@@ -113,14 +147,35 @@ private:
     void RefreshEnvironment();
     void RefreshTerrainSurface();
     void UpdateFogTexture();
-    void AddBuildingPad(const cinder::Entity& Entity);
+    /** GroundZ is AddEntity's single per-entity terrain sample, so slab and hull agree. */
+    void AddBuildingPad(const cinder::Entity& Entity, float GroundZ);
     bool ValidateModel(UStaticMesh* Mesh, cinder::Kind Kind, FString& Reason) const;
     void AddEntity(const cinder::Entity& Entity);
-    void FlushBatches();
+    /** Terrain, fog, scenery and effects: everything that only changes on a simulation step. */
+    void RenderSimState();
+    /** Entity poses: re-evaluated every rendered frame so motion is continuous. */
+    void RenderPoseState();
+    /**
+     * bPosePass selects the dynamic entity batches; the complement is the static
+     * environment set that RefreshEnvironment owns. The split is exact because
+     * FBatch::bDynamic is already true for precisely the batches AddEntity writes.
+     */
+    void FlushBatches(bool bPosePass);
     void UpdateCompletionAudio();
     bool LoadMatchFrom(const FString& Filename);
     TUniquePtr<cinder::Simulation> Simulation;
     FCinderTutorial Training;
+    void LoadCampaignProgress();
+    void ObserveCampaign();
+    void SettleCampaignBoundary();
+    bool CanPersistCampaign() const;
+    FCinderCampaign CampaignDirector;
+    TUniquePtr<FCinderCampaignSave> CampaignStorage;
+    FCinderCampaignProgress CampaignRecord;
+    FString CampaignStorageMessage;
+    uint32 SavedCampaignBoundary = 0;
+    bool bCampaignCheckpointAvailable = false;
+    bool bCampaignVictoryRecorded = false;
     cinder::Stats AudioStatsSnapshot;
     FCinderCombatFeedbackStats CombatFeedback;
     std::vector<cinder::Entity> ResourceMemory;
@@ -133,6 +188,21 @@ private:
     TMap<cinder::Id, cinder::Vec2> PreviousOnlinePositions;
     int CurrentMap = 0;
     float RenderTimer = 0;
+    /**
+     * Presentation clock. Poses are evaluated against this free-running local
+     * time rather than Simulation::time(), which is quantized to the 0.05 s step
+     * and therefore held an animation for one or two display frames in an uneven
+     * 3:2 cadence. It accumulates only while a match is actually running, so
+     * pausing still freezes every animation. It is never read back by, compared
+     * against, or fed into the simulation.
+     */
+    float PresentationTime = 0;
+    /** Monotonic per-pose counter standing in for Simulation::tick() in observations. */
+    uint64 PoseSerial = 0;
+    /** Set from UCinderLandscapeTerrain::Update; false means the ground is the flat fallback plane. */
+    bool bTerrainRelief = false;
+    /** Local selection, refreshed once per pose pass. Cosmetic view state only. */
+    TSet<cinder::Id> SelectedIds;
     TArray<FBatch> Batches;
     FInstanceUploadCounters InstanceUploads;
     TArray<int32> ModelBatchIndices;
@@ -148,6 +218,7 @@ private:
     TArray<int32> RockBatchIndices;
     TArray<uint8> LastFogCells;
     uint64 FogSnapshotRevision = 0;
+    uint64 MatchGenerationSerial = 1;
     TArray<uint8> LastObstacleReveal;
     uint32 ObstacleGeometryHash = 0;
     float PresentedWorldSize = 0.0f;

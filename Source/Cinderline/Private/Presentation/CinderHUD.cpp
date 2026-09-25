@@ -4,11 +4,19 @@
 #include "Presentation/CinderAudioSubsystem.h"
 #include "Presentation/CinderHelpContent.h"
 #include "Presentation/CinderOnlineSubsystem.h"
+#include "Presentation/CinderVoiceSubsystem.h"
 #include "Presentation/CinderTeamColors.h"
+// The minimap relief is baked from the landscape's own closed-form height
+// generator now that the terrain rolls across the whole map, not from the
+// splat-mask sampler: a mask stain only ever described where stone and ash
+// were painted, which said nothing about which way the ground falls.
+#include "Presentation/CinderLandscapeTerrain.h"
 #include "Presentation/CinderUnitInfo.h"
 #include "Sim/AIDifficulty.h"
+#include "Sim/SimulationRules.h"
 #include "Sim/MatchLength.h"
 #include "Presentation/CinderTutorial.h"
+#include "Presentation/CinderCampaign.h"
 #include "Presentation/CinderCamera.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
@@ -40,9 +48,100 @@ namespace
 const FLinearColor Ink(0.004f, 0.010f, 0.018f, 0.97f);
 const FLinearColor PanelInk(0.012f, 0.027f, 0.037f, 0.98f);
 const FLinearColor White(0.88f, 0.94f, 0.97f);
-const FLinearColor Muted(0.38f, 0.50f, 0.55f);
+// Was (0.38,0.50,0.55). That is a 2.6:1 grey on this near-black ink, and the
+// clock chip, queue subtitles and selection detail all use it: on a bright
+// desert battlefield in daylight, through an 80% MetalFX resample, it read as
+// an empty box. Lifted to roughly 7:1 against PanelInk while staying clearly
+// subordinate to White.
+const FLinearColor Muted(0.60f, 0.72f, 0.77f);
 const FLinearColor Mint(0.10f, 0.90f, 0.74f);
 const FLinearColor Amber(1.0f, 0.64f, 0.24f);
+const FLinearColor Alarm(1.0f, 0.30f, 0.26f);
+// Type ramp. FontForScale rasterizes 14 * Scale * UIScale, so these five
+// multipliers are the only sizes the HUD is allowed to ask for. Before this
+// there were 27 ad-hoc values between 0.46 and 3.65 and the smallest of them
+// bottomed out on the rasterizer's floor, which is why 0.46-scale world labels
+// were illegible on a phone. Every step is at least 1.22x its neighbour so the
+// hierarchy survives the 80% resample plus FXAA.
+constexpr float TypeDisplay = 1.40f;
+constexpr float TypeTitle = 1.06f;
+constexpr float TypeBody = 0.80f;
+constexpr float TypeCaption = 0.66f;
+constexpr float TypeMicro = 0.52f;
+// The wordmark is art, not type: it is set twice in the whole game, on the
+// menu and on the campaign map, and is deliberately outside the ramp.
+constexpr float TypeWordmark = 3.65f;
+constexpr float TypeWordmarkCompact = 2.00f;
+// Spacing scale in logical units. Multiply by UIScale at the call site.
+constexpr float Space1 = 4.0f;
+constexpr float Space2 = 8.0f;
+constexpr float Space3 = 12.0f;
+constexpr float Space4 = 16.0f;
+// Press animation. 0.12 s is short enough to feel like the control reacted to
+// the finger rather than played an animation, and long enough to survive a
+// 30 fps frame budget (three to four frames).
+constexpr float PressSeconds = 0.12f;
+// Resource chip feedback windows.
+constexpr float ResourceFlashSeconds = 0.45f;
+// Baked minimap relief. 96 texels across an 84-unit square is about 4 source
+// texels per drawn point at AEON's 3.38 UIScale, so bilinear upscaling reads as
+// soft relief rather than blocks, and one bake is 9,216 CinderLandscapeTerrain
+// height samples instead of the 65,536 the ground material's 256 texture costs.
+// At the standard 4800 cm world one texel spans 50 cm, which is a little over
+// one landscape vertex (38.1 cm): fine enough that a 180 cm-half-width drainage
+// trough is still seven texels across and survives the bilinear upscale.
+constexpr int32 MinimapTerrainSize = 96;
+// Hillshade. A pure colour ramp cannot express which way a slope faces, and at
+// minimap scale the whole legibility of a hill is in that. The light matches
+// the scene sun and comes in from the upper left of the minimap, which is -X
+// and -Y in texel space because the minimap draws +Y downward. Already unit
+// length, so the lambert term needs no normalisation of L at bake time.
+constexpr float MinimapLight[3] = {-0.5494f, -0.5494f, 0.6295f};
+// Vertical exaggeration applied to the height gradient before the surface
+// normal is built. The agreed walkable ceiling is 62 cm of relief and the
+// gradient cap is 0.20, so a true normal would sit within 11 degrees of
+// straight up and the lambert term would vary by under a tenth - invisible on
+// an 84-point minimap. 2.5 lifts a typical 0.10 hillside to roughly +-20% of
+// brightness, which reads clearly without turning gentle ground into a cliff.
+constexpr float MinimapHillshadeExaggeration = 2.5f;
+// Shade clamp. The floor keeps the darkest walkable shadow well above the
+// near-black cliff fill below, so no amount of slope can make walkable ground
+// read as impassable; the ceiling stops a sunlit crest blowing out to white and
+// competing with the cliff rim, which is the brightest thing on the map.
+constexpr float MinimapShadeFloor = 0.55f;
+constexpr float MinimapShadeCeiling = 1.45f;
+// Minimum hypsometric span in centimetres. The ramp is normalised over the
+// relief actually present on the map so every map uses the full palette, but a
+// map that came out nearly flat must not have its millimetres of noise
+// stretched into full contrast. 24 cm is a third of the walkable ceiling.
+constexpr float MinimapReliefSpanFloor = 24.0f;
+// Gradient below which ground counts as "worn flat". Pathways damp the relief
+// toward flat and are the ground players actually march and build on, so they
+// are the one walkable feature worth calling out by more than shading: under
+// this gradient the texel is tinted toward pale dust. 0.035 is well under the
+// 0.10 a rolling hill flank carries, so open hillside is never mistaken for a
+// route, and the three noise octaves keep untravelled flats above it.
+constexpr float MinimapWornGradient = 0.035f;
+constexpr float MinimapWornStrength = 0.20f;
+// One fog run cell per 2x2 simulation cells. At FogSize 64 that is a 32-cell
+// overlay: half the runs, and a 2.6-point boundary instead of a 1.3-point one,
+// which is the difference between surviving MetalFX and being smeared away.
+constexpr int32 MinimapFogStride = 2;
+// Selection ring texture. 64 is enough for a band four texels thick, which
+// lands at five-plus screen pixels on any ring big enough to be worth drawing.
+constexpr int32 SelectionRingSize = 64;
+// World Z the selection ring is projected at. The ring is a screen-space quad
+// drawn by the Canvas, so it cannot intersect geometry, but its centre still
+// has to project from the ground the unit is standing on: once the battlefield
+// puts units on a slope this needs the sampled terrain height, not a constant.
+constexpr float SelectionRingHeight = 7.0f;
+FLinearColor Lift(FLinearColor Base, float Amount)
+{
+    // Press and flash feedback brightens toward white without touching alpha
+    // ordering, so a translucent face stays translucent while it pops.
+    return FLinearColor(FMath::Min(1.0f, Base.R + Amount), FMath::Min(1.0f, Base.G + Amount),
+        FMath::Min(1.0f, Base.B + Amount), FMath::Min(1.0f, Base.A + Amount * 0.55f));
+}
 constexpr int32 SheetNone = 0;
 constexpr int32 SheetContext = 1;
 constexpr int32 SheetTypes = 2;
@@ -67,10 +166,12 @@ FString RosterOrder(const cinder::Entity& Entity)
     switch (Entity.order)
     {
     case Order::Idle: return TEXT("IDLE");
-    case Order::Move: return TEXT("MOVE");
+    case Order::Move: return Entity.navigationExhausted ? TEXT("MOVE BLOCKED") : TEXT("MOVE");
     case Order::Attack: return TEXT("ATTACK");
-    case Order::AttackMove: return TEXT("ATTACK MOVE");
-    case Order::Gather: return Entity.returning ? TEXT("RETURN ORE") : TEXT("GATHER");
+    case Order::AttackMove: return Entity.navigationExhausted ? TEXT("ATTACK MOVE BLOCKED") : TEXT("ATTACK MOVE");
+    case Order::Gather:
+        if (Entity.navigationExhausted) return Entity.returning ? TEXT("RETURN BLOCKED") : TEXT("GATHER BLOCKED");
+        return Entity.returning ? TEXT("RETURN ORE") : TEXT("GATHER");
     case Order::Hold: return TEXT("HOLD");
     case Order::Construct: return TEXT("BUILD");
     case Order::Defend:
@@ -79,8 +180,73 @@ FString RosterOrder(const cinder::Entity& Entity)
         const float DY = Entity.pos.y - Entity.goal.y;
         return DX * DX + DY * DY > 25.0f ? TEXT("TO DEFEND") : TEXT("DEFEND");
     }
+    case Order::Patrol:
+        if (Entity.navigationExhausted) return TEXT("PATROL BLOCKED");
+        if (Entity.sustained.phase == cinder::SustainedOrderPhase::Pursuit) return TEXT("PATROL ENGAGE");
+        if (Entity.sustained.phase == cinder::SustainedOrderPhase::Return) return TEXT("RETURN TO ENDPOINT");
+        return TEXT("PATROL");
+    case Order::Escort:
+        if (Entity.navigationExhausted) return TEXT("ESCORT BLOCKED");
+        if (Entity.sustained.phase == cinder::SustainedOrderPhase::Pursuit) return TEXT("ESCORT ENGAGE");
+        if (Entity.sustained.phase == cinder::SustainedOrderPhase::Return) return TEXT("RETURN TO ESCORT");
+        return TEXT("ESCORT");
     }
     return TEXT("IDLE");
+}
+bool SameTacticalPlan(const cinder::Entity& A, const cinder::Entity& B)
+{
+    const bool bATactical = A.order == cinder::Order::Move || A.order == cinder::Order::AttackMove
+        || A.order == cinder::Order::Defend;
+    const bool bBTactical = B.order == cinder::Order::Move || B.order == cinder::Order::AttackMove
+        || B.order == cinder::Order::Defend;
+    const bool bAHasPlan = bATactical || !A.futureOrders.empty();
+    const bool bBHasPlan = bBTactical || !B.futureOrders.empty();
+    const bool bASustained = A.order == cinder::Order::Patrol || A.order == cinder::Order::Escort;
+    const bool bBSustained = B.order == cinder::Order::Patrol || B.order == cinder::Order::Escort;
+    if (!bAHasPlan && !bBHasPlan && !bASustained && !bBSustained) return true;
+    if (bAHasPlan != bBHasPlan || A.order != B.order
+        || A.futureOrders.size() != B.futureOrders.size()) return false;
+    if (bATactical && (A.goal.x != B.goal.x || A.goal.y != B.goal.y
+        || A.supportTarget != B.supportTarget || A.hasArrivalFacing != B.hasArrivalFacing
+        || (A.hasArrivalFacing && A.arrivalFacing != B.arrivalFacing))) return false;
+    if (A.order == cinder::Order::Patrol
+        && (A.sustained.patrolOrigin.x != B.sustained.patrolOrigin.x
+            || A.sustained.patrolOrigin.y != B.sustained.patrolOrigin.y
+            || A.sustained.patrolDestination.x != B.sustained.patrolDestination.x
+            || A.sustained.patrolDestination.y != B.sustained.patrolDestination.y)) return false;
+    if (A.order == cinder::Order::Escort
+        && (A.sustained.escortTarget != B.sustained.escortTarget
+            || A.sustained.escortOffset.x != B.sustained.escortOffset.x
+            || A.sustained.escortOffset.y != B.sustained.escortOffset.y)) return false;
+    for (std::size_t Index = 0; Index < A.futureOrders.size(); ++Index)
+    {
+        const cinder::TacticalOrder& Left = A.futureOrders[Index];
+        const cinder::TacticalOrder& Right = B.futureOrders[Index];
+        if (Left.order != Right.order || Left.point.x != Right.point.x || Left.point.y != Right.point.y
+            || Left.supportTarget != Right.supportTarget || Left.buildingKind != Right.buildingKind
+            || Left.hasArrivalFacing != Right.hasArrivalFacing
+            || (Left.hasArrivalFacing && Left.arrivalFacing != Right.arrivalFacing)) return false;
+    }
+    return true;
+}
+// How tall a blueprint stands. These are the authored mesh heights from
+// scripts/create_visual_target_models.py, not estimates: a ghost that does not
+// match the structure it promises is worse than no ghost, because the player
+// sizes up the approach against a volume the building will never fill. Each
+// model's XY is exactly its definition radius doubled, so the footprint needs
+// no table - only the height does.
+float BlueprintHeight(cinder::Kind Kind)
+{
+    switch (Kind)
+    {
+    case cinder::Kind::Headquarters: return 185;
+    case cinder::Kind::Laboratory: return 160;
+    case cinder::Kind::MotorPool: return 155;
+    case cinder::Kind::Foundry: return 120;
+    case cinder::Kind::Turret: return 120;
+    case cinder::Kind::Processor: return 112;
+    default: return 120;
+    }
 }
 FString ConstructionStatus(const cinder::Simulation& Sim, const cinder::Entity& Site)
 {
@@ -133,6 +299,254 @@ void ACinderHUD::BeginPlay()
 }
 
 void ACinderHUD::Panel(float X, float Y, float W, float H, FLinearColor Color) { DrawRect(Color, X, Y, W, H); }
+
+uint32 ACinderHUD::ButtonKey(const FString& Action, int32 Argument, cinder::Id EntityId)
+{
+    // Entity identity only participates for the roster buttons, which are the
+    // only controls whose action and argument are identical across rows. Every
+    // other site patches FButton::EntityId after the draw call has already run,
+    // so folding it in would make the stamped key unreachable at draw time.
+    const uint32 Identity = Action == TEXT("armyunit") ? static_cast<uint32>(EntityId) : 0u;
+    return HashCombineFast(HashCombineFast(GetTypeHash(Action),
+        static_cast<uint32>(Argument)), Identity);
+}
+
+float ACinderHUD::PressPulse(const FString& Action, int32 Argument, cinder::Id EntityId) const
+{
+    if (PressedAt.IsEmpty()) return 0;
+    const float* Stamp = PressedAt.Find(ButtonKey(Action, Argument, EntityId));
+    if (!Stamp) return 0;
+    const float Age = FrameRealTime - *Stamp;
+    if (Age < 0 || Age >= PressSeconds) return 0;
+    // Instant attack, eased release: the control is already at full brightness
+    // on the frame the tap lands, which is the only frame the player is looking.
+    const float Remaining = 1.0f - Age / PressSeconds;
+    return Remaining * Remaining;
+}
+
+UTexture2D* ACinderHUD::SelectionRing()
+{
+    if (SelectionRingTexture) return SelectionRingTexture;
+    // A headless automation run has no RHI, so CreateTransient yields a texture
+    // whose resource never materialises and AHUD::DrawTexture asserts on it. The
+    // fog and ground textures in CinderBattlefield gate on exactly this.
+    if (!FApp::CanEverRender()) return nullptr;
+    constexpr int32 Size = SelectionRingSize;
+    TArray<uint8> Pixels;
+    Pixels.SetNumUninitialized(Size * Size * 4);
+    // Three concentric zones in one texture so a single tinted quad carries
+    // both the team colour and the dark separation it needs against pale
+    // ground: a faint interior wash, a dark halo, and the bright band itself.
+    // RGB encodes brightness and is multiplied by the team tint at draw time.
+    constexpr float BandCenter = 0.80f;
+    constexpr float BandHalfWidth = 0.075f;
+    constexpr float HaloHalfWidth = 0.20f;
+    for (int32 Y = 0; Y < Size; ++Y) for (int32 X = 0; X < Size; ++X)
+    {
+        const float DX = (X + 0.5f) / Size * 2.0f - 1.0f;
+        const float DY = (Y + 0.5f) / Size * 2.0f - 1.0f;
+        const float Distance = FMath::Sqrt(DX * DX + DY * DY);
+        const float Band = FMath::Clamp(1.0f - FMath::Abs(Distance - BandCenter) / BandHalfWidth, 0.0f, 1.0f);
+        const float Halo = FMath::Clamp(1.0f - FMath::Abs(Distance - BandCenter) / HaloHalfWidth, 0.0f, 1.0f);
+        const float Core = Band * Band * (3 - 2 * Band);
+        const float Wash = Distance < BandCenter ? 0.10f : 0.0f;
+        const float Alpha = FMath::Clamp(FMath::Max3(Core, Halo * Halo * 0.55f, Wash), 0.0f, 1.0f);
+        const uint8 Luminance = static_cast<uint8>(FMath::Clamp(Core * 255.0f + 10.0f, 0.0f, 255.0f));
+        const int32 Pixel = (Y * Size + X) * 4;
+        Pixels[Pixel] = Luminance; Pixels[Pixel + 1] = Luminance;
+        Pixels[Pixel + 2] = Luminance;
+        Pixels[Pixel + 3] = static_cast<uint8>(Alpha * 255.0f);
+    }
+    SelectionRingTexture = UTexture2D::CreateTransient(Size, Size, PF_B8G8R8A8, NAME_None, Pixels);
+    if (!SelectionRingTexture) return nullptr;
+    SelectionRingTexture->SRGB = false;
+    SelectionRingTexture->NeverStream = true;
+    SelectionRingTexture->Filter = TF_Bilinear;
+    SelectionRingTexture->AddressX = SelectionRingTexture->AddressY = TA_Clamp;
+    SelectionRingTexture->UpdateResource();
+    return SelectionRingTexture;
+}
+
+void ACinderHUD::RefreshMinimapTerrain(ACinderBattlefield* Battle)
+{
+    if (!Battle) return;
+    // See SelectionRing: without an RHI the baked texture has no resource and the
+    // canvas asserts, so headless automation falls back to the flat panel below.
+    if (!FApp::CanEverRender()) return;
+    const cinder::Simulation& Sim = Battle->Sim();
+    const int32 Map = Sim.config().map;
+    const float World = Sim.worldSize();
+    const uint64 Geometry = CinderLandscapeTerrain::GeometrySignature(Sim);
+    if (MinimapTerrain && MinimapTerrainGeometry == Geometry
+        && FMath::IsNearlyEqual(MinimapTerrainWorldSize, World)) return;
+
+    // The relief is authored map geometry, not observed state, so it is baked
+    // once and never rebuilt on exploration. It is only ever seen through the
+    // fog overlay below, whose unexplored colour is fully opaque.
+    constexpr int32 Size = MinimapTerrainSize;
+    const float Texel = World / Size;
+
+    // Cliff mask first, because it decides which texels are allowed to
+    // contribute to the walkable hypsometric range below. An obstacle rectangle
+    // is the only impassable geometry the simulation knows about, and the
+    // landscape raises it into a terraced mesa several metres tall; that relief
+    // must never be normalised into the same ramp as the 62 cm of walkable roll,
+    // or a mesa would compress every hill on the map into one flat tone.
+    TArray<uint8> Blocked;
+    Blocked.SetNumZeroed(Size * Size);
+    for (const cinder::Obstacle& Cliff : Sim.obstacles())
+    {
+        const int32 MinX = FMath::Clamp(FMath::FloorToInt((Cliff.center.x - Cliff.half.x) / World * Size), 0, Size - 1);
+        const int32 MaxX = FMath::Clamp(FMath::CeilToInt((Cliff.center.x + Cliff.half.x) / World * Size), 0, Size - 1);
+        const int32 MinY = FMath::Clamp(FMath::FloorToInt((Cliff.center.y - Cliff.half.y) / World * Size), 0, Size - 1);
+        const int32 MaxY = FMath::Clamp(FMath::CeilToInt((Cliff.center.y + Cliff.half.y) / World * Size), 0, Size - 1);
+        for (int32 Y = MinY; Y <= MaxY; ++Y) for (int32 X = MinX; X <= MaxX; ++X)
+            Blocked[Y * Size + X] = 1;
+    }
+
+    // One generator evaluation per texel, held in a buffer. The hillshade needs
+    // the four axial neighbours of every texel, so shading straight out of
+    // HeightAt would cost five evaluations per texel - 46,080 instead of 9,216 -
+    // for exactly the same picture. Buffering also means the walkable range can
+    // be measured in one pass before any colour is chosen.
+    TArray<float> Heights;
+    Heights.SetNumUninitialized(Size * Size);
+    for (int32 Y = 0; Y < Size; ++Y) for (int32 X = 0; X < Size; ++X)
+        Heights[Y * Size + X] = CinderLandscapeTerrain::HeightAt(Sim,
+            (X + 0.5f) * Texel, (Y + 0.5f) * Texel);
+
+    // Normalise the ramp over the relief this map actually has rather than over
+    // the agreed 62 cm ceiling: the generator feathers to zero at the world edge
+    // and toward every obstacle, so a map that only ever reaches 40 cm would
+    // otherwise spend a third of the palette on tones it never shows.
+    float LowRelief = 0.0f, HighRelief = 0.0f;
+    bool bAnyWalkable = false;
+    for (int32 Index = 0; Index < Size * Size; ++Index)
+    {
+        if (Blocked[Index]) continue;
+        // Named Relief, not Height: ACinderHUD already has a Height field for the
+        // viewport, and -Wshadow is an error in this build.
+        const float Relief = Heights[Index];
+        if (!bAnyWalkable) { LowRelief = HighRelief = Relief; bAnyWalkable = true; continue; }
+        LowRelief = FMath::Min(LowRelief, Relief);
+        HighRelief = FMath::Max(HighRelief, Relief);
+    }
+    const float ReliefSpan = FMath::Max(HighRelief - LowRelief, MinimapReliefSpanFloor);
+
+    // Byte triples chosen straight in display space: the minimap is the one
+    // surface the player reads at a glance, so the palette is flattened and
+    // desaturated rather than inherited from the ground material's linear mask.
+    //
+    // The four walkable stops are a hypsometric ramp: cool and dark in the
+    // drainage troughs, warm and pale on the crests, which is the reading every
+    // relief map has trained players on. They are deliberately all mid-tone -
+    // the darkest walkable value is 28 and survives the 0.55 shade floor at 15,
+    // while the cliff fill sits at 11 and takes no shading at all. That gap is
+    // what stops a shadowed hillside ever being mistaken for impassable ground.
+    constexpr uint8 TroughRGB[3] = {28, 38, 45};
+    constexpr uint8 LowlandRGB[3] = {44, 53, 53};
+    constexpr uint8 RiseRGB[3] = {74, 78, 68};
+    constexpr uint8 CrestRGB[3] = {114, 112, 91};
+    // Worn routes. Pale, dusty and slightly warm, so a pathway reads as a ribbon
+    // laid over the hillshade rather than as another elevation band.
+    constexpr uint8 WornRGB[3] = {124, 119, 102};
+    // Impassable. Near-black matte with a hard bright rim and no hillshade at
+    // all: flat fill plus a one-texel outline is a wall, and nothing produced by
+    // the smooth walkable ramp above can imitate it. This is the whole point of
+    // the pass - terrain that looks like a barrier but is not is worse than flat
+    // ground, and so is a barrier that looks like a hill.
+    constexpr uint8 CliffRGB[3] = {11, 14, 18};
+    constexpr uint8 CliffRimRGB[3] = {152, 163, 168};
+
+    TArray<uint8> Pixels;
+    Pixels.SetNumUninitialized(Size * Size * 4);
+    for (int32 Y = 0; Y < Size; ++Y) for (int32 X = 0; X < Size; ++X)
+    {
+        const int32 Index = Y * Size + X;
+        const bool bCliff = Blocked[Index] != 0;
+        // A plateau edge - blocked next to walkable - is the one feature the
+        // player actually navigates by, so it gets the brightest value on the
+        // map. Clamped neighbours, so a rectangle touching the world boundary
+        // still rims against the edge instead of reading past the buffer.
+        const bool bRim = bCliff && (X == 0 || Y == 0 || X == Size - 1 || Y == Size - 1
+            || !Blocked[Index - 1] || !Blocked[Index + 1]
+            || !Blocked[Index - Size] || !Blocked[Index + Size]);
+
+        // Central differences over the clamped neighbours. Dividing by the span
+        // actually stepped keeps this a true gradient in centimetres per
+        // centimetre at the world edge, where the clamp halves the step.
+        const int32 XMinus = FMath::Max(X - 1, 0), XPlus = FMath::Min(X + 1, Size - 1);
+        const int32 YMinus = FMath::Max(Y - 1, 0), YPlus = FMath::Min(Y + 1, Size - 1);
+        const float GradientX = (Heights[Y * Size + XPlus] - Heights[Y * Size + XMinus])
+            / FMath::Max((XPlus - XMinus) * Texel, 1.0f);
+        const float GradientY = (Heights[YPlus * Size + X] - Heights[YMinus * Size + X])
+            / FMath::Max((YPlus - YMinus) * Texel, 1.0f);
+
+        float Shade = 1.0f;
+        float Ramp = 0.0f;
+        float Worn = 0.0f;
+        if (!bCliff)
+        {
+            Ramp = FMath::Clamp((Heights[Index] - LowRelief) / ReliefSpan, 0.0f, 1.0f);
+            // Surface normal of the exaggerated relief, lambert against the sun,
+            // then rescaled so genuinely flat ground lands on exactly 1.0 and
+            // the ramp colour comes through unaltered. Without that rescale the
+            // whole map would be darkened by the light's own elevation cosine.
+            const float NormalX = -GradientX * MinimapHillshadeExaggeration;
+            const float NormalY = -GradientY * MinimapHillshadeExaggeration;
+            const float Length = FMath::Sqrt(NormalX * NormalX + NormalY * NormalY + 1.0f);
+            const float Lambert = (NormalX * MinimapLight[0] + NormalY * MinimapLight[1]
+                + MinimapLight[2]) / Length;
+            Shade = FMath::Clamp(Lambert / MinimapLight[2], MinimapShadeFloor, MinimapShadeCeiling);
+            // Worn pathways damp the relief toward flat, so they are the one
+            // place on the map where the gradient collapses. Keyed on gradient
+            // rather than on height because a path keeps its height as it climbs.
+            const float Gradient = FMath::Sqrt(GradientX * GradientX + GradientY * GradientY);
+            Worn = MinimapWornStrength
+                * (1.0f - FMath::Clamp(Gradient / MinimapWornGradient, 0.0f, 1.0f));
+        }
+
+        const int32 Pixel = Index * 4;
+        for (int32 Channel = 0; Channel < 3; ++Channel)
+        {
+            float Value;
+            if (bCliff)
+            {
+                Value = static_cast<float>(bRim ? CliffRimRGB[Channel] : CliffRGB[Channel]);
+            }
+            else
+            {
+                // Three equal segments across the four hypsometric stops.
+                const float Scaled = Ramp * 3.0f;
+                const float Local = Scaled - FMath::FloorToFloat(FMath::Min(Scaled, 2.0f));
+                Value = Scaled < 1.0f
+                    ? FMath::Lerp(static_cast<float>(TroughRGB[Channel]), static_cast<float>(LowlandRGB[Channel]), Local)
+                    : Scaled < 2.0f
+                        ? FMath::Lerp(static_cast<float>(LowlandRGB[Channel]), static_cast<float>(RiseRGB[Channel]), Local)
+                        : FMath::Lerp(static_cast<float>(RiseRGB[Channel]), static_cast<float>(CrestRGB[Channel]), Local);
+                Value = FMath::Lerp(Value, static_cast<float>(WornRGB[Channel]), Worn);
+                Value *= Shade;
+            }
+            // Pixels are BGRA; Channel 0 is red in the palette triples above.
+            Pixels[Pixel + (2 - Channel)] = static_cast<uint8>(FMath::Clamp(Value, 0.0f, 255.0f));
+        }
+        Pixels[Pixel + 3] = 255;
+    }
+    // A fresh transient texture rather than a region upload: this runs at most
+    // once per map, so the simpler path costs one collectable object instead of
+    // a render-thread copy whose lifetime has to be kept alive by hand.
+    UTexture2D* Baked = UTexture2D::CreateTransient(Size, Size, PF_B8G8R8A8, NAME_None, Pixels);
+    if (!Baked) return;
+    Baked->SRGB = true;
+    Baked->NeverStream = true;
+    Baked->Filter = TF_Bilinear;
+    Baked->AddressX = Baked->AddressY = TA_Clamp;
+    Baked->UpdateResource();
+    MinimapTerrain = Baked;
+    MinimapTerrainMap = Map;
+    MinimapTerrainGeometry = Geometry;
+    MinimapTerrainWorldSize = World;
+}
 FSlateFontInfo ACinderHUD::FontForScale(float Scale) const
 {
     const UFont* Font = Scale >= 1.5f ? HeadingFont.Get() : InterfaceFont.Get();
@@ -141,7 +555,10 @@ FSlateFontInfo ACinderHUD::FontForScale(float Scale) const
     const float DPI = Canvas && Canvas->Canvas ? FMath::Max(1.0f, Canvas->Canvas->GetDPIScale()) : 1.0f;
     // Rasterize at the final glyph size. Scaling a small cached glyph blurred
     // both large headings and fractional-size labels, especially on Retina.
-    Info.Size = FMath::Clamp(FMath::RoundToInt(14 * Scale * UIScale / DPI), 6, 128);
+    // The floor is 8, not 6: a 6-point glyph loses its thin strokes entirely to
+    // the 80% MetalFX resample and FXAA, so the old floor silently produced
+    // unreadable rather than merely small text on every sub-0.5 scale.
+    Info.Size = FMath::Clamp(FMath::RoundToInt(14 * Scale * UIScale / DPI), 8, 128);
     return Info;
 }
 FVector2D ACinderHUD::MeasureLabel(const FString& Text, float Scale) const
@@ -155,6 +572,21 @@ void ACinderHUD::Label(const FString& Text, float X, float Y, FLinearColor Color
     if (!GEngine || !Canvas) return;
     FCanvasTextStringViewItem Item(FVector2D(FMath::RoundToFloat(X), FMath::RoundToFloat(Y)), FStringView(Text), FontForScale(Scale), Color);
     Item.Scale = FVector2D(1);
+    Canvas->DrawItem(Item);
+}
+void ACinderHUD::WorldLabel(const FString& Text, float X, float Y, FLinearColor Color, float Scale)
+{
+    if (!GEngine || !Canvas) return;
+    FCanvasTextStringViewItem Item(FVector2D(FMath::RoundToFloat(X), FMath::RoundToFloat(Y)),
+        FStringView(Text), FontForScale(Scale), Color);
+    Item.Scale = FVector2D(1);
+    // World-space text sits on whatever the battlefield happens to be showing:
+    // pale ground, a lit hull, an explosion. The outline is the only thing that
+    // keeps it legible without a panel behind it, and at Minimum quality there
+    // is no bloom or shadow to separate it either. Panel-backed labels must not
+    // take this path - the outline is an extra glyph pass per string.
+    Item.bOutlined = true;
+    Item.OutlineColor = FLinearColor(0.0f, 0.0f, 0.0f, FMath::Min(1.0f, Color.A * 0.92f));
     Canvas->DrawItem(Item);
 }
 float ACinderHUD::WrappedHeight(const FString& Text, float MaxWidth, float Scale) const
@@ -219,43 +651,142 @@ void ACinderHUD::Button(const FString& Text, const FString& Action, int Arg, flo
 {
     const float S = UIScale, H = 44 * S;
     float MouseX = -1, MouseY = -1;
+    // Hover is a desktop affordance and is meaningless under a finger. Press is
+    // the one that matters on a phone: it is stamped by the single tap entry
+    // point and decays over PressSeconds.
     if (PlayerOwner) PlayerOwner->GetMousePosition(MouseX, MouseY);
     const bool Hover = FBox2D(FVector2D(X,Y), FVector2D(X+W,Y+H)).IsInside(FVector2D(MouseX,MouseY));
     const bool Primary = Action == TEXT("start");
     const bool Warning = Action.StartsWith(TEXT("cancel"));
     const FLinearColor Accent = Warning ? Amber : Mint;
-    const float FaceY = Y + 3 * S, FaceH = H - 6 * S;
-    Surface(X, FaceY, W, FaceH, Primary ? Mint : Active ? Accent.CopyWithNewOpacity(0.48f)
-        : FLinearColor(0.20f, 0.30f, 0.36f, Hover ? 0.58f : 0.28f), 6 * S);
-    if (!Primary) Surface(X + S, FaceY + S, W - 2*S, FaceH - 2*S,
-        Active ? FLinearColor(0.015f,0.065f,0.073f,0.98f) : FLinearColor(0.012f,0.023f,0.036f,0.95f), 5*S);
-    const float FontScale = 0.72f;
+    // Drawn rect only. FButton::Bounds below keeps the untouched X/Y/W/H, so a
+    // second tap that arrives mid-animation still lands on the same box.
+    const float Press = PressPulse(Action, Arg, 0);
+    const float Pop = Press * 1.5f * S;
+    const float FaceX = X + Pop, FaceW = W - 2 * Pop;
+    const float FaceY = Y + 3 * S + Pop, FaceH = H - 6 * S - 2 * Pop;
+    const FLinearColor Rim = Primary ? Mint : Active ? Accent.CopyWithNewOpacity(0.48f)
+        : FLinearColor(0.20f, 0.30f, 0.36f, Hover ? 0.58f : 0.28f);
+    // Lit from above: bright top edge falling into the shadow the control casts
+    // on itself. One Surface call, no extra triangles.
+    Surface(FaceX, FaceY, FaceW, FaceH, Lift(Rim, 0.10f + Press * 0.34f),
+        FLinearColor(Rim.R * 0.45f, Rim.G * 0.45f, Rim.B * 0.55f,
+            FMath::Min(1.0f, Rim.A + Press * 0.20f)), 6 * S);
+    if (!Primary)
+    {
+        const FLinearColor FaceTop = Active ? FLinearColor(0.028f, 0.105f, 0.115f, 0.98f)
+            : FLinearColor(0.026f, 0.046f, 0.066f, 0.95f);
+        const FLinearColor FaceBottom = Active ? FLinearColor(0.010f, 0.045f, 0.052f, 0.98f)
+            : FLinearColor(0.008f, 0.016f, 0.026f, 0.95f);
+        Surface(FaceX + S, FaceY + S, FaceW - 2*S, FaceH - 2*S,
+            Lift(FaceTop, Press * 0.30f), Lift(FaceBottom, Press * 0.22f), 5*S);
+    }
+    const float FontScale = TypeBody;
     const float TW = MeasureLabel(Text, FontScale).X;
-    const float Fit = TW > 0 ? FMath::Min(1.0f, (W-16*S)/TW) : 1;
+    const float Fit = TW > 0 ? FMath::Min(1.0f, (W-Space4*S)/TW) : 1;
     const bool bBuild = Action == TEXT("build") || Action == TEXT("globalbuild");
-    Label(Text, X + 8*S, Y + (bBuild ? 7 : 14)*S, Primary ? Ink : Active ? Accent : White, FontScale * Fit);
+    const FLinearColor ContentColor = Lift(Primary ? Ink : Active ? Accent : White, Press * 0.30f);
+    if (Text == TEXT("X") && (Action.Contains(TEXT("close")) || Action.StartsWith(TEXT("cancel"))))
+        ActionGlyph(Action, Arg, X + (W - 18*S) * 0.5f, Y + (H - 18*S) * 0.5f,
+            18*S, ContentColor);
+    else
+    {
+        const float DrawScale = FontScale * Fit;
+        const FVector2D DrawSize = MeasureLabel(Text, DrawScale);
+        Label(Text, bBuild ? X + 10*S : X + (W - DrawSize.X) * 0.5f,
+            bBuild ? Y + 7*S : Y + (H - DrawSize.Y) * 0.5f,
+            ContentColor, DrawScale);
+    }
     FButton B; B.Bounds=FBox2D(FVector2D(X,Y),FVector2D(X+W,Y+H)); B.Action=Action; B.Argument=Arg; Buttons.Add(B);
 }
 
-void ACinderHUD::ActionButton(const FString& Text, const FString& Action, int Arg, float X, float Y, float W, bool Active)
+void ACinderHUD::ActionButton(const FString& Text, const FString& Action, int Arg, float X, float Y, float W,
+    bool Active, bool bIconOnly)
 {
-    const float S = UIScale, H = 44*S;
-    float MX=-1,MY=-1; if(PlayerOwner) PlayerOwner->GetMousePosition(MX,MY);
-    const FBox2D Hit(FVector2D(X,Y), FVector2D(X+W,Y+H));
-    const bool Hover=Hit.IsInside(FVector2D(MX,MY));
-    const bool Warning=Action.StartsWith(TEXT("cancel"));
-    const FLinearColor Accent=Warning ? Amber : Mint;
-    Surface(X+2*S,Y+2*S,W-4*S,H-4*S,Active ? Accent.CopyWithNewOpacity(0.55f)
-        : FLinearColor(0.21f,0.31f,0.36f,Hover ? 0.5f : 0.24f),8*S);
-    Surface(X+3*S,Y+3*S,W-6*S,H-6*S,Active ? FLinearColor(0.012f,0.066f,0.077f,0.96f)
-        : FLinearColor(0.008f,0.016f,0.028f,0.91f),7*S);
-    const FLinearColor Color=Active ? Accent : White;
-    const bool Glyph=ActionGlyph(Action,Arg,X+(W-19*S)*0.5f,Y+6*S,19*S,Color);
-    const float FontScale=0.55f;
-    const float TW=MeasureLabel(Text,FontScale).X;
-    const float Fit=TW>0 ? FMath::Min(1.0f,(W-6*S)/TW) : 1;
-    Label(Text,X+(W-TW*Fit)*0.5f,Y+(Glyph ? 28 : 17)*S,Color,FontScale*Fit);
-    if(Active) Surface(X+W*0.36f,Y+40*S,W*0.28f,2*S,Accent,S);
+    const float S = UIScale, H = 44 * S;
+    float MX = -1, MY = -1;
+    if (PlayerOwner) PlayerOwner->GetMousePosition(MX, MY);
+    const FBox2D Hit(FVector2D(X, Y), FVector2D(X + W, Y + H));
+    const bool Hover = Hit.IsInside(FVector2D(MX, MY));
+    const bool Warning = Action.StartsWith(TEXT("cancel")) || Action == TEXT("closesheet");
+    const FLinearColor Accent = Warning ? Amber : Mint;
+    // The hit rectangle stays fixed while the face settles under a press.
+    const float Press = PressPulse(Action, Arg, 0);
+    const float Pop = Press * 1.5f * S;
+    const FLinearColor Rim = Active ? Accent.CopyWithNewOpacity(0.63f)
+        : FLinearColor(0.22f, 0.36f, 0.40f, Hover ? 0.58f : 0.32f);
+    Surface(X + S + Pop, Y + 2 * S + Pop, W - 2 * S - 2 * Pop, H - 4 * S - 2 * Pop,
+        Lift(Rim, 0.08f + Press * 0.28f),
+        FLinearColor(Rim.R * 0.35f, Rim.G * 0.42f, Rim.B * 0.48f,
+            FMath::Min(1.0f, Rim.A + Press * 0.18f)), 9 * S);
+    const FLinearColor FaceTop = Active ? FLinearColor(0.031f, 0.118f, 0.132f, 0.97f)
+        : FLinearColor(0.025f, 0.052f, 0.070f, 0.95f);
+    const FLinearColor FaceBottom = Active ? FLinearColor(0.010f, 0.052f, 0.059f, 0.97f)
+        : FLinearColor(0.008f, 0.020f, 0.032f, 0.95f);
+    Surface(X + 2 * S + Pop, Y + 3 * S + Pop, W - 4 * S - 2 * Pop, H - 6 * S - 2 * Pop,
+        Lift(FaceTop, Press * 0.26f), Lift(FaceBottom, Press * 0.20f), 8 * S);
+
+    const FLinearColor IconColor = Lift(Active ? Accent : bIconOnly ? White : Muted, Press * 0.35f);
+    const FLinearColor TextColor = Lift(White, Press * 0.26f);
+    if (bIconOnly)
+    {
+        const float LargeIcon = 22 * S;
+        // Keep the action name in the call site for navigation, tutorials and
+        // review, but give the touch control one strong, centered symbol.
+        ActionGlyph(Action, Arg, X + (W - LargeIcon) * 0.5f,
+            Y + (H - LargeIcon) * 0.5f + Pop, LargeIcon, IconColor);
+        if (Active)
+            Surface(X + W * 0.30f, Y + 39 * S, W * 0.40f, 2 * S, Accent, S);
+        FButton B; B.Bounds = Hit; B.Action = Action; B.Argument = Arg; Buttons.Add(B);
+        return;
+    }
+    const float IconSize = 18 * S;
+    const FVector2D BodySize = MeasureLabel(Text, TypeBody);
+    const FVector2D CaptionSize = MeasureLabel(Text, TypeCaption);
+    // A real caption and icon sit side by side when their measured content
+    // fits. The secondary type step lets Select, Research and Clear remain
+    // horizontal without shrinking their text to an arbitrary tiny size.
+    const bool bInlineBody = W >= 62 * S
+        && IconSize + 5 * S + BodySize.X + 12 * S <= W;
+    const bool bInlineCaption = W >= 62 * S
+        && IconSize + 5 * S + CaptionSize.X + 12 * S <= W;
+    const bool bInline = bInlineBody || bInlineCaption;
+    if (bInline)
+    {
+        const float InlineScale = bInlineBody ? TypeBody : TypeCaption;
+        const FVector2D InlineSize = bInlineBody ? BodySize : CaptionSize;
+        const float ContentW = IconSize + 5 * S + InlineSize.X;
+        const float ContentX = X + (W - ContentW) * 0.5f;
+        const bool bGlyph = ActionGlyph(Action, Arg, ContentX, Y + (H - IconSize) * 0.5f + Pop,
+            IconSize, IconColor);
+        if (bGlyph)
+            Label(Text, ContentX + IconSize + 5 * S, Y + (H - InlineSize.Y) * 0.5f + Pop,
+                TextColor, InlineScale);
+        else
+            Label(Text, X + (W - BodySize.X) * 0.5f, Y + (H - BodySize.Y) * 0.5f + Pop,
+                TextColor, TypeBody);
+    }
+    else
+    {
+        const bool bGlyph = ActionGlyph(Action, Arg, X + (W - IconSize) * 0.5f,
+            Y + 5 * S + Pop, IconSize, IconColor);
+        FString Caption = Text;
+        const float CaptionWidth = W - 10 * S;
+        const float CaptionScale = bGlyph ? TypeCaption : TypeBody;
+        if (MeasureLabel(Caption, CaptionScale).X > CaptionWidth)
+        {
+            while (Caption.Len() > 1
+                && MeasureLabel(Caption + TEXT("..."), CaptionScale).X > CaptionWidth)
+                Caption.LeftChopInline(1);
+            Caption += TEXT("...");
+        }
+        const FVector2D StackedSize = MeasureLabel(Caption, CaptionScale);
+        Label(Caption, X + (W - StackedSize.X) * 0.5f,
+            Y + (bGlyph ? 27 * S : (H - StackedSize.Y) * 0.5f) + Pop,
+            TextColor, CaptionScale);
+    }
+    if (Active)
+        Surface(X + W * 0.30f, Y + 39 * S, W * 0.40f, 2 * S, Accent, S);
     FButton B; B.Bounds=Hit; B.Action=Action; B.Argument=Arg; Buttons.Add(B);
 }
 
@@ -338,12 +869,21 @@ void ACinderHUD::DrawUnitPortrait(cinder::Kind Kind, float X, float Y, float W, 
 void ACinderHUD::EntityButton(const cinder::Entity& Entity, float X, float Y, float W, bool Active, int32 SquadMask)
 {
     const float S=UIScale,H=64*S;
-    Surface(X,Y,W,H,Active ? FLinearColor(0.015f,0.075f,0.085f,0.97f) : PanelInk,6*S);
+    // Drawn rect only; Entry.Bounds below is the untouched card.
+    const float Press=PressPulse(TEXT("armyunit"),0,Entity.id);
+    const float Pop=Press*1.5f*S;
+    const FLinearColor CardTop=Active ? FLinearColor(0.026f,0.112f,0.126f,0.97f)
+        : FLinearColor(0.024f,0.046f,0.060f,0.98f);
+    const FLinearColor CardBottom=Active ? FLinearColor(0.009f,0.048f,0.056f,0.97f)
+        : FLinearColor(0.007f,0.016f,0.024f,0.98f);
+    Surface(X+Pop,Y+Pop,W-2*Pop,H-2*Pop,
+        Lift(CardTop,Press*0.30f),Lift(CardBottom,Press*0.22f),6*S);
     DrawUnitPortrait(Entity.kind,X+3*S,Y+3*S,W-6*S,38*S,Active);
     Surface(X+W-29*S,Y+5*S,25*S,12*S,Ink,3*S);
-    SingleLineLabel(FString::Printf(TEXT("#%u"),Entity.id),X+W-27*S,Y+6*S,22*S,White,0.47f);
-    SingleLineLabel(Name(Entity.kind),X+6*S,Y+42*S,W-12*S,Active ? Mint : White,0.58f);
-    if(SquadMask) SingleLineLabel(FString::Printf(TEXT("%c"),TCHAR('A'+FMath::CountTrailingZeros(static_cast<uint32>(SquadMask)))),X+6*S,Y+6*S,18*S,Amber,0.50f);
+    SingleLineLabel(FString::Printf(TEXT("#%u"),Entity.id),X+W-27*S,Y+6*S,22*S,White,TypeMicro);
+    SingleLineLabel(Name(Entity.kind),X+6*S,Y+42*S,W-Space3*S,
+        Lift(Active ? Mint : White,Press*0.30f),TypeCaption);
+    if(SquadMask) SingleLineLabel(FString::Printf(TEXT("%c"),TCHAR('A'+FMath::CountTrailingZeros(static_cast<uint32>(SquadMask)))),X+6*S,Y+6*S,18*S,Amber,TypeMicro);
     HealthBar(Entity.hp,cinder::definition(Entity.kind).hp,X+5*S,Y+H-6*S,W-10*S,Mint);
     FButton Entry; Entry.Bounds=FBox2D(FVector2D(X,Y),FVector2D(X+W,Y+H));
     Entry.Action=TEXT("armyunit"); Entry.EntityId=Entity.id; Buttons.Add(Entry);
@@ -356,16 +896,21 @@ void ACinderHUD::DifficultyButton(const FString& Text, int Arg, float X, float Y
     const float HitHeight = FMath::Max(H, 44 * UIScale);
     const float HitY = Y - (HitHeight - H) * 0.5f;
     const bool Hover = MouseX >= X && MouseY >= HitY && MouseX < X + W && MouseY < HitY + HitHeight;
+    // Drawn rect only; the hit box below is built from HitY/HitHeight, which
+    // the press animation never touches.
+    const float Press = PressPulse(Action, Arg, 0);
+    const float Pop = Press * 1.5f * UIScale;
     const FLinearColor Face = Active ? FLinearColor(0.018f, 0.11f, 0.105f)
         : Hover ? FLinearColor(0.026f, 0.055f, 0.072f) : PanelInk;
-    Panel(X, Y, W, H, Face);
+    Surface(X + Pop, Y + Pop, W - 2 * Pop, H - 2 * Pop,
+        Lift(Face, 0.035f + Press * 0.30f), Lift(Face, Press * 0.20f), 4 * UIScale);
     Panel(X, Y, Active ? 3 * UIScale : UIScale, H, Active ? Mint : FLinearColor(0.075f, 0.16f, 0.18f));
     Panel(X, Y, W, UIScale, Active ? Mint : FLinearColor(0.075f, 0.16f, 0.18f));
     Panel(X, Y + H - UIScale, W, UIScale, FLinearColor(0.018f, 0.055f, 0.065f));
-    const float TextWidth = MeasureLabel(Text, 0.68f).X;
+    const float TextWidth = MeasureLabel(Text, TypeBody).X;
     const float Fit = TextWidth > 0 ? FMath::Min(1.0f, (W - 12 * UIScale) / TextWidth) : 1.0f;
     Label(Text, X + 7 * UIScale, Y + (H / UIScale - 11) * 0.5f * UIScale,
-        Active ? Mint : White, 0.68f * Fit);
+        Lift(Active ? Mint : White, Press * 0.30f), TypeBody * Fit);
     FButton ButtonEntry;
     ButtonEntry.Bounds = FBox2D(FVector2D(X, HitY), FVector2D(X + W, HitY + HitHeight));
     ButtonEntry.Action = Action;
@@ -396,6 +941,11 @@ bool ACinderHUD::HandleTap(FVector2D Point)
             && B.Action != TEXT("helpreference") && B.Action != TEXT("helpinput")
             && B.Action != TEXT("helpsection")) return true;
         UCinderAudioSubsystem::Play(this, ECinderCue::UI_Click);
+        // Single tap entry point, so one stamp covers every control. Stamped
+        // after the modal gates above: a tap a gate swallowed produced no
+        // action and must not flash a button either.
+        PressedAt.Add(ButtonKey(B.Action, B.Argument, B.EntityId),
+            GetWorld() ? GetWorld()->GetRealTimeSeconds() : FrameRealTime);
         if (B.Action == TEXT("map")) SelectedMap = B.Argument;
         else if (B.Action == TEXT("groupsnext")) ++SubgroupPage;
         else if (B.Action == TEXT("queuepage")) QueuePage = FMath::Max(0, QueuePage + B.Argument);
@@ -422,7 +972,7 @@ bool ACinderHUD::HandleTap(FVector2D Point)
         else if (B.Action == TEXT("trainkind")) { GlobalTrainKind = B.Argument; bTutorialTrainKindChosen = true; bTutorialTrainQuantityChosen = false; }
         else if (B.Action == TEXT("trainqty")) { GlobalTrainQuantity = FMath::Clamp(B.Argument, 1, 20); bTutorialTrainQuantityChosen = true; }
         else if (B.Action == TEXT("trainqtydelta")) { GlobalTrainQuantity = FMath::Clamp(GlobalTrainQuantity + B.Argument, 1, 20); bTutorialTrainQuantityChosen = true; }
-        else if (B.Action == TEXT("tutorialshow")) FocusTutorialTarget();
+        else if (B.Action == TEXT("tutorialshow") || B.Action == TEXT("campaignshow")) FocusTutorialTarget();
         else if (B.Action == TEXT("globalbuild"))
         {
             PC->BeginGlobalBuild(static_cast<cinder::Kind>(B.Argument));
@@ -501,6 +1051,14 @@ bool ACinderHUD::HandleTap(FVector2D Point)
             if (PC->SelectOwnedEntity(B.EntityId)) PC->ExecuteAction(TEXT("focus"));
             CompactSheet = SheetNone;
         }
+        else if (B.Action == TEXT("squadtactics"))
+        {
+            if (PC->RecallSquad(B.Argument))
+            {
+                CompactSelectionId = PC->Selection().empty() ? 0 : PC->Selection().front();
+                CompactSheet = SheetOrders;
+            }
+        }
         else if (B.Action == TEXT("squad"))
         {
             PC->ExecuteAction(B.Action, B.Argument);
@@ -517,6 +1075,8 @@ bool ACinderHUD::HandleTap(FVector2D Point)
             if (B.Action == TEXT("tutorialfocus") || B.Action == TEXT("buildmenu")) bTutorialDetails = false;
             if (B.Action == TEXT("buildmenu") || B.Action == TEXT("kind") || B.Action == TEXT("box")
                 || B.Action == TEXT("move") || B.Action == TEXT("attack") || B.Action == TEXT("defend")
+                || B.Action == TEXT("patrol") || B.Action == TEXT("escort")
+                || B.Action == TEXT("facenext")
                 || B.Action == TEXT("stop") || B.Action == TEXT("hold")
                 || B.Action == TEXT("focus") || B.Action == TEXT("tutorialfocus")
                 || B.Action == TEXT("workers") || B.Action == TEXT("cancelbuilding")) CompactSheet = 0;
@@ -524,6 +1084,9 @@ bool ACinderHUD::HandleTap(FVector2D Point)
         }
         return true;
     }
+    // Card actions are Buttons above. Consume the remaining opaque card body
+    // before special regions such as the minimap can dispatch underneath it.
+    if (TutorialCardBounds.bIsValid && TutorialCardBounds.IsInside(Point)) return true;
     if (Minimap.bIsValid && Minimap.IsInside(Point) && PC->Battlefield() && !PC->Battlefield()->IsMenu() && !PC->Battlefield()->IsPaused())
     {
         const float World = PC->Battlefield()->Sim().worldSize();
@@ -600,22 +1163,23 @@ void ACinderHUD::DrawHUD()
     Super::DrawHUD();
     Buttons.Reset(); UIRegions.Reset(); Minimap.Init();
     if (!Canvas) return;
+    // One clock for the whole frame so every animated control agrees, and real
+    // time rather than world time so the HUD still responds while paused.
+    FrameRealTime = GetWorld() ? GetWorld()->GetRealTimeSeconds() : FrameRealTime;
+    // Bound the press map: an entry only lives for one PressSeconds window, so
+    // the map can never grow past the taps landed inside 0.12 s.
+    for (auto Iterator = PressedAt.CreateIterator(); Iterator; ++Iterator)
+        if (FrameRealTime - Iterator.Value() >= PressSeconds || FrameRealTime < Iterator.Value())
+            Iterator.RemoveCurrent();
     auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
     auto* Battle = PC ? PC->Battlefield() : nullptr;
     const bool bMenu = Battle && Battle->IsMenu();
-    // The viewport may already have inset the entire canvas. Only the menu
-    // opts out: its artwork is full bleed and its controls handle their own inset.
-    // UE's PopSafeZoneTransform only pops when left/top padding is nonzero.
-    bool bRestoreCanvasSafeZone = false;
-#if PLATFORM_IOS
-    if (bMenu && Canvas->Canvas && FSlateApplication::IsInitialized())
-    {
-        FDisplayMetrics Metrics;
-        FSlateApplication::Get().GetCachedDisplayMetrics(Metrics);
-        bRestoreCanvasSafeZone = Metrics.TitleSafePaddingSize.X > 0.5f
-            || Metrics.TitleSafePaddingSize.Y > 0.5f;
-    }
-#endif
+    // The viewport applies a safe-zone translation before calling DrawHUD.
+    // Draw and register hitboxes in the same viewport coordinates as raw input;
+    // our explicit layout still positions controls within the platform insets.
+    // Match UE's pop guard: right/bottom-only padding cannot be popped by UE.
+    const bool bRestoreCanvasSafeZone = Canvas->Canvas
+        && (Canvas->SafeZonePadX != 0 || Canvas->SafeZonePadY != 0);
     if (bRestoreCanvasSafeZone) Canvas->PopSafeZoneTransform();
     ON_SCOPE_EXIT
     {
@@ -644,10 +1208,15 @@ void ACinderHUD::DrawHUD()
         SafeInsets = FVector4(Insets.X * ScaleX, Insets.Y * ScaleY, Insets.Z * ScaleX, Insets.W * ScaleY);
     }
 #if PLATFORM_IOS
-    if (bMenu)
     {
         // Read UIKit without changing Unreal's global display metrics or the
-        // gameplay canvas. Poll only while the menu is open to follow rotation.
+        // gameplay canvas. This used to be gated on the menu, so a match fell
+        // back to TitleSafePaddingSize - which does not know about the Dynamic
+        // Island or the home indicator - and the controls the player actually
+        // uses were the ones laid out against the wrong insets. The 0.5 s
+        // throttle and the async hop are unchanged; they are what make polling
+        // UIKit from a draw call affordable every frame instead of only in a
+        // menu, and rotation still resolves within half a second.
         const double Now = FPlatformTime::Seconds();
         if (!bMenuInsetQueryPending && Now >= NextMenuInsetRefreshTime)
         {
@@ -672,12 +1241,19 @@ void ACinderHUD::DrawHUD()
                 });
             });
         }
-        SafeInsets = FVector4(MenuInsetFractions.X * Width, MenuInsetFractions.Y * Height,
-            MenuInsetFractions.Z * Width, MenuInsetFractions.W * Height);
+        // Until the first async reply lands, MenuInsetFractions is all zero.
+        // Keep the TitleSafePaddingSize fallback for those frames rather than
+        // laying the whole HUD out against no insets at all; a device that
+        // genuinely reports zero insets gets the same answer either way.
+        const bool bPolled = MenuInsetFractions.X > 0 || MenuInsetFractions.Y > 0
+            || MenuInsetFractions.Z > 0 || MenuInsetFractions.W > 0;
+        if (bPolled)
+            SafeInsets = FVector4(MenuInsetFractions.X * Width, MenuInsetFractions.Y * Height,
+                MenuInsetFractions.Z * Width, MenuInsetFractions.W * Height);
         if (SafeInsets != LastReportedMenuInsets)
         {
-            UE_LOG(LogCinderHUD, Display, TEXT("CINDERLINE_MENU_SAFE_AREA canvas=%.0fx%.0f insets_px=(%.1f,%.1f,%.1f,%.1f) background=full_bleed"),
-                Width, Height, SafeInsets.X, SafeInsets.Y, SafeInsets.Z, SafeInsets.W);
+            UE_LOG(LogCinderHUD, Display, TEXT("CINDERLINE_MENU_SAFE_AREA canvas=%.0fx%.0f insets_px=(%.1f,%.1f,%.1f,%.1f) background=full_bleed menu=%d"),
+                Width, Height, SafeInsets.X, SafeInsets.Y, SafeInsets.Z, SafeInsets.W, bMenu ? 1 : 0);
             LastReportedMenuInsets = SafeInsets;
         }
     }
@@ -732,8 +1308,11 @@ void ACinderHUD::DrawHUD()
     if (QueueProducerId != ProducerId) { QueueProducerId = ProducerId; QueuePage = 0; }
     DrawWorldIndicators(PC, Battle);
     DrawCompactMatch(PC, Battle);
-    if (Battle->Tutorial().IsActive() && !Battle->IsPaused() && Battle->Sim().winner() == -1 && !PC->IsHelpOpen())
-        DrawTutorialCard(Battle);
+    if (!Battle->IsPaused() && !Battle->IsMatchOver() && !PC->IsHelpOpen())
+    {
+        if (Battle->Campaign().IsActive()) DrawCampaignCard(Battle);
+        else if (Battle->Tutorial().IsActive()) DrawTutorialCard(Battle);
+    }
     if (PC->IsHelpOpen()) DrawHelp(PC, Battle);
 }
 
@@ -758,6 +1337,12 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
     }
     Panel(0, Height - 58 * UIScale, Width, 58 * UIScale, FLinearColor(0.002f, 0.005f, 0.009f, 0.6f));
     UIRegions.Add(FBox2D(FVector2D::ZeroVector, FVector2D(Width, Height)));
+    auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
+    if (PC && PC->IsCampaignMenuOpen())
+    {
+        DrawCampaignMenu(PC, Battle);
+        return;
+    }
     const TCHAR* MapNames[] = { TEXT("Shattered Rift"), TEXT("Glass Basin"), TEXT("Iron Reach") };
     const TCHAR* MapDescriptions[] = {
         TEXT("Split the front. Control the crossing."),
@@ -766,7 +1351,6 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
     };
     if (bCompactLayout)
     {
-        const auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
         // Keep the menu inside the asymmetric safe area. The Dynamic Island
         // swaps sides between the two landscape orientations.
         const float X = MobileLayout.Left, W = MobileLayout.Right - MobileLayout.Left;
@@ -775,15 +1359,15 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
         const float LengthY = SkirmishY - 51 * UIScale;
         const float DifficultyY = LengthY - 62 * UIScale;
         const float MapY = DifficultyY - 62 * UIScale;
-        Label(TEXT("CINDERLINE"), X - UIScale, MapY - 54 * UIScale, White, 2.0f);
-        SingleLineLabel(MapDescriptions[SelectedMap], X, MapY - 18 * UIScale, W, Muted, 0.66f);
+        Label(TEXT("CINDERLINE"), X - UIScale, MapY - 54 * UIScale, White, TypeWordmarkCompact);
+        SingleLineLabel(MapDescriptions[SelectedMap], X, MapY - 18 * UIScale, W, Muted, TypeCaption);
         const float MapW = (W - 16 * UIScale) / 3;
         for (int I = 0; I < 3; ++I)
             Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), MapY, MapW, SelectedMap == I);
         const cinder::AIDifficulty Difficulty = PC ? PC->SelectedAIDifficulty() : cinder::AIDifficulty::Normal;
         SingleLineLabel(FString::Printf(TEXT("AI DIFFICULTY / %s"),
             UTF8_TO_TCHAR(cinder::aiDifficultyDescription(Difficulty))),
-            X, DifficultyY - 14 * UIScale, W, White, 0.62f);
+            X, DifficultyY - 14 * UIScale, W, White, TypeCaption);
         const float DifficultyGap = 4 * UIScale;
         const float DifficultyW = (W - DifficultyGap * 4) / 5;
         const TCHAR* CompactDifficultyNames[] = {
@@ -795,7 +1379,7 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
                 Difficulty == cinder::aiDifficultyAt(static_cast<std::size_t>(I)));
         const cinder::MatchLength Length = PC ? PC->SelectedMatchLength() : cinder::MatchLength::Standard;
         SingleLineLabel(FString::Printf(TEXT("SOLO LENGTH / %s"), UTF8_TO_TCHAR(cinder::matchLengthDescription(Length))),
-            X, LengthY - 14 * UIScale, W, White, 0.62f);
+            X, LengthY - 14 * UIScale, W, White, TypeCaption);
         const float LengthW = (W - 8 * UIScale) / 3;
         for (int I = 0; I < static_cast<int>(cinder::MatchLength::Count); ++I)
             DifficultyButton(UTF8_TO_TCHAR(cinder::matchLengthName(cinder::matchLengthAt(I))), I,
@@ -804,27 +1388,27 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
         Button(TEXT("START SKIRMISH"), TEXT("start"), SelectedMap, X, SkirmishY, W * 0.55f - 5 * UIScale, true);
         Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + W * 0.55f + 5 * UIScale, SkirmishY, W * 0.45f - 5 * UIScale);
         const float SecondaryGap = 5 * UIScale;
-        const float SecondaryW = (W - 2 * SecondaryGap) / 3;
-        Button(PC && PC->HasCompletedTutorial() ? TEXT("REPLAY TRAINING") : TEXT("GUIDED TRAINING"),
-            TEXT("tutorial"), 0, X, SecondaryY, SecondaryW, true);
-        Button(TEXT("FIELD GUIDE"), TEXT("help"), 0,
-            X + SecondaryW + SecondaryGap, SecondaryY, SecondaryW);
+        const float SecondaryW = (W - 3 * SecondaryGap) / 4;
+        Button(TEXT("CAMPAIGN"), TEXT("campaignmenu"), 0, X, SecondaryY, SecondaryW, true);
+        Button(PC && PC->HasCompletedTutorial() ? TEXT("QUICK REPLAY") : TEXT("QUICK TRAIN"),
+            TEXT("tutorial"), 0, X + SecondaryW + SecondaryGap, SecondaryY, SecondaryW);
+        Button(TEXT("GUIDE"), TEXT("help"), 0,
+            X + 2 * (SecondaryW + SecondaryGap), SecondaryY, SecondaryW);
         Button(TEXT("MULTIPLAYER"), TEXT("online"), 0,
-            X + 2 * (SecondaryW + SecondaryGap), SecondaryY, SecondaryW, true);
+            X + 3 * (SecondaryW + SecondaryGap), SecondaryY, SecondaryW);
         return;
     }
-    const auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
     const float X = 72 * UIScale, W = 540 * UIScale;
-    Label(TEXT("THE CAIRN ASSEMBLY"), X, 83 * UIScale, Mint, 0.78f);
-    Label(TEXT("CINDERLINE"), X - 4 * UIScale, 122 * UIScale, White, 3.65f);
-    Label(TEXT("Build your foothold."), X, 219 * UIScale, White, 1.17f);
+    Label(TEXT("THE CAIRN ASSEMBLY"), X, 83 * UIScale, Mint, TypeBody);
+    Label(TEXT("CINDERLINE"), X - 4 * UIScale, 122 * UIScale, White, TypeWordmark);
+    Label(TEXT("Build your foothold."), X, 219 * UIScale, White, TypeTitle);
     Panel(X, 254 * UIScale, W, UIScale, FLinearColor(0.10f, 0.17f, 0.19f, 0.8f));
-    Label(TEXT("DEPLOYMENT SECTOR"), X, 269 * UIScale, Muted, 0.68f);
+    Label(TEXT("DEPLOYMENT SECTOR"), X, 269 * UIScale, Muted, TypeCaption);
     const float MapW = (W - 16 * UIScale) / 3;
     for (int I = 0; I < 3; ++I)
         Button(MapNames[I], TEXT("map"), I, X + I * (MapW + 8 * UIScale), 292 * UIScale, MapW, SelectedMap == I);
-    Label(MapDescriptions[SelectedMap], X, 342 * UIScale, Muted, 0.72f);
-    Label(TEXT("AI DIFFICULTY"), X, 364 * UIScale, Muted, 0.62f);
+    Label(MapDescriptions[SelectedMap], X, 342 * UIScale, Muted, TypeCaption);
+    Label(TEXT("AI DIFFICULTY"), X, 364 * UIScale, Muted, TypeCaption);
     const cinder::AIDifficulty Difficulty = PC ? PC->SelectedAIDifficulty() : cinder::AIDifficulty::Normal;
     const float DifficultyGap = 6 * UIScale;
     const float DifficultyW = (W - DifficultyGap * 4) / 5;
@@ -833,23 +1417,24 @@ void ACinderHUD::DrawMenu(ACinderBattlefield* Battle)
             I, X + I * (DifficultyW + DifficultyGap), 384 * UIScale, DifficultyW, 28 * UIScale,
             Difficulty == cinder::aiDifficultyAt(static_cast<std::size_t>(I)));
     SingleLineLabel(UTF8_TO_TCHAR(cinder::aiDifficultyDescription(Difficulty)),
-        X, 424 * UIScale, W, White, 0.65f);
+        X, 424 * UIScale, W, White, TypeCaption);
     const cinder::MatchLength Length = PC ? PC->SelectedMatchLength() : cinder::MatchLength::Standard;
-    Label(TEXT("SOLO LENGTH"), X, 446 * UIScale, Muted, 0.62f);
+    Label(TEXT("SOLO LENGTH"), X, 446 * UIScale, Muted, TypeCaption);
     const float LengthW = (W - 12 * UIScale) / 3;
     for (int I = 0; I < static_cast<int>(cinder::MatchLength::Count); ++I)
         DifficultyButton(UTF8_TO_TCHAR(cinder::matchLengthName(cinder::matchLengthAt(I))), I,
             X + I * (LengthW + 6 * UIScale), 466 * UIScale, LengthW, 28 * UIScale,
             Length == cinder::matchLengthAt(I), TEXT("matchlength"));
-    SingleLineLabel(UTF8_TO_TCHAR(cinder::matchLengthDescription(Length)), X, 506 * UIScale, W, White, 0.65f);
+    SingleLineLabel(UTF8_TO_TCHAR(cinder::matchLengthDescription(Length)), X, 506 * UIScale, W, White, TypeCaption);
     Button(TEXT("START SKIRMISH   [ENTER]"), TEXT("start"), SelectedMap, X, 534 * UIScale, 302 * UIScale, true);
     Button(TEXT("CONTINUE SAVE"), TEXT("load"), 0, X + 314 * UIScale, 534 * UIScale, 226 * UIScale);
-    Button(PC && PC->HasCompletedTutorial() ? TEXT("REPLAY TRAINING  [T]") : TEXT("GUIDED TRAINING  [T]"), TEXT("tutorial"), 0, X, 590 * UIScale, 302 * UIScale, true);
-    Button(TEXT("FIELD GUIDE  [F1]"), TEXT("help"), 0, X + 314 * UIScale, 590 * UIScale, 226 * UIScale);
-    Button(TEXT("MULTIPLAYER"), TEXT("online"), 0, X, 646 * UIScale, W, true);
-    Label(TEXT("SOLO SKIRMISH"), X, Height - 16 * UIScale, Mint, 0.70f);
+    Button(TEXT("CAMPAIGN"), TEXT("campaignmenu"), 0, X, 590 * UIScale, 302 * UIScale, true);
+    Button(PC && PC->HasCompletedTutorial() ? TEXT("QUICK REPLAY  [T]") : TEXT("QUICK TRAINING  [T]"), TEXT("tutorial"), 0, X + 314 * UIScale, 590 * UIScale, 226 * UIScale);
+    Button(TEXT("FIELD GUIDE  [F1]"), TEXT("help"), 0, X, 646 * UIScale, 260 * UIScale);
+    Button(TEXT("MULTIPLAYER"), TEXT("online"), 0, X + 272 * UIScale, 646 * UIScale, 268 * UIScale);
+    Label(TEXT("SOLO SKIRMISH"), X, Height - 16 * UIScale, Mint, TypeCaption);
     SingleLineLabel(FString(DesktopControlHint) + TEXT(" / Right-click command"), 317 * UIScale, Height - 16 * UIScale,
-        Width - 317 * UIScale - X, Muted, 0.70f);
+        Width - 317 * UIScale - X, Muted, TypeCaption);
 
 }
 
@@ -874,17 +1459,17 @@ void ACinderHUD::DrawTutorialOffer(ACinderPlayerController* PC)
 
     Panel(X, Y, W, H, FLinearColor(0.004f, 0.018f, 0.026f, 0.98f));
     Panel(X, Y, 5 * S, H, Mint);
-    Label(TEXT("YOUR FIRST COMMAND"), X + 24 * S, Y + 18 * S, Mint, 0.66f);
-    Label(TEXT("LEARN THE FRONTIER"), X + 24 * S, Y + 40 * S, White, bCompactLayout ? 1.22f : 1.42f);
-    WrappedLabel(TEXT("Play a guided example battle that teaches mining, construction, research, reinforcement, and defense."),
+    Label(TEXT("YOUR FIRST COMMAND"), X + 24 * S, Y + 18 * S, Mint, TypeCaption);
+    Label(TEXT("RESTORE THE EMBERLINE"), X + 24 * S, Y + 40 * S, White, bCompactLayout ? TypeTitle : TypeDisplay);
+    WrappedLabel(TEXT("Play six short missions that teach economy, scouting, defense, counters, and a complete battle."),
         X + 24 * S, Y + 78 * S, W - 48 * S, White, bCompactLayout ? 0.68f : 0.76f);
-    WrappedLabel(TEXT("The opponent waits while you learn, then sends one small raid when your army is ready. We guide you through defense and on to victory."),
+    WrappedLabel(TEXT("Each lesson begins with exact touch guidance, then gives you room to make the decision yourself."),
         X + 24 * S, Y + 124 * S, W - 48 * S, Muted, bCompactLayout ? 0.66f : 0.72f);
 
     const float Gap = 8 * S;
     const float ButtonW = (W - 48 * S - Gap) * 0.5f;
     const float ButtonY = Y + H - 62 * S;
-    Button(TEXT("GET GUIDED TUTORIAL"), TEXT("onboardlearn"), 0,
+    Button(TEXT("START CAMPAIGN"), TEXT("onboardcampaign"), 0,
         X + 24 * S, ButtonY, ButtonW, true);
     Button(TEXT("SKIP FOR NOW"), TEXT("onboardskip"), 0,
         X + 24 * S + ButtonW + Gap, ButtonY, ButtonW);
@@ -934,10 +1519,10 @@ void ACinderHUD::DrawHelp(ACinderPlayerController* PC, ACinderBattlefield* Battl
         const float Pad = 14 * S;
         Panel(X, Y, W, H, PanelInk);
         Panel(X, Y, 4 * S, H, Mint);
-        Label(GuideLabel, X + Pad, Y + 8 * S, Mint, 0.62f);
-        SingleLineLabel(Page.Title, X + Pad, Y + 28 * S, W - 150 * S, White, 1.05f);
+        Label(GuideLabel, X + Pad, Y + 8 * S, Mint, TypeCaption);
+        SingleLineLabel(Page.Title, X + Pad, Y + 28 * S, W - 150 * S, White, TypeTitle);
         Button(BackLabel, TEXT("helpclose"), 0, X + W - 126 * S, Y + 6 * S, 112 * S);
-        SingleLineLabel(Page.Subtitle, X + Pad, Y + 52 * S, W - 2 * Pad, Muted, 0.68f);
+        SingleLineLabel(Page.Subtitle, X + Pad, Y + 52 * S, W - 2 * Pad, Muted, TypeCaption);
 
         const float NavigationY = Y + H - 50 * S;
         const float ReferenceY = NavigationY - 50 * S;
@@ -953,10 +1538,10 @@ void ACinderHUD::DrawHelp(ACinderPlayerController* PC, ACinderBattlefield* Battl
             const float ArrowsX = X + W - Pad - ArrowW * 2 - ArrowGap;
             Panel(X + Pad, SectionY - 2 * S, 3 * S, ContentBottom - SectionY, FLinearColor(0.10f, 0.30f, 0.28f, 0.8f));
             SingleLineLabel(FString::Printf(TEXT("%s  /  %d OF %d"), *Section.Heading, CompactHelpSection + 1, Page.Sections.Num()),
-                X + Pad + 12 * S, SectionY + 10 * S, ArrowsX - X - Pad - 20 * S, Amber, 0.68f);
+                X + Pad + 12 * S, SectionY + 10 * S, ArrowsX - X - Pad - 20 * S, Amber, TypeCaption);
             Button(TEXT("<"), TEXT("helpsection"), (CompactHelpSection + Page.Sections.Num() - 1) % Page.Sections.Num(), ArrowsX, SectionY, ArrowW);
             Button(TEXT(">"), TEXT("helpsection"), (CompactHelpSection + 1) % Page.Sections.Num(), ArrowsX + ArrowW + ArrowGap, SectionY, ArrowW);
-            WrappedLabel(Section.Body, X + Pad + 12 * S, SectionY + 52 * S, TextW - 12 * S, White, 0.74f);
+            WrappedLabel(Section.Body, X + Pad + 12 * S, SectionY + 52 * S, TextW - 12 * S, White, TypeBody);
         }
 
         if (bReference)
@@ -995,21 +1580,21 @@ void ACinderHUD::DrawHelp(ACinderPlayerController* PC, ACinderBattlefield* Battl
     Panel(X, Y, W, H, PanelInk);
     Panel(X, Y, 5 * S, H, Mint);
     Panel(X + SidebarW, Y, S, H, FLinearColor(0.08f, 0.15f, 0.17f));
-    Label(GuideLabel, X + 20 * S, Y + 18 * S, Mint, 0.68f);
+    Label(GuideLabel, X + 20 * S, Y + 18 * S, Mint, TypeCaption);
     for (int32 I = 0; I < CinderHelp::TopicCount; ++I)
         Button(CinderHelp::TopicTitle(I), TEXT("helppage"), I, X + 18 * S, Y + (62 + I * 51) * S, SidebarW - 36 * S, I == PageIndex);
 
-    SingleLineLabel(Page.Title, ContentX, Y + 22 * S, ContentW - 178 * S, White, 1.65f);
+    SingleLineLabel(Page.Title, ContentX, Y + 22 * S, ContentW - 178 * S, White, TypeDisplay);
     Button(BackLabel, TEXT("helpclose"), 0, X + W - 170 * S, Y + 16 * S, 148 * S);
-    WrappedLabel(Page.Subtitle, ContentX, Y + 62 * S, ContentW, Muted, 0.80f);
+    WrappedLabel(Page.Subtitle, ContentX, Y + 62 * S, ContentW, Muted, TypeBody);
     Panel(ContentX, Y + 96 * S, ContentW, S, FLinearColor(0.08f, 0.20f, 0.21f));
 
     float TextY = Y + 120 * S;
     for (const FCinderHelpSection& Section : Page.Sections)
     {
-        Label(Section.Heading, ContentX, TextY, Amber, 0.78f);
+        Label(Section.Heading, ContentX, TextY, Amber, TypeBody);
         TextY += 24 * S;
-        TextY += WrappedLabel(Section.Body, ContentX, TextY, ContentW, White, 0.84f);
+        TextY += WrappedLabel(Section.Body, ContentX, TextY, ContentW, White, TypeBody);
         TextY += 18 * S;
     }
 
@@ -1030,7 +1615,7 @@ void ACinderHUD::DrawHelp(ACinderPlayerController* PC, ACinderBattlefield* Battl
     else
     {
         SingleLineLabel(TEXT("F1 / ESC / ENTER closes  |  LEFT / RIGHT topic  |  T input"),
-            ContentX + 270 * S, ControlY + 13 * S, ContentW - 270 * S, Muted, 0.70f);
+            ContentX + 270 * S, ControlY + 13 * S, ContentW - 270 * S, Muted, TypeCaption);
     }
 }
 
@@ -1038,7 +1623,7 @@ FCinderTutorialGuide ACinderHUD::CurrentTutorialGuide() const
 {
     const auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
     const auto* Battle = PC ? PC->Battlefield() : nullptr;
-    if (!Battle || !Battle->Tutorial().IsActive()) return {};
+    if (!Battle || (!Battle->Tutorial().IsActive() && !Battle->Campaign().IsRunning())) return {};
     FCinderTutorialContext Context;
     Context.Selection = PC->Selection();
     Context.bCompact = bCompactLayout || PLATFORM_IOS || PLATFORM_ANDROID;
@@ -1052,10 +1637,15 @@ FCinderTutorialGuide ACinderHUD::CurrentTutorialGuide() const
     Context.bAttackMove = PC->IsAttackMoveMode();
     Context.bMoveCommand = PC->IsMoveCommandMode();
     Context.bDefendCommand = PC->IsDefendCommandMode();
+    Context.bPatrolCommand = PC->IsPatrolCommandMode();
+    Context.bEscortCommand = PC->IsEscortCommandMode();
     Context.bProductionRally = PC->IsProductionRallyMode();
     Context.PinnedProducer = PC->IsProductionRallyMode() ? PC->ProductionRallyProducer() : PinnedProducerId;
     Context.ArmyTab = ArmyPanelTab;
-    return Battle->Tutorial().Guide(Battle->Sim(), Context, bCompactLayout || PLATFORM_IOS || PLATFORM_ANDROID);
+    const bool bTouch = bCompactLayout || PLATFORM_IOS || PLATFORM_ANDROID;
+    return Battle->Campaign().IsRunning()
+        ? Battle->Campaign().Guide(Battle->Sim(), Context, bTouch)
+        : Battle->Tutorial().Guide(Battle->Sim(), Context, bTouch);
 }
 
 bool ACinderHUD::FocusTutorialTarget()
@@ -1063,7 +1653,7 @@ bool ACinderHUD::FocusTutorialTarget()
     auto* PC = Cast<ACinderPlayerController>(PlayerOwner);
     auto* Battle = PC ? PC->Battlefield() : nullptr;
     auto* Rig = PC ? Cast<ACinderCamera>(PC->GetPawn()) : nullptr;
-    if (!Battle || !Rig || Battle->IsPaused() || PC->IsHelpOpen() || Battle->Sim().winner() != -1) return false;
+    if (!Battle || !Rig || Battle->IsPaused() || PC->IsHelpOpen() || Battle->IsMatchOver()) return false;
     const auto Guide = CurrentTutorialGuide();
     if (Guide.Target != ECinderTutorialGuideTarget::Entity && Guide.Target != ECinderTutorialGuideTarget::Ground) return false;
     cinder::Vec2 Point = Guide.Point;
@@ -1076,6 +1666,10 @@ bool ACinderHUD::FocusTutorialTarget()
     // Finding a target must not perform the selection or issue an order for the player.
     // A closer view keeps a target near the map edge out from under the HUD.
     if (Rig->Distance() > 900) Rig->Zoom(900 - Rig->Distance());
+    // Left on the flat plane deliberately: ACinderCamera::Focus clamps the
+    // anchor's Z to 0 itself, so sampling the terrain here would cost a height
+    // evaluation and change nothing. Seating the camera anchor on the relief is
+    // the camera's call to make, not the HUD's.
     Rig->Focus(FVector(Point.x, Point.y, 0));
     UE_LOG(LogCinderHUD, Verbose, TEXT("CINDERLINE_TUTORIAL_FOCUS point=(%.1f,%.1f) distance=%.1f"),
         Point.x, Point.y, Rig->Distance());
@@ -1181,8 +1775,8 @@ void ACinderHUD::DrawTutorialCard(ACinderBattlefield* Battle, bool bForceShow)
     {
         if (W < 192 * S || X < Left || X + W > Right + 1) return;
         const float TextW = W - 2 * Pad;
-        const float H = 24 * S + WrappedHeight(Instruction, TextW, 0.82f)
-            + (Explanation.IsEmpty() ? 0 : 4 * S + WrappedHeight(Explanation, TextW, 0.67f))
+        const float H = 24 * S + WrappedHeight(Instruction, TextW, TypeBody)
+            + (Explanation.IsEmpty() ? 0 : 4 * S + WrappedHeight(Explanation, TextW, TypeCaption))
             + 10 * S + (bInlineAction ? 48 * S : 0);
         if (Y + H > Height - 66 * S - SafeBottomOffset) return;
         Candidates.Add(FBox2D(FVector2D(X, Y), FVector2D(X + W, Y + H)));
@@ -1220,10 +1814,10 @@ void ACinderHUD::DrawTutorialCard(ACinderBattlefield* Battle, bool bForceShow)
     Surface(X, Y, W, H, Ink, 8*S);
     Surface(X, Y+8*S, 2*S, H-16*S, Guide.bWaiting ? Mint : Amber, S);
     Label(FString::Printf(TEXT("TRAINING %d/%d   %d/%d"), Step + 1, FCinderTutorial::StepCount,
-        Guide.ActionIndex, Guide.ActionCount), X + Pad, Y + 6 * S, Guide.bWaiting ? Mint : Amber, 0.58f);
+        Guide.ActionIndex, Guide.ActionCount), X + Pad, Y + 6 * S, Guide.bWaiting ? Mint : Amber, TypeMicro);
     float TextY = Y + 24 * S;
-    TextY += WrappedLabel(Instruction, X + Pad, TextY, W - 2 * Pad, White, 0.82f);
-    if (!Explanation.IsEmpty()) WrappedLabel(Explanation, X + Pad, TextY + 4 * S, W - 2 * Pad, Muted, 0.67f);
+    TextY += WrappedLabel(Instruction, X + Pad, TextY, W - 2 * Pad, White, TypeBody);
+    if (!Explanation.IsEmpty()) WrappedLabel(Explanation, X + Pad, TextY + 4 * S, W - 2 * Pad, Muted, TypeCaption);
     UIRegions.Add(TutorialCardBounds);
     if (bInlineAction)
     {
@@ -1259,13 +1853,17 @@ void ACinderHUD::LogTutorialGuidance() const
 
 bool ACinderHUD::RefreshFogRuns(uint64 SourceRevision, int32 SourceDimension,
     const TArray<uint8>& SourceCells, uint64& CachedRevision, int32& CachedDimension,
-    TArray<FMinimapFogRun>& CachedRuns)
+    TArray<FMinimapFogRun>& CachedRuns, int32 Stride)
 {
-    if (CachedRevision == SourceRevision && CachedDimension == SourceDimension) return false;
+    const int32 Step = FMath::Max(1, Stride);
+    // Runs are emitted in block coordinates, so the cached dimension is the
+    // coarse one and the caller's Size / Dimension cell math needs no change.
+    const int32 Dimension = SourceDimension > 0 ? FMath::DivideAndRoundUp(SourceDimension, Step) : 0;
+    if (CachedRevision == SourceRevision && CachedDimension == Dimension) return false;
     CachedRevision = SourceRevision;
-    CachedDimension = SourceDimension;
+    CachedDimension = Dimension;
     CachedRuns.Reset();
-    if (SourceDimension <= 0) return true;
+    if (Dimension <= 0) return true;
 
     const bool bValidSnapshot = static_cast<int64>(SourceCells.Num())
         == static_cast<int64>(SourceDimension) * SourceDimension;
@@ -1274,14 +1872,35 @@ bool ACinderHUD::RefreshFogRuns(uint64 SourceRevision, int32 SourceDimension,
         if (!bValidSnapshot) return uint8(0);
         return FMath::Min<uint8>(SourceCells[Y * SourceDimension + X], uint8(2));
     };
-    CachedRuns.Reserve(SourceDimension * 2);
-    for (int32 Y = 0; Y < SourceDimension; ++Y)
+    // The block takes the LEAST known state it contains. Taking the greatest
+    // would let one visible cell promote its unexplored neighbours and reveal
+    // baked terrain the player has never seen; taking the least only ever
+    // hides ground that is already known, which is a cosmetic loss.
+    auto BlockState = [&](int32 X, int32 Y)
+    {
+        if (Step == 1) return StateAt(X, Y);
+        uint8 Least = 2;
+        for (int32 OffsetY = 0; OffsetY < Step; ++OffsetY)
+        {
+            const int32 CellY = Y * Step + OffsetY;
+            if (CellY >= SourceDimension) continue;
+            for (int32 OffsetX = 0; OffsetX < Step; ++OffsetX)
+            {
+                const int32 CellX = X * Step + OffsetX;
+                if (CellX >= SourceDimension) continue;
+                Least = FMath::Min<uint8>(Least, StateAt(CellX, CellY));
+            }
+        }
+        return Least;
+    };
+    CachedRuns.Reserve(Dimension * 2);
+    for (int32 Y = 0; Y < Dimension; ++Y)
     {
         int32 RunStart = 0;
-        uint8 RunState = StateAt(0, Y);
-        for (int32 X = 1; X <= SourceDimension; ++X)
+        uint8 RunState = BlockState(0, Y);
+        for (int32 X = 1; X <= Dimension; ++X)
         {
-            const uint8 State = X < SourceDimension ? StateAt(X, Y) : uint8(255);
+            const uint8 State = X < Dimension ? BlockState(X, Y) : uint8(255);
             if (State == RunState) continue;
             CachedRuns.Add(FMinimapFogRun{Y, RunStart, X, RunState});
             RunStart = X;
@@ -1297,22 +1916,37 @@ void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Ba
     const FVector2D Origin = MobileLayout.Minimap.Min;
     Minimap = FBox2D(Origin, Origin + FVector2D(Size));
     UIRegions.Add(Minimap);
-    Surface(Origin.X - 4 * UIScale, Origin.Y - 4 * UIScale, Size + 8 * UIScale, Size + 8 * UIScale, Ink, 7 * UIScale);
+    Surface(Origin.X - 4 * UIScale, Origin.Y - 4 * UIScale, Size + 8 * UIScale, Size + 8 * UIScale,
+        Lift(Ink, 0.05f), Ink, 7 * UIScale);
     Panel(Origin.X - UIScale, Origin.Y - UIScale, Size + 2 * UIScale, Size + 2 * UIScale, FLinearColor(0.12f,0.25f,0.30f,0.75f));
     if (MinimapFogSource.Get() != Battle)
     {
         MinimapFogSource = Battle;
         MinimapFogRevision = MAX_uint64;
         MinimapFogDimension = 0;
+        MinimapTerrainMap = MIN_int32;
     }
+    // Base layer: one baked relief texture where the minimap used to show
+    // nothing but fog. It is authored map geometry rather than observed state,
+    // which is why it can be baked once, and why the unexplored fog colour
+    // below is fully opaque instead of a veil.
+    RefreshMinimapTerrain(Battle);
+    if (MinimapTerrain)
+        DrawTexture(MinimapTerrain, Origin.X, Origin.Y, Size, Size, 0, 0, 1, 1,
+            FLinearColor::White, BLEND_Opaque);
+    else
+        Panel(Origin.X, Origin.Y, Size, Size, FLinearColor(0.014f, 0.025f, 0.04f));
     RefreshFogRuns(Battle->FogRevision(), Battle->FogDimension(), Battle->FogCells(),
-        MinimapFogRevision, MinimapFogDimension, MinimapFogRuns);
+        MinimapFogRevision, MinimapFogDimension, MinimapFogRuns, MinimapFogStride);
     const float Cell = Size / FMath::Max(1, MinimapFogDimension);
     const float CellExtent = Cell + 0.3f;
+    // Unexplored stays opaque - correctness, not polish. Explored and visible
+    // are veils so the relief underneath reads, which is the entire point of
+    // baking it; the visible veil is a faint warm lift rather than a fill.
     const FLinearColor FogColors[] = {
-        FLinearColor(0.014f, 0.025f, 0.04f),
-        FLinearColor(0.065f, 0.12f, 0.14f),
-        FLinearColor(0.11f, 0.25f, 0.25f)
+        FLinearColor(0.012f, 0.020f, 0.031f, 1.00f),
+        FLinearColor(0.020f, 0.042f, 0.056f, 0.74f),
+        FLinearColor(0.10f, 0.26f, 0.27f, 0.17f)
     };
     for (const FMinimapFogRun& Run : MinimapFogRuns)
     {
@@ -1342,11 +1976,17 @@ void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Ba
     const auto& Player = Battle->Sim().players()[0];
     if (Player.armyRallySet)
     {
-        const float FlagX = Origin.X + Player.armyRally.x * K;
-        const float FlagY = Origin.Y + Player.armyRally.y * K;
-        DrawLine(FlagX, FlagY, FlagX, FlagY - 7 * UIScale, Ink, 3 * UIScale);
-        DrawLine(FlagX, FlagY, FlagX, FlagY - 7 * UIScale, Mint, UIScale);
-        Panel(FlagX, FlagY - 7 * UIScale, 5 * UIScale, 3 * UIScale, Mint);
+        // The same arrowhead the world overlay plants, at minimap scale. A
+        // pennant here and a chevron out there would be two words for one
+        // thing, and the minimap is where players check the rally fastest.
+        const float MarkX = Origin.X + Player.armyRally.x * K;
+        const float MarkY = Origin.Y + Player.armyRally.y * K;
+        const float MarkH = 7 * UIScale, MarkHalf = 3.5f * UIScale;
+        DrawLine(MarkX, MarkY, MarkX - MarkHalf, MarkY - MarkH, Ink, 3 * UIScale);
+        DrawLine(MarkX, MarkY, MarkX + MarkHalf, MarkY - MarkH, Ink, 3 * UIScale);
+        DrawLine(MarkX, MarkY, MarkX - MarkHalf, MarkY - MarkH, Mint, UIScale);
+        DrawLine(MarkX, MarkY, MarkX + MarkHalf, MarkY - MarkH, Mint, UIScale);
+        DrawLine(MarkX - MarkHalf, MarkY - MarkH, MarkX + MarkHalf, MarkY - MarkH, Mint, UIScale);
     }
     cinder::Vec2 Corners[4];
     const FVector2D Screens[4] = { FVector2D(0, 0), FVector2D(Width, 0), FVector2D(Width, Height), FVector2D(0, Height) };
@@ -1363,46 +2003,587 @@ void ACinderHUD::DrawMinimap(ACinderPlayerController* PC, ACinderBattlefield* Ba
 void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlefield* Battle)
 {
     const auto& Sim = Battle->Sim();
+    // Every world-space overlay in this function is anchored to the presented
+    // ground. The terrain used to be a plane everywhere outside an obstacle
+    // rectangle, so projecting a marker from a constant Z was exact; now that
+    // hills, troughs and worn pathways run across the whole map, a constant Z is
+    // a flat sheet that the first rise cuts straight through, and half a rally
+    // line would disappear underground. The literal each call site used to pass
+    // survives unchanged as its clearance above the ground it now rides.
+    const auto Ground = [&](cinder::Vec2 Point, float Clearance)
+    {
+        return FVector(Point.x, Point.y, Battle->GroundHeight(Point) + Clearance);
+    };
     auto WorldLine = [&](FVector A, FVector B, FLinearColor C, float Thickness)
     {
         FVector2D SA, SB;
         if (PC->ProjectWorldLocationToScreen(A, SA) && PC->ProjectWorldLocationToScreen(B, SB)) DrawLine(SA.X, SA.Y, SB.X, SB.Y, C, Thickness * UIScale);
     };
-    const auto DrawRallyFlag = [&](cinder::Vec2 Point, FLinearColor Color, const FString& Text)
+    auto WorldCircle = [&](cinder::Vec2 Center, float Radius, FLinearColor Color)
     {
-        FVector2D P;
-        if (!PC->ProjectWorldLocationToScreen(FVector(Point.x, Point.y, 10), P)) return;
-        if (P.X < 0 || P.X > Width || P.Y < 0 || P.Y > Height) return;
-        const float S = UIScale;
-        DrawLine(P.X, P.Y, P.X, P.Y - 28 * S, Ink, 4 * S);
-        DrawLine(P.X, P.Y, P.X, P.Y - 28 * S, Color, 2 * S);
-        Panel(P.X, P.Y - 28 * S, 15 * S, 10 * S, Ink);
-        Panel(P.X + S, P.Y - 27 * S, 13 * S, 8 * S, Color);
-        DrawLine(P.X - 5 * S, P.Y, P.X + 5 * S, P.Y, Color, 2 * S);
-        if (!Text.IsEmpty())
+        constexpr int32 Segments = 32;
+        // The previous vertex is carried rather than re-derived, which halves
+        // both the trig and - now that each vertex costs a terrain evaluation -
+        // the height generator calls a pursuit or build-footprint circle pays.
+        cinder::Vec2 Previous{Center.x + Radius, Center.y};
+        FVector PreviousPoint = Ground(Previous, 10);
+        for (int32 Index = 1; Index <= Segments; ++Index)
         {
-            Surface(P.X + 19 * S, P.Y - 28 * S, 83 * S, 19 * S, Ink.CopyWithNewOpacity(0.88f), 4 * S);
-            SingleLineLabel(Text, P.X + 23 * S, P.Y - 24 * S, 75 * S, Color, 0.48f);
+            const float Angle = 2.0f * PI * Index / Segments;
+            const cinder::Vec2 Next{Center.x + FMath::Cos(Angle) * Radius,
+                Center.y + FMath::Sin(Angle) * Radius};
+            const FVector NextPoint = Ground(Next, 10);
+            WorldLine(PreviousPoint, NextPoint, Color, 1.0f);
+            PreviousPoint = NextPoint;
         }
     };
+    // A rally point is a route, not a location. A pennant on a pole only ever
+    // said "something is marked here"; what a player actually needs to read at
+    // a glance is which structure feeds which place - one Kiln holding the ramp
+    // while another backfills the expansion. So the pennant is gone and what
+    // replaces it is the shape StarCraft uses: a ground-hugging spine from the
+    // structure, chevrons marching along it so the direction is never
+    // ambiguous, and a single arrowhead planted where the output gathers.
+    const auto DrawRallyChevron = [&](cinder::Vec2 Point, cinder::Vec2 Direction, float Size,
+        FLinearColor Color)
+    {
+        // Built in world space rather than on screen, so it keeps pointing
+        // along the route under any camera yaw instead of skewing with it.
+        const cinder::Vec2 Side{-Direction.y, Direction.x};
+        const cinder::Vec2 Tail{Point.x - Direction.x * Size, Point.y - Direction.y * Size};
+        const FVector Tip = Ground(Point, 14);
+        WorldLine(Tip, Ground({Tail.x + Side.x * Size * 0.62f, Tail.y + Side.y * Size * 0.62f}, 14),
+            Color, 2.0f);
+        WorldLine(Tip, Ground({Tail.x - Side.x * Size * 0.62f, Tail.y - Side.y * Size * 0.62f}, 14),
+            Color, 2.0f);
+    };
+    const auto DrawRallyRoute = [&](cinder::Vec2 Origin, cinder::Vec2 Destination,
+        FLinearColor Color, const FString& Text, bool bFromStructure)
+    {
+        const float DX = Destination.x - Origin.x, DY = Destination.y - Origin.y;
+        const float Length = FMath::Sqrt(DX * DX + DY * DY);
+        if (bFromStructure && Length > 48.0f)
+        {
+            // The spine has to ride the relief or half of a cross-map rally
+            // runs underground, but one sample per 120 cm is capped at 48: a
+            // rally set at the far edge of the world must not cost hundreds of
+            // height evaluations and projections in a single frame.
+            const int32 Samples = FMath::Clamp(FMath::CeilToInt(Length / 120.0f), 1, 40);
+            const FLinearColor Spine = Color.CopyWithNewOpacity(0.40f);
+            FVector2D Previous;
+            // WorldLine would project every interior vertex twice; a spine is a
+            // polyline, so each point is projected once and carried forward.
+            bool bPrevious = PC->ProjectWorldLocationToScreen(Ground(Origin, 12), Previous);
+            for (int32 Index = 1; Index <= Samples; ++Index)
+            {
+                const float T = static_cast<float>(Index) / Samples;
+                FVector2D Next;
+                const bool bNext = PC->ProjectWorldLocationToScreen(
+                    Ground({Origin.x + DX * T, Origin.y + DY * T}, 12), Next);
+                if (bPrevious && bNext)
+                    DrawLine(Previous.X, Previous.Y, Next.X, Next.Y, Spine, 2.0f * UIScale);
+                Previous = Next;
+                bPrevious = bNext;
+            }
+            // Motion is what separates a route from a line somebody left
+            // behind. The chevrons slide structure-to-destination on a loop,
+            // spaced in world units so a longer rally gets more of them rather
+            // than the same few stretched over wider gaps.
+            const cinder::Vec2 Direction{DX / Length, DY / Length};
+            const int32 Chevrons = FMath::Clamp(FMath::FloorToInt(Length / 260.0f), 1, 10);
+            const float Slide = FMath::Frac(FrameRealTime * 0.62f);
+            for (int32 Index = 0; Index < Chevrons; ++Index)
+            {
+                const float T = (Index + Slide) / Chevrons;
+                // Chevrons that overlap the structure it leaves or the
+                // arrowhead it reaches read as clutter, not as flow.
+                if (T < 0.06f || T > 0.94f) continue;
+                DrawRallyChevron({Origin.x + DX * T, Origin.y + DY * T}, Direction,
+                    34.0f, Color.CopyWithNewOpacity(0.88f));
+            }
+        }
+        // The ring is the patch of ground arrivals actually gather on, drawn at
+        // that size rather than as a dot so the destination has real extent.
+        WorldCircle(Destination, 52.0f, Color.CopyWithNewOpacity(0.58f));
+        FVector2D P;
+        if (!PC->ProjectWorldLocationToScreen(Ground(Destination, 12), P)) return;
+        if (P.X < 0 || P.X > Width || P.Y < 0 || P.Y > Height) return;
+        const float S = UIScale;
+        // The terminal arrowhead is the one mark that has to survive a fully
+        // pulled-back camera, so it is sized on screen; a world-space triangle
+        // at that distance collapses into noise. The bob is small enough to
+        // catch the eye without reading as a bouncing icon.
+        const float Bob = 2.0f * S * FMath::Sin(FrameRealTime * 2.4f);
+        const float Tip = P.Y - 7 * S + Bob, Base = P.Y - 25 * S + Bob;
+        const auto Stroke = [&](float AX, float AY, float BX, float BY)
+        {
+            DrawLine(AX, AY, BX, BY, Ink, 5 * S);
+            DrawLine(AX, AY, BX, BY, Color, 2.5f * S);
+        };
+        Stroke(P.X, Tip, P.X - 9 * S, Base);
+        Stroke(P.X, Tip, P.X + 9 * S, Base);
+        Stroke(P.X - 9 * S, Base, P.X + 9 * S, Base);
+        if (!Text.IsEmpty())
+        {
+            Surface(P.X + 14 * S, Base - 3 * S, 88 * S, 19 * S, Ink.CopyWithNewOpacity(0.88f), 4 * S);
+            SingleLineLabel(Text, P.X + 18 * S, Base + 1 * S, 80 * S, Color, TypeMicro);
+        }
+    };
+    // A structure that has been ordered but not yet raised is drawn as a
+    // blueprint: the exact footprint it will occupy and enough of the volume
+    // above it to judge what the finished building will block. A plan that only
+    // exists inside a queue list is a plan the player cannot check against the
+    // terrain it has to sit on.
+    const auto DrawBlueprint = [&](cinder::Vec2 Point, cinder::Kind Kind, FLinearColor Color,
+        const FString& Text, float Opacity)
+    {
+        FVector2D Anchor;
+        if (!PC->ProjectWorldLocationToScreen(Ground(Point, 12), Anchor)) return;
+        // Cull before paying for the outline. A base full of queued sites just
+        // off the side of the screen is still a ground sample per vertex.
+        const float Slack = 220 * UIScale;
+        if (Anchor.X < -Slack || Anchor.X > Width + Slack
+            || Anchor.Y < -Slack || Anchor.Y > Height + Slack) return;
+        const float Radius = cinder::definition(Kind).radius;
+        const float BuildHeight = BlueprintHeight(Kind);
+        const FLinearColor Line = Color.CopyWithNewOpacity(Opacity);
+        const FLinearColor Faint = Color.CopyWithNewOpacity(Opacity * 0.45f);
+        // Dashed, not solid: a solid ground ring is already this HUD's word for
+        // a real selected thing, and a plan must never be mistaken for a
+        // structure that exists.
+        constexpr int32 Segments = 24;
+        FVector2D PreviousRing;
+        bool bPreviousRing = PC->ProjectWorldLocationToScreen(
+            Ground({Point.x + Radius, Point.y}, 8), PreviousRing);
+        for (int32 Index = 1; Index <= Segments; ++Index)
+        {
+            const float Angle = Index * UE_TWO_PI / Segments;
+            FVector2D NextRing;
+            const bool bNextRing = PC->ProjectWorldLocationToScreen(
+                Ground({Point.x + FMath::Cos(Angle) * Radius,
+                    Point.y + FMath::Sin(Angle) * Radius}, 8), NextRing);
+            if (Index % 2 && bPreviousRing && bNextRing)
+                DrawLine(PreviousRing.X, PreviousRing.Y, NextRing.X, NextRing.Y, Line, 2.0f * UIScale);
+            PreviousRing = NextRing;
+            bPreviousRing = bNextRing;
+        }
+        // Four corner posts and a capped top - ten world lines, the cheapest
+        // volume that still reads as a building rather than a painted circle.
+        // Every building model is an axis-aligned box whose half-width is
+        // exactly its definition radius, so the corners sit a diagonal out from
+        // the centre and the ring is that box's inscribed circle. Standing the
+        // posts on the ring instead would draw a ghost 29% narrower than the
+        // structure it promises, which is the same lie as drawing it short.
+        const float Corner = Radius * 1.41421356f;
+        FVector2D TopCorners[4];
+        bool bTopCorners[4];
+        for (int32 Index = 0; Index < 4; ++Index)
+        {
+            const float Angle = Index * (UE_PI * 0.5f) + UE_PI * 0.25f;
+            const FVector Foot = Ground({Point.x + FMath::Cos(Angle) * Corner,
+                Point.y + FMath::Sin(Angle) * Corner}, 6);
+            FVector2D FootScreen;
+            bTopCorners[Index] = PC->ProjectWorldLocationToScreen(
+                Foot + FVector(0, 0, BuildHeight), TopCorners[Index]);
+            if (bTopCorners[Index] && PC->ProjectWorldLocationToScreen(Foot, FootScreen))
+                DrawLine(FootScreen.X, FootScreen.Y, TopCorners[Index].X, TopCorners[Index].Y,
+                    Faint, 1.5f * UIScale);
+        }
+        // The cap reuses the four post tops rather than reprojecting them.
+        for (int32 Index = 0; Index < 4; ++Index)
+        {
+            const int32 Next = (Index + 1) % 4;
+            if (bTopCorners[Index] && bTopCorners[Next])
+                DrawLine(TopCorners[Index].X, TopCorners[Index].Y,
+                    TopCorners[Next].X, TopCorners[Next].Y, Line, 1.5f * UIScale);
+        }
+        if (Text.IsEmpty()) return;
+        FVector2D Screen;
+        if (!PC->ProjectWorldLocationToScreen(Ground(Point, BuildHeight + 26), Screen)
+            || Screen.X < 0 || Screen.X > Width || Screen.Y < 0 || Screen.Y > Height) return;
+        const float S = UIScale;
+        // The outline may be faint; the name never is. A ghost you cannot
+        // identify is the same problem as no ghost at all.
+        const FLinearColor TextColor = Color.CopyWithNewOpacity(FMath::Max(Opacity, 0.92f));
+        const float LabelW = FMath::Clamp(
+            static_cast<float>(MeasureLabel(Text, TypeMicro).X) + 12 * S, 46 * S, 132 * S);
+        Surface(Screen.X - LabelW * 0.5f, Screen.Y - 10 * S, LabelW, 19 * S,
+            Ink.CopyWithNewOpacity(0.90f), 4 * S);
+        SingleLineLabel(Text, Screen.X - LabelW * 0.5f + 6 * S, Screen.Y - 6 * S,
+            LabelW - 12 * S, TextColor, TypeMicro);
+    };
+    UTexture2D* RingTexture = SelectionRing();
+    // Breathing, not flickering: at 30 fps a faster pulse aliases, and the
+    // floor of 0.86 keeps the ring readable at every point in the cycle.
+    const float RingPulse = 0.86f + 0.14f * FMath::Sin(FrameRealTime * 3.0f);
+    const auto DrawSelectionRing = [&](cinder::Vec2 Center, float Radius, int32 Team)
+    {
+        if (!RingTexture) return;
+        // Three projections where the 24-segment wireframe needed 48, and one
+        // textured quad where it needed 24 DrawLine calls. A ground circle seen
+        // by a camera with no roll projects to a screen-axis-aligned ellipse,
+        // so these two conjugate semi-diameters give its exact half-width and
+        // half-height and there is no rotation left to carry.
+        FVector2D ScreenCenter, ScreenX, ScreenY;
+        // Ride the terrain, not the old flat plane: obstacle plateaus reach
+        // several metres and the walkable ground now rolls everywhere else, so
+        // a ring projected from Z=0 under a unit standing on a rise would hang
+        // in the valley well below its own unit.
+        const FVector Base(Center.x, Center.y, Battle->GroundHeight(Center) + SelectionRingHeight);
+        if (!PC->ProjectWorldLocationToScreen(Base, ScreenCenter)
+            || !PC->ProjectWorldLocationToScreen(Base + FVector(Radius, 0, 0), ScreenX)
+            || !PC->ProjectWorldLocationToScreen(Base + FVector(0, Radius, 0), ScreenY)) return;
+        const FVector2D AxisX = ScreenX - ScreenCenter, AxisY = ScreenY - ScreenCenter;
+        const float HalfW = FMath::Sqrt(static_cast<float>(AxisX.X * AxisX.X + AxisY.X * AxisY.X));
+        const float HalfH = FMath::Sqrt(static_cast<float>(AxisX.Y * AxisX.Y + AxisY.Y * AxisY.Y));
+        // Under about 14 points across, the band is thinner than the 80%
+        // MetalFX resample can carry, so hold a floor instead of drawing a
+        // smear that reads as noise around a zoomed-out army.
+        const float RingW = FMath::Max(HalfW, 7.0f * UIScale) * 2;
+        const float RingH = FMath::Max(HalfH, 4.0f * UIScale) * 2;
+        if (ScreenCenter.X + RingW * 0.5f < 0 || ScreenCenter.X - RingW * 0.5f > Width
+            || ScreenCenter.Y + RingH * 0.5f < 0 || ScreenCenter.Y - RingH * 0.5f > Height) return;
+        DrawTexture(RingTexture, ScreenCenter.X - RingW * 0.5f, ScreenCenter.Y - RingH * 0.5f,
+            RingW, RingH, 0, 0, 1, 1, CinderTeamColors::Color(Team, RingPulse), BLEND_Translucent);
+    };
+    const auto DrawFacingArrow = [&](cinder::Vec2 Point, float Angle, FLinearColor Color)
+    {
+        const cinder::Vec2 Tip{Point.x + FMath::Cos(Angle) * 58.0f, Point.y + FMath::Sin(Angle) * 58.0f};
+        const cinder::Vec2 Left{Tip.x - FMath::Cos(Angle - 0.55f) * 18.0f,
+            Tip.y - FMath::Sin(Angle - 0.55f) * 18.0f};
+        const cinder::Vec2 Right{Tip.x - FMath::Cos(Angle + 0.55f) * 18.0f,
+            Tip.y - FMath::Sin(Angle + 0.55f) * 18.0f};
+        // The arrow is 58 cm long, so its tip can sit on noticeably different
+        // ground from its tail on a hillside; each vertex takes its own height.
+        const FVector TipPoint = Ground(Tip, 16);
+        WorldLine(Ground(Point, 16), TipPoint, Color, 2.0f);
+        WorldLine(TipPoint, Ground(Left, 16), Color, 2.0f);
+        WorldLine(TipPoint, Ground(Right, 16), Color, 2.0f);
+    };
     const auto& Player = Sim.players()[0];
-    if (Player.armyRallySet)
-        DrawRallyFlag(Player.armyRally, Mint,
-            PC->IsProductionRallyMode() || (CompactSheet == SheetArmy && ArmyPanelTab == 3)
-                ? TEXT("ARMY RALLY") : TEXT(""));
+    const bool bRallyFocus = PC->IsProductionRallyMode()
+        || (CompactSheet == SheetArmy && ArmyPanelTab == 3);
+    // Every selected structure draws its own route, not just the primary:
+    // selecting three Kilns and watching three lines fan out to three places is
+    // the whole reason to draw routes instead of points. Amber is a local
+    // override and mint the shared army rally, so a facility that has been
+    // pulled off the team rally is obvious from colour alone.
+    bool bArmyRouteDrawn = false;
+    int32 RallyRoutes = 0;
+    for (cinder::Id Id : PC->Selection())
+    {
+        if (RallyRoutes >= 8) break;
+        const cinder::Entity* Producer = Sim.find(Id);
+        if (!Producer || !Producer->alive() || Producer->team != 0
+            || !cinder::definition(Producer->kind).building) continue;
+        const bool bInherits = !Producer->rallyOverride && Player.armyRallySet
+            && cinder::rules::combatProductionKind(Producer->kind);
+        // A structure still sitting on the untouched default exit offset has no
+        // rally worth drawing. That line would point at its own doorstep and
+        // would fire on every single base selection.
+        if (!Producer->rallyOverride && !bInherits) continue;
+        bArmyRouteDrawn |= bInherits;
+        // One label leads; the rest would stack eight chips over one base.
+        // Opening the rally panel or arming a rally puts them all back.
+        const bool bLabel = RallyRoutes == 0 || bRallyFocus;
+        DrawRallyRoute(Battle->RenderPosition(*Producer), Producer->rally,
+            Producer->rallyOverride ? Amber : Mint,
+            !bLabel ? FString()
+                : Producer->rallyOverride
+                    ? (Producer->kind == cinder::Kind::Headquarters
+                        ? TEXT("WORKER RALLY") : TEXT("LOCAL RALLY"))
+                    : TEXT("ARMY RALLY"),
+            true);
+        ++RallyRoutes;
+    }
+    // The shared rally is team state, not selection state, so it still shows
+    // with nothing selected - but only when no selected producer already ended
+    // a route on it, which would stack two arrowheads on the same point.
+    if (Player.armyRallySet && !bArmyRouteDrawn)
+        DrawRallyRoute(Player.armyRally, Player.armyRally, Mint,
+            bRallyFocus ? TEXT("ARMY RALLY") : TEXT(""), false);
     if (!PC->Selection().empty())
     {
-        const auto* Producer = Sim.find(PC->Selection().front());
-        if (Producer && Producer->alive() && Producer->team == 0
-            && cinder::definition(Producer->kind).building && Producer->rallyOverride)
-            DrawRallyFlag(Producer->rally, Amber, TEXT("LOCAL RALLY"));
+        const cinder::Entity* Primary = Sim.find(PC->Selection().front());
+        if (Primary && Primary->alive() && Primary->team == 0
+            && Primary->kind != cinder::Kind::Resource && !cinder::definition(Primary->kind).building)
+        {
+            const auto DrawWaypoint = [&](cinder::Vec2 Point, cinder::Order Order, const FString& Text)
+            {
+                FVector2D Screen;
+                if (!PC->ProjectWorldLocationToScreen(Ground(Point, 12), Screen)
+                    || Screen.X < 0 || Screen.X > Width || Screen.Y < 0 || Screen.Y > Height) return;
+                const bool bAttackMove = Order == cinder::Order::AttackMove;
+                const FLinearColor Color = bAttackMove ? Amber : Mint;
+                const float R = 8 * UIScale;
+                if (bAttackMove)
+                {
+                    DrawLine(Screen.X - R, Screen.Y - R, Screen.X + R, Screen.Y + R, Ink, 4 * UIScale);
+                    DrawLine(Screen.X - R, Screen.Y + R, Screen.X + R, Screen.Y - R, Ink, 4 * UIScale);
+                    DrawLine(Screen.X - R, Screen.Y - R, Screen.X + R, Screen.Y + R, Color, 2 * UIScale);
+                    DrawLine(Screen.X - R, Screen.Y + R, Screen.X + R, Screen.Y - R, Color, 2 * UIScale);
+                }
+                else
+                {
+                    Panel(Screen.X - R, Screen.Y - R, R * 2, R * 2, Ink);
+                    Panel(Screen.X - R + 2 * UIScale, Screen.Y - R + 2 * UIScale,
+                        R * 2 - 4 * UIScale, R * 2 - 4 * UIScale, Color);
+                }
+                Surface(Screen.X + 11 * UIScale, Screen.Y - 10 * UIScale, 31 * UIScale, 18 * UIScale,
+                    Ink.CopyWithNewOpacity(0.90f), 4 * UIScale);
+                SingleLineLabel(Text, Screen.X + 15 * UIScale, Screen.Y - 6 * UIScale,
+                    24 * UIScale, Color, TypeMicro);
+            };
+            // Ore steps only. Construction steps go through DrawBlueprint,
+            // which owns the footprint and the volume the plan will occupy.
+            const auto DrawWorkerPlanMarker = [&](cinder::Vec2 Point, const FString& Text,
+                FLinearColor Color)
+            {
+                FVector2D Screen;
+                if (!PC->ProjectWorldLocationToScreen(Ground(Point, 16), Screen)
+                    || Screen.X < 0 || Screen.X > Width || Screen.Y < 0 || Screen.Y > Height) return;
+                const float S = UIScale;
+                Panel(Screen.X - 4 * S, Screen.Y - 4 * S, 8 * S, 8 * S, Color);
+                const float LabelW = FMath::Min(92 * S,
+                    FMath::Max(42 * S, static_cast<float>(MeasureLabel(Text, TypeMicro).X + 10 * S)));
+                Surface(Screen.X + 8 * S, Screen.Y - 12 * S, LabelW, 19 * S,
+                    Ink.CopyWithNewOpacity(0.90f), 4 * S);
+                SingleLineLabel(Text, Screen.X + 13 * S, Screen.Y - 8 * S,
+                    LabelW - 9 * S, Color, TypeMicro);
+            };
+
+            cinder::Vec2 From = Battle->RenderPosition(*Primary);
+            bool bLinkReady = false;
+            if (Primary->order == cinder::Order::Move || Primary->order == cinder::Order::AttackMove
+                || Primary->order == cinder::Order::Defend)
+            {
+                WorldLine(Ground(From, 12), Ground(Primary->goal, 12),
+                    Muted.CopyWithNewOpacity(0.70f), 1.5f);
+                DrawWaypoint(Primary->goal, Primary->order, TEXT("NOW"));
+                if (Primary->hasArrivalFacing)
+                    DrawFacingArrow(Primary->goal, Primary->arrivalFacing, Mint);
+                From = Primary->goal;
+                bLinkReady = true;
+            }
+            else if (Primary->order == cinder::Order::Patrol)
+            {
+                const cinder::SustainedOrderState& State = Primary->sustained;
+                WorldLine(Ground(State.patrolOrigin, 12),
+                    Ground(State.patrolDestination, 12),
+                    Mint.CopyWithNewOpacity(0.72f), 2.0f);
+                DrawWaypoint(State.patrolOrigin, cinder::Order::Move, TEXT("A"));
+                DrawWaypoint(State.patrolDestination, cinder::Order::Move, TEXT("B"));
+                if (State.phase != cinder::SustainedOrderPhase::Travel)
+                    WorldCircle(State.pursuitAnchor, cinder::Simulation::SustainedPursuitRadius,
+                        Amber.CopyWithNewOpacity(0.22f));
+                From = Primary->goal;
+                bLinkReady = true;
+            }
+            else if (Primary->order == cinder::Order::Escort)
+            {
+                const cinder::SustainedOrderState& State = Primary->sustained;
+                WorldLine(Ground(From, 12), Ground(Primary->goal, 12),
+                    Mint.CopyWithNewOpacity(0.72f), 2.0f);
+                DrawWaypoint(Primary->goal, cinder::Order::Move, TEXT("SLOT"));
+                if (const cinder::Entity* Leader = Sim.find(State.escortTarget);
+                    Leader && Leader->alive() && Leader->team == 0)
+                {
+                    const cinder::Vec2 LeaderPoint = Battle->RenderPosition(*Leader);
+                    WorldLine(Ground(Primary->goal, 12),
+                        Ground(LeaderPoint, 12), Amber.CopyWithNewOpacity(0.65f), 1.5f);
+                    DrawWaypoint(LeaderPoint, cinder::Order::Move, TEXT("LEAD"));
+                }
+                WorldCircle(Primary->goal, cinder::Simulation::SustainedPursuitRadius,
+                    Mint.CopyWithNewOpacity(0.20f));
+                From = Primary->goal;
+                bLinkReady = true;
+            }
+            else if (Primary->order == cinder::Order::Gather)
+            {
+                const cinder::Entity* Ore = Sim.find(Primary->target ? Primary->target : Primary->resourceTarget);
+                if (Ore && Ore->alive() && Ore->kind == cinder::Kind::Resource)
+                {
+                    WorldLine(Ground(From, 12), Ground(Ore->pos, 12),
+                        Amber.CopyWithNewOpacity(0.55f), 1.5f);
+                    DrawWorkerPlanMarker(Ore->pos, TEXT("NOW MINE"), Amber);
+                    From = Ore->pos;
+                    bLinkReady = true;
+                }
+            }
+            else if (Primary->order == cinder::Order::Construct)
+            {
+                const cinder::Entity* Site = Sim.find(Primary->target);
+                if (Site && Site->alive() && Site->team == 0 && cinder::definition(Site->kind).building)
+                {
+                    WorldLine(Ground(From, 12), Ground(Site->pos, 12),
+                        Amber.CopyWithNewOpacity(0.55f), 1.5f);
+                    DrawWorkerPlanMarker(Site->pos, TEXT("NOW BUILD"), Amber);
+                    From = Site->pos;
+                    bLinkReady = true;
+                }
+            }
+            for (std::size_t Index = 0; Index < Primary->futureOrders.size(); ++Index)
+            {
+                const cinder::TacticalOrder& Order = Primary->futureOrders[Index];
+                const int32 Ordinal = static_cast<int32>(Index + 1);
+                if (Order.order == cinder::Order::Move || Order.order == cinder::Order::AttackMove)
+                {
+                    if (bLinkReady)
+                        WorldLine(Ground(From, 12), Ground(Order.point, 12),
+                            Order.order == cinder::Order::AttackMove
+                                ? Amber.CopyWithNewOpacity(0.62f) : Mint.CopyWithNewOpacity(0.62f), 1.5f);
+                    DrawWaypoint(Order.point, Order.order, FString::FromInt(Ordinal));
+                    if (Order.hasArrivalFacing)
+                        DrawFacingArrow(Order.point, Order.arrivalFacing,
+                            Order.order == cinder::Order::AttackMove ? Amber : Mint);
+                    From = Order.point;
+                    bLinkReady = true;
+                    continue;
+                }
+
+                cinder::Vec2 StepPoint{};
+                FString StepLabel;
+                // Worker is the sentinel for "this step raises nothing", which
+                // is the same value the order itself carries for a non-build.
+                cinder::Kind StepBlueprint = cinder::Kind::Worker;
+                if (Order.order == cinder::Order::Gather)
+                {
+                    const cinder::Entity* Ore = Sim.find(Order.supportTarget);
+                    if (!Ore || !Ore->alive() || Ore->kind != cinder::Kind::Resource) continue;
+                    StepPoint = Ore->pos;
+                    StepLabel = FString::Printf(TEXT("%d MINE"), Ordinal);
+                }
+                else if (Order.order == cinder::Order::Construct && Order.supportTarget)
+                {
+                    const cinder::Entity* Site = Sim.find(Order.supportTarget);
+                    if (!Site || !Site->alive() || Site->team != 0 || !cinder::definition(Site->kind).building) continue;
+                    StepPoint = Site->pos;
+                    StepLabel = FString::Printf(TEXT("%d RESUME"), Ordinal);
+                }
+                else if (Order.order == cinder::Order::Construct
+                    && Order.buildingKind != cinder::Kind::Worker)
+                {
+                    StepPoint = Order.point;
+                    StepBlueprint = Order.buildingKind;
+                    StepLabel = FString::Printf(TEXT("%d %s"), Ordinal,
+                        *Name(Order.buildingKind).ToUpper());
+                }
+                else continue;
+
+                WorldLine(Ground(From, 12), Ground(StepPoint, 12),
+                    Amber.CopyWithNewOpacity(0.62f), 1.5f);
+                // Only a site with no entity yet gets a ghost here. A queued
+                // resume points at a foundation that already stands, and the
+                // ambient pass below is already drawing that one's volume.
+                if (StepBlueprint != cinder::Kind::Worker)
+                    DrawBlueprint(StepPoint, StepBlueprint, Amber, StepLabel, 0.85f);
+                else DrawWorkerPlanMarker(StepPoint, StepLabel, Amber);
+                From = StepPoint;
+                bLinkReady = true;
+            }
+        }
     }
+    if (PC->Selection().size() > 1)
+    {
+        int32 Markers = 0;
+        for (cinder::Id Id : PC->Selection())
+        {
+            if (Markers >= 24) break;
+            const cinder::Entity* Entity = Sim.find(Id);
+            if (!Entity || !Entity->alive() || Entity->team != 0
+                || (Entity->order != cinder::Order::Move && Entity->order != cinder::Order::AttackMove
+                    && Entity->order != cinder::Order::Defend)) continue;
+            FVector2D Screen;
+            if (PC->ProjectWorldLocationToScreen(Ground(Entity->goal, 13), Screen))
+            {
+                Panel(Screen.X - 3 * UIScale, Screen.Y - 3 * UIScale, 6 * UIScale, 6 * UIScale,
+                    Entity->order == cinder::Order::AttackMove ? Amber : Mint);
+                ++Markers;
+            }
+        }
+    }
+    if (PC->IsFacingPointerActive())
+    {
+        const cinder::Vec2 Center = PC->FacingCenter();
+        const cinder::Vec2 Direction = PC->FacingDirectionPoint();
+        float Angle = 0.0f;
+        if (cinder::rules::arrivalFacingFromDirection(
+            {Direction.x - Center.x, Direction.y - Center.y}, Angle))
+        {
+            DrawFacingArrow(Center, Angle, Amber);
+            std::vector<cinder::rules::FormationRecipient> Recipients;
+            for (cinder::Id Id : PC->Selection())
+            {
+                const cinder::Entity* Entity = Sim.find(Id);
+                if (Entity && Entity->alive() && Entity->team == 0
+                    && Entity->kind != cinder::Kind::Resource && !cinder::definition(Entity->kind).building)
+                    Recipients.push_back({Entity->id, Entity->pos});
+            }
+            std::vector<cinder::rules::NominalFormationSlot> Slots;
+            if (cinder::rules::nominalFormationSlots(Center, PC->FacingLatchedSpacing(), true,
+                Angle, Recipients, Slots))
+            {
+                const int32 Visible = FMath::Min<int32>(24, static_cast<int32>(Slots.size()));
+                for (int32 Index = 0; Index < Visible; ++Index)
+                {
+                    FVector2D Screen;
+                    if (PC->ProjectWorldLocationToScreen(
+                        Ground(Slots[Index].point, 14), Screen))
+                        Panel(Screen.X - 3 * UIScale, Screen.Y - 3 * UIScale,
+                            6 * UIScale, 6 * UIScale, Mint);
+                }
+            }
+            FVector2D Screen;
+            if (PC->ProjectWorldLocationToScreen(Ground(Center, 18), Screen))
+            {
+                Surface(Screen.X + 12 * UIScale, Screen.Y + 10 * UIScale, 112 * UIScale,
+                    19 * UIScale, Ink.CopyWithNewOpacity(0.90f), 4 * UIScale);
+                SingleLineLabel(TEXT("FORMATION GUIDE"), Screen.X + 17 * UIScale,
+                    Screen.Y + 14 * UIScale, 102 * UIScale, Amber, TypeMicro);
+            }
+        }
+    }
+    // The plan chain above only runs for the primary selection, which means a
+    // build order given two minutes ago becomes invisible the moment that
+    // drudge is deselected - and a queued site is exactly the thing the player
+    // needs on screen while deciding where the next one goes. These two counts
+    // bound the ambient pass below: sites are capped because a queue can hold
+    // sixteen per worker, foundations because a late-game base can be rebuilt
+    // wholesale after a raid.
+    const cinder::Id PlanPrimary = PC->Selection().empty() ? 0 : PC->Selection().front();
+    int32 QueuedBlueprints = 0, FoundationBlueprints = 0;
     for (const auto& E : Sim.entities())
     {
         if (!E.alive() || E.kind == cinder::Kind::Resource || (E.team != 0 && !Sim.visible(0, E.pos))) continue;
         const cinder::Vec2 RenderPoint = Battle->RenderPosition(E);
         const auto& D = cinder::definition(E.kind);
         const bool Selected = std::find(PC->Selection().begin(), PC->Selection().end(), E.id) != PC->Selection().end();
+        // A foundation already grows a scaled mesh and carries a progress bar,
+        // and neither says how much ground the finished structure will take.
+        // The ghost stands at full height beside the stub that is rising into
+        // it, which is what makes a half-built base read as a base under
+        // construction rather than a field of small pads.
+        if (E.team == 0 && D.building && E.progress < 1 && FoundationBlueprints < 16)
+        {
+            // The ghost dissolves as the real structure rises into it, so a
+            // site at 90% is a building with a hint of scaffold rather than a
+            // finished machine wearing a cage.
+            DrawBlueprint(RenderPoint, E.kind, Amber, FString(),
+                0.14f + 0.50f * (1.0f - E.progress));
+            ++FoundationBlueprints;
+        }
+        // Queued sites belonging to any other drudge. Dimmer than the selected
+        // worker's chain so the plan being actively edited still leads the eye.
+        if (E.team == 0 && E.kind == cinder::Kind::Worker && E.id != PlanPrimary)
+            for (const cinder::TacticalOrder& Planned : E.futureOrders)
+            {
+                if (QueuedBlueprints >= 24) break;
+                if (Planned.order != cinder::Order::Construct || Planned.supportTarget
+                    || Planned.buildingKind == cinder::Kind::Worker) continue;
+                DrawBlueprint(Planned.point, Planned.buildingKind, Amber,
+                    Name(Planned.buildingKind).ToUpper(), 0.46f);
+                ++QueuedBlueprints;
+            }
         if (E.kind == cinder::Kind::Worker && E.order == cinder::Order::Construct)
         {
             if (const auto* Site = Sim.find(E.target); Site && Sim.constructionWorker(Site->id) == E.id && (E.team == 0 || Sim.visible(0, Site->pos)))
@@ -1411,33 +2592,44 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
                 {
                     const FVector2D Direction = FVector2D(RenderPoint.x - Site->pos.x, RenderPoint.y - Site->pos.y).GetSafeNormal();
                     const FVector2D Edge = FVector2D(Site->pos.x, Site->pos.y) + Direction * cinder::definition(Site->kind).radius;
-                    WorldLine(FVector(RenderPoint.x, RenderPoint.y, 44), FVector(Edge.X, Edge.Y, 56), Amber, 2);
+                    // Both ends of the build beam take their own ground: the
+                    // worker and the wall of the site it is welding can stand a
+                    // full hillside apart once the terrain rolls.
+                    WorldLine(Ground(RenderPoint, 44),
+                        Ground({static_cast<float>(Edge.X), static_cast<float>(Edge.Y)}, 56),
+                        Amber, 2);
                 }
-                else if (Selected) WorldLine(FVector(RenderPoint.x, RenderPoint.y, 10), FVector(Site->pos.x, Site->pos.y, 10), Amber.CopyWithNewOpacity(0.45f), 1);
+                else if (Selected) WorldLine(Ground(RenderPoint, 10), Ground(Site->pos, 10), Amber.CopyWithNewOpacity(0.45f), 1);
             }
         }
         if (Selected)
         {
-            const float R = D.radius + 9;
-            for (int I = 0; I < 24; ++I)
-            {
-                const float A = I * UE_TWO_PI / 24, B = (I + 1) * UE_TWO_PI / 24;
-                WorldLine(FVector(RenderPoint.x + FMath::Cos(A) * R, RenderPoint.y + FMath::Sin(A) * R, 7), FVector(RenderPoint.x + FMath::Cos(B) * R, RenderPoint.y + FMath::Sin(B) * R, 7), Mint, 2);
-            }
-            if (!D.building && E.order != cinder::Order::Idle && PC->bDebug) WorldLine(FVector(RenderPoint.x, RenderPoint.y, 10), FVector(E.goal.x, E.goal.y, 10), Muted, 1);
+            // Team-tinted so a selected enemy scout never reads as one of
+            // yours, which the old hardcoded Mint wireframe could not express.
+            DrawSelectionRing(RenderPoint, D.radius + 9, E.team);
+            if (!D.building && E.order != cinder::Order::Idle && PC->bDebug) WorldLine(Ground(RenderPoint, 10), Ground(E.goal, 10), Muted, 1);
         }
         if (Selected || E.hp < D.hp || E.progress < 1)
         {
             FVector2D P;
+            // Head clearance above the model, so it is measured from the ground
+            // the model stands on. This anchor carries the health bar, the
+            // build-progress bar and the construction-status label, all three of
+            // which would drift off a building sited on a rise if Z stayed
+            // absolute - and a half-built structure is exactly the thing a
+            // player scans for at a glance.
             const float Z = D.air ? 180 : D.building ? 200 : 83;
-            if (PC->ProjectWorldLocationToScreen(FVector(RenderPoint.x, RenderPoint.y, Z), P))
+            const FVector LabelPoint(RenderPoint.x, RenderPoint.y,
+                Battle->EntityGroundHeight(RenderPoint, E.kind) + Z);
+            if (PC->ProjectWorldLocationToScreen(LabelPoint, P))
             {
                 const float BarW = (D.building ? 58 : 34) * UIScale;
                 Panel(P.X - BarW / 2, P.Y, BarW, 4 * UIScale, Ink);
                 Panel(P.X - BarW / 2, P.Y, BarW * FMath::Clamp(E.hp / D.hp, 0.0f, 1.0f), 4 * UIScale, CinderTeamColors::Accent(E.team));
                 if (E.progress < 1) Panel(P.X - BarW / 2, P.Y + 6 * UIScale, BarW * E.progress, 3 * UIScale, Amber);
                 if (E.team == 0 && D.building && E.progress < 1)
-                    Label(ConstructionStatus(Sim, E), P.X - BarW / 2, P.Y - 19 * UIScale, Amber, 0.62f);
+                    WorldLabel(ConstructionStatus(Sim, E), P.X - BarW / 2, P.Y - 19 * UIScale,
+                        Amber, TypeCaption);
             }
         }
     }
@@ -1465,7 +2657,7 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
                         && To.x <= Sim.worldSize() && To.y <= Sim.worldSize();
                     const cinder::Vec2 Mid{(From.x + To.x) * 0.5f, (From.y + To.y) * 0.5f};
                     if (!bInWorld || !Sim.visible(0, From) || !Sim.visible(0, Mid) || !Sim.visible(0, To)) continue;
-                    WorldLine(FVector(From.x, From.y, 6), FVector(To.x, To.y, 6), Mint.CopyWithNewOpacity(0.34f), 1);
+                    WorldLine(Ground(From, 6), Ground(To, 6), Mint.CopyWithNewOpacity(0.34f), 1);
                 }
             }
         }
@@ -1521,8 +2713,15 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
             const float Fade = (1.0f - Age) * (1.0f - Age * 0.4f);
             const float Phase = static_cast<float>(FX.id % 31) * 0.37f;
             const FLinearColor Shot = CinderTeamColors::Accent(FX.team);
-            const FVector From(FX.from.x, FX.from.y, EffectHeight(FX.sourceKind));
-            const FVector To(FX.to.x, FX.to.y, EffectHeight(FX.targetKind));
+            // EffectHeight is a muzzle or impact height measured from whatever
+            // the shooter is standing on, so it is added to the ground under
+            // that XY rather than to the old flat plane. A tracer between two
+            // units on opposite sides of a rise otherwise left both ends
+            // hanging at the wrong altitude for the models they belong to.
+            const FVector From(FX.from.x, FX.from.y,
+                Battle->EntityGroundHeight(FX.from, FX.sourceKind) + EffectHeight(FX.sourceKind));
+            const FVector To(FX.to.x, FX.to.y,
+                Battle->EntityGroundHeight(FX.to, FX.targetKind) + EffectHeight(FX.targetKind));
             const auto PointOnLink = [&](float Fraction) { return FMath::Lerp(From, To, Fraction); };
 
             if (FX.type == cinder::EffectType::Weapon)
@@ -1598,7 +2797,8 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
             else if (FX.type == cinder::EffectType::Death && TargetVisible)
             {
                 const auto& Victim = cinder::definition(FX.targetKind);
-                const FVector Center(FX.to.x, FX.to.y, Victim.air ? EffectHeight(FX.targetKind) : 8.0f);
+                const FVector Center(FX.to.x, FX.to.y, Battle->EntityGroundHeight(FX.to, FX.targetKind)
+                    + (Victim.air ? EffectHeight(FX.targetKind) : 8.0f));
                 const float Footprint = FMath::Clamp(Victim.radius * (Victim.building ? 1.05f : 1.35f), 25.0f, 135.0f) * EffectScale;
                 const float Radius = Footprint * (0.20f + Age * 0.90f);
                 const FLinearColor Fire(1.0f, 0.52f, 0.22f);
@@ -1633,25 +2833,45 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
         const auto Status = PC->BuildPlacementStatus(&P);
         const bool Valid = Status.accepted;
         const FLinearColor Color = Valid ? Mint : FLinearColor(1, 0.24f, 0.18f);
-        for (int I = 0; I < 32; ++I)
+        // The placement footprint is the one ring the player reads before
+        // committing ore, so it rides the ground vertex by vertex: on rolling
+        // terrain a footprint drawn at a constant Z would sit visibly off the
+        // ground it is about to occupy. Worn pathways are the flattest ground on
+        // the map by design, which is exactly where this ring should look level.
         {
-            const float A = I * UE_TWO_PI / 32, B = (I + 1) * UE_TWO_PI / 32;
-            WorldLine(FVector(P.x + FMath::Cos(A) * R, P.y + FMath::Sin(A) * R, 8), FVector(P.x + FMath::Cos(B) * R, P.y + FMath::Sin(B) * R, 8), Color, 3);
+            cinder::Vec2 PreviousPoint{P.x + R, P.y};
+            FVector PreviousGround = Ground(PreviousPoint, 8);
+            for (int I = 1; I <= 32; ++I)
+            {
+                const float A = I * UE_TWO_PI / 32;
+                const cinder::Vec2 NextPoint{P.x + FMath::Cos(A) * R, P.y + FMath::Sin(A) * R};
+                const FVector NextGround = Ground(NextPoint, 8);
+                WorldLine(PreviousGround, NextGround, Color, 3);
+                PreviousGround = NextGround;
+            }
         }
         // The tutorial owns the suggested-site instruction. A stale menu tap
         // must not display an unrelated red placement error beneath it.
         if (bSuggestedSite) return;
         FVector2D Screen(Margin, Height * 0.5f);
         FVector2D Projected;
-        if (PC->ProjectWorldLocationToScreen(FVector(P.x, P.y, 10), Projected)) Screen = Projected;
+        if (PC->ProjectWorldLocationToScreen(Ground(P, 10), Projected)) Screen = Projected;
 #if PLATFORM_IOS || PLATFORM_ANDROID
-        const FString PlacementLabel = Valid ? TEXT("TAP TO BUILD") : UTF8_TO_TCHAR(Status.message.c_str());
+        const FString PlacementLabel = Valid
+            ? PC->IsWorkerBuildQueueActive()
+                ? TEXT("TAP TO QUEUE SITE / ORE PAID WHEN REACHED / MAX 16")
+                : TEXT("TAP TO BUILD")
+            : UTF8_TO_TCHAR(Status.message.c_str());
 #else
-        const FString PlacementLabel = Valid ? TEXT("CLICK TO BUILD") : UTF8_TO_TCHAR(Status.message.c_str());
+        const FString PlacementLabel = Valid
+            ? PC->IsWorkerBuildQueueActive()
+                ? TEXT("SHIFT-CLICK TO QUEUE SITE / ORE PAID WHEN REACHED / MAX 16")
+                : TEXT("CLICK TO BUILD / SHIFT APPENDS")
+            : UTF8_TO_TCHAR(Status.message.c_str());
 #endif
         const float Inset = bCompactLayout ? Margin : 12 * UIScale;
         const float MaxWidth = FMath::Max(1.0f, FMath::Min(560 * UIScale, Width - 2 * Inset));
-        const float LabelWidth = FMath::Min(MaxWidth, static_cast<float>(MeasureLabel(PlacementLabel, 0.8f).X));
+        const float LabelWidth = FMath::Min(MaxWidth, static_cast<float>(MeasureLabel(PlacementLabel, TypeBody).X));
         const float LabelX = FMath::Clamp(static_cast<float>(Screen.X + 14 * UIScale), Inset, FMath::Max(Inset, Width - Inset - LabelWidth));
         // Leave room for the desktop build panel and its rejection-feedback line.
         const float LowerReserved = bCompactLayout ? 70.0f : PC->bBuildMenu ? 384.0f : 224.0f;
@@ -1660,7 +2880,7 @@ void ACinderHUD::DrawWorldIndicators(ACinderPlayerController* PC, ACinderBattlef
         const float LabelY = FMath::Clamp(static_cast<float>(Screen.Y - 20 * UIScale), UpperLimit,
             FMath::Max(UpperLimit, BottomEdge - LowerReserved * UIScale));
         Panel(LabelX - 4 * UIScale, LabelY - 3 * UIScale, LabelWidth + 8 * UIScale, 24 * UIScale, Ink);
-        SingleLineLabel(PlacementLabel, LabelX, LabelY, MaxWidth, Color, 0.8f);
+        SingleLineLabel(PlacementLabel, LabelX, LabelY, MaxWidth, Color, TypeBody);
     }
 }
 
@@ -1674,18 +2894,19 @@ void ACinderHUD::DrawProductionQueue(const cinder::Entity* Producer, float X, fl
     const int Start = QueuePage * PageSize, End = FMath::Min(Start + PageSize, Count);
     const int Rows = FMath::Max(1, FMath::DivideAndRoundUp(End - Start, Columns));
     const float PanelH = (bCompactLayout ? 62 + Rows * 51 : 164) * S;
-    Panel(X - 5 * S, Y - 6 * S, W + 10 * S, PanelH, Ink);
+    Surface(X - 5 * S, Y - 6 * S, W + 10 * S, PanelH,
+        FLinearColor(0.026f, 0.048f, 0.068f, 0.97f), Ink, 10 * S);
+    Surface(X - 5 * S, Y + 6 * S, 2 * S, PanelH - 24 * S,
+        Mint.CopyWithNewOpacity(0.68f), Mint.CopyWithNewOpacity(0.14f), S);
     UIRegions.Add(FBox2D(FVector2D(X - 5 * S, Y - 6 * S), FVector2D(X + W + 5 * S, Y - 6 * S + PanelH)));
-    SingleLineLabel(FString::Printf(TEXT("QUEUE %d / %d"), Count, cinder::Simulation::MaxQueue), X + 5 * S, Y + 3 * S, W - 219 * S, Amber, 0.80f);
-#if PLATFORM_IOS || PLATFORM_ANDROID
-    const TCHAR* CancelHint = TEXT("TAP TO CANCEL");
-#else
-    const TCHAR* CancelHint = TEXT("CLICK TO CANCEL");
-#endif
-    const FString Range = Count ? FString::Printf(TEXT("%d-%d / %s"), Start + 1, End, CancelHint) : TEXT("NO PRODUCTION QUEUED");
-    SingleLineLabel(Range, X + 5 * S, Y + 25 * S, W - 219 * S, Muted, 0.70f);
-    if (QueuePage > 0) Button(TEXT("<"), TEXT("queuepage"), -1, X + W - 98 * S, Y, 44 * S);
-    if (QueuePage + 1 < Pages) Button(TEXT(">"), TEXT("queuepage"), 1, X + W - 44 * S, Y, 44 * S);
+    const float HeaderTextW = W - 206 * S;
+    SingleLineLabel(FString::Printf(TEXT("QUEUE %d/%d"), Count, cinder::Simulation::MaxQueue),
+        X + 5 * S, Y + 3 * S, HeaderTextW, Amber, TypeBody);
+    SingleLineLabel(Count ? TEXT("X CANCEL") : TEXT("QUEUE EMPTY"),
+        X + 5 * S, Y + 25 * S, HeaderTextW, Muted, TypeCaption);
+    if (QueuePage > 0) Button(TEXT("<"), TEXT("queuepage"), -1, X + W - 144 * S, Y, 44 * S);
+    if (QueuePage + 1 < Pages) Button(TEXT(">"), TEXT("queuepage"), 1, X + W - 94 * S, Y, 44 * S);
+    Button(TEXT("X"), TEXT("closesheet"), 0, X + W - 44 * S, Y, 44 * S);
     const float CellW = (W - (Columns - 1) * 7 * S) / Columns;
     for (int I = Start; I < End; ++I)
     {
@@ -1694,16 +2915,21 @@ void ACinderHUD::DrawProductionQueue(const cinder::Entity* Producer, float X, fl
         const float BX = X + (Cell % Columns) * (CellW + 7 * S), BY = Y + (52 + (Cell / Columns) * 51) * S;
         const FString QName = Q.research ? TEXT("Research") : Name(Q.kind);
         Button(TEXT(""),TEXT("cancelproduction"),0,BX,BY,CellW);
-        SingleLineLabel(QName,BX+8*S,BY+7*S,CellW-32*S,White,0.64f);
-        SingleLineLabel(FString::Printf(TEXT("%d / %ds"),I+1,FMath::CeilToInt(Q.remaining)),BX+8*S,BY+25*S,CellW-32*S,Muted,0.53f);
+        SingleLineLabel(QName,BX+8*S,BY+7*S,CellW-32*S,White,TypeCaption);
+        SingleLineLabel(FString::Printf(TEXT("%d / %ds"),I+1,FMath::CeilToInt(Q.remaining)),BX+8*S,BY+25*S,CellW-32*S,Muted,TypeMicro);
         ActionGlyph(TEXT("cancelproduction"),0,BX+CellW-23*S,BY+14*S,16*S,Amber);
         Buttons.Last().EntityId = Producer->id;
         Buttons.Last().JobId = Q.id;
         Panel(BX, BY + 41 * S, CellW * FMath::Clamp(1 - Q.remaining / FMath::Max(Q.total, 0.01f), 0.0f, 1.0f), 2 * S, Mint);
     }
 
-    Button(TEXT("VIEW JOBS"), TEXT("producerjobs"), 0, X + W - 206 * S, Y, 98 * S);
-    Buttons.Last().EntityId = Producer ? Producer->id : 0;
+    // On later pages the back arrow uses this slot. Jobs remains one tap away
+    // on page one, and through the Army drawer while browsing the queue.
+    if (QueuePage == 0)
+    {
+        Button(TEXT("VIEW JOBS"), TEXT("producerjobs"), 0, X + W - 206 * S, Y, 98 * S);
+        Buttons.Last().EntityId = Producer ? Producer->id : 0;
+    }
 }
 
 bool ACinderHUD::GetOnlineNotice(ACinderPlayerController* PC, ACinderBattlefield* Battle, FString& Heading, FString& Detail) const
@@ -1751,8 +2977,8 @@ void ACinderHUD::DrawOnlineNotice(const FString& Heading, const FString& Detail,
     const float H = (bCompact ? 50 : 56) * S;
     Panel(X, Y, W, H, FLinearColor(0.025f, 0.035f, 0.04f, 0.97f));
     Panel(X, Y, 4 * S, H, Amber);
-    SingleLineLabel(Heading, X + 13 * S, Y + 6 * S, W - 25 * S, Amber, bCompact ? 0.66f : 0.76f);
-    SingleLineLabel(Detail, X + 13 * S, Y + (bCompact ? 26 : 29) * S, W - 25 * S, White, bCompact ? 0.60f : 0.68f);
+    SingleLineLabel(Heading, X + 13 * S, Y + 6 * S, W - 25 * S, Amber, bCompact ? TypeCaption : TypeBody);
+    SingleLineLabel(Detail, X + 13 * S, Y + (bCompact ? 26 : 29) * S, W - 25 * S, White, TypeCaption);
 }
 
 void ACinderHUD::DrawUnitRibbon(ACinderPlayerController* PC, ACinderBattlefield* Battle)
@@ -1807,7 +3033,7 @@ void ACinderHUD::DrawUnitRibbon(ACinderPlayerController* PC, ACinderBattlefield*
         const float X = Bounds.Min.X + Index * (CardW + Gap);
         if(Summaries.Num()>Visible && Index==Visible-1)
         {
-            ActionButton(FString::Printf(TEXT("+%d types"),Summaries.Num()-Visible+1),TEXT("army"),0,X,Bounds.Min.Y,CardW);
+            ActionButton(FString::Printf(TEXT("+%d"),Summaries.Num()-Visible+1),TEXT("army"),0,X,Bounds.Min.Y,CardW);
             continue;
         }
         const bool bSelected = !PC->Selection().empty()
@@ -1820,7 +3046,7 @@ void ACinderHUD::DrawUnitRibbon(ACinderPlayerController* PC, ACinderBattlefield*
         Panel(X + CardW - 20 * S, Bounds.Min.Y + 3 * S, 17 * S, 15 * S,
             FLinearColor(0.002f, 0.008f, 0.013f, 0.86f));
         SingleLineLabel(FString::Printf(TEXT("%d"), Summary.Count), X + CardW - 18 * S,
-            Bounds.Min.Y + 4 * S, 14 * S, White, 0.54f);
+            Bounds.Min.Y + 4 * S, 14 * S, White, TypeMicro);
         FString SquadText;
         for (int32 Squad = 0; Squad < ACinderPlayerController::SquadCount; ++Squad)
             if ((Summary.SquadMask & (1 << Squad)) != 0) SquadText.AppendChar(TCHAR('A' + Squad));
@@ -1829,10 +3055,10 @@ void ACinderHUD::DrawUnitRibbon(ACinderPlayerController* PC, ACinderBattlefield*
             Panel(X + 3 * S, Bounds.Min.Y + 3 * S, (7 + SquadText.Len() * 7) * S, 15 * S,
                 FLinearColor(0.002f, 0.008f, 0.013f, 0.86f));
             SingleLineLabel(SquadText, X + 6 * S, Bounds.Min.Y + 4 * S,
-                (SquadText.Len() * 7 + 1) * S, Amber, 0.50f);
+                (SquadText.Len() * 7 + 1) * S, Amber, TypeMicro);
         }
         SingleLineLabel(CardName(Summary.Kind), X + 4 * S, Bounds.Max.Y - 17 * S,
-            CardW - 8 * S, bSelected ? Mint : White, 0.48f);
+            CardW - 8 * S, bSelected ? Mint : White, TypeMicro);
         HealthBar(Summary.Health, Summary.Maximum, X + 3 * S, Bounds.Max.Y - 4 * S,
             CardW - 6 * S, Summary.Health / FMath::Max(1.0f, Summary.Maximum) < 0.35f ? Amber : Mint);
         FButton Entry;
@@ -1850,6 +3076,7 @@ void ACinderHUD::DrawSelectionIdentity(ACinderPlayerController* PC, ACinderBattl
     const cinder::Entity* First = nullptr;
     float Health = 0, Maximum = 0;
     int32 Count = 0;
+    int32 OtherRoutes = 0;
     FString SharedOrder;
     bool bSharedOrder = true;
     std::map<cinder::Kind, int32> Types;
@@ -1859,7 +3086,11 @@ void ACinderHUD::DrawSelectionIdentity(ACinderPlayerController* PC, ACinderBattl
         if (!Entity || !Entity->alive() || Entity->team != 0) continue;
         const FString Order = RosterOrder(*Entity);
         if (!First) { First = Entity; SharedOrder = Order; }
-        else if (SharedOrder != Order) bSharedOrder = false;
+        else
+        {
+            if (SharedOrder != Order) bSharedOrder = false;
+            if (!SameTacticalPlan(*First, *Entity)) ++OtherRoutes;
+        }
         Health += Entity->hp;
         Maximum += cinder::definition(Entity->kind).hp;
         ++Types[Entity->kind];
@@ -1872,14 +3103,27 @@ void ACinderHUD::DrawSelectionIdentity(ACinderPlayerController* PC, ACinderBattl
         ? MobileLayout.Identity
         : FBox2D(FVector2D(Margin + 180 * S, Height - 181 * S), FVector2D(Margin + 490 * S, Height - 137 * S));
     const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
-    Surface(X,Y,W,H,FLinearColor(0.007f,0.018f,0.030f,0.92f),8*S);
+    Surface(X,Y,W,H,FLinearColor(0.022f,0.044f,0.064f,0.92f),
+        FLinearColor(0.005f,0.012f,0.021f,0.94f),8*S);
     DrawUnitPortrait(First->kind,X+4*S,Y+4*S,36*S,H-8*S,true);
     const float InfoW=44*S;
     const FString Title=Count==1 ? Name(First->kind) : Types.size()==1
         ? FString::Printf(TEXT("%s ×%d"),*Name(First->kind),Count) : FString::Printf(TEXT("%d units selected"),Count);
-    SingleLineLabel(Title,X+47*S,Y+6*S,W-InfoW-54*S,White,0.73f);
-    const FString Detail=FString::Printf(TEXT("%s   %.0f/%.0f"),bSharedOrder ? *SharedOrder : TEXT("MIXED"),Health,Maximum);
-    SingleLineLabel(Detail,X+47*S,Y+23*S,W-InfoW-54*S,Muted,0.52f);
+    SingleLineLabel(Title,X+47*S,Y+6*S,W-InfoW-54*S,White,TypeBody);
+    FString OrderDetail = bSharedOrder ? SharedOrder : TEXT("MIXED");
+    if (!First->futureOrders.empty())
+    {
+        const bool bWaiting = First->order != cinder::Order::Move && First->order != cinder::Order::AttackMove;
+        OrderDetail += FString::Printf(TEXT(" +%d %s"),
+            static_cast<int32>(First->futureOrders.size()), bWaiting ? TEXT("WAITING") : TEXT("QUEUED"));
+    }
+    if (PC->IsQueueNextPending()) OrderDetail += TEXT(" / QUEUE PENDING");
+    else if (PC->IsDestinationPending() && PC->IsPatrolCommandMode()) OrderDetail += TEXT(" / PATROL PENDING");
+    else if (PC->IsDestinationPending() && PC->IsEscortCommandMode()) OrderDetail += TEXT(" / ESCORT PENDING");
+    if (OtherRoutes > 0) OrderDetail += FString::Printf(TEXT(" / +%d UNIT ROUTE%s"),
+        OtherRoutes, OtherRoutes == 1 ? TEXT("") : TEXT("S"));
+    const FString Detail=FString::Printf(TEXT("%s   %.0f/%.0f"),*OrderDetail,Health,Maximum);
+    SingleLineLabel(Detail,X+47*S,Y+23*S,W-InfoW-54*S,Muted,TypeMicro);
     HealthBar(Health,Maximum,X+47*S,Y+H-5*S,W-InfoW-54*S,Mint);
     FButton Focus;
     Focus.Bounds = FBox2D(Bounds.Min, FVector2D(X + W - InfoW, Bounds.Max.Y));
@@ -1935,30 +3179,34 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
         ? MobileLayout.Drawer
         : FBox2D(FVector2D(Margin, Height - 400 * S), FVector2D(Margin + 520 * S, Height - 204 * S));
     const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
-    Surface(X,Y,W,H,FLinearColor(0.009f,0.020f,0.032f,0.96f),10*S);
-    Surface(X,Y+12*S,2*S,H-24*S,Mint.CopyWithNewOpacity(0.55f),S);
+    Surface(X,Y,W,H,FLinearColor(0.026f,0.048f,0.068f,0.96f),
+        FLinearColor(0.006f,0.013f,0.022f,0.97f),10*S);
+    Surface(X,Y+12*S,2*S,H-24*S,Mint.CopyWithNewOpacity(0.70f),
+        Mint.CopyWithNewOpacity(0.18f),S);
     UIRegions.Add(Bounds);
 
-    Button(TEXT("ROSTER"), TEXT("armytab"), 0, X + W - 310 * S, Y, 60 * S, ArmyPanelTab == 0);
-    Button(TEXT("SQUADS"), TEXT("armytab"), 1, X + W - 246 * S, Y, 60 * S, ArmyPanelTab == 1);
-    Button(TEXT("JOBS"), TEXT("armytab"), 2, X + W - 182 * S, Y, 48 * S, ArmyPanelTab == 2);
-    Button(TEXT("RALLY"), TEXT("armytab"), 3, X + W - 130 * S, Y, 78 * S, ArmyPanelTab == 3);
+    // The header fits the narrow 300-unit drawer without hanging over its
+    // left edge. The tabs vary with their labels and keep four-unit gutters.
+    Button(TEXT("ROSTER"), TEXT("armytab"), 0, X + W - 294 * S, Y, 60 * S, ArmyPanelTab == 0);
+    Button(TEXT("SQUADS"), TEXT("armytab"), 1, X + W - 230 * S, Y, 62 * S, ArmyPanelTab == 1);
+    Button(TEXT("JOBS"), TEXT("armytab"), 2, X + W - 164 * S, Y, 48 * S, ArmyPanelTab == 2);
+    Button(TEXT("RALLY"), TEXT("armytab"), 3, X + W - 112 * S, Y, 64 * S, ArmyPanelTab == 3);
     Button(TEXT("X"), TEXT("closesheet"), 0, X + W - 44 * S, Y, 44 * S);
-    if (W > 390 * S) SingleLineLabel(TEXT("Army"),X+10*S,Y+15*S,W-322*S,White,0.7f);
+    if (W > 390 * S) SingleLineLabel(TEXT("Army"),X+10*S,Y+15*S,W-322*S,White,TypeCaption);
     if (ArmyPanelTab == 3)
     {
         const auto& Player = Sim.players()[0];
-        Button(Player.armyRallySet ? TEXT("MOVE FLAG") : TEXT("SET FLAG"), TEXT("productionrally"), 0,
+        Button(Player.armyRallySet ? TEXT("MOVE RALLY") : TEXT("SET RALLY"), TEXT("productionrally"), 0,
             X + 14 * S, Y + 48 * S, 116 * S, true);
         if (Player.armyRallySet)
-            Button(TEXT("FIND FLAG"), TEXT("rallyfocus"), 0, X + 138 * S, Y + 48 * S, 116 * S);
-        SingleLineLabel(Player.armyRallySet ? TEXT("New troops gather at your army flag.")
+            Button(TEXT("FIND RALLY"), TEXT("rallyfocus"), 0, X + 138 * S, Y + 48 * S, 116 * S);
+        SingleLineLabel(Player.armyRallySet ? TEXT("New troops gather at your army rally.")
                 : TEXT("Choose where new troops should gather."),
-            X + 14 * S, Y + 108 * S, W - 28 * S, White, 0.66f);
+            X + 14 * S, Y + 108 * S, W - 28 * S, White, TypeCaption);
         SingleLineLabel(TEXT("New facilities inherit it; local rallies stay."),
-            X + 14 * S, Y + 132 * S, W - 28 * S, Muted, 0.59f);
+            X + 14 * S, Y + 132 * S, W - 28 * S, Muted, TypeCaption);
         SingleLineLabel(TEXT("Drudges mine ore. Existing orders continue."),
-            X + 14 * S, Y + 156 * S, W - 28 * S, Muted, 0.59f);
+            X + 14 * S, Y + 156 * S, W - 28 * S, Muted, TypeCaption);
         return;
     }
     if (ArmyPanelTab == 1)
@@ -1976,16 +3224,19 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
                     return std::find(PC->Selection().begin(), PC->Selection().end(), Id) != PC->Selection().end();
                 });
             SingleLineLabel(FString::Printf(TEXT("SQUAD %c  /  %d"), TCHAR('A' + Index), Size),
-                ColumnX, Y + 53 * S, ColumnW, Size > 0 ? Mint : Muted, 0.66f);
+                ColumnX, Y + 53 * S, ColumnW, Size > 0 ? Mint : Muted, TypeCaption);
             if (Size > 0)
                 Button(TEXT("RECALL"), TEXT("squad"), Index, ColumnX, Y + 72 * S, ColumnW, bSelected);
             else
             {
                 Panel(ColumnX, Y + 72 * S, ColumnW, 44 * S, PanelInk);
-                SingleLineLabel(TEXT("EMPTY"), ColumnX + 12 * S, Y + 85 * S, ColumnW - 24 * S, Muted, 0.70f);
+                SingleLineLabel(TEXT("EMPTY"), ColumnX + 12 * S, Y + 85 * S, ColumnW - 24 * S, Muted, TypeCaption);
             }
             Button(TEXT("ASSIGN SELECTED"), TEXT("squadassign"), Index,
                 ColumnX, Y + 120 * S, ColumnW);
+            if (Size > 0)
+                Button(TEXT("TACTICS"), TEXT("squadtactics"), Index,
+                    ColumnX, Y + 168 * S, ColumnW);
         }
         return;
     }
@@ -2016,7 +3267,7 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
         ProductionJobsPage = FMath::Clamp(ProductionJobsPage, 0, Pages - 1);
         const cinder::Entity* PinnedProducer = PinnedProducerId ? Sim.find(PinnedProducerId) : nullptr;
         const auto Rally = Sim.autoRallyStatus(0, cinder::Kind::Resource, PinnedProducerId);
-        Button(PinnedProducer ? TEXT("RALLY THIS") : TEXT("ARMY FLAG"), TEXT("productionrally"), 0,
+        Button(PinnedProducer ? TEXT("RALLY THIS") : TEXT("ARMY RALLY"), TEXT("productionrally"), 0,
             X + 14 * S, Y + 48 * S, 104 * S, Rally.accepted);
         Buttons.Last().EntityId = PinnedProducerId;
         const bool bCanUseDefault = PinnedProducer && PinnedProducer->rallyOverride
@@ -2030,7 +3281,7 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
         else SingleLineLabel(Rally.accepted ? PinnedProducer ? TEXT("This facility")
                         : TEXT("Future troops")
                     : UTF8_TO_TCHAR(Rally.message.c_str()),
-                X + 126 * S, Y + 62 * S, W - 240 * S, Rally.accepted ? Muted : Amber, 0.55f);
+                X + 126 * S, Y + 62 * S, W - 240 * S, Rally.accepted ? Muted : Amber, TypeMicro);
         if (ProductionJobsPage > 0) Button(TEXT("<"), TEXT("jobpage"), -1, X + W - 96 * S, Y + 48 * S, 44 * S);
         if (ProductionJobsPage + 1 < Pages) Button(TEXT(">"), TEXT("jobpage"), 1, X + W - 48 * S, Y + 48 * S, 44 * S);
         const int32 Start = ProductionJobsPage * PageSize;
@@ -2063,9 +3314,9 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
                     *JobName, Job.QueuePosition, Job.Item->remaining);
                 Progress = 1.0f - Job.Item->remaining / FMath::Max(0.01f, Job.Item->total);
             }
-            SingleLineLabel(Description, X + 22 * S, RowY + 7 * S, RowW - 126 * S, White, 0.58f);
+            SingleLineLabel(Description, X + 22 * S, RowY + 7 * S, RowW - 126 * S, White, TypeMicro);
             if (!AssignmentDetail.IsEmpty())
-                SingleLineLabel(AssignmentDetail, X + 22 * S, RowY + 21 * S, RowW - 126 * S, Muted, 0.52f);
+                SingleLineLabel(AssignmentDetail, X + 22 * S, RowY + 21 * S, RowW - 126 * S, Muted, TypeMicro);
             HealthBar(Progress, 1.0f, X + 22 * S, RowY + 34 * S, RowW - 126 * S, Mint);
             Button(TEXT("VIEW"), TEXT("productionfocus"), 0, X + W - 108 * S, RowY, 60 * S);
             Buttons.Last().EntityId = Job.Producer->id;
@@ -2075,7 +3326,7 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
             Buttons.Last().JobId = Job.Item ? Job.Item->id : 0;
         }
         if (Jobs.IsEmpty())
-            SingleLineLabel(TEXT("NO PRODUCTION QUEUED"), X + 14 * S, Y + 113 * S, W - 28 * S, Muted, 0.68f);
+            SingleLineLabel(TEXT("NO PRODUCTION QUEUED"), X + 14 * S, Y + 113 * S, W - 28 * S, Muted, TypeCaption);
         return;
     }
 
@@ -2099,7 +3350,7 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
     else
     {
         Panel(X + 14 * S, Y + 48 * S, CellW, 44 * S, PanelInk);
-        SingleLineLabel(TEXT("ALL 0"), X + 19 * S, Y + 61 * S, CellW - 10 * S, Muted, 0.58f);
+        SingleLineLabel(TEXT("ALL 0"), X + 19 * S, Y + 61 * S, CellW - 10 * S, Muted, TypeMicro);
     }
     for (int32 Index = 0; Index < 7; ++Index)
     {
@@ -2119,9 +3370,9 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
             Panel(CellX + CellW - 18 * S, CellY + 3 * S, 15 * S, 14 * S,
                 FLinearColor(0.002f, 0.008f, 0.013f, 0.86f));
             SingleLineLabel(FString::Printf(TEXT("%d"), Count), CellX + CellW - 16 * S,
-                CellY + 4 * S, 12 * S, White, 0.50f);
+                CellY + 4 * S, 12 * S, White, TypeMicro);
             SingleLineLabel(CardName(Kinds[Index]), CellX + 3 * S, CellY + 26 * S,
-                CellW - 6 * S, bKindSelected ? Mint : White, 0.44f);
+                CellW - 6 * S, bKindSelected ? Mint : White, TypeMicro);
             HealthBar(HealthByKind[Kinds[Index]], MaximumByKind[Kinds[Index]],
                 CellX + 3 * S, CellY + 40 * S, CellW - 6 * S, Mint);
             FButton TypeEntry;
@@ -2135,7 +3386,7 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
             Panel(CellX, CellY, CellW, 44 * S, PanelInk);
             UnitGlyph(Kinds[Index], CellX + (CellW - 18 * S) * 0.5f, CellY + 6 * S, 18 * S, Muted);
             SingleLineLabel(CardName(Kinds[Index]), CellX + 3 * S, CellY + 27 * S,
-                CellW - 6 * S, Muted, 0.42f);
+                CellW - 6 * S, Muted, TypeMicro);
         }
     }
     const int32 Start = ArmyRosterPage * PageSize;
@@ -2152,7 +3403,7 @@ void ACinderHUD::DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield*
                 SquadMask |= 1 << Squad;
         EntityButton(*Army[Index], X + 62 * S + (Index - Start) * (UnitW + Gap), RowY, UnitW, bSelected, SquadMask);
     }
-    if (Army.empty()) SingleLineLabel(TEXT("NO COMBAT UNITS YET"), X + 14 * S, RowY + 14 * S, W - 28 * S, Muted, 0.68f);
+    if (Army.empty()) SingleLineLabel(TEXT("NO COMBAT UNITS YET"), X + 14 * S, RowY + 14 * S, W - 28 * S, Muted, TypeCaption);
 }
 
 void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact)
@@ -2164,9 +3415,15 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
         ? MobileLayout.Drawer
         : FBox2D(FVector2D(Margin, Height - 400 * S), FVector2D(Margin + 520 * S, Height - 204 * S));
     const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
-    Surface(X,Y,W,H,FLinearColor(0.009f,0.020f,0.032f,0.96f),10*S);
-    Surface(X,Y+12*S,2*S,H-24*S,Mint.CopyWithNewOpacity(0.55f),S);
+    // A drawer is the one surface that has to read as sitting above the
+    // battlefield rather than printed on it, so it carries the strongest
+    // gradient in the HUD: lit top edge falling into near-black at the base.
+    Surface(X,Y,W,H,FLinearColor(0.026f,0.048f,0.068f,0.96f),
+        FLinearColor(0.006f,0.013f,0.022f,0.97f),10*S);
+    Surface(X,Y+12*S,2*S,H-24*S,Mint.CopyWithNewOpacity(0.70f),
+        Mint.CopyWithNewOpacity(0.18f),S);
     UIRegions.Add(Bounds);
+    const int32 PlayerOre = Sim.players()[0].ore;
     const cinder::Entity* PinnedProducer = PinnedProducerId ? Sim.find(PinnedProducerId) : nullptr;
     if (!PinnedProducer || !PinnedProducer->alive() || PinnedProducer->team != 0
         || !cinder::definition(PinnedProducer->kind).building)
@@ -2187,7 +3444,7 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
 
     if (CompactSheet == SheetGlobalBuild)
     {
-        SingleLineLabel(TEXT("BUILD / AUTO DRUDGE"), X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, 0.74f);
+        SingleLineLabel(TEXT("BUILD / AUTO DRUDGE"), X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, TypeBody);
         const cinder::Kind Buildings[] = { cinder::Kind::Headquarters, cinder::Kind::Processor,
             cinder::Kind::Foundry, cinder::Kind::MotorPool, cinder::Kind::Laboratory, cinder::Kind::Turret };
         const float Gap = 6 * S;
@@ -2196,16 +3453,17 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
         {
             const cinder::Kind Kind = Buildings[Index];
             const auto Plan = Sim.autoBuildStatus(0, Kind);
+            bOreShortfallPending |= !Plan.accepted && cinder::definition(Kind).cost > PlayerOre;
             const float CellX = X + 14 * S + (Index % 3) * (CellW + Gap);
             const float CellY = Y + (49 + (Index / 3) * 49) * S;
             Button(Name(Kind).ToUpper(), TEXT("globalbuild"), static_cast<int32>(Kind),
                 CellX, CellY, CellW, PC->IsGlobalBuildMode() && PC->BuildingKind() == Kind);
             const FString BuildState = Plan.accepted ? TEXT("") : TEXT(" / Locked");
             SingleLineLabel(FString::Printf(TEXT("%d ore%s"), cinder::definition(Kind).cost, *BuildState),
-                CellX + 10 * S, CellY + 27 * S, CellW - 20 * S, Plan.accepted ? Mint : Amber, 0.53f);
+                CellX + 10 * S, CellY + 27 * S, CellW - 20 * S, Plan.accepted ? Mint : Amber, TypeMicro);
         }
         SingleLineLabel(TEXT("Choose a structure, then place it."),
-            X + 14 * S, Y + H - 24 * S, W - 28 * S, Muted, 0.55f);
+            X + 14 * S, Y + H - 24 * S, W - 28 * S, Muted, TypeMicro);
         return;
     }
 
@@ -2215,12 +3473,14 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
             static_cast<int32>(cinder::Kind::Worker), static_cast<int32>(cinder::Kind::Kite));
         GlobalTrainQuantity = FMath::Clamp(GlobalTrainQuantity, 1, 20);
         const cinder::Kind SelectedKind = static_cast<cinder::Kind>(GlobalTrainKind);
-        const bool bAwaitingTutorialChoice = Battle->Tutorial().IsActive() && !bTutorialTrainKindChosen;
+        const bool bAwaitingTutorialChoice = (Battle->Tutorial().IsActive() || Battle->Campaign().IsRunning())
+            && !bTutorialTrainKindChosen;
         const auto Plan = Sim.autoTrainStatus(0, SelectedKind, GlobalTrainQuantity, PinnedProducerId);
+        bOreShortfallPending |= !Plan.accepted && Plan.totalCost > PlayerOre;
         const FString Allocation = PinnedProducer
             ? FString::Printf(TEXT("PINNED %s"), *Name(PinnedProducer->kind).ToUpper()) : TEXT("AUTO ASSIGN");
         SingleLineLabel(FString::Printf(TEXT("TRAIN / %s / x%d"), *Allocation, GlobalTrainQuantity),
-            X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, 0.74f);
+            X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, TypeBody);
         const float Gap = 4*S;
         const bool Narrow=W<400*S;
         const int32 Columns=Narrow ? 4 : 8;
@@ -2232,7 +3492,7 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
             const bool bSelected = !bAwaitingTutorialChoice && Kind == SelectedKind;
             DrawUnitPortrait(Kind, CellX, CellY, CellW, 44 * S, bSelected);
             SingleLineLabel(CardName(Kind), CellX + 3 * S, CellY + 27 * S,
-                CellW - 6 * S, bSelected ? Mint : White, 0.43f);
+                CellW - 6 * S, bSelected ? Mint : White, TypeMicro);
             FButton Entry;
             Entry.Bounds = FBox2D(FVector2D(CellX, CellY), FVector2D(CellX + CellW, CellY + 44 * S));
             Entry.Action = TEXT("trainkind"); Entry.Argument = Index; Buttons.Add(Entry);
@@ -2259,7 +3519,7 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
                 Plan.totalCost, Plan.totalSupply, static_cast<int32>(Plan.assignments.size()), Completion)
             : UTF8_TO_TCHAR(Plan.message.c_str());
         SingleLineLabel(Status, X + 14 * S, Y + (Narrow ? 198*S : H-24*S), W - 28 * S,
-            bAwaitingTutorialChoice ? Muted : Plan.accepted ? Mint : Amber, 0.56f);
+            bAwaitingTutorialChoice ? Muted : Plan.accepted ? Mint : Amber, TypeMicro);
         return;
     }
 
@@ -2268,13 +3528,14 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
         const FString Allocation = PinnedProducer
             ? FString::Printf(TEXT("PINNED %s"), *Name(PinnedProducer->kind).ToUpper()) : TEXT("AUTO FACILITY");
         SingleLineLabel(FString::Printf(TEXT("RESEARCH / %s"), *Allocation),
-            X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, 0.74f);
+            X + 14 * S, Y + 14 * S, HeaderLabelWidth, Amber, TypeBody);
         const TCHAR* Names[] = {TEXT("TECH TIER"), TEXT("WEAPONS"), TEXT("ARMOR")};
         const float Gap = 7 * S;
         const float CellW = (W - 28 * S - Gap * 2) / 3;
         for (int32 Upgrade = 0; Upgrade < 3; ++Upgrade)
         {
             const auto Plan = Sim.autoResearchStatus(0, Upgrade, PinnedProducerId);
+            bOreShortfallPending |= !Plan.accepted && Plan.totalCost > PlayerOre;
             const float CellX = X + 14 * S + Upgrade * (CellW + Gap);
             Button(Names[Upgrade], TEXT("globalresearch"), Upgrade, CellX, Y + 57 * S, CellW);
             FString Status=UTF8_TO_TCHAR(Plan.message.c_str());
@@ -2285,10 +3546,10 @@ void ACinderHUD::DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefie
             else if(Status.Contains(TEXT("queue space"))) Status=TEXT("Queues full");
             else if(Status.Contains(TEXT("Resonator"))) Status=TEXT("Needs a ready Resonator");
             else if(Status.Contains(TEXT("Insufficient ore"))) Status=FString::Printf(TEXT("Need %d ore"),Plan.totalCost);
-            WrappedLabel(Status,CellX+8*S,Y+107*S,CellW-16*S,Plan.accepted ? Mint : Amber,0.54f);
+            WrappedLabel(Status,CellX+8*S,Y+107*S,CellW-16*S,Plan.accepted ? Mint : Amber,TypeMicro);
         }
         SingleLineLabel(TEXT("Assigned to the next available Resonator."),
-            X + 14 * S, Y + H - 24 * S, W - 28 * S, Muted, 0.55f);
+            X + 14 * S, Y + H - 24 * S, W - 28 * S, Muted, TypeMicro);
     }
 }
 
@@ -2304,11 +3565,12 @@ void ACinderHUD::DrawInfoDrawer(ACinderPlayerController* PC, ACinderBattlefield*
         ? MobileLayout.Drawer
         : FBox2D(FVector2D(Margin, Height - 400 * S), FVector2D(Margin + 520 * S, Height - 204 * S));
     const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X, H = Bounds.GetSize().Y;
-    Surface(X,Y,W,H,FLinearColor(0.009f,0.020f,0.032f,0.96f),10*S);
+    Surface(X,Y,W,H,FLinearColor(0.026f,0.048f,0.068f,0.96f),
+        FLinearColor(0.006f,0.013f,0.022f,0.97f),10*S);
     UIRegions.Add(Bounds);
     UnitGlyph(Entity->kind, X + 14 * S, Y + 12 * S, 24 * S, Mint);
-    SingleLineLabel(Details.Name.ToUpper(), X + 48 * S, Y + 8 * S, W - 184 * S, White, 0.88f);
-    SingleLineLabel(Details.Role, X + 48 * S, Y + 27 * S, W - 184 * S, Muted, 0.60f);
+    SingleLineLabel(Details.Name.ToUpper(), X + 48 * S, Y + 8 * S, W - 184 * S, White, TypeBody);
+    SingleLineLabel(Details.Role, X + 48 * S, Y + 27 * S, W - 184 * S, Muted, TypeCaption);
     const bool bCombatPageAvailable = Details.bArmed || Details.bHealer;
     const int32 NextPage = InfoPage == 0 ? 1 : InfoPage == 1 && bCombatPageAvailable ? 2 : 0;
     const FString NextPageLabel = InfoPage == 0 ? TEXT("GUIDE")
@@ -2319,35 +3581,35 @@ void ACinderHUD::DrawInfoDrawer(ACinderPlayerController* PC, ACinderBattlefield*
     if (InfoPage == 1)
     {
         float TextY = Y + 56 * S;
-        Label(TEXT("PURPOSE"), X + 14 * S, TextY, Amber, 0.62f);
+        Label(TEXT("PURPOSE"), X + 14 * S, TextY, Amber, TypeCaption);
         TextY += 18 * S;
-        TextY += WrappedLabel(Details.Purpose, X + 14 * S, TextY, W - 28 * S, White, 0.68f);
+        TextY += WrappedLabel(Details.Purpose, X + 14 * S, TextY, W - 28 * S, White, TypeCaption);
         TextY += 7 * S;
-        Label(TEXT("CAPABILITIES / UNLOCKS"), X + 14 * S, TextY, Amber, 0.62f);
+        Label(TEXT("CAPABILITIES / UNLOCKS"), X + 14 * S, TextY, Amber, TypeCaption);
         TextY += 18 * S;
-        WrappedLabel(Details.Capabilities, X + 14 * S, TextY, W - 28 * S, White, 0.64f);
+        WrappedLabel(Details.Capabilities, X + 14 * S, TextY, W - 28 * S, White, TypeCaption);
         return;
     }
     if (InfoPage == 2 && bCombatPageAvailable)
     {
         float TextY = Y + 56 * S;
-        Label(Details.bHealer ? TEXT("HEALING EFFECT") : TEXT("COMBAT EFFECT"), X + 14 * S, TextY, Amber, 0.62f);
+        Label(Details.bHealer ? TEXT("HEALING EFFECT") : TEXT("COMBAT EFFECT"), X + 14 * S, TextY, Amber, TypeCaption);
         TextY += 19 * S;
-        TextY += WrappedLabel(Details.DamageNote, X + 14 * S, TextY, W - 28 * S, White, 0.68f);
+        TextY += WrappedLabel(Details.DamageNote, X + 14 * S, TextY, W - 28 * S, White, TypeCaption);
         TextY += 8 * S;
-        Label(TEXT("REFERENCE"), X + 14 * S, TextY, Amber, 0.62f);
+        Label(TEXT("REFERENCE"), X + 14 * S, TextY, Amber, TypeCaption);
         TextY += 18 * S;
         const FString Reference = Details.bHealer
             ? FString::Printf(TEXT("HEAL %.0f    INTERVAL %.2fs    CENTER RANGE %.0f"),
                 Details.HealAmount, Details.HealInterval, Details.Range)
             : FString::Printf(TEXT("DAMAGE %.0f / HIT    COOLDOWN %.2fs    BASE RANGE %.0f + TARGET RADIUS"),
                 Details.Damage, Details.Cooldown, Details.Range);
-        WrappedLabel(Reference, X + 14 * S, TextY, W - 28 * S, Muted, 0.64f);
+        WrappedLabel(Reference, X + 14 * S, TextY, W - 28 * S, Muted, TypeCaption);
         return;
     }
     HealthBar(Details.Health, Details.MaxHealth, X + 14 * S, Y + 53 * S, W - 28 * S, Mint);
     SingleLineLabel(FString::Printf(TEXT("HEALTH %.0f / %.0f    ORDER %s"), Details.Health, Details.MaxHealth, *Details.OrderText.ToUpper()),
-        X + 14 * S, Y + 61 * S, W - 28 * S, White, 0.67f);
+        X + 14 * S, Y + 61 * S, W - 28 * S, White, TypeCaption);
     const bool bUnarmedBuilding = Details.bBuilding && !Details.bArmed && !Details.bHealer;
     const FString BuildingStatus = Entity->progress < 1
         ? FString::Printf(TEXT("BUILDING %.0f%%"), Entity->progress * 100)
@@ -2362,14 +3624,14 @@ void ACinderHUD::DrawInfoDrawer(ACinderPlayerController* PC, ACinderBattlefield*
         Attack = FString::Printf(TEXT("ARMOR %.0f    VISION %.0f    %s"), Details.Armor, Details.Vision, *BuildingStatus);
     else
         Attack = FString::Printf(TEXT("ARMOR %.0f    SPEED %.0f    VISION %.0f"), Details.Armor, Details.Speed, Details.Vision);
-    SingleLineLabel(Attack, X + 14 * S, Y + 82 * S, W - 28 * S, Amber, 0.64f);
+    SingleLineLabel(Attack, X + 14 * S, Y + 82 * S, W - 28 * S, Amber, TypeCaption);
     if (!bUnarmedBuilding)
         SingleLineLabel(FString::Printf(TEXT("SPEED %.0f    VISION %.0f    COOLDOWN %.2fs"), Details.Speed, Details.Vision, Details.Cooldown),
-            X + 14 * S, Y + 102 * S, W - 28 * S, Muted, 0.62f);
-    WrappedLabel(Details.Purpose, X + 14 * S, Y + (bUnarmedBuilding ? 107 : 125) * S, W - 28 * S, White, 0.66f);
+            X + 14 * S, Y + 102 * S, W - 28 * S, Muted, TypeCaption);
+    WrappedLabel(Details.Purpose, X + 14 * S, Y + (bUnarmedBuilding ? 107 : 125) * S, W - 28 * S, White, TypeCaption);
     if (bCombatPageAvailable)
         SingleLineLabel(TEXT("GUIDE > COMBAT FOR FULL EFFECTS"),
-            X + 14 * S, Y + H - 23 * S, W - 28 * S, Muted, 0.56f);
+            X + 14 * S, Y + H - 23 * S, W - 28 * S, Muted, TypeMicro);
 }
 
 void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefield* Battle)
@@ -2403,93 +3665,170 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
     if (CompactSheet == SheetQueue && (!bBuilding || bSite)) CompactSheet = SheetNone;
     const bool bSheetVisible = !PC->IsBuildMode() && (PC->bBuildMenu || CompactSheet != 0);
 
-    // Separate resource chips leave the middle of the screen transparent.
-    const auto Chip = [&](const FString& Glyph, const FString& Value, float X, float W, FLinearColor Color)
+    // Affordability is only known after the catalogs run, and they draw below
+    // these chips. Latch last frame's answer: one frame of lag on a 0.45 s
+    // pulse is imperceptible and costs less than evaluating every plan twice.
+    bOreShortfall = bOreShortfallPending;
+    bOreShortfallPending = false;
+
+    const int32 Supply = Sim.supply(0), Capacity = Sim.capacity(0);
+    const int32 TechKey = Player.tier * 100 + Player.weapons * 10 + Player.armor;
+    const float FrameDelta = GetWorld() ? GetWorld()->GetDeltaSeconds() : 0.0f;
+    if (LastOre != Player.ore)
     {
-        Surface(X, Top+6*S, W, 30*S, FLinearColor(0.006f,0.015f,0.026f,0.88f), 7*S);
-        ActionGlyph(Glyph,0,X+9*S,Top+13*S,16*S,Color);
-        SingleLineLabel(Value,X+32*S,Top+13*S,W-39*S,Color,0.80f);
+        // A match start or a debug grant is a jump, not income: snap rather
+        // than spend two seconds counting up to it.
+        if (LastOre == MIN_int32 || FMath::Abs(Player.ore - LastOre) > 400) OreDisplay = static_cast<float>(Player.ore);
+        else { OreChangeDelta = static_cast<float>(Player.ore - LastOre); OreChangedAt = FrameRealTime; }
+        LastOre = Player.ore;
+    }
+    // Ease the printed figure toward the authoritative integer. The HUD only
+    // mirrors it - nothing downstream reads OreDisplay - and a counter that
+    // rolls is what makes income read as an event instead of a digit swap.
+    OreDisplay = FrameDelta > 0
+        ? FMath::FInterpTo(OreDisplay, static_cast<float>(Player.ore), FrameDelta, 9.0f)
+        : static_cast<float>(Player.ore);
+    if (FMath::Abs(OreDisplay - static_cast<float>(Player.ore)) < 0.75f) OreDisplay = static_cast<float>(Player.ore);
+    if (LastSupply != Supply || LastCapacity != Capacity)
+    {
+        SupplyChangedAt = LastSupply == MIN_int32 ? 0.0f : FrameRealTime;
+        LastSupply = Supply; LastCapacity = Capacity;
+    }
+    if (LastTier != TechKey)
+    {
+        TierChangedAt = LastTier == MIN_int32 ? 0.0f : FrameRealTime;
+        LastTier = TechKey;
+    }
+    const auto FlashAmount = [this](float ChangedAt)
+    {
+        const float Age = FrameRealTime - ChangedAt;
+        if (ChangedAt <= 0 || Age < 0 || Age >= ResourceFlashSeconds) return 0.0f;
+        return 1.0f - Age / ResourceFlashSeconds;
+    };
+    // Separate resource chips leave the middle of the screen transparent.
+    const auto Chip = [&](const FString& Glyph, const FString& Value, float X, float W,
+        FLinearColor Color, float Flash, bool bBlocked)
+    {
+        // Cannot-afford and supply-blocked are the two states a player has to
+        // read without looking away from the battlefield, so they pulse on the
+        // chip itself rather than surfacing as a message somewhere else.
+        const float Pulse = bBlocked ? 0.5f + 0.5f * FMath::Sin(FrameRealTime * 5.0f) : 0.0f;
+        const FLinearColor Face(0.006f,0.015f,0.026f,0.88f);
+        const FLinearColor FaceTop = bBlocked
+            ? FMath::Lerp(Lift(Face, 0.035f), FLinearColor(0.22f,0.030f,0.026f,0.94f), Pulse)
+            : Lift(Face, 0.035f + Flash * 0.12f);
+        Surface(X, Top+6*S, W, 30*S, FaceTop, Face, 7*S);
+        const FLinearColor Tint = bBlocked
+            ? FMath::Lerp(Color, Alarm, 0.35f + Pulse * 0.45f)
+            : Lift(Color, Flash * 0.30f);
+        ActionGlyph(Glyph,0,X+9*S,Top+13*S,16*S,Tint);
+        SingleLineLabel(Value,X+32*S,Top+13*S,W-39*S,Tint,TypeBody);
         UIRegions.Add(FBox2D(FVector2D(X,Top+6*S),FVector2D(X+W,Top+36*S)));
     };
-    Chip(TEXT("ore"),FString::FromInt(Player.ore),L.Left,94*S,Amber);
-    Chip(TEXT("crew"),FString::Printf(TEXT("%d/%d"),Sim.supply(0),Sim.capacity(0)),L.Left+100*S,90*S,White);
-    Chip(TEXT("tech"),FString::Printf(TEXT("T%d  W%d  A%d"),Player.tier,Player.weapons,Player.armor),L.Left+196*S,118*S,Mint);
+    Chip(TEXT("ore"),FString::FromInt(FMath::RoundToInt(OreDisplay)),L.Left,94*S,Amber,
+        OreChangeDelta > 0 ? FlashAmount(OreChangedAt) : 0.0f, bOreShortfall);
+    Chip(TEXT("crew"),FString::Printf(TEXT("%d/%d"),Supply,Capacity),L.Left+100*S,90*S,White,
+        FlashAmount(SupplyChangedAt), Capacity > 0 && Supply >= Capacity);
+    Chip(TEXT("tech"),FString::Printf(TEXT("T%d  W%d  A%d"),Player.tier,Player.weapons,Player.armor),
+        L.Left+196*S,118*S,Mint,FlashAmount(TierChangedAt),false);
     const FString Time = bOnline && Online && Online->PlayerCount() == 4
         ? FString::Printf(TEXT("%d/4 IN"), Online->RemainingPlayers())
         : bOnline ? Online && Online->PingMilliseconds() >= 0
         ? FString::Printf(TEXT("%.0f ms"),Online->PingMilliseconds()) : TEXT("Online") : ClockString(Sim.time());
-    Chip(TEXT("clock"),Time,L.Left+320*S,84*S,Muted);
-    ActionButton(TEXT("Help"),TEXT("help"),0,L.Right-92*S,Top,44*S);
-    ActionButton(TEXT("Menu"),TEXT("pause"),0,L.Right-44*S,Top,44*S);
-
-    const float RailY=L.GlobalActions.Min.Y;
-    ActionButton(TEXT("Build"),TEXT("globalcatalog"),SheetGlobalBuild,L.Left,RailY,48*S,
-        CompactSheet==SheetGlobalBuild || PC->IsGlobalBuildMode());
-    ActionButton(TEXT("Train"),TEXT("globalcatalog"),SheetGlobalTrain,L.Left,RailY+48*S,48*S,CompactSheet==SheetGlobalTrain);
-    ActionButton(TEXT("Research"),TEXT("globalcatalog"),SheetGlobalResearch,L.Left,RailY+96*S,48*S,CompactSheet==SheetGlobalResearch);
-    ActionButton(TEXT("Army"),TEXT("army"),0,L.Left,RailY+144*S,48*S,CompactSheet==SheetArmy);
+    Chip(TEXT("clock"),Time,L.Left+320*S,84*S,Muted,0.0f,false);
+    const float NavGap = FCinderMobileHUDLayout::NavigationGap * S;
+    const float RailY = L.GlobalActions.Min.Y;
+    const float RailGap = FCinderMobileHUDLayout::GlobalActionGap * S;
+    const float RailStep = FCinderMobileHUDLayout::GlobalActionHeight * S + RailGap;
+    ActionButton(TEXT("Build"), TEXT("globalcatalog"), SheetGlobalBuild, L.Left, RailY,
+        FCinderMobileHUDLayout::GlobalBuildWidth * S,
+        CompactSheet == SheetGlobalBuild || PC->IsGlobalBuildMode(), true);
+    ActionButton(TEXT("Train"), TEXT("globalcatalog"), SheetGlobalTrain, L.Left + RailStep, RailY,
+        FCinderMobileHUDLayout::GlobalTrainWidth * S, CompactSheet == SheetGlobalTrain, true);
+    ActionButton(TEXT("Research"), TEXT("globalcatalog"), SheetGlobalResearch, L.Left, RailY + RailStep,
+        FCinderMobileHUDLayout::GlobalResearchWidth * S, CompactSheet == SheetGlobalResearch, true);
+    ActionButton(TEXT("Army"), TEXT("army"), 0, L.Left + RailStep, RailY + RailStep,
+        FCinderMobileHUDLayout::GlobalArmyWidth * S, CompactSheet == SheetArmy, true);
+    const float ClearW = FCinderMobileHUDLayout::NavigationDeselectWidth * S;
+    const float SelectW = FCinderMobileHUDLayout::NavigationSelectWidth * S;
+    const float HomeW = FCinderMobileHUDLayout::NavigationHomeWidth * S;
+    const float NavY = L.Navigation.Min.Y;
+    const float MenuW = FCinderMobileHUDLayout::NavigationMenuWidth * S;
+    const float MenuX = L.Right - MenuW;
+    const float HomeX = MenuX - NavGap - HomeW;
+    const float SelectX = HomeX - NavGap - SelectW;
+    const float ClearX = SelectX - NavGap - ClearW;
     if (!PC->Selection().empty())
-        ActionButton(TEXT("Deselect"),TEXT("deselect"),0,L.Navigation.Min.X,L.Navigation.Min.Y,44*S);
-    ActionButton(TEXT("Select"),TEXT("box"),0,L.Navigation.Min.X+48*S,L.Navigation.Min.Y,44*S,PC->bBoxSelect);
-    ActionButton(TEXT("Home"),TEXT("home"),0,L.Navigation.Min.X+96*S,L.Navigation.Min.Y,44*S);
+        ActionButton(TEXT("Clear"), TEXT("deselect"), 0, ClearX, NavY, ClearW, false, true);
+    ActionButton(TEXT("Select"), TEXT("box"), 0, SelectX, NavY, SelectW, PC->bBoxSelect, true);
+    ActionButton(TEXT("Home"), TEXT("home"), 0, HomeX, NavY, HomeW, false, true);
+    ActionButton(TEXT("Menu"), TEXT("pause"), 0, MenuX, NavY, MenuW, false, true);
     if (!bCompactLayout)
     {
-        ActionButton(TEXT("Zoom in"),TEXT("zoom+"),0,L.Navigation.Min.X+48*S,L.Navigation.Min.Y+48*S,44*S);
-        ActionButton(TEXT("Zoom out"),TEXT("zoom-"),0,L.Navigation.Min.X+96*S,L.Navigation.Min.Y+48*S,44*S);
+        const float ZoomW = 84*S;
+        ActionButton(TEXT("Zoom in"),TEXT("zoom+"),0,L.Right-2*ZoomW-NavGap,NavY+48*S,ZoomW);
+        ActionButton(TEXT("Zoom out"),TEXT("zoom-"),0,L.Right-ZoomW,NavY+48*S,ZoomW);
     }
     if (!bSheetVisible && !PC->IsBuildMode()) DrawMinimap(PC,Battle);
 
     if (PC->IsBuildMode() || PC->IsProductionRallyMode())
+    {
+        if (PC->IsManualBuildMode() && PC->HasSingleSelectedWorker())
+            ActionButton(PC->IsQueueNextArmed() ? TEXT("Queue on") : TEXT("Queue"),
+                TEXT("queuenext"), 0, L.Right - 212 * S, DockY, 96 * S, PC->IsQueueNextArmed());
         ActionButton(PC->IsBuildMode() ? TEXT("Cancel build") : TEXT("Cancel rally"),
-            PC->IsBuildMode() ? TEXT("cancelplacement") : TEXT("cancelrally"),0,L.Right-96*S,DockY,96*S,true);
-    else if (bSheetVisible)
-    {
-        // The palette already exposes its actions. Only keep its dismissal at the thumb.
-        ActionButton(TEXT("Close"),TEXT("closesheet"),0,L.Right-48*S,DockY,48*S,true);
+            PC->IsBuildMode() ? TEXT("cancelplacement") : TEXT("cancelrally"),0,L.Right-112*S,DockY,112*S,true);
     }
-    else
+    else if (!bSheetVisible)
     {
-        const float W=49*S, Gap=4*S, X=L.Commands.Min.X;
+        const float Gap=Space1*S, X=L.Commands.Min.X;
+        const float W0=48*S, W1=56*S, W2=56*S, W3=60*S;
+        const float X1=X+W0+Gap, X2=X1+W1+Gap, X3=X2+W2+Gap;
         if (bCombatSelection)
         {
-            ActionButton(TEXT("Move"),TEXT("move"),0,X,DockY,W,PC->IsMoveCommandMode());
-            ActionButton(TEXT("Attack"),TEXT("attack"),0,X+W+Gap,DockY,W,PC->IsAttackMoveMode());
-            ActionButton(TEXT("Defend"),TEXT("defend"),0,X+2*(W+Gap),DockY,W,PC->IsDefendCommandMode());
-            ActionButton(TEXT("Orders"),TEXT("orders"),0,X+3*(W+Gap),DockY,W);
+            ActionButton(TEXT("Move"),TEXT("move"),0,X,DockY,W0,PC->IsMoveCommandMode());
+            ActionButton(TEXT("Attack"),TEXT("attack"),0,X1,DockY,W1,PC->IsAttackMoveMode());
+            ActionButton(TEXT("Defend"),TEXT("defend"),0,X2,DockY,W2,PC->IsDefendCommandMode());
+            ActionButton(TEXT("Orders"),TEXT("orders"),0,X3,DockY,W3);
         }
         else if(bWorker)
         {
-            ActionButton(TEXT("Move"),TEXT("move"),0,X,DockY,W,PC->IsMoveCommandMode());
-            ActionButton(TEXT("Build here"),TEXT("buildmenu"),0,X+W+Gap,DockY,W,PC->bBuildMenu);
-            ActionButton(TEXT("Stop"),TEXT("stop"),0,X+2*(W+Gap),DockY,W);
-            ActionButton(TEXT("Orders"),TEXT("orders"),0,X+3*(W+Gap),DockY,W);
+            ActionButton(TEXT("Move"),TEXT("move"),0,X,DockY,W0,PC->IsMoveCommandMode());
+            ActionButton(TEXT("Build"),TEXT("buildmenu"),0,X1,DockY,W1,PC->bBuildMenu);
+            ActionButton(TEXT("Stop"),TEXT("stop"),0,X2,DockY,W2);
+            ActionButton(TEXT("Orders"),TEXT("orders"),0,X3,DockY,W3);
         }
         else if(bBuilding)
         {
             if(bSite)
-                ActionButton(TEXT("Site"),TEXT("sheet"),SheetContext,X,DockY,W);
+                ActionButton(TEXT("Site"),TEXT("sheet"),SheetContext,X,DockY,W0);
             else if(First->kind==cinder::Kind::Laboratory)
-                ActionButton(TEXT("Tech"),TEXT("sheet"),SheetContext,X,DockY,W);
+                ActionButton(TEXT("Tech"),TEXT("sheet"),SheetContext,X,DockY,W0);
             else if(bProductionBuilding)
             {
-                ActionButton(TEXT("Train here"),TEXT("globalcatalog"),SheetGlobalTrain,X,DockY,W);
+                ActionButton(TEXT("Train"),TEXT("globalcatalog"),SheetGlobalTrain,X,DockY,W0);
                 Buttons.Last().EntityId=First->id;
             }
-            else ActionButton(TEXT("Info"),TEXT("info"),0,X,DockY,W);
-            ActionButton(TEXT("Focus"),TEXT("focus"),0,X+W+Gap,DockY,W);
+            else ActionButton(TEXT("Info"),TEXT("info"),0,X,DockY,W0);
+            if(bProductionBuilding && !bSite)
+            {
+                ActionButton(TEXT("Rally"),TEXT("productionrally"),0,X1,DockY,W1);
+                Buttons.Last().EntityId=First->id;
+            }
+            else ActionButton(TEXT("Focus"),TEXT("focus"),0,X1,DockY,W1);
             if(bProductionBuilding && !bSite)
             {
                 ActionButton(bCompactLayout ? TEXT("Queue") : TEXT("Jobs"),bCompactLayout ? TEXT("sheet") : TEXT("producerjobs"),
-                    bCompactLayout ? SheetQueue : 0,X+2*(W+Gap),DockY,W);
+                    bCompactLayout ? SheetQueue : 0,X2,DockY,W2);
                 if(!bCompactLayout) Buttons.Last().EntityId=First->id;
             }
-            else ActionButton(TEXT("Workers"),TEXT("workers"),0,X+2*(W+Gap),DockY,W);
-            ActionButton(TEXT("Orders"),TEXT("orders"),0,X+3*(W+Gap),DockY,W);
+            else ActionButton(TEXT("Crew"),TEXT("workers"),0,X2,DockY,W2);
+            ActionButton(TEXT("Orders"),TEXT("orders"),0,X3,DockY,W3);
         }
         else
         {
             // No selected unit means no selection-specific orders to crowd the battlefield.
-            ActionButton(TEXT("Workers"),TEXT("workers"),0,L.Right-48*S,DockY,48*S);
+            ActionButton(TEXT("Workers"),TEXT("workers"),0,L.Right-88*S,DockY,88*S);
         }
     }
 
@@ -2523,7 +3862,11 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
         FString Title;
         if (PC->bBuildMenu)
         {
-            Title = TEXT("BUILD / ORE COST");
+            const cinder::Entity* Worker = PC->HasSingleSelectedWorker() ? Sim.find(PC->Selection().front()) : nullptr;
+            Title = Worker
+                ? FString::Printf(TEXT("DRUDGE #%u BUILD / %d OF 16 FUTURE / ORE PAID ON START"),
+                    Worker->id, static_cast<int32>(Worker->futureOrders.size()))
+                : TEXT("BUILD / SELECT ONE DRUDGE");
             for (auto K : { cinder::Kind::Headquarters, cinder::Kind::Processor, cinder::Kind::Foundry, cinder::Kind::MotorPool, cinder::Kind::Laboratory, cinder::Kind::Turret })
                 Options.Add({ FString::Printf(TEXT("%s / %d"), *Name(K), cinder::definition(K).cost), TEXT("build"), static_cast<int>(K) });
         }
@@ -2539,16 +3882,55 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
             Title = TEXT("ORDERS / CURRENT SELECTION");
             if (First)
             {
+                const int32 QueuedCount = static_cast<int32>(First->futureOrders.size());
+                FString OrderHeading = RosterOrder(*First);
+                if (PC->IsFacingPending()) OrderHeading = TEXT("FACING PENDING");
+                else if (PC->IsFaceNextArmed()) OrderHeading = TEXT("FACE NEXT ARMED");
+                else if (PC->IsQueueNextPending()) OrderHeading = TEXT("QUEUE PENDING");
+                else if (PC->IsQueueNextArmed())
+                    OrderHeading = PC->HasSingleSelectedWorker() && !PC->IsMoveCommandMode() && !PC->IsAttackMoveMode()
+                        ? TEXT("QUEUE WORK PLAN")
+                        : PC->IsMoveCommandMode() ? TEXT("QUEUE MOVE") : TEXT("QUEUE ATTACK");
+                else if (PC->IsPatrolCommandMode())
+                    OrderHeading = PC->IsDestinationPending() ? TEXT("PATROL PENDING") : TEXT("PATROL: CHOOSE POINT");
+                else if (PC->IsEscortCommandMode())
+                    OrderHeading = PC->IsDestinationPending() ? TEXT("ESCORT PENDING") : TEXT("ESCORT: CHOOSE UNIT");
+                Title = FString::Printf(TEXT("ORDERS / %s / %d QUEUED"), *OrderHeading, QueuedCount);
                 Options.Add({ TEXT("FOCUS SELECTION"), TEXT("focus"), 0 });
                 if (!bBuilding)
                 {
+                    const TCHAR* SpacingName = PC->FormationSpacingPreset() == cinder::FormationSpacing::Tight
+                        ? TEXT("TIGHT") : PC->FormationSpacingPreset() == cinder::FormationSpacing::Wide
+                        ? TEXT("WIDE") : TEXT("STD");
+                    Options.Add({ FString::Printf(TEXT("SPACE %s"), SpacingName), TEXT("space"), 0 });
+                    if (PC->IsMoveCommandMode() || PC->IsAttackMoveMode() || PC->IsDefendCommandMode())
+                        Options.Add({ PC->IsFacingPending() ? TEXT("FACE PENDING") : TEXT("FACE NEXT"),
+                            TEXT("facenext"), 0 });
+                    Options.Add({ PC->IsDestinationPending() && PC->IsPatrolCommandMode()
+                        ? TEXT("PATROL PENDING") : TEXT("PATROL"), TEXT("patrol"), 0 });
+                    Options.Add({ PC->IsDestinationPending() && PC->IsEscortCommandMode()
+                        ? TEXT("ESCORT PENDING") : TEXT("ESCORT"), TEXT("escort"), 0 });
+                    FString QueueLabel = PC->HasSingleSelectedWorker() ? TEXT("QUEUE WORK") : TEXT("QUEUE NEXT");
+                    if (PC->IsQueueNextPending()) QueueLabel = TEXT("QUEUE PENDING");
+                    else if (PC->IsMoveCommandMode()) QueueLabel = TEXT("QUEUE MOVE");
+                    else if (PC->IsAttackMoveMode()) QueueLabel = TEXT("QUEUE ATTACK");
+                    Options.Add({ QueueLabel, TEXT("queuenext"), 0 });
+                    const bool bHasQueuedOrders = std::any_of(PC->Selection().begin(), PC->Selection().end(), [&](cinder::Id Id)
+                    {
+                        const cinder::Entity* Entity = Sim.find(Id);
+                        return Entity && Entity->alive() && Entity->team == 0 && !Entity->futureOrders.empty();
+                    });
+                    if (bHasQueuedOrders)
+                        Options.Add({ PC->HasSingleSelectedWorker() ? TEXT("CLEAR FUTURE PLAN") : TEXT("CLEAR QUEUED"), TEXT("clearorders"), 0 });
                     Options.Add({ TEXT("STOP"), TEXT("stop"), 0 });
                     Options.Add({ TEXT("HOLD POSITION"), TEXT("hold"), 0 });
                 }
                 if (PC->Selection().size() > 1) Options.Add({ TEXT("SELECT BY TYPE"), TEXT("sheet"), SheetTypes });
             }
             Options.Add({ TEXT("SELECT DRUDGES"), TEXT("workers"), 0 });
-            Options.Add({ TEXT("OPEN BUILD"), TEXT("globalcatalog"), SheetGlobalBuild });
+            Options.Add(PC->HasSingleSelectedWorker()
+                ? FOption{TEXT("BUILD WITH THIS DRUDGE"), TEXT("buildmenu"), 0}
+                : FOption{TEXT("OPEN AUTO BUILD"), TEXT("globalcatalog"), SheetGlobalBuild});
         }
         else
         {
@@ -2561,6 +3943,12 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
             }
             else if (First && cinder::definition(First->kind).building)
             {
+                if (First->kind == cinder::Kind::Headquarters)
+                {
+                    Options.Add({TEXT("WORKER RALLY"), TEXT("productionrally"), 0, First->id});
+                    if (First->rallyOverride)
+                        Options.Add({TEXT("AUTO MINE"), TEXT("rallydefault"), 0, First->id});
+                }
                 if (First->kind == cinder::Kind::Laboratory)
                 {
                     Options.Add({TEXT("TRAIN MEND"), TEXT("globalcatalog"), SheetGlobalTrain, First->id});
@@ -2589,28 +3977,38 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
         const float SheetW = L.Drawer.GetSize().X - 10*S;
         const float SheetH = (52 + Rows * 50) * S;
         const float X = L.Drawer.Min.X + 5*S, Y = L.Drawer.Min.Y;
-        Surface(X - 5*S,Y,SheetW+10*S,SheetH,Ink,10*S);
+        Surface(X - 5*S,Y,SheetW+10*S,SheetH,Lift(Ink,0.045f),Ink,10*S);
         UIRegions.Add(FBox2D(FVector2D(X - 5 * S, Y), FVector2D(X + SheetW + 5 * S, Y + SheetH)));
-        SingleLineLabel(Title, X + 8 * S, Y + 16 * S, SheetW - 70 * S, Amber, 0.74f);
+        SingleLineLabel(Title, X + 8 * S, Y + 16 * S, SheetW - 70 * S, Amber, TypeBody);
         Button(TEXT("X"), TEXT("closesheet"), 0, X + SheetW - 44 * S, Y + 2 * S, 44 * S);
         const float CellW = (SheetW - (Columns - 1) * 7 * S) / Columns;
         for (int I = 0; I < Options.Num(); ++I)
         {
             const float BX = X + (I % Columns) * (CellW + 7 * S), BY = Y + (52 + (I / Columns) * 50) * S;
-            Button(Options[I].Text, Options[I].Action, Options[I].Arg, BX, BY, CellW);
+            Button(Options[I].Text, Options[I].Action, Options[I].Arg, BX, BY, CellW,
+                (Options[I].Action == TEXT("queuenext") && PC->IsQueueNextArmed())
+                || (Options[I].Action == TEXT("facenext") && PC->IsFaceNextArmed())
+                || Options[I].Action == TEXT("space")
+                || (Options[I].Action == TEXT("patrol") && PC->IsPatrolCommandMode())
+                || (Options[I].Action == TEXT("escort") && PC->IsEscortCommandMode()));
             Buttons.Last().EntityId = Options[I].EntityId;
             if (Options[I].Action == TEXT("build"))
             {
                 const auto Kind = static_cast<cinder::Kind>(Options[I].Arg);
                 const auto Status = Sim.buildStatus(0, Kind, PC->Selection());
-                SingleLineLabel(FString::Printf(TEXT("T%d / %s"), cinder::definition(Kind).tier, Status.accepted ? TEXT("READY") : TEXT("LOCKED")),
-                    BX + 12 * S, BY + 27 * S, CellW - 24 * S, Status.accepted ? Mint : Amber, 0.70f);
+                // Feeds next frame's ore chip: a rejection the player can fix
+                // by mining is a different message from a tech lock.
+                bOreShortfallPending |= !Status.accepted && cinder::definition(Kind).cost > Player.ore;
+                const bool bPlanning = PC->IsQueueNextArmed() && PC->HasSingleSelectedWorker();
+                const TCHAR* Availability = bPlanning ? TEXT("PLAN") : Status.accepted ? TEXT("READY") : TEXT("LOCK");
+                SingleLineLabel(FString::Printf(TEXT("T%d %s"), cinder::definition(Kind).tier, Availability),
+                    BX + 12 * S, BY + 27 * S, CellW - 24 * S, bPlanning || Status.accepted ? Mint : Amber, TypeCaption);
             }
         }
-        if (Options.IsEmpty()) Label(TEXT("Select a unit or a production structure first."), X + 5 * S, Y + 56 * S, White, 0.78f);
+        if (Options.IsEmpty()) Label(TEXT("Select a unit or a production structure first."), X + 5 * S, Y + 56 * S, White, TypeBody);
     }
-    const bool bTutorialCardVisible = Battle->Tutorial().IsActive()
-        && !Battle->IsPaused() && Sim.winner() == -1;
+    const bool bTutorialCardVisible = (Battle->Tutorial().IsActive() || Battle->Campaign().IsRunning())
+        && !Battle->IsPaused() && !Battle->IsMatchOver();
     if (!bOnlineNotice && !bTutorialCardVisible && !PC->Feedback().IsEmpty())
     {
         const float FeedbackX=bSheetVisible ? L.Drawer.Max.X+8*S : L.Drawer.Min.X;
@@ -2618,17 +4016,69 @@ void ACinderHUD::DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefiel
         const float MaxW=FMath::Min(320*S,L.Right-FeedbackX);
         if(MaxW>=130*S)
         {
-            const float FW=FMath::Min(MaxW,static_cast<float>(MeasureLabel(PC->Feedback(),0.64f).X)+20*S);
-            const float FH=WrappedHeight(PC->Feedback(),FW-20*S,0.64f)+16*S;
+            const float FW=FMath::Min(MaxW,static_cast<float>(MeasureLabel(PC->Feedback(),TypeCaption).X)+20*S);
+            const float FH=WrappedHeight(PC->Feedback(),FW-20*S,TypeCaption)+16*S;
             Surface(FeedbackX,FeedbackY,FW,FH,FLinearColor(0.007f,0.016f,0.027f,0.96f),7*S);
             Surface(FeedbackX,FeedbackY+8*S,2*S,FH-16*S,Amber,S);
-            WrappedLabel(PC->Feedback(),FeedbackX+10*S,FeedbackY+8*S,FW-20*S,White,0.64f);
+            WrappedLabel(PC->Feedback(),FeedbackX+10*S,FeedbackY+8*S,FW-20*S,White,TypeCaption);
         }
     }
     if (PC->bDebug && !bOnlineNotice && !bSheetVisible && !PC->IsBuildMode())
-        Label(FString::Printf(TEXT("%.2f ms sim / %d entities / %.0f fps"), Sim.lastStepMilliseconds(), static_cast<int>(Sim.entities().size()), 1.0f / FMath::Max(GetWorld()->GetDeltaSeconds(), 0.001f)), Margin, 134 * S + SafeTopOffset, Mint, 0.72f);
+        Label(FString::Printf(TEXT("%.2f ms sim / %d entities / %.0f fps"), Sim.lastStepMilliseconds(), static_cast<int>(Sim.entities().size()), 1.0f / FMath::Max(GetWorld()->GetDeltaSeconds(), 0.001f)), Margin, 134 * S + SafeTopOffset, Mint, TypeCaption);
     if (bOnlineNotice) DrawOnlineNotice(OnlineHeading, OnlineDetail, L.Drawer.Min.X, L.Top+48*S, FMath::Min(420*S,InnerW-170*S), true);
+    if (!Battle->IsPaused() && !Battle->IsMatchOver() && !PC->IsHelpOpen()) DrawVoiceControls(PC);
     DrawOverlay(PC, Battle);
+}
+
+void ACinderHUD::DrawVoiceControls(ACinderPlayerController* PC)
+{
+    auto* Voice = PC && PC->GetGameInstance() ? PC->GetGameInstance()->GetSubsystem<UCinderVoiceSubsystem>() : nullptr;
+    if (!Voice) return;
+    const float S = UIScale;
+    const auto& Layout = MobileLayout;
+    if (!Voice->IsActive())
+    {
+        ActionButton(TEXT("Voice"), TEXT("VoiceToggle"), 0,
+            Layout.VoiceButton.Min.X, Layout.VoiceButton.Min.Y, Layout.VoiceButton.GetSize().X);
+    }
+    else
+    {
+        const float X = Layout.VoiceControls.Min.X, Y = Layout.VoiceControls.Min.Y;
+        ActionButton(TEXT("Live"), TEXT("VoiceToggle"), 0, X, Y, 60*S, true);
+        ActionButton(Voice->IsMuted() ? TEXT("Unmute") : TEXT("Mute"), TEXT("VoiceMute"), 0,
+            X + 64*S, Y, 60*S, Voice->IsMuted());
+        ActionButton(TEXT("End"), TEXT("VoiceEnd"), 0, X + 128*S, Y, 60*S);
+    }
+    if (Voice->IsActive() || Voice->HasError())
+    {
+        const auto& Bounds = Layout.VoiceStatus;
+        const float X = Bounds.Min.X, Y = Bounds.Min.Y, W = Bounds.GetSize().X;
+        Surface(X, Y, W, Bounds.GetSize().Y, Lift(Ink, 0.035f), Ink, 8*S);
+        const FLinearColor Accent = Voice->HasError() ? Amber : Voice->IsMuted() ? Muted : Mint;
+        const float Pulse = Voice->IsActive() && !Voice->IsMuted()
+            ? 0.7f + 0.3f * FMath::Sin(FrameRealTime * 3.0f) : 0.7f;
+        Surface(X + 9*S, Y + 10*S, 5*S, 5*S, Accent.CopyWithNewOpacity(Pulse), 2*S);
+        SingleLineLabel(Voice->StatusText(), X + 20*S, Y + 8*S, W - 28*S, Accent, TypeCaption);
+        const FString Detail = !Voice->CaptionText().IsEmpty() ? Voice->CaptionText()
+            : !Voice->ReceiptText().IsEmpty() ? Voice->ReceiptText()
+            : Voice->IsMuted() ? TEXT("Mic off / session connected") : TEXT("Speak an order");
+        // Two bounded lines retain the most recent words without covering the map.
+        if (VoiceCaptionSource != Detail || !FMath::IsNearlyEqual(VoiceCaptionWidth, W))
+        {
+            VoiceCaptionSource = Detail;
+            VoiceCaptionWidth = W;
+            int32 Low = 0, High = FMath::Min(Detail.Len(), 160);
+            while (Low < High)
+            {
+                const int32 Count = (Low + High + 1) / 2;
+                if (WrappedHeight(Detail.Right(Count), W - 18*S, TypeCaption) <= 24*S) Low = Count;
+                else High = Count - 1;
+            }
+            VoiceCaptionDisplay = Detail.Right(Low);
+        }
+        WrappedLabel(VoiceCaptionDisplay, X + 9*S, Y + 23*S, W - 18*S, White, TypeCaption);
+        UIRegions.Add(Bounds);
+    }
 }
 
 void ACinderHUD::DrawMatch(ACinderPlayerController* PC, ACinderBattlefield* Battle)
@@ -2638,6 +4088,11 @@ void ACinderHUD::DrawMatch(ACinderPlayerController* PC, ACinderBattlefield* Batt
 
 void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Battle)
 {
+    if (Battle->Campaign().IsActive())
+    {
+        DrawCampaignOverlay(PC, Battle);
+        return;
+    }
     const auto& Sim = Battle->Sim(); const auto& Player = Sim.players()[0];
     const bool bOnline = Battle->IsOnlineMatch();
     const bool bEliminated = bOnline && Sim.eliminated(0);
@@ -2656,7 +4111,7 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
                 : bTraining ? Sim.winner() == 0 ? TEXT("TUTORIAL VICTORY") : TEXT("TUTORIAL DEFEAT")
                 : Sim.winner() == 0 ? TEXT("FRONTIER SECURED") : TEXT("ANCHOR LOST")
             : bOnline ? TEXT("ONLINE MATCH CONTINUES") : bTraining ? TEXT("TRAINING PAUSED") : TEXT("SKIRMISH PAUSED");
-        Label(Heading, X, Y, Sim.winner() > 0 || bEliminated ? Amber : Mint, 1.65f);
+        Label(Heading, X, Y, Sim.winner() > 0 || bEliminated ? Amber : Mint, TypeDisplay);
         if (bShowResult)
         {
             const auto& S = Player.stats;
@@ -2675,17 +4130,17 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
                     const FString WinnerName = Online ? Online->SeatName(Seat) : FString();
                     Outcome = FString::Printf(TEXT("%s won the match."), WinnerName.IsEmpty() ? TEXT("An opponent") : *WinnerName);
                 }
-                SingleLineLabel(Outcome, X, Y + 40 * UIScale, 480 * UIScale, Muted, 0.70f);
+                SingleLineLabel(Outcome, X, Y + 40 * UIScale, 480 * UIScale, Muted, TypeCaption);
             }
             if (bTraining && Sim.winner() == 0)
                 Label(Battle->Tutorial().IsComplete()
                         ? TEXT("GUIDED TUTORIAL COMPLETE")
                         : TEXT("VICTORY REACHED / REPLAY TO FINISH THE LESSONS"),
-                    X, Y + 40 * UIScale, Mint, 0.72f);
-            Label(FString::Printf(TEXT("%s    Ore collected %d    Damage %.0f"), *ClockString(Sim.time()), S.gathered, S.damage), X, Y + 62 * UIScale, White, 0.9f);
-            Label(FString::Printf(TEXT("Produced %d    Lost %d    Destroyed %d"), S.produced, S.lost, S.killed), X, Y + 96 * UIScale, White, 0.9f);
-            Label(FString::Printf(TEXT("Structures %d    Razed %d    Expansions %d"), S.built, S.buildingsDestroyed, S.expansions), X, Y + 130 * UIScale, White, 0.9f);
-            Label(FString::Printf(TEXT("Technology upgrades %d"), S.upgrades), X, Y + 164 * UIScale, White, 0.9f);
+                    X, Y + 40 * UIScale, Mint, TypeCaption);
+            Label(FString::Printf(TEXT("%s    Ore collected %d    Damage %.0f"), *ClockString(Sim.time()), S.gathered, S.damage), X, Y + 62 * UIScale, White, TypeBody);
+            Label(FString::Printf(TEXT("Produced %d    Lost %d    Destroyed %d"), S.produced, S.lost, S.killed), X, Y + 96 * UIScale, White, TypeBody);
+            Label(FString::Printf(TEXT("Structures %d    Razed %d    Expansions %d"), S.built, S.buildingsDestroyed, S.expansions), X, Y + 130 * UIScale, White, TypeBody);
+            Label(FString::Printf(TEXT("Technology upgrades %d"), S.upgrades), X, Y + 164 * UIScale, White, TypeBody);
             if (bOnline)
             {
                 Button(TEXT("LEAVE / TO MENU"), TEXT("onlineleave"), 0, X, Y + 224 * UIScale, 480 * UIScale, true);
@@ -2699,13 +4154,13 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
         }
         else if (bOnline)
         {
-            Label(TEXT("The server keeps advancing while this menu is open."), X, Y + 48 * UIScale, White, 0.80f);
+            Label(TEXT("The server keeps advancing while this menu is open."), X, Y + 48 * UIScale, White, TypeBody);
             Button(TEXT("RESUME"), TEXT("resume"), 0, X, Y + 80 * UIScale, 230 * UIScale, true);
             Button(TEXT("FIELD GUIDE"), TEXT("help"), 0, X + 250 * UIScale, Y + 80 * UIScale, 230 * UIScale);
             Button(TEXT("CONNECTION"), TEXT("connection"), 0, X, Y + 136 * UIScale, 230 * UIScale);
             Button(TEXT("SURRENDER"), TEXT("onlinesurrender"), 0, X + 250 * UIScale, Y + 136 * UIScale, 230 * UIScale);
             Button(TEXT("LEAVE"), TEXT("onlineleave"), 0, X, Y + 192 * UIScale, 480 * UIScale);
-            if (!PC->Feedback().IsEmpty()) Label(PC->Feedback(), X, Y + 250 * UIScale, Amber, 0.85f);
+            if (!PC->Feedback().IsEmpty()) Label(PC->Feedback(), X, Y + 250 * UIScale, Amber, TypeBody);
         }
         else
         {
@@ -2718,8 +4173,8 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
             Button(TEXT("MAIN MENU"), TEXT("menu"), 0, X + 250 * UIScale, Y + 136 * UIScale, 230 * UIScale);
             Button(PC->bDebug ? TEXT("HIDE METRICS") : TEXT("SHOW METRICS"), TEXT("debug"), 0, X, Y + 192 * UIScale, 230 * UIScale, PC->bDebug);
             if (!bTraining) Button(TEXT("FIELD GUIDE"), TEXT("help"), 0, X + 250 * UIScale, Y + 192 * UIScale, 230 * UIScale);
-            Label(TEXT("A attack-move / S stop / H hold / B build / F focus / Space home"), X, Y + 264 * UIScale, Muted, 0.78f);
-            if (!PC->Feedback().IsEmpty()) Label(PC->Feedback(), X, Y + 310 * UIScale, Amber, 0.85f);
+            Label(TEXT("A attack-move / S stop / H hold / B build / F focus / Space home"), X, Y + 264 * UIScale, Muted, TypeBody);
+            if (!PC->Feedback().IsEmpty()) Label(PC->Feedback(), X, Y + 310 * UIScale, Amber, TypeBody);
         }
     }
 
@@ -2735,8 +4190,8 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
         const float Y = (Height - H) * 0.5f;
         Panel(X, Y, W, H, PanelInk);
         Panel(X, Y, 4 * S, H, Amber);
-        Label(PC->IsOnlineSurrenderPending() ? TEXT("SURRENDER MATCH?") : TEXT("LEAVE MATCH?"), X + 24 * S, Y + 22 * S, White, 1.35f);
-        WrappedLabel(PC->IsOnlineSurrenderPending() ? TEXT("Your forces are eliminated. Any remaining opponents keep fighting.") : TEXT("Leaving forfeits this game."), X + 24 * S, Y + 62 * S, W - 48 * S, White, 0.80f);
+        Label(PC->IsOnlineSurrenderPending() ? TEXT("SURRENDER MATCH?") : TEXT("LEAVE MATCH?"), X + 24 * S, Y + 22 * S, White, TypeDisplay);
+        WrappedLabel(PC->IsOnlineSurrenderPending() ? TEXT("Your forces are eliminated. Any remaining opponents keep fighting.") : TEXT("Leaving forfeits this game."), X + 24 * S, Y + 62 * S, W - 48 * S, White, TypeBody);
         const float ButtonW = (W - 55 * S) * 0.5f;
         Button(PC->IsOnlineSurrenderPending() ? TEXT("SURRENDER") : TEXT("LEAVE AND FORFEIT"), TEXT("onlineconfirm"), 0, X + 24 * S, Y + H - 66 * S, ButtonW, true);
         Button(TEXT("CANCEL"), TEXT("onlinecancel"), 0, X + 31 * S + ButtonW, Y + H - 66 * S, ButtonW);
@@ -2754,9 +4209,9 @@ void ACinderHUD::DrawOverlay(ACinderPlayerController* PC, ACinderBattlefield* Ba
         const float Y = (Height - H) * 0.5f;
         Panel(X, Y, W, H, PanelInk);
         Panel(X, Y, 4 * S, H, Amber);
-        Label(TEXT("RESTART TRAINING?"), X + 24 * S, Y + 22 * S, White, 1.35f);
+        Label(TEXT("RESTART TRAINING?"), X + 24 * S, Y + 22 * S, White, TypeDisplay);
         WrappedLabel(TEXT("This restarts the guided battle from step one. Your saved skirmish is kept."),
-            X + 24 * S, Y + 62 * S, W - 48 * S, White, 0.80f);
+            X + 24 * S, Y + 62 * S, W - 48 * S, White, TypeBody);
         const float ButtonW = (W - 55 * S) * 0.5f;
         Button(bCompactLayout ? TEXT("RESTART") : TEXT("RESTART  [ENTER]"), TEXT("tutorialconfirm"), 0,
             X + 24 * S, Y + H - 66 * S, ButtonW, true);

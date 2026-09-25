@@ -155,6 +155,153 @@ void TryArmModes(ACinderPlayerController& Controller)
 }
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderMotionDisplayCadence,
+    "Cinderline.Presentation.EntityMotion.DisplayCadence",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderMotionDisplayCadence::RunTest(const FString& Parameters)
+{
+    using namespace cinder;
+    FCinderEntityMotion Motion;
+    auto Frame = [&Motion](const FCinderMotionObservation& Observation)
+    {
+        Motion.BeginFrame();
+        const FCinderEntityPose Pose = Motion.Observe(Observation);
+        Motion.EndFrame();
+        return Pose;
+    };
+    FCinderMotionObservation Walker;
+    Walker.Id = 701; Walker.Kind = Kind::Worker; Walker.Order = Order::Move;
+    Walker.Position = {100, 100}; Walker.Tick = 1; Walker.SimulationTick = 40; Walker.Time = 2.0f;
+    TestFalse(TEXT("First observation cannot infer walking"), Frame(Walker).bMoving);
+    ++Walker.Tick; ++Walker.SimulationTick; Walker.Time += Simulation::Step; Walker.Position.x += 7;
+    const FCinderEntityPose Walking = Frame(Walker);
+    TestTrue(TEXT("Observed fixed-step displacement starts walking"), Walking.bMoving);
+    FCinderEntityPose Intervening;
+    for (int32 Index = 0; Index < 4; ++Index)
+    {
+        ++Walker.Tick; Walker.Time += 1.0f / 120.0f;
+        Intervening = Frame(Walker);
+        TestTrue(TEXT("Local walking persists across 120Hz frames between 20Hz updates"), Intervening.bMoving);
+    }
+    TestFalse(TEXT("Retained walking still advances its leg pose each display frame"),
+        FMath::IsNearlyEqual(Walking.LegFrontLeftRotation.Pitch, Intervening.LegFrontLeftRotation.Pitch));
+
+    // A pause can receive a fresh serial or authority sample without advancing
+    // presentation time. It must neither integrate again nor consume that sample.
+    ++Walker.Tick; ++Walker.SimulationTick;
+    const FCinderEntityPose Paused = Frame(Walker);
+    TestTrue(TEXT("A stopped clock preserves the exact active pose"),
+        Paused.bMoving == Intervening.bMoving && Paused.BodyZ == Intervening.BodyZ
+        && Paused.LegFrontLeftRotation.Equals(Intervening.LegFrontLeftRotation, 0));
+    ++Walker.Tick; Walker.Time += 1.0f / 120.0f;
+    const FCinderEntityPose Stopped = Frame(Walker);
+    TestFalse(TEXT("The next authoritative stationary step stops walking on resume"), Stopped.bMoving);
+    TestTrue(TEXT("A stopped walker has neutral legs"), Stopped.LegFrontLeftRotation.IsNearlyZero());
+
+    ++Walker.Tick; ++Walker.SimulationTick; Walker.Time += Simulation::Step; Walker.Position.x += 7;
+    TestTrue(TEXT("New movement restarts walking"), Frame(Walker).bMoving);
+    ++Walker.Tick; Walker.Time += 1.0f / 120.0f; Walker.Order = Order::Hold;
+    TestFalse(TEXT("A same-tick Hold order immediately clears retained walking"), Frame(Walker).bMoving);
+
+    // Skipping multiple authority updates must not turn a normal displacement
+    // into a display-rate-dependent sprint.
+    FCinderMotionObservation Prior = Walker;
+    Prior.Order = Order::Move; Prior.SimulationTick = 50; Prior.Time = 4.0f;
+    FCinderMotionObservation Current = Prior;
+    ++Current.Tick; Current.SimulationTick += 3; Current.Time += 1.0f / 120.0f; Current.Position.x += 21;
+    FCinderMotionMemory Memory, Advanced;
+    FCinderEntityMotion::CalculatePose(Current, &Prior, Memory, &Advanced);
+    TestTrue(TEXT("Skipped authority ticks retain the measured 140cm/s movement speed"),
+        FMath::IsNearlyEqual(Advanced.MovementVelocity.x, 140.0f, 0.01f));
+
+    Motion.Reset();
+    Walker.bInterpolatedPosition = true; Walker.Order = Order::Move;
+    Walker.SimulationTick = 60; Walker.Time = 5.0f; ++Walker.Tick;
+    Frame(Walker);
+    ++Walker.Tick; Walker.Time += 1.0f / 120.0f; Walker.Position.x += 1;
+    TestTrue(TEXT("Online interpolation animates within a single authority tick"), Frame(Walker).bMoving);
+    ++Walker.Tick; Walker.Time += 1.0f / 120.0f;
+    TestFalse(TEXT("Finished online interpolation stops without waiting for another snapshot"), Frame(Walker).bMoving);
+
+    Walker.bInterpolatedPosition = false; ++Walker.Tick; ++Walker.SimulationTick;
+    Walker.Time += Simulation::Step; Walker.Position.x += 7;
+    Frame(Walker);
+    ++Walker.Tick; ++Walker.SimulationTick; Walker.Time += Simulation::Step; Walker.Position.x += 7;
+    TestTrue(TEXT("Local motion can be active before fog eviction"), Frame(Walker).bMoving);
+    Motion.BeginFrame();
+    Motion.EndFrame(Walker.Time, [](const Vec2&) { return false; });
+    TestFalse(TEXT("Fog eviction drops the activity memory"), Motion.HasSample(Walker.Id));
+    ++Walker.Tick; ++Walker.SimulationTick; Walker.Time += Simulation::Step;
+    TestFalse(TEXT("A revealed stationary unit never resumes its old gait"), Frame(Walker).bMoving);
+    return !HasAnyErrors();
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderMotionWorkCadence,
+    "Cinderline.Presentation.EntityMotion.WorkCadence",
+    EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+
+bool FCinderMotionWorkCadence::RunTest(const FString& Parameters)
+{
+    using namespace cinder;
+    FCinderEntityMotion Motion;
+    auto Frame = [&Motion](const FCinderMotionObservation& Observation)
+    {
+        Motion.BeginFrame();
+        const FCinderEntityPose Pose = Motion.Observe(Observation);
+        Motion.EndFrame();
+        return Pose;
+    };
+    FCinderMotionObservation Worker;
+    Worker.Id = 702; Worker.Kind = Kind::Worker; Worker.Order = Order::Gather;
+    Worker.Position = {100, 100}; Worker.HarvestTimer = 0.2f;
+    Worker.Tick = 1; Worker.SimulationTick = 70; Worker.Time = 2.0f;
+    TestFalse(TEXT("First observation does not invent mining activity"), Frame(Worker).bToolActive);
+    ++Worker.Tick; ++Worker.SimulationTick; Worker.Time += Simulation::Step; Worker.HarvestTimer += Simulation::Step;
+    const FCinderEntityPose Mining = Frame(Worker);
+    TestTrue(TEXT("A new harvest update activates the mining tool"), Mining.bToolActive);
+    FCinderEntityPose Intervening;
+    for (int32 Index = 0; Index < 4; ++Index)
+    {
+        ++Worker.Tick; Worker.Time += 1.0f / 120.0f;
+        Intervening = Frame(Worker);
+        TestTrue(TEXT("Mining stays active between authoritative harvest updates"), Intervening.bToolActive);
+    }
+    TestFalse(TEXT("The active tool advances on intervening display frames"),
+        FMath::IsNearlyEqual(Mining.ToolRotation.Pitch, Intervening.ToolRotation.Pitch));
+    ++Worker.Tick;
+    const FCinderEntityPose Paused = Frame(Worker);
+    TestTrue(TEXT("A repeated clock leaves the tool pose unchanged"),
+        Paused.bToolActive && Paused.ToolRotation.Equals(Intervening.ToolRotation, 0));
+    ++Worker.Tick; ++Worker.SimulationTick; Worker.Time += 1.0f / 120.0f;
+    TestFalse(TEXT("A new tick without harvest progress clears mining activity"), Frame(Worker).bToolActive);
+
+    ++Worker.Tick; ++Worker.SimulationTick; Worker.Time += Simulation::Step; Worker.HarvestTimer = 0.01f;
+    TestTrue(TEXT("A harvest timer wrapping after collection still counts as work"), Frame(Worker).bToolActive);
+    ++Worker.Tick; Worker.Time += 1.0f / 120.0f; Worker.bReturning = true;
+    TestFalse(TEXT("Returning with ore immediately clears retained mining"), Frame(Worker).bToolActive);
+    ++Worker.Tick; Worker.Time += 1.0f / 120.0f; Worker.bReturning = false;
+    TestFalse(TEXT("Ending return cannot revive stale mining without new progress"), Frame(Worker).bToolActive);
+
+    ++Worker.Tick; ++Worker.SimulationTick; Worker.Time += Simulation::Step; Worker.HarvestTimer += Simulation::Step;
+    TestTrue(TEXT("Fresh harvest progress restarts mining"), Frame(Worker).bToolActive);
+    ++Worker.Tick; Worker.Time += 1.0f / 120.0f; Worker.Order = Order::Move;
+    TestFalse(TEXT("A same-tick movement order clears the mining tool"), Frame(Worker).bToolActive);
+    ++Worker.Tick; Worker.Time += 1.0f / 120.0f; Worker.Order = Order::Construct; Worker.bConstructionActive = true;
+    TestTrue(TEXT("Construction continues to use explicit active-work state"), Frame(Worker).bToolActive);
+    ++Worker.Tick; Worker.Time += 1.0f / 120.0f; Worker.bConstructionActive = false;
+    TestFalse(TEXT("Interrupted construction immediately stops its tool"), Frame(Worker).bToolActive);
+
+    Motion.Reset();
+    Worker.Order = Order::Gather; ++Worker.Tick; ++Worker.SimulationTick; Worker.Time += Simulation::Step;
+    TestFalse(TEXT("Reset discards mining activity from the prior scene"), Frame(Worker).bToolActive);
+    ++Worker.Tick; ++Worker.SimulationTick; Worker.Time += Simulation::Step; Worker.HarvestTimer += Simulation::Step;
+    TestTrue(TEXT("Mining can reactivate before an authority rewind"), Frame(Worker).bToolActive);
+    ++Worker.Tick; Worker.SimulationTick = 0; Worker.Time += Simulation::Step;
+    TestFalse(TEXT("An authority rewind discards stale work state"), Frame(Worker).bToolActive);
+    return !HasAnyErrors();
+}
+
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderWorldLifecycleIntegration,
     "Cinderline.Integration.WorldLifecycle",
     EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
@@ -175,14 +322,34 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     Current.Tick = 11; Current.Time = 0.55f;
     const FCinderEntityPose StationaryPose = FCinderEntityMotion::CalculatePose(Current, &Prior);
     TestFalse(TEXT("A movement order without an actual position delta has no walk pose"), StationaryPose.bMoving);
-    TestTrue(TEXT("A stationary ground unit retains an exact neutral body pose"),
-        StationaryPose.BodyZ == 0 && StationaryPose.BodyRotation.IsNearlyZero());
+    // Idle life is deliberate, but it must stay far below the walk cycle so a
+    // standing unit can never be misread as a moving one, and it must never
+    // disturb the legs, which are what actually read as locomotion. The absolute
+    // caps track the amplitudes that survive MetalFX at 80% (~1.0 px/cm), where
+    // the previous half-pixel settle could not be seen at all.
+    TestTrue(TEXT("A stationary ground unit keeps its idle settle well below the walk cycle"),
+        FMath::Abs(StationaryPose.BodyZ) <= 1.4f && FMath::Abs(StationaryPose.BodyRotation.Roll) <= 0.6f
+        && FMath::IsNearlyZero(StationaryPose.BodyRotation.Pitch));
+    TestTrue(TEXT("A stationary ground unit leaves every leg neutral"),
+        StationaryPose.LegFrontLeftRotation.IsNearlyZero() && StationaryPose.LegFrontRightRotation.IsNearlyZero()
+        && StationaryPose.LegRearLeftRotation.IsNearlyZero() && StationaryPose.LegRearRightRotation.IsNearlyZero());
+    FCinderMotionObservation OffsetPhase = Current;
+    OffsetPhase.Id = Current.Id + 1;
+    TestFalse(TEXT("Neighbouring idle units settle out of phase rather than in unison"),
+        FMath::IsNearlyEqual(FCinderEntityMotion::CalculatePose(OffsetPhase, &Prior).BodyZ,
+            StationaryPose.BodyZ, 0.001f));
     Current.Position.x += 4;
     const FCinderEntityPose WalkingPose = FCinderEntityMotion::CalculatePose(Current, &Prior);
     TestTrue(TEXT("An observed authoritative position delta starts locomotion"), WalkingPose.bMoving);
     TestTrue(TEXT("Drudge diagonal legs alternate around manifest pivots"),
         WalkingPose.LegFrontLeftRotation.Pitch * WalkingPose.LegFrontRightRotation.Pitch < 0
         && FMath::IsNearlyEqual(WalkingPose.LegFrontLeftRotation.Pitch, WalkingPose.LegRearRightRotation.Pitch));
+    // The relative bound is the assertion that actually encodes the intent; the
+    // absolute caps above are only there to pin the idle channel to a sane
+    // magnitude. Both amplitudes may be retuned, but never to the point where a
+    // settling unit could be mistaken for a walking one at a glance.
+    TestTrue(TEXT("Idle settle stays unmistakably below the walk cycle"),
+        FMath::Abs(StationaryPose.BodyZ) * 2.5f < FMath::Abs(WalkingPose.BodyZ));
 
     Prior.Order = Current.Order = Order::Gather; Prior.HarvestTimer = Current.HarvestTimer = 0.2f;
     const FCinderEntityPose TravellingGather = FCinderEntityMotion::CalculatePose(Current, &Prior);
@@ -240,6 +407,69 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     TestTrue(TEXT("Observe starts recoil only for the exact entity whose cooldown rose"),
         FiredPose.bRecoil && !NeighborPose.bRecoil);
 
+    bool bImpulseStaysPositive = true;
+    for (int32 Sample = 0; Sample < 32; ++Sample)
+    {
+        // Sampled at bin centres because the envelope is legitimately exactly
+        // zero at alpha 0. It is the interior that matters: a true damped cosine
+        // would swing negative around alpha 0.5 and flip both WeaponOffset.X and
+        // WeaponOffset.Z, throwing the muzzle forward of its own rest pose.
+        const float Alpha = (Sample + 0.5f) / 32.0f;
+        if (FCinderEntityMotion::RecoilImpulse(Alpha) <= 0.0f) bImpulseStaysPositive = false;
+    }
+    TestTrue(TEXT("The recoil envelope never crosses zero across its whole impulse"), bImpulseStaysPositive);
+
+    // Fog privacy, not polish: an entity that leaves the cache because its cell
+    // went dark must never topple, or the animation itself reports a kill the
+    // player was not allowed to see.
+    FCinderEntityMotion DeathMotion;
+    FCinderMotionObservation Doomed;
+    Doomed.Id = 400; Doomed.Kind = Kind::Striker; Doomed.Team = 1;
+    Doomed.Position = {900, 900}; Doomed.Tick = 30; Doomed.Time = 2.0f;
+    Doomed.Hp = Doomed.MaxHp = definition(Kind::Striker).hp;
+    DeathMotion.BeginFrame(); DeathMotion.Observe(Doomed);
+    DeathMotion.EndFrame(2.0f, [](const Vec2&) { return true; });
+    DeathMotion.BeginFrame();
+    DeathMotion.EndFrame(2.05f, [](const Vec2&) { return false; });
+    TestEqual(TEXT("An entity evicted while its cell is fogged never topples"),
+        DeathMotion.DyingEntities().Num(), 0);
+    DeathMotion.BeginFrame(); DeathMotion.Observe(Doomed);
+    DeathMotion.EndFrame(2.1f, [](const Vec2&) { return true; });
+    DeathMotion.BeginFrame();
+    DeathMotion.EndFrame(2.15f, [](const Vec2&) { return true; });
+    TestEqual(TEXT("An entity that stops being reported by a still-visible cell is a death"),
+        DeathMotion.DyingEntities().Num(), 1);
+    DeathMotion.BeginFrame();
+    DeathMotion.EndFrame(2.15f + FCinderEntityMotion::DeathDuration);
+    TestEqual(TEXT("A finished topple leaves the bounded death ring"),
+        DeathMotion.DyingEntities().Num(), 0);
+
+    FCinderDyingEntity Wreck;
+    Wreck.Kind = Kind::Striker; Wreck.Position = {900, 900}; Wreck.StartedAt = 3.0f;
+    const FCinderEntityPose Toppling = FCinderEntityMotion::CalculateDeathPose(Wreck,
+        3.0f + FCinderEntityMotion::DeathDuration * 0.75f);
+    TestTrue(TEXT("A toppling hull pitches over, drops and splays its diagonal legs"),
+        Toppling.BodyRotation.Pitch > 0 && Toppling.BodyZ < 0
+        && Toppling.LegFrontLeftRotation.Pitch * Toppling.LegFrontRightRotation.Pitch < 0);
+
+    // cinder ids come from a strictly monotonic counter, so only an id above
+    // everything this client has ever seen is a genuine production. A lower id
+    // is an existing unit walking into vision and must reveal, not be born.
+    FCinderEntityMotion BirthMotion;
+    FCinderMotionObservation Fresh;
+    Fresh.Id = 90; Fresh.Kind = Kind::Worker; Fresh.Position = {500, 500};
+    Fresh.Tick = 40; Fresh.Time = 3.0f;
+    Fresh.Hp = Fresh.MaxHp = definition(Kind::Worker).hp;
+    FCinderMotionObservation Revealed = Fresh; Revealed.Id = 12;
+    BirthMotion.BeginFrame();
+    const FCinderEntityPose Born = BirthMotion.Observe(Fresh);
+    const FCinderEntityPose Reveal = BirthMotion.Observe(Revealed);
+    BirthMotion.EndFrame();
+    TestTrue(TEXT("A genuinely new id scales in on the frame it is first observed"),
+        Born.UniformScale < 0.99f);
+    TestTrue(TEXT("An id below the high water mark is a reveal and never scales in"),
+        FMath::IsNearlyEqual(Reveal.UniformScale, 1.0f));
+
     CinderTerrainSurface::FFeatures Terrain;
     const FColor EmptyTerrain = CinderTerrainSurface::Sample(Terrain, 1000, 1000);
     TestTrue(TEXT("Terrain without observed inputs has no exposed stone, mineral stain or service ground"),
@@ -267,6 +497,25 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
     }
     TestTrue(TEXT("Map seed changes the ash mask while identical inputs stay deterministic"),
         bMapChangesAsh && bSameInputDeterministic);
+
+    CinderTerrainSurface::FFeatures TrailTerrain;
+    TrailTerrain.Trails.Emplace(Vec2{1400, 1600}, Vec2{1900, 1600});
+    const FColor TrailCenter = CinderTerrainSurface::Sample(TrailTerrain, 1650, 1600);
+    const FColor TrailShoulder = CinderTerrainSurface::Sample(TrailTerrain, 1650, 1700);
+    TestTrue(TEXT("Authored routes have a worn core, ragged shoulder and finite extent"),
+        TrailCenter.A > 200 && TrailShoulder.A > 0 && TrailShoulder.A < TrailCenter.A
+        && CinderTerrainSurface::Sample(TrailTerrain, 1650, 1900).A == 0
+        && CinderTerrainSurface::Sample(TrailTerrain, 1100, 1600).A == 0);
+    TrailTerrain.Cliffs.Add({{1650, 1600}, {80, 80}});
+    TestEqual(TEXT("A worn route cannot paint a traversable-looking ramp across known cliffs"),
+        CinderTerrainSurface::Sample(TrailTerrain, 1650, 1600).A, uint8(0));
+    TrailTerrain.Cliffs.Reset();
+    TrailTerrain.WorldSize *= 0.75f;
+    TrailTerrain.Trails.Reset();
+    TrailTerrain.Trails.Emplace(Vec2{1050, 1200}, Vec2{1425, 1200});
+    TestTrue(TEXT("Short-map route paint follows scaled route coordinates"),
+        CinderTerrainSurface::Sample(TrailTerrain, 1237.5f, 1200).A > 200
+        && CinderTerrainSurface::Sample(TrailTerrain, 1237.5f, 1430).A == 0);
 
     CinderTerrainSurface::FFeatures ServiceTerrain;
     ServiceTerrain.ServicePads.Add({{1000, 1000}, {120, 80}});
@@ -863,7 +1112,9 @@ bool FCinderWorldLifecycleIntegration::RunTest(const FString& Parameters)
 
     // Check actual renderer output through public actors/components. Skim has one
     // centered body instance in both the imported-model and primitive-fallback adapters.
-    Battle.Sim().reset({0, 42, false, 1});
+    // The staged one-tick kills below use the original open-lane sightlines; they
+    // measure instance membership updates rather than high-ground combat rules.
+    Battle.Sim().reset({0, 42, false, 1, MatchLength::Standard, 2, 0});
     Battle.ResetPresentation();
     auto& Sim = Battle.Sim();
     const Id FirstSkim = Sim.debugSpawn(Kind::Scout, 0, {1103, 1309});

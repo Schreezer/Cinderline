@@ -33,8 +33,9 @@ public:
     void Initialize(USceneComponent* AttachRoot, UStaticMesh* Sphere, UStaticMesh* Cylinder,
         UStaticMesh* Cone, UStaticMesh* Plane, UMaterialInterface* FallbackMaterial);
 
-    /** Submit one visible effect frame. The component never mutates the simulation. */
-    void Update(const cinder::Simulation& Simulation, int32 ViewerTeam = 0);
+    /** Submit one visible effect frame using the actual bound terrain mode.
+        Standalone callers default to flat ground; the component never mutates simulation. */
+    void Update(const cinder::Simulation& Simulation, int32 ViewerTeam = 0, bool bTerrainRelief = false);
 
     /** Clear all transient geometry. SuppressThroughId prevents saved effects replaying after load. */
     void Reset(uint64 SuppressThroughId = 0);
@@ -58,6 +59,7 @@ private:
         TeamBeam3,
         HealBeam,
         Dust,
+        Scorch,
         Count
     };
 
@@ -68,6 +70,21 @@ private:
 
     static constexpr int32 MaxInstances = 160;
     static constexpr int32 MaxBatchInstances = 56;
+    /** Wrecks a battlefield remembers at once, oldest replaced first. */
+    static constexpr int32 MaxWrecks = 24;
+    static constexpr float WreckLifetimeSeconds = 26.0f;
+
+    /** A scorch mark left where something died. Local cosmetic memory only: it is
+        never saved, never sent, and never consulted by the simulation. */
+    struct FWreck
+    {
+        cinder::Vec2 Position;
+        float Radius = 0;
+        float RecordedAt = 0;
+        uint64 EffectId = 0;
+    };
+    TArray<FWreck> Wrecks;
+    int32 NextWreck = 0;
 
     bool bInitialized = false;
     bool bSoftDust = false;

@@ -78,6 +78,38 @@ bool FCinderUnitInfoTest::RunTest(const FString& Parameters)
     TestEqual(TEXT("Defend arrival status uses the simulation's five-unit boundary"),
         CinderUnitInfo::Describe(Sim, Defending).OrderText, FString(TEXT("Defending")));
 
+    Entity Sustained = *Sim.find(Striker);
+    Sustained.order = Order::Patrol;
+    Sustained.sustained.phase = SustainedOrderPhase::Return;
+    TestEqual(TEXT("Patrol return status is distinct from ordinary movement"),
+        CinderUnitInfo::Describe(Sim, Sustained).OrderText, FString(TEXT("Returning to patrol endpoint")));
+    Sustained.order = Order::Escort;
+    Sustained.sustained = {};
+    Sustained.sustained.escortTarget = Mender;
+    TestEqual(TEXT("Escort travel status identifies its owned leader"),
+        CinderUnitInfo::Describe(Sim, Sustained).OrderText,
+        FString::Printf(TEXT("Escorting unit #%u"), Mender));
+    Sustained.sustained.phase = SustainedOrderPhase::Pursuit;
+    TestEqual(TEXT("Escort pursuit status is visible in unit information"),
+        CinderUnitInfo::Describe(Sim, Sustained).OrderText, FString(TEXT("Escort engaging")));
+
+    Entity WaitingWorker;
+    WaitingWorker.kind = Kind::Worker;
+    WaitingWorker.team = 0;
+    WaitingWorker.hp = definition(Kind::Worker).hp;
+    WaitingWorker.order = Order::Gather;
+    WaitingWorker.returning = true;
+    WaitingWorker.navigationExhausted = true;
+    TestEqual(TEXT("A blocked delivery is described as waiting, not active travel"),
+        CinderUnitInfo::Describe(Sim, WaitingWorker).OrderText, FString(TEXT("Ore delivery blocked")));
+    WaitingWorker.returning = false;
+    TestEqual(TEXT("A blocked mining trip is distinct from blocked ore delivery"),
+        CinderUnitInfo::Describe(Sim, WaitingWorker).OrderText, FString(TEXT("Mining route blocked")));
+    WaitingWorker.navigationExhausted = false;
+    WaitingWorker.returning = true;
+    TestEqual(TEXT("A recovered delivery returns to its ordinary description"),
+        CinderUnitInfo::Describe(Sim, WaitingWorker).OrderText, FString(TEXT("Returning ore")));
+
     Config ShortConfig;
     ShortConfig.ai = false;
     ShortConfig.matchLength = MatchLength::Short;

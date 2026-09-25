@@ -9,6 +9,7 @@
 #include "GameFramework/Actor.h"
 #include "Materials/MaterialInterface.h"
 #include "Misc/AutomationTest.h"
+#include "Presentation/CinderLandscapeTerrain.h"
 #include "Presentation/CinderTeamColors.h"
 #include "Presentation/CinderWorldEffects.h"
 #include "Sim/Network.h"
@@ -153,8 +154,8 @@ bool FCinderWorldEffectsInitialization::RunTest(const FString& Parameters)
     using namespace CinderWorldEffectsTests;
     FFixture Fixture;
     if (!Fixture.Initialize(*this)) return false;
-    TestEqual(TEXT("Initialization creates only four team glow/beam pairs plus shared effects"),
-        Fixture.EffectComponentCount(), 13);
+    TestEqual(TEXT("Initialization creates only four team glow/beam pairs, shared effects and one scorch batch"),
+        Fixture.EffectComponentCount(), 14);
     for (int32 Team = 0; Team < CinderTeamColors::Count; ++Team)
         TestEqual(*FString::Printf(TEXT("Team %d owns one distinct glow and one distinct beam material"), Team),
             Fixture.ComponentsWithTint(CinderTeamColors::Accent(Team))
@@ -341,6 +342,60 @@ bool FCinderWorldEffectsFogResetAndStableFrame::RunTest(const FString& Parameter
     Fixture.Effects->Update(Sim, 0);
     TestEqual(TEXT("Repeated revealed frame is upload-free"),
         Fixture.Effects->Stats().Uploads, RevealedUploads);
+
+    // Canonical mesh cliffs share their aircraft envelope in both terrain modes.
+    // A custom cliff still distinguishes Landscape relief from flat fallback.
+    // Inspect actual submitted exhaust transforms, not a copy of the height formula.
+    // Revision zero explicitly permits the custom cliff snapshot below.
+    Sim.reset({0, 42, false, 1, MatchLength::Standard, 2, 0});
+    StopStartingWorkers(Sim);
+    Fixture.Effects->Reset();
+    const Id ModeKite = Sim.debugSpawn(Kind::Kite, 0, Sim.obstacles()[0].center);
+    if (!TestTrue(TEXT("Terrain-mode fixture spawns a visible aircraft above a cliff"), ModeKite != 0)) return false;
+    TestTrue(TEXT("The effects terrain-mode regression uses a canonical rock body for its map revision"),
+        CinderLandscapeTerrain::UsesAuthoredCliffBody(Sim, 0));
+    auto ReadExhaust = [&](bool bTerrainRelief, FVector& OutPosition)
+    {
+        Fixture.Effects->Update(Sim, 0, bTerrainRelief);
+        if (!TestEqual(TEXT("An idle visible aircraft produces exactly one exhaust instance"),
+            Fixture.TotalInstanceCount(), 1)) return false;
+        TArray<UInstancedStaticMeshComponent*> Components;
+        Fixture.Owner->GetComponents<UInstancedStaticMeshComponent>(Components);
+        for (UInstancedStaticMeshComponent* Component : Components)
+        {
+            if (!Component || Component->GetInstanceCount() == 0) continue;
+            FTransform Transform;
+            if (!Component->GetInstanceTransform(0, Transform, true)) return false;
+            OutPosition = Transform.GetLocation();
+            return true;
+        }
+        return false;
+    };
+    const uint64 BeforeModes = Sim.stateHash();
+    FVector FlatExhaust, ReliefExhaust, RestoredExhaust;
+    if (!ReadExhaust(false, FlatExhaust) || !ReadExhaust(true, ReliefExhaust)
+        || !ReadExhaust(false, RestoredExhaust)) return false;
+    TestTrue(TEXT("Canonical mesh cliff exhaust keeps its safe altitude in both terrain modes"),
+        ReliefExhaust.Equals(FlatExhaust, 0.001f));
+    TestTrue(TEXT("Returning to flat fallback restores the original exhaust transform"),
+        RestoredExhaust.Equals(FlatExhaust, 0.001f));
+    TestEqual(TEXT("Changing presentation terrain mode never changes authoritative simulation state"),
+        Sim.stateHash(), BeforeModes);
+
+    net::Snapshot Custom = net::snapshotFor(Sim, 0);
+    Custom.obstacles[0].half.x += 1.0f;
+    if (!TestTrue(TEXT("A perturbed cliff snapshot remains valid"), Sim.applySnapshot(Custom))) return false;
+    TestFalse(TEXT("The custom cliff is not replaced with the canonical mesh body"),
+        CinderLandscapeTerrain::UsesAuthoredCliffBody(Sim, 0));
+    const uint64 BeforeCustomModes = Sim.stateHash();
+    if (!ReadExhaust(false, FlatExhaust) || !ReadExhaust(true, ReliefExhaust)
+        || !ReadExhaust(false, RestoredExhaust)) return false;
+    TestTrue(TEXT("Actual relief mode changes exhaust altitude above a custom heightfield cliff"),
+        ReliefExhaust.Z > FlatExhaust.Z + 100.0f);
+    TestTrue(TEXT("Returning to custom flat fallback restores the exhaust transform"),
+        RestoredExhaust.Equals(FlatExhaust, 0.001f));
+    TestEqual(TEXT("Custom presentation terrain mode never changes simulation state"),
+        Sim.stateHash(), BeforeCustomModes);
     return !HasAnyErrors();
 }
 
@@ -355,7 +410,8 @@ bool FCinderWorldEffectsInstanceBudget::RunTest(const FString& Parameters)
     FFixture Fixture;
     if (!Fixture.Initialize(*this)) return false;
     Simulation Sim;
-    Sim.reset({0, 77, false, 1});
+    // The tightly packed firing formations below occupy the legacy open lane.
+    Sim.reset({0, 77, false, 1, MatchLength::Standard, 2, 0});
     StopStartingWorkers(Sim);
     std::vector<Id> Friendly;
     std::vector<Id> Enemy;

@@ -241,6 +241,8 @@ void UCinderOnlineSubsystem::Deinitialize()
     // App termination is a disconnect, allowing the server's grace period to apply.
     CloseSocket();
     SeatToken.Empty();
+    PendingCommands.Reset();
+    CommandAcknowledgements.Reset();
     Super::Deinitialize();
 }
 
@@ -287,6 +289,7 @@ bool UCinderOnlineSubsystem::CanReconnectSession() const
 void UCinderOnlineSubsystem::ReportUncertainOrders(const FString& Reason)
 {
     const int32 Count = PendingCommands.Num();
+    CommandAcknowledgements.Reset();
     if (!Count) return;
     PendingCommands.Reset();
     bLastOrderAccepted = false;
@@ -336,7 +339,8 @@ void UCinderOnlineSubsystem::BeginConnection(const FString& Url, const FString& 
     bHasMatch = bHasSnapshot = bResumeAllowed = bWaitingForWorker = false; NextSequence = 1;
     for (int32 Seat = 0; Seat < MaxPlayers; ++Seat) { Names[Seat].Empty(); Connected[Seat] = Ready[Seat] = false; }
     LastError.Empty(); LastOrderFeedback.Empty();
-    PendingCommands.Reset(); ReconnectDeadline = SnapshotDeadline = 0; ReconnectAttempts = 0; PingMs = -1;
+    PendingCommands.Reset(); CommandAcknowledgements.Reset();
+    ReconnectDeadline = SnapshotDeadline = 0; ReconnectAttempts = 0; PingMs = -1;
     if (GConfig && !FApp::IsUnattended() && !GIsAutomationTesting)
         SavePreferences(Preferences());
     OpenSocket(false);
@@ -491,6 +495,16 @@ void UCinderOnlineSubsystem::HandleText(const FString& Message)
         bLastOrderAccepted = Accepted;
         LastOrderFeedback = Text.Left(240);
         if (LastOrderFeedback.IsEmpty()) LastOrderFeedback = Accepted ? TEXT("Order accepted") : TEXT("Order rejected");
+        if (CommandAcknowledgements.Num() >= 128)
+        {
+            uint32 Oldest = MAX_uint32;
+            for (const auto& Entry : CommandAcknowledgements) Oldest = FMath::Min(Oldest, Entry.Key);
+            CommandAcknowledgements.Remove(Oldest);
+        }
+        FCinderOnlineCommandAcknowledgement Acknowledgement;
+        Acknowledgement.bAccepted = Accepted;
+        Acknowledgement.Message = LastOrderFeedback;
+        CommandAcknowledgements.Add(Sequence, MoveTemp(Acknowledgement));
         ++OrderFeedbackSerial;
     }
     else if (Type == TEXT("peer"))
@@ -517,6 +531,7 @@ void UCinderOnlineSubsystem::HandleText(const FString& Message)
         Status = ResultWinner == -2 ? TEXT("Draw confirmed by the server.")
             : ResultWinner == 0 ? TEXT("Victory confirmed by the server.") : TEXT("Defeat confirmed by the server.");
         PendingCommands.Reset();
+        CommandAcknowledgements.Reset();
         UE_LOG(LogCinderOnline, Display, TEXT("CINDERLINE_ONLINE result_local=%d"), ResultWinner);
     }
     else if (Type == TEXT("pong"))
@@ -618,6 +633,7 @@ void UCinderOnlineSubsystem::HandleBinary(const void* Data, SIZE_T Size, bool bL
         Status = ResultWinner == -2 ? TEXT("Draw confirmed by the server.")
             : ResultWinner == 0 ? TEXT("Victory confirmed by the server.") : TEXT("Defeat confirmed by the server.");
         PendingCommands.Reset();
+        CommandAcknowledgements.Reset();
     }
     else if (CurrentState != ECinderOnlineState::Finished)
     {
@@ -626,6 +642,7 @@ void UCinderOnlineSubsystem::HandleBinary(const void* Data, SIZE_T Size, bool bL
         if (IsEliminated())
         {
             PendingCommands.Reset();
+            CommandAcknowledgements.Reset();
             if (bRecovered || !bWasEliminated)
                 Status = TEXT("You are eliminated. The remaining players are still fighting. You can leave the match.");
         }
@@ -653,15 +670,29 @@ bool UCinderOnlineSubsystem::CanSendOrders() const
         bHasSnapshot && !IsEliminated() && FPlatformTime::Seconds() - LastSnapshotAt < 3.0 && PendingCommands.Num() < 64;
 }
 
-bool UCinderOnlineSubsystem::SendCommand(const cinder::Command& Command)
+bool UCinderOnlineSubsystem::SendCommand(const cinder::Command& Command, uint32* OutSequence)
 {
+    if (OutSequence) *OutSequence = 0;
     if (!CanSendOrders() || NextSequence == 0) return false;
     const uint32 Sequence = NextSequence++;
     const auto Bytes = cinder::net::encodeCommand(Command, Sequence);
     if (Bytes.empty()) return false;
     PendingCommands.Add(Sequence, FPlatformTime::Seconds());
     Socket->Send(Bytes.data(), Bytes.size(), true);
+    if (OutSequence) *OutSequence = Sequence;
     return true;
+}
+
+bool UCinderOnlineSubsystem::ConsumeCommandAcknowledgement(uint32 Sequence,
+    FCinderOnlineCommandAcknowledgement& Out)
+{
+    if (FCinderOnlineCommandAcknowledgement* Found = CommandAcknowledgements.Find(Sequence))
+    {
+        Out = MoveTemp(*Found);
+        CommandAcknowledgements.Remove(Sequence);
+        return true;
+    }
+    return false;
 }
 
 void UCinderOnlineSubsystem::SetReady(bool Value)
@@ -682,6 +713,7 @@ void UCinderOnlineSubsystem::Leave()
     if (CurrentState == ECinderOnlineState::Leaving) return;
     bHasMatch = bHasSnapshot = false; SnapshotDeadline = 0;
     PendingCommands.Reset();
+    CommandAcknowledgements.Reset();
     if (!Socket || !Socket->IsConnected()) { FinishLeave(); return; }
     CurrentState = ECinderOnlineState::Leaving;
     LeaveDeadline = FPlatformTime::Seconds() + 3.0;
@@ -695,7 +727,8 @@ void UCinderOnlineSubsystem::FinishLeave()
     CurrentState = ECinderOnlineState::Offline;
     Room.Empty(); SeatToken.Empty(); PendingCode.Empty(); Team = -1; ResultWinner = -1;
     bHasMatch = bHasSnapshot = bResumeAllowed = bWaitingForWorker = false;
-    ReconnectDeadline = SnapshotDeadline = LeaveDeadline = 0; ReconnectAttempts = 0; PendingCommands.Reset();
+    ReconnectDeadline = SnapshotDeadline = LeaveDeadline = 0; ReconnectAttempts = 0;
+    PendingCommands.Reset(); CommandAcknowledgements.Reset();
     for (int32 Seat = 0; Seat < MaxPlayers; ++Seat) { Names[Seat].Empty(); Connected[Seat] = Ready[Seat] = false; }
     Players = 2;
     Status = TEXT("Left the online room."); LastError.Empty();

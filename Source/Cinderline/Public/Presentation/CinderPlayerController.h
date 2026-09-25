@@ -25,10 +25,22 @@ public:
     UCinderOnlineSubsystem* Online() const;
 #if UE_BUILD_DEVELOPMENT
     const TSharedPtr<SWidget>& OnlinePanelForPreview() const { return OnlinePanel; }
+    void PreviewTacticalQueueIntent(bool bPending);
+    void PreviewSustainedIntent(bool bEscort, bool bPending = false);
+    void PreviewFormationIntent(cinder::FormationSpacing Spacing, bool bFacing, bool bPending);
+    void PreviewFacingGesture(cinder::Vec2 Center, cinder::Vec2 Direction,
+        cinder::FormationSpacing Spacing);
 #endif
     bool IsOnlineLeavePending() const { return bOnlineLeavePending; }
     bool IsOnlineSurrenderPending() const { return bOnlineSurrenderPending; }
     const std::vector<cinder::Id>& Selection() const { return Selected; }
+    /** Narrow voice adapter: explicit frozen recipients, never implicit current selection. */
+    bool CommanderGameplayActive() const { return IsGameplayActive(); }
+    bool CommanderIssue(cinder::Command Command, uint32* OutOnlineSequence = nullptr);
+    bool CommanderSelect(const std::vector<cinder::Id>& Units);
+    bool CommanderFocus(cinder::Vec2 Point);
+    bool CommanderCameraPoint(cinder::Vec2& Out) const;
+    bool CommanderPointedLocation(cinder::Vec2& Out) const;
     bool GroundPoint(FVector2D Screen, cinder::Vec2& Out) const;
     bool ProjectTutorialTarget(cinder::Id Id, cinder::Vec2 Point, FVector2D& Out) const;
     bool IsSelecting() const { return bPointerDown && bDragging && bGestureSelect && !bPointerPlacement; }
@@ -37,16 +49,33 @@ public:
     bool IsBuildMode() const { return bBuildMode; }
     bool IsPlacementGestureActive() const { return bPointerDown && bPointerPlacement; }
     bool IsGlobalBuildMode() const { return bBuildMode && bAutomaticBuild; }
+    bool IsManualBuildMode() const { return bBuildMode && !bAutomaticBuild; }
+    bool HasSingleSelectedWorker() const;
+    bool IsWorkerBuildQueueActive() const;
     bool IsAttackMoveMode() const { return DestinationMode == EDestinationMode::AttackMove; }
     bool IsMoveCommandMode() const { return DestinationMode == EDestinationMode::Move; }
     bool IsDefendCommandMode() const { return DestinationMode == EDestinationMode::Defend; }
+    bool IsPatrolCommandMode() const { return DestinationMode == EDestinationMode::Patrol; }
+    bool IsEscortCommandMode() const { return DestinationMode == EDestinationMode::Escort; }
     bool IsProductionRallyMode() const { return DestinationMode == EDestinationMode::ProductionRally; }
+    bool IsQueueNextArmed() const { return bQueueNext; }
+    bool IsQueueNextPending() const { return PendingIntentSequence != 0 && !bPendingIntentCancelled && PendingIntentWasQueueNext; }
+    bool IsDestinationPending() const { return PendingIntentSequence != 0 && !bPendingIntentCancelled; }
+    cinder::FormationSpacing FormationSpacingPreset() const { return SpacingPreset; }
+    bool IsFaceNextArmed() const { return bFaceNext; }
+    bool IsFacingPointerActive() const { return bFacingPointer; }
+    bool IsFacingPending() const { return IsDestinationPending() && PendingIntentHasArrivalFacing; }
+    cinder::Vec2 FacingCenter() const { return FacingCenterPoint; }
+    cinder::Vec2 FacingDirectionPoint() const { return FacingDirection; }
+    cinder::FormationSpacing FacingLatchedSpacing() const { return FacingPointerSpacing; }
     cinder::Id ProductionRallyProducer() const { return RallyProducer; }
     cinder::CommandResult BuildPlacementStatus(const cinder::Vec2* Site = nullptr) const;
     cinder::Kind BuildingKind() const { return PendingBuilding; }
     cinder::Vec2 PlacementPoint() const { return Placement; }
     const FString& Feedback() const { return FeedbackText; }
     void ExecuteAction(const FString& Action, int Argument = 0);
+    bool IsCampaignMenuOpen() const { return bCampaignMenuOpen; }
+    int32 SelectedCampaignMission() const { return CampaignMenuMission; }
     void BeginGlobalBuild(cinder::Kind Kind);
     void QueueTraining(cinder::Kind Kind, int Quantity, cinder::Id Producer = 0);
     void QueueResearch(int Upgrade, cinder::Id Producer = 0);
@@ -86,6 +115,11 @@ private:
     friend class FCinderOnboardingIntegration;
     friend class FCinderArmyControlIntegration;
     friend class FCinderWorldTapIntegration;
+    friend class FCinderTacticalOrderIntegration;
+    friend class FCinderPatrolEscortIntegration;
+    friend class FCinderFormationIntegration;
+    friend class FCinderHUDTouchSafeZoneIntegration;
+    friend class FCinderCampaignHUDIntegration;
     friend class FCinderProductionControlIntegration;
     friend class FCinderOnlineRecoveryIntegration;
     enum class EDestinationMode : uint8
@@ -94,6 +128,8 @@ private:
         AttackMove,
         Move,
         Defend,
+        Patrol,
+        Escort,
         ProductionRally,
     };
     struct FProjectedPickCandidate
@@ -114,18 +150,32 @@ private:
     void HandleWorldTap(cinder::Id HitId, const cinder::Vec2* Ground, bool ForceCommand = false);
     bool SelectTappedEntity(cinder::Id Id);
     void ClearPointerTapIntent();
+    void CancelPointerWithoutRelease();
     void PanScreen(FVector2D Previous, FVector2D Current);
-    bool Issue(cinder::Command Command);
+    bool Issue(cinder::Command Command, uint32* OutOnlineSequence = nullptr);
     bool IssueDestination(cinder::Vec2 Point);
+    bool IssueFacingDestination(cinder::Vec2 Point, float ArrivalFacing,
+        cinder::FormationSpacing Spacing);
+    bool IssueEscortTarget(cinder::Id Target);
+    bool FinishDestinationIssue(cinder::Command Command, const TCHAR* PendingFeedback,
+        bool bTrackAuthoritativeIntent);
+    static cinder::CommandQueueMode ResolveQueueMode(cinder::CommandType Type,
+        bool bShiftDown, bool bTouchQueue, bool bExplicitDestination);
+    bool QueueModifierDown() const;
+    void ResolveDestinationAcknowledgement(uint32 Sequence, bool bAccepted);
     bool HasDestinationMode() const { return DestinationMode != EDestinationMode::None; }
     bool HasUnitDestinationMode() const
     {
         return DestinationMode == EDestinationMode::AttackMove
             || DestinationMode == EDestinationMode::Move
-            || DestinationMode == EDestinationMode::Defend;
+            || DestinationMode == EDestinationMode::Defend
+            || DestinationMode == EDestinationMode::Patrol
+            || DestinationMode == EDestinationMode::Escort;
     }
     void ToggleDestinationMode(EDestinationMode Mode);
-    void ClearDestinationModes();
+    void ClearDestinationModes(bool bDiscardPending = false);
+    void ClearFacingPointer();
+    void DiscardPendingDestinationIntent();
     bool IsGameplayActive() const;
     void ResetInteraction(bool bClearSelection);
     void SelectRectangle();
@@ -135,6 +185,8 @@ private:
     void AttackMode();
     void MoveMode();
     void DefendMode();
+    void PatrolMode();
+    void EscortMode();
     void Stop();
     void Hold();
     void ToggleHelp();
@@ -144,9 +196,13 @@ private:
     void BeginTutorial();
     void ResolveTutorialOffer(bool bBeginTutorial);
     void UpdateTutorial();
+    bool ExecuteCampaignAction(const FString& Action, int32 Argument);
+    void OpenCampaignMenu();
+    void FocusCampaignStart();
     void OpenOnlinePanel();
     void CloseOnlinePanel();
     void PollOnlineState();
+    void PollWorkerPlanNotice();
     void ToggleBuild();
     void ZoomIn();
     void ZoomOut();
@@ -183,26 +239,55 @@ private:
     bool bBuildMode = false;
     bool bAutomaticBuild = false;
     EDestinationMode DestinationMode = EDestinationMode::None;
+    bool bQueueNext = false;
+    cinder::FormationSpacing SpacingPreset = cinder::FormationSpacing::Standard;
+    bool bFaceNext = false;
+    bool bFacingPointer = false;
+    bool bConsumeFacingRelease = false;
+    cinder::Vec2 FacingCenterPoint{};
+    cinder::Vec2 FacingDirection{};
+    cinder::FormationSpacing FacingPointerSpacing = cinder::FormationSpacing::Standard;
+    uint64 DestinationGeneration = 1;
+    uint64 PendingIntentGeneration = 0;
+    uint32 PendingIntentSequence = 0;
+    EDestinationMode PendingIntentMode = EDestinationMode::None;
+    std::vector<cinder::Id> PendingIntentSelection;
+    bool PendingIntentWasQueueNext = false;
+    bool bPendingIntentCancelled = false;
+    cinder::CommandQueueMode PendingIntentQueueMode = cinder::CommandQueueMode::Replace;
+    cinder::FormationSpacing PendingIntentSpacing = cinder::FormationSpacing::Standard;
+    bool PendingIntentHasArrivalFacing = false;
+    float PendingIntentArrivalFacing = 0.0f;
+    cinder::Vec2 PendingIntentPoint{};
     cinder::Id RallyProducer = 0;
     FVector2D PointerStart, PointerLast, PreviousCentroid, PreviousMouse;
     float PointerHeld = 0, PreviousPinch = 0, LastTapTime = -1, FeedbackLife = 0;
     cinder::Id LastTapEntity = 0;
     cinder::Id PointerSelectionTarget = 0;
     cinder::Id PointerContextTarget = 0;
+    cinder::Id PointerCommandTarget = 0;
     bool bPointerWorldTapLatched = false;
     cinder::Kind PendingBuilding = cinder::Kind::Foundry;
     cinder::Vec2 Placement;
+    cinder::Vec2 CommanderLastPoint{};
+    uint64 CommanderPointGeneration = 0;
+    bool bCommanderHasPoint = false;
     FString FeedbackText;
     bool bHelpOpen = false, bTutorialRestartPending = false;
     bool bHelpTouch = PLATFORM_IOS || PLATFORM_ANDROID;
     bool bTutorialCompleted = false;
     bool bTutorialOfferResolved = false;
+    bool bCampaignMenuOpen = false;
+    int32 CampaignMenuMission = 0;
     cinder::AIDifficulty MenuDifficulty = cinder::AIDifficulty::Normal;
     cinder::MatchLength MenuMatchLength = cinder::MatchLength::Standard;
     bool bOnlineLeavePending = false, bOnlineSurrenderPending = false;
     bool bOnlineEliminationObserved = false;
     TSharedPtr<SWidget> OnlinePanel;
     uint64 OnlineFeedbackSerial = 0;
+    bool bWorkerPlanNoticeInitialized = false;
+    uint64 WorkerPlanNoticeSerial = 0;
+    uint64 WorkerPlanNoticeTick = 0;
     int32 CurrentHelpPage = 0, CurrentHelpReference = 0;
     float ArrowPanCredit[4] = { 0, 0, 0, 0 };
 };

@@ -881,7 +881,8 @@ FCinderTutorialGuide FCinderTutorial::Guide(const cinder::Simulation& Sim,
         Result.ActionCount = Count;
     };
     const bool bAnyDestinationMode = Context.bAttackMove || Context.bMoveCommand
-        || Context.bDefendCommand || Context.bBuildMode || Context.bProductionRally;
+        || Context.bDefendCommand || Context.bPatrolCommand || Context.bEscortCommand
+        || Context.bBuildMode || Context.bProductionRally;
     auto GuideTrain = [&](cinder::Kind Kind, int32 Quantity, bool bOrdered,
         const FString& Explanation, int32 Offset, int32 Count)
     {

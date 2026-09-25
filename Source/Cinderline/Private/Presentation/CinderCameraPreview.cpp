@@ -109,7 +109,7 @@ void CaptureCameraBorder(UWorld* World, ACinderPlayerController* PC, ACinderCame
 
 FAutoConsoleCommandWithWorldAndArgs CameraBorderCommand(
     TEXT("cinder.cameraborder"),
-    TEXT("DEVELOPMENT: on an existing local match, focus center or push the real camera clamp toward west|east|north|south|nw|ne|sw|se, then capture after 2s. Optional distance is 650..3200, default 1650. Run cinder.artpreview battlelive first for the standard scene. Never resets or saves a match."),
+    TEXT("DEVELOPMENT: on an existing local match, focus center or push the real camera clamp toward west|east|north|south|nw|ne|sw|se, then capture after 2s. Optional distance is the camera's own closest..farthest range, default the opening view. Run cinder.artpreview battlelive first for the standard scene. Never resets or saves a match."),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
     {
         const FString Edge = Args.IsEmpty() ? FString() : Args[0].ToLower();
@@ -121,12 +121,15 @@ FAutoConsoleCommandWithWorldAndArgs CameraBorderCommand(
             return;
         }
 
-        int32 Distance = 1650;
-        if (Args.Num() == 2 && (!LexTryParseString(Distance, *Args[1]) || Distance < 650 || Distance > 3200))
+        int32 Distance = static_cast<int32>(ACinderCamera::DefaultDistance);
+        if (Args.Num() == 2 && (!LexTryParseString(Distance, *Args[1])
+            || Distance < static_cast<int32>(ACinderCamera::ClosestDistance)
+            || Distance > static_cast<int32>(ACinderCamera::FarthestDistance)))
         {
             UE_LOG(LogCinderCameraPreview, Warning,
-                TEXT("CINDERLINE_MAP_BORDER edge=%s refused=invalid_distance value=%s allowed=650..3200"),
-                *Edge, *Args[1]);
+                TEXT("CINDERLINE_MAP_BORDER edge=%s refused=invalid_distance value=%s allowed=%d..%d"),
+                *Edge, *Args[1], static_cast<int32>(ACinderCamera::ClosestDistance),
+                static_cast<int32>(ACinderCamera::FarthestDistance));
             return;
         }
 

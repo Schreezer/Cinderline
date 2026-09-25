@@ -15,6 +15,7 @@
 #include "Presentation/CinderOnlineSubsystem.h"
 #include "Presentation/CinderPlayerController.h"
 #include "Tests/AutomationCommon.h"
+#include <cmath>
 #include <limits>
 
 namespace CinderOnlineIntegration
@@ -62,6 +63,13 @@ const cinder::Entity* FindOwnWorker(const cinder::net::Snapshot& Snapshot)
     return nullptr;
 }
 
+const cinder::Entity* FindOtherOwnWorker(const cinder::net::Snapshot& Snapshot, cinder::Id Excluded)
+{
+    for (const cinder::Entity& Entity : Snapshot.entities)
+        if (Entity.id != Excluded && Entity.team == 0 && Entity.kind == cinder::Kind::Worker && Entity.alive()) return &Entity;
+    return nullptr;
+}
+
 const cinder::Entity* FindEntity(const cinder::net::Snapshot& Snapshot, cinder::Id Id)
 {
     for (const cinder::Entity& Entity : Snapshot.entities)
@@ -83,6 +91,21 @@ bool HasNormalizedOwnArmy(const cinder::net::Snapshot& Snapshot)
         bFoundOwnEntity |= Entity.team == 0 && Entity.alive();
     }
     return bFoundOwnEntity && FindOwnWorker(Snapshot) != nullptr;
+}
+
+bool TacticalPlansArePrivate(const cinder::net::Snapshot& Snapshot)
+{
+    for (const cinder::Entity& Entity : Snapshot.entities)
+        if (Entity.team != 0 && (Entity.supportTarget != 0 || !Entity.futureOrders.empty()
+            || Entity.hasArrivalFacing || Entity.arrivalFacing != 0.0f || std::signbit(Entity.arrivalFacing)
+            || Entity.sustained.escortTarget != 0 || Entity.sustained.pursuitTarget != 0
+            || Entity.sustained.patrolOrigin.x != 0 || Entity.sustained.patrolOrigin.y != 0
+            || Entity.sustained.patrolDestination.x != 0 || Entity.sustained.patrolDestination.y != 0
+            || Entity.sustained.patrolTowardDestination
+            || Entity.sustained.escortOffset.x != 0 || Entity.sustained.escortOffset.y != 0
+            || Entity.sustained.pursuitAnchor.x != 0 || Entity.sustained.pursuitAnchor.y != 0
+            || Entity.sustained.phase != cinder::SustainedOrderPhase::Travel)) return false;
+    return true;
 }
 
 struct FTransportFixture
@@ -193,7 +216,7 @@ struct FFourPlayerTransportFixture
 enum class EFourPlayerPhase : uint8
 {
     Initialize, WaitForRoom, WaitForJoin, WaitForPartialReady, WaitForSnapshots,
-    WaitForOrders, WaitForRejectedEnemyOrder, WaitForElimination, WaitForEliminatedReconnect,
+    WaitForOrders, WaitForAppendedOrders, WaitForRejectedEnemyOrder, WaitForElimination, WaitForEliminatedReconnect,
     WaitForSecondElimination, WaitForResult, WaitForLeave
 };
 
@@ -293,6 +316,54 @@ public:
                 const auto* Worker = FindEntity(*Client->LatestSnapshot(), Workers[Seat]);
                 if (!Worker || Worker->order != cinder::Order::Hold) return false;
             }
+            for (int32 Seat = 0; Seat < 4; ++Seat)
+            {
+                auto* Client = Fixture.Clients[Seat];
+                cinder::Command Command;
+                Command.type = cinder::CommandType::Move;
+                Command.team = 0;
+                Command.units = {Workers[Seat]};
+                Command.point = {900.0f + Seat * 80.0f, 900.0f + Seat * 60.0f};
+                Command.queueMode = cinder::CommandQueueMode::Append;
+                Command.spacing = static_cast<cinder::FormationSpacing>(Seat % 3);
+                Command.hasArrivalFacing = true;
+                Command.arrivalFacing = -1.0f + Seat * 0.5f;
+                AppendFacings[Seat] = Command.arrivalFacing;
+                AppendSnapshotSerials[Seat] = Client->SnapshotSerial();
+                if (!Test->TestTrue(TEXT("Every seat sends an appended route through its private transport"),
+                    Client->SendCommand(Command, &AppendSequences[Seat]))
+                    || !Test->TestTrue(TEXT("Each appended route receives a concrete command sequence"), AppendSequences[Seat] != 0))
+                    return Finish();
+            }
+            Phase = EFourPlayerPhase::WaitForAppendedOrders;
+            return false;
+        case EFourPlayerPhase::WaitForAppendedOrders:
+            for (int32 Seat = 0; Seat < 4; ++Seat)
+            {
+                auto* Client = Fixture.Clients[Seat];
+                if (AppendAcknowledged[Seat] == 0)
+                {
+                    FCinderOnlineCommandAcknowledgement Acknowledgement;
+                    if (!Client->ConsumeCommandAcknowledgement(AppendSequences[Seat], Acknowledgement)) return false;
+                    if (!Test->TestTrue(TEXT("The exact append sequence receives an accepted acknowledgement"),
+                        Acknowledgement.bAccepted && Acknowledgement.Message == TEXT("Destination queued.")
+                        && !Client->IsCommandPending(AppendSequences[Seat]))) return Finish();
+                    AppendAcknowledged[Seat] = 1;
+                }
+                const cinder::net::Snapshot* Snapshot = Client->LatestSnapshot();
+                const cinder::Entity* Worker = Snapshot ? FindEntity(*Snapshot, Workers[Seat]) : nullptr;
+                if (!Snapshot || Client->SnapshotSerial() <= AppendSnapshotSerials[Seat]
+                    || !Worker || Worker->futureOrders.size() != 1) return false;
+                const cinder::TacticalOrder& Future = Worker->futureOrders.front();
+                if (!Test->TestTrue(TEXT("Each owned snapshot retains its accepted future route"),
+                        Worker->order == cinder::Order::Hold && Future.order == cinder::Order::Move
+                        && Future.supportTarget == 0
+                        && Future.point.x == 900.0f + Seat * 80.0f
+                        && Future.point.y == 900.0f + Seat * 60.0f
+                        && Future.hasArrivalFacing && Future.arrivalFacing == AppendFacings[Seat])
+                    || !Test->TestTrue(TEXT("Four-player snapshots keep tactical plans private to their owner"),
+                        TacticalPlansArePrivate(*Snapshot))) return Finish();
+            }
             {
                 cinder::Command Command; Command.type = cinder::CommandType::Hold; Command.team = 0; Command.units = {Workers[0]};
                 FeedbackBefore[2] = Fixture.Clients[2]->FeedbackSerial();
@@ -380,6 +451,10 @@ private:
     FFourPlayerTransportFixture Fixture;
     cinder::Id Workers[4] = {};
     uint64 FeedbackBefore[4] = {}, ReconnectTick = 0, ReconnectSerial = 0;
+    uint64 AppendSnapshotSerials[4] = {};
+    uint32 AppendSequences[4] = {};
+    uint8 AppendAcknowledged[4] = {};
+    float AppendFacings[4] = {};
 };
 
 enum class ETransportPhase : uint8
@@ -390,8 +465,15 @@ enum class ETransportPhase : uint8
     WaitForSnapshots,
     WaitForAcceptedOrder,
     WaitForReplicatedOrder,
+    WaitForAppendAcknowledgement,
+    WaitForAppendSnapshot,
     WaitForRejectedOrder,
     WaitForReconnect,
+    WaitForPatrolAcknowledgement,
+    WaitForPatrolSnapshot,
+    WaitForEscortAcknowledgement,
+    WaitForEscortSnapshot,
+    WaitForSustainedReconnect,
     WaitForPausedSnapshot,
     WaitForResult,
     WaitForLeave
@@ -524,6 +606,9 @@ public:
             const cinder::Entity* Worker = FindOwnWorker(*HostSnapshot);
             if (!Test->TestNotNull(TEXT("Host snapshot contains an addressable own worker"), Worker)) return Finish();
             OrderedWorker = Worker->id;
+            const cinder::Entity* OtherWorker = FindOtherOwnWorker(*HostSnapshot, OrderedWorker);
+            if (!Test->TestNotNull(TEXT("Host snapshot contains a second own worker for Escort transport coverage"), OtherWorker)) return Finish();
+            EscortWorker = OtherWorker->id;
             SnapshotSerialBeforeOrder = Fixture.Host->SnapshotSerial();
             SnapshotTickBeforeOrder = HostSnapshot->tick;
             WorkerOrderBeforeCommand = Worker->order;
@@ -584,12 +669,64 @@ public:
                         && Fixture.Battle->Sim().tick() == Snapshot->tick))
                 return Finish();
 
+            cinder::Command Append;
+            Append.type = cinder::CommandType::Move;
+            Append.team = 0;
+            Append.units = {OrderedWorker};
+            Append.point = {900.0f, 900.0f};
+            Append.queueMode = cinder::CommandQueueMode::Append;
+            Append.spacing = cinder::FormationSpacing::Wide;
+            Append.hasArrivalFacing = true;
+            Append.arrivalFacing = 0.75f;
+            SnapshotSerialBeforeAppend = Fixture.Host->SnapshotSerial();
+            GuestSnapshotSerialBeforeAppend = Fixture.Guest->SnapshotSerial();
+            if (!Test->TestTrue(TEXT("Host sends an appended route through the real WebSocket"),
+                    Fixture.Host->SendCommand(Append, &AppendSequence))
+                || !Test->TestTrue(TEXT("Appended route receives a concrete transport sequence"), AppendSequence != 0))
+                return Finish();
+            Phase = ETransportPhase::WaitForAppendAcknowledgement;
+            return false;
+        }
+
+        case ETransportPhase::WaitForAppendAcknowledgement:
+        {
+            FCinderOnlineCommandAcknowledgement Acknowledgement;
+            if (!Fixture.Host->ConsumeCommandAcknowledgement(AppendSequence, Acknowledgement)) return false;
+            if (!Test->TestTrue(TEXT("The exact append sequence receives an accepted authoritative acknowledgement"),
+                Acknowledgement.bAccepted && Acknowledgement.Message == TEXT("Destination queued.")
+                && !Fixture.Host->IsCommandPending(AppendSequence))) return Finish();
+            Phase = ETransportPhase::WaitForAppendSnapshot;
+            return false;
+        }
+
+        case ETransportPhase::WaitForAppendSnapshot:
+        {
+            const cinder::net::Snapshot* HostSnapshot = Fixture.Host->LatestSnapshot();
+            const cinder::net::Snapshot* GuestSnapshot = Fixture.Guest->LatestSnapshot();
+            const cinder::Entity* Worker = HostSnapshot ? FindEntity(*HostSnapshot, OrderedWorker) : nullptr;
+            if (!HostSnapshot || !GuestSnapshot || Fixture.Host->SnapshotSerial() <= SnapshotSerialBeforeAppend
+                || Fixture.Guest->SnapshotSerial() <= GuestSnapshotSerialBeforeAppend
+                || !Worker || Worker->futureOrders.size() != 1) return false;
+            const cinder::TacticalOrder& Future = Worker->futureOrders.front();
+            if (!Test->TestTrue(TEXT("Owned protocol-eleven snapshot retains the accepted future route and facing"),
+                    Worker->order == cinder::Order::Hold && Future.order == cinder::Order::Move
+                    && Future.supportTarget == 0 && Future.point.x >= 0 && Future.point.y >= 0
+                    && Future.point.x <= cinder::Simulation::WorldSize && Future.point.y <= cinder::Simulation::WorldSize
+                    && Future.hasArrivalFacing && Future.arrivalFacing == 0.75f)
+                || !Test->TestTrue(TEXT("Two-player snapshots expose tactical plans only for the recipient's army"),
+                    TacticalPlansArePrivate(*HostSnapshot) && TacticalPlansArePrivate(*GuestSnapshot))) return Finish();
+            AcceptedFuturePoint = Future.point;
+            AcceptedFutureFacing = Future.arrivalFacing;
+
             cinder::Command Invalid;
-            Invalid.type = cinder::CommandType::Hold;
+            Invalid.type = cinder::CommandType::Move;
             Invalid.team = 0;
             Invalid.units = {std::numeric_limits<cinder::Id>::max() - 7};
+            Invalid.point = {1500.0f, 1500.0f};
+            Invalid.queueMode = cinder::CommandQueueMode::Append;
             FeedbackBeforeInvalid = Fixture.Host->FeedbackSerial();
-            if (!Test->TestTrue(TEXT("Battlefield transmits the invalid entity command for server validation"),
+            SnapshotSerialBeforeInvalid = Fixture.Host->SnapshotSerial();
+            if (!Test->TestTrue(TEXT("Battlefield transmits the invalid append for server validation"),
                 Fixture.Battle->SubmitCommand(Invalid).accepted))
                 return Finish();
             Phase = ETransportPhase::WaitForRejectedOrder;
@@ -598,14 +735,20 @@ public:
 
         case ETransportPhase::WaitForRejectedOrder:
             if (Fixture.Host->FeedbackSerial() <= FeedbackBeforeInvalid) return false;
-            if (!Test->TestFalse(TEXT("Authoritative worker rejected an unknown entity ID"), Fixture.Host->LastOrderAccepted())
-                || !Test->TestTrue(TEXT("Rejected command returned explanatory feedback"), !Fixture.Host->OrderFeedback().IsEmpty()))
+            if (!Test->TestFalse(TEXT("Authoritative worker rejected an append with an unknown entity ID"), Fixture.Host->LastOrderAccepted())
+                || !Test->TestTrue(TEXT("Rejected append returned explanatory feedback"), !Fixture.Host->OrderFeedback().IsEmpty()))
                 return Finish();
             if (const cinder::net::Snapshot* Snapshot = Fixture.Host->LatestSnapshot())
             {
                 const cinder::Entity* Worker = FindEntity(*Snapshot, OrderedWorker);
-                if (!Test->TestTrue(TEXT("Accepted Hold order is present before reconnect"),
-                    Worker && Worker->order == cinder::Order::Hold)) return Finish();
+                if (Fixture.Host->SnapshotSerial() <= SnapshotSerialBeforeInvalid || !Worker
+                    || Worker->futureOrders.size() != 1) return false;
+                const cinder::TacticalOrder& Future = Worker->futureOrders.front();
+                if (!Test->TestTrue(TEXT("Rejected append preserves the accepted tactical tail and opaque identity"),
+                    Worker->id == OrderedWorker && Worker->order == cinder::Order::Hold
+                    && Future.order == cinder::Order::Move && Future.point.x == AcceptedFuturePoint.x
+                    && Future.point.y == AcceptedFuturePoint.y && Future.supportTarget == 0
+                    && Future.hasArrivalFacing && Future.arrivalFacing == AcceptedFutureFacing)) return Finish();
                 TickBeforeReconnect = Snapshot->tick;
             }
             else
@@ -632,8 +775,13 @@ public:
             if (!Test->TestEqual(TEXT("Reconnect restores the same private room"), Fixture.Host->RoomCode(), RoomBeforeReconnect)
                 || !Test->TestEqual(TEXT("Reconnect restores the same seat"), Fixture.Host->LocalSeat(), SeatBeforeReconnect)
                 || !Test->TestTrue(TEXT("Reconnect retains the stable own-worker ID"), Worker != nullptr)
-                || !Test->TestTrue(TEXT("Reconnect snapshot retains the accepted Hold order"),
-                    Worker && Worker->order == cinder::Order::Hold)
+                || !Test->TestTrue(TEXT("Reconnect snapshot retains the accepted Hold order and future route"),
+                    Worker && Worker->order == cinder::Order::Hold && Worker->futureOrders.size() == 1
+                    && Worker->futureOrders.front().order == cinder::Order::Move
+                    && Worker->futureOrders.front().point.x == AcceptedFuturePoint.x
+                    && Worker->futureOrders.front().point.y == AcceptedFuturePoint.y
+                    && Worker->futureOrders.front().hasArrivalFacing
+                    && Worker->futureOrders.front().arrivalFacing == AcceptedFutureFacing)
                 || !Test->TestTrue(TEXT("Guest remains in the active match while the host reconnects"),
                     Fixture.Guest->State() == ECinderOnlineState::Playing))
                 return Finish();
@@ -643,6 +791,134 @@ public:
                 Fixture.Battle->Sim().tick() == Snapshot->tick
                     && AdapterWorker && AdapterWorker->order == cinder::Order::Hold))
                 return Finish();
+
+            cinder::Command Patrol;
+            Patrol.type = cinder::CommandType::Patrol;
+            Patrol.team = 0;
+            Patrol.units = {OrderedWorker};
+            Patrol.point = AcceptedFuturePoint;
+            SnapshotSerialBeforePatrol = Fixture.Host->SnapshotSerial();
+            GuestSnapshotSerialBeforePatrol = Fixture.Guest->SnapshotSerial();
+            if (!Test->TestTrue(TEXT("Host sends Patrol through the real WebSocket"),
+                    Fixture.Host->SendCommand(Patrol, &PatrolSequence))
+                || !Test->TestTrue(TEXT("Patrol receives a concrete transport sequence"), PatrolSequence != 0))
+                return Finish();
+            Phase = ETransportPhase::WaitForPatrolAcknowledgement;
+            return false;
+        }
+
+        case ETransportPhase::WaitForPatrolAcknowledgement:
+        {
+            FCinderOnlineCommandAcknowledgement Acknowledgement;
+            if (!Fixture.Host->ConsumeCommandAcknowledgement(PatrolSequence, Acknowledgement)) return false;
+            if (!Test->TestTrue(TEXT("The exact Patrol sequence receives its accepted authoritative acknowledgement"),
+                Acknowledgement.bAccepted && Acknowledgement.Message == TEXT("Patrol route accepted.")
+                && !Fixture.Host->IsCommandPending(PatrolSequence))) return Finish();
+            Phase = ETransportPhase::WaitForPatrolSnapshot;
+            return false;
+        }
+
+        case ETransportPhase::WaitForPatrolSnapshot:
+        {
+            const cinder::net::Snapshot* HostSnapshot = Fixture.Host->LatestSnapshot();
+            const cinder::net::Snapshot* GuestSnapshot = Fixture.Guest->LatestSnapshot();
+            const cinder::Entity* Patrol = HostSnapshot ? FindEntity(*HostSnapshot, OrderedWorker) : nullptr;
+            if (!HostSnapshot || !GuestSnapshot || Fixture.Host->SnapshotSerial() <= SnapshotSerialBeforePatrol
+                || Fixture.Guest->SnapshotSerial() <= GuestSnapshotSerialBeforePatrol
+                || !Patrol || Patrol->order != cinder::Order::Patrol) return false;
+            if (!Test->TestTrue(TEXT("Owned protocol-eleven snapshot retains the complete Patrol plan"),
+                    Patrol->sustained.patrolOrigin.x >= 0 && Patrol->sustained.patrolOrigin.y >= 0
+                    && Patrol->sustained.patrolOrigin.x <= cinder::Simulation::WorldSize
+                    && Patrol->sustained.patrolOrigin.y <= cinder::Simulation::WorldSize
+                    && Patrol->sustained.patrolDestination.x == AcceptedFuturePoint.x
+                    && Patrol->sustained.patrolDestination.y == AcceptedFuturePoint.y
+                    && Patrol->sustained.patrolTowardDestination
+                    && Patrol->sustained.escortTarget == 0
+                    && Patrol->sustained.pursuitTarget == 0
+                    && Patrol->sustained.phase == cinder::SustainedOrderPhase::Travel
+                    && !Patrol->hasArrivalFacing && Patrol->arrivalFacing == 0.0f
+                    && !std::signbit(Patrol->arrivalFacing))
+                || !Test->TestTrue(TEXT("Patrol state stays private on both recipient-normalized snapshots"),
+                    TacticalPlansArePrivate(*HostSnapshot) && TacticalPlansArePrivate(*GuestSnapshot))) return Finish();
+            AcceptedPatrolOrigin = Patrol->sustained.patrolOrigin;
+            AcceptedPatrolDestination = Patrol->sustained.patrolDestination;
+
+            cinder::Command Escort;
+            Escort.type = cinder::CommandType::Escort;
+            Escort.team = 0;
+            Escort.units = {EscortWorker};
+            Escort.target = OrderedWorker;
+            SnapshotSerialBeforeEscort = Fixture.Host->SnapshotSerial();
+            GuestSnapshotSerialBeforeEscort = Fixture.Guest->SnapshotSerial();
+            if (!Test->TestTrue(TEXT("Host sends Escort with an owned opaque target through the real WebSocket"),
+                    Fixture.Host->SendCommand(Escort, &EscortSequence))
+                || !Test->TestTrue(TEXT("Escort receives a concrete transport sequence"), EscortSequence != 0))
+                return Finish();
+            Phase = ETransportPhase::WaitForEscortAcknowledgement;
+            return false;
+        }
+
+        case ETransportPhase::WaitForEscortAcknowledgement:
+        {
+            FCinderOnlineCommandAcknowledgement Acknowledgement;
+            if (!Fixture.Host->ConsumeCommandAcknowledgement(EscortSequence, Acknowledgement)) return false;
+            if (!Test->TestTrue(TEXT("The exact Escort sequence receives its accepted authoritative acknowledgement"),
+                Acknowledgement.bAccepted && Acknowledgement.Message == TEXT("Escort formation assigned.")
+                && !Fixture.Host->IsCommandPending(EscortSequence))) return Finish();
+            Phase = ETransportPhase::WaitForEscortSnapshot;
+            return false;
+        }
+
+        case ETransportPhase::WaitForEscortSnapshot:
+        {
+            const cinder::net::Snapshot* HostSnapshot = Fixture.Host->LatestSnapshot();
+            const cinder::net::Snapshot* GuestSnapshot = Fixture.Guest->LatestSnapshot();
+            const cinder::Entity* Patrol = HostSnapshot ? FindEntity(*HostSnapshot, OrderedWorker) : nullptr;
+            const cinder::Entity* Escort = HostSnapshot ? FindEntity(*HostSnapshot, EscortWorker) : nullptr;
+            if (!HostSnapshot || !GuestSnapshot || Fixture.Host->SnapshotSerial() <= SnapshotSerialBeforeEscort
+                || Fixture.Guest->SnapshotSerial() <= GuestSnapshotSerialBeforeEscort
+                || !Patrol || !Escort || Escort->order != cinder::Order::Escort) return false;
+            const float EscortOffsetSquared = Escort->sustained.escortOffset.x * Escort->sustained.escortOffset.x
+                + Escort->sustained.escortOffset.y * Escort->sustained.escortOffset.y;
+            if (!Test->TestTrue(TEXT("Owned protocol-eleven snapshot retains the opaque Escort link and stable slot"),
+                    Patrol->order == cinder::Order::Patrol
+                    && Escort->sustained.escortTarget == OrderedWorker
+                    && Escort->sustained.pursuitTarget == 0
+                    && Escort->sustained.phase == cinder::SustainedOrderPhase::Travel
+                    && EscortOffsetSquared > 0
+                    && EscortOffsetSquared <= cinder::Simulation::MaxEscortOffset * cinder::Simulation::MaxEscortOffset)
+                || !Test->TestTrue(TEXT("Escort state stays private on both recipient-normalized snapshots"),
+                    TacticalPlansArePrivate(*HostSnapshot) && TacticalPlansArePrivate(*GuestSnapshot))) return Finish();
+            AcceptedEscortOffset = Escort->sustained.escortOffset;
+            SnapshotSerialBeforeSustainedReconnect = Fixture.Host->SnapshotSerial();
+            TickBeforeSustainedReconnect = HostSnapshot->tick;
+            Fixture.Host->Reconnect();
+            if (!Test->TestTrue(TEXT("Sustained-order reconnect enters the reconnecting state"),
+                Fixture.Host->State() == ECinderOnlineState::Reconnecting)) return Finish();
+            Phase = ETransportPhase::WaitForSustainedReconnect;
+            return false;
+        }
+
+        case ETransportPhase::WaitForSustainedReconnect:
+        {
+            const cinder::net::Snapshot* Snapshot = Fixture.Host->LatestSnapshot();
+            const cinder::Entity* Patrol = Snapshot ? FindEntity(*Snapshot, OrderedWorker) : nullptr;
+            const cinder::Entity* Escort = Snapshot ? FindEntity(*Snapshot, EscortWorker) : nullptr;
+            if (Fixture.Host->State() != ECinderOnlineState::Playing
+                || Fixture.Host->SnapshotSerial() <= SnapshotSerialBeforeSustainedReconnect
+                || !Snapshot || Snapshot->tick <= TickBeforeSustainedReconnect || !Patrol || !Escort) return false;
+            if (!Test->TestTrue(TEXT("Reconnect retains Patrol endpoints and both stable opaque identities"),
+                    Patrol->id == OrderedWorker && Patrol->order == cinder::Order::Patrol
+                    && Patrol->sustained.patrolOrigin.x == AcceptedPatrolOrigin.x
+                    && Patrol->sustained.patrolOrigin.y == AcceptedPatrolOrigin.y
+                    && Patrol->sustained.patrolDestination.x == AcceptedPatrolDestination.x
+                    && Patrol->sustained.patrolDestination.y == AcceptedPatrolDestination.y
+                    && Escort->id == EscortWorker && Escort->order == cinder::Order::Escort
+                    && Escort->sustained.escortTarget == OrderedWorker
+                    && Escort->sustained.escortOffset.x == AcceptedEscortOffset.x
+                    && Escort->sustained.escortOffset.y == AcceptedEscortOffset.y)
+                || !Test->TestTrue(TEXT("Reconnect still exposes sustained plans only to their owner"),
+                    TacticalPlansArePrivate(*Snapshot))) return Finish();
             PausedAdapterTick = Fixture.Battle->Sim().tick();
             PausedSessionSerial = Fixture.Host->SnapshotSerial();
             Fixture.Controller->ExecuteAction(TEXT("pause"));
@@ -733,13 +1009,31 @@ private:
     ETransportPhase Phase = ETransportPhase::Initialize;
     FTransportFixture Fixture;
     cinder::Id OrderedWorker = 0;
+    cinder::Id EscortWorker = 0;
     cinder::Order WorkerOrderBeforeCommand = cinder::Order::Idle;
     uint64 SnapshotSerialBeforeOrder = 0;
     uint64 SnapshotTickBeforeOrder = 0;
     uint64 FeedbackBeforeOrder = 0;
     uint64 FeedbackBeforeInvalid = 0;
+    uint64 SnapshotSerialBeforeAppend = 0;
+    uint64 GuestSnapshotSerialBeforeAppend = 0;
+    uint64 SnapshotSerialBeforeInvalid = 0;
+    uint32 AppendSequence = 0;
+    uint32 PatrolSequence = 0;
+    uint32 EscortSequence = 0;
+    cinder::Vec2 AcceptedFuturePoint{};
+    float AcceptedFutureFacing = 0.0f;
+    cinder::Vec2 AcceptedPatrolOrigin{};
+    cinder::Vec2 AcceptedPatrolDestination{};
+    cinder::Vec2 AcceptedEscortOffset{};
     uint64 SnapshotSerialBeforeReconnect = 0;
     uint64 TickBeforeReconnect = 0;
+    uint64 SnapshotSerialBeforePatrol = 0;
+    uint64 GuestSnapshotSerialBeforePatrol = 0;
+    uint64 SnapshotSerialBeforeEscort = 0;
+    uint64 GuestSnapshotSerialBeforeEscort = 0;
+    uint64 SnapshotSerialBeforeSustainedReconnect = 0;
+    uint64 TickBeforeSustainedReconnect = 0;
     uint64 PausedSessionSerial = 0;
     uint64 PausedAdapterTick = 0;
     int32 SeatBeforeReconnect = -1;

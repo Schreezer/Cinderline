@@ -9,6 +9,12 @@ class IWebSocket;
 enum class ECinderConnectionMode : uint8 { Internet, LocalNetwork };
 enum class ECinderOnlineState : uint8 { Offline, Connecting, Lobby, Starting, Playing, Reconnecting, Leaving, Finished, Error };
 
+struct FCinderOnlineCommandAcknowledgement
+{
+    bool bAccepted = false;
+    FString Message;
+};
+
 /** Room transport and private seat credentials. Gameplay authority stays on the server. */
 UCLASS()
 class CINDERLINE_API UCinderOnlineSubsystem : public UGameInstanceSubsystem, public FTickableGameObject
@@ -62,11 +68,15 @@ public:
     void RecoverConnection();
     void Leave();
     bool Surrender();
-    bool SendCommand(const cinder::Command& Command);
+    bool SendCommand(const cinder::Command& Command, uint32* OutSequence = nullptr);
+    bool IsCommandPending(uint32 Sequence) const { return PendingCommands.Contains(Sequence); }
+    bool ConsumeCommandAcknowledgement(uint32 Sequence, FCinderOnlineCommandAcknowledgement& Out);
 private:
     friend class FCinderOnboardingIntegration;
     friend class FCinderArmyControlIntegration;
     friend class FCinderOnlineRecoveryIntegration;
+    friend class FCinderTacticalOrderIntegration;
+    friend class FCinderPatrolEscortIntegration;
     void BeginConnection(const FString& Url, const FString& Name, const FString& Code, bool bCreate);
     void OpenSocket(bool bResume);
     void CloseSocket();
@@ -96,6 +106,7 @@ private:
     uint64 SocketGeneration = 0, ReceivedSnapshotSerial = 0, OrderFeedbackSerial = 0;
     uint32 NextSequence = 1;
     TMap<uint32, double> PendingCommands;
+    TMap<uint32, FCinderOnlineCommandAcknowledgement> CommandAcknowledgements;
     cinder::net::Snapshot Snapshot;
     TArray<uint8> BinaryBuffer;
     FString LastOrderFeedback;

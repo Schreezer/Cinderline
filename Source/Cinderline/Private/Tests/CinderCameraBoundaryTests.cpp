@@ -57,7 +57,8 @@ bool FCinderCameraBoundaryTest::RunTest(const FString& Parameters)
             Rig->Camera->AspectRatio = Aspect; // No viewport: the rig uses its configured aspect.
             const auto Footprint = Rig->GroundFootprint();
             if (!TestTrue(TEXT("Camera rays intersect the ground at every supported aspect"), Footprint.bValid)) return false;
-            for (float Zoom : {650.0f, 1650.0f, 3200.0f})
+            for (float Zoom : {ACinderCamera::ClosestDistance, ACinderCamera::DefaultDistance,
+                               ACinderCamera::FarthestDistance})
             for (const FVector& Direction : Directions)
             {
                 Rig->Focus(Center, true);
@@ -100,7 +101,7 @@ bool FCinderCameraBoundaryTest::RunTest(const FString& Parameters)
         }
         Rig->Camera->AspectRatio = 2868.0f / 1320.0f;
         Rig->Focus(Center, true);
-        Rig->Zoom(650 - Rig->Distance());
+        Rig->Zoom(ACinderCamera::ClosestDistance - Rig->Distance());
         Rig->Focus(Center, true);
         Rig->Pan(FVector(-1000000, 0, 0));
         const auto CloseFootprint = Rig->GroundFootprint();
@@ -178,6 +179,77 @@ bool FCinderCameraBoundaryTest::RunTest(const FString& Parameters)
         TestTrue(TEXT("Returning to Standard restores its exact border transforms"),
             Transform.Equals(StandardTransforms[Index], 0));
     }
+    // The authored duel raises the home to 180 cm. Exercise the actual camera's
+    // focus, zoom clamp and projection with the battlefield's presented-height
+    // sampler; a flat XY-only focus lets the 185 cm Anchor roof leave a phone view.
+    Battle->StartMatch(0, cinder::AIDifficulty::Normal, cinder::MatchLength::Standard);
+    Battle->bTerrainRelief = true;
+    Battle->LastFogCells.Init(2, cinder::Simulation::FogSize * cinder::Simulation::FogSize);
+    Rig->SetTerrainSource(Battle);
+    const cinder::Vec2 Home = Battle->Sim().entities().front().pos;
+    const FVector AnchorExtent(125.0f, 125.0f, 92.5f);
+    int32 ElevatedCases = 0;
+    for (float Aspect : {1440.0f / 900.0f, 1170.0f / 540.0f})
+    for (float RequestedZoom : {ACinderCamera::ClosestDistance, ACinderCamera::DefaultDistance,
+        ACinderCamera::FarthestDistance})
+    {
+        Rig->Camera->AspectRatio = Aspect;
+        const float GroundZ = Battle->PickingGroundHeight(Home);
+        TestTrue(TEXT("The new main has presented elevated ground"), GroundZ > 170.0f);
+        Rig->Focus(FVector(Home.x, Home.y, GroundZ), true, AnchorExtent);
+        Rig->Zoom(RequestedZoom - Rig->Distance());
+        Rig->Focus(FVector(Home.x, Home.y, GroundZ), true, AnchorExtent);
+        const auto Footprint = Rig->GroundFootprint();
+        TestTrue(TEXT("Home focus frames the complete elevated Anchor at desktop and phone zooms"),
+            Rig->ContainsFocus(Rig->GetActorLocation(), Rig->Distance(), Footprint));
+        // The ordinary interpolation clamp must retain the same permitted
+        // focus region instead of undoing a correct instantaneous Home view.
+        for (int32 Frame = 0; Frame < 30; ++Frame) Rig->Tick(1.0f / 30);
+        TestTrue(TEXT("Normal camera ticks retain the complete elevated Home framing"),
+            Rig->ContainsFocus(Rig->GetActorLocation(), Rig->Boom->TargetArmLength, Footprint));
+        const FVector Eye = Rig->GetActorLocation() - Footprint.Forward * Rig->Distance();
+        for (int32 X : {-1, 1}) for (int32 Y : {-1, 1}) for (int32 Z : {-1, 1})
+        {
+            const FVector Point(Home.x + X * AnchorExtent.X, Home.y + Y * AnchorExtent.Y,
+                GroundZ + AnchorExtent.Z + Z * AnchorExtent.Z);
+            const FVector Delta = Point - Eye;
+            const double Depth = FVector::DotProduct(Delta, Footprint.Forward);
+            TestTrue(TEXT("Every real Anchor bounding-box corner projects inside the safe viewport"),
+                Depth > 0 && FMath::Abs(FVector::DotProduct(Delta, Footprint.Right)) <= Depth * Footprint.TanHalfX * 0.801
+                && FMath::Abs(FVector::DotProduct(Delta, Footprint.Up)) <= Depth * Footprint.TanHalfY * 0.801);
+        }
+        const FVector Pivot = Rig->GetActorLocation();
+        const double HeightDistance = Pivot.Z / -Footprint.Forward.Z;
+        const FVector2D Shift(Footprint.Forward.X * HeightDistance, Footprint.Forward.Y * HeightDistance);
+        const FVector2D Low = FVector2D(Pivot) + Shift + Footprint.Min * (Rig->Distance() + HeightDistance);
+        const FVector2D High = FVector2D(Pivot) + Shift + Footprint.Max * (Rig->Distance() + HeightDistance);
+        TestTrue(TEXT("The raised camera keeps its complete world-plane footprint within the existing border allowance"),
+            Low.X >= -360.1 && Low.Y >= -360.1 && High.X <= 5160.1 && High.Y <= 5160.1);
+        ++ElevatedCases;
+    }
+    Rig->Camera->AspectRatio = 1170.0f / 540.0f;
+    Rig->Focus(FVector(1490, 1230, 0), true);
+    Rig->Zoom(ACinderCamera::DefaultDistance - Rig->Distance());
+    Rig->Focus(FVector(1490, 1230, 0), true);
+    for (int32 Step = 0; Step < 4; ++Step)
+    {
+        Rig->Pan(FVector(140, 0, 0));
+        for (int32 Frame = 0; Frame < 60; ++Frame) Rig->Tick(1.0f / 30);
+        const FVector Pivot = Rig->GetActorLocation();
+        TestTrue(TEXT("Panning down the ramp follows the currently presented incline"),
+            FMath::IsNearlyEqual(Pivot.Z, static_cast<double>(Battle->PickingGroundHeight(
+                {static_cast<float>(Pivot.X), static_cast<float>(Pivot.Y)})), 0.1));
+    }
+    Battle->LastFogCells.Init(0, cinder::Simulation::FogSize * cinder::Simulation::FogSize);
+    Rig->Focus(FVector(Home.x, Home.y, 0), true);
+    TestTrue(TEXT("Unknown plateau focus follows fog-flattened ground without exposing its elevation"),
+        FMath::IsNearlyEqual(Rig->GetActorLocation().Z,
+            static_cast<double>(Battle->PickingGroundHeight(Home)), 0.1) && Rig->GetActorLocation().Z <= 0.0);
+    Battle->bTerrainRelief = false;
+    Rig->Focus(FVector(Home.x, Home.y, 0), true);
+    TestTrue(TEXT("A flat fallback never retains the previous elevated camera pivot"),
+        FMath::IsNearlyZero(Rig->GetActorLocation().Z, 0.1));
+    AddInfo(FString::Printf(TEXT("CINDERLINE_CAMERA_ELEVATED_HOME_PASS cases=%d; actual 250x250x185 cm Anchor bounds, desktop/phone, closest/default/farthest requests, elevated border footprint, ramp pan, fog flattening and flat fallback."), ElevatedCases));
     AddInfo(FString::Printf(TEXT("CINDERLINE_CAMERA_BOUNDARY_PASS cases=%d; three world sizes, four aspects, three zooms, eight edge/corner directions, repeated drag, reversal, interpolated zoom, and resized black borders. Physical input and rendered black pixels require viewport verification."), Cases));
     return true;
 }

@@ -36,9 +36,12 @@ public:
     void LogMobileLayout() const;
     bool TapPreviewAction(const FString& Action, TOptional<int32> Argument = {}, TOptional<cinder::Id> Entity = {});
     void LogTutorialGuidance() const;
+    void LogCampaignHUD() const;
 #endif
 private:
     friend class FCinderWorldLifecycleIntegration;
+    friend class FCinderHUDTouchSafeZoneIntegration;
+    friend class FCinderCampaignHUDIntegration;
     struct FButton
     {
         FBox2D Bounds;
@@ -54,13 +57,30 @@ private:
         int32 EndX = 0;
         uint8 State = 0;
     };
+    // Stride folds Stride x Stride source cells into one run cell using the
+    // *least* known state in the block, so a coarser minimap can never promote
+    // an unexplored cell to explored. Stride 1 is the exact per-cell behaviour.
     static bool RefreshFogRuns(uint64 SourceRevision, int32 SourceDimension,
         const TArray<uint8>& SourceCells, uint64& CachedRevision, int32& CachedDimension,
-        TArray<FMinimapFogRun>& CachedRuns);
+        TArray<FMinimapFogRun>& CachedRuns, int32 Stride = 1);
     void Panel(float X, float Y, float W, float H, FLinearColor Color);
     void Surface(float X, float Y, float W, float H, FLinearColor Color, float Radius = 8);
+    // Same 20-vertex fan, two colours: perimeter vertices are interpolated by
+    // their Y position and the centre vertex takes the midpoint, so a vertical
+    // gradient or a radial inset costs zero extra triangles and zero extra
+    // draw calls over the flat form.
+    void Surface(float X, float Y, float W, float H, FLinearColor TopColor,
+        FLinearColor BottomColor, float Radius = 8);
+    // Outlined text for world-space labels only. The outline is an extra glyph
+    // pass per string, so the 136 panel-backed label sites keep Label().
+    void WorldLabel(const FString& Text, float X, float Y, FLinearColor Color, float Scale);
+    static uint32 ButtonKey(const FString& Action, int32 Argument, cinder::Id EntityId);
+    float PressPulse(const FString& Action, int32 Argument, cinder::Id EntityId = 0) const;
+    UTexture2D* SelectionRing();
+    void RefreshMinimapTerrain(ACinderBattlefield* Battle);
     bool ActionGlyph(const FString& Action, int32 Arg, float X, float Y, float Size, FLinearColor Color);
-    void ActionButton(const FString& Text, const FString& Action, int Arg, float X, float Y, float W, bool Active = false);
+    void ActionButton(const FString& Text, const FString& Action, int Arg, float X, float Y, float W,
+        bool Active = false, bool bIconOnly = false);
     void Label(const FString& Text, float X, float Y, FLinearColor Color, float Scale = 1);
     FSlateFontInfo FontForScale(float Scale) const;
     FVector2D MeasureLabel(const FString& Text, float Scale) const;
@@ -76,9 +96,13 @@ private:
     void DifficultyButton(const FString& Text, int Arg, float X, float Y, float W, float H, bool Active, const FString& Action = TEXT("difficulty"));
     void DrawMenu(ACinderBattlefield* Battle);
     void DrawTutorialOffer(ACinderPlayerController* PC);
+    void DrawCampaignMenu(ACinderPlayerController* PC, ACinderBattlefield* Battle);
+    void DrawCampaignCard(ACinderBattlefield* Battle, bool bForceShow = false);
+    void DrawCampaignOverlay(ACinderPlayerController* PC, ACinderBattlefield* Battle);
     void DrawHelp(ACinderPlayerController* PC, ACinderBattlefield* Battle);
     void DrawMatch(ACinderPlayerController* PC, ACinderBattlefield* Battle);
     void DrawCompactMatch(ACinderPlayerController* PC, ACinderBattlefield* Battle);
+    void DrawVoiceControls(ACinderPlayerController* PC);
     void DrawSelectionIdentity(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact);
     void DrawArmyDrawer(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact);
     void DrawGlobalCatalog(ACinderPlayerController* PC, ACinderBattlefield* Battle, bool bCompact);
@@ -98,8 +122,29 @@ private:
     uint64 MinimapFogRevision = MAX_uint64;
     int32 MinimapFogDimension = 0;
     TWeakObjectPtr<ACinderBattlefield> MinimapFogSource;
+    // Static per map: a baked relief pass under the fog overlay replaces the
+    // 130-380 terrain-less DrawRect calls the minimap used to pay every frame.
+    int32 MinimapTerrainMap = MIN_int32;
+    uint64 MinimapTerrainGeometry = 0;
+    float MinimapTerrainWorldSize = 0;
+    // Real-time clock sampled once per frame so every press animation in the
+    // frame reads the same instant, and so the pruning pass below is O(1).
+    float FrameRealTime = 0;
+    // Tap-stamped button identities. Pruned every frame, so the map is bounded
+    // by the number of taps inside one 0.12 s press window.
+    TMap<uint32, float> PressedAt;
+    // Resource chips. Last-seen authoritative values plus the instant each
+    // changed drive the flash; OreDisplay is the eased number actually printed.
+    int32 LastOre = MIN_int32, LastSupply = MIN_int32, LastCapacity = MIN_int32, LastTier = MIN_int32;
+    float OreDisplay = 0;
+    float OreChangedAt = 0, OreChangeDelta = 0, SupplyChangedAt = 0, TierChangedAt = 0;
+    // Affordability is only known after the catalogs run, which draw below the
+    // chips. Latch it for the next frame rather than computing the plans twice.
+    bool bOreShortfall = false, bOreShortfallPending = false;
     FCinderMobileHUDLayout MobileLayout;
     float UIScale = 1, Margin = 24, Width = 1280, Height = 720;
+    FString VoiceCaptionSource, VoiceCaptionDisplay;
+    float VoiceCaptionWidth = 0;
     float SafeTopOffset = 0, SafeBottomOffset = 0;
     double NextMenuInsetRefreshTime = 0.0;
     bool bMenuInsetQueryPending = false;
@@ -140,4 +185,8 @@ private:
     TObjectPtr<UFont> InterfaceFont;
     UPROPERTY(Transient)
     TObjectPtr<UFont> HeadingFont;
+    UPROPERTY(Transient)
+    TObjectPtr<UTexture2D> MinimapTerrain;
+    UPROPERTY(Transient)
+    TObjectPtr<UTexture2D> SelectionRingTexture;
 };

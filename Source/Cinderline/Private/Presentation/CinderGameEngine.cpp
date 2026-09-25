@@ -190,7 +190,7 @@ ECinderFramePacingState UCinderGameEngine::ClassifyMatchState(const ACinderBattl
     if (!IsValid(Battlefield)) return ECinderFramePacingState::Idle;
     if (Battlefield->IsMenu()) return ECinderFramePacingState::Menu;
     if (Battlefield->IsPaused()) return ECinderFramePacingState::Paused;
-    if (Battlefield->Sim().winner() != -1 || (Battlefield->IsOnlineMatch() && Battlefield->Sim().eliminated(0))) return ECinderFramePacingState::Results;
+    if (Battlefield->IsMatchOver() || (Battlefield->IsOnlineMatch() && Battlefield->Sim().eliminated(0))) return ECinderFramePacingState::Results;
     return ECinderFramePacingState::Gameplay;
 }
 

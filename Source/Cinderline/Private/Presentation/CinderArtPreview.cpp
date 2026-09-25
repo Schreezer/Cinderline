@@ -266,8 +266,23 @@ bool StageBase(UWorld* World)
     ACinderPlayerController* PC = FindPlayer(World);
     if (!World || !Battle || RefuseOnline(Battle, PC)) return false;
 
+    // A profile that has never finished the tutorial has a pending onboarding
+    // offer, and that gate swallows every action except its own three answers —
+    // including "start". Staging would then dress the simulation while the
+    // battlefield quietly stayed in the menu, and the capture would abort later
+    // with "fixture changed" pointing nowhere near the cause. Decline it first:
+    // this is a development capture path, and a first-run prompt is not what it
+    // is here to photograph.
+    if (PC && PC->IsTutorialOfferPending()) PC->ExecuteAction(TEXT("onboardskip"));
     if (PC) PC->ExecuteAction(TEXT("start"), 0);
     else Battle->StartMatch(0);
+    if (Battle->IsMenu())
+    {
+        UE_LOG(LogCinderArtPreview, Error,
+            TEXT("CINDERLINE_ART_PREVIEW refused=start_rejected; the battlefield stayed in the menu, so an action gate swallowed \"start\""));
+        if (PC) PC->Notify(TEXT("Art preview failed: the match would not start."));
+        return false;
+    }
     cinder::Simulation& Sim = Battle->Sim();
     cinder::Config Config;
     Config.map = 0;
@@ -466,8 +481,15 @@ void CaptureArtPreview(UWorld* World, const FString& Mode)
     ACinderBattlefield* Battle = FindBattlefield(World);
     if (!World || !IsArtFixture(Battle))
     {
+        // Name the condition that actually moved. A bare "fixture_changed" forces
+        // whoever hits this to guess between five unrelated causes, and this path
+        // only runs in the development capture fixture.
         UE_LOG(LogCinderArtPreview, Warning,
-            TEXT("CINDERLINE_ART_PREVIEW capture=%s skipped=fixture_changed"), *Mode);
+            TEXT("CINDERLINE_ART_PREVIEW capture=%s skipped=fixture_changed world=%d battle=%d menu=%d online=%d ai=%d map=%d seed=%u expected_seed=%u"),
+            *Mode, World != nullptr, Battle != nullptr,
+            Battle ? Battle->IsMenu() : -1, Battle ? Battle->IsOnlineMatch() : -1,
+            Battle ? Battle->Sim().config().ai : -1, Battle ? Battle->Sim().config().map : -1,
+            Battle ? Battle->Sim().config().seed : 0u, ArtPreviewSeed);
         return;
     }
     // Asset generation runs under NullRHI, so the first rendered editor launch
@@ -557,7 +579,17 @@ FAutoConsoleCommandWithWorldAndArgs ArtPreviewCommand(
         ClearArtPreviewTimers();
         if (!StageBase(World)) return;
         if ((Mode == TEXT("battle") || Mode == TEXT("battlelive")) && !StageBattleRaid(World)) return;
-        if (Mode == TEXT("battlelive")) return;
+        if (Mode == TEXT("battlelive"))
+        {
+            // battlelive never captures, so nothing else on this path would flush
+            // shader compilation. A profile taken while shader maps are still
+            // building measures the compiler over gray fallback materials rather
+            // than the frame, and the readiness marker these emit is what the
+            // capture tooling refuses to proceed without.
+            FinishArtPreviewCompilation(Mode);
+            LogArtPreviewViewport(World, Mode);
+            return;
+        }
         ScheduleCapture(World, Mode,
             Mode == TEXT("base") ? BaseCaptureDelay : BattleCaptureDelay,
             ArtPreviewCaptureTimer);

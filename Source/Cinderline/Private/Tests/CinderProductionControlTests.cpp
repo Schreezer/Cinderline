@@ -10,6 +10,9 @@
 #include "Presentation/CinderPlayerController.h"
 #include "Tests/AutomationCommon.h"
 
+#include <algorithm>
+#include <vector>
+
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCinderProductionControlIntegration,
     "Cinderline.Integration.ProductionControls",
     EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
@@ -75,11 +78,108 @@ bool FCinderProductionControlIntegration::RunTest(const FString& Parameters)
     for (const auto& Entity : Sim.entities())
         if (Entity.alive() && Entity.team == 0 && Entity.kind == Kind::Headquarters) { Headquarters = Entity.id; break; }
     if (!TestTrue(TEXT("Rally fixture has a headquarters with a separate worker rally"), Headquarters != 0)) return false;
+
+    Id RallyResource = 0;
+    for (const auto& Entity : Sim.entities())
+        if (Entity.alive() && Entity.kind == Kind::Resource && Entity.resource > 0
+            && Sim.explored(0, Entity.pos)) { RallyResource = Entity.id; break; }
+    if (!TestTrue(TEXT("Resource rally fixture has explored ore"), RallyResource != 0)) return false;
+    const Vec2 ResourceCenter = Sim.find(RallyResource)->pos;
+    const Vec2 OffCenterResourceGround{ResourceCenter.x + 41, ResourceCenter.y + 27};
+    std::vector<Entity> WorkersBeforeResourceRally;
+    for (const auto& Entity : Sim.entities())
+        if (Entity.alive() && Entity.team == 0 && Entity.kind == Kind::Worker)
+            WorkersBeforeResourceRally.push_back(Entity);
+
+    if (!TestTrue(TEXT("Resource rally starts from an explicitly selected Anchor"),
+        PC->SelectOwnedEntity(Headquarters))) return false;
+    const std::size_t BeforeResourceRally = Sim.recording().size();
     PC->BeginProductionRally(Headquarters);
+    PC->HandleWorldTap(RallyResource, &OffCenterResourceGround, false);
+    if (!TestTrue(TEXT("Anchor resource Rally submits one automatic producer command"),
+        Sim.recording().size() == BeforeResourceRally + 1)) return false;
+    const auto& ResourceRally = Sim.recording().back().command;
+    TestTrue(TEXT("Resource Rally canonicalizes the off-center terrain hit to the ore entity center"),
+        ResourceRally.type == CommandType::AutoRally && ResourceRally.target == Headquarters
+        && ResourceRally.point.x == ResourceCenter.x && ResourceRally.point.y == ResourceCenter.y
+        && Sim.find(Headquarters)->rally.x == ResourceCenter.x
+        && Sim.find(Headquarters)->rally.y == ResourceCenter.y
+        && !PC->IsProductionRallyMode());
+    for (const auto& Before : WorkersBeforeResourceRally)
+    {
+        const auto* After = Sim.find(Before.id);
+        TestTrue(TEXT("Setting a resource Rally preserves every existing Drudge order"),
+            After && After->order == Before.order && After->target == Before.target
+            && After->resourceTarget == Before.resourceTarget && After->goal.x == Before.goal.x
+            && After->goal.y == Before.goal.y && After->returning == Before.returning
+            && After->resumeGather == Before.resumeGather);
+    }
+
+    PC->QueueTraining(Kind::Worker, 1, Headquarters);
+    Id RallyNewborn = 0;
+    for (int32 Step = 0; Step < 4000 && !RallyNewborn; ++Step)
+    {
+        Sim.update(Simulation::Step);
+        for (const auto& Entity : Sim.entities())
+        {
+            if (!Entity.alive() || Entity.team != 0 || Entity.kind != Kind::Worker) continue;
+            const bool bExisting = std::any_of(WorkersBeforeResourceRally.begin(), WorkersBeforeResourceRally.end(),
+                [&](const cinder::Entity& Before) { return Before.id == Entity.id; });
+            if (!bExisting) { RallyNewborn = Entity.id; break; }
+        }
+    }
+    const Entity* Newborn = Sim.find(RallyNewborn);
+    if (!TestTrue(TEXT("A Drudge completes from the resource-rallied Anchor"), Newborn != nullptr)) return false;
+    TestTrue(TEXT("The newborn Drudge gathers the chosen ore entity"),
+        Newborn->order == Order::Gather && Newborn->target == RallyResource
+        && Newborn->resourceTarget == RallyResource);
+
+    const Id ContextWorker = WorkersBeforeResourceRally.front().id;
+    PC->SelectOwnedEntity(ContextWorker);
+    const std::size_t BeforeNormalGather = Sim.recording().size();
+    PC->HandleWorldTap(RallyResource, &OffCenterResourceGround, false);
+    TestTrue(TEXT("A normal selected-Drudge ore tap remains Gather"),
+        Sim.recording().size() == BeforeNormalGather + 1
+        && Sim.recording().back().command.type == CommandType::Gather
+        && Sim.recording().back().command.target == RallyResource
+        && Sim.find(ContextWorker)->order == Order::Gather
+        && Sim.find(ContextWorker)->resourceTarget == RallyResource);
+
+    PC->SelectOwnedEntity(Headquarters);
+    const std::size_t BeforeContextResourceRally = Sim.recording().size();
+    PC->HandleWorldTap(RallyResource, &OffCenterResourceGround, true);
+    TestTrue(TEXT("Desktop force-context on ore with an Anchor selected issues Rally instead of Gather"),
+        Sim.recording().size() == BeforeContextResourceRally + 1
+        && Sim.recording().back().command.type == CommandType::Rally
+        && Sim.recording().back().command.units == std::vector<Id>{Headquarters}
+        && Sim.recording().back().command.point.x == ResourceCenter.x
+        && Sim.recording().back().command.point.y == ResourceCenter.y);
+
+    const Vec2 RallyBeforeDeselect = Sim.find(Headquarters)->rally;
+    const std::size_t BeforeBuildingDeselect = Sim.recording().size();
+    const Vec2 EmptyGround{1900, 1450};
+    PC->HandleWorldTap(0, &EmptyGround, false);
+    TestTrue(TEXT("A normal building terrain tap deselects without changing its Rally"),
+        PC->Selection().empty() && Sim.recording().size() == BeforeBuildingDeselect
+        && Sim.find(Headquarters)->rally.x == RallyBeforeDeselect.x
+        && Sim.find(Headquarters)->rally.y == RallyBeforeDeselect.y);
+
+    PC->SelectOwnedEntity(Headquarters);
+    PC->BeginProductionRally(Headquarters);
+    const Vec2 GroundWorkerRally{2100, 1700};
+    const std::size_t BeforeGroundWorkerRally = Sim.recording().size();
+    PC->HandleWorldTap(0, &GroundWorkerRally, false);
     if (!TestTrue(TEXT("A pinned headquarters accepts an explicit worker destination"),
-        PC->IssueDestination({2100, 1700}))) return false;
+        Sim.recording().size() == BeforeGroundWorkerRally + 1)) return false;
     TestTrue(TEXT("Worker rally override can exist before an army default"),
-        Sim.find(Headquarters)->rallyOverride && !Sim.players()[0].armyRallySet);
+        Sim.recording().back().command.type == CommandType::AutoRally
+        && Sim.recording().back().command.point.x == GroundWorkerRally.x
+        && Sim.recording().back().command.point.y == GroundWorkerRally.y
+        && Sim.find(Headquarters)->rally.x == GroundWorkerRally.x
+        && Sim.find(Headquarters)->rally.y == GroundWorkerRally.y
+        && Sim.find(Headquarters)->rallyOverride && !Sim.players()[0].armyRallySet
+        && !PC->IsProductionRallyMode());
+    PC->SelectOwnedEntity(Soldier);
     PC->QueueTraining(Kind::Worker, 1, Headquarters);
     if (!TestTrue(TEXT("Auto Mine fixture has a paid worker job"), !Sim.find(Headquarters)->queue.empty())) return false;
     const QueueItem WorkerJobBeforeReset = Sim.find(Headquarters)->queue.back();
@@ -94,7 +194,7 @@ bool FCinderProductionControlIntegration::RunTest(const FString& Parameters)
     const int OreBeforeAutoMine = Sim.players()[0].ore;
     const int SupplyBeforeAutoMine = Sim.supply(0);
     const auto AutoMineCount = Sim.recording().size();
-    TestTrue(TEXT("Headquarters Auto Mine status requires no team army flag"),
+    TestTrue(TEXT("Headquarters Auto Mine status requires no team army rally"),
         Sim.autoRallyStatus(0, Kind::Resource, Headquarters, true).accepted);
     PC->UseDefaultProductionRally(Headquarters);
     if (!TestTrue(TEXT("Headquarters Auto Mine records exactly one authoritative command"),
@@ -103,7 +203,7 @@ bool FCinderProductionControlIntegration::RunTest(const FString& Parameters)
     TestTrue(TEXT("Auto Mine carries the exact opaque producer ID and explicit reset operation"),
         AutoMine.type == CommandType::AutoRally && AutoMine.queueIndex == 1 && AutoMine.target == Headquarters
         && AutoMine.kind == Kind::Resource && AutoMine.units.empty() && AutoMine.point.x == 0 && AutoMine.point.y == 0);
-    TestTrue(TEXT("Auto Mine clears only the worker override without creating an army flag"),
+    TestTrue(TEXT("Auto Mine clears only the worker override without creating an army rally"),
         !Sim.find(Headquarters)->rallyOverride && !Sim.players()[0].armyRallySet
         && PC->Selection() == std::vector<Id>{Soldier});
     const auto& WorkerJobAfterReset = Sim.find(Headquarters)->queue.back();
@@ -155,20 +255,20 @@ bool FCinderProductionControlIntegration::RunTest(const FString& Parameters)
         RestoreDefault.type == CommandType::AutoRally && RestoreDefault.queueIndex == 1
         && RestoreDefault.target == Second && RestoreDefault.units.empty()
         && RestoreDefault.point.x == 0 && RestoreDefault.point.y == 0);
-    TestTrue(TEXT("Restoring the default clears the override and inherits the current flag"),
+    TestTrue(TEXT("Restoring the default clears the override and inherits the current rally"),
         !Sim.find(Second)->rallyOverride && Sim.find(Second)->rally.x == 2400 && Sim.find(Second)->rally.y == 2400
         && Sim.find(Headquarters)->rally.x == HeadquartersRally.x && Sim.find(Headquarters)->rally.y == HeadquartersRally.y);
     auto* Camera = World->SpawnActor<ACinderCamera>();
     if (!TestNotNull(TEXT("Rally focus fixture has an actual camera rig"), Camera)) return false;
     PC->Rig = Camera;
     Camera->Focus(FVector(1200, 1400, 0), true);
-    TestFalse(TEXT("Rally focus fixture starts away from the flag"),
+    TestFalse(TEXT("Rally focus fixture starts away from the rally"),
         Camera->GetActorLocation().Equals(FVector(2400, 2400, 0), 1));
     const auto BeforeFocus = Sim.stateHash();
     const auto FocusCount = Sim.recording().size();
     PC->ExecuteAction(TEXT("rallyfocus"));
     Camera->Tick(1.0f);
-    TestTrue(TEXT("The rally-focus action moves the actual camera to the army flag"),
+    TestTrue(TEXT("The rally-focus action moves the actual camera to the army rally"),
         Camera->GetActorLocation().Equals(FVector(2400, 2400, 0), 1));
     TestTrue(TEXT("Camera rally focus preserves selection, gameplay state, and command recording"),
         PC->Selection() == std::vector<Id>{Soldier} && Sim.stateHash() == BeforeFocus && Sim.recording().size() == FocusCount);

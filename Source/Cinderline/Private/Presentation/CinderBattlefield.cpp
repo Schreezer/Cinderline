@@ -1,4 +1,6 @@
 #include "Presentation/CinderBattlefield.h"
+#include "Presentation/CinderFogMask.h"
+#include "Presentation/CinderGroundPalette.h"
 #include "Presentation/CinderAudioSubsystem.h"
 #include "Presentation/CinderCamera.h"
 #include "Presentation/CinderTerrainSurface.h"
@@ -7,10 +9,13 @@
 #include "Presentation/CinderTeamColors.h"
 #include "Presentation/CinderWorldEffects.h"
 #include "Presentation/CinderOnlineSubsystem.h"
+#include "Presentation/CinderPlayerController.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Components/DirectionalLightComponent.h"
+#include "Components/ExponentialHeightFogComponent.h"
 #include "Components/SkyLightComponent.h"
 #include "Engine/DirectionalLight.h"
+#include "Engine/ExponentialHeightFog.h"
 #include "Engine/GameInstance.h"
 #include "Engine/SkyLight.h"
 #include "Engine/StaticMesh.h"
@@ -41,8 +46,12 @@ constexpr int32 FogTextureSize = 256;
 constexpr int32 FogPixelsPerCell = FogTextureSize / cinder::Simulation::FogSize;
 constexpr float BasicShapeSize = 100.0f;
 constexpr float WorldBorderWidth = 3000.0f;
+// The flat fog sheet's Z, and the reference height of the out-of-bounds skirt just above
+// it. Only the generated flat-ground fallback still draws the sheet: a single plane 2.5 cm
+// up cannot cover a map that has real hills in it, so on the canonical Landscape path the
+// ground material carries fog itself and RenderSimState hides this plane. See there.
 constexpr float WorldSurfaceZ = 2.5f;
-static_assert(FogPixelsPerCell == 4, "Fog edge guards assume four pixels per simulation cell");
+static_assert(FogTextureSize == CinderFogMask::TextureSize, "fog upload must match the shared mask");
 static_assert(TeamCount == cinder::Simulation::MaxPlayers, "The presentation palette must cover every simulation player");
 struct FFogTextureUpload
 {
@@ -56,6 +65,66 @@ const TCHAR* ModelAssetNames[ModelCount] = {
     TEXT("SM_Resonator"), TEXT("SM_Ward"), TEXT("SM_Ore")
 };
 const TCHAR* ModelSlotNames[] = { TEXT("HullDark"), TEXT("HullLight"), TEXT("Metal"), TEXT("TeamPanel"), TEXT("CoreGlow") };
+// Hull tinting by battlefield role. Team colour stays the identity signal and
+// lives in the TeamPanel and CoreGlow slots; these only shift the hull, so the
+// two channels never compete. The values form a deliberate value ladder —
+// aircraft lightest, structures darkest — so small units read against warm
+// ground while large structures sit back and let the army read in front.
+enum class ECinderModelRole : uint8 { Infantry, Vehicle, Air, Structure, Neutral, Count };
+const ECinderModelRole ModelRoles[ModelCount] = {
+    ECinderModelRole::Infantry,  // Worker
+    ECinderModelRole::Infantry,  // Striker
+    ECinderModelRole::Infantry,  // Lancer
+    ECinderModelRole::Infantry,  // Scout
+    ECinderModelRole::Vehicle,   // Bastion
+    ECinderModelRole::Vehicle,   // Mortar
+    ECinderModelRole::Vehicle,   // Mender
+    ECinderModelRole::Air,       // Kite
+    ECinderModelRole::Structure, // Headquarters
+    ECinderModelRole::Structure, // Processor
+    ECinderModelRole::Structure, // Foundry
+    ECinderModelRole::Structure, // MotorPool
+    ECinderModelRole::Structure, // Laboratory
+    ECinderModelRole::Structure, // Turret
+    ECinderModelRole::Neutral    // Resource
+};
+// One dark and one light hull tint per role, in ECinderModelRole order. HullDark
+// covers most of every mesh, so the spread there has to be wide — a few
+// hundredths apart is invisible on a 40-pixel unit. Hue moves with value:
+// infantry warm steel, vehicles blue steel, aircraft pale sky, structures deep
+// navy. Ore never uses Neutral in practice; it keeps the warm override below.
+//
+// The dark slot previously spanned 0.044 to 0.190, which is the bottom of the
+// ramp where the tonemapper has almost no range left — every role resolved to
+// the same near-black on a phone. The ladder now sits where the key light
+// actually reaches, so the four roles separate by value before they separate by
+// hue, and they keep separating after the thermal ladder zeroes bloom.
+const FLinearColor RoleHullTints[static_cast<int32>(ECinderModelRole::Count)][2] = {
+    { FLinearColor(0.115f, 0.135f, 0.165f), FLinearColor(0.66f, 0.70f, 0.74f) }, // Infantry
+    { FLinearColor(0.070f, 0.105f, 0.150f), FLinearColor(0.42f, 0.52f, 0.62f) }, // Vehicle
+    { FLinearColor(0.240f, 0.300f, 0.380f), FLinearColor(0.82f, 0.88f, 0.96f) }, // Air
+    { FLinearColor(0.050f, 0.072f, 0.100f), FLinearColor(0.34f, 0.42f, 0.50f) }, // Structure
+    { FLinearColor(0.045f, 0.065f, 0.075f), FLinearColor(0.42f, 0.50f, 0.52f) }  // Neutral
+};
+// Surface response per role. M_CinderModelV3 already evaluates a Fresnel rim on
+// every unit pixel and then multiplies it by RimLight, which nothing has ever
+// written — so the cost was being paid and the rim discarded. Writing it here
+// costs no extra instruction and is the only thing that separates a unit from
+// the ground once shadows are off at Minimum quality.
+//
+// Rim is inversely proportional to screen size on purpose: the smallest
+// silhouettes need the most edge to survive MetalFX at 80% plus FXAA, while a
+// structure with a large footprint would look wrapped in neon at the same value.
+struct FRoleFinish { float Roughness, Metallic, Rim; };
+const FRoleFinish RoleFinishes[static_cast<int32>(ECinderModelRole::Count)] = {
+    { 0.52f, 0.08f, 0.60f }, // Infantry — small, needs the most edge
+    { 0.38f, 0.35f, 0.50f }, // Vehicle — polished plate catches the key
+    { 0.30f, 0.20f, 0.70f }, // Air — read against sky-lit ground, highest rim
+    { 0.62f, 0.05f, 0.34f }, // Structure — matte, sits back behind the army
+    { 0.70f, 0.02f, 0.30f }  // Neutral
+};
+static_assert(UE_ARRAY_COUNT(ModelRoles) == ModelCount,
+    "Every simulation kind needs a battlefield role");
 FAutoConsoleCommandWithWorld ModelStatusCommand(
     TEXT("cinder.models"),
     TEXT("Report imported models, primitive fallbacks and current rendered entity counts."),
@@ -75,7 +144,7 @@ FAutoConsoleCommandWithWorld CombatStatusCommand(
 }
 
 ACinderBattlefield::ACinderBattlefield()
-    : Simulation(MakeUnique<cinder::Simulation>())
+    : Simulation(MakeUnique<cinder::Simulation>()), CampaignStorage(MakeUnique<FCinderCampaignSave>())
 {
     PrimaryActorTick.bCanEverTick = true;
     RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("BattlefieldRoot"));
@@ -187,19 +256,50 @@ void ACinderBattlefield::LoadModelBatches()
     for (int32 Slot = 3; Slot <= 4; ++Slot)
     {
         auto* Material = UMaterialInstanceDynamic::Create(ModelMaterials[Slot], this);
+        // Ore reads as self-lit azure crystal. Two reasons beyond looks: the core
+        // slot is unlit at GlowIntensity 2.60, so blue spines become the most
+        // saturated thing in frame and a deposit is findable at a glance; and the
+        // old amber (1.0, 0.58, 0.12) sat almost exactly on team 3's identity
+        // orange (1.00, 0.68, 0.14), so a neutral deposit and a player's buildings
+        // were the same colour on the minimap. Azure is the widest gap in the
+        // palette - cyan would re-collide with team 0's teal.
         Material->SetVectorParameterValue(TEXT("Tint"), Slot == 3
-            ? FLinearColor(0.85f, 0.35f, 0.08f) : FLinearColor(1.0f, 0.58f, 0.12f));
+            ? FLinearColor(0.13f, 0.40f, 0.90f) : FLinearColor(0.14f, 0.44f, 1.00f));
         ModelMaterials.Add(Material);
     }
-    // Warm rock faces keep ore recognizable at compact gameplay zoom.
+    // Cool desaturated rock so the crystal spines above carry all the saturation.
     const int32 OreMaterialStart = ModelMaterials.Num();
-    const FLinearColor OreColors[] = { FLinearColor(0.24f, 0.11f, 0.035f), FLinearColor(0.58f, 0.29f, 0.07f) };
+    const FLinearColor OreColors[] = { FLinearColor(0.055f, 0.075f, 0.115f), FLinearColor(0.33f, 0.41f, 0.52f) };
     for (int32 Slot = 0; Slot < 2; ++Slot)
     {
         auto* OreMaterial = UMaterialInstanceDynamic::Create(ModelMaterials[Slot], this);
         OreMaterial->SetVectorParameterValue(TEXT("Tint"), OreColors[Slot]);
         ModelMaterials.Add(OreMaterial);
     }
+    // Per-role hull pairs. Ore keeps its own warm override below, so the Neutral
+    // entry only ever backs a role that has no dedicated palette.
+    const int32 RoleMaterialStart = ModelMaterials.Num();
+    for (int32 Role = 0; Role < static_cast<int32>(ECinderModelRole::Count); ++Role)
+    {
+        const FRoleFinish& Finish = RoleFinishes[Role];
+        for (int32 Slot = 0; Slot < 2; ++Slot)
+        {
+            auto* Hull = UMaterialInstanceDynamic::Create(ModelMaterials[Slot], this);
+            Hull->SetVectorParameterValue(TEXT("Tint"), RoleHullTints[Role][Slot]);
+            // Rim colour stays per-role rather than per-team: these hull instances
+            // are shared across factions, and team identity already lives in the
+            // TeamPanel and CoreGlow slots. Tinting the rim per team here would
+            // need four times the material instances for no added information.
+            Hull->SetScalarParameterValue(TEXT("Roughness"), Finish.Roughness);
+            Hull->SetScalarParameterValue(TEXT("Metallic"), Finish.Metallic);
+            Hull->SetScalarParameterValue(TEXT("RimLight"), Finish.Rim);
+            ModelMaterials.Add(Hull);
+        }
+    }
+    auto RoleHullMaterial = [&](int32 Kind, int32 Slot)
+    {
+        return RoleMaterialStart + static_cast<int32>(ModelRoles[Kind]) * 2 + Slot;
+    };
     int32 Loaded = 0;
     for (int32 Index = 0; Index < ModelCount; ++Index)
     {
@@ -220,7 +320,12 @@ void ACinderBattlefield::LoadModelBatches()
             const int32 BatchIndex = Batches.Num();
             FBatch& Batch = AddBatch(Mesh, FLinearColor::White, true);
             for (int32 Slot = 0; Slot < 3; ++Slot)
-                Batch.Mesh->SetMaterial(Slot, ModelMaterials[Resource && Slot < 2 ? OreMaterialStart + Slot : Slot]);
+            {
+                // Slot 2 is mechanical Metal, shared by every role on purpose.
+                const int32 Material = Slot >= 2 ? Slot
+                    : Resource ? OreMaterialStart + Slot : RoleHullMaterial(Index, Slot);
+                Batch.Mesh->SetMaterial(Slot, ModelMaterials[Material]);
+            }
             Batch.Mesh->SetMaterial(3, ModelMaterials[Resource ? ResourcePaletteStart : PaletteMaterialStart + Team * 2]);
             Batch.Mesh->SetMaterial(4, ModelMaterials[Resource ? ResourcePaletteStart + 1 : PaletteMaterialStart + Team * 2 + 1]);
             ModelBatchIndices[Index * TeamCount + Team] = BatchIndex;
@@ -232,20 +337,23 @@ void ACinderBattlefield::LoadModelBatches()
     {
         return (Kind * TeamCount + Team) * static_cast<int32>(ECinderMotionPart::Count) + static_cast<int32>(Part);
     };
-    auto MaterialForName = [&](FName Name, int32 Team) -> UMaterialInterface*
+    // Legs, weapons and other motion parts must carry their parent's role hull,
+    // or an articulated unit would show two different greys on one body.
+    auto MaterialForName = [&](FName Name, int32 Kind, int32 Team) -> UMaterialInterface*
     {
-        if (Name == FName(ModelSlotNames[0])) return ModelMaterials[0];
-        if (Name == FName(ModelSlotNames[1])) return ModelMaterials[1];
+        if (Name == FName(ModelSlotNames[0])) return ModelMaterials[RoleHullMaterial(Kind, 0)];
+        if (Name == FName(ModelSlotNames[1])) return ModelMaterials[RoleHullMaterial(Kind, 1)];
         if (Name == FName(ModelSlotNames[2])) return ModelMaterials[2];
         if (Name == FName(ModelSlotNames[3])) return ModelMaterials[PaletteMaterialStart + Team * 2];
         if (Name == FName(ModelSlotNames[4])) return ModelMaterials[PaletteMaterialStart + Team * 2 + 1];
         return nullptr;
     };
-    auto ApplyMotionMaterials = [&](UInstancedStaticMeshComponent* Component, UStaticMesh* Mesh, int32 Team)
+    auto ApplyMotionMaterials = [&](UInstancedStaticMeshComponent* Component, UStaticMesh* Mesh,
+        int32 Kind, int32 Team)
     {
         const auto& Slots = Mesh->GetStaticMaterials();
         for (int32 Slot = 0; Slot < Slots.Num(); ++Slot)
-            Component->SetMaterial(Slot, MaterialForName(Slots[Slot].MaterialSlotName, Team));
+            Component->SetMaterial(Slot, MaterialForName(Slots[Slot].MaterialSlotName, Kind, Team));
     };
     for (int32 KindIndex = 0; KindIndex < ModelCount; ++KindIndex)
     {
@@ -304,7 +412,7 @@ void ACinderBattlefield::LoadModelBatches()
                     BatchIndex = Batches.Num();
                     AddBatch(Mesh, FLinearColor::White, true);
                 }
-                ApplyMotionMaterials(Batches[BatchIndex].Mesh, Mesh, Team);
+                ApplyMotionMaterials(Batches[BatchIndex].Mesh, Mesh, KindIndex, Team);
                 MotionPartBatchIndices[MotionKey(KindIndex, Team, Part.Part)] = BatchIndex;
             }
         }
@@ -523,6 +631,15 @@ void ACinderBattlefield::RefreshEnvironment()
         if (WorldBorderBatch != INDEX_NONE)
         {
             constexpr float HalfBorder = WorldBorderWidth * 0.5f;
+            // The out-of-bounds skirt, not a second fog sheet, so relief never pokes through
+            // it and it stays drawn on both terrain paths even when the fog plane above is
+            // hidden: every one of these four planes lies entirely OUTSIDE the playable
+            // rectangle (the camera boundary regression asserts exactly that), and the
+            // generator feathers relief to zero at the world boundary, so the map edge still
+            // meets the skirt flush. Its Z must also stay a compile-time constant - that same
+            // regression re-enters a Standard match on a different map and requires the four
+            // border transforms to compare exactly equal, which a terrain-derived height on a
+            // per-map heightfield could not do.
             constexpr float BorderZ = WorldSurfaceZ + 0.1f;
             const FVector VerticalScale(WorldBorderWidth / BasicShapeSize,
                 (World + 2.0f * WorldBorderWidth) / BasicShapeSize, 1.0f);
@@ -561,6 +678,12 @@ void ACinderBattlefield::RefreshEnvironment()
             const float Width = Obstacle.half.x * 2 / (bLongX ? Segments : 1);
             const float Depth = Obstacle.half.y * 2 / (bLongX ? 1 : Segments);
             const float Offset = (Segment + 0.5f) * LongSize / Segments - LongSize * 0.5f;
+            // These proxies deliberately stay at the flat base and are NOT seated on the
+            // heightfield. They exist only while CinderScenery is unavailable, which is the
+            // same situation in which no Landscape is bound and the ground really is the flat
+            // plane: they stand IN FOR the obstacle cliff rather than on top of it, so
+            // lifting them by the relief inside the rectangle would stack a second mesa on
+            // the first. Every other artefact in this file is seated; this one must not be.
             const FVector Position(Obstacle.center.x + (bLongX ? Offset : 0), Obstacle.center.y + (bLongX ? 0 : Offset), -0.5f);
             const float Height = FMath::Clamp(FMath::Min(Width, Depth) * (0.48f + 0.06f * ((Seed + Segment) % 4)), 70.0f, 195.0f);
             if (BatchIndex == INDEX_NONE)
@@ -587,7 +710,13 @@ void ACinderBattlefield::RefreshTerrainSurface()
     CinderTerrainSurface::FFeatures Features;
     Features.Map = Simulation->config().map;
     Features.WorldSize = Simulation->worldSize();
+    if (Simulation->usesAuthoredTerrain()) Features.AuthoredDefinition = &cinder::mapDefinition(
+        Simulation->config().map, Simulation->playerCount(), Simulation->config().matchLength,
+        Simulation->config().mapRevision);
+    GroundSurfaceMaterial->SetScalarParameterValue(TEXT("AuthoredMap"), Features.AuthoredDefinition ? 1.0f : 0.0f);
     uint32 Hash = HashCombineFast(GetTypeHash(Features.Map), GetTypeHash(Features.WorldSize));
+    Hash = HashCombineFast(Hash, GetTypeHash(Simulation->playerCount()));
+    Hash = HashCombineFast(Hash, GetTypeHash(CinderLandscapeTerrain::GeometrySignature(*Simulation)));
     for (const auto& Cliff : Simulation->obstacles())
     {
         if (!Simulation->explored(0, Cliff.center)) continue;
@@ -622,6 +751,7 @@ void ACinderBattlefield::RefreshTerrainSurface()
     Hash = HashCombineFast(Hash, GetTypeHash(Features.Minerals.Num()));
     Hash = HashCombineFast(Hash, GetTypeHash(ServiceBuildings.Num()));
     if (!bTerrainSurfaceInvalid && GroundSurfaceTexture && Hash == TerrainSurfaceHash) return;
+    CinderLandscapeTerrain::GatherPathways(*Simulation, Features.Trails);
     for (const cinder::Entity* Building : ServiceBuildings)
     {
         const float Radius = cinder::definition(Building->kind).radius * 1.20f;
@@ -728,6 +858,10 @@ void ACinderBattlefield::UpdateFogTexture()
     if (FogPlaneBatch == INDEX_NONE)
     {
         // Missing optional material and headless tests retain the original grid adapter.
+        // No fog material means no FogTexture, and UCinderLandscapeTerrain::Update refuses to
+        // bind without one, so this branch always runs over the flat ground plane: these
+        // quads at Z 1 have no relief to poke through, and the landscape-bound path above
+        // that hides the fog sheet can never be reached from here.
         for (int32 Y = 0; Y < Cells; ++Y) for (int32 X = 0; X < Cells; ++X)
             if (Current[Y * Cells + X] != 2)
                 Batches[Current[Y * Cells + X] ? 4 : 3].Transforms.Add(FTransform(FQuat::Identity,
@@ -739,28 +873,11 @@ void ACinderBattlefield::UpdateFogTexture()
     Upload->Pixels.SetNumUninitialized(FogTextureSize * FogTextureSize * 4);
     for (int32 Y = 0; Y < FogTextureSize; ++Y) for (int32 X = 0; X < FogTextureSize; ++X)
     {
-        const int32 CX = X / FogPixelsPerCell, CY = Y / FogPixelsPerCell;
-        const uint8 State = Current[CY * Cells + CX];
-        float Opacity = 1;
-        if (State == 2)
-        {
-            float Distance = 4;
-            for (int32 NY = CY - 1; NY <= CY + 1; ++NY) for (int32 NX = CX - 1; NX <= CX + 1; ++NX)
-            {
-                if (NX >= 0 && NY >= 0 && NX < Cells && NY < Cells && Current[NY * Cells + NX] == 2) continue;
-                const float DX = FMath::Max(0.0f, FMath::Max(NX * FogPixelsPerCell - (X + 0.5f), (X + 0.5f) - (NX + 1) * FogPixelsPerCell));
-                const float DY = FMath::Max(0.0f, FMath::Max(NY * FogPixelsPerCell - (Y + 0.5f), (Y + 0.5f) - (NY + 1) * FogPixelsPerCell));
-                Distance = FMath::Min(Distance, FMath::Sqrt(DX * DX + DY * DY));
-            }
-            // Guard texels alongside hidden cells remain fully opaque, including corners.
-            // Bilinear filtering therefore cannot uncover ground outside observed cells.
-            const float T = FMath::Clamp((Distance - 0.75f) / 2.25f, 0.0f, 1.0f);
-            Opacity = 1 - T * T * (3 - 2 * T);
-        }
+        const CinderFogMask::FTexel Texel = CinderFogMask::SampleTexel(Current, X, Y);
         const int32 Pixel = (Y * FogTextureSize + X) * 4;
         Upload->Pixels[Pixel] = 0;
-        Upload->Pixels[Pixel + 1] = State ? 255 : 0;
-        Upload->Pixels[Pixel + 2] = static_cast<uint8>(FMath::RoundToInt(Opacity * 255));
+        Upload->Pixels[Pixel + 1] = static_cast<uint8>(FMath::RoundToInt(Texel.Explored * 255));
+        Upload->Pixels[Pixel + 2] = static_cast<uint8>(FMath::RoundToInt(Texel.Opacity * 255));
         Upload->Pixels[Pixel + 3] = 255;
     }
     // Shared ownership survives both render/RHI queues. If UE rejects the update,
@@ -771,13 +888,24 @@ void ACinderBattlefield::UpdateFogTexture()
     ++FogTextureUploads;
 }
 
-void ACinderBattlefield::AddBuildingPad(const cinder::Entity& Entity)
+void ACinderBattlefield::AddBuildingPad(const cinder::Entity& Entity, float GroundZ)
 {
     if (PadBatch == INDEX_NONE || (Entity.team == 0 && Entity.progress >= 1 && Scenery && Scenery->IsInitialized())) return;
     const float Diameter = cinder::definition(Entity.kind).radius * 2;
     // A single shallow rectangular service slab grounds the silhouette without a second ring.
+    // GroundZ is the caller's one sample for this entity, taken at the same XY the hull uses,
+    // so the slab and the building it belongs to can never disagree about where the floor is.
+    // The half-centimetre sink keeps the slab reading as poured into the surface rather than
+    // laid on top of it, exactly as the old -0.5 did against the flat plane.
+    //
+    // THE SLAB STAYS FLAT WHILE THE GROUND UNDER IT MAY TILT. One rigid box cannot follow a
+    // heightfield, so a corner would lift clear on a real gradient. That is acceptable only
+    // because the terrain generator damps relief toward level along the worn pathways, which
+    // is the ground players actually build on: the residual gradient under a footprint is a
+    // small fraction of the walkable ceiling, so the lift stays inside the slab's thickness.
+    // If pathway damping is ever removed, this slab has to become per-corner geometry.
     Batches[PadBatch].Transforms.Add(FTransform(FRotator(0, FMath::RadiansToDegrees(Entity.facing), 0),
-        FVector(Entity.pos.x, Entity.pos.y, -0.5f), FVector(Diameter * 1.08f / 100, Diameter * 1.08f / 100, 0.03f)));
+        FVector(Entity.pos.x, Entity.pos.y, GroundZ - 0.5f), FVector(Diameter * 1.08f / 100, Diameter * 1.08f / 100, 0.03f)));
 }
 
 void ACinderBattlefield::BeginPlay()
@@ -796,6 +924,7 @@ void ACinderBattlefield::BeginPlay()
     if (GroundMaterial)
     {
         GroundSurfaceMaterial = UMaterialInstanceDynamic::Create(GroundMaterial, this);
+        CinderGroundPalette::Apply(GroundSurfaceMaterial);
         GroundMaterial = GroundSurfaceMaterial;
     }
     if (!GroundMaterial) GroundMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Art/Materials/M_CinderGroundV2.M_CinderGroundV2"), nullptr, LOAD_NoWarn);
@@ -818,20 +947,27 @@ void ACinderBattlefield::BeginPlay()
     InitializeEnvironment();
     if (GroundSurfaceMaterial && FogTexture) GroundSurfaceMaterial->SetTextureParameterValue(TEXT("FogMask"), FogTexture);
     CanyonTerrain->Initialize();
-    Scenery->Initialize(RootComponent, GroundSurfaceMaterial);
+    Scenery->Initialize(RootComponent, GroundSurfaceMaterial, FogTexture);
     WorldEffects->Initialize(RootComponent, Sphere, Cylinder, Cone, Plane, BaseMaterial);
 
-    auto* Sun = GetWorld()->SpawnActor<ADirectionalLight>(FVector::ZeroVector, FRotator(-42, -38, 0));
+    // Raking light gives fractured cliffs depth. Keep enough headroom for pale
+    // unit armor while the cool skylight makes shaded rock faces readable.
+    auto* Sun = GetWorld()->SpawnActor<ADirectionalLight>(FVector::ZeroVector, FRotator(-46, 45, 0));
     auto* SunComponent = Cast<UDirectionalLightComponent>(Sun->GetLightComponent());
     SunComponent->SetMobility(EComponentMobility::Movable);
-    SunComponent->SetIntensity(4.5f);
-    SunComponent->SetLightColor(FLinearColor(1.0f, 0.84f, 0.66f));
+    SunComponent->SetIntensity(6.5f);
+    SunComponent->SetLightColor(FLinearColor(1.0f, 0.91f, 0.78f));
     SunComponent->SetCastShadows(true);
-    SunComponent->SetDynamicShadowDistanceMovableLight(6000);
+    // The camera never pulls back past FarthestDistance, so 6000 cm of cascade
+    // range was spending most of a fixed 1024 shadow map on ground nobody sees.
+    // 4200 roughly doubles the texel density over the playable view.
+    SunComponent->SetDynamicShadowDistanceMovableLight(4200);
     SunComponent->SetDynamicShadowCascades(PLATFORM_IOS ? 2 : 4);
-    SunComponent->SetCascadeDistributionExponent(2.0f);
-    SunComponent->SetShadowBias(0.25f);
-    SunComponent->SetShadowSlopeBias(0.35f);
+    SunComponent->SetCascadeDistributionExponent(3.2f);
+    // Steep landscape walls need more slope bias than flat ground; the lower
+    // values produced dense self-shadow stripes that hid the rock's strata.
+    SunComponent->SetShadowBias(0.70f);
+    SunComponent->SetShadowSlopeBias(1.0f);
     auto* Sky = GetWorld()->SpawnActor<ASkyLight>();
     auto* SkyComponent = Sky->GetLightComponent();
     SkyComponent->SetMobility(EComponentMobility::Movable);
@@ -843,9 +979,32 @@ void ACinderBattlefield::BeginPlay()
         SkyComponent->SourceType = SLS_SpecifiedCubemap;
         SkyComponent->SetCubemap(AmbientCubemap);
     }
-    SkyComponent->SetIntensity(1.10f);
-    SkyComponent->SetLightColor(FLinearColor(0.70f, 0.83f, 1.0f));
+    SkyComponent->SetIntensity(1.40f);
+    SkyComponent->SetLightColor(FLinearColor(0.50f, 0.62f, 0.82f));
+
+    // Atmospheric depth. Mobile forward computes height fog per-vertex for opaque
+    // geometry, so this is close to free and it is the only distance cue in the
+    // project — without it the far half of the map sits at the same contrast as
+    // the near half and the battlefield reads flat. Cool blue inscatter against
+    // warm ground is what makes distance recede.
+    //
+    // Volumetric fog is explicitly off: it is a full volume pass this frame
+    // budget cannot afford. FogMaxOpacity is capped well below 1 and StartDistance
+    // keeps the near field clear, so unexplored ground still reads as unknown
+    // rather than merely hazy — fog of war stays the darker, separate signal.
+    auto* HeightFog = GetWorld()->SpawnActor<AExponentialHeightFog>();
+    if (auto* FogComponent = HeightFog ? HeightFog->GetComponent() : nullptr)
+    {
+        FogComponent->SetMobility(EComponentMobility::Movable);
+        FogComponent->SetFogDensity(0.012f);
+        FogComponent->SetFogHeightFalloff(0.35f);
+        FogComponent->SetFogInscatteringColor(FLinearColor(0.30f, 0.42f, 0.62f));
+        FogComponent->SetStartDistance(900.0f);
+        FogComponent->SetFogMaxOpacity(0.55f);
+        FogComponent->SetVolumetricFog(false);
+    }
     Simulation->reset();
+    LoadCampaignProgress();
     ResetFeedback();
     RenderState();
 }
@@ -896,16 +1055,34 @@ bool ACinderBattlefield::StartOnlineMatch(const cinder::net::Snapshot& Snapshot)
     return true;
 }
 
-cinder::CommandResult ACinderBattlefield::SubmitCommand(const cinder::Command& Command)
+cinder::CommandResult ACinderBattlefield::SubmitCommand(const cinder::Command& Command, uint32* OutOnlineSequence)
 {
-    if (!bOnlineMatch) return Simulation->command(Command);
+    if (OutOnlineSequence) *OutOnlineSequence = 0;
+    if (!bOnlineMatch)
+    {
+        if (CampaignDirector.IsActive() && (bMenu || bPaused || IsMatchOver()))
+            return {false, "This campaign mission is not accepting orders."};
+        const auto Result = Simulation->command(Command);
+        if (Result.accepted && CampaignDirector.IsActive())
+            CampaignDirector.AcceptedCommand(*Simulation, Command);
+        return Result;
+    }
     auto* Online = GetGameInstance() ? GetGameInstance()->GetSubsystem<UCinderOnlineSubsystem>() : nullptr;
-    const bool bSent = Online && Online->SendCommand(Command);
+    const bool bSent = Online && Online->SendCommand(Command, OutOnlineSequence);
     return {bSent, bSent ? "Order sent. Waiting for the server." : "Connection unavailable. Wait for the match to reconnect."};
 }
 
 cinder::Vec2 ACinderBattlefield::RenderPosition(const cinder::Entity& Entity) const
 {
+    // Online is the one place the presented root may lag the authoritative one:
+    // snapshots arrive on a network interval with nothing in between, so there is
+    // no alternative to interpolating. A local match deliberately does NOT do
+    // this. Lerping between two local steps would buy smoother translation at the
+    // cost of rendering up to a full 0.05 s behind, which breaks the invariant
+    // that a settled or paused frame shows exactly where things are — and on a
+    // touch RTS the tap-to-move response is worth more than the last of the
+    // translation smoothing. Everything riding the root (gait, recoil, turret,
+    // banking, flinch) is evaluated per rendered frame regardless.
     if (!bOnlineMatch || cinder::definition(Entity.kind).building || Entity.kind == cinder::Kind::Resource) return Entity.pos;
     const cinder::Vec2* Previous = PreviousOnlinePositions.Find(Entity.id);
     if (!Previous || (Entity.team != 0 && !Simulation->visible(0, *Previous))) return Entity.pos;
@@ -913,11 +1090,66 @@ cinder::Vec2 ACinderBattlefield::RenderPosition(const cinder::Entity& Entity) co
     return {FMath::Lerp(Previous->x, Entity.pos.x, Alpha), FMath::Lerp(Previous->y, Entity.pos.y, Alpha)};
 }
 
+float ACinderBattlefield::GroundHeight(cinder::Vec2 Point) const
+{
+    // Where the ground IS, which is not the same question as what the generator
+    // WOULD produce. Only a compatible world size gets a pre-authored Landscape;
+    // every other match length falls back to a genuinely flat generated plane, and
+    // seating against relief that nothing renders would float units, props and
+    // overlays by up to the walkable ceiling over ground the player sees as level.
+    // HeightAt stays the pure generator so BuildHeightData can still bake every
+    // size; the presented surface is gated here, once, where the answer is known.
+    if (!bTerrainRelief) return 0.0f;
+    // The landscape actor sits at BaselineZ, so the rendered surface is the
+    // baseline plus the generated relief.
+    return CinderLandscapeTerrain::BaselineZ
+        + CinderLandscapeTerrain::HeightAt(*Simulation, Point.x, Point.y);
+}
+
+float ACinderBattlefield::PickingGroundHeight(cinder::Vec2 Point) const
+{
+    if (!bTerrainRelief) return 0.0f;
+    constexpr float Baseline = CinderLandscapeTerrain::BaselineZ;
+    if (!FMath::IsFinite(Point.x) || !FMath::IsFinite(Point.y)
+        || LastFogCells.Num() != CinderFogMask::Cells * CinderFogMask::Cells) return Baseline;
+
+    // Match the uploaded linear BGRA8 FogMask.G at mip zero: normalized world
+    // UVs, texel-center coordinates, clamp addressing, and quantization before
+    // bilinear filtering. Sample the last presented fog snapshot rather than
+    // newer simulation visibility that may not yet have reached the material.
+    const float WorldSize = FMath::Max(1.0f, Simulation->worldSize());
+    const float TexelX = FMath::Clamp(Point.x / WorldSize, 0.0f, 1.0f) * CinderFogMask::TextureSize - 0.5f;
+    const float TexelY = FMath::Clamp(Point.y / WorldSize, 0.0f, 1.0f) * CinderFogMask::TextureSize - 0.5f;
+    const int32 X = FMath::FloorToInt(TexelX), Y = FMath::FloorToInt(TexelY);
+    const auto ExploredAt = [this](int32 SampleX, int32 SampleY)
+    {
+        const auto Texel = CinderFogMask::SampleTexel(LastFogCells,
+            FMath::Clamp(SampleX, 0, CinderFogMask::TextureSize - 1),
+            FMath::Clamp(SampleY, 0, CinderFogMask::TextureSize - 1));
+        return static_cast<float>(FMath::RoundToInt(Texel.Explored * 255.0f)) / 255.0f;
+    };
+    const float FractionX = TexelX - X, FractionY = TexelY - Y;
+    const float Explored = FMath::Lerp(
+        FMath::Lerp(ExploredAt(X, Y), ExploredAt(X + 1, Y), FractionX),
+        FMath::Lerp(ExploredAt(X, Y + 1), ExploredAt(X + 1, Y + 1), FractionX), FractionY);
+    // The ground shader offsets -(WorldZ + 1) * (1 - FogMask.G).
+    return Baseline + (GroundHeight(Point) - Baseline) * Explored;
+}
+
+float ACinderBattlefield::EntityGroundHeight(cinder::Vec2 Point, cinder::Kind Kind) const
+{
+    const float Ground = GroundHeight(Point);
+    const cinder::Definition& Definition = cinder::definition(Kind);
+    return Definition.air ? FMath::Max(Ground, CinderLandscapeTerrain::VisualObstacleTopAt(
+        *Simulation, Point.x, Point.y, bTerrainRelief, Definition.radius * 2.0f)) : Ground;
+}
+
 void ACinderBattlefield::ReturnToMenu()
 {
     SetActorTickEnabled(true);
     bMenu = true; bPaused = false;
     Training.Reset();
+    CampaignDirector.Reset();
     bOnlineMatch = false;
     PreviousOnlinePositions.Reset();
     // Keep the completed match counters available for diagnostics while skipping stale effects.
@@ -945,9 +1177,17 @@ void ACinderBattlefield::SetPaused(bool Value)
 
 void ACinderBattlefield::ResetPresentation()
 {
+    ++MatchGenerationSerial;
     Training.Reset();
+    CampaignDirector.Reset();
+    SavedCampaignBoundary = 0;
+    bCampaignVictoryRecorded = false;
     InvalidateEnvironment();
     ResourceMemory.clear();
+    // The presentation clock belongs to the match that produced it: recoil,
+    // flinch, birth and death stamps are all compared against it, and carrying it
+    // across a reset would leave every stamp in the future.
+    PresentationTime = 0;
     Scenery->Reset();
     WorldEffects->Reset(Simulation->lastEffectId());
     ResetFeedback();
@@ -985,7 +1225,8 @@ void ACinderBattlefield::UpdateCombatFeedback()
         const cinder::Vec2 Point = bSource ? Effect.from : Effect.to;
         const cinder::Kind Kind = bSource ? Effect.sourceKind : Effect.targetKind;
         FVector2D Screen;
-        return Player->ProjectWorldLocationToScreen(FVector(Point.x, Point.y, cinder::definition(Kind).air ? 125 : 25), Screen)
+        const float Z = EntityGroundHeight(Point, Kind) + (cinder::definition(Kind).air ? 125.0f : 25.0f);
+        return Player->ProjectWorldLocationToScreen(FVector(Point.x, Point.y, Z), Screen)
             && Screen.X >= 0 && Screen.Y >= 0 && Screen.X < ViewportWidth && Screen.Y < ViewportHeight;
     };
 
@@ -1103,23 +1344,40 @@ void ACinderBattlefield::Tick(float DeltaSeconds)
             }
         }
         if (bPaused && Simulation->winner() == -1) return;
+        PresentationTime += DeltaSeconds;
         RenderTimer += DeltaSeconds;
         const bool bInterpolating = FPlatformTime::Seconds() - OnlineSnapshotAt < OnlineSnapshotInterval;
         if (bNewSnapshot || (bInterpolating && RenderTimer >= cinder::Simulation::Step))
-        { RenderTimer = 0; RenderState(); }
+        { RenderTimer = 0; RenderSimState(); }
+        // Online already interpolates the root between snapshots; running the pose
+        // pass every frame is what makes the parts riding that root continuous too.
+        RenderPoseState();
         return; // A network replica must never run the authoritative simulation loop.
     }
     // Start/load explicitly populate the scene. Frozen matches need neither new
     // simulation poses nor repeated fog scans and instance comparisons.
-    if (bMenu || bPaused || Simulation->winner() != -1) return;
+    if (bMenu || bPaused) return;
+    if (IsMatchOver())
+    {
+        if (CampaignDirector.IsRunning()) ObserveCampaign();
+        else if (CampaignDirector.IsActive()) SettleCampaignBoundary();
+        return;
+    }
     Simulation->update(FMath::Min(DeltaSeconds, 0.2f));
     if (Training.IsActive()) Training.TickOpponent(*Simulation);
+    if (CampaignDirector.IsActive())
+    {
+        CampaignDirector.TickOpponent(*Simulation);
+        ObserveCampaign();
+    }
     UpdateCompletionAudio();
     UpdateCombatFeedback();
+    PresentationTime += DeltaSeconds;
     RenderTimer += DeltaSeconds;
     // Always submit the terminal state before subsequent ticks become idle.
-    if (RenderTimer >= cinder::Simulation::Step || Simulation->winner() != -1)
-    { RenderTimer = 0; RenderState(); }
+    if (RenderTimer >= cinder::Simulation::Step || IsMatchOver())
+    { RenderTimer = 0; RenderSimState(); }
+    RenderPoseState();
 }
 
 void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
@@ -1140,18 +1398,70 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
     {
         FCinderMotionObservation Observation;
         Observation.Id = Entity.id; Observation.Kind = Entity.kind; Observation.Position = RenderPoint;
+        Observation.Team = Entity.team;
         Observation.Order = Entity.order; Observation.Facing = Entity.facing;
         Observation.Cooldown = Entity.cooldown; Observation.HarvestTimer = Entity.harvestTimer;
         Observation.bReturning = Entity.returning;
         Observation.bConstructionActive = Entity.order == Order::Construct && Simulation->constructionActive(Entity.target);
-        Observation.Tick = bOnlineMatch ? OnlinePoseSerial : Simulation->tick();
-        Observation.Time = bOnlineMatch ? Simulation->time() - OnlineSnapshotInterval + FMath::Clamp(static_cast<float>(FPlatformTime::Seconds() - OnlineSnapshotAt), 0.0f, OnlineSnapshotInterval) : Simulation->time();
+        // Health is read only to edge-detect a drop for the flinch; the pose never
+        // feeds any of it back, and Simulation::hash still owns every one of these.
+        Observation.Hp = Entity.hp;
+        Observation.MaxHp = Def.hp;
+        if (const cinder::Entity* AimTarget = Entity.target ? Simulation->find(Entity.target) : nullptr)
+        {
+            // Fog privacy: a barrel may never track a target the local player cannot
+            // see, or the turret itself becomes a pointer to an unseen enemy.
+            if (AimTarget->alive() && Simulation->visible(0, AimTarget->pos))
+            {
+                Observation.bHasTarget = true;
+                Observation.TargetBearing = FMath::Atan2(AimTarget->pos.y - RenderPoint.y,
+                    AimTarget->pos.x - RenderPoint.x);
+            }
+        }
+        // LOCAL VIEW STATE. This is the one pose input that legitimately differs
+        // between two clients watching the same match, so it may only ever widen a
+        // cosmetic channel. It must never reach a command, the state hash, a save,
+        // a snapshot, or any observation hash added later.
+        Observation.bSelected = SelectedIds.Contains(Entity.id);
+        // One monotonic presentation clock for every stamp. Recoil, flinch, birth
+        // and death all record against Observation.Time and are later compared
+        // against the time handed to EndFrame, so the two must be the same clock.
+        Observation.Tick = PoseSerial;
+        Observation.SimulationTick = Simulation->tick();
+        Observation.bInterpolatedPosition = bOnlineMatch;
+        Observation.Time = PresentationTime;
         Pose = EntityMotion.Observe(Observation);
     }
     // Cosmetic transforms follow simulation time; they cannot move the authoritative XY root.
     const bool bGroundHover = Entity.kind == Kind::Scout || Entity.kind == Kind::Mender;
-    const float Elevation = (Def.air ? 125.0f : bGroundHover ? 8.0f : 0.0f) + Pose.BodyZ;
-    if (Def.building && Simulation->visible(0, RenderPoint)) AddBuildingPad(Entity);
+    // ONE heightfield evaluation per entity per frame, reused by the hull, every motion part,
+    // the primitive fallback and the service slab. GroundHeight is the closed-form generator
+    // rather than a trace, but it still walks the obstacle list per call, and the HUD already
+    // samples the same function at the same XY for the selection ring - seating both from one
+    // value is what keeps the ring welded to the feet instead of a centimetre out.
+    //
+    // Air units clear the full mesh cliff silhouette, which can be much taller
+    // than the low Landscape foundation beneath it.
+    // A unit is a point and can ride the exact surface under it. A building is a rigid
+    // flat-bottomed box: seated at its centre height, the downhill corner of a footprint
+    // sitting across a gradient lifts clear of the ground and the structure visibly
+    // hovers. Seat a building at the LOWEST ground under its own footprint instead, so
+    // the uphill side embeds into the slope — a structure cut into a rise reads as
+    // built there, while one floating over a dip reads as a bug. Four rim samples plus
+    // the centre is enough at this footprint size and only runs for buildings.
+    float GroundZ = EntityGroundHeight(RenderPoint, Entity.kind);
+    if (Def.building && bTerrainRelief)
+    {
+        const float Reach = Def.radius * 0.78f;
+        for (int32 Corner = 0; Corner < 4; ++Corner)
+        {
+            const float Angle = Corner * (PI * 0.5f) + Entity.facing;
+            GroundZ = FMath::Min(GroundZ, GroundHeight({RenderPoint.x + FMath::Cos(Angle) * Reach,
+                RenderPoint.y + FMath::Sin(Angle) * Reach}));
+        }
+    }
+    const float Elevation = GroundZ + (Def.air ? 125.0f : bGroundHover ? 8.0f : 0.0f) + Pose.BodyZ;
+    if (Def.building && Simulation->visible(0, RenderPoint)) AddBuildingPad(Entity, GroundZ);
     const float BuildScale = Def.building ? FMath::Max(0.08f, Entity.progress) : 1;
     const FQuat Facing = FRotator(0, FMath::RadiansToDegrees(Entity.facing), 0).Quaternion();
     const int32 ModelKey = static_cast<int32>(Entity.kind) * TeamCount + (Resource ? 0 : Entity.team);
@@ -1167,14 +1477,18 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
                 const int32 Key = ModelKey * static_cast<int32>(ECinderMotionPart::Count) + static_cast<int32>(Part.Part);
                 if (!MotionPartBatchIndices.IsValidIndex(Key) || MotionPartBatchIndices[Key] == INDEX_NONE) continue;
                 Batches[MotionPartBatchIndices[Key]].Transforms.Add(CinderPartWorldTransform(
-                    Root, Facing, Part.Pivot, Pose.Rotation(Part.Part), Pose.Offset(Part.Part)));
+                    Root, Facing, Part.Pivot, Pose.Rotation(Part.Part), Pose.Offset(Part.Part),
+                    FVector(Pose.UniformScale)));
             }
             ++LastModelEntities;
             return;
         }
         // The imported centimeter mesh is already sized to the definition and has a bottom pivot.
+        // UniformScale is 1 outside the 0.35 s birth window, so the construction
+        // rise (BuildScale) keeps its exact meaning for every settled entity.
         Batches[ModelBatchIndices[ModelKey]].Transforms.Add(FTransform(Facing * Pose.BodyRotation.Quaternion(),
-            FVector(RenderPoint.x, RenderPoint.y, Elevation), FVector(1, 1, BuildScale)));
+            FVector(RenderPoint.x, RenderPoint.y, Elevation),
+            FVector(Pose.UniformScale, Pose.UniformScale, BuildScale * Pose.UniformScale)));
         ++LastModelEntities;
         return;
     }
@@ -1184,7 +1498,9 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
         for (int I = 0; I < 3; ++I)
         {
             const float A = I * 2.0944f;
-            Batches[2].Transforms.Add(FTransform(FRotator(0, I * 120, I * 8), FVector(RenderPoint.x + FMath::Cos(A) * 15, RenderPoint.y + FMath::Sin(A) * 15, 34), FVector(0.25f, 0.3f, 0.65f + I * 0.1f)));
+            // Ore shards are ground-standing geometry like everything else: the three
+            // spikes ride the entity's single ground sample rather than an absolute 34 cm.
+            Batches[2].Transforms.Add(FTransform(FRotator(0, I * 120, I * 8), FVector(RenderPoint.x + FMath::Cos(A) * 15, RenderPoint.y + FMath::Sin(A) * 15, GroundZ + 34), FVector(0.25f, 0.3f, 0.65f + I * 0.1f)));
         }
         return;
     }
@@ -1266,9 +1582,15 @@ void ACinderBattlefield::AddEntity(const cinder::Entity& AuthoritativeEntity)
 
 void ACinderBattlefield::RenderState()
 {
+    // Explicit submissions (start, load, reset, the terminal frame) still want one
+    // complete scene, so the whole pass runs. Tick calls the two halves separately.
+    RenderSimState();
+    RenderPoseState();
+}
+
+void ACinderBattlefield::RenderSimState()
+{
     if (bOnlineMatch) ++OnlinePoseSerial;
-    LastModelEntities = LastFallbackEntities = 0;
-    for (FBatch& Batch : Batches) if (Batch.bDynamic) Batch.Transforms.Reset();
     if (Batches.IsEmpty()) return;
     if (!IsValid(CameraRig))
     {
@@ -1283,37 +1605,121 @@ void ACinderBattlefield::RenderState()
             }
         }
     }
-    if (CameraRig) CameraRig->SetWorldSize(Simulation->worldSize());
+    if (CameraRig)
+    {
+        CameraRig->SetTerrainSource(this);
+        CameraRig->SetWorldSize(Simulation->worldSize());
+    }
     RefreshEnvironment();
     RefreshTerrainSurface();
     UpdateFogTexture();
-    Batches[0].Mesh->SetVisibility(!CanyonTerrain->Update(*Simulation, FogTexture, GroundSurfaceTexture));
-    EntityMotion.BeginFrame();
+    // ONE signal, two artefacts. UCinderLandscapeTerrain::Update returns true only when it
+    // has a canonical Landscape bound WITH this frame's fog mask already in its material, so
+    // the return value means precisely "the authored terrain is on screen and it is carrying
+    // fog itself". The generated flat ground plane hides behind it, and so does the flat fog
+    // sheet: that sheet is a single plane at WorldSurfaceZ, and any relief taller than 2.5 cm
+    // pokes straight through it. With real hills that is not an occasional artefact at an
+    // obstacle, it is every hill on every map on every frame.
+    //
+    // M_CinderCanyonGround does the job properly in its place: it multiplies BASE_COLOR by
+    // the visible fraction of this same FogTexture, writes the fog tint as EMISSIVE_COLOR so
+    // it holds up independently of lighting, and flattens unexplored relief through
+    // WORLD_POSITION_OFFSET so an unseen ridge cannot even silhouette against explored sky.
+    //
+    // FOG PRIVACY, which is correctness and not dressing: hiding the sheet reveals nothing.
+    // The sheet only ever DIMMED geometry this class had already decided the local player may
+    // see - obstacle rock batches gated on explored, service slabs gated on visible, scenery
+    // gated on its own fog checks and now masked by the canyon materials. It was never the
+    // gate. For the ground itself the gate moves from the plane to the landscape material,
+    // and both read the identical FogTexture, so unknown, explored and visible fall on the
+    // same texels either way. Update refuses to bind without that texture, so there is no
+    // path on which the landscape shows while the mask is missing.
+    //
+    // On the fallback path (any non-canonical world size) the ground really is a flat plane,
+    // so the sheet still fits it exactly and is left exactly as it is today.
+    const bool bLandscapeBound = CanyonTerrain->Update(*Simulation, FogTexture, GroundSurfaceTexture);
+    // One authority for "the presented ground has relief", read by GroundHeight and
+    // handed to the scenery and effect components so all four systems seat against
+    // the same surface rather than each deciding for itself.
+    bTerrainRelief = bLandscapeBound;
+    Batches[0].Mesh->SetVisibility(!bLandscapeBound);
+    if (FogPlaneBatch != INDEX_NONE) Batches[FogPlaneBatch].Mesh->SetVisibility(!bLandscapeBound);
     for (const auto& Entity : Simulation->entities())
     {
-        if (Entity.kind == cinder::Kind::Resource)
-        {
-            // Cache only observed resource state: unseen harvesting must not leak through visuals.
-            if (Simulation->visible(0, Entity.pos))
-            {
-                const auto It = std::find_if(ResourceMemory.begin(), ResourceMemory.end(), [&](const cinder::Entity& E) { return E.id == Entity.id; });
-                if (It == ResourceMemory.end()) ResourceMemory.push_back(Entity); else *It = Entity;
-            }
-        }
-        else if (Entity.alive()) AddEntity(Entity);
+        if (Entity.kind != cinder::Kind::Resource) continue;
+        // Cache only observed resource state: unseen harvesting must not leak through visuals.
+        if (!Simulation->visible(0, Entity.pos)) continue;
+        const auto It = std::find_if(ResourceMemory.begin(), ResourceMemory.end(), [&](const cinder::Entity& E) { return E.id == Entity.id; });
+        if (It == ResourceMemory.end()) ResourceMemory.push_back(Entity); else *It = Entity;
     }
-    for (const auto& Resource : ResourceMemory) AddEntity(Resource);
-    EntityMotion.EndFrame();
-    Scenery->Update(*Simulation, ResourceMemory);
-    WorldEffects->Update(*Simulation, 0);
-    FlushBatches();
+    Scenery->Update(*Simulation, ResourceMemory, bTerrainRelief);
+    WorldEffects->Update(*Simulation, 0, bTerrainRelief);
+    FlushBatches(false);
 }
 
-void ACinderBattlefield::FlushBatches()
+void ACinderBattlefield::RenderPoseState()
 {
-    ++InstanceUploads.Passes;
+    if (Batches.IsEmpty()) return;
+    ++PoseSerial;
+    LastModelEntities = LastFallbackEntities = 0;
+    for (FBatch& Batch : Batches) if (Batch.bDynamic) Batch.Transforms.Reset();
+    // Snapshot the local selection once per pass rather than querying the
+    // controller per entity. Purely cosmetic view state; see AddEntity.
+    SelectedIds.Reset();
+    if (UWorld* World = GetWorld())
+        if (const auto* Controller = Cast<ACinderPlayerController>(World->GetFirstPlayerController()))
+            for (cinder::Id Id : Controller->Selection()) SelectedIds.Add(Id);
+    EntityMotion.BeginFrame();
+    for (const auto& Entity : Simulation->entities())
+        if (Entity.kind != cinder::Kind::Resource && Entity.alive()) AddEntity(Entity);
+    for (const auto& Resource : ResourceMemory) AddEntity(Resource);
+    // Eviction discriminates death from fog: a sample that vanished while its cell
+    // is still visible died, and one whose cell went dark merely left vision. Only
+    // the first may play a death, or the scene would leak kills made in the dark.
+    EntityMotion.EndFrame(PresentationTime,
+        [this](const cinder::Vec2& Position) { return Simulation->visible(0, Position); });
+    // Topples ride the batches their unit already used, so a death costs transforms
+    // and nothing else: no component, no draw call, no asset. The ring is bounded
+    // at MaxDyingEntities, so the worst case is 24 hulls of at most six parts.
+    for (const FCinderDyingEntity& Wreck : EntityMotion.DyingEntities())
+    {
+        const int32 KindIndex = static_cast<int32>(Wreck.Kind);
+        if (!MotionKindAvailable.IsValidIndex(KindIndex) || !MotionKindAvailable[KindIndex]) continue;
+        if (!CinderTeamColors::IsValid(Wreck.Team) || Wreck.Team >= Simulation->playerCount()) continue;
+        const int32 ModelKey = KindIndex * TeamCount + Wreck.Team;
+        const FCinderEntityPose DeathPose = FCinderEntityMotion::CalculateDeathPose(Wreck, PresentationTime);
+        const bool bWreckHover = Wreck.Kind == cinder::Kind::Scout || Wreck.Kind == cinder::Kind::Mender;
+        // Seated exactly as the living hull was in AddEntity, from one sample at the wreck's
+        // own XY. Any other formula would make the hull jump vertically on the single frame
+        // the unit stops being an entity and becomes a topple.
+        const cinder::Definition& WreckDef = cinder::definition(Wreck.Kind);
+        const float WreckGroundZ = EntityGroundHeight(Wreck.Position, Wreck.Kind);
+        const float WreckZ = WreckGroundZ + (WreckDef.air ? 125.0f : bWreckHover ? 8.0f : 0.0f)
+            + DeathPose.BodyZ;
+        const FVector Root(Wreck.Position.x, Wreck.Position.y, WreckZ);
+        const FQuat WreckFacing = FRotator(0, FMath::RadiansToDegrees(Wreck.Facing), 0).Quaternion();
+        for (const FCinderMotionAssetPart& Part : CinderMotionAssetParts(Wreck.Kind))
+        {
+            const int32 Key = ModelKey * static_cast<int32>(ECinderMotionPart::Count)
+                + static_cast<int32>(Part.Part);
+            if (!MotionPartBatchIndices.IsValidIndex(Key) || MotionPartBatchIndices[Key] == INDEX_NONE) continue;
+            Batches[MotionPartBatchIndices[Key]].Transforms.Add(CinderPartWorldTransform(
+                Root, WreckFacing, Part.Pivot, DeathPose.Rotation(Part.Part), DeathPose.Offset(Part.Part)));
+        }
+    }
+    FlushBatches(true);
+}
+
+void ACinderBattlefield::FlushBatches(bool bPosePass)
+{
+    // One presentation pass is one submitted frame, not one call. The environment
+    // half runs on the simulation step and the pose half every rendered frame, so
+    // counting both would double a number that diagnostics and the lifecycle
+    // regressions read as "frames submitted". The pose half is the per-frame one.
+    if (bPosePass) ++InstanceUploads.Passes;
     for (FBatch& Batch : Batches)
     {
+        if (Batch.bDynamic != bPosePass) continue;
         if (!Batch.bDynamic && !Batch.bDirty)
         {
             ++InstanceUploads.StaticSkips;
@@ -1383,7 +1789,14 @@ void ACinderBattlefield::FlushBatches()
         }
         if (Batch.Mesh->GetInstanceCount() == NewCount)
         {
-            Batch.SubmittedTransforms = Batch.Transforms;
+            // The idle settle moves every unit every pass, so the unchanged fast
+            // path above almost never fires for entity batches and this snapshot
+            // is on the hot path. A dynamic batch's Transforms are cleared at the
+            // top of the next pose pass, so swapping keeps both allocations and
+            // drops an O(n) copy of 96-byte transforms. The static environment
+            // batches are rebuilt in place by RefreshEnvironment and must copy.
+            if (Batch.bDynamic) Swap(Batch.SubmittedTransforms, Batch.Transforms);
+            else Batch.SubmittedTransforms = Batch.Transforms;
             Batch.bDirty = false;
         }
         else Batch.bDirty = true;
@@ -1394,7 +1807,7 @@ bool ACinderBattlefield::SaveMatch() const
 {
     // The menu can retain the last simulation for diagnostics, including practice.
     // Only a current skirmish may reach the persistent save slot.
-    if (bMenu || bOnlineMatch || Training.IsActive()) return false;
+    if (bMenu || bOnlineMatch || Training.IsActive() || CampaignDirector.IsActive()) return false;
     const FString Directory = FPaths::ProjectSavedDir() / TEXT("Matches");
     IFileManager::Get().MakeDirectory(*Directory, true);
     const FString Filename = IFileManager::Get().ConvertToAbsolutePathForExternalAppForWrite(*(Directory / TEXT("skirmish.cinder")));

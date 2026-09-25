@@ -5,6 +5,7 @@
 #include "Engine/GameViewportClient.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformApplicationMisc.h"
 #include "HAL/PlatformMisc.h"
@@ -19,6 +20,7 @@
 #include "UnrealClient.h"
 #include "Widgets/SWindow.h"
 #include "TimerManager.h"
+#include "Presentation/CinderBattlefield.h"
 #include "Presentation/CinderGameEngine.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogCinderQuality, Log, All);
@@ -355,6 +357,74 @@ private:
 FQualityFrameSample FrameSample;
 TWeakObjectPtr<UWorld> GPUProfileWorld;
 FTimerHandle GPUProfileTimer;
+FAutoConsoleCommandWithWorldAndArgs SimulationProfileCommand(
+    TEXT("cinder.simprofile"), TEXT("DEVELOPMENT: enable, disable or report offline authoritative simulation-step phase timing. Usage: cinder.simprofile [on|off|status]."),
+    FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
+    {
+        if (Args.Num() > 1 || (Args.Num() == 1
+            && !Args[0].Equals(TEXT("on"), ESearchCase::IgnoreCase)
+            && !Args[0].Equals(TEXT("off"), ESearchCase::IgnoreCase)
+            && !Args[0].Equals(TEXT("status"), ESearchCase::IgnoreCase)))
+        {
+            UE_LOG(LogCinderQuality, Display,
+                TEXT("CINDERLINE_SIM_PROFILE usage: cinder.simprofile [on|off|status]"));
+            return;
+        }
+
+        ACinderBattlefield* Battle = nullptr;
+        if (World && World->IsGameWorld())
+        {
+            TActorIterator<ACinderBattlefield> It(World);
+            if (It) Battle = *It;
+        }
+        if (!Battle)
+        {
+            UE_LOG(LogCinderQuality, Display,
+                TEXT("CINDERLINE_SIM_PROFILE rejected reason=no_battlefield"));
+            return;
+        }
+
+        cinder::Simulation& Sim = Battle->Sim();
+        const bool bOn = Args.Num() == 1 && Args[0].Equals(TEXT("on"), ESearchCase::IgnoreCase);
+        const bool bOff = Args.Num() == 1 && Args[0].Equals(TEXT("off"), ESearchCase::IgnoreCase);
+        if (bOn)
+        {
+            if (Battle->IsOnlineMatch() || Sim.isReplica())
+            {
+                UE_LOG(LogCinderQuality, Display,
+                    TEXT("CINDERLINE_SIM_PROFILE rejected reason=offline_authority_required online=%d replica=%d"),
+                    Battle->IsOnlineMatch() ? 1 : 0, Sim.isReplica() ? 1 : 0);
+                return;
+            }
+            Sim.setProfilingEnabled(true);
+            UE_LOG(LogCinderQuality, Display,
+                TEXT("CINDERLINE_SIM_PROFILE enabled=1 collected=0; the next completed simulation step will replace the cleared sample"));
+            return;
+        }
+        if (bOff)
+        {
+            Sim.setProfilingEnabled(false);
+            UE_LOG(LogCinderQuality, Display,
+                TEXT("CINDERLINE_SIM_PROFILE enabled=0 collected=0; sample cleared"));
+            return;
+        }
+
+        const cinder::SimulationStepProfile& Profile = Sim.lastStepProfile();
+        const bool bMenu = Battle->IsMenu();
+        const bool bPaused = Battle->IsPaused();
+        const bool bHistorical = Profile.collected
+            && (bMenu || bPaused || Sim.winner() != -1 || Profile.tick != Sim.tick());
+        const TCHAR* Scope = !Profile.collected ? TEXT("unavailable")
+            : bHistorical ? TEXT("last_completed_step_historical") : TEXT("last_completed_step");
+        UE_LOG(LogCinderQuality, Display,
+            TEXT("CINDERLINE_SIM_PROFILE status enabled=%d collected=%d sample_tick=%llu current_tick=%llu menu=%d paused=%d replica=%d winner=%d historical=%d scope=%s setup_ms=%.3f production_ms=%.3f movement_economy_ms=%.3f vision_ms=%.3f combat_ms=%.3f ai_ms=%.3f completion_ms=%.3f total_ms=%.3f; local simulation-step wall-clock durations, not CPU or GPU utilization and not rendered-frame coverage"),
+            Sim.profilingEnabled() ? 1 : 0, Profile.collected ? 1 : 0,
+            static_cast<unsigned long long>(Profile.tick), static_cast<unsigned long long>(Sim.tick()),
+            bMenu ? 1 : 0, bPaused ? 1 : 0, Sim.isReplica() ? 1 : 0, Sim.winner(),
+            bHistorical ? 1 : 0, Scope, Profile.setupMs, Profile.productionMs,
+            Profile.movementEconomyMs, Profile.visionMs, Profile.combatMs,
+            Profile.aiMs, Profile.completionMs, Profile.totalMs);
+    }));
 FAutoConsoleCommandWithWorldAndArgs GPUProfileCommand(
     TEXT("cinder.gpuprofile"), TEXT("DEVELOPMENT: capture Unreal's GPU pass timing log after 1-60 seconds (default 10), allowing the scene to warm up. Requires a visible game viewport."),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
